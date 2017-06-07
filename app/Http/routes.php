@@ -18,9 +18,10 @@ Route::get('now', function () {
 Route::auth();
 
 Route::get('/', 'HomeController@index');
-Route::get('/login','LoginContoller@login');
-// Route::post('comment', 'CommentController@store');
+//Route::get('/','LoginController@login');
+// Route::get('/login','LoginController@login');
 
+Route::get('/login', 'AccessController@index');
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
     Route::get('/', 'LoginContoller@login');
 });
