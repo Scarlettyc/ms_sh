@@ -18,9 +18,9 @@ Route::get('now', function () {
 Route::auth();
 
 Route::get('/', 'HomeController@index');
-Route::post('comment', 'CommentController@store');
+Route::get('/login','LoginContoller@login');
+// Route::post('comment', 'CommentController@store');
 
 Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
-    Route::get('/', 'HomeController@index');
-    Route::resource('article', 'ArticleController');
+    Route::get('/', 'LoginContoller@login');
 });
