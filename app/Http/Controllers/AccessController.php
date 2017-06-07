@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class AccessController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Show the application dashboard.test
      *
      * @return \Illuminate\Http\Response
      */
