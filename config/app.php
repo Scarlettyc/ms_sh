@@ -82,7 +82,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Encryption Key
+    | Encryption Key KEY
     |--------------------------------------------------------------------------
     |
     | This key is used by the Illuminate encrypter service and should be set
