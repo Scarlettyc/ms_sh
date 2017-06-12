@@ -8,7 +8,9 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
-
+use Log;
+use BLogger;
+use Response;
 class Handler extends ExceptionHandler
 {
     /**
@@ -47,4 +49,33 @@ class Handler extends ExceptionHandler
     {
         return parent::render($request, $e);
     }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Exception  $e
+     * @return \Illuminate\Http\Response
+     */
+    public static function exceptionHandle(Exception $exception){
+
+            Log::error($exception);
+
+            // $err = [
+            //     'message' => $exception->getMessage(),
+            //     'file' => $exception->getFile(),
+            //     'line' => $exception->getLine(),
+            //     'code' => $exception->getCode(),
+            //     ];
+            // BLogger::getLogger(BLogger::LOG_ERROR)->error($err);
+
+             $response = [
+                'status' => 0,
+                'error' => "please send uuid",
+            ];
+    return Response::json($response);
+
+
+   
+    } 
 }

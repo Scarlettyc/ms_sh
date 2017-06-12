@@ -5,6 +5,9 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
+use Exception;
+use App\Exceptions\Handler;
+use Response;
 class AccessController extends Controller
 {
     /**
@@ -12,21 +15,44 @@ class AccessController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function login(Request $request)
+    public  function login(Request $request)
     // public function login()
     {
+
         $req=$request->getContent();
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
         $usermodel=new UserModel();
-        if($usermodel->isExist('uuid',$data['uuid'])>0){
-          $userData=UserModel::where('uuid','=',$data['uuid'])->first();
-        }
-        else {
-           $usermodel->createNew($data);
-        }
+        try { 
+                if(array_key_exists("uuid",$data))
+                {
+                    if($usermodel->isExist('uuid',$data['uuid'])>0){
+                        $userData=UserModel::where('uuid','=',$data['uuid'])->first();
+                        $response=json_encode($userData,TRUE)；
+                    }
+                    else {
+                        $usermodel->createNew($data);
+                        $userData=UserModel::where('uuid','=',$data['uuid'])->first();
+                        $response=json_encode($userData,true)；
+                        $response=base64_enode($response);
+                    }
+                }
+                else {
 
-        return 'yes';
+                    throw new Exception("oppos, you nee Need UUId");
+                }
+
+            $response = [
+                'status' => 0,
+                'error' => "please send uuid",
+            ];
+        }
+        catch (Exception $e) {
+
+            Handler::exceptionHandle($e);
+        } 
+
+         return Response::json($response);
 
         // return view('home');
     }
