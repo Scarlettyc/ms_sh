@@ -16,17 +16,20 @@ class AccessController extends Controller
     // public function login()
     {
         $req=$request->getContent();
+        print_r($req);
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
         $usermodel=new UserModel();
-        if($usermodel->isExist('uuid',$data['uuid'])>0){
-          $userData=UserModel::where('uuid','=',$data['uuid'])->first();
-        }
-        else {
+        // if($usermodel->isExist('uuid',$data['uuid'])>0){
+        //   $userData=UserModel::where('uuid','=',$data['uuid'])->first();
+        // }
+        // else {
            $usermodel->createNew($data);
-        }
+            $res=json_decode($data,TRUE);
+            $json=base64_decode($req);
+        // }
 
-        return 'yes';
+        return ;
 
         // return view('home');
     }
