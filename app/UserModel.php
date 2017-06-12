@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
 {
-     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','u_name','os','uuid','createdate','u_vip_lv','u_payment','u_gem'];
+     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','u_name','os','uuid','u_vip_lv','u_payment','u_gem','pass_tutorial','createdate'];
 
      protected $connection='mysql';
      protected $table = "user"; 
