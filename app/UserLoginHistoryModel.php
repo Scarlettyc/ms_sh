@@ -19,14 +19,14 @@ class UserLoginHistoryModel extends Model
      
      public function createNew($udata){
      	$lastULogin=$this->select(DB::raw('MAX(u_login_id)'))->first();
-        $uLoginid=substr($lastUid['MAX(u_login_id)'],2,11)+1;
+        $uLoginid=substr($lastULogin['MAX(u_login_id)'],2,11)+1;
         $ulogin=[];
         $ulogin['u_login_id']=substr($lastULogin['MAX(u_login_id)'],0,2).$uLoginid;
-        $ulogin['u_id']=$ulogin[$udata['u_id']];
-        $ulogin['os']=$ulogin[$udata['os']];
-        $ulogin['machine_type']=$ulogin[$udata['machine_type']];
-        $ulogin['uuid']=$ulogin[$udata['uuid']];
-        $ulogin['country']=$ulogin[$udata['country']];
+        $ulogin['u_id']=$udata['u_id'];
+        $ulogin['os']=$udata['os'];
+        $ulogin['machine_type']=$udata['machine_type'];
+        $ulogin['uuid']=$udata['uuid'];
+        $ulogin['country']=$udata['country'];
         $ulogin['loginday']=Carbon::now();
         $ulogin['createdate']=Carbon::now();
         $this->insert($ulogin);

@@ -75,10 +75,10 @@ class AccessController extends Controller
                         $result['user_data']['user_info']=$userData;
 
                     }
-                    //$userLoginHistory->create($userData);
+                    $userLoginHistory->createNew($userData);
 
                 $response=json_encode($result,TRUE);
-               // $response=base64_encode($response);
+                $response=base64_encode($response);
                }
                 else {
 
