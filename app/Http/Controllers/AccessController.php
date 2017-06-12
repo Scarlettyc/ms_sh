@@ -16,7 +16,7 @@ class AccessController extends Controller
     // public function login()
     {
         $req=$request->getContent();
-        print_r($req);
+        //print_r($req);
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
         $usermodel=new UserModel();
@@ -25,11 +25,14 @@ class AccessController extends Controller
         // }
         // else {
            $usermodel->createNew($data);
-            $res=json_decode($data,TRUE);
-            $json=base64_decode($req);
+           $userData=UserModel::where('uuid','=',$data['uuid'])->first();
+        // }
+            $res=json_decode($userData,TRUE);
+            $json=base64_encode($res);
+            print_r($res);
         // }
 
-        return ;
+        return $res ;
 
         // return view('home');
     }
@@ -45,4 +48,5 @@ class AccessController extends Controller
     //     return json_encode($responseData);
 
     // }
+    
 }
