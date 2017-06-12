@@ -16,15 +16,15 @@ Route::get('now', function () {
 });
 
 Route::auth();
-Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 Route::controller('access','AccessController');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/database', 'AccessController@test');
 
-Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
+// Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
-});
-Route::auth();
+// });
+// Route::auth();
 
 Route::get('/home', 'HomeController@index');

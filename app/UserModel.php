@@ -14,9 +14,7 @@ class UserModel extends Model
      protected $table = "user"; 
 
      public function isExist($key,$uuid){
-
-     	return $this->where($key,'=',$uuid)->count();
-
+        return $this->where('uuid','=',$uuid)->count();
      }
      
      public function createNew($udata){
