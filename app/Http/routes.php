@@ -16,7 +16,7 @@ Route::get('now', function () {
 });
 
 Route::auth();
-Route::get('/', 'HomeController@index');
+Route::get('/home', 'HomeController@index');
 Route::controller('access','AccessController');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
@@ -26,5 +26,3 @@ Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin
   
 });
 Route::auth();
-
-Route::get('/home', 'HomeController@index');

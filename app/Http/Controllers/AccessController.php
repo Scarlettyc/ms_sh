@@ -45,4 +45,7 @@ class AccessController extends Controller
     //     return json_encode($responseData);
 
     // }
+    public function test(){
+        return view('home');
+    }
 }
