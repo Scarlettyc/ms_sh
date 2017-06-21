@@ -23,11 +23,6 @@ class UserModel extends Model
         $udata['u_id']=substr($lastUid['MAX(u_id)'],0,2).$uid;
         $udata['createdate']=Carbon::now();
         $this->insert($udata);
-
+        
      }
-     // public function update($udata){
-     // 	$uid=$udata['u_id'];
-     // 	unset($udata['u_id']);
-     // 	$this->where('u_id','=',$uid)->update($udata);
-     // }
 }

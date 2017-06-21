@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserLoginHistoryModel extends Model
 {
-     protected $fillable = ['u_login_id', 'u_id', 'os', 'machine_type','uuid','date','createdate'];
+     protected $fillable = ['u_login_id', 'u_id', 'os', 'machine_type','uuid','country','loginday','createdate'];
 
      protected $connection='mysql';
      protected $table = "user_login_history"; 
