@@ -5,97 +5,71 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
-use App\Charmodel;
-use App\NationModel;
-use App\NationBuildingsModel;
-use App\NationResourceModel;
-use App\BuildingsMstModel;
-use App\ResourceMstModel;
+use App\CharacterModel;
 use App\UserLoginHistoryModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Redis;
 class AccessController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public  function login(Request $request)
-    // public function login()
-    {
+	public function login(Request $request)
+	{
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 
-        $req=$request->getContent();
-        $json=base64_decode($req);
-        $data=json_decode($json,TRUE);
+		$usermodel=new UserModel();
+		$characterModel=new CharacterModel();
+		$userLoginHistoryModel=new UserLoginHistoryModel();
+		$result=[];
 
-        $usermodel=new UserModel();
-        $charmodel=new CharModel();
-        $nationModel=new NationModel();
-        $nationBuModel=new NationBuildingsModel();
-        $nationReModel=new NationResourceModel();
-        $userLoginHistory=new UserLoginHistoryModel();
-        $result=[];
+		$usrGem=UserModel::get();
+		$result['mst_data']['user_gem']=$userGem;
+		$redis=new redis();
+		$redis->connection('default');
+		if(isset($data["uuid"]))
+		{  
+			$userData=$data;
+			if($usermodel->isExist('uuid',$data['uuid'])>0)
+			{
+				$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+				$result['user_data']['user_info']=$userData;
+				if($usermodel['pass_tutorial'])
+				{
+					$u_id=$userData['u_id'];
+					$userChar=$charactermodel->where('u_id','=',$u_id)->first();
+					$userLoginCount=UserLoginHistoryModel::where('u_id','=',$u_id)->get()->distinct('loginday')->count('loginday');
+					$result['user_data']['login_count']=$userLoginCount+1;
+					$result['user_data']['character_info']=$userCharacter;
+				}
+			}
+			else {
+				$usermodel->createNew($data);
+				$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+				$result['user_data']['user_info']=$userData;
 
-        $buildingMst=BuildingsMstModel::get();
-        $resourceMst=ResourceMstModel::get();
-        $result['mst_data']['build_mst']=$buildingMst;
-        $result['mst_data']['resource_mst']=$resourceMst;
+			}
+			$redis->lPush('user_login_data','testtest');
+			$userLoginHistory->createNew($userData);
 
+			$response=json_encode($result,TRUE);
+			$response=base64_encode($response);
+		}
+		else {
 
-        // try { 
-                if(isset($data["uuid"]))
-                {  
-                    $userData=$data;
-                    if($usermodel->isExist('uuid',$data['uuid'])>0)
-                    {
-                       
-                        $userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-                        $result['user_data']['user_info']=$userData;
-                        if($usermodel['pass_tutorial'])
-                        {
-                            $u_id=$userData['u_id'];
-                            $userChar=$charmodel->where('u_id','=',$u_id)->first();
-                            $userNation=$nationModel->where('u_id','=',$u_id)->first();
-                            $n_id=$userNation['n_id'];
-                            $nationBuildings=$nationBuModel->where('n_id','=',$n_id)->get();
-                            $nationResource=$nationReModel->where('n_id','=',$n_id)->get();
-                            $userLoginCount=UserLoginHistoryModel::where('u_id','=',$u_id)->get()->distinct('loginday')->count('loginday');
-                            $result['user_data']['login_count']=$userLoginCount+1;
-                            $result['user_data']['char_info']=$userChar;
-                            $result['user_data']['nation_data']=$userNation;
-                            $result['user_data']['nation_buildings']=$nationBuildings;
-                       
-                        }
-                    }
-                    else {
-                        $usermodel->createNew($data);
-                        $userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-                        $result['user_data']['user_info']=$userData;
+			throw new Exception("oppos, you nee Need UUId");
+			$response = [
+			'status' => 'wrong',
+			'error' => "please send uuid",
+			];
+		}
+		return  $response;
+	}
 
-                    }
-                    $userLoginHistory->createNew($userData);
-
-                $response=json_encode($result,TRUE);
-                $response=base64_encode($response);
-               }
-                else {
-
-                    throw new Exception("oppos, you nee Need UUId");
-                $response = [
-                'status' => 'wrong',
-                'error' => "please send uuid",
-                    ];
-        }
-
-         return  $response;
-
-        // return view('home');
-    }
-    public function update(Request $request)
-    {   
-        $req=$request->getContent();
+	public function update(Request $request)
+	{
+		$req=$request->getContent();
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
         $usermodel=new UserModel();
@@ -103,7 +77,13 @@ class AccessController extends Controller
         $responseData=UserModel::where('u_id',$data['u_id'])->get();
 
         return json_encode($responseData);
+	}
 
-    }
-    
+	public function test (Request $request){
+ 		Redis::connection('default');
+		echo '<h3>Redis Server Connect Success</h3>';
+
+		Redis::lPush('user_login_data','testtest');
+        var_dump(Redis::lRange('user_login_data',0,-1));
+}
 }
