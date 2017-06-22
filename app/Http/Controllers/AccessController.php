@@ -11,6 +11,8 @@ use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
+use DateTime;
 class AccessController extends Controller
 {
 	public function login(Request $request)
@@ -26,8 +28,7 @@ class AccessController extends Controller
 
 		$usrGem=UserModel::get();
 		$result['mst_data']['user_gem']=$userGem;
-		$redis=new redis();
-		$redis->connection('default');
+		Redis::connection('default');
 		if(isset($data["uuid"]))
 		{  
 			$userData=$data;
@@ -50,7 +51,23 @@ class AccessController extends Controller
 				$result['user_data']['user_info']=$userData;
 
 			}
-			$redis->lPush('user_login_data','testtest');
+
+			date_default_timezone_set("UTC");
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
+
+			$logindata['u_id']=$userData['u_id'];
+			$logindata['uuid']=$data['uuid']);
+			$logindata['os']=$data['os']);
+			$logindata['login']="UTC:".time(); 
+			$logindata['logoff']=0; 
+			$logindata['createdate']="UTC:".time(); 
+			$logindata=json_encode($logindata,TRUE);
+			if(Redis::HEXISTS('login_data',$dmy))
+			{ 	$loghistory=Redis::HGET('login_data',$dmy);
+				$logindata=$loghistory.$logindata;
+			}
+		    Redis::HSET('login_data',$dmy,$logindata);
 			$userLoginHistory->createNew($userData);
 
 			$response=json_encode($result,TRUE);
@@ -82,8 +99,13 @@ class AccessController extends Controller
 	public function test (Request $request){
  		Redis::connection('default');
 		echo '<h3>Redis Server Connect Success</h3>';
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		if(!Redis::HEXISTS('login_data','20170623'))
+		{ 
+			Redis::HSET('login_data','20170623','test2');
 
-		Redis::lPush('user_login_data','testtest');
-        var_dump(Redis::lRange('user_login_data',0,-1));
+		}
+       
 }
 }
