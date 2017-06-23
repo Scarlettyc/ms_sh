@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
-use App\UserLoginHistoryModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -23,7 +22,6 @@ class AccessController extends Controller
 
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
-		$userLoginHistoryModel=new UserLoginHistoryModel();
 		$result=[];
 
 		$usrGem=UserModel::get();
@@ -57,8 +55,8 @@ class AccessController extends Controller
 			$dmy=$now->format( 'Ymd' );
 
 			$logindata['u_id']=$userData['u_id'];
-			$logindata['uuid']=$data['uuid']);
-			$logindata['os']=$data['os']);
+			$logindata['uuid']=$data['uuid'];
+			$logindata['os']=$data['os'];
 			$logindata['login']="UTC:".time(); 
 			$logindata['logoff']=0; 
 			$logindata['createdate']="UTC:".time(); 

@@ -11,6 +11,6 @@ class ResourceMstModel extends Model
      protected $fillable = ['r_id', 'r_name', 'r_rarity','createdate',];
 
      protected $connection='mysql';
-     protected $table = "rescource_mst"; 
+     protected $table = "Rescource_mst"; 
 
 }
