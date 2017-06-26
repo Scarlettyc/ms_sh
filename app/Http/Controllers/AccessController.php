@@ -37,16 +37,7 @@ class AccessController extends Controller
 			{
 				$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
 				$u_id=$userData['u_id'];
-				$loginToday=Redis::HGET('login_data',$dmy);
-				if($loginToday){
-					$loginTodayArr=json_decode($loginToday);
-  					foreach ($loginTodayArr as $key => $value) {
-  						if($value->u_id!=$u_id){
-  						$loginCount=$userData['u_login_count']+1;
-						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
-  						}
-  					}
-  				}
+
 				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
 				{	
 					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
@@ -56,30 +47,44 @@ class AccessController extends Controller
 			else {
 				$usermodel->createNew($data);
 			}
-			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
-			$result['user_data']['user_info']=$userfinal;
-			date_default_timezone_set("UTC");
 
 			$lastweek=date("Ymd",strtotime("-1 week"));
-			$logindata['u_id']=$userfinal['u_id'];
-			$logindata['uuid']=$userfinal['uuid'];
-			$logindata['os']=$userfinal['os'];
+			$logindata['u_id']=$userData['u_id'];
+			$logindata['uuid']=$userData['uuid'];
+			$logindata['os']=$userData['os'];
 			$logindata['login']=time(); 
 			$logindata['logoff']=0; 
 			$logindata['status']=0;//online 0, in backend 1, logof 2 
 			$logindata['createdate']=time(); 
-			Redis::HGET('login_data',$dmy);
-			if(Redis::HEXISTS('login_data',$dmy))
-			{ 	$loghistory=Redis::HGET('login_data',$dmy);
-				$loginlist=json_decode($loghistory,TRUE);
-				array_push($loginlist,$logindata);	
-			}
-			else{
+			$loginToday=Redis::HGET('login_data',$dmy);
+				if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						if($value->u_id!=$u_id){
+  						$loginCount=$userData['u_login_count']+1;
+						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+						$loghistory=Redis::HGET('login_data',$dmy);
+						$loginlist=json_decode($loghistory,TRUE);
+						array_push($loginlist,$logindata);	
+						Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+  						}
+  						else if($value->logoff!=0){
+  							$loghistory=Redis::HGET('login_data',$dmy);
+  							$loginlist=json_decode($loghistory,TRUE);
+							array_push($loginlist,$logindata);	
+			   				Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+  						}
+  					}
+  				}
+			else {
 				$loginlist[]=$logindata;
-
+			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
 			}
-			
-		    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+
+		    $userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$result['user_data']['user_info']=$userfinal;
+			date_default_timezone_set("UTC");
+
 			$response=json_encode($result,TRUE);
 			//$response=base64_encode($response);
 		}
@@ -111,11 +116,20 @@ class AccessController extends Controller
 	Redis::connection('default');
 	$now   = new DateTime;
 	$dmy=$now->format( 'Ymd' );
-	$loginUser=Redis::HGET('login_data',$dmy);
-	$array=json_decode($loginUser);
-	foreach ($array as $key => $value) {
-		var_dump($value->u_id);
-	}
+	$u_id="ui100000001";
+				$loginToday=Redis::HGET('login_data',$dmy);
+				if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						echo ($value->u_id);
+  						echo ($u_id);
+  						if($value->u_id!=$u_id){
+  							dd("not same");
+  						$loginCount=$userData['u_login_count']+1;
+						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+  						}
+  					}
+  				}
 	
 
  	}
