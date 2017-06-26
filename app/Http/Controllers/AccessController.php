@@ -38,11 +38,13 @@ class AccessController extends Controller
 				$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
 				$u_id=$userData['u_id'];
 				$loginToday=Redis::HGET('login_data',$dmy);
-				$loginTodayArr=json_decode($loginToday);
-  				foreach ($loginTodayArr as $key => $value) {
-  					if($value->u_id!=$u_id){
+				if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						if($value->u_id!=$u_id){
   						$loginCount=$userData['u_login_count']+1;
 						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+  						}
   					}
   				}
 				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
