@@ -11,4 +11,7 @@ class CharacterModel extends Model
 
 	protected $connection = 'mysql';
 	protected $table = "Character";
+	public function isExist($key,$chid){
+        return $this->where($key,'=',$chid)->count();
+     }
 }
