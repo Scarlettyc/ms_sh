@@ -22,7 +22,10 @@ Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/database', 'AccessController@test');
 
-Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
+Route::post('/workshop', 'WorkshopController@workshop');
+// Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
-});
-Route::auth();
+// });
+// Route::auth();post
+
+Route::get('/home', 'HomeController@index');

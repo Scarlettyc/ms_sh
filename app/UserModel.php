@@ -8,15 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
 {
-     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','u_name','os','uuid','createdate','u_vip_lv','u_payment','u_gem'];
+     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','pass_tutorial','u_name','u_vip_lv','u_payment','u_gem','u_coin','u_login_count','os','uuid','access_token','createdate','updatedate'];
 
      protected $connection='mysql';
      protected $table = "user"; 
 
      public function isExist($key,$uuid){
-
-     	return $this->where($key,'=',$uuid)->count();
-
+        return $this->where($key,'=',$uuid)->count();
      }
      
      public function createNew($udata){
@@ -25,11 +23,15 @@ class UserModel extends Model
         $udata['u_id']=substr($lastUid['MAX(u_id)'],0,2).$uid;
         $udata['createdate']=Carbon::now();
         $this->insert($udata);
-
+        
      }
-     // public function update($udata){
-     // 	$uid=$udata['u_id'];
-     // 	unset($udata['u_id']);
-     // 	$this->where('u_id','=',$uid)->update($udata);
-     // }
+    public function createTOKEN($length){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }

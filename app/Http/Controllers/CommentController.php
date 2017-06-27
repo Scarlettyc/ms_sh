@@ -15,7 +15,7 @@ class CommentController extends Controller
         if (Comment::create($request->all())) {
             return redirect()->back();
         } else {
-            return redirect()->back()->withInput()->withErrors('评论发表失败！');
+            return redirect()->back()->withInput()->withErrors('error');
         }
     }
 }
