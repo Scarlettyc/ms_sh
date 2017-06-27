@@ -48,10 +48,12 @@ class AccessController extends Controller
 				$usermodel->createNew($data);
 			}
 			$userData=$data;
-			$token=$usermodel->createTOKEN(16)
-			while ($usermodel->isExist('access_token',$token)<0) {
-			$data['access_token']=$token;
+			$token='';
+			do{
+				$token=$usermodel->createTOKEN(16);
 			}
+			while ($usermodel->isExist('access_token',$token)>0);
+			$data['access_token']=$token
 
 			$lastweek=date("Ymd",strtotime("-1 week"));
 			$logindata['u_id']=$userData['u_id'];
