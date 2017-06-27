@@ -32,7 +32,7 @@ class AccessController extends Controller
         $result['mst_data']['equip_mst']=$resourceMst;
 		if(isset($data["uuid"]))
 		{  
-			$userData=$data;
+
 			if($usermodel->isExist('uuid',$data['uuid'])>0)
 			{
 				$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
@@ -46,6 +46,11 @@ class AccessController extends Controller
 			}
 			else {
 				$usermodel->createNew($data);
+			}
+			$userData=$data;
+			$token=$usermodel->createTOKEN(16)
+			while ($usermodel->isExist('access_token',$token)<0) {
+			$data['access_token']=$token;
 			}
 
 			$lastweek=date("Ymd",strtotime("-1 week"));

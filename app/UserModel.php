@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
 {
-     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','pass_tutorial','u_name','os','uuid','u_vip_lv','u_payment','u_gem','u_coin','createdate','updatedate'];
+     protected $fillable = ['u_id', 'fb_id', 'ch_id', 'country', 'machine_type','email','password','pass_tutorial','u_name','u_vip_lv','u_payment','u_gem','u_coin','u_login_count','os','uuid','access_token','createdate','updatedate'];
 
      protected $connection='mysql';
      protected $table = "user"; 
@@ -25,4 +25,13 @@ class UserModel extends Model
         $this->insert($udata);
         
      }
+    public function createTOKEN($length){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+        $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
 }
