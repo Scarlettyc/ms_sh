@@ -65,5 +65,6 @@ class WorkshopController extends Controller
                 'error' => "please refresh",
                     ];
 		}
+		return $response;
 	}
 }
