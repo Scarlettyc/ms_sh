@@ -20,7 +20,7 @@ Route::get('/home', 'HomeController@index');
 Route::controller('access','AccessController');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
-Route::get('/database', 'AccessController@test');
+Route::post('/database', 'AccessController@test');
 
 Route::post('/workshop', 'WorkshopController@workshop');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
