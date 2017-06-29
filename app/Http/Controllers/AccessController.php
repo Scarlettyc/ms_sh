@@ -38,104 +38,113 @@ class AccessController extends Controller
 		$resourceMst=$equipMstModel::get();
         $result['mst_data']['equip_mst']=$resourceMst;
         $userData=$data;
-		// if(isset($data['uuid']))
-		// {  
-		// 	if($data['os']='ios'&&strlen($data['uuid'])==40)
-		// 	{
-		// 		if($usermodel->isExist('uuid',$data['uuid'])>0)
-		// 		{	
-		// 			$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-		// 			$u_id=$userData['u_id'];
+		if(isset($data['uuid']))
+		{  
+			if($data['os']='ios'&&strlen($data['uuid'])==40)
+			{
+				if($usermodel->isExist('uuid',$data['uuid'])>0)
+				{	
+					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+					$u_id=$userData['u_id'];
 
-		// 		if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
-		// 		{	
-		// 			$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
-		// 			$result['user_data']['character_info']=$userCharacter;
-		// 		}
-		// 		}
-		// 		else {
-		// 				$usermodel->createNew($data);
-		// 		}
-		// 	}
-		// 	else if(strlen($data['uuid'])==37){
-		// 		if($usermodel->isExist('uuid',$data['uuid'])>0)
-		// 		{	
-		// 			$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-		// 			$u_id=$userData['u_id'];
+				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+				{	
+					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+					$result['user_data']['character_info']=$userCharacter;
+				}
+				}
+				else {
+						$usermodel->createNew($data);
+				}
+			}
+			else if(strlen($data['uuid'])==37){
+				if($usermodel->isExist('uuid',$data['uuid'])>0)
+				{	
+					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+					$u_id=$userData['u_id'];
 
-		// 		if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
-		// 		{	
-		// 			$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
-		// 			$result['user_data']['character_info']=$userCharacter;
-		// 		}
-		// 		}
-		// 		else {
-		// 				$usermodel->createNew($data);
-		// 		}
+				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+				{	
+					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+					$result['user_data']['character_info']=$userCharacter;
+				}
+				}
+				else {
+						$usermodel->createNew($data);
+				}
 
-		// 	}
-		// 	$token='';
-		// 		$token=$usermodel->createTOKEN(16);
+			}
+			else{
 
-		// 	$lastweek=date("Ymd",strtotime("-1 week"));
-		// 	$logindata['u_id']=$userData['u_id'];
-		// 	$logindata['uuid']=$userData['uuid'];
-		// 	$logindata['os']=$userData['os'];
-		// 	$logindata['login']=time(); 
-		// 	$logindata['access_token']=$token; 
-		// 	$logindata['logoff']=0; 
-		// 	$logindata['status']=0;//online 0, in backend 1, logof 2 
-		// 	$logindata['createdate']=time(); 
-		// 	$loginToday=Redis::HGET('login_data',$dmy);
-		// 	$haveLogin=false;
-		// 	$logoff=false;
-		// 		if($loginToday){
-		// 			$loginTodayArr=json_decode($loginToday);
-  // 					foreach ($loginTodayArr as $key => $value) {
-  // 						if($value->u_id==$u_id&&$value->logoff==0){
-  // 							$haveLogin=true;
-  // 						}
-  // 						else if ($value->u_id==$u_id&&$value->logoff!=0){
-  // 							$logoff=true;
-  // 						}
+			throw new Exception("oppos, give me a correct uuid");
+			$response = [
+			'status' => 'wrong',
+			'error' => "please send uuid",
+			];
 
-  // 					}
-  // 				}
-		// 	else {
-		// 		$loginlist[]=$logindata;
-		// 	    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-		// 	}
-		// 	if($logoff){
-		// 		$loghistory=Redis::HGET('login_data',$dmy);
-  // 				$loginlist=json_decode($loghistory,TRUE);
-		// 		array_push($loginlist,$logindata);	
-		// 	    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-		// 	}
-		// 	if(!$haveLogin){
-		// 		$loginCount=$userData['u_login_count']+1;
-		// 		$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
-		// 		$loghistory=Redis::HGET('login_data',$dmy);
-		// 		$loginlist=json_decode($loghistory,TRUE);
-		// 		array_push($loginlist,$logindata);	
-		// 		Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-		// 	}
+			}
+			$token='';
+				$token=$usermodel->createTOKEN(16);
 
-		//     $userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
-		// 	$result['user_data']['user_info']=$userfinal;
-		// 	date_default_timezone_set("UTC");
+			$lastweek=date("Ymd",strtotime("-1 week"));
+			$logindata['u_id']=$userData['u_id'];
+			$logindata['uuid']=$userData['uuid'];
+			$logindata['os']=$userData['os'];
+			$logindata['login']=time(); 
+			$logindata['access_token']=$token; 
+			$logindata['logoff']=0; 
+			$logindata['status']=0;//online 0, in backend 1, logof 2 
+			$logindata['createdate']=time(); 
+			$loginToday=Redis::HGET('login_data',$dmy);
+			$haveLogin=false;
+			$logoff=false;
+				if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						if($value->u_id==$u_id&&$value->logoff==0){
+  							$haveLogin=true;
+  						}
+  						else if ($value->u_id==$u_id&&$value->logoff!=0){
+  							$logoff=true;
+  						}
 
-		// 	$response=json_encode($result,TRUE);
-		// 	//$response=base64_encode($response);
-		// }
-		// else {
+  					}
+  				}
+			else {
+				$loginlist[]=$logindata;
+			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
+			if($logoff){
+				$loghistory=Redis::HGET('login_data',$dmy);
+  				$loginlist=json_decode($loghistory,TRUE);
+				array_push($loginlist,$logindata);	
+			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
+			if(!$haveLogin){
+				$loginCount=$userData['u_login_count']+1;
+				$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+				$loghistory=Redis::HGET('login_data',$dmy);
+				$loginlist=json_decode($loghistory,TRUE);
+				array_push($loginlist,$logindata);	
+				Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
 
-		// 	throw new Exception("oppos, you nee Need UUId");
-		// 	$response = [
-		// 	'status' => 'wrong',
-		// 	'error' => "please send uuid",
-		// 	];
-		// }
-		return  "test";
+		    $userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$result['user_data']['user_info']=$userfinal;
+			date_default_timezone_set("UTC");
+
+			$response=json_encode($result,TRUE);
+			//$response=base64_encode($response);
+		}
+		else {
+
+			throw new Exception("oppos, you nee Need UUId");
+			$response = [
+			'status' => 'wrong',
+			'error' => "please send uuid",
+			];
+		}
+		return  $response;
 	}
 
 	public function update(Request $request)
