@@ -5,7 +5,7 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
-use App\Charmodel;
+//use App\Charmodel;
 use App\NationModel;
 use App\NationBuildingsModel;
 use App\NationResourceModel;
@@ -24,9 +24,9 @@ class AccessController extends Controller
      * @return \Illuminate\Http\Response
      */
     public  function login(Request $request)
-    // public function login()
+   // public function login()
     {
-
+/***
         $req=$request->getContent();
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
@@ -93,7 +93,7 @@ class AccessController extends Controller
          return  $response;
 
         // return view('home');
-    }
+   */ }
     public function update(Request $request)
     {   
         $req=$request->getContent();
