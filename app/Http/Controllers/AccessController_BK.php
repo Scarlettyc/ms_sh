@@ -5,98 +5,153 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
-//use App\Charmodel;
-use App\NationModel;
-use App\NationBuildingsModel;
-use App\NationResourceModel;
-use App\BuildingsMstModel;
-use App\ResourceMstModel;
-use App\UserLoginHistoryModel;
+use App\CharacterModel;
+use App\EquipmentMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
-use Illuminate\Support\FacadesRedis;
+use Illuminate\Support\Facades\Redis;
+use Carbon\Carbon;
+use Log;
+use DateTime;
 class AccessController extends Controller
 {
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public  function login(Request $request)
-   // public function login()
-    {
-/***
-        $req=$request->getContent();
-        $json=base64_decode($req);
-        $data=json_decode($json,TRUE);
+	public function login(Request $request)
+	{
+		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
+		$data=json_decode($json,TRUE);
+		
+		//$data2=json_encode($request->header(),TRUE);
+		//dd($data2);
+		Log:info($request->header());
+		//Log:info('test access');
+		
+		$usermodel=new UserModel();
+		$characterModel=new CharacterModel();
+		$result=[];
+		$equipMstModel=new EquipmentMstModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+	//	Redis::connection('default');
+		$resourceMst=$equipMstModel::get();
+        $result['mst_data']['equip_mst']=$resourceMst;
+        $userData=$data;
+		if(isset($data['uuid']))
+		{  
+			if($data['os']='ios'&&strlen($data['uuid'])==40)
+			{
+				if($usermodel->isExist('uuid',$data['uuid'])>0)
+				{	
+					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+					$u_id=$userData['u_id'];
 
-        $usermodel=new UserModel();
-        $charmodel=new CharModel();
-        $nationModel=new NationModel();
-        $nationBuModel=new NationBuildingsModel();
-        $nationReModel=new NationResourceModel();
-        $userLoginHistory=new UserLoginHistoryModel();
-        $result=[];
+				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+				{	
+					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+					$result['user_data']['character_info']=$userCharacter;
+				}
+				//	dd($result);
+				}
+				else {
+						$usermodel->createNew($data);
+				//	dd($data);
+				}
+			}
+			else if(strlen($data['uuid'])==37){
+				if($usermodel->isExist('uuid',$data['uuid'])>0)
+				{	
+					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
+					$u_id=$userData['u_id'];
 
-        $buildingMst=BuildingsMstModel::get();
-        $resourceMst=ResourceMstModel::get();
-        $result['mst_data']['build_mst']=$buildingMst;
-        $result['mst_data']['resource_mst']=$resourceMst;
+				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+				{	
+					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+					$result['user_data']['character_info']=$userCharacter;
+				}
+				}
+				else {
+						$usermodel->createNew($data);
+				}
 
+			}
+			else{
 
-        // try { 
-                if(isset($data["uuid"]))
-                {  
-                    $userData=$data;
-                    if($usermodel->isExist('uuid',$data['uuid'])>0)
-                    {
-                       
-                        $userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-                        $result['user_data']['user_info']=$userData;
-                        if($usermodel['pass_tutorial'])
-                        {
-                            $u_id=$userData['u_id'];
-                            $userChar=$charmodel->where('u_id','=',$u_id)->first();
-                            $userNation=$nationModel->where('u_id','=',$u_id)->first();
-                            $n_id=$userNation['n_id'];
-                            $nationBuildings=$nationBuModel->where('n_id','=',$n_id)->get();
-                            $nationResource=$nationReModel->where('n_id','=',$n_id)->get();
-                            $userLoginCount=UserLoginHistoryModel::where('u_id','=',$u_id)->get()->distinct('loginday')->count('loginday');
-                            $result['user_data']['login_count']=$userLoginCount+1;
-                            $result['user_data']['char_info']=$userChar;
-                            $result['user_data']['nation_data']=$userNation;
-                            $result['user_data']['nation_buildings']=$nationBuildings;
-                       
-                        }
-                    }
-                    else {
-                        $usermodel->createNew($data);
-                        $userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-                        $result['user_data']['user_info']=$userData;
+			throw new Exception("oppos, give me a correct uuid");
+			$response = [
+			'status' => 'wrong',
+			'error' => "please send uuid",
+			];
 
-                    }
-                    $userLoginHistory->createNew($userData);
+			}
+			$token='';
+				$token=$usermodel->createTOKEN(16);
 
-                $response=json_encode($result,TRUE);
-                $response=base64_encode($response);
-               }
-                else {
+			$lastweek=date("Ymd",strtotime("-1 week"));
+			$logindata['u_id']=$userData['u_id'];
+			$logindata['uuid']=$userData['uuid'];
+			$logindata['os']=$userData['os'];
+			$logindata['login']=time(); 
+			$logindata['access_token']=$token; 
+			$logindata['logoff']=0; 
+			$logindata['status']=0;//online 0, in backend 1, logof 2 
+			$logindata['createdate']=time(); 
+			$loginToday=Redis::HGET('login_data',$dmy);
+			$haveLogin=false;
+			$logoff=false;
+				if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						if($value->u_id==$u_id&&$value->logoff==0){
+  							$haveLogin=true;
+  						}
+  						else if ($value->u_id==$u_id&&$value->logoff!=0){
+  							$logoff=true;
+  						}
 
-                    throw new Exception("oppos, you nee Need UUId");
-                $response = [
-                'status' => 'wrong',
-                'error' => "please send uuid",
-                    ];
-        }
+  					}
+  				}
+			else {
+				$loginlist[]=$logindata;
+			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
+			if($logoff){
+				$loghistory=Redis::HGET('login_data',$dmy);
+  				$loginlist=json_decode($loghistory,TRUE);
+				array_push($loginlist,$logindata);	
+			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
+			if(!$haveLogin){
+				$loginCount=$userData['u_login_count']+1;
+				$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+				$loghistory=Redis::HGET('login_data',$dmy);
+				$loginlist=json_decode($loghistory,TRUE);
+				array_push($loginlist,$logindata);	
+				Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
+			}
 
-         return  $response;
+		    $userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$result['user_data']['user_info']=$userfinal;
+			date_default_timezone_set("UTC");
 
-        // return view('home');
-   */ }
-    public function update(Request $request)
-    {   
-        $req=$request->getContent();
+			$response=json_encode($result,TRUE);
+			//$response=base64_encode($response);
+		}
+		else {
+
+			throw new Exception("oppos, you nee Need UUId");
+			$response = [
+			'status' => 'wrong',
+			'error' => "please send uuid",
+			];
+		}
+		return  $response;
+	}
+
+	public function update(Request $request)
+	{
+		$req=$request->getContent();
         $json=base64_decode($req);
         $data=json_decode($json,TRUE);
         $usermodel=new UserModel();
@@ -104,15 +159,40 @@ class AccessController extends Controller
         $responseData=UserModel::where('u_id',$data['u_id'])->get();
 
         return json_encode($responseData);
+	}
 
-    }
+	public function test (Request $request){
 
-public function test (Request $request){
-  $redis = new Redis();
-$redis->connect('127.0.0.1', 6379);
-echo '<h3>Redis Server Connect Success</h3>';
-$redis->set('test', 'Hello Redis');
-echo $redis->get('test');
+	 Redis::connection('default');
+	 $now   = new DateTime;
+	 $dmy=$now->format( 'Ymd' );
+	 $u_id="ui100000001";
+	 			$loginToday=Redis::HGET('login_data','20170701');
+dd($loginToday);
+				if($loginToday){
+ 				$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						echo ($value->u_id);
+   						echo ($u_id);
+   						if($value->u_id!=$u_id){
+   							dd("not same");
+   						$loginCount=$userData['u_login_count']+1;
+						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
+ 					}
+  					}
+   				}
+
+/*		$req=$request->getContent();
+		$json=base64_decode($req);
+		print_r($json);
+		$data=json_decode($json,TRUE);
+		Log:info('test access');
+		log:info($json);*/
+
+ $characterModel=new CharacterModel();
+// dd($characterModel->isExist('ch_id','21'));
+	return "test";
+
+ 	}
 }
-    
-}
+

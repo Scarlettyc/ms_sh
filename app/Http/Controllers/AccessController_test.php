@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use Log;
 use DateTime;
-class AccessController extends Controller
+class AccessControllerr extends BaseController
 {
 	public function login(Request $request)
 	{
