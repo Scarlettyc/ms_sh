@@ -163,7 +163,7 @@ class AccessController extends Controller
 
 	public function test (Request $request){
 
-	 Redis::connection('default');
+/*	 Redis::connection('default');
 	 $now   = new DateTime;
 	 $dmy=$now->format( 'Ymd' );
 	 $u_id="ui100000001";
@@ -181,18 +181,15 @@ dd($loginToday);
  					}
   					}
    				}
-
-/*		$req=$request->getContent();
+		$req=$request->getContent();
 		$json=base64_decode($req);
 		print_r($json);
 		$data=json_decode($json,TRUE);
 		Log:info('test access');
 		log:info($json);*/
 
- $characterModel=new CharacterModel();
-// dd($characterModel->isExist('ch_id','21'));
-	return "test";
 
+ phpinfo();
  	}
 }
 
