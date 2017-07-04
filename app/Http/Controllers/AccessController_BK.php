@@ -220,8 +220,8 @@ dd($loginToday);
 			$logindata['os']=$loginTodayArr->os;
 			$logindata['lastlogin']=$loginTodayArr->lastlogin; 
 			$logindata['access_token']=$loginTodayArr->access_token; 
-			$logindata['logoff']=1; 
-			$logindata['status']=$loginTodayArr->status; ;//online 0, in backend 1, logoff 2 
+			$logindata['logoff']=time(); 
+			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($loginTodayArr,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
