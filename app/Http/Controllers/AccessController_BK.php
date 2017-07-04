@@ -45,11 +45,13 @@ class AccessController extends Controller
 					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
 					$u_id=$userData['u_id'];
 
-				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
-				{	
-					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
-					$result['user_data']['character_info']=$userChar;
-				}
+					if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+					{	
+						$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+						$result['user_data']['character_info']=$userChar;
+						$result['user_data']['equipment_info']=$this->getEquip($userChar);
+					}
+
 
 				//	dd($result);
 				}
@@ -64,11 +66,12 @@ class AccessController extends Controller
 					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
 					$u_id=$userData['u_id'];
 
-				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
-				{	
-					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
-					$result['user_data']['character_info']=$userCharacter;
-				}
+					if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+					{	
+						$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+						$result['user_data']['character_info']=$userChar;
+						$result['user_data']['equipment_info']=$this->getEquip($userChar);
+					}
 				}
 				else {
 						$usermodel->createNew($data);
@@ -191,7 +194,14 @@ dd($loginToday);
  phpinfo();
  	}
  	private function getEquip($userChar){
-
+ 		$w_id_l=$userChar['w_id_l'];
+ 		$w_id_r=$userChar['w_id_r'];
+ 		$m_id=$userChar['m_id'];
+ 		$equ_id_1=$userChar['equ_id_1'];
+ 		$equ_id_2=$userChar['equ_id_2'];
+ 		$equ_id_3=$userChar['equ_id_3'];
+        $equipdata=$equipMstModel->where('equ_id','IN',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
+        return $equipdata
  	} 
 }
 
