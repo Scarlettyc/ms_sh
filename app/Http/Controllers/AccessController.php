@@ -35,8 +35,6 @@ class AccessController extends Controller
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 	//	Redis::connection('default');
-		$resourceMst=$equipMstModel::get();
-        $result['mst_data']['equip_mst']=$resourceMst;
         $userData=$data;
 		if(isset($data['uuid']))
 		{  
@@ -50,8 +48,9 @@ class AccessController extends Controller
 				if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
 				{	
 					$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
-					$result['user_data']['character_info']=$userCharacter;
+					$result['user_data']['character_info']=$userChar;
 				}
+
 				//	dd($result);
 				}
 				else {
@@ -86,7 +85,7 @@ class AccessController extends Controller
 
 			}
 			$token='';
-				$token=$usermodel->createTOKEN(16);
+			$token=$usermodel->createTOKEN(16);
 
 			$lastweek=date("Ymd",strtotime("-1 week"));
 			$logindata['u_id']=$userData['u_id'];
@@ -191,5 +190,8 @@ dd($loginToday);
 
  phpinfo();
  	}
+ 	private function getEquip($userChar){
+
+ 	} 
 }
 
