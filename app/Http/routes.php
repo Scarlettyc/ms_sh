@@ -21,7 +21,7 @@ Route::controller('access','AccessController');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
-
+Route::post('/tutorial', 'TutorialController@passTutorial');
 Route::post('/workshop', 'WorkshopController@workshop');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   

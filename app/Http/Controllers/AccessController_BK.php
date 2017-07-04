@@ -25,7 +25,7 @@ class AccessController extends Controller
 		
 		//$data2=json_encode($request->header(),TRUE);
 		//dd($data2);
-		Log:info($request->header());
+
 		//Log:info('test access');
 		
 		$usermodel=new UserModel();
@@ -139,6 +139,7 @@ class AccessController extends Controller
 			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
+			 Log:info("user_info".$result);
 			//$response=base64_encode($response);
 		}
 		else {
@@ -192,7 +193,7 @@ dd($loginToday);
 		log:info($json);*/
 
 
- phpinfo();
+ 	phpinfo();
  	}
  	private function getEquip($userChar){
  		$equipMstModel=new EquipmentMstModel();
