@@ -208,7 +208,7 @@ dd($loginToday);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		
-		if(isset($data['uuid'])){
+		if(isset($data['u_id'])){
 			$u_id=$data['u_id'];
 			$now   = new DateTime;
 			$dmy=$now->format( 'Ymd' );
@@ -229,7 +229,7 @@ dd($loginToday);
 	}
 	else {
 			throw new Exception("oppos, need u_id");
-
 	}
+}
 }
 
