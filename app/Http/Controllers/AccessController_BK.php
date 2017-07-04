@@ -132,8 +132,9 @@ class AccessController extends Controller
 				array_push($loginlist,$logindata);	
 				Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
 			}
-
-		    $userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			
+			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$userfinal['access_token']=$token;
 			$result['user_data']['user_info']=$userfinal;
 			date_default_timezone_set("UTC");
 
