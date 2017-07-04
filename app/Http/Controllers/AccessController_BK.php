@@ -224,7 +224,7 @@ dd($loginToday);
 			$logindata['status']=$loginTodayArr->status; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($loginTodayArr,TRUE);
-			Redis::HSET('login_data',$dmy.$u_id,json_encode($loginlist,TRUE));
+			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
 			$response=$loginlist;
 			return  $response;
 	}
