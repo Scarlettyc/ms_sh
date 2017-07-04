@@ -194,14 +194,15 @@ dd($loginToday);
  phpinfo();
  	}
  	private function getEquip($userChar){
+ 		$equipMstModel=new EquipmentMstModel();
  		$w_id_l=$userChar['w_id_l'];
  		$w_id_r=$userChar['w_id_r'];
  		$m_id=$userChar['m_id'];
  		$equ_id_1=$userChar['equ_id_1'];
  		$equ_id_2=$userChar['equ_id_2'];
  		$equ_id_3=$userChar['equ_id_3'];
-        $equipdata=$equipMstModel->where('equ_id','IN',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
-        return $equipdata
+        $equipdata=$equipMstModel->whereIn('equ_id',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
+        return $equipdata;
  	} 
 }
 
