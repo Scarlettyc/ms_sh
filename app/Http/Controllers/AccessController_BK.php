@@ -98,8 +98,8 @@ class AccessController extends Controller
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$token=$usermodel->createTOKEN(16);
-					//dd($loginTodayArr);
-					$status=$loginTodayArr[0]->status;
+					dd($loginTodayArr);
+					$status=$loginTodayArr->status;
 					if($logoff!=0){
 						$logindata['u_id']=$userData['u_id'];
 						$logindata['uuid']=$userData['uuid'];
@@ -125,8 +125,8 @@ class AccessController extends Controller
 					$logindata['logoff']=0; 
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
-					$loginlist[]=$logindata;
-			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
+					
+			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($logindata,TRUE));
 				}
 			
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
@@ -207,24 +207,25 @@ dd($loginToday);
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		
+		//dd($data);
 		if(isset($data['u_id'])){
 			$u_id=$data['u_id'];
 			$now   = new DateTime;
 			$dmy=$now->format( 'Ymd' );
-			$loginToday=Redis::HGET('login_data',$dmy);
+			$loginToday=Redis::HGET('login_data',$dmy.$u_id);
+			$loginTodayArr=json_decode($loginToday);	
 			$result='';
-			$logindata['u_id']=$userData['u_id'];
-			$logindata['uuid']=$userData['uuid'];
-			$logindata['os']=$userData['os'];
-			$logindata['lastlogin']=time(); 
-			$logindata['access_token']=$token; 
+			$logindata['u_id']=$data['u_id'];
+			$logindata['uuid']=$loginTodayArr->uuid;
+			$logindata['os']=$loginTodayArr->os;
+			$logindata['lastlogin']=$loginTodayArr->lastlogin; 
+			$logindata['access_token']=$loginTodayArr->access_token; 
 			$logindata['logoff']=1; 
-			$logindata['status']=$loginTodayArr[0]->status; ;//online 0, in backend 1, logoff 2 
-			$logindata['createdate']=$loginTodayArr[0]->createdate; 
-			$loginlist=json_decode($loghistory,TRUE);
-			Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
-			$response=json_encode($loginlist,TRUE);
+			$logindata['status']=$loginTodayArr->status; ;//online 0, in backend 1, logoff 2 
+			$logindata['createdate']=$loginTodayArr->createdate; 
+			$loginlist=json_encode($loginTodayArr,TRUE);
+			Redis::HSET('login_data',$dmy.$u_id,json_encode($loginlist,TRUE));
+			$response=$loginlist;
 			return  $response;
 	}
 	else {
