@@ -17,7 +17,9 @@ class TutorialController extends Controller
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$update['passTutorial']=1;
+		$update['']
 		$uid=$data['u_id'];
+
 		$userModel->update($update)->where('u_id',$uid);
 	}
  }

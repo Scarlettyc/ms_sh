@@ -87,51 +87,46 @@ class AccessController extends Controller
 			];
 
 			}
-			$token='';
-			$token=$usermodel->createTOKEN(16);
+
 
 			$lastweek=date("Ymd",strtotime("-1 week"));
-			$logindata['u_id']=$userData['u_id'];
-			$logindata['uuid']=$userData['uuid'];
-			$logindata['os']=$userData['os'];
-			$logindata['login']=time(); 
-			$logindata['access_token']=$token; 
-			$logindata['logoff']=0; 
-			$logindata['status']=0;//online 0, in backend 1, logof 2 
-			$logindata['createdate']=time(); 
-			$loginToday=Redis::HGET('login_data',$dmy);
+
+			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$haveLogin=false;
 			$logoff=false;
+			$token='';
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
-  					foreach ($loginTodayArr as $key => $value) {
-  						if($value->u_id==$u_id&&$value->logoff==0){
-  							$haveLogin=true;
-  						}
-  						else if ($value->u_id==$u_id&&$value->logoff!=0){
-  							$logoff=true;
-  						}
-
+					$token=$usermodel->createTOKEN(16);
+					$status=$loginTodayArr['status'];
+					if($logoff!=0){
+						$logindata['u_id']=$userData['u_id'];
+						$logindata['uuid']=$userData['uuid'];
+						$logindata['os']=$userData['os'];
+						$logindata['lastlogin']=time(); 
+						$logindata['access_token']=$token; 
+						$logindata['logoff']=0; 
+						$logindata['status']=0;//online 0, in backend 1, logoff 2 
+						$logindata['createdate']=$loginTodayArr['createdate']; 
+						$loginlist=json_decode($loghistory,TRUE);
+						Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
+					}
+					else {
+						throw new Exception("login error");
+						}
   					}
-  				}
-			else {
-				$loginlist[]=$logindata;
-			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-			}
-			if($logoff){
-				$loghistory=Redis::HGET('login_data',$dmy);
-  				$loginlist=json_decode($loghistory,TRUE);
-				array_push($loginlist,$logindata);	
-			    Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-			}
-			if(!$haveLogin){
-				$loginCount=$userData['u_login_count']+1;
-				$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
-				$loghistory=Redis::HGET('login_data',$dmy);
-				$loginlist=json_decode($loghistory,TRUE);
-				array_push($loginlist,$logindata);	
-				Redis::HSET('login_data',$dmy,json_encode($loginlist,TRUE));
-			}
+				else {
+					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$userData['os'];
+					$logindata['lastlogin']=time(); 
+					$logindata['access_token']=$token; 
+					$logindata['logoff']=0; 
+					$logindata['status']=0;//online 0, in backend 1, logof 2 
+					$logindata['createdate']=time(); 
+					$loginlist[]=$logindata;
+			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
+				}
 			
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
 			$userfinal['access_token']=$token;
@@ -206,5 +201,27 @@ dd($loginToday);
         $equipdata=$equipMstModel->whereIn('equ_id',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
         return $equipdata;
  	} 
+ 	public function logout(Request $request){
+ 		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$loginToday=Redis::HGET('login_data',$dmy);
+		$result='';
+		if($loginToday){
+					$loginTodayArr=json_decode($loginToday);
+  					foreach ($loginTodayArr as $key => $value) {
+  						if($value->u_id==$u_id&&$value->logoff==0){
+
+  							
+
+  						}
+  					}
+
+
+ 	}
 }
 
