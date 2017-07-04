@@ -207,23 +207,29 @@ dd($loginToday);
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		$u_id=$data['u_id'];
-		$now   = new DateTime;
-		$dmy=$now->format( 'Ymd' );
-		$loginToday=Redis::HGET('login_data',$dmy);
-		$result='';
-		$logindata['u_id']=$userData['u_id'];
-		$logindata['uuid']=$userData['uuid'];
-		$logindata['os']=$userData['os'];
-		$logindata['lastlogin']=time(); 
-		$logindata['access_token']=$token; 
-		$logindata['logoff']=1; 
-		$logindata['status']=$loginTodayArr[0]->status; ;//online 0, in backend 1, logoff 2 
-		$logindata['createdate']=$loginTodayArr[0]->createdate; 
-		$loginlist=json_decode($loghistory,TRUE);
-		Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
-		$response=json_encode($loginlist,TRUE);
-		return  $response;
-}
+		
+		if(isset($data['uuid'])){
+			$u_id=$data['u_id'];
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
+			$loginToday=Redis::HGET('login_data',$dmy);
+			$result='';
+			$logindata['u_id']=$userData['u_id'];
+			$logindata['uuid']=$userData['uuid'];
+			$logindata['os']=$userData['os'];
+			$logindata['lastlogin']=time(); 
+			$logindata['access_token']=$token; 
+			$logindata['logoff']=1; 
+			$logindata['status']=$loginTodayArr[0]->status; ;//online 0, in backend 1, logoff 2 
+			$logindata['createdate']=$loginTodayArr[0]->createdate; 
+			$loginlist=json_decode($loghistory,TRUE);
+			Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($loginlist,TRUE));
+			$response=json_encode($loginlist,TRUE);
+			return  $response;
+	}
+	else {
+			throw new Exception("oppos, need u_id");
+
+	}
 }
 
