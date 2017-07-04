@@ -98,7 +98,8 @@ class AccessController extends Controller
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$token=$usermodel->createTOKEN(16);
-					$status=$loginTodayArr['status'];
+					//dd($loginTodayArr);
+					$status=$loginTodayArr[0]->status;
 					if($logoff!=0){
 						$logindata['u_id']=$userData['u_id'];
 						$logindata['uuid']=$userData['uuid'];
@@ -134,7 +135,7 @@ class AccessController extends Controller
 			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
-			 Log:info("user_info".$result);
+			 //Log:info("user_info".$result);
 			//$response=base64_encode($response);
 		}
 		else {
@@ -223,5 +224,6 @@ dd($loginToday);
 
 
  	}
+}
 }
 
