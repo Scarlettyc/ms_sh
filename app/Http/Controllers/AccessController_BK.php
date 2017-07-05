@@ -98,19 +98,20 @@ class AccessController extends Controller
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$token=$usermodel->createTOKEN(16);
-					dd($loginTodayArr);
+					//dd($loginTodayArr);
 					$status=$loginTodayArr->status;
+					$logoff=$loginTodayArr->logoff;
 					if($logoff!=0){
 						$logindata['u_id']=$userData['u_id'];
 						$logindata['uuid']=$userData['uuid'];
 						$logindata['os']=$userData['os'];
 						$logindata['lastlogin']=time(); 
-						$logindata['access_token']=$loginTodayArr->access_token; 
-						$logindata['logoff']=$loginTodayArr->logoff; 
-						$logindata['status']=$loginTodayArr->status; ;//online 0, in backend 1, logoff 2 
+						$logindata['access_token']=$token; 
+						$logindata['logoff']=0; 
+						$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 						$logindata['createdate']=$loginTodayArr->createdate; 
-						$loginlist=json_encode($loghistory,TRUE);
-						Redis::HSET('login_data',$dmy.$userData['u_id'],loginlist);
+						$loginlist=json_encode($logindata,TRUE);
+						Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 					}
 					else {
 						throw new Exception("login error");
@@ -226,7 +227,7 @@ dd($loginToday);
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($logindata,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
-			$response=$loginlist;
+			$response="success logout";
 			return  $response;
 	}
 	else {
