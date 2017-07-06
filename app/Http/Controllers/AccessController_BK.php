@@ -145,7 +145,6 @@ class AccessController extends Controller
 						$baggage_key=$userData['u_id'].'_'.$loginrewards['item_type'].'_'.$loginrewards['item_org_id'];
 
 						$baggage=Redis::HGET('baggage_data',$baggage_key);
-						if()
 						$itemQ=0;
 						if($baggage){
 							$itemQ=$baggage+$loginrewards['item_quantity'];
@@ -156,7 +155,7 @@ class AccessController extends Controller
 						$reward_history['item_type']=$loginrewards['item_org_id'];
 						$reward_history['item_quantity']=$loginrewards['item_quantity'];
 						$reward_history['createtime']=time(); 
-						
+
 						Redis::LPUSH('reward_history',$userData['u_id'],json_encode($reward_history,TRUE));
 
 					}
