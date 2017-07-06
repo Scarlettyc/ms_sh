@@ -24,12 +24,6 @@ class AccessController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		
-		//$data2=json_encode($request->header(),TRUE);
-		//dd($data2);
-
-		//Log:info('test access');
-		
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$result=[];
