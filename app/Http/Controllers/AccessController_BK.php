@@ -138,7 +138,7 @@ class AccessController extends Controller
 					->first();
 
 					if($loginrewards['item_type']==1&&$loginrewards['item_org_id']==1){
-						$userCoin=$userData['u_coin']+$loginrewards['r_quantity'];
+						$userCoin=$userData['u_coin']+$loginrewards['item_quantity'];
 						$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
 					}
 					else{
@@ -151,6 +151,11 @@ class AccessController extends Controller
 
 						}
 						Redis::HSET('baggage_data',$baggage_key,$itemQ);
+						$reward_history['item_type']=$loginrewards['item_type'];
+						$reward_history['item_type']=$loginrewards['item_org_id'];
+						$reward_history['item_quantity']=$loginrewards['item_quantity'];
+						$reward_history['createtime']=time(); 
+						Redis::HSET('reward_history',$userData['u_id'],$reward_history);
 
 					}
 
