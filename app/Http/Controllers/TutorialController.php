@@ -31,7 +31,7 @@ class TutorialController extends Controller
 			$char['u_id']=$uid;
 			$characterModel->insert($char);
 			$finalChar=$characterModel->where('u_id',$uid)->first();
-			$response=json_encode($finalChar,TRUE);
+			$response['user_data']['character_info']=json_encode($finalChar,TRUE);
 			return $response;
 		}
 		else {
@@ -48,7 +48,7 @@ class TutorialController extends Controller
 		$update['passTutorial']=1;
 		$usermodel->update($update)->where('u_id',$uid);
 		$finalUser=$usermodel->where('u_id',$uid)->first();
-		$response=json_encode($finalUser,TRUE);
+		$response['user_data']['user_info']=json_encode($finalUser,TRUE);
 		return $response;
 	}
  }
