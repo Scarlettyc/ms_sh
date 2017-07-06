@@ -18,9 +18,10 @@ class TutorialController extends Controller
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$uid=$data['u_id'];
+		$characterModel=new CharacterModel();
 		if($characterModel->isExist('u_id',$uid)<0)
 		{
-			$characterModel=new CharacterModel();
+
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$char['title']=$data['title'];
 			$char['createdate']=$datetime;
