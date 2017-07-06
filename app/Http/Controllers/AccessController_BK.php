@@ -151,18 +151,22 @@ class AccessController extends Controller
 
 						}
 						Redis::HSET('baggage_data',$baggage_key,$itemQ);
-						$reward_history['u_id']=$userData['u_id'];
-						$reward_history['item_type']=$loginrewards['item_type'];
-						$reward_history['item_type']=$loginrewards['item_org_id'];
-						$reward_history['item_quantity']=$loginrewards['item_quantity'];
-						$reward_history['createtime']=time(); 
 
-						Redis::LPUSH('reward_history',json_encode($reward_history,TRUE));
 
 					}
+					$reward_history['u_id']=$userData['u_id'];
+					$reward_history['item_type']=$loginrewards['item_type'];
+					$reward_history['item_type']=$loginrewards['item_org_id'];
+					$reward_history['item_quantity']=$loginrewards['item_quantity'];
+					$reward_history['login_count']=$loginCount;
+					$reward_history['createtime']=time(); 
+
+
+					Redis::LPUSH('reward_history',json_encode($reward_history,TRUE));
 
 					$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
 			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($logindata,TRUE));
+			    	$result['user_data']['login_reward']=$reward_history;
 				}
 			
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
