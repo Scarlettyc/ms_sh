@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
-use App\BaggageModel;
 use App\Login_rewardsModel;
 use Exception;
 use App\Exceptions\Handler;
@@ -34,7 +33,6 @@ class AccessController extends Controller
 		$characterModel=new CharacterModel();
 		$result=[];
 		$equipMstModel=new EquipmentMstModel();
-		$baggageModel=new BaggageModel();
 		$logindRewardsModel=new Login_rewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
