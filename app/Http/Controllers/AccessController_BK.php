@@ -151,12 +151,13 @@ class AccessController extends Controller
 
 						}
 						Redis::HSET('baggage_data',$baggage_key,$itemQ);
+						$reward_history['u_id']=$userData['u_id'];
 						$reward_history['item_type']=$loginrewards['item_type'];
 						$reward_history['item_type']=$loginrewards['item_org_id'];
 						$reward_history['item_quantity']=$loginrewards['item_quantity'];
 						$reward_history['createtime']=time(); 
 
-						Redis::LPUSH('reward_history',$userData['u_id'],json_encode($reward_history,TRUE));
+						Redis::LPUSH('reward_history',json_encode($reward_history,TRUE));
 
 					}
 
