@@ -9,7 +9,8 @@ use App\Http\Requests;
 use App\Article;
 use App\UserModel;
 use App\CharacterModel;
-
+use Exception;
+use DateTime;
 class TutorialController extends Controller
 {
 	public function createChar(Request $request){
@@ -19,13 +20,15 @@ class TutorialController extends Controller
 		$data=json_decode($json,TRUE);
 		$uid=$data['u_id'];
 		$characterModel=new CharacterModel();
-		if($characterModel->isExist('u_id',$uid)<0)
+		//dd($characterModel->isExist('u_id',$uid));
+		if($characterModel->isExist('u_id',$uid)==0)
 		{
+ 			$now   = new DateTime;
 
 			$datetime=$now->format( 'Y-m-d h:m:s' );
-			$char['title']=$data['title'];
+			$char['ch_title']=$data['title'];
 			$char['createdate']=$datetime;
-			$char['u_id']=$datetime;
+			$char['u_id']=$uid;
 			$characterModel->insert($char);
 		}
 		else {
