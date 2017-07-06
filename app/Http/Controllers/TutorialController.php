@@ -30,12 +30,15 @@ class TutorialController extends Controller
 			$char['createdate']=$datetime;
 			$char['u_id']=$uid;
 			$characterModel->insert($char);
+			$finalChar=$characterModel->where('u_id',$uid)->first();
+			$response=json_encode($finalChar,TRUE);
+			return $response;
 		}
 		else {
 			throw new Exception("char already exist");
 		}
 	}
-	public function updateEq(Request $request){
+	public function passTu(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
@@ -44,5 +47,8 @@ class TutorialController extends Controller
 		$characterModel=new CharacterModel();
 		$update['passTutorial']=1;
 		$usermodel->update($update)->where('u_id',$uid);
+		$finalUser=$usermodel->where('u_id',$uid)->first();
+		$response=json_encode($finalUser,TRUE);
+		return $response;
 	}
  }

@@ -22,7 +22,7 @@ Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
 Route::post('/upchar', 'TutorialController@createChar');
-Route::post('/upequip', 'TutorialController@updateEq');
+Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
 Route::post('/workshop', 'WorkshopController@workshop');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
