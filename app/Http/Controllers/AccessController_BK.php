@@ -7,6 +7,8 @@ use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
+use App\BaggageModel;
+use App\Login_rewardsModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -32,6 +34,8 @@ class AccessController extends Controller
 		$characterModel=new CharacterModel();
 		$result=[];
 		$equipMstModel=new EquipmentMstModel();
+		$baggageModel=new BaggageModel();
+		$logindRewardsModel=new Login_rewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 	//	Redis::connection('default');
@@ -128,6 +132,29 @@ class AccessController extends Controller
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
 					$loginCount=$userData['u_login_count']+1;
+
+					$datetime=$now->format( 'Y-m-d h:m:s' );
+					$loginrewards=$logindRewardsModel->where('days',$loginCount)
+					->where('start_date','<',$datetime)
+					->where('end_date','>',$datetime)
+					->first();
+					if($loginrewards['r_type']==0&&$loginrewards['r_id']==1){
+						$userCoin=$userData['u_coin']+$loginrewards['r_quantity'];
+						$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
+					}
+					else{
+						$baggage_key=$userData['u_id'].'_'.$loginrewards['item_type'].'_'.$loginrewards['item_org_id'];
+
+						$baggage=Redis::HGET('baggage_data',$baggage_key);
+						$itemQ=0;
+						if($baggage){
+							$itemQ=$baggage+$loginrewards['item_quantity'];
+
+						}
+						Redis::HSET('baggage_data',$baggage_key,$itemQ);
+
+					}
+
 					$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
 			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($logindata,TRUE));
 				}

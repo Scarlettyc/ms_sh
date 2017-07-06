@@ -25,7 +25,6 @@ class UserModel extends Model
         $udata['u_id']=substr($lastUid['MAX(u_id)'],0,2).$uid;
         $udata['createdate']=Carbon::now();
         $this->insert($udata);
-        
      }
     public function createTOKEN($length){
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
