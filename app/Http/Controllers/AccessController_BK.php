@@ -8,6 +8,7 @@ use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
 use App\Login_rewardsModel;
+use App\UserBaggageModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -34,9 +35,10 @@ class AccessController extends Controller
 		$result=[];
 		$equipMstModel=new EquipmentMstModel();
 		$logindRewardsModel=new Login_rewardsModel();
+		$userBaggageModel=new UserBaggageModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-	//	Redis::connection('default');
+	    Redis::connection('default');
         $userData=$data;
 		if(isset($data['uuid']))
 		{  
@@ -141,18 +143,33 @@ class AccessController extends Controller
 						$userCoin=$userData['u_coin']+$loginrewards['item_quantity'];
 						$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
 					}
+					else if($loginrewards['item_type']==3){
+						for($i=0;$i<$loginrewards['item_quantity'];$i++){
+						$baggage['u_id']=$userData['u_id'];
+						$baggage['item_type']=$loginrewards['item_type'];
+						$baggage['item_org_id']=$loginrewards['item_org_id'];
+						$baggage['item_quantity']=1;
+						$baggage['status']=0;
+						$baggage['createdate']=$datetime;
+						$userBaggageModel->insert($baggage);
+						}
+					}
 					else{
-						$baggage_key=$userData['u_id'].'_'.$loginrewards['item_type'].'_'.$loginrewards['item_org_id'];
-
-						$baggage=Redis::HGET('baggage_data',$baggage_key);
-						$itemQ=$loginrewards['item_quantity'];
-						if($baggage){
-							$itemQ=$baggage+$loginrewards['item_quantity'];
+						$hasItem=$userBaggageModel->where('u_id',$userData['u_id'])->where('item_org_id',$loginrewards['item_org_id'])->where('item_type',$loginrewards['item_type'])
+						->first();
+						$baggage['u_id']=$userData['u_id'];
+						$baggage['item_type']=$loginrewards['item_type'];
+						$baggage['item_org_id']=$loginrewards['item_org_id'];
+						if($hasItem){
+							$baggage['item_quantity']=$hasItem['item_quantity']+$loginrewards['item_quantity'];
+						}
+						else{
+							$baggage['item_quantity']=$loginrewards['item_quantity'];
 
 						}
-						Redis::HSET('baggage_data',$baggage_key,$itemQ);
-
-
+						$baggage['status']=0;
+						$baggage['createdate']=$datetime;
+						$userBaggageModel->insert($baggage);
 					}
 					$reward_history['u_id']=$userData['u_id'];
 					$reward_history['item_type']=$loginrewards['item_type'];

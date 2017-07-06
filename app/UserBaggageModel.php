@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BaggageModel extends Model
+class UserBaggageModel extends Model
 {
      protected $fillable = ['b_id','u_id', 'item_org_id', 'item_type', 'item_quantity', 'status','createdate'];
 
