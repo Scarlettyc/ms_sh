@@ -136,7 +136,8 @@ class AccessController extends Controller
 					->where('start_date','<',$datetime)
 					->where('end_date','>',$datetime)
 					->first();
-					if($loginrewards['r_type']==0&&$loginrewards['r_id']==1){
+
+					if($loginrewards['item_type']==1&&$loginrewards['item_org_id']==1){
 						$userCoin=$userData['u_coin']+$loginrewards['r_quantity'];
 						$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
 					}
