@@ -145,7 +145,7 @@ class AccessController extends Controller
 						$baggage_key=$userData['u_id'].'_'.$loginrewards['item_type'].'_'.$loginrewards['item_org_id'];
 
 						$baggage=Redis::HGET('baggage_data',$baggage_key);
-						$itemQ=0;
+						$itemQ=$loginrewards['item_quantity'];
 						if($baggage){
 							$itemQ=$baggage+$loginrewards['item_quantity'];
 
