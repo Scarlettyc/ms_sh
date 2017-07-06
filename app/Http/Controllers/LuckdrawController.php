@@ -12,7 +12,7 @@ use App\UserModel;
 use Exception;
 
 use DateTime;
-class LuckdrawController extends Controller
+class Luck_drawController extends Controller
 {
  	public function draw(Request $request){
  		$req=$request->getContent();
