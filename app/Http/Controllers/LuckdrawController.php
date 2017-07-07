@@ -33,12 +33,12 @@ class LuckdrawController extends Controller
 		   $characterModel=new CharacterModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	   
 		   $rate=rand(1, 10000);
-		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
-		   if($luckdraw){
+		   $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+		   if($drawresult){
 		   $draw['u_id']=$data['u_id'];
-		   $draw['item_org_id']=$luckdraw['item_org_id'];
-		   $draw['item_quantity']=$luckdraw['item_quantity'];
-		   $draw['item_type']=$luckdraw['item_type'];
+		   $draw['item_org_id']=$drawresult['item_org_id'];
+		   $draw['item_quantity']=$drawresult['item_quantity'];
+		   $draw['item_type']=$drawresult['item_type'];
 		   $draw['createtime']=time();
 		   Redis::HSET('luckdraw',$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
@@ -69,15 +69,15 @@ class LuckdrawController extends Controller
 		if($data['draw_type']==1)
 		{
  		 $rate=rand(1, 10000);
-		 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_price','<',$userData['u_coin'])->first();
+		 $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_price','<',$userData['u_coin'])->first();
 		 	
-		 	if($luckdraw){
+		 	if($drawresult){
 		 		$draw['u_id']=$data['u_id'];
-		   		$draw['item_org_id']=$luckdraw['item_org_id'];
-		   		$draw['item_quantity']=$luckdraw['item_quantity'];
-		   		$draw['item_type']=$luckdraw['item_type'];
+		   		$draw['item_org_id']=$drawresult['item_org_id'];
+		   		$draw['item_quantity']=$drawresult['item_quantity'];
+		   		$draw['item_type']=$drawresult['item_type'];
 		  		$draw['createtime']=time();
-		   		Redis::SGET('luckdraw',$date.$data['u_id'].'ac',$json_encode($draw,TRUE));
+		   		Redis::HSET('luckdraw',$date.$data['u_id'].'ac',json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
 		 	}
 		 	else {
@@ -87,14 +87,14 @@ class LuckdrawController extends Controller
 		}
 		else if ($data['draw_type']==2){
 					 $rate=rand(5000, 10000);
-					 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
-					 if($luckdraw){
+					 $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
+					 if($drawresult){
 					    $draw['u_id']=$data['u_id'];
-		   				$draw['item_org_id']=$luckdraw['item_org_id'];
-		   				$draw['item_quantity']=$luckdraw['item_quantity'];
-		   				$draw['item_type']=$luckdraw['item_type'];
+		   				$draw['item_org_id']=$drawresult['item_org_id'];
+		   				$draw['item_quantity']=$drawresult['item_quantity'];
+		   				$draw['item_type']=$drawresult['item_type'];
 		  				$draw['createtime']=time();
-		   				Redis::SGET('luckdraw',$date.$data['u_id'].'ag'.time(),$json_encode($draw,TRUE));
+		   				Redis::SGET('luckdraw',$date.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
 
 					 }
