@@ -19,7 +19,7 @@ class LuckdrawController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		Redis::connection('default');
+		// Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$gotToday=Redis::HGET('luckdraw',$dmy.$data['u_id']);
