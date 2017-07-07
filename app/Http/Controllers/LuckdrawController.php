@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\Luck_draw_rewardsModel;
 use App\CharacterModel;
 use App\UserModel;
+use App\UserBaggageModel;
 use Exception;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
@@ -31,6 +32,7 @@ class LuckdrawController extends Controller
 		else {
 		   $luckdraw=new Luck_draw_rewardsModel();
 		   $characterModel=new CharacterModel();
+		   $baggageModel=new UserBaggageModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	   
 		   $rate=rand(1, 10000);
 		   $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('star_lv_to','>=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
@@ -42,6 +44,7 @@ class LuckdrawController extends Controller
 		   $draw['createtime']=time();
 		   Redis::HSET('luckdraw',$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
+		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 			}
 			else{
 				throw new Exception("sorry, no avaliable prize");
@@ -78,6 +81,7 @@ class LuckdrawController extends Controller
 		  		$draw['createtime']=time();
 		   		Redis::HSET('luckdraw',$date.$data['u_id'].'ac',json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
+
 		 	}
 		 	else {
 		 		throw new Exception("sorry, you dont' have enought coin");
@@ -102,6 +106,7 @@ class LuckdrawController extends Controller
 
 		 				}
 			}
+					$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 					$response=json_encode($result,TRUE);
  	    			return $response;
 			
