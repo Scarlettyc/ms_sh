@@ -33,7 +33,7 @@ class LuckdrawController extends Controller
 		   $characterModel=new CharacterModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	   
 		   $rate=rand(1, 10000);
-		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->first();
+		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		   if($luckdraw){
 		   $draw['u_id']=$data['u_id'];
 		   $draw['item_org_id']=$luckdraw['item_org_id'];
