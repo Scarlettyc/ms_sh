@@ -16,9 +16,9 @@ class UserBaggageModel extends Model
      public function updatebaggage($u_id,$item_type,$item_org_id,$quantity){
      		 $now   = new DateTime;
 			 $date=$now->format( 'Y-m-d h:m:s' );
-     	     $item=$this->where('u_id','=',$uuid)->where('item_type',$item_type)->where('item_org_id',$item_org_id)->first();
+     	     $item=$this->where('u_id','=',$u_id)->where('item_type',$item_type)->where('item_org_id',$item_org_id)->first();
      	     if($item){
-                $this->where('u_id','=',$uuid)->where('item_type',$item_type)->where('item_org_id',$item_org_id)->update(["item_quantity"=>$item['item_quantity']+$quantity]);
+                $this->where('u_id','=',$u_id)->where('item_type',$item_type)->where('item_org_id',$item_org_id)->update(["item_quantity"=>$item['item_quantity']+$quantity]);
 
      	     }
      	     else{
