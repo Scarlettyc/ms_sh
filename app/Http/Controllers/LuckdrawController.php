@@ -54,7 +54,7 @@ class LuckdrawController extends Controller
 		$userData=$usermodel->where('u_id',$data['u_id'])->first;
 		$characterModel=new CharacterModel();
 		$chardata=$characterModel->where('u_id',$data['u_id'])->first();
-		$luckdraw=new Luck_draw_rewardsModel()
+		$luckdraw=new Luck_draw_rewardsModel();
 		if($data['draw_type']==1)
 		{
  		 $rate=rand(1, 10000);

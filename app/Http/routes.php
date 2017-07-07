@@ -25,8 +25,8 @@ Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
 Route::post('/workshop', 'WorkshopController@workshop');
 Route::controller('luckdraw','LuckdrawController');
-Route::post('/freedraw', 'Luck_drawController@draw');
-Route::post('/buydraw', 'Luck_drawController@buydraw');
+Route::post('/freedraw', 'LuckdrawController@draw');
+Route::post('/buydraw', 'LuckdrawController@buydraw');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
 // });
