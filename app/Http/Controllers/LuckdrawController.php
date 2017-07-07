@@ -28,7 +28,7 @@ class LuckdrawController extends Controller
 			$result['luckdraw']['timeuntil']=time()-$gotToday['createtime'];
 		}
 		else {
-		   $luckdraw=new Luck_draw_rewardsModel()
+		   $luckdraw=new Luck_draw_rewardsModel();
 		   $characterModel=new CharacterModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();
 		   $rate=rand(1, 10000);
@@ -55,7 +55,8 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();
 		$chardata=$characterModel->where('u_id',$data['u_id'])->first();
 		$luckdraw=new Luck_draw_rewardsModel()
-		if($data['draw_type']=1){
+		if($data['draw_type']==1)
+		{
  		 $rate=rand(1, 10000);
 		 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_price','<',$userData['u_coin'])->first();
 		 	
