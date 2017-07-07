@@ -105,7 +105,7 @@ class LuckdrawController extends Controller
 		   				$draw['item_type']=$drawresult['item_type'];
 		   				$draw['draw_gem']=$drawresult['draw_gem'];
 		  				$draw['createtime']=time();
-		   				Redis::SGET('luckdraw',$dateKey.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
+		   				Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
 		   				$userGem=$userData['u_gem']-$drawresult['draw_gem'];
 		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
