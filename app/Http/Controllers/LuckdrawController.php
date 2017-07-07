@@ -27,7 +27,7 @@ class LuckdrawController extends Controller
 		$gotToday=Redis::HGET('luckdraw',$dmy.$data['u_id']);
 		$result=[];
 		if($gotToday){
-			$todaydraw=json_decode($gotToday,TRUE)
+			$todaydraw=json_decode($gotToday,TRUE);
 			$result['luckdraw']['timeuntil']=time()-$todaydraw['createtime'];
 		}
 		else {
