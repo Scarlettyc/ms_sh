@@ -86,7 +86,7 @@ class LuckdrawController extends Controller
 		   		Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ac',json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
 		   		$userCoin=$userData['u_coin']-$drawresult['draw_coin'];
-		   	 	$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
+		   	 	$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 
 		 	}
 		 	else {
@@ -107,7 +107,7 @@ class LuckdrawController extends Controller
 		   				Redis::SGET('luckdraw',$date.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
 		   				$userGem=$userData['u_gem']-$drawresult['draw_gem'];
-		   	 			$usermodel->where('u_id',$u_id)->update(["u_gem"=>$userGem]);
+		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 
 					 }
 					 else {
