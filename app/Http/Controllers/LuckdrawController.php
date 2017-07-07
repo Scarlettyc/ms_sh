@@ -10,7 +10,7 @@ use App\Luck_draw_rewardsModel;
 use App\CharacterModel;
 use App\UserModel;
 use Exception;
-
+use Illuminate\Support\Facades\Redis;
 use DateTime;
 class LuckdrawController extends Controller
 {
@@ -76,7 +76,7 @@ class LuckdrawController extends Controller
 
 		 	}
 		}
-		else if ($data['draw_type']=1){
+		else if ($data['draw_type']==2){
 					 $rate=rand(5000, 10000);
 					 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
 					 if($luckdraw){
