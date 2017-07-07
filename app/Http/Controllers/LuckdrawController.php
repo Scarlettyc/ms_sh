@@ -82,6 +82,7 @@ class LuckdrawController extends Controller
 		   		$draw['item_org_id']=$drawresult['item_org_id'];
 		   		$draw['item_quantity']=$drawresult['item_quantity'];
 		   		$draw['item_type']=$drawresult['item_type'];
+		   		$draw['item_gem']==$drawresult['item_gem'];
 		  		$draw['createtime']=time();
 		   		Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ac',json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
@@ -102,7 +103,7 @@ class LuckdrawController extends Controller
 		   				$draw['item_org_id']=$drawresult['item_org_id'];
 		   				$draw['item_quantity']=$drawresult['item_quantity'];
 		   				$draw['item_type']=$drawresult['item_type'];
-		   				$draw['item_coin']=
+		   				$draw['item_gem']==$drawresult['item_gem'];
 		  				$draw['createtime']=time();
 		   				Redis::SGET('luckdraw',$date.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
