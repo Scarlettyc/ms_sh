@@ -70,6 +70,7 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$result=[];
 		$date=$now->format( 'Y-m-d h:m:s' );
+		$dateKey=$now->format( 'Y-m-d:h:m:s' );
 		$result=[];
 		if($data['draw_type']==1)
 		{
@@ -82,8 +83,10 @@ class LuckdrawController extends Controller
 		   		$draw['item_quantity']=$drawresult['item_quantity'];
 		   		$draw['item_type']=$drawresult['item_type'];
 		  		$draw['createtime']=time();
-		   		Redis::HSET('luckdraw',$date.$data['u_id'].'ac',json_encode($draw,TRUE));
+		   		Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ac',json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
+		   		$userCoin=$userData['u_coin']-$drawresult['draw_coin'];
+		   	 	$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
 
 		 	}
 		 	else {
@@ -99,9 +102,12 @@ class LuckdrawController extends Controller
 		   				$draw['item_org_id']=$drawresult['item_org_id'];
 		   				$draw['item_quantity']=$drawresult['item_quantity'];
 		   				$draw['item_type']=$drawresult['item_type'];
+		   				$draw['item_coin']=
 		  				$draw['createtime']=time();
 		   				Redis::SGET('luckdraw',$date.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
+		   				$userGem=$userData['u_gem']-$drawresult['draw_gem'];
+		   	 			$usermodel->where('u_id',$u_id)->update(["u_gem"=>$userGem]);
 
 					 }
 					 else {
