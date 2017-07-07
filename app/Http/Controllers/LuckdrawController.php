@@ -51,7 +51,7 @@ class LuckdrawController extends Controller
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$usermodel=new UserModel();
-		$userData=$usermodel->where('u_id',$data['u_id'])->first;
+		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		$characterModel=new CharacterModel();
 		$chardata=$characterModel->where('u_id',$data['u_id'])->first();
 		$luckdraw=new Luck_draw_rewardsModel();
