@@ -15,7 +15,7 @@ use DateTime;
 class LuckdrawController extends Controller
 {
  	public function draw(Request $request){
- 		$req=$request->getContent();
+		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
@@ -31,10 +31,10 @@ class LuckdrawController extends Controller
 		else {
 		   $luckdraw=new Luck_draw_rewardsModel();
 		   $characterModel=new CharacterModel();
-		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();
-//dd($chardata);		   
-$rate=rand(1, 10000);
+		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	   
+		   $rate=rand(1, 10000);
 		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->first();
+		   if($luckdraw){
 		   $draw['u_id']=$data['u_id'];
 		   $draw['item_org_id']=$luckdraw['item_org_id'];
 		   $draw['item_quantity']=$luckdraw['item_quantity'];
@@ -42,6 +42,10 @@ $rate=rand(1, 10000);
 		   $draw['createtime']=time();
 		   Redis::HSET('luckdraw',$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
+			}
+			else{
+				throw new Exception("sorry, no avaliable prize");
+			}
 		}
 		$response=json_encode($result,TRUE);
  	    return $response;
@@ -61,6 +65,7 @@ $rate=rand(1, 10000);
 		$now   = new DateTime;
 		$result=[];
 		$date=$now->format( 'Y-m-d h:m:s' );
+		$result=[];
 		if($data['draw_type']==1)
 		{
  		 $rate=rand(1, 10000);
