@@ -75,7 +75,7 @@ class LuckdrawController extends Controller
 		if($data['draw_type']==1)
 		{
 			$rate=rand(1, 10000);
-		 	$drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('star_lv_to','>=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_coin','<',$userData['u_coin'])->first();
+		 	$drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('star_lv_to','>=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_coin','<=',$userData['u_coin'])->first();
 		 	
 		 	if($drawresult){
 		 		$draw['u_id']=$data['u_id'];
@@ -97,7 +97,7 @@ class LuckdrawController extends Controller
 		}
 		else if ($data['draw_type']==2){
 					 $rate=rand(5000, 10000);
-					 $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('star_lv_to','>=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
+					 $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('star_lv_to','>=',$chardata['ch_star_lv'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_gem','<=',$userData['u_gem'])->first();
 					 if($drawresult){
 					    $draw['u_id']=$data['u_id'];
 		   				$draw['item_org_id']=$drawresult['item_org_id'];
