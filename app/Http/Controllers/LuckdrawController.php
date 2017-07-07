@@ -32,14 +32,15 @@ class LuckdrawController extends Controller
 		   $luckdraw=new Luck_draw_rewardsModel();
 		   $characterModel=new CharacterModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();
-		   $rate=rand(1, 10000);
+//dd($chardata);		   
+$rate=rand(1, 10000);
 		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->first();
 		   $draw['u_id']=$data['u_id'];
 		   $draw['item_org_id']=$luckdraw['item_org_id'];
 		   $draw['item_quantity']=$luckdraw['item_quantity'];
 		   $draw['item_type']=$luckdraw['item_type'];
 		   $draw['createtime']=time();
-		   Redis::SGET('luckdraw',$dmy.$data['u_id'],$json_encode($draw,TRUE));
+		   Redis::HSET('luckdraw',$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
 		}
 		$response=json_encode($result,TRUE);
@@ -51,12 +52,14 @@ class LuckdrawController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+ 		//dd($data);
 		$usermodel=new UserModel();
 		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		$characterModel=new CharacterModel();
 		$chardata=$characterModel->where('u_id',$data['u_id'])->first();
 		$luckdraw=new Luck_draw_rewardsModel();
 		$now   = new DateTime;
+		$result=[];
 		$date=$now->format( 'Y-m-d h:m:s' );
 		if($data['draw_type']==1)
 		{
