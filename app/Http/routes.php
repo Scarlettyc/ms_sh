@@ -16,7 +16,6 @@ Route::get('now', function () {
 });
 
 Route::auth();
-Route::get('/home', 'HomeController@index');
 Route::controller('access','AccessController');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
@@ -25,6 +24,7 @@ Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
 Route::post('/workshop', 'WorkshopController@workshop');
+Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'Luck_drawController@draw');
 Route::post('/buydraw', 'Luck_drawController@buydraw');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
@@ -32,4 +32,4 @@ Route::post('/buydraw', 'Luck_drawController@buydraw');
 // });
 // Route::auth();post
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');

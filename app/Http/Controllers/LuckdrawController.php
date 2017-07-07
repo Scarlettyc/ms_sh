@@ -12,7 +12,7 @@ use App\UserModel;
 use Exception;
 
 use DateTime;
-class Luck_drawController extends Controller
+class LuckdrawController extends Controller
 {
  	public function draw(Request $request){
  		$req=$request->getContent();
@@ -32,7 +32,7 @@ class Luck_drawController extends Controller
 		   $characterModel=new CharacterModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();
 		   $rate=rand(1, 10000);
-		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',4chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->first()
+		   $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->first();
 		   $draw['u_id']=$data['u_id'];
 		   $draw['item_org_id']=$luckdraw['item_org_id'];
 		   $draw['item_quantity']=$luckdraw['item_quantity'];
@@ -57,7 +57,8 @@ class Luck_drawController extends Controller
 		$luckdraw=new Luck_draw_rewardsModel()
 		if($data['draw_type']=1){
  		 $rate=rand(1, 10000);
-		 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',4chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_price','<',$userData['u_coin'])->first();
+		 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_price','<',$userData['u_coin'])->first();
+		 	
 		 	if($luckdraw){
 		 		$draw['u_id']=$data['u_id'];
 		   		$draw['item_org_id']=$luckdraw['item_org_id'];
@@ -74,7 +75,7 @@ class Luck_drawController extends Controller
 		}
 		else if ($data['draw_type']=1){
 					 $rate=rand(5000, 10000);
-					 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',4chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',4chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
+					 $luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('star_lv_from','<=',$chardata['ch_star_lv'])->where('rate_from','>=',$rate)->where('star_lv_to','>=',$rate)->where('draw_gem','<',$userData['u_gem'])->first();
 					 if($luckdraw){
 					    $draw['u_id']=$data['u_id'];
 		   				$draw['item_org_id']=$luckdraw['item_org_id'];
