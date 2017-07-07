@@ -22,6 +22,7 @@ class LuckdrawController extends Controller
 		// Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
 		$gotToday=Redis::HGET('luckdraw',$dmy.$data['u_id']);
 		$result=[];
 		if($gotToday){
