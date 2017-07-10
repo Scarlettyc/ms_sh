@@ -99,7 +99,7 @@ class AccessController extends Controller
 					//dd($loginTodayArr);
 					$status=$loginTodayArr->status;
 					$logoff=$loginTodayArr->logoff;
-					if($logoff!=0){
+					// if($logoff!=0){
 						$logindata['u_id']=$userData['u_id'];
 						$logindata['uuid']=$userData['uuid'];
 						$logindata['os']=$userData['os'];
@@ -109,12 +109,12 @@ class AccessController extends Controller
 						$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 						$logindata['createdate']=$loginTodayArr->createdate; 
 						$loginlist=json_encode($logindata,TRUE);
-						Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+						//Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 					}
-					else {
-						throw new Exception("login error");
-						}
-  					}
+					// else {
+					// 	throw new Exception("login error");
+					// 	}
+  			// 		}
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
