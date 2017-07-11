@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 class CharacterModel extends Model
 {
-	protected $fillable = ['ch_id','ch_title','u_id','core_id','w_id_l','w_id_r','m_id','equ_id_1','equ_id_2','equ_id_3','b_id','ch_lv','ch_star','ch_star_lv','ch_hp_max','ch_atk_max','ch_atk_min','ch_def','ch_res','ch_crit','ch_cd','ch_spd','createdate'];
+	protected $fillable = ['ch_id','ch_title','u_id','core_id','w_id_l','w_id_r','m_id','equ_id_1','equ_id_2','equ_id_3','b_id','ch_lv','ch_star','ch_hp_max','ch_atk_max','ch_atk_min','ch_def','ch_res','ch_crit','ch_cd','ch_spd','createdate'];
 
 	protected $connection = 'mysql';
 	protected $table = "Character";
