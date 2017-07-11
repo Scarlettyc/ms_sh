@@ -40,15 +40,22 @@ class MatchController extends Controller
 			$matchKey='match_range_lv'.$maxLv.'star'.$maxStar;
 		}
 		$matchList=Redis::LLEN($matchKey);
+
 		if($matchList==0||!$matchList){
 			Redis::LPUSH($matchKey,$u_id);
 			return "wait in list";
 		}
 		else {
+			$match_uid=Redis::LRANGE($matchKey,0,1);
+			if($matchList==1&&$match_uid[1]==$u_id){
+				return "wait in list";
+			}
+			else{
 			$match_uid=Redis::LPOP($matchKey);
 			$result['match_result']=$match_uid;
 			$response=json_encode($result,TRUE);
 			return $response;
+			}
 		}
         
     }
