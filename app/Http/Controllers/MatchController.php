@@ -12,7 +12,7 @@ use App\CharacterModel;
 use Illuminate\Support\Facades\Redis;
 class MatchController extends Controller
 {
-    public function match($Request $request)
+    public function match(Request $request)
     {
     	$req=$request->getContent();
 		$json=base64_decode($req);
