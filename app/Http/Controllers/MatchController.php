@@ -47,7 +47,7 @@ class MatchController extends Controller
 		}
 		else {
 			$match_uid=Redis::LRANGE($matchKey,0,1);
-			if($matchList==1&&$match_uid[1]==$u_id){
+			if($matchList==1&&$match_uid[0]==$u_id){
 				return "wait in list";
 			}
 			else{
