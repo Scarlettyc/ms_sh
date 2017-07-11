@@ -29,23 +29,23 @@ class MatchController extends Controller
 		$maxStar=$matchrange->max('star_from');
 		if($chardata['ch_lv']<$maxLv){
 			$match=$matchrange->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_from','<=',$chardata['ch_lv'])->first();
-			$matchKey='lv'.$match['user_lv_from'].'to'.$match['user_lv_to'];
+			$matchKey='match_range_lv'.$match['user_lv_from'].'to'.$match['user_lv_to'];
 		}
 		else if($chardata['ch_star']<$maxStar){
 			$match=$matchrange->where('ch_star','<=',$chardata['ch_lv'])->where('star_to','<=',$chardata['ch_lv'])->first();
-			$matchKey='star'.$match['star_from'].'to'.$match['star_to'];
+			$matchKey='match_range_star'.$match['star_from'].'to'.$match['star_to'];
 
 		}
 		else{
-			$matchKey='lv'.$maxLv.'star'.$maxStar;
+			$matchKey='match_range_lv'.$maxLv.'star'.$maxStar;
 		}
-		$matchList=Redis::LLEN('match_range',$matchKey);
+		$matchList=Redis::LLEN($matchKey);
 		if($matchList==0||!$matchList){
-			Redis::LPUSH('match_range',$matchKey,$u_id);
+			Redis::LPUSH($matchKey,$u_id);
 			return "wait in list";
 		}
 		else {
-			$match_uid=Redis::LPOP('match_range',$matchKey);
+			$match_uid=Redis::LPOP($matchKey);
 			$result['match_result']=$match_uid;
 			$response=json_encode($result,TRUE);
 			return $response;
