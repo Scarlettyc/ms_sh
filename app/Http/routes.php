@@ -27,6 +27,7 @@ Route::post('/workshop', 'WorkshopController@workshop');
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
 Route::post('/buydraw', 'LuckdrawController@buydraw');
+Route::post('/battlematch', 'MatchController@match');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
 // });
