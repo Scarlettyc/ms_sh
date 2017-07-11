@@ -57,46 +57,67 @@ class WorkshopController extends Controller
 			//$response=base64_decode($response);	
 
 			return $response;
-
-
-		/*if(isset($data["uuid"]))
-		{
-			$userData=$data;
-			$userData=$UserModel->where('uuid','=',$data['uuid'])->first();
-			$ch_id=$userData['ch_id'];
-			$characterData=$characterModel->where('ch_id','=',$data['ch_id'])->first();
-			$result['character_data']['character_info']=$CharacterData;
-
-			$w_id_l=$characterData['w_id_l'];
-			$w_id_r=$characterData['w_id_r'];
-			$m_id=$characterData['m_id'];
-			$equ_id_1=$characterData['equ_id_1'];
-			$equ_id_2=$characterData['equ_id_2'];
-			$equ_id_3=$characterData['equ_id_3'];
-
-			$equipmentData=$equipmentMstModel->whereIn('equ_id',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
-			$result['equipment_data']['equipment_info']=$EquipmentData;
-
-			$Equipment_a=$equipmentMstModel->where('equ_id','=',$w_id_r)->first();
-			$skill_a=$Equipment_a['skill_id'];
-			$Equipment_b=$equipmentMstModel->where('equ_id','=',$w_id_l)->first();
-			$skill_b=$Equipment_b['skill_id'];
-			$Equipment_c=$equipmentMstModel->where('equ_id','=',$m_id)->first();
-			$skill_c=$Equipment_c['skill_id'];
-			
-			$skillData=$SkillMstModel->whereIn('skill_id',[$skill_a,$skill_b,$skill_c])->get();
-			$result['skill_data']['skill_info']=$SkillData;
-
-			$response=json_encode($result,TRUE);
-			$response=base64_decode($response);		
-		}
-		else{
-			throw new Exception("something went wrong!");
-			$response = [
-                'status' => 'wrong',
-                'error' => "please refresh",
-                    ];
-		}
-		return $response; **/
 	}
+
+	public function getEquipmentInfo($equipmentID){
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+
+		$equipmentMstModel=new EquipmentMstModel();
+		$effectionMstModel=new EffectionMstModel();
+		$result=[];
+
+		$equipmentInfo = $equipmentMstModel->where('equ_id', '=', $equipmentID)->first();
+		$result['equipment_d']['equipment_i']=$equipmentInfo;
+
+		$eff_id=$equipmentInfo['eff_id'];
+
+		$effInfo=$effectionMstModel->where('eff_id','=', $eff_id)->first();
+		$result['eff_d']['eff_i']=$effInfo;
+
+		$response=json_encode($result,TRUE);
+		return $response;
+	}
+
+	public function getSkillInfo($skillID){
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+
+		$skillMstModel=new SkillMstModel();
+		$effectionMstModel=new EffectionMstModel();
+		$result=[];
+
+		$skillInfo = $skillMstModel->where('skill_id', '=', $skillID)->first();
+		$result['skill_d']['skill_i']=$skillInfo;
+
+		$eff_id=$skillInfo['eff_id'];
+
+		$effInfo=$effectionMstModel->where('eff_id', '=', $eff_id)->first();
+		$result['eff_d']['eff_i']=$effInfo;
+
+		$response=json_encode($result,TRUE);
+		return $response;
+	}
+
+	
+
+	/*public function getRightWeapon($w_id_r){
+		$W_R_Info = DB::select('select * from Equipment_mst where equ_id = ?', [$w_id_r]);
+
+		return $W_R_Info;
+	}
+
+	public function getLeftWeapon($w_id_l){
+		$W_L_Info = DB::select('select * from Equipment_mst where equ_id = ?', [$w_id_l]);
+
+		return $W_L_Info;
+	}
+
+	public function getMoveEquipment($m_id){
+		$M_Info = DB::select('select * from Equipment_mst where equ_id = ?', [$m_id]);
+
+		return $M_Info;
+	}*/
+
+
 }
