@@ -65,24 +65,23 @@ class LuckdrawController extends Controller
 		   $draw['createtime']=time();
 		   $draw['duration']=$drawresult['free_drwa_duration'];
 		   $draw['draw_type']=$drawtype;
-		   switch($drawresult['item_type']){
-		   		case 1:
+			if($drawresult['item_type']==1){
 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$rescourceData['r_name'];
 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
-		   			break;
+		   			}
 
-		   		case 2:
+		   	else if ($drawresult['item_type']==2){
 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$equData['equ_name'];
 		   			$draw['item_img_path']=$equData['icon_path'];
-		   			break;
-		   		case 3:
+		   			}
+		   	else if ($drawresult['item_type']==3){
 		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$scData['sc_name'];
 		   			$draw['item_img_path']=$scData['sc_img_path'];
-		   			break;	
-		   }
+		 		}
+		   	}
 
 		   }
 		   Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
