@@ -26,7 +26,8 @@ Route::post('/logout', 'AccessController@logout');
 Route::post('/workshop', 'WorkshopController@workshop');
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
-Route::post('/buydraw', 'LuckdrawController@buydraw');
+Route::post('/onedraw', 'LuckdrawController@oneDraw');
+Route::post('/multidraw', 'LuckdrawController@multiDraw');
 
 Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@match');
