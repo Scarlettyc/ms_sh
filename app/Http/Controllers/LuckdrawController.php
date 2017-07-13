@@ -43,14 +43,15 @@ class LuckdrawController extends Controller
 			$todaydraw=json_decode($gotToday,TRUE);
 			$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
 			$result['luckdrawfree'.$drawtype]['timeuntil']=time()-$todaydraw['createtime']+$luckdata['duration'];
-
+                     
 		}
 		else {
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
-		   if('$drawtype'==1){
+		   if($drawtype==1){
 		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
 		   $rate=rand($defindData['value1'], $defindData['value2']);
-			}
+			
+	}
 		   else {
 		   	$defindData=$defindMstModel->where('defind_id',4)->first(); 
 		   	$rate=rand($defindData['value1'], $defindData['value2']);
@@ -67,7 +68,7 @@ class LuckdrawController extends Controller
 		   $draw['draw_type']=$drawtype;
 
 				if($drawresult['item_type']==1){
-		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
+		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$rescourceData['r_name'];
 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
 		   			}
@@ -87,13 +88,16 @@ class LuckdrawController extends Controller
 		   			$result['luckdraw']=$draw;
 		   			$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 	
-					$response=json_encode($result,TRUE);
- 	    			return $response;
+				//	$response=json_encode($result,TRUE);
+ 	    	//		return $response;
  			}
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
+
  	}
+         $response=json_encode($result,TRUE);
+                                return $response;
  }
 
 
