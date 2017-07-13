@@ -35,7 +35,7 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();
 		$baggageModel=new UserBaggageModel();
 		$rescourceModel=new ResourceMstModel();
-		$scrollModel=new Scroll_mst();
+		$scrollModel=new ScrollMstModel();
 		$equipmentModel=new Equipment_mst();
 		$defindMstModel=new DefindMstModel();
 		$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
