@@ -89,9 +89,12 @@ class LuckdrawController extends Controller
 	
 					$response=json_encode($result,TRUE);
  	    			return $response;
-
- 		}
+ 			}
+			else{
+				throw new Exception("sorry, no avaliable prize");
+			}
  	}
+ }
 
 
  	public function oneDraw(Request $request){
