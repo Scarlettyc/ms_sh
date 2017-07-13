@@ -30,6 +30,11 @@ Route::post('/buydraw', 'LuckdrawController@buydraw');
 
 Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@match');
+Route::post('/addfriend', 'FriendController@addFriend');
+Route::post('/removeriend', 'FriendController@removeFriend');
+Route::post('/friendlist', 'FriendController@friend_list');
+Route::post('/get_friend_request', 'FriendController@friend_list');
+Route::post('/del_friend_request', 'FriendController@reject_request');
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
 // });
