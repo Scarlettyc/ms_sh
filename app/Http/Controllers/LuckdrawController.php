@@ -110,19 +110,16 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$gotToday=Redis::HGET('luckdraw'.$drawtype,$dmy.$data['u_id']);
+		
 		$result=[];
 		$drawtype=$data['draw_type'];
-		$usermodel=new UserModel();
-		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		$luckdraw=new Luck_draw_rewardsModel();
 		$characterModel=new CharacterModel();
 		$baggageModel=new UserBaggageModel();
-		$rescourceModel=new Rescource_mst();
-		$scrollModel=new Scroll_mst();
-		$equipmentModel=new Equipment_mst();
+		$rescourceModel=new ResourceMstModel();
+		$scrollModel=new ScrollMstModel();
+		$equipmentModel=new EquipmentMstModel();
 		$defindMstModel=new DefindMstModel();
-
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   if($drawtype==1){
 		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
