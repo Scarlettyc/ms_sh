@@ -28,7 +28,7 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$gotToday=Redis::HGET('luckdraw'.$drawtype,$dmy.$data['u_id']);
+
 		$result=[];
 		$drawtype=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
@@ -38,7 +38,7 @@ class LuckdrawController extends Controller
 		$scrollModel=new Scroll_mst();
 		$equipmentModel=new Equipment_mst();
 		$defindMstModel=new DefindMstModel();
-
+		$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
 		if($gotToday){
 			$todaydraw=json_decode($gotToday,TRUE);
 			$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
