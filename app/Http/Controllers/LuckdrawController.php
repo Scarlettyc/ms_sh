@@ -11,7 +11,7 @@ use App\CharacterModel;
 use App\UserModel;
 use App\UserBaggageModel;
 use App\Equipment_mst;
-use App\Scroll_mst;
+use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\DefindMstModel;
 use Exception;
