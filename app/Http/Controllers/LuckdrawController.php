@@ -65,36 +65,37 @@ class LuckdrawController extends Controller
 		   $draw['createtime']=time();
 		   $draw['duration']=$drawresult['free_drwa_duration'];
 		   $draw['draw_type']=$drawtype;
-			if($drawresult['item_type']==1){
+
+				if($drawresult['item_type']==1){
 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$rescourceData['r_name'];
 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
 		   			}
 
-		   	else if ($drawresult['item_type']==2){
+		   		else if ($drawresult['item_type']==2){
 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$equData['equ_name'];
 		   			$draw['item_img_path']=$equData['icon_path'];
 		   			}
-		   	else if ($drawresult['item_type']==3){
+		   		else if ($drawresult['item_type']==3){
 		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
 		   			$draw['item_name']=$scData['sc_name'];
 		   			$draw['item_img_path']=$scData['sc_img_path'];
-		 		}
+		 			}
 
-		 		Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
-		   		$result['luckdraw']=$draw;
-		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+		 			Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		   			$result['luckdraw']=$draw;
+		   			$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 	
-				$response=json_encode($result,TRUE);
- 	    		return $response;
-		   	}
+					$response=json_encode($result,TRUE);
+ 	    			return $response;
 		   	else{
 				throw new Exception("sorry, no avaliable prize");
 			}
 
  		}
  	}
+ }
 
  	public function oneDraw(Request $request){
  				$req=$request->getContent();
