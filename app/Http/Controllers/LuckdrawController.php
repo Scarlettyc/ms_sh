@@ -317,16 +317,14 @@ class LuckdrawController extends Controller
 		   			$userGem=$userData['u_gem']-$payBy;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
 		   			}
-
+		   			$result[]=$draw;
 		   		}
-		   		$result[]=$draw;
+		   		
 			}
 		   		Redis::HSET('luckdraw'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   		$final['luckdraw']=$result;
 		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 		   			$response=json_encode($final,TRUE);
  	    		return $response;
-			else{
-				throw new Exception("sorry, no avaliable prize");
-			}
+ 	    	
  		}
