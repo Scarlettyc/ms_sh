@@ -81,19 +81,18 @@ class LuckdrawController extends Controller
 		   			$draw['item_name']=$scData['sc_name'];
 		   			$draw['item_img_path']=$scData['sc_img_path'];
 		 		}
-		   	}
 
-		   }
-		   Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
-		   $result['luckdraw']=$draw;
-		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
-		}
-			else{
+		 		Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		   		$result['luckdraw']=$draw;
+		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+	
+				$response=json_encode($result,TRUE);
+ 	    		return $response;
+		   	}
+		   	else{
 				throw new Exception("sorry, no avaliable prize");
 			}
-		}
-		$response=json_encode($result,TRUE);
- 	    return $response;
+
  	}
 
  	public function oneDraw(Request $request){
@@ -165,15 +164,18 @@ class LuckdrawController extends Controller
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
 		   		}
 
-		   }
 		   Redis::HSET('luckdraw'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
 		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+
+		   	$response=json_encode($result,TRUE);
+ 	    	return $response;
+		   }
+		 
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
-		$response=json_encode($result,TRUE);
- 	    return $response;
+
  	}
 
  	// public function buydraw(Request $request){
@@ -318,13 +320,12 @@ class LuckdrawController extends Controller
 		   		}
 		   		$result[]=$draw;
 			}
-		   Redis::HSET('luckdraw'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
-		   $final['luckdraw']=$result;
-		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+		   		Redis::HSET('luckdraw'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		   		$final['luckdraw']=$result;
+		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+		   			$response=json_encode($final,TRUE);
+ 	    		return $response;
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
-			$response=json_encode($final,TRUE);
- 	    return $response;
-
  }
