@@ -145,7 +145,7 @@ class LuckdrawController extends Controller
 		  	 	$draw['duration']=$drawresult['free_drwa_duration'];
 		  	 	$draw['draw_type']=$drawtype;
 			if($drawresult['item_type']==1){
-		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
+		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$rescourceData['r_name'];
 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
 		   			}
