@@ -10,6 +10,9 @@ use App\Luck_draw_rewardsModel;
 use App\CharacterModel;
 use App\UserModel;
 use App\UserBaggageModel;
+use App\Equipment_mst;
+use App\Scroll_mst;
+use App\Rescource_mst;
 use Exception;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
@@ -24,29 +27,58 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$gotToday=Redis::HGET('luckdraw',$dmy.$data['u_id']);
+		$gotToday=Redis::HGET('luckdraw'.$drawtype,$dmy.$data['u_id']);
 		$result=[];
+		$drawtype=$data['draw_type'];
+		$luckdraw=new Luck_draw_rewardsModel();
+		$characterModel=new CharacterModel();
+		$baggageModel=new UserBaggageModel();
+		$rescourceModel=new Rescource_mst();
+		$scrollModel=new Scroll_mst();
+		$equipmentModel=new Equipment_mst();
+
+
 		if($gotToday){
 			$todaydraw=json_decode($gotToday,TRUE);
-			$result['luckdraw']['timeuntil']=time()-$todaydraw['createtime'];
+			$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
+			$result['luckdraw'.$drawtype]['timeuntil']=time()-$todaydraw['createtime']+$luckdata['duration'];
+
 		}
 		else {
-		   $luckdraw=new Luck_draw_rewardsModel();
-		   $characterModel=new CharacterModel();
-		   $baggageModel=new UserBaggageModel();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	   
 		   $rate=rand(1, 10000);
-		   $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		   if($drawresult){
 		   $draw['u_id']=$data['u_id'];
 		   $draw['item_org_id']=$drawresult['item_org_id'];
 		   $draw['item_quantity']=$drawresult['item_quantity'];
 		   $draw['item_type']=$drawresult['item_type'];
 		   $draw['createtime']=time();
+		   $draw['duration']=$drawresult['free_drwa_duration'];
+		   switch($drawresult['item_type']){
+		   		case 1:
+		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
+		   			$draw['item_name']=$rescourceData['r_name'];
+		   			$draw['item_img_path']=$rescourceData['r_img_path'];
+		   			break;
+
+		   		case 2:
+		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
+		   			$draw['item_name']=$equData['equ_name'];
+		   			$draw['item_img_path']=$equData['icon_path'];
+		   			break;
+		   		case 3:
+		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
+		   			$draw['item_name']=$scData['sc_name'];
+		   			$draw['item_img_path']=$scData['sc_img_path'];
+		   			break;	
+		   }
+
+		   }
 		   Redis::HSET('luckdraw',$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   $result['luckdraw']=$draw;
 		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
-			}
+		}
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
