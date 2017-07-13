@@ -260,7 +260,6 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$gotToday=Redis::HGET('luckdraw'.$drawtype,$dmy.$data['u_id']);
 		$result=[];
 		$drawtype=$data['draw_type'];
 		$usermodel=new UserModel();
