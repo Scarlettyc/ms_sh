@@ -120,6 +120,9 @@ class LuckdrawController extends Controller
 		$scrollModel=new ScrollMstModel();
 		$equipmentModel=new EquipmentMstModel();
 		$defindMstModel=new DefindMstModel();
+		$usermodel=new UserModel();
+		$baggageModel=new UserBaggageModel();
+		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   if($drawtype==1){
 		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
