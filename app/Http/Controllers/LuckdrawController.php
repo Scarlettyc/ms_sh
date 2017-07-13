@@ -10,7 +10,7 @@ use App\Luck_draw_rewardsModel;
 use App\CharacterModel;
 use App\UserModel;
 use App\UserBaggageModel;
-use App\Equipment_mst;
+use App\EquipmentMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\DefindMstModel;
@@ -36,7 +36,7 @@ class LuckdrawController extends Controller
 		$baggageModel=new UserBaggageModel();
 		$rescourceModel=new ResourceMstModel();
 		$scrollModel=new ScrollMstModel();
-		$equipmentModel=new Equipment_mst();
+		$equipmentModel=new EquipmentMstModel();
 		$defindMstModel=new DefindMstModel();
 		$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
 		if($gotToday){
