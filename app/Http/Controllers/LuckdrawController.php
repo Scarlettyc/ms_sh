@@ -93,6 +93,7 @@ class LuckdrawController extends Controller
 				throw new Exception("sorry, no avaliable prize");
 			}
 
+ 		}
  	}
 
  	public function oneDraw(Request $request){
@@ -328,4 +329,4 @@ class LuckdrawController extends Controller
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
- }
+ 		}
