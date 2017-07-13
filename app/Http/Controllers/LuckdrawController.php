@@ -12,7 +12,7 @@ use App\UserModel;
 use App\UserBaggageModel;
 use App\Equipment_mst;
 use App\Scroll_mst;
-use App\Rescource_mst;
+use App\ResourceMstModel;
 use App\DefindMstModel;
 use Exception;
 use Illuminate\Support\Facades\Redis;
@@ -34,7 +34,7 @@ class LuckdrawController extends Controller
 		$luckdraw=new Luck_draw_rewardsModel();
 		$characterModel=new CharacterModel();
 		$baggageModel=new UserBaggageModel();
-		$rescourceModel=new Rescource_mst();
+		$rescourceModel=new ResourceMstModel();
 		$scrollModel=new Scroll_mst();
 		$equipmentModel=new Equipment_mst();
 		$defindMstModel=new DefindMstModel();
