@@ -58,8 +58,9 @@ class LoginRewardController extends Controller
 		$userData=$userModel->where('u_id',$uid)->first();
 		$maxDays=$defindMstModel->where('defind_id',5)->first();
 		$todayRewards=$loginRewardsModel->where('days',$userData['u_login_count'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-		$getReward=$this->chooseReward($todayRewards);
 		$loginCount=$userData['u_login_count'];
+		$getReward=$this->chooseReward($todayRewards,$loginCount);
+		
 		if(($loginCount+1)==$maxDays){
 			$loginCount=1;
 		}
