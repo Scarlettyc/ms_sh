@@ -61,7 +61,7 @@ class LoginRewardController extends Controller
 		$loginCount=$userData['u_login_count'];
 		$getReward=$this->chooseReward($todayRewards,$loginCount);
 		
-		if(($loginCount+1)==$maxDays){
+		if(($loginCount+1)==$maxDays['value1']){
 			$loginCount=1;
 		}
 		else{
