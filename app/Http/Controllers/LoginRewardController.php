@@ -59,10 +59,10 @@ class LoginRewardController extends Controller
 		$getReward=$this->chooseReward($todayRewards);
 		$loginCount=$userData['u_login_count'];
 		if(($loginCount+1)==$maxDays){
-			$loginCount=1；
+			$loginCount=1;
 		}
 		else{
-			$loginCount=$loginCount+1；
+			$loginCount=$loginCount+1;
 
 		}
 		$userModel->where('u_id',$uid)->update(['u_login_count',$loginCount]);
