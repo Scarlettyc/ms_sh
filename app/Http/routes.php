@@ -24,8 +24,8 @@ Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
 Route::post('/workshop', 'WorkshopController@workshop');
-Route::post('/getEquipmentInfo', 'WorkshopController@getEquipmentInfo')
-Route::post('/getSkillInfo', 'WorkshopController@getSkillInfo')
+Route::post('/getEquipmentInfo', 'WorkshopController@getEquipmentInfo');
+Route::post('/getSkillInfo', 'WorkshopController@getSkillInfo');
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
