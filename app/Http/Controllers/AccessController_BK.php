@@ -90,11 +90,9 @@ class AccessController extends Controller
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$token=$usermodel->createTOKEN(16);
-
-					//dd($loginTodayArr);
 					$status=$loginTodayArr->status;
 					$logoff=$loginTodayArr->logoff;
-					// if($logoff!=0){
+					if($logoff!=0){
 						$logindata['u_id']=$userData['u_id'];
 						$logindata['uuid']=$userData['uuid'];
 						$logindata['os']=$userData['os'];
@@ -104,8 +102,12 @@ class AccessController extends Controller
 						$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 						$logindata['createdate']=$loginTodayArr->createdate; 
 						$loginlist=json_encode($logindata,TRUE);
-						//Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+						Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 					}
+					else {
+						throw new Exception("login error!");
+					}
+				}
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
@@ -138,18 +140,6 @@ class AccessController extends Controller
 		}
 		return  $response;
 	}
-
-	// public function update(Request $request)
-	// {
-	// 	$req=$request->getContent();
- //        $json=base64_decode($req);
- //        $data=json_decode($json,TRUE);
- //        $usermodel=new UserModel();
- //        $usermodel->createNew($data);
- //        $responseData=UserModel::where('u_id',$data['u_id'])->get();
-
- //        return json_encode($responseData);
-	// }
 
 	public function test (Request $request){
  	phpinfo();
