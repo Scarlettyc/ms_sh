@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
+use App\EquipmentMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -23,6 +24,7 @@ class AccessController extends Controller
 		$data=json_decode($json,TRUE);
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
+		$equipmentModel=new EquipmentMstModel();
 		$result=[];
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
