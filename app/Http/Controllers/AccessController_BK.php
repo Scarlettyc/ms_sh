@@ -79,8 +79,6 @@ class AccessController extends Controller
 			];
 
 			}
-
-
 			$lastweek=date("Ymd",strtotime("-1 week"));
 
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
