@@ -61,7 +61,7 @@ class AccessController extends Controller
 
 					if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
 					{	
-						$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
+						$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
 						$result['user_data']['character_info']=$userChar;
 						$result['user_data']['equipment_info']=$this->getEquip($userChar);
 					}
