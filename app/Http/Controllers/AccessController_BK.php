@@ -111,8 +111,6 @@ class AccessController extends Controller
 					$logindata['logoff']=0; 
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
-					$loginCount=$userData['u_login_count']+1;
-
 					$datetime=$now->format( 'Y-m-d h:m:s' );
 				}
 			

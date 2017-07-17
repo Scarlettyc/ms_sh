@@ -38,6 +38,13 @@ Route::post('/removeriend', 'FriendController@removeFriend');
 Route::post('/friendlist', 'FriendController@friend_list');
 Route::post('/get_friend_request', 'FriendController@friend_list');
 Route::post('/del_friend_request', 'FriendController@reject_request');
+
+Route::controller('loginreward','LoginRewardController');
+Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
+Route::post('/gettoday', 'LoginRewardController@getToday');
+
+
+
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
 // });
