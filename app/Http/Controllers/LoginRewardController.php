@@ -30,12 +30,12 @@ class LoginRewardController extends Controller
 
 		$userData=$userModel->where('u_id',$uid)->first();
 		$maxDays=$defindMstModel->where('defind_id',5)->first();
-		$loginRewards=$loginRewardsModel->where('days','<=',$maxDays)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$loginRewards=$loginRewardsModel->where('days','<=',$maxDays['value1'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$loginCount=$userData['u_login_count'];
 		$result=[];
 		foreach($loginRewards as $reward){
 			
-			$getReward=$this->chooseReward($reward);
+			$getReward=$this->chooseReward($reward,$loginCount);
 
 			$result['login_rewards'][]=$getReward;
 		}
@@ -72,7 +72,7 @@ class LoginRewardController extends Controller
 		return $todayreward;
  	}
 
- 	private function chooseReward($reward){
+ 	private function chooseReward($reward,$loginCount){
  		$resourceModel=new ResourceMstModel();
 		$equipmentMstModel=new EquipmentMstModel();
 		$scrollMstModel=new ScrollMstModel();
