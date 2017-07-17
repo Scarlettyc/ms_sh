@@ -36,21 +36,15 @@ class AccessController extends Controller
 				{	
 					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
 					$u_id=$userData['u_id'];
-
-					if($userData['pass_tutorial']&&$characterModel->isExist('ch_id',$userData['ch_id']))
+					$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
+					if($userData['pass_tutorial']&&$userChar)
 					{	
-						$userChar=$characterModel->where('ch_id','=',$userData['ch_id'])->first();
 						$result['user_data']['character_info']=$userChar;
 						$result['user_data']['equipment_info']=$this->getEquip($userChar);
 					}
-
-
-				//	dd($result);
 				}
 				else {
-
 						$usermodel->createNew($data);
-				//	dd($data);
 				}
 			}
 			else if(strlen($data['uuid'])==37){
@@ -61,7 +55,6 @@ class AccessController extends Controller
 					$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
 					if($userData['pass_tutorial']&&$userChar)
 					{	
-						
 						$result['user_data']['character_info']=$userChar;
 						$result['user_data']['equipment_info']=$this->getEquip($userChar);
 					}
