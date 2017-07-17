@@ -54,6 +54,7 @@ class AccessController extends Controller
 				//	dd($result);
 				}
 				else {
+
 						$usermodel->createNew($data);
 				//	dd($data);
 				}
@@ -96,6 +97,7 @@ class AccessController extends Controller
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$token=$usermodel->createTOKEN(16);
+
 					//dd($loginTodayArr);
 					$status=$loginTodayArr->status;
 					$logoff=$loginTodayArr->logoff;
@@ -200,46 +202,19 @@ class AccessController extends Controller
 		return  $response;
 	}
 
-	public function update(Request $request)
-	{
-		$req=$request->getContent();
-        $json=base64_decode($req);
-        $data=json_decode($json,TRUE);
-        $usermodel=new UserModel();
-        $usermodel->createNew($data);
-        $responseData=UserModel::where('u_id',$data['u_id'])->get();
+	// public function update(Request $request)
+	// {
+	// 	$req=$request->getContent();
+ //        $json=base64_decode($req);
+ //        $data=json_decode($json,TRUE);
+ //        $usermodel=new UserModel();
+ //        $usermodel->createNew($data);
+ //        $responseData=UserModel::where('u_id',$data['u_id'])->get();
 
-        return json_encode($responseData);
-	}
+ //        return json_encode($responseData);
+	// }
 
 	public function test (Request $request){
-
-/*	 Redis::connection('default');
-	 $now   = new DateTime;
-	 $dmy=$now->format( 'Ymd' );
-	 $u_id="ui100000001";
-	 			$loginToday=Redis::HGET('login_data','20170701');
-dd($loginToday);
-				if($loginToday){
- 				$loginTodayArr=json_decode($loginToday);
-  					foreach ($loginTodayArr as $key => $value) {
-  						echo ($value->u_id);
-   						echo ($u_id);
-   						if($value->u_id!=$u_id){
-   							dd("not same");
-   						$loginCount=$userData['u_login_count']+1;
-						$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
- 					}
-  					}
-   				}
-		$req=$request->getContent();
-		$json=base64_decode($req);
-		print_r($json);
-		$data=json_decode($json,TRUE);
-		Log:info('test access');
-		log:info($json);*/
-
-
  	phpinfo();
  	}
  	private function getEquip($userChar){
@@ -254,6 +229,7 @@ dd($loginToday);
         return $equipdata;
  	} 
  	public function logout(Request $request){
+ 		$header=$request->header('Content-Type');
  		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);

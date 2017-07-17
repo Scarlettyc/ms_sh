@@ -28,8 +28,6 @@ class MatchController extends Controller
 		$maxLv=$matchrange->max('user_lv_to');
 		$maxStar=$matchrange->max('star_from');
 		if($chardata['ch_lv']<$maxLv){
-			$match=$matchrange->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_from','<=',$chardata['ch_lv'])->first();
-			$matchKey='match_range_lv'.$match['user_lv_from'].'to'.$match['user_lv_to'];
 		}
 		else if($chardata['ch_star']<$maxStar){
 			$match=$matchrange->where('ch_star','<=',$chardata['ch_lv'])->where('star_to','<=',$chardata['ch_lv'])->first();
@@ -51,10 +49,10 @@ class MatchController extends Controller
 				return "wait in list";
 			}
 			else{
-			$match_uid=Redis::LPOP($matchKey);
-			$result['match_result']=$match_uid;
-			$response=json_encode($result,TRUE);
-			return $response;
+				$match_uid=Redis::LPOP($matchKey);
+				$result['match_result']=$match_uid;
+				$response=json_encode($result,TRUE);
+				return $response;
 			}
 		}
         

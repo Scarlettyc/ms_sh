@@ -5,6 +5,7 @@ use DB;
 use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
+<<<<<<< HEAD
 
 class ScrollMstModel extends Model
 {
@@ -13,4 +14,12 @@ class ScrollMstModel extends Model
 	protected $connection='mysql';
     protected $table = "Scroll_mst"; 
 
+=======
+class ScrollMstModel extends Model
+{
+	protected $fillable = ['ch_star','star_level','star_path','udpatedate','createdate'];
+
+	protected $connection='mysql';
+	protected $table = "Scroll_mst";
+>>>>>>> ea25a64a84bd97ce8f0672334ceaa1df6e2210d6
 }
