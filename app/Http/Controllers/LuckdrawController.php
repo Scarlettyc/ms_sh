@@ -184,73 +184,6 @@ class LuckdrawController extends Controller
 
  	}
 
- 	// public function buydraw(Request $request){
- 	// 	$req=$request->getContent();
-		// $json=base64_decode($req);
-	 // 	//dd($json);
-		// $data=json_decode($json,TRUE);
- 	// 	//dd($data);
-		// $usermodel=new UserModel();
-		// $baggageModel=new UserBaggageModel();
-		// $userData=$usermodel->where('u_id',$data['u_id'])->first();
-
-		// $characterModel=new CharacterModel();
-		// $chardata=$characterModel->where('u_id',$data['u_id'])->first();
-		// $luckdraw=new Luck_draw_rewardsModel();
-		// $now   = new DateTime;
-		// $result=[];
-		// $date=$now->format( 'Y-m-d h:m:s' );
-		// $dateKey=$now->format( 'Y-m-d:h:m:s' );
-		// $result=[];
-
-		// 	$rate=rand(1, 10000);
-		//  	$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_coin','<=',$userData['u_coin'])->first();
-		 	
-		//  	if($drawresult){
-		//  		$draw['u_id']=$data['u_id'];
-		//    		$draw['item_org_id']=$drawresult['item_org_id'];
-		//    		$draw['item_quantity']=$drawresult['item_quantity'];
-		//    		$draw['item_type']=$drawresult['item_type'];
-		//    		$draw['draw_coin']=$drawresult['draw_coin'];
-		//   		$draw['createtime']=time();
-		//    		Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ac',json_encode($draw,TRUE));
-		//    		$result['luckdraw']=$draw;
-		//    		$userCoin=$userData['u_coin']-$drawresult['draw_coin'];
-		//    	 	$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
-
-		//  	}
-		//  	else {
-		//  		throw new Exception("sorry, you dont' have enought coin");
-
-		//  	}
-		// }
-		// else if ($data['draw_type']==2){
-		// 			 $rate=rand(5000, 10000);
-		// 			 $drawresult=$luckdraw->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_gem','<=',$userData['u_gem'])->first();
-		// 			 if($drawresult){
-		// 			    $draw['u_id']=$data['u_id'];
-		//    				$draw['item_org_id']=$drawresult['item_org_id'];
-		//    				$draw['item_quantity']=$drawresult['item_quantity'];
-		//    				$draw['item_type']=$drawresult['item_type'];
-		//    				$draw['draw_gem']=$drawresult['draw_gem'];
-		//   				$draw['createtime']=time();
-		//    				Redis::HSET('luckdraw',$dateKey.$data['u_id'].'ag'.time(),json_encode($draw,TRUE));
-		//    				$result['luckdraw']=$draw;
-		//    				$userGem=$userData['u_gem']-$drawresult['draw_gem'];
-		//    	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
-
-		// 			 }
-		// 			 else {
-		//  				throw new Exception("sorry, you dont' have enought gem");
-
-		//  				}
-		// 	}
-		// 			$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
-		// 			$response=json_encode($result,TRUE);
- 	//     			return $response;
-			
-		// }
-
  	public function multiDraw(Request $request){
  				$req=$request->getContent();
 		$json=base64_decode($req);
@@ -281,11 +214,11 @@ class LuckdrawController extends Controller
 		   		$rate=rand($defindData['value1'], $defindData['value2']);
 		   		$payBy=$userData['u_coin'];
 				}
-		   else {
-		   	$defindData=$defindMstModel->where('defind_id',4)->first(); 
-		   	$rate=rand($defindData['value1'], $defindData['value2']);
-		   	 $payBy=$userData['u_gem'];
-		   } 
+		   		else {
+		   		$defindData=$defindMstModel->where('defind_id',4)->first(); 
+		   		$rate=rand($defindData['value1'], $defindData['value2']);
+		   	 	$payBy=$userData['u_gem'];
+		  		} 
 		   
 		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
 		   if($drawresult){

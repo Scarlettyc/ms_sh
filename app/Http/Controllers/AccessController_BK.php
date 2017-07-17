@@ -6,9 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
-use App\EquipmentMstModel;
-use App\Login_rewardsModel;
-use App\UserBaggageModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -27,9 +24,6 @@ class AccessController extends Controller
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$result=[];
-		$equipMstModel=new EquipmentMstModel();
-		$logindRewardsModel=new Login_rewardsModel();
-		$userBaggageModel=new UserBaggageModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
@@ -78,7 +72,6 @@ class AccessController extends Controller
 
 			}
 			else{
-
 			throw new Exception("oppos, give me a correct uuid");
 			$response = [
 			'status' => 'wrong',
@@ -113,10 +106,6 @@ class AccessController extends Controller
 						$loginlist=json_encode($logindata,TRUE);
 						//Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 					}
-					// else {
-					// 	throw new Exception("login error");
-					// 	}
-  			// 		}
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
@@ -130,56 +119,6 @@ class AccessController extends Controller
 					$loginCount=$userData['u_login_count']+1;
 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
-					$loginrewards=$logindRewardsModel->where('days',$loginCount)
-					->where('start_date','<',$datetime)
-					->where('end_date','>',$datetime)
-					->first();
-
-					if($loginrewards['item_type']==1&&$loginrewards['item_org_id']==1){
-						$userCoin=$userData['u_coin']+$loginrewards['item_quantity'];
-						$usermodel->where('u_id',$u_id)->update(["u_coin"=>$userCoin]);
-					}
-					else if($loginrewards['item_type']==3){
-						for($i=0;$i<$loginrewards['item_quantity'];$i++){
-						$baggage['u_id']=$userData['u_id'];
-						$baggage['item_type']=$loginrewards['item_type'];
-						$baggage['item_org_id']=$loginrewards['item_org_id'];
-						$baggage['item_quantity']=1;
-						$baggage['status']=0;
-						$baggage['createdate']=$datetime;
-						$userBaggageModel->insert($baggage);
-						}
-					}
-					else{
-						$hasItem=$userBaggageModel->where('u_id',$userData['u_id'])->where('item_org_id',$loginrewards['item_org_id'])->where('item_type',$loginrewards['item_type'])
-						->first();
-						$baggage['u_id']=$userData['u_id'];
-						$baggage['item_type']=$loginrewards['item_type'];
-						$baggage['item_org_id']=$loginrewards['item_org_id'];
-						if($hasItem){
-							$baggage['item_quantity']=$hasItem['item_quantity']+$loginrewards['item_quantity'];
-						}
-						else{
-							$baggage['item_quantity']=$loginrewards['item_quantity'];
-
-						}
-						$baggage['status']=0;
-						$baggage['createdate']=$datetime;
-						$userBaggageModel->insert($baggage);
-					}
-					$reward_history['u_id']=$userData['u_id'];
-					$reward_history['item_type']=$loginrewards['item_type'];
-					$reward_history['item_type']=$loginrewards['item_org_id'];
-					$reward_history['item_quantity']=$loginrewards['item_quantity'];
-					$reward_history['login_count']=$loginCount;
-					$reward_history['createtime']=time(); 
-
-
-					Redis::LPUSH('reward_history',json_encode($reward_history,TRUE));
-
-					$usermodel->where('u_id',$u_id)->update(["u_login_count"=>$loginCount]);
-			    	Redis::HSET('login_data',$dmy.$userData['u_id'],json_encode($logindata,TRUE));
-			    	$result['user_data']['login_reward']=$reward_history;
 				}
 			
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
@@ -188,8 +127,6 @@ class AccessController extends Controller
 			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
-			 //Log:info("user_info".$result);
-			//$response=base64_encode($response);
 		}
 		else {
 
@@ -257,7 +194,7 @@ class AccessController extends Controller
 	}
 	else {
 			throw new Exception("oppos, need u_id");
+		}
 	}
-}
 }
 
