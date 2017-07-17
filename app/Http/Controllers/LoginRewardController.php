@@ -68,7 +68,7 @@ class LoginRewardController extends Controller
 			$loginCount=$loginCount+1;
 
 		}
-		$userModel->where('u_id',$uid)->update(['u_login_count',$loginCount]);
+		$userModel->where('u_id',$uid)->update(['u_login_count'=>$loginCount,'updated_at'=>$datetime]);
 		$getReward['createtime']=time();
 		$todayreward=json_encode($getReward,TRUE);
 		Redis::LPUSH('reward_history',$todayreward);
