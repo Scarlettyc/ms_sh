@@ -31,7 +31,7 @@ class LoginRewardController extends Controller
 		$userData=$userModel->where('u_id',$uid)->first();
 		$maxDays=$defindMstModel->where('defind_id',5)->first();
 		$loginRewards=$loginRewardsModel->where('days','<=',$maxDays['value1'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
-		$loginCount=$userData['u_login_count'];
+		$loginCount=$userData['u_login_count']+1;
 		$result=[];
 		foreach($loginRewards as $reward){
 			
@@ -57,20 +57,19 @@ class LoginRewardController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$userData=$userModel->where('u_id',$uid)->first();
 		$maxDays=$defindMstModel->where('defind_id',5)->first();
-		$todayRewards=$loginRewardsModel->where('days',$userData['u_login_count'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-		$loginCount=$userData['u_login_count'];
+		$todayRewards=$loginRewardsModel->where('days',$userData['u_login_count']+1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$loginCount=$userData['u_login_count']+1;
 		$getReward=$this->chooseReward($todayRewards,$loginCount);
 		
-		if(($loginCount+1)==$maxDays['value1']){
+		if($loginCount==$maxDays['value1']+1){
 			$loginCount=1;
 		}
-		else{
-			$loginCount=$loginCount+1;
 
-		}
 		$userModel->where('u_id',$uid)->update(['u_login_count'=>$loginCount,'updated_at'=>$datetime]);
+		$getReward['u_id']=$uid;
 		$getReward['createtime']=time();
-		$todayreward=json_encode($getReward,TRUE);
+		$todayreward['today_rewards']=$getReward;
+		$result=json_encode($todayreward,TRUE);
 		Redis::LPUSH('reward_history',$todayreward);
 		return $todayreward;
  	}
@@ -109,7 +108,7 @@ class LoginRewardController extends Controller
 				$getReward['img_path']=$scData['sc_img_path'];
 			}
 
-			if(($loginCount+1)==$reward['days']){
+			if($loginCount==$reward['days']){
 				$getReward['today']=1;
 			}
 			else{
