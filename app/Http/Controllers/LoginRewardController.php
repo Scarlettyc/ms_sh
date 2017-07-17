@@ -70,7 +70,7 @@ class LoginRewardController extends Controller
 		$getReward['createtime']=time();
 		$todayreward['today_rewards']=$getReward;
 		$result=json_encode($todayreward,TRUE);
-		Redis::LPUSH('reward_history',$todayreward);
+		Redis::LPUSH('reward_history',$result);
 		return $todayreward;
  	}
 
