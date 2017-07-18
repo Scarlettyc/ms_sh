@@ -243,7 +243,7 @@ class BaggageController extends Controller
 		return $response;
 	}
 
-	function getResource ($baggage_u_id)
+	public function getResource ($baggage_u_id)
 	{
 		if(isset($baggage_u_id))
 		{
