@@ -161,7 +161,8 @@ class AccessController extends Controller
  		$header=$request->header('Content-Type');
  		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
+	 	$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
 		$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 		$loginTodayArr=json_decode($loginToday);
@@ -169,8 +170,7 @@ class AccessController extends Controller
 		//dd($data);
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
-			$now   = new DateTime;
-			$dmy=$now->format( 'Ymd' );
+
 			$loginToday=Redis::HGET('login_data',$dmy.$u_id);
 			$loginTodayArr=json_decode($loginToday);	
 			$result='';
