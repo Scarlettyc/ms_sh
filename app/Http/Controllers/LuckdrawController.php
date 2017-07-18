@@ -175,10 +175,10 @@ class LuckdrawController extends Controller
  				$draw_quantity=$defindMstModel->where('defind_id',2)->first();
  				$chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		 		$result=[];
-			 if($drawtype==1&&$userData['u_coin']<$draw_quantity*$luckdata['draw_spend']){
+			 if($drawtype==1&&$userData['u_coin']<$draw_quantity['value1']*$luckdata['draw_spend']){
 					throw new Exception("no enough coins");
 			 }
-			 else if($userData['u_gem']<$draw_quantity*$luckdata['draw_spend']){
+			 else if($userData['u_gem']<$draw_quantity['value1']*$luckdata['draw_spend']){
 					throw new Exception("no enough gems");
 			 }
 		   for($i=0;$i<$draw_quantity['value1'];$i++)
