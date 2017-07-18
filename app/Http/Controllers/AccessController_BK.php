@@ -47,7 +47,7 @@ class AccessController extends Controller
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
-					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					Redis::HSET('login_data',$dmy.$userfinal['u_id'],$loginlist);
 			$response=json_encode($userfinal,TRUE);
 			return  base64_encode($response);
 		
