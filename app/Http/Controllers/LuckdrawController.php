@@ -300,7 +300,7 @@ class LuckdrawController extends Controller
 		   				$baScNew['status']=0;
 		   				$baScNew['updatedate']=$date;
 		   				$baScNew['createdate']=$date;
-		   				$baScModel->insert($baEqNew);
+		   				$baScModel->insert($baScNew);
 		   				}		   			
 		 			}
 		 		return $draw;
