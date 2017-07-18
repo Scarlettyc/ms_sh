@@ -32,7 +32,7 @@ class MatchController extends Controller
 			$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
 		}
 		else{
-			$matchKey='match_maxlv_star'.$maxLv.'star'.$maxStar;
+			$matchKey='match_maxlv_star'.$match['star_from'].'star'.$match['star_to'];
 		}
 		$matchList=Redis::LLEN($matchKey);
 
