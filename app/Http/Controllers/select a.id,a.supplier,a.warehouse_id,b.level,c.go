@@ -1,1 +1,0 @@
-select a.id,a.supplier,a.warehouse_id,b.level,c.goods_name,c.size,c.brand from inventory as a left join level as b on a.goods_level = b.id left join (select a.goods_id as goods_id, a.goods_name as goods_name,b.brand as brand,c.size as size from goods as a left join brand as b on a.goods_brand=b.id left join size as c on a.goods_size=c.id) as c on a.goods_id=c.goods_id
