@@ -26,7 +26,7 @@ class TutorialController extends Controller
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 
-		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		if($access_token==$data['access_token'])
 		{
 			$uid=$data['u_id'];
 			$characterModel=new CharacterModel();
@@ -41,7 +41,7 @@ class TutorialController extends Controller
 				$characterModel->insert($char);
 				$finalChar=$characterModel->where('u_id',$uid)->first();
 				$response['user_data']['character_info']=json_encode($finalChar,TRUE);
-				return $response;
+				return base64_encode($response);
 			}
 			else {
 				throw new Exception("char already exist");
@@ -71,7 +71,7 @@ class TutorialController extends Controller
 			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1]);
 			$finalUser=$usermodel->where('u_id',$uid)->first();
 			$response['user_data']['user_info']=json_encode($finalUser,TRUE);
-		return $response;
+		return base64_encode($response);
 		}
 		else {
 			throw new Exception("there have some error of you access_token");

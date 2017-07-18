@@ -9,7 +9,9 @@ use App\Http\Requests;
 use App\Luck_draw_rewardsModel;
 use App\CharacterModel;
 use App\UserModel;
-use App\UserBaggageModel;
+use App\UserBaggageEqModel;
+use App\UserBaggageResModel;
+use App\UserBaggageScrollModel;
 use App\EquipmentMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
@@ -39,7 +41,10 @@ class LuckdrawController extends Controller
 			$drawtype=$data['draw_type'];
 			$luckdraw=new Luck_draw_rewardsModel();
 			$characterModel=new CharacterModel();
-			$baggageModel=new UserBaggageModel();
+			$baReModel=new UserBaggageResModel();
+			$baEqModel=new UserBaggageEqModel();
+			$baScModel=new UserBaggageScrollModel();
+
 			$rescourceModel=new ResourceMstModel();
 			$scrollModel=new ScrollMstModel();
 			$equipmentModel=new EquipmentMstModel();
@@ -57,26 +62,35 @@ class LuckdrawController extends Controller
 		   		$defindData=$defindMstModel->where('defind_id',3)->first(); 
 		  		$rate=rand($defindData['value1'], $defindData['value2']);
 				}
-		   	else {
+		   		else {
 		   		$defindData=$defindMstModel->where('defind_id',4)->first(); 
 		   		$rate=rand($defindData['value1'], $defindData['value2']);
-		   } 
+		   		} 
 		   
-		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		   if($drawresult){
-		   $draw['u_id']=$data['u_id'];
-		   $draw['item_org_id']=$drawresult['item_org_id'];
-		   $draw['item_quantity']=$drawresult['item_quantity'];
-		   $draw['item_type']=$drawresult['item_type'];
-		   $draw['createtime']=time();
-		   $draw['duration']=$drawresult['free_drwa_duration'];
-		   $draw['draw_type']=$drawtype;
+		   		$draw['u_id']=$data['u_id'];
+		   		$draw['item_org_id']=$drawresult['item_org_id'];
+		   		$draw['item_quantity']=$drawresult['item_quantity'];
+		   		$draw['item_type']=$drawresult['item_type'];
+		   		$draw['createtime']=time();
+		   		$draw['duration']=$drawresult['free_draw_duration'];
+		   		$draw['draw_type']=$drawtype;
 
 				if($drawresult['item_type']==1){
 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$rescourceData['r_name'];
 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
+		   			$draw['description']=$rescourceData['r_description'];
+		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->first();
+		   			if(isset($baRedata)){
+		   				$br_quanitty=$baRedata['br_quantity']+$draw['item_quantity'];
+		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
 		   			}
+		   			else{
+		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
+		   			}
+		   		}
 
 		   		else if ($drawresult['item_type']==2){
 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
@@ -91,7 +105,7 @@ class LuckdrawController extends Controller
 
 		 			Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   			$result['luckdraw']=$draw;
-		   			$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+		   			// $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 	
 				//	$response=json_encode($result,TRUE);
  	    	//		return $response;
@@ -151,7 +165,6 @@ class LuckdrawController extends Controller
 		   		$draw['item_quantity']=$drawresult['item_quantity'];
 		   		$draw['item_type']=$drawresult['item_type'];
 		  	 	$draw['createtime']=time();
-		  	 	$draw['duration']=$drawresult['free_drwa_duration'];
 		  	 	$draw['draw_type']=$drawtype;
 			if($drawresult['item_type']==1){
 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
