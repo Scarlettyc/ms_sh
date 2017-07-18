@@ -132,7 +132,6 @@ class LuckdrawController extends Controller
 
 		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
-		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 
 		   	$response=json_encode($result,TRUE);
  	    	return $response;
@@ -186,8 +185,7 @@ class LuckdrawController extends Controller
 					}   
 				}		
 		   		$final['luckdraw']=$result;
-		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
-		   			$response=json_encode($final,TRUE);
+		   		$response=json_encode($final,TRUE);
  	    		return $response;
  	    	
 
