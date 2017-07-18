@@ -109,7 +109,7 @@ class AccessController extends Controller
 					else {
 						throw new Exception("login error!");
 					}
-				$firstLogin=1;
+				$firstLogin=0;
 				}
 				else {
 					$token=$usermodel->createTOKEN(16);
@@ -122,7 +122,9 @@ class AccessController extends Controller
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
-					$firstLogin=0;
+					$loginlist=json_encode($logindata,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					$firstLogin=1;
 				}
 			
 			$userfinal=$usermodel->where('u_id','=',$userData['u_id'])->first();
