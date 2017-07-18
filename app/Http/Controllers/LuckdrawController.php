@@ -266,7 +266,7 @@ class LuckdrawController extends Controller
 		   				$baReNew['br_quantity']=$drawresult['item_quantity'];
 		   				$baReNew['status']=0;
 		   				$baReNew['updated_at']=$date;
-		   				$baReNew['creatdate']=$date;
+		   				$baReNew['createdate']=$date;
 		   				$baReModel->insert($baReNew);
 		   			}
 		   		}
@@ -283,7 +283,7 @@ class LuckdrawController extends Controller
 		   				$baEqNew['b_icon_path']=$equData['icon_path'];
 		   				$baEqNew['status']=0;
 		   				$baEqNew['updatedate']=$date;
-		   				$baEqNew['creatdate']=$date;
+		   				$baEqNew['createdate']=$date;
 		   				$baEqModel->insert($baEqNew);
 		   				}
 		   			}
@@ -299,7 +299,7 @@ class LuckdrawController extends Controller
 		   				$baScNew['bsc_icon']=$scData['icon_path'];
 		   				$baScNew['status']=0;
 		   				$baScNew['updatedate']=$date;
-		   				$baScNew['creatdate']=$date;
+		   				$baScNew['createdate']=$date;
 		   				$baScModel->insert($baEqNew);
 		   				}		   			
 		 			}
