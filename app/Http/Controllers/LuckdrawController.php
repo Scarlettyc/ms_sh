@@ -171,12 +171,14 @@ class LuckdrawController extends Controller
 		   		if($drawresult){
 		   		
 		   			$result[]=$this->chooseBaggage($drawresult,$data);
-				}   		
+					}   
+				}		
 		   		$final['luckdraw']=$result;
 		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 		   			$response=json_encode($final,TRUE);
  	    		return $response;
  	    	
+
  		}
 
  		private function chooseBaggage($drawresult,$data){
