@@ -294,9 +294,9 @@ class LuckdrawController extends Controller
 		   			$draw['description']=$scData['sc_description'];
 					for($i=0;$i<=$drawresult['item_quantity'];$i++){
 		   				$baScNew['u_id']=$data['u_id'];
-		   				$baScNew['bsc_id']=$scData['equ_id'];
-		   				$baScNew['bsc_rarity']=$scData['equ_rarity'];
-		   				$baScNew['bsc_icon']=$scData['icon_path'];
+		   				$baScNew['bsc_id']=$scData['sc_id'];
+		   				$baScNew['bsc_rarity']=$scData['sc_rarity'];
+		   				$baScNew['bsc_icon']=$scData['sc_img_path'];
 		   				$baScNew['status']=0;
 		   				$baScNew['updatedate']=$date;
 		   				$baScNew['createdate']=$date;
