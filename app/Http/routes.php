@@ -17,6 +17,7 @@ Route::get('now', function () {
 
 Route::auth();
 Route::controller('access','AccessController');
+Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
@@ -38,6 +39,13 @@ Route::post('/removeriend', 'FriendController@removeFriend');
 Route::post('/friendlist', 'FriendController@friend_list');
 Route::post('/get_friend_request', 'FriendController@friend_list');
 Route::post('/del_friend_request', 'FriendController@reject_request');
+
+Route::controller('loginreward','LoginRewardController');
+Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
+Route::post('/gettoday', 'LoginRewardController@getToday');
+
+
+
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
 // });
