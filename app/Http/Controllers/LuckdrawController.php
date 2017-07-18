@@ -85,7 +85,7 @@ class LuckdrawController extends Controller
 
 
  	public function oneDraw(Request $request){
- 				$req=$request->getContent();
+ 		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
@@ -100,7 +100,12 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();	
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
-		$userData=$usermodel->where('u_id',$data['u_id'])->first();
+
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		if($access_token==$data['access_token']){
+			$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   if($drawtype==1){
 		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
@@ -136,6 +141,11 @@ class LuckdrawController extends Controller
 			else{
 				throw new Exception("sorry, no avaliable prize");
 			}
+		}
+		else{
+    	throw new Exception("there have some error of you access_token");
+   		 }
+
 
  	}
 
@@ -210,7 +220,7 @@ class LuckdrawController extends Controller
 		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->first();
 		   			if(isset($baRedata)){
 		   				$br_quanitty=$baRedata['br_quantity']+$drawresult['item_quantity'];
-		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
+		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
 		   			}
 		   			else{
 		   				$baReNew['u_id']=$data['u_id'];
