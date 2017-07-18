@@ -121,11 +121,14 @@ class LuckdrawController extends Controller
 		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
 		   if($drawresult){
 				$draw=$this->chooseBaggage($drawresult,$data);
+
 		   		if($drawtype==1){
+		   			$draw['spent_coin']=$payBy;
 		   			$userCoin=$userData['u_coin']-$payBy;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
 		   		else {
+		   			$draw['spent_gem']=$payBy;
 		   			$userGem=$userData['u_gem']-$payBy;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
 		   		}
