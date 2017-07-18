@@ -46,7 +46,7 @@ class LuckdrawController extends Controller
 			if($gotToday){
 				$todaydraw=json_decode($gotToday,TRUE);
 				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
-				$result['luckdrawfree'.$drawtype]['timeuntil']=time()+$luckdata['duration']-$todaydraw['createtime'];
+				$result['luckdrawfree'.$drawtype]['timeuntil']=time()+$luckdata['free_draw_duration']-$todaydraw['createtime'];
 				$response=json_encode($result,TRUE);
  	    		return $response;
                      
