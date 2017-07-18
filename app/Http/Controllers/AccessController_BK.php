@@ -61,14 +61,14 @@ class AccessController extends Controller
 		if(isset($data['email'])&&isset($data['password']))
 		{  
 			$userData=$usermodel->where('email','=',$data['email'])->
-			where('password',md5($data['password']))->first();
+			where('password',$data['password'])->first();
 		}
 		else if(isset($data['fb_id'])){
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
 		}
 		else if (isset($data['friend_id'])&&isset($data['password'])){
 			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->
-			where('password',md5($data['password']))->first();
+			where('password',$data['password'])->first();
 
 		}
 		else {
