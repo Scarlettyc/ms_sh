@@ -27,15 +27,13 @@ class MatchController extends Controller
 		$chardata=$characterModel->where('u_id',$u_id)->first();
 		$maxLv=$matchrange->max('user_lv_to');
 		$maxStar=$matchrange->max('star_from');
+		$match=$matchrange->where('ch_star','<=',$chardata['ch_star'])->where('star_to','<=',$chardata['ch_star'])->first();
 		if($chardata['ch_lv']<$maxLv){
-		}
-		else if($chardata['ch_star']<$maxStar){
-			$match=$matchrange->where('ch_star','<=',$chardata['ch_lv'])->where('star_to','<=',$chardata['ch_lv'])->first();
-			$matchKey='match_range_star'.$match['star_from'].'to'.$match['star_to'];
+			$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
 
 		}
 		else{
-			$matchKey='match_range_lv'.$maxLv.'star'.$maxStar;
+			$matchKey='match_maxlv_star'.$maxLv.'star'.$maxStar;
 		}
 		$matchList=Redis::LLEN($matchKey);
 
