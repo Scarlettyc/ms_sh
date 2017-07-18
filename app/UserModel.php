@@ -19,15 +19,14 @@ class UserModel extends Model
 
      }
      
-     public function createNew($data){
+     public function createNew($udata){
      	$lastUid=$this->select(DB::raw('MAX(u_id)'))->first();
         $uid=substr($lastUid['MAX(u_id)'],2,11)+1;
         $udata['u_id']=substr($lastUid['MAX(u_id)'],0,2).$uid;
         $udata['createdate']=Carbon::now();
-        $udata['friend_id']==$this->createTOKEN(11);
+        $udata['friend_id']=$this->createTOKEN(11);
         $udata['password']=md5($this->createTOKEN(8));
-        $result=array_merge($data,$udata);
-        $this->insert($result);
+        $this->insert($udata);
      }
     public function createTOKEN($length){
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
