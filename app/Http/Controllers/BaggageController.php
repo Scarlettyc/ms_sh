@@ -86,20 +86,22 @@ class BaggageController extends Conroller
 				$Core=getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
 				$response=json_encode($result,TRUE);
-			}else{
+			}else
+			{
 				throw new Exception("Wrong select data");
 				$response=[
 				'status' => 'Wrong',
 				'error' => "please check select data",
-				]
-			}else
-			{
-				throw new Exception("No User ID");
-				$response=[
-				'status' => 'Wrong',
-				'error' => "please check u_id",
-				]
+				];
 			}
+		}else
+		{
+			throw new Exception("No User ID");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
 		return $response;
 	}
 
@@ -207,7 +209,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check Scroll id",
-			]
+			];
 		}
 		return $response;		
 	}
@@ -257,7 +259,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
-			]
+			];
 		}
 		return $response;
 	}
@@ -278,7 +280,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
-			]
+			];
 		}
 		return $response;
 	}
@@ -299,7 +301,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
-			]
+			];
 		}
 		return $response;
 	}
@@ -320,7 +322,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
-			]
+			];
 		}
 		return $response;
 	}
@@ -341,7 +343,7 @@ class BaggageController extends Conroller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
-			]
+			];
 		}
 		return $response;
 	}
