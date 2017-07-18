@@ -20,6 +20,7 @@ class AccessController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
+			$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
@@ -61,7 +62,7 @@ class AccessController extends Controller
 		else if(isset($data['fb_id'])){
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
 		}
-		else if (isset($data['friend_id'])&&isset($data['password']){
+		else if (isset($data['friend_id'])&&isset($data['password'])){
 			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->
 			where('password',md5($data['password']))->first();
 
