@@ -164,7 +164,7 @@ class AccessController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		//dd($data);
