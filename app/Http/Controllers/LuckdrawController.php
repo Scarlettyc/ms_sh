@@ -130,7 +130,7 @@ class LuckdrawController extends Controller
 		   		else {
 		   			$draw['spent_gem']=$drawresult['draw_spend'];
 		   			$userGem=$userData['u_gem']-$drawresult['draw_spend'];
-		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
+		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 		   		}
 
 		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
