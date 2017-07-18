@@ -243,8 +243,11 @@ class BaggageController extends Controller
 		return $response;
 	}
 
-	public function getResource ($baggage_u_id)
+	public function getResource (Request $request)
 	{
+		$req=$request->getContent();
+		$baggage_u_id=json_decode($req,TRUE);
+		
 		if(isset($baggage_u_id))
 		{
 			$UserBaggageResModel=new UserBaggageResModel();
