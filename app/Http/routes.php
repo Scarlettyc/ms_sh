@@ -17,6 +17,7 @@ Route::get('now', function () {
 
 Route::auth();
 Route::controller('access','AccessController');
+Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');

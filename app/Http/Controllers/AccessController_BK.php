@@ -16,6 +16,30 @@ use Log;
 use DateTime;
 class AccessController extends Controller
 {
+	public function quickLogin(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$usermodel=new UserModel();
+		if(isset($data['uuid']))
+		{  	if($data['os']='ios'&&strlen($data['uuid'])==40)
+			{
+				if($usermodel->isExist('uuid',$data['uuid'])>0)
+				{	$usermodel->where('uuid',$data['uuid'])->update(['uuid'=>0,'updated_at'=>$datetime]);
+					
+				}
+					$usermodel->createNew($data);
+			}
+			else {
+				
+			}
+		else {
+			throw new Exception("oppos, give me a correct uuid");
+			}
+		}
+	}
 	public function login(Request $request)
 	{
 		$req=$request->getContent();
@@ -30,50 +54,25 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
         $userData=$data;
-		if(isset($data['uuid']))
+		if(isset($data['email']))
 		{  
-			if($data['os']='ios'&&strlen($data['uuid'])==40)
-			{
-				if($usermodel->isExist('uuid',$data['uuid'])>0)
-				{	
-					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-					$u_id=$userData['u_id'];
-					$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
-					if($userData['pass_tutorial']&&$userChar)
-					{	
-						$result['user_data']['character_info']=$userChar;
-						$result['user_data']['equipment_info']=$this->getEquip($userChar);
-					}
-				}
-				else {
-						$usermodel->createNew($data);
-				}
-			}
-			else if(strlen($data['uuid'])==37){
-				if($usermodel->isExist('uuid',$data['uuid'])>0)
-				{	
-					$userData=$usermodel->where('uuid','=',$data['uuid'])->first();
-					$u_id=$userData['u_id'];
-					$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
-					if($userData['pass_tutorial']&&$userChar)
-					{	
-						$result['user_data']['character_info']=$userChar;
-						$result['user_data']['equipment_info']=$this->getEquip($userChar);
-					}
-				}
-				else {
-						$usermodel->createNew($data);
-				}
+			$userData=$usermodel->where('email','=',$data['email'])->first();
+		}
+		else if(isset($data['fb_id'])){
+			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
+		}
+		else if (isset($data['friend_id'])){
+			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->first();
 
-			}
-			else{
-			throw new Exception("oppos, give me a correct uuid");
-			$response = [
-			'status' => 'wrong',
-			'error' => "please send uuid",
-			];
-
-			}
+		}
+			$u_id=$userData['u_id'];
+			$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
+			if($userData['pass_tutorial']&&$userChar)
+				{	
+					$result['user_data']['character_info']=$userChar;
+					$result['user_data']['equipment_info']=$this->getEquip($userChar);
+				}
+				
 			$lastweek=date("Ymd",strtotime("-1 week"));
 
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
