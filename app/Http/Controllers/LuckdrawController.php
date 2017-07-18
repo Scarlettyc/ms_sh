@@ -166,8 +166,8 @@ class LuckdrawController extends Controller
 		if($access_token==$data['access_token']){
 
  				$drawtype=$data['draw_type'];
- 				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
  				$luckdraw=new Luck_draw_rewardsModel();
+ 				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
  				$characterModel=new CharacterModel();
  				$defindMstModel=new DefindMstModel();
  				$usermodel=new UserModel();
