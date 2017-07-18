@@ -56,12 +56,26 @@ class TutorialController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$uid=$data['u_id'];
-		$usermodel=new UserModel();
-		$characterModel=new CharacterModel();
-		$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1);
-		$finalUser=$usermodel->where('u_id',$uid)->first();
-		$response['user_data']['user_info']=json_encode($finalUser,TRUE);
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$data=json_decode($json,TRUE);
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+
+		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		{
+			$uid=$data['u_id'];
+			$usermodel=new UserModel();
+			$characterModel=new CharacterModel();
+			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1);
+			$finalUser=$usermodel->where('u_id',$uid)->first();
+			$response['user_data']['user_info']=json_encode($finalUser,TRUE);
 		return $response;
+		}
+		else {
+			throw new Exception("there have some error of you access_token");
+		}
+
 	}
  }
