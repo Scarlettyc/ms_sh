@@ -28,33 +28,38 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
+		$data=json_decode($json,TRUE);
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 
-		$result=[];
-		$drawtype=$data['draw_type'];
-		$luckdraw=new Luck_draw_rewardsModel();
-		$characterModel=new CharacterModel();
-		$baggageModel=new UserBaggageModel();
-		$rescourceModel=new ResourceMstModel();
-		$scrollModel=new ScrollMstModel();
-		$equipmentModel=new EquipmentMstModel();
-		$defindMstModel=new DefindMstModel();
-		$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
-		if($gotToday){
-			$todaydraw=json_decode($gotToday,TRUE);
-			$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
-			$result['luckdrawfree'.$drawtype]['timeuntil']=time()-$todaydraw['createtime']+$luckdata['duration'];
+		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		{
+			$result=[];
+			$drawtype=$data['draw_type'];
+			$luckdraw=new Luck_draw_rewardsModel();
+			$characterModel=new CharacterModel();
+			$baggageModel=new UserBaggageModel();
+			$rescourceModel=new ResourceMstModel();
+			$scrollModel=new ScrollMstModel();
+			$equipmentModel=new EquipmentMstModel();
+			$defindMstModel=new DefindMstModel();
+			$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
+			if($gotToday){
+				$todaydraw=json_decode($gotToday,TRUE);
+				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
+				$result['luckdrawfree'.$drawtype]['timeuntil']=time()-$todaydraw['createtime']+$luckdata['duration'];
                      
-		}
-		else {
-		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
-		   if($drawtype==1){
-		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
-		   $rate=rand($defindData['value1'], $defindData['value2']);
-			
-	}
-		   else {
-		   	$defindData=$defindMstModel->where('defind_id',4)->first(); 
-		   	$rate=rand($defindData['value1'], $defindData['value2']);
+			}
+			else {
+		   		$chardata=$characterModel->where('u_id',$data['u_id'])->first();	
+		  	 if($drawtype==1){
+		   		$defindData=$defindMstModel->where('defind_id',3)->first(); 
+		  		$rate=rand($defindData['value1'], $defindData['value2']);
+				}
+		   	else {
+		   		$defindData=$defindMstModel->where('defind_id',4)->first(); 
+		   		$rate=rand($defindData['value1'], $defindData['value2']);
 		   } 
 		   
 		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
@@ -95,9 +100,13 @@ class LuckdrawController extends Controller
 				throw new Exception("sorry, no avaliable prize");
 			}
 
- 	}
+ 		}
          $response=json_encode($result,TRUE);
                                 return $response;
+    }
+    else{
+    	throw new Exception("there have some error of you access_token");
+    }
  }
 
 
