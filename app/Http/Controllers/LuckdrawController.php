@@ -134,6 +134,7 @@ class LuckdrawController extends Controller
 		   		}
 
 		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
+		   		unset($draw['duration']);  
 		   		$result['luckdraw']=$draw;
 
 		   	$response=json_encode($result,TRUE);
