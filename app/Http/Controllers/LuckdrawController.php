@@ -223,7 +223,7 @@ class LuckdrawController extends Controller
 		   		}
 
 		   		else if ($drawresult['item_type']==2){
-		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
+		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$equData['equ_name'];
 		   			$draw['item_img_path']=$equData['icon_path'];
 		   			$draw['description']=$rescourceData['equ_description'];
@@ -239,7 +239,7 @@ class LuckdrawController extends Controller
 		   				}
 		   			}
 		   		else if ($drawresult['item_type']==3){
-		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
+		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$scData['sc_name'];
 		   			$draw['item_img_path']=$scData['sc_img_path'];
 		   			$draw['description']=$scData['sc_description'];
