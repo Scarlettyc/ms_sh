@@ -88,6 +88,7 @@ class AccessController extends Controller
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
+			$firstLogin=0;
 			if($loginToday){
 				$loginTodayArr=json_decode($loginToday);
 				$token=$usermodel->createTOKEN(16);
@@ -108,6 +109,7 @@ class AccessController extends Controller
 					else {
 						throw new Exception("login error!");
 					}
+				$firstLogin=1;
 				}
 				else {
 					$token=$usermodel->createTOKEN(16);
@@ -120,6 +122,7 @@ class AccessController extends Controller
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
+					$firstLogin=0;
 				}
 			
 			$userfinal=$usermodel->where('u_id','=',$userData['u_id'])->first();
@@ -127,6 +130,7 @@ class AccessController extends Controller
 			$account['email']=$userfinal['email'];
 			$account['fb_id']=$userfinal['fb_id'];
 			$account['friend_id']=$userfinal['friend_id'];
+			$account['first_login']=$firstLogin;
 			$result['user_data']['user_info']=$userfinal;
 			$result['user_data']['account_info']=$account;
 			date_default_timezone_set("UTC");
