@@ -68,7 +68,7 @@ class TutorialController extends Controller
 			$uid=$data['u_id'];
 			$usermodel=new UserModel();
 			$characterModel=new CharacterModel();
-			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1);
+			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1]);
 			$finalUser=$usermodel->where('u_id',$uid)->first();
 			$response['user_data']['user_info']=json_encode($finalUser,TRUE);
 		return $response;
