@@ -114,22 +114,20 @@ class WorkshopController extends Controller
 		$req=$request->getContent();
 		$equipmentID=json_decode($req,TRUE);
 
-		$equipmentMstModel=new EquipmentMstModel();
-		$effectionMstModel=new EffectionMstModel();
-		$result=[];
-
-		$equipmentInfo = $equipmentMstModel->where('equ_id', '=', $equipmentID)->first();
-		if(isset($equipmentInfo))
+		if(isset($equipmentID))
 		{
+			$equipmentMstModel=new EquipmentMstModel();
+			$effectionMstModel=new EffectionMstModel();
+			$result=[];
+
+			$equipmentInfo = $equipmentMstModel->where('equ_id', '=', $equipmentID)->first();
+
 			$result['equipment_d']['equipment_i']=$equipmentInfo;
 
 			$eff_id=$equipmentInfo['eff_id'];
 
 			$effInfo=$effectionMstModel->where('eff_id','=', $eff_id)->first();
-			$result['eff_d']['eff_i']=$effInfo;
-
-			$response=json_encode($result,TRUE);
-			return $response;
+			$result['equipment_d']['eff_i']=$effInfo;
 		}else{
 			throw new Exception("Wrong equipment ID");
 			$response=[
@@ -137,7 +135,8 @@ class WorkshopController extends Controller
 			'error' => "please check Equipment ID",
 			];
 		}
-		
+		$response=json_encode($result,TRUE);
+		return $response;
 	}
 
 	public function getSkillInfo(Request $request)
@@ -145,22 +144,20 @@ class WorkshopController extends Controller
 		$req=$request->getContent();
 		$skillID=json_decode($req,TRUE);
 
-		$skillMstModel=new SkillMstModel();
-		$effectionMstModel=new EffectionMstModel();
-		$result=[];
-
-		$skillInfo = $skillMstModel->where('skill_id', '=', $skillID)->first();
-		if(isset($skillInfo))
+		if(isset($skillID))
 		{
+			$skillMstModel=new SkillMstModel();
+			$effectionMstModel=new EffectionMstModel();
+			$result=[];
+
+			$skillInfo = $skillMstModel->where('skill_id', '=', $skillID)->first();
+
 			$result['skill_d']['skill_i']=$skillInfo;
 
 			$eff_id=$skillInfo['eff_id'];
 
 			$effInfo=$effectionMstModel->where('eff_id', '=', $eff_id)->first();
-			$result['eff_d']['eff_i']=$effInfo;
-
-			$response=json_encode($result,TRUE);
-			return $response;
+			$result['skill_d']['eff_i']=$effInfo;
 		}else{
 			throw new Exception("Wrong skill ID");
 			$response=[
@@ -168,6 +165,8 @@ class WorkshopController extends Controller
 			'error' => "please check Skill ID",
 			];
 		}
+		$response=json_encode($result,TRUE);
+		return $response;
 	}
 
 

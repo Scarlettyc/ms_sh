@@ -26,9 +26,13 @@ Route::controller('tutorial','TutorialController');
 Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
-Route::post('/workshop', 'WorkshopController@workshop');
-Route::post('/getEquipmentInfo', 'WorkshopController@getEquipmentInfo');
-Route::post('/getSkillInfo', 'WorkshopController@getSkillInfo');
+
+Route::controller('baggage','BaggageController');
+Route::post('/baggage','BaggageController@baggage');
+Route::post('/getResourceInfo','BaggageController@getResourceInfo');
+Route::post('/getScrollInfo','BaggageController@getScrollInfo');
+Route::post('/getEquipmentInfo','BaggageController@getEquipmentInfo');
+
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
