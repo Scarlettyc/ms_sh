@@ -204,7 +204,7 @@ class LuckdrawController extends Controller
 				}
 				
 		   		if($drawtype==1){
-		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity
+		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity;
 		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
@@ -275,7 +275,7 @@ class LuckdrawController extends Controller
 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id'])->first();
 		   			$draw['item_name']=$equData['equ_name'];
 		   			$draw['item_img_path']=$equData['icon_path'];
-		   			$draw['description']=$rescourceData['equ_description'];
+		   			$draw['description']=$equData['equ_description'];
 		   			for($i=0;$i<=$drawresult['item_quantity'];$i++){
 		   				$baEqNew['u_id']=$data['u_id'];
 		   				$baEqNew['b_equ_id']=$equData['equ_id'];
