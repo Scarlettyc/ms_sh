@@ -41,13 +41,6 @@ class LuckdrawController extends Controller
 			$drawtype=$data['draw_type'];
 			$luckdraw=new Luck_draw_rewardsModel();
 			$characterModel=new CharacterModel();
-			$baReModel=new UserBaggageResModel();
-			$baEqModel=new UserBaggageEqModel();
-			$baScModel=new UserBaggageScrollModel();
-
-			$rescourceModel=new ResourceMstModel();
-			$scrollModel=new ScrollMstModel();
-			$equipmentModel=new EquipmentMstModel();
 			$defindMstModel=new DefindMstModel();
 			$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
 			if($gotToday){
@@ -67,60 +60,25 @@ class LuckdrawController extends Controller
 		   		$rate=rand($defindData['value1'], $defindData['value2']);
 		   		} 
 		   
+
 		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
-		   if($drawresult){
-		   		$draw['u_id']=$data['u_id'];
-		   		$draw['item_org_id']=$drawresult['item_org_id'];
-		   		$draw['item_quantity']=$drawresult['item_quantity'];
-		   		$draw['item_type']=$drawresult['item_type'];
-		   		$draw['createtime']=time();
-		   		$draw['duration']=$drawresult['free_draw_duration'];
-		   		$draw['draw_type']=$drawtype;
+		   	 if($drawresult){
 
-				if($drawresult['item_type']==1){
-		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
-		   			$draw['item_name']=$rescourceData['r_name'];
-		   			$draw['item_img_path']=$rescourceData['r_img_path'];
-		   			$draw['description']=$rescourceData['r_description'];
-		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->first();
-		   			if(isset($baRedata)){
-		   				$br_quanitty=$baRedata['br_quantity']+$draw['item_quantity'];
-		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
-		   			}
-		   			else{
-		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
-		   			}
-		   		}
-
-		   		else if ($drawresult['item_type']==2){
-		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$equData['equ_name'];
-		   			$draw['item_img_path']=$equData['icon_path'];
-		   			}
-		   		else if ($drawresult['item_type']==3){
-		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$scData['sc_name'];
-		   			$draw['item_img_path']=$scData['sc_img_path'];
-		 			}
-
+		  	 		$draw=$this->chooseBaggage($drawresult,$data);
 		 			Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   			$result['luckdraw']=$draw;
-		   			// $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
-	
-				//	$response=json_encode($result,TRUE);
- 	    	//		return $response;
- 			}
-			else{
-				throw new Exception("sorry, no avaliable prize");
-			}
+					$response=json_encode($result,TRUE);
+ 	    			return $response;
+ 					}
+				else{
+					throw new Exception("sorry, no avaliable prize");
+				}
 
- 		}
-         $response=json_encode($result,TRUE);
-                                return $response;
-    }
-    else{
+ 			}
+    	}
+    	else{
     	throw new Exception("there have some error of you access_token");
-    }
+   		 }
  }
 
 
@@ -137,14 +95,9 @@ class LuckdrawController extends Controller
 		$result=[];
 		$drawtype=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
-		$characterModel=new CharacterModel();
-		$baggageModel=new UserBaggageModel();
-		$rescourceModel=new ResourceMstModel();
-		$scrollModel=new ScrollMstModel();
-		$equipmentModel=new EquipmentMstModel();
+		$characterModel=new CharacterModel();	
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
-		$baggageModel=new UserBaggageModel();
 		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   if($drawtype==1){
@@ -160,29 +113,7 @@ class LuckdrawController extends Controller
 		   
 		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
 		   if($drawresult){
-		   		$draw['u_id']=$data['u_id'];
-		   		$draw['item_org_id']=$drawresult['item_org_id'];
-		   		$draw['item_quantity']=$drawresult['item_quantity'];
-		   		$draw['item_type']=$drawresult['item_type'];
-		  	 	$draw['createtime']=time();
-		  	 	$draw['draw_type']=$drawtype;
-			if($drawresult['item_type']==1){
-		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
-		   			$draw['item_name']=$rescourceData['r_name'];
-		   			$draw['item_img_path']=$rescourceData['r_img_path'];
-		   			}
-
-		   	else if ($drawresult['item_type']==2){
-		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$equData['equ_name'];
-		   			$draw['item_img_path']=$equData['icon_path'];
-		   			}
-		   	else if ($drawresult['item_type']==3){
-		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$scData['sc_name'];
-		   			$draw['item_img_path']=$scData['sc_img_path'];
-		 		}
-		   	
+				$draw=$this->chooseBaggage($drawresult,$data);
 		   		if($drawtype==1){
 		   			$userCoin=$userData['u_coin']-$payBy;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
@@ -192,13 +123,13 @@ class LuckdrawController extends Controller
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
 		   		}
 
-		   Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
-		   $result['luckdraw']=$draw;
-		   $baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
+		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
+		   		$result['luckdraw']=$draw;
+		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 
 		   	$response=json_encode($result,TRUE);
  	    	return $response;
-		   }
+		   	}
 		 
 			else{
 				throw new Exception("sorry, no avaliable prize");
@@ -215,20 +146,14 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$result=[];
 		$drawtype=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
 		$characterModel=new CharacterModel();
-		$baggageModel=new UserBaggageModel();
-		$rescourceModel=new ResourceMstModel();
-		$scrollModel=new ScrollMstModel();
-		$equipmentModel=new EquipmentMstModel();
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
-		$baggageModel=new UserBaggageModel();
 		$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		$draw_quantity=$defindMstModel->where('defind_id',2)->first();
-		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
+		 $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   $result=[];
 		   for($i=0;$i<$draw_quantity['value1'];$i++){
 		   		if($drawtype==1){
@@ -242,51 +167,92 @@ class LuckdrawController extends Controller
 		   	 	$payBy=$userData['u_gem'];
 		  		} 
 		   
-		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
-		   if($drawresult){
-		   		$draw['u_id']=$data['u_id'];
-		   		$draw['item_org_id']=$drawresult['item_org_id'];
-		   		$draw['item_quantity']=$drawresult['item_quantity'];
-		   		$draw['item_type']=$drawresult['item_type'];
-		  	 	$draw['createtime']=time();
-		  	 	$draw['duration']=$drawresult['free_drwa_duration'];
-		  	 	$draw['draw_type']=$drawtype;
-			
-			if($drawresult['item_type']==1){
-		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$rescourceData['r_name'];
-		   			$draw['item_img_path']=$rescourceData['r_img_path'];
-		   			}
-
-		   	else if ($drawresult['item_type']==2){
-		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$equData['equ_name'];
-		   			$draw['item_img_path']=$equData['icon_path'];
-		   			}
-		   	else if ($drawresult['item_type']==3){
-		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
-		   			$draw['item_name']=$scData['sc_name'];
-		   			$draw['item_img_path']=$scData['sc_img_path'];
-		 		}
-		   
-		   		if($drawtype==1){
-		   			$userCoin=$userData['u_coin']-$payBy;
-		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
-		   		}
-		   		else {
-		   			$userGem=$userData['u_gem']-$payBy;
-		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
-		   			}
-		   			Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
-		   			$result[]=$draw;
-		   		}
+		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
+		   		if($drawresult){
 		   		
-			}
-		   		
+		   			$result[]=$this->chooseBaggage($drawresult,$data);
+				}   		
 		   		$final['luckdraw']=$result;
 		   		$baggageModel->updatebaggage($data['u_id'],$drawresult['item_type'],$drawresult['item_org_id'],$drawresult['item_quantity']);
 		   			$response=json_encode($final,TRUE);
  	    		return $response;
  	    	
+ 		}
+
+ 		private function chooseBaggage($drawresult,$data){
+ 			$baReModel=new UserBaggageResModel();
+			$baEqModel=new UserBaggageEqModel();
+			$baScModel=new UserBaggageScrollModel();
+
+			$rescourceModel=new ResourceMstModel();
+			$scrollModel=new ScrollMstModel();
+			$equipmentModel=new EquipmentMstModel();
+
+		   		$draw['u_id']=$data['u_id'];
+		   		$draw['item_org_id']=$drawresult['item_org_id'];
+		   		$draw['item_quantity']=$drawresult['item_quantity'];
+		   		$draw['item_type']=$drawresult['item_type'];
+		   		$draw['createtime']=time();
+		   		$draw['duration']=$drawresult['free_draw_duration'];
+		   		$draw['draw_type']=$drawtype;
+
+ 			if($drawresult['item_type']==1){
+		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
+		   			$draw['item_name']=$rescourceData['r_name'];
+		   			$draw['item_img_path']=$rescourceData['r_img_path'];
+		   			$draw['description']=$rescourceData['r_description'];
+		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->first();
+		   			if(isset($baRedata)){
+		   				$br_quanitty=$baRedata['br_quantity']+$drawresult['item_quantity'];
+		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updatedate'=>$date]);
+		   			}
+		   			else{
+		   				$baReNew['u_id']=$data['u_id'];
+		   				$baReNew['br_id']=$drawresult['item_org_id'];
+		   				$baReNew['br_icon']=$rescourceData['r_img_path'];
+		   				$baReNew['br_rarity']=$rescourceData['r_rarity'];
+		   				$baReNew['br_type']=$rescourceData['r_type'];
+		   				$baReNew['br_quantity']=$drawresult['item_quantity'];
+		   				$baReNew['status']=0;
+		   				$baReNew['updatedate']=$date;
+		   				$baReNew['creatdate']=$date;
+		   				$baReModel->insert($baReNew);
+		   			}
+		   		}
+
+		   		else if ($drawresult['item_type']==2){
+		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id']);
+		   			$draw['item_name']=$equData['equ_name'];
+		   			$draw['item_img_path']=$equData['icon_path'];
+		   			$draw['description']=$rescourceData['equ_description'];
+		   			for($i=0;$i<=$drawresult['item_quantity'];$i++){
+		   				$baEqNew['u_id']=$data['u_id'];
+		   				$baEqNew['b_equ_id']=$equData['equ_id'];
+		   				$baEqNew['b_equ_rarity']=$equData['equ_rarity'];
+		   				$baEqNew['b_icon_path']=$equData['icon_path'];
+		   				$baEqNew['status']=0;
+		   				$baEqNew['updatedate']=$date;
+		   				$baEqNew['creatdate']=$date;
+		   				$baEqModel->insert($baEqNew);
+		   				}
+		   			}
+		   		else if ($drawresult['item_type']==3){
+		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id']);
+		   			$draw['item_name']=$scData['sc_name'];
+		   			$draw['item_img_path']=$scData['sc_img_path'];
+		   			$draw['description']=$scData['sc_description'];
+					for($i=0;$i<=$drawresult['item_quantity'];$i++){
+		   				$baScNew['u_id']=$data['u_id'];
+		   				$baScNew['bsc_id']=$equData['equ_id'];
+		   				$baScNew['bsc_rarity']=$equData['equ_rarity'];
+		   				$baScNew['bsc_icon']=$equData['icon_path'];
+		   				$baScNew['status']=0;
+		   				$baScNew['updatedate']=$date;
+		   				$baScNew['creatdate']=$date;
+		   				$baScModel->insert($baEqNew);
+		   				}		   			
+		 			}
+		 		return $draw;
+
  		}
 }
