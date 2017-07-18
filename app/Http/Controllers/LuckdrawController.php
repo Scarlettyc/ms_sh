@@ -123,13 +123,13 @@ class LuckdrawController extends Controller
 				$draw=$this->chooseBaggage($drawresult,$data);
 
 		   		if($drawtype==1){
-		   			$draw['spent_coin']=$payBy;
-		   			$userCoin=$userData['u_coin']-$payBy;
+		   			$draw['spent_coin']=$drawresult['draw_spend'];
+		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
 		   		else {
-		   			$draw['spent_gem']=$payBy;
-		   			$userGem=$userData['u_gem']-$payBy;
+		   			$draw['spent_gem']=$drawresult['draw_spend'];
+		   			$userGem=$userData['u_gem']-$drawresult['draw_spend'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userCoin]);
 		   		}
 
