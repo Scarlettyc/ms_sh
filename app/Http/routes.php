@@ -32,6 +32,7 @@ Route::post('/baggage','BaggageController@baggage');
 Route::post('/getResourceInfo','BaggageController@getResourceInfo');
 Route::post('/getScrollInfo','BaggageController@getScrollInfo');
 Route::post('/getEquipmentInfo','BaggageController@getEquipmentInfo');
+Route::post('/getResource','BaggageController@getResource');
 
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
