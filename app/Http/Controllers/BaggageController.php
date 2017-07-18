@@ -92,15 +92,14 @@ class BaggageController extends Conroller
 				'status' => 'Wrong',
 				'error' => "please check select data",
 				]
+			}else
+			{
+				throw new Exception("No User ID");
+				$response=[
+				'status' => 'Wrong',
+				'error' => "please check u_id",
+				]
 			}
-		}else
-		{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			]
-		}
 		return $response;
 	}
 
