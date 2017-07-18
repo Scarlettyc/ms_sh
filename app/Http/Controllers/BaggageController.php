@@ -116,7 +116,7 @@ class BaggageController extends Conroller
 			$result=[];
 
 			$ResourceInfo = $ResourceMstModel->where('r_id','=',$ResId)->first();
-			$result=['Resource_data']['Resource_info']=$ResourceInfo;
+			$result['Resource_data']['Resource_info']=$ResourceInfo;
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Resource ID");
@@ -226,11 +226,11 @@ class BaggageController extends Conroller
 			$result=[];
 
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$WeaponId)->first();
-			$result=['Equipment_data']['Equipment_info']=$EquipmentInfo;
+			$result['Equipment_data']['Equipment_info']=$EquipmentInfo;
 
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
-			$result=['Equipment_data']['EquipmentEff_info']=$EquipmentEffInfo;
+			$result['Equipment_data']['EquipmentEff_info']=$EquipmentEffInfo;
 
 			$response=json_encode($result,TRUE);
 		}else{
