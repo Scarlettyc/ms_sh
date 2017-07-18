@@ -189,7 +189,9 @@ class LuckdrawController extends Controller
 			$rescourceModel=new ResourceMstModel();
 			$scrollModel=new ScrollMstModel();
 			$equipmentModel=new EquipmentMstModel();
-
+			$now   = new DateTime;
+			$date=$now->format( 'Y-m-d h:m:s' );
+			
 		   		$draw['u_id']=$data['u_id'];
 		   		$draw['item_org_id']=$drawresult['item_org_id'];
 		   		$draw['item_quantity']=$drawresult['item_quantity'];
