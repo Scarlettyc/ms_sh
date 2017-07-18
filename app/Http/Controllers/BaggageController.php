@@ -144,7 +144,7 @@ class BaggageController extends Conroller
 			$ResourceMstModel=new ResourceMstModel();
 			$EffectionMstModel=new EffectionMstModel();
 			$UserBaggageResModel=new UserBaggageResModel();	
-			$result[];
+			$result=[];
 
 			$ScrollInfo = $ScrollMstModel->where('sc_id','=',$ScrollId)->first();
 			$result['Scroll_data']['Scroll_info']=$ScrollInfo;
