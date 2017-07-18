@@ -47,6 +47,8 @@ class LuckdrawController extends Controller
 				$todaydraw=json_decode($gotToday,TRUE);
 				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
 				$result['luckdrawfree'.$drawtype]['timeuntil']=time()-$todaydraw['createtime']+$luckdata['duration'];
+				$response=json_encode($result,TRUE);
+ 	    		return $response;
                      
 			}
 			else {
@@ -191,7 +193,7 @@ class LuckdrawController extends Controller
 			$equipmentModel=new EquipmentMstModel();
 			$now   = new DateTime;
 			$date=$now->format( 'Y-m-d h:m:s' );
-			
+
 		   		$draw['u_id']=$data['u_id'];
 		   		$draw['item_org_id']=$drawresult['item_org_id'];
 		   		$draw['item_quantity']=$drawresult['item_quantity'];

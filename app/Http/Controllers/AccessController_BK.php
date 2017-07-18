@@ -31,7 +31,7 @@ class AccessController extends Controller
 				{	$usermodel->where('uuid',$data['uuid'])->update(['uuid'=>0,'updated_at'=>$datetime]);
 					
 				}
-					$usermodel->createNew($data);
+					$usermodel->createNew($data);	
 			}
 		}
 		else {
@@ -39,6 +39,15 @@ class AccessController extends Controller
 		}
 
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$token=$usermodel->createTOKEN(16);
+					$logindata['u_id']=$userfinal['u_id'];
+					$logindata['lastlogin']=time(); 
+					$logindata['access_token']=$token; 
+					$logindata['logoff']=0; 
+					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
+					$logindata['createdate']= time();
+					$loginlist=json_encode($logindata,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 			$response=json_encode($userfinal,TRUE);
 			return  base64_encode($response);
 		
