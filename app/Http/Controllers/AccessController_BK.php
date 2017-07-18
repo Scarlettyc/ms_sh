@@ -96,8 +96,6 @@ class AccessController extends Controller
 				$logoff=$loginTodayArr->logoff;
 				if($logoff!=0){
 					$logindata['u_id']=$userData['u_id'];
-					$logindata['uuid']=$userData['uuid'];
-					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -114,8 +112,6 @@ class AccessController extends Controller
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
-					$logindata['uuid']=$userData['uuid'];
-					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -167,8 +163,11 @@ class AccessController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+		$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		//dd($data);
-		if(isset($data['u_id'])){
+		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
 			$now   = new DateTime;
 			$dmy=$now->format( 'Ymd' );
@@ -189,7 +188,7 @@ class AccessController extends Controller
 			return  $response;
 	}
 	else {
-			throw new Exception("oppos, need u_id");
+			throw new Exception("there have some error of you access_token");
 		}
 	}
 }
