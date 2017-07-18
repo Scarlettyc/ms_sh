@@ -46,6 +46,7 @@ class BaggageController extends Controller
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select'];
+		echo "test";
 		if(isset($u_id))
 		{
 			if($select = 'All')
