@@ -20,7 +20,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
 
-class BaggageController extends Conroller
+class BaggageController extends Controller
 {
 	public function baggage(Request $request)
 	{
