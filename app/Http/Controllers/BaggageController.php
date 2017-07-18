@@ -46,7 +46,6 @@ class BaggageController extends Controller
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select'];
-		echo "test";
 		if(isset($u_id))
 		{
 			if($select = 'All')
@@ -67,7 +66,6 @@ class BaggageController extends Controller
 				$Resource=getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
-				echo "Resource";
 			}elseif($select = 'S')
 			{
 				$Scroll=getScroll($u_id);
@@ -103,7 +101,6 @@ class BaggageController extends Controller
 			'status' => 'Wrong',
 			'error' => "please check u_id",
 			];
-			echo "error";
 		}
 		return $response;
 	}
