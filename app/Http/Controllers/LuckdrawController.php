@@ -204,13 +204,13 @@ class LuckdrawController extends Controller
 				}
 				
 		   		if($drawtype==1){
-		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity;
-		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity;
+		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity['value1'];
+		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity['value1'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
 		   		else {
-		   			$result['spent_gem']=$drawresult['draw_spend']*$draw_quantity;
-		   			$userGem=$userData['u_gem']-$drawresult['draw_spend'];
+		   			$result['spent_gem']=$drawresult['draw_spend']*$draw_quantity['value1'];
+		   			$userGem=$userData['u_gem']-$drawresult['draw_spend']*$draw_quantity['value1'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 		   		}
 
