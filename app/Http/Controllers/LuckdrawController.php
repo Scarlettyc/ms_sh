@@ -196,7 +196,7 @@ class LuckdrawController extends Controller
 		   		$draw['item_type']=$drawresult['item_type'];
 		   		$draw['createtime']=time();
 		   		$draw['duration']=$drawresult['free_draw_duration'];
-		   		$draw['draw_type']=$drawtype;
+		   		$draw['draw_type']=$data['draw_type'];
 
  			if($drawresult['item_type']==1){
 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
