@@ -40,7 +40,7 @@ class AccessController extends Controller
 
 			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
 			$response=json_encode($userfinal,TRUE);
-			return  $response;
+			return  base64_encode($response);
 		
 	}
 
@@ -134,7 +134,8 @@ class AccessController extends Controller
 			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
-			return  $response;
+
+			return  base64_encode($response);
 		}
 		else {
 
@@ -185,7 +186,7 @@ class AccessController extends Controller
 			$loginlist=json_encode($logindata,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
 			$response="success logout";
-			return  $response;
+			return  base64_encode($response);
 	}
 	else {
 			throw new Exception("there have some error of you access_token");
