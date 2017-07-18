@@ -20,11 +20,12 @@ class AccessController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
+		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
 		if(isset($data['uuid']))
-		{  	if($data['os']='ios'&&strlen($data['uuid'])==40)
+		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
 				if($usermodel->isExist('uuid',$data['uuid'])>0)
 				{	$usermodel->where('uuid',$data['uuid'])->update(['uuid'=>0,'updated_at'=>$datetime]);
@@ -32,14 +33,17 @@ class AccessController extends Controller
 				}
 					$usermodel->createNew($data);
 			}
-			else {
-				
-			}
+		}
 		else {
 			throw new Exception("oppos, give me a correct uuid");
-			}
 		}
+
+			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$response=json_encode($userfinal,TRUE);
+			return  base64_encode($response);
+		
 	}
+
 	public function login(Request $request)
 	{
 		$req=$request->getContent();
@@ -54,81 +58,90 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
         $userData=$data;
-		if(isset($data['email']))
+		if(isset($data['email'])&&isset($data['password']))
 		{  
-			$userData=$usermodel->where('email','=',$data['email'])->first();
+			$userData=$usermodel->where('email','=',$data['email'])->
+			where('password',$data['password'])->first();
 		}
 		else if(isset($data['fb_id'])){
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
 		}
-		else if (isset($data['friend_id'])){
-			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->first();
+		else if (isset($data['friend_id'])&&isset($data['password'])){
+			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->
+			where('password',$data['password'])->first();
 
 		}
-			$u_id=$userData['u_id'];
-			$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
-			if($userData['pass_tutorial']&&$userChar)
-				{	
-					$result['user_data']['character_info']=$userChar;
-					$result['user_data']['equipment_info']=$this->getEquip($userChar);
-				}
+		else {
+			throw new Exception("no info of this account");
+			
+		}
+		if(isset($userData)){
+		
+		$u_id=$userData['u_id'];
+		$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
+		if($userData['pass_tutorial']&&$userChar)
+		{	
+			$result['user_data']['character_info']=$userChar;
+			$result['user_data']['equipment_info']=$this->getEquip($userChar);
+		}
 				
-			$lastweek=date("Ymd",strtotime("-1 week"));
-
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
-			$haveLogin=false;
-			$logoff=false;
+			$logoff=0;
 			$token='';
-				if($loginToday){
-					$loginTodayArr=json_decode($loginToday);
-					$token=$usermodel->createTOKEN(16);
-					$status=$loginTodayArr->status;
-					$logoff=$loginTodayArr->logoff;
-					if($logoff!=0){
-						$logindata['u_id']=$userData['u_id'];
-						$logindata['uuid']=$userData['uuid'];
-						$logindata['os']=$userData['os'];
-						$logindata['lastlogin']=time(); 
-						$logindata['access_token']=$token; 
-						$logindata['logoff']=0; 
-						$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
-						$logindata['createdate']=$loginTodayArr->createdate; 
-						$loginlist=json_encode($logindata,TRUE);
-						Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
-					}
+			$firstLogin=0;
+			if($loginToday){
+				$loginTodayArr=json_decode($loginToday);
+				$token=$usermodel->createTOKEN(16);
+				$status=$loginTodayArr->status;
+				$logoff=$loginTodayArr->logoff;
+				if($logoff!=0){
+					$logindata['u_id']=$userData['u_id'];
+					$logindata['lastlogin']=time(); 
+					$logindata['access_token']=$token; 
+					$logindata['logoff']=0; 
+					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
+					$logindata['createdate']=$loginTodayArr->createdate; 
+					$loginlist=json_encode($logindata,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+				}
 					else {
 						throw new Exception("login error!");
 					}
+				$firstLogin=0;
 				}
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
-					$logindata['uuid']=$userData['uuid'];
-					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
 					$logindata['status']=0;//online 0, in backend 1, logof 2 
 					$logindata['createdate']=time(); 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
+					$loginlist=json_encode($logindata,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					$firstLogin=1;
 				}
 			
-			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$userfinal=$usermodel->where('u_id','=',$userData['u_id'])->first();
 			$userfinal['access_token']=$token;
+			$account['email']=$userfinal['email'];
+			$account['fb_id']=$userfinal['fb_id'];
+			$account['friend_id']=$userfinal['friend_id'];
+			$account['first_login']=$firstLogin;
 			$result['user_data']['user_info']=$userfinal;
+			$result['user_data']['account_info']=$account;
 			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
+
+			return  base64_encode($response);
 		}
 		else {
 
-			throw new Exception("oppos, you nee Need UUId");
-			$response = [
-			'status' => 'wrong',
-			'error' => "please send uuid",
-			];
+			throw new Exception("no available account");
 		}
-		return  $response;
+		
 	}
 
 	public function test (Request $request){
@@ -149,13 +162,16 @@ class AccessController extends Controller
  		$header=$request->header('Content-Type');
  		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
+	 	$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		//dd($data);
-		if(isset($data['u_id'])){
+		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
-			$now   = new DateTime;
-			$dmy=$now->format( 'Ymd' );
+
 			$loginToday=Redis::HGET('login_data',$dmy.$u_id);
 			$loginTodayArr=json_decode($loginToday);	
 			$result='';
@@ -170,10 +186,10 @@ class AccessController extends Controller
 			$loginlist=json_encode($logindata,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
 			$response="success logout";
-			return  $response;
+			return  base64_encode($response);
 	}
 	else {
-			throw new Exception("oppos, need u_id");
+			throw new Exception("there have some error of you access_token");
 		}
 	}
 }

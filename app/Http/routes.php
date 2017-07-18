@@ -21,6 +21,8 @@ Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
+
+Route::controller('tutorial','TutorialController');
 Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');

@@ -23,26 +23,36 @@ class LoginRewardController extends Controller
 		$data=json_decode($json,TRUE);
 		$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$uid=$data['u_id'];
-		$userModel=new UserModel();
-		$loginRewardsModel= new Login_rewardsModel();
-		$defindMstModel=new DefindMstModel();
+		$dmy=$now->format( 'Ymd' );
+		$loginToday=Redis::HGET('login_data',$dmy.$uid);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_to;
+		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		{
+			$uid=$data['u_id'];
+			$userModel=new UserModel();
+			$loginRewardsModel= new Login_rewardsModel();
+			$defindMstModel=new DefindMstModel();
 
-		$userData=$userModel->where('u_id',$uid)->first();
-		$maxDays=$defindMstModel->where('defind_id',5)->first();
-		$loginRewards=$loginRewardsModel->where('days','<=',$maxDays['value1'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
-		$loginCount=$userData['u_login_count']+1;
-		$result=[];
-		foreach($loginRewards as $reward){
+			$userData=$userModel->where('u_id',$uid)->first();
+			$maxDays=$defindMstModel->where('defind_id',5)->first();
+			$loginRewards=$loginRewardsModel->where('days','<=',$maxDays['value1'])->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$loginCount=$userData['u_login_count']+1;
+			$result=[];
+			foreach($loginRewards as $reward){
 			
 			$getReward=$this->chooseReward($reward,$loginCount);
 
 			$result['login_rewards'][]=$getReward;
+			}
+			$response=json_encode($result,TRUE);
+			return base64_encode($response);
+
+		}
+		else {
+			throw new Exception("there have some error of you access_token");
 		}
 
-		$response=json_encode($result,TRUE);
-
-		return $response;
 
  	}
  	public function getToday(Request $request){
@@ -51,19 +61,24 @@ class LoginRewardController extends Controller
 		$data=json_decode($json,TRUE);
 		$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$uid=$data['u_id'];
-		$userModel=new UserModel();
-		$loginRewardsModel= new Login_rewardsModel();
-		$defindMstModel=new DefindMstModel();
-		$userData=$userModel->where('u_id',$uid)->first();
-		$maxDays=$defindMstModel->where('defind_id',5)->first();
-		$todayRewards=$loginRewardsModel->where('days',$userData['u_login_count']+1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$dmy=$now->format( 'Ymd' );
+		$loginToday=Redis::HGET('login_data',$dmy.$uid);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_to;
+		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		{ 	$uid=$data['u_id'];
+			$userModel=new UserModel();
+			$loginRewardsModel= new Login_rewardsModel();
+			$defindMstModel=new DefindMstModel();
+			$userData=$userModel->where('u_id',$uid)->first();
+			$maxDays=$defindMstModel->where('defind_id',5)->first();
+			$todayRewards=$loginRewardsModel->where('days',$userData['u_login_count']+1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$loginCount=$userData['u_login_count']+1;
 		$getReward=$this->chooseReward($todayRewards,$loginCount);
 		
-		if($loginCount==$maxDays['value1']+1){
+			if($loginCount==$maxDays['value1']+1){
 			$loginCount=1;
-		}
+			}
 
 		$userModel->where('u_id',$uid)->update(['u_login_count'=>$loginCount,'updated_at'=>$datetime]);
 		$getReward['u_id']=$uid;
@@ -71,7 +86,12 @@ class LoginRewardController extends Controller
 		$todayreward['today_rewards']=$getReward;
 		$result=json_encode($todayreward,TRUE);
 		Redis::LPUSH('reward_history',$result);
-		return $todayreward;
+		return base64_encode($result);
+		}
+		else {
+			throw new Exception("there have some error of you access_token");
+		}
+
  	}
 
  	private function chooseReward($reward,$loginCount){
