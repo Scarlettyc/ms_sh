@@ -20,7 +20,7 @@ class AccessController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		
+		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
@@ -37,6 +37,10 @@ class AccessController extends Controller
 		else {
 			throw new Exception("oppos, give me a correct uuid");
 		}
+
+			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$response=json_encode($userfinal,TRUE);
+			return  $response;
 		
 	}
 
