@@ -137,6 +137,7 @@ class AccessController extends Controller
 			$account['friend_id']=$userfinal['friend_id'];
 			$account['first_login']=$firstLogin;
 			$result['user_data']['user_info']=$userfinal;
+			$result['user_data']['char_info']=$userChar;
 			$result['user_data']['account_info']=$account;
 			date_default_timezone_set("UTC");
 
