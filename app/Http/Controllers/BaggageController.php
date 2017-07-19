@@ -232,7 +232,7 @@ class BaggageController extends Controller
 			$EffectionMstModel=new EffectionMstModel();
 			$result=[];
 
-			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$WeaponId)->first();
+			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first();
 			$result['Equipment_data']['Equipment_info']=$EquipmentInfo;
 
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
