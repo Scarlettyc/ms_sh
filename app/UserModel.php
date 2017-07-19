@@ -28,6 +28,7 @@ class UserModel extends Model
         $udata['friend_id']=$this->createTOKEN(11);
         $udata['password']=md5($this->createTOKEN(8));
         $this->insert($udata);
+        return $udata;
      }
     public function createTOKEN($length){
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

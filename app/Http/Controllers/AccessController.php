@@ -27,14 +27,14 @@ class AccessController extends Controller
 		if(isset($data['uuid']))
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
-					$usermodel->createNew($data);	
+					$userData=$usermodel->createNew($data);	
 			}
 		}
 		else {
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
-			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
+			$userfinal=$userData;
 
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userfinal['u_id'];
