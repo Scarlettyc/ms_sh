@@ -223,7 +223,7 @@ class BaggageController extends Controller
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$EquipmentId=$data['EquId']
+		$EquipmentId=$data['EquId'];
 
 		if(isset($EquipmentId))
 		{
