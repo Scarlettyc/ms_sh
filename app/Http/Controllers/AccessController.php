@@ -34,20 +34,19 @@ class AccessController extends Controller
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
-			$userfinal=$userData;
 
 			$token=$usermodel->createTOKEN(16);
-					$logindata['u_id']=$userfinal['u_id'];
-					$logindata['uuid']=$data['uuid'];
+					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token;
 					$logindata['logoff']=0; 
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
-					Redis::HSET('login_data',$dmy.$userfinal['u_id'],$loginlist);
-					$userfinal['access_token']=$token;
-			$response=json_encode($userfinal,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					$userData['access_token']=$token;
+			$response=json_encode($userData,TRUE);
 			return  base64_encode($response);
 		
 	}
