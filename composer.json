@@ -24,7 +24,11 @@
             "App\\": "app/"
         },
         "files": [
-            "app/getResource.php"
+            "app/getResource.php",
+            "app/getScroll.php",
+            "app/getWeapon",
+            "app/getMovement",
+            "app/getCore"
         ]
     },
     "autoload-dev": {
