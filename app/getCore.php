@@ -20,7 +20,7 @@ function getCore ($baggage_u_id)
 		$baggageCore=$UserBaggageEqModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
 		$result['Baggage_data']['Baggage_Core']=$baggageCore;
 
-		$response=json_encode($result,TRUE);
+		$response=$result;
 	}else{
 		throw new Exception("No User ID");
 		$response=[

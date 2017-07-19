@@ -20,7 +20,7 @@ function getScroll ($baggage_u_id)
 		$baggageScroll=$UserBaggageScrollModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
 		$result['Baggage_data']['Baggage_Scroll']=$baggageScroll;
 
-		$response=json_encode($result,TRUE);
+		$response=$result;
 	}else{
 		throw new Exception("No User ID");
 		$response=[
