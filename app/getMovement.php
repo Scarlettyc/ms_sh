@@ -28,5 +28,6 @@ function getMovement ($baggage_u_id)
 		'error' => "please check u_id",
 		];
 	}
-	return $response;
+	
+	return stripslashes($response);
 }
