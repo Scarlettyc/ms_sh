@@ -110,7 +110,9 @@ class BaggageController extends Controller
 	public function getResourceInfo (Request $request)
 	{
 		$req=$request->getContent();
-		$ResId=json_decode($req,TRUE);
+		$data=json_decode($req,TRUE);
+
+		$ResId=$data['ResId'];
 
 		if(isset($ResId))
 		{
@@ -135,7 +137,7 @@ class BaggageController extends Controller
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$ScrollId=$data['Scroll'];
+		$ScrollId=$data['ScrollId'];
 		$u_id=$data['u_id'];
 
 		if(isset($ScrollId))
@@ -219,7 +221,9 @@ class BaggageController extends Controller
 	public function getEquipmentInfo (Request $request)
 	{
 		$req=$request->getContent();
-		$EquipmentId=json_decode($req,TRUE);
+		$data=json_decode($req,TRUE);
+
+		$EquipmentId=$data['EquId']
 
 		if(isset($EquipmentId))
 		{
