@@ -42,9 +42,7 @@ class BaggageUtil
 			$result=[];
 
 			$baggageScroll=$UserBaggageScrollModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
-			$result['Baggage_data']['Baggage_Scroll']=$baggageScroll;
-
-			$response=$result;
+			$response=$baggageScroll;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -63,9 +61,7 @@ class BaggageUtil
 			$result=[];
 
 			$baggageWeapon=$UserBaggageEqModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->get();
-			$result['Baggage_data']['Baggage_weapon']=$baggageWeapon;
-
-			$response=$result;
+			$response=$baggageWeapon;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -84,9 +80,7 @@ class BaggageUtil
 			$result=[];
 
 			$baggageCore=$UserBaggageEqModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
-			$result['Baggage_data']['Baggage_Core']=$baggageCore;
-
-			$response=$result;
+			$response=$baggageCore;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -105,9 +99,7 @@ class BaggageUtil
 			$result=[];
 
 			$baggageMovement=$UserBaggageEqModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',2)->get();
-			$result['Baggage_data']['Baggage_movement']=$baggageMovement;
-
-			$response=$result;
+			$response=$baggageMovement;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
