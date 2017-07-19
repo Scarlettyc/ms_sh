@@ -9,7 +9,6 @@ use App\UserModel;
 use App\CharacterModel;
 use Exception;
 use DateTime;
-use App\UserModel;
 use App\CharacterModel;
 use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
