@@ -63,7 +63,8 @@ class BaggageController extends Controller
 				$response=json_encode($result,TRUE);
 			}elseif($select = 'R')
 			{
-				$Resource=getResource($u_id);
+				$Du_id=json_encode($u_id,TRUE);
+				$Resource=getResource($Du_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
 			}elseif($select = 'S')
