@@ -48,7 +48,7 @@ class BaggageController extends Controller
 		$select=$userBaggageChoice['select'];
 		if(isset($u_id))
 		{
-			if($select = 'All')
+			if($select === "All")
 			{
 				$Resource=getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
@@ -61,27 +61,27 @@ class BaggageController extends Controller
 				$Core=getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
 				$response=json_encode($result,TRUE);
-			}else if($select = 'R')
+			}else if($select === "R")
 			{
 				$Resource=getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
-			}else if($select = 'S')
+			}else if($select === "S")
 			{
 				$Scroll=getScroll($u_id);
 				$result['Baggage_data']['Baggage_info']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}else if($select = 'W')
+			}else if($select === "W")
 			{
 				$Weapon=getWeapon($u_id);
 				$result['Baggage_data']['Baggage_info']=$Weapon;
 				$response=json_encode($result,TRUE);
-			}else if($select = 'M')
+			}else if($select === "M")
 			{
 				$Movement=getMovement($u_id);
 				$result['Baggage_data']['Baggage_info']=$Movement;
 				$response=json_encode($result,TRUE);
-			}else if($select = 'C')
+			}else if($select === "C")
 			{
 				$Core=getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
