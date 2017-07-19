@@ -103,6 +103,7 @@ class AccessController extends Controller
 				$logoff=$loginTodayArr->logoff;
 				if($logoff!=0){
 					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -119,6 +120,7 @@ class AccessController extends Controller
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
