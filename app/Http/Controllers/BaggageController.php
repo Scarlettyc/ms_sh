@@ -34,7 +34,6 @@ class BaggageController extends Controller
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
-		$getResource=new getResource();
 		$result=[];
 
 		/*$datetime=$now->format( 'Y-m-d h:m:s' );
@@ -64,8 +63,7 @@ class BaggageController extends Controller
 				$response=json_encode($result,TRUE);
 			}elseif($select = 'R')
 			{
-				$Du_id=json_encode($u_id,TRUE);
-				$Resource=getResource($Du_id);
+				$Resource=getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
 			}elseif($select = 'S')
