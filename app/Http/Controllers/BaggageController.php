@@ -190,8 +190,8 @@ class BaggageController extends Controller
 			$result['Normal_Resource1_data']['Normal_Resource1_quantity']=$NormalRes1Quantity;
 
 			//if have normal resource 2, get normal resource 2 icon and the number or resource that user already had
-			$Normal_res_id_2=$ScrollInfo['r_id_4'];
-			if(isset($Normal_res_id_2))
+			$normal_res_id_2=$ScrollInfo['r_id_4'];
+			if(isset($normal_res_id_2))
 			{
 				$NormalRes2Info = $ResourceMstModel->where('r_id','=',$normal_res_id_2)->pluck('r_img_path');
 				$result['Normal_Resource2_data']['Normal_Resource2_icon']=$NormalRes2Info;
@@ -200,8 +200,8 @@ class BaggageController extends Controller
 			}
 
 			//if have normal resource 3, get normal resource 3 icon and the number or resource that user already had
-			$Normal_res_id_3=$ScrollInfo['r_id_5'];
-			if(isset($Normal_res_id_3))
+			$normal_res_id_3=$ScrollInfo['r_id_5'];
+			if(isset($normal_res_id_3))
 			{
 				$NormalRes3Info = $ResourceMstModel->where('r_id','=',$normal_res_id_3)->pluck('r_img_path');
 				$result['Normal_Resource3_data']['Normal_Resource3_icon']=$NormalRes3Info;
