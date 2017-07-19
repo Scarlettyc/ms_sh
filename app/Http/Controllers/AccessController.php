@@ -27,10 +27,6 @@ class AccessController extends Controller
 		if(isset($data['uuid']))
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
-				if($usermodel->isExist('uuid',$data['uuid'])>0)
-				{	$usermodel->where('uuid',$data['uuid'])->update(['uuid'=>0,'updated_at'=>$datetime]);
-					
-				}
 					$usermodel->createNew($data);	
 			}
 		}
