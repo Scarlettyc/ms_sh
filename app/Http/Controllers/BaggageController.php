@@ -51,15 +51,15 @@ class BaggageController extends Controller
 			if($select === "All")
 			{
 				$Resource=getResource($u_id);
-				$result['Baggage_data']['Baggage_info']=$Resource;
+				$result['Baggage_data']['Baggage_info_Res']=$Resource;
 				$Scroll=getScroll($u_id);
-				$result['Baggage_data']['Baggage_info']=$Scroll;
+				$result['Baggage_data']['Baggage_info_Scr']=$Scroll;
 				$Weapon=getWeapon($u_id);
-				$result['Baggage_data']['Baggage_info']=$Weapon;
+				$result['Baggage_data']['Baggage_info_Wea']=$Weapon;
 				$Movement=getMovement($u_id);
-				$result['Baggage_data']['Baggage_info']=$Movement;
+				$result['Baggage_data']['Baggage_info_Mov']=$Movement;
 				$Core=getCore($u_id);
-				$result['Baggage_data']['Baggage_info']=$Core;
+				$result['Baggage_data']['Baggage_info_Core']=$Core;
 				$response=json_encode($result,TRUE);
 			}else if($select === "R")
 			{
