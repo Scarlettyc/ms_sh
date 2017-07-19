@@ -164,7 +164,7 @@ class FriendController extends Controller
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
  		$key='friend_coin_'.$dmy.'_'.$u_id;
- 		$sentCoin=Redis::HEXISTS($key,$friend['u_id'];
+ 		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
  		$sentFriends=Redis::HKEYS($key,$friend['u_id']);
  		if($sentCoin<1&&count($sentFriends)<10){
 		Redis::HSET($key,$friend['u_id'],time());
