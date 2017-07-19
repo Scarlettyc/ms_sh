@@ -61,27 +61,27 @@ class BaggageController extends Controller
 				$Core=getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
 				$response=json_encode($result,TRUE);
-			}elseif($select = 'R')
+			}else if($select = 'R')
 			{
 				$Resource=getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
-			}elseif($select = 'S')
+			}else if($select = 'S')
 			{
 				$Scroll=getScroll($u_id);
 				$result['Baggage_data']['Baggage_info']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}elseif($select = 'W')
+			}else if($select = 'W')
 			{
 				$Weapon=getWeapon($u_id);
 				$result['Baggage_data']['Baggage_info']=$Weapon;
 				$response=json_encode($result,TRUE);
-			}elseif($select = 'M')
+			}else if($select = 'M')
 			{
 				$Movement=getMovement($u_id);
 				$result['Baggage_data']['Baggage_info']=$Movement;
 				$response=json_encode($result,TRUE);
-			}elseif($select = 'C')
+			}else if($select = 'C')
 			{
 				$Core=getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
@@ -243,7 +243,7 @@ class BaggageController extends Controller
 		return $response;
 	}
 
-	function getResource ($baggage_u_id)
+	/*function getResource ($baggage_u_id)
 	{		
 		if(isset($baggage_u_id))
 		{
@@ -346,5 +346,5 @@ class BaggageController extends Controller
 			];
 		}
 		return $response;
-	}
+	}*/
 }
