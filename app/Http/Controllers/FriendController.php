@@ -6,14 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\UserModel;
-use App\CharacterModel;
 use Exception;
 use DateTime;
 use App\CharacterModel;
 use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
-use DateTime;
 class FriendController extends Controller
 {
 	public function searchFriend(Request $request){
