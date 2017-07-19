@@ -34,6 +34,7 @@ class BaggageController extends Controller
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$getResource=new getResource();
 		$result=[];
 
 		/*$datetime=$now->format( 'Y-m-d h:m:s' );
