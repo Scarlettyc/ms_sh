@@ -20,14 +20,13 @@ function getMovement ($baggage_u_id)
 		$baggageMovement=$UserBaggageEqModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',2)->get();
 		$result['Baggage_data']['Baggage_movement']=$baggageMovement;
 
-		$response=json_encode($result,TRUE);
+		$response=$result;
 	}else{
 		throw new Exception("No User ID");
 		$response=[
 		'status' => 'Wrong',
 		'error' => "please check u_id",
 		];
-	}
-	
-	return stripslashes($response);
+	}	
+	return $response;
 }
