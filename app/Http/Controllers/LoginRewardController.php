@@ -24,12 +24,13 @@ class LoginRewardController extends Controller
 		$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
+		$uid=$data['u_id'];
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_to;
 		if(isset($data['u_id'])&&$access_token==$data['access_token'])
 		{
-			$uid=$data['u_id'];
+			
 			$userModel=new UserModel();
 			$loginRewardsModel= new Login_rewardsModel();
 			$defindMstModel=new DefindMstModel();
