@@ -13,6 +13,7 @@ use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
+use App\Util\BaggageUtil;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -34,6 +35,7 @@ class BaggageController extends Controller
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
 		/*$datetime=$now->format( 'Y-m-d h:m:s' );
@@ -50,40 +52,40 @@ class BaggageController extends Controller
 		{
 			if($select === "All")
 			{
-				$Resource=getResource($u_id);
+				$Resorce=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']['Baggage_info_Res']=$Resource;
-				$Scroll=getScroll($u_id);
+				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']['Baggage_info_Scr']=$Scroll;
-				$Weapon=getWeapon($u_id);
+				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']['Baggage_info_Wea']=$Weapon;
-				$Movement=getMovement($u_id);
+				$Movement=$BaggageUtil->getMovement($u_id);
 				$result['Baggage_data']['Baggage_info_Mov']=$Movement;
-				$Core=getCore($u_id);
+				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']['Baggage_info_Core']=$Core;
 				$response=json_encode($result,TRUE);
 			}else if($select === "R")
 			{
-				$Resource=getResource($u_id);
+				$Resorce=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']['Baggage_info']=$Resource;
 				$response=json_encode($result,TRUE);
 			}else if($select === "S")
 			{
-				$Scroll=getScroll($u_id);
+				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']['Baggage_info']=$Scroll;
 				$response=json_encode($result,TRUE);
 			}else if($select === "W")
 			{
-				$Weapon=getWeapon($u_id);
+				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']['Baggage_info']=$Weapon;
 				$response=json_encode($result,TRUE);
 			}else if($select === "M")
 			{
-				$Movement=getMovement($u_id);
+				$Movement=$BaggageUtil->getMovement($u_id);
 				$result['Baggage_data']['Baggage_info']=$Movement;
 				$response=json_encode($result,TRUE);
 			}else if($select === "C")
 			{
-				$Core=getCore($u_id);
+				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']['Baggage_info']=$Core;
 				$response=json_encode($result,TRUE);
 			}else
