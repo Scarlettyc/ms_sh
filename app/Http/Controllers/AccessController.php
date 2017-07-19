@@ -38,7 +38,7 @@ class AccessController extends Controller
 
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userfinal['u_id'];
-					$logindate['uuid']=$data['uuid'];
+					$logindata['uuid']=$data['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token;
 					$logindata['logoff']=0; 
