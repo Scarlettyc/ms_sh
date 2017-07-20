@@ -119,7 +119,7 @@ class BaggageController extends Controller
 		}else if($ItemType === "itemtype_3")
 		{
 			$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
-			$response=$ScrollInfo；
+			$response=$ScrollInfo;
 		}else
 		{
 			throw new Exception("Wrong itemtype data");
