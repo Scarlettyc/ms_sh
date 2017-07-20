@@ -38,6 +38,7 @@ class AccessController extends Controller
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$data['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token;
 					$logindata['logoff']=0; 
@@ -104,6 +105,7 @@ class AccessController extends Controller
 				if($logoff!=0){
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -121,6 +123,7 @@ class AccessController extends Controller
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
