@@ -71,9 +71,10 @@ class AccessController extends Controller
         $userData=$data;
 		if(isset($data['user_name'])&&isset($data['password']))
 		{  	
-			if(strpos('@', $data['user_name'])){ 
+			if(strpos($data['user_name'],'@')){ 
 				$userData=$usermodel->where('email','=',$data['user_name'])->
 				where('password',$data['password'])->first();
+
 			}
 			else {
 				$userData=$usermodel->where('friend_id','=',$data['user_name'])->
