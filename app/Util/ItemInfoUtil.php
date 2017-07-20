@@ -2,6 +2,7 @@
 namespace App\Util;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\UserModel;
 use App\EquipmentMstModel;
 use App\EffectionMstModel;
 use App\SkillMstModel;
@@ -26,9 +27,9 @@ class ItemInfoUtil
 			$ResourceMstModel=new ResourceMstModel();
 			$result=[];
 
-			$ResourceInfo = $ResourceMstModel->where('r_id','=',$ResId)->first();
+			$ResourceInfo = $ResourceMstModel->select('r_id','r_name','r_rarity','r_type','r_img_path','r_description')->where('r_id','=',$ResId)->first();
 			$result['Resource_data']['Resource_info']=$ResourceInfo;
-			$response=$result;
+			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Resource ID");
 			$response=[
@@ -46,6 +47,7 @@ class ItemInfoUtil
 
 		if(isset($ScrollId))
 		{
+			$UserModel=new UserModel();
 			$ScrollMstModel=new ScrollMstModel();
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
@@ -55,12 +57,14 @@ class ItemInfoUtil
 			$result=[];
 
 			$ScrollInfo = $ScrollMstModel->where('sc_id','=',$ScrollId)->first();
-			$result['Scroll_data']['Scroll_info']=$ScrollInfo;
+			$ScrollDataInfo = $ScrollMstModel->select('sc_name','rd1_quantity','rd2_quantity','rd3_quantity','rd4_quantity','rd5_quantity','sc_rarity','sc_description','sc_img_path','sc_sale_price')->where('sc_id','=',$ScrollId)->first();
+			$result['Scroll_data']['Scroll_info']=$ScrollDataInfo;
 
 			//get equipment information and skill information from database
 			$equ_id=$ScrollInfo['equ_id'];
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$equ_id)->first();
-			$result['Equipment_data']['Equipment_info']=$EquipmentInfo;
+			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','icon_path')->where('equ_id','=',$equ_id)->first();
+			$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
 
 			$EquEff_id = $EquipmentInfo['eff_id'];
 			$EquEffectInfo = $EffectionMstModel->where('eff_id','=',$EquEff_id)->first();
@@ -68,7 +72,8 @@ class ItemInfoUtil
 
 			$Skill_id = $EquipmentInfo['skill_id'];
 			$SkillInfo = $SkillMstModel->where('skill_id','=',$Skill_id)->first();
-			$result['Skill_data']['Skill_info']=$SkillInfo;
+			$SkillDataInfo = $SkillMstModel->select('skill_name','skill_icon','skill_info')->where('skill_id','=',$Skill_id)->first();
+			$result['Skill_data']['Skill_info']=$SkillDataInfo;
 
 			$SkillEff_id = $SkillInfo['eff_id'];
 			$SkillEffectInfo = $EffectionMstModel->where('eff_id','=',$SkillEff_id)->first();
@@ -82,8 +87,7 @@ class ItemInfoUtil
 			$result['Rare_Resource_data']['Rare_Resource_quantity']=$RareResQuantity;
 
 			//get the number of coin that user already had
-			$coin_res_id=$ScrollInfo['r_id_2'];
-			$CoinResQuantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$coin_res_id)->pluck('br_quantity');
+			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->pluck('u_coin');
 
 			//get normal resource 1 icon and the number or resource that user already had
 			$normal_res_id_1=$ScrollInfo['r_id_3'];
@@ -132,7 +136,8 @@ class ItemInfoUtil
 			$result=[];
 
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first();
-			$result['Equipment_data']['Equipment_info']=$EquipmentInfo;
+			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','equ_price','icon_path')->where('equ_id','=',$EquipmentId)->first();
+			$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
 
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
