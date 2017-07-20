@@ -57,7 +57,7 @@ class ItemInfoUtil
 			$result=[];
 
 			$ScrollInfo = $ScrollMstModel->where('sc_id','=',$ScrollId)->first();
-			$ScrollDataInfo = $ScrollMstModel->select('sc_name','rd1_quantity','rd2_quantity','rd3_quantity','rd4_quantity','rd5_quantity','sc_rarity','sc_description','sc_img_path')->where('sc_id','=',$ScrollId)->first();
+			$ScrollDataInfo = $ScrollMstModel->select('sc_name','rd1_quantity','rd2_quantity','rd3_quantity','rd4_quantity','rd5_quantity','sc_rarity','sc_description','sc_img_path','sc_sale_price')->where('sc_id','=',$ScrollId)->first();
 			$result['Scroll_data']['Scroll_info']=$ScrollDataInfo;
 
 			//get equipment information and skill information from database

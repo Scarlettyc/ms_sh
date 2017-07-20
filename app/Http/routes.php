@@ -29,9 +29,6 @@ Route::post('/logout', 'AccessController@logout');
 
 Route::controller('baggage','BaggageController');
 Route::post('/baggage','BaggageController@baggage');
-Route::post('/getResourceInfo','BaggageController@getResourceInfo');
-Route::post('/getScrollInfo','BaggageController@getScrollInfo');
-Route::post('/getEquipmentInfo','BaggageController@getEquipmentInfo');
 Route::post('/getItemInfo','BaggageController@getItemInfo');
 
 Route::controller('luckdraw','LuckdrawController');
