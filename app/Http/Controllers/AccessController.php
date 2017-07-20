@@ -181,15 +181,12 @@ class AccessController extends Controller
 		//dd($data);
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
-
-			$loginToday=Redis::HGET('login_data',$dmy.$u_id);
-			$loginTodayArr=json_decode($loginToday);	
 			$result='';
 			$logindata['u_id']=$data['u_id'];
 			$logindata['uuid']=$loginTodayArr->uuid;
 			$logindata['os']=$loginTodayArr->os;
 			$logindata['lastlogin']=$loginTodayArr->lastlogin; 
-			$logindata['access_token']=$loginTodayArr->access_token; 
+			$logindata['access_token']=$access_token;
 			$logindata['logoff']=time(); 
 			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
