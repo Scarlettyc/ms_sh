@@ -34,6 +34,8 @@ class AccessController extends Controller
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
+		 $userfinal=$usermodel->where('u_id',$u_id)->first();
+		 
 
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
@@ -46,8 +48,9 @@ class AccessController extends Controller
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
-					$userData['access_token']=$token;
-			$response=json_encode($userData,TRUE);
+					$userfinal['access_token']=$token;
+
+			$response=json_encode($userfinal,TRUE);
 			return  base64_encode($response);
 		
 	}
