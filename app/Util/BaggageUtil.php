@@ -1,4 +1,5 @@
 <?php
+namespace App\Util;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
@@ -23,7 +24,7 @@ class BaggageUtil
 
 			/*$baggageResource=$UserBaggageResModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();*/
 
-			$baggageResource=DB::table('User_Baggage_Res')->select('u_id','br_id','br_type','br_quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
+			$baggageResource=$UserBaggageResModel->select('u_id','br_id','br_type','br_quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
 			$response=$baggageResource;
 		}else{
 			throw new Exception("No User ID");
