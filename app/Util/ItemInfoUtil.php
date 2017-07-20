@@ -28,7 +28,7 @@ class ItemInfoUtil
 
 			$ResourceInfo = $ResourceMstModel->where('r_id','=',$ResId)->first();
 			$result['Resource_data']['Resource_info']=$ResourceInfo;
-			$response=json_encode($result,TRUE);
+			$response=$result;
 		}else{
 			throw new Exception("Wrong Resource ID");
 			$response=[

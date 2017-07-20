@@ -42,7 +42,7 @@ class BaggageController extends Controller
 
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
-		$select=$userBaggageChoice['select'];
+		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
 		if(isset($u_id))
 		{
 			if($select === "All")
@@ -95,7 +95,7 @@ class BaggageController extends Controller
 		return $response;
 	}
 
-	/*public function getItemInfo (Request $request)
+	public function getItemInfo (Request $request)
 	{
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
@@ -103,35 +103,33 @@ class BaggageController extends Controller
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
-		$ItemType=$data['type'];
-
-	}*/
-
-
+		$ItemType=$data['type']; //there are three different types: itemtype_1/itemtype_2/itemtype_3
+		$ItemId=$data['Item_Id'];
+		$u_id=$data['u_id'];
 
 
+		if($ItemType === "itemtype_1")
+		{
+			$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
+			$response=json_encode($ResInfo,TRUE);
+		}else if($ItemType === "itemtype_2")
+		{
+			$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
+			$response=json_encode($EquInfo,TRUE);
+		}else if($ItemType === "itemtype_3")
+		{
+			$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
+			$response=json_encode($ScrollInfo,TRUE);
+		}else
+		{
+			throw new Exception("Wrong itemtype data");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check itemtype data",
+			];
+		}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	}
 
 
 
@@ -152,7 +150,33 @@ class BaggageController extends Controller
 
 
 
-	public function getResourceInfo (Request $request)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	/*public function getResourceInfo (Request $request)
 	{
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
@@ -292,5 +316,5 @@ class BaggageController extends Controller
 			];
 		}
 		return $response;
-	}
+	}*/
 }
