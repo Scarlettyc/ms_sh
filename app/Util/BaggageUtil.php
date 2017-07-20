@@ -25,11 +25,10 @@ class BaggageUtil
 			/*$baggageResource=$UserBaggageResModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();*/
 
 			$baggageResource=$UserBaggageResModel->select('u_id','br_id','br_type','br_quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
-			foreach ($baggageResource as $item_type) {
-				$item_type=array("item_type"=>1);
-				$baggageResource=array_merge($baggageResource,$item_type);
-			}
-			$response=$baggageResource;
+			$result['Baggage_data']['Baggage_info_Res']=$baggageResource;
+			$item_type=1;
+			$result['Baggage_data']['item_type']=$item_type;
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
