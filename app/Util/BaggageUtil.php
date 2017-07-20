@@ -6,11 +6,13 @@ use Illuminate\Http\JsonResponse;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
+use App\ItemMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
+use DB;
 use Illuminate\Support\Facades\Redis;
 
 class BaggageUtil
@@ -20,10 +22,13 @@ class BaggageUtil
 		if(isset($baggage_u_id))
 		{
 			$UserBaggageResModel=new UserBaggageResModel();
+			$ItemMstModel=new ItemMstModel();
 			$result=[];
-
-			$baggageResource=$UserBaggageResModel->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
-			$response=$baggageResource;
+			
+			$baggageResource=$UserBaggageResModel->select('u_id','br_id','br_type','br_quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
+			$result['Baggage_data']['Baggage_info_Res']=$baggageResource;
+			$result['Baggage_data']['item_type']=1;
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[

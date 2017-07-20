@@ -15,6 +15,7 @@ use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\Util\BaggageUtil;
+use App\Util\ItemInfoUtil;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -29,13 +30,6 @@ class BaggageController extends Controller
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$CharacterModel=new CharacterModel();
-		$EquipmentMstModel=new EquipmentMstModel();
-		$ResourceMstModel=new ResourceMstModel();
-		$ScrollMstModel=new ScrollMstModel();
-		$UserBaggageEqModel=new UserBaggageEqModel();
-		$UserBaggageResModel=new UserBaggageResModel();
-		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
@@ -67,7 +61,7 @@ class BaggageController extends Controller
 			}else if($select === "R")
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
-				$result['Baggage_data']['Baggage_info']=$Resource;
+				$result=$Resource;
 				$response=json_encode($result,TRUE);
 			}else if($select === "S")
 			{
@@ -107,6 +101,63 @@ class BaggageController extends Controller
 		}
 		return $response;
 	}
+
+	/*public function getItemInfo (Request $request)
+	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+
+		$ItemInfoUtil=new ItemInfoUtil();
+		$result=[];
+
+		$ItemType=$data['type'];
+
+	}*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public function getResourceInfo (Request $request)
 	{
