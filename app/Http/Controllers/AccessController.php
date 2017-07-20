@@ -34,8 +34,8 @@ class AccessController extends Controller
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
-		 $userfinal=$usermodel->where('u_id',$u_id)->first();
-		 
+		 $userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
+
 
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
