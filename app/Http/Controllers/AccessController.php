@@ -69,18 +69,19 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
         $userData=$data;
-		if(isset($data['email'])&&isset($data['password']))
-		{  
-			$userData=$usermodel->where('email','=',$data['email'])->
-			where('password',$data['password'])->first();
+		if(isset($data['user_name'])&&isset($data['password']))
+		{  	
+			if(strpos(‘@’, $data['user_name'])){ 
+				$userData=$usermodel->where('email','=',$data['user_name'])->
+				where('password',$data['password'])->first();
+			}
+			else {
+				$userData=$usermodel->where('friend_id','=',$data['user_name'])->
+				where('password',$data['password'])->first();
+			}
 		}
 		else if(isset($data['fb_id'])){
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
-		}
-		else if (isset($data['friend_id'])&&isset($data['password'])){
-			$userData=$usermodel->where('friend_id','=',$data['friend_id'])->
-			where('password',$data['password'])->first();
-
 		}
 		else {
 			throw new Exception("no info of this account");

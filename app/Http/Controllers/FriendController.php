@@ -52,7 +52,8 @@ class FriendController extends Controller
 	}
 
 	public function get_friend_request(Request $request){
-	 	//dd($json);
+	 	$req=$request->getContent();
+	 	$json=base64_decode($req);
 		$data=json_decode($json,TRUE);	
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
