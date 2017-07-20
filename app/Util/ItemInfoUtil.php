@@ -63,7 +63,7 @@ class ItemInfoUtil
 			//get equipment information and skill information from database
 			$equ_id=$ScrollInfo['equ_id'];
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$equ_id)->first();
-			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','icon_path')->where('equ_id','=',$EquipmentId)->first();
+			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','icon_path')->where('equ_id','=',$equ_id)->first();
 			$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
 
 			$EquEff_id = $EquipmentInfo['eff_id'];
