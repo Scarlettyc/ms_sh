@@ -34,10 +34,13 @@ class AccessController extends Controller
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
+		 $userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
+
 
 			$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$data['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token;
 					$logindata['logoff']=0; 
@@ -45,8 +48,9 @@ class AccessController extends Controller
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
-					$userData['access_token']=$token;
-			$response=json_encode($userData,TRUE);
+					$userfinal['access_token']=$token;
+
+			$response=json_encode($userfinal,TRUE);
 			return  base64_encode($response);
 		
 	}
@@ -104,6 +108,7 @@ class AccessController extends Controller
 				if($logoff!=0){
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -121,6 +126,7 @@ class AccessController extends Controller
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
+					$logindata['os']=$userData['os'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -181,15 +187,12 @@ class AccessController extends Controller
 		//dd($data);
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
-
-			$loginToday=Redis::HGET('login_data',$dmy.$u_id);
-			$loginTodayArr=json_decode($loginToday);	
 			$result='';
 			$logindata['u_id']=$data['u_id'];
 			$logindata['uuid']=$loginTodayArr->uuid;
 			$logindata['os']=$loginTodayArr->os;
 			$logindata['lastlogin']=$loginTodayArr->lastlogin; 
-			$logindata['access_token']=$loginTodayArr->access_token; 
+			$logindata['access_token']=$access_token;
 			$logindata['logoff']=time(); 
 			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
