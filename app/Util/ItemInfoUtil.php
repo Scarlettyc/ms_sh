@@ -28,7 +28,7 @@ class ItemInfoUtil
 
 			$ResourceInfo = $ResourceMstModel->where('r_id','=',$ResId)->first();
 			$result['Resource_data']['Resource_info']=$ResourceInfo;
-			$response=$result;
+			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Resource ID");
 			$response=[
@@ -111,7 +111,7 @@ class ItemInfoUtil
 				$NormalRes3Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_3)->pluck('br_quantity');
 				$result['Normal_Resource3_data']['Normal_Resource3_quantity']=$NormalRes3Quantity;
 			}
-			$response=$result;
+			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("No Scroll ID");
 			$response=[
@@ -138,7 +138,7 @@ class ItemInfoUtil
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
 			$result['Equipment_data']['EquipmentEff_info']=$EquipmentEffInfo;
 
-			$response=$result;
+			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
 			$response=[
