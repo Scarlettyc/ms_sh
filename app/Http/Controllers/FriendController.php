@@ -6,15 +6,12 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\UserModel;
-use App\CharacterModel;
 use Exception;
 use DateTime;
-use App\UserModel;
 use App\CharacterModel;
 use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
-use DateTime;
 class FriendController extends Controller
 {
 	public function searchFriend(Request $request){
@@ -164,7 +161,7 @@ class FriendController extends Controller
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
  		$key='friend_coin_'.$dmy.'_'.$u_id;
- 		$sentCoin=Redis::HEXISTS($key,$friend['u_id'];
+ 		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
  		$sentFriends=Redis::HKEYS($key,$friend['u_id']);
  		if($sentCoin<1&&count($sentFriends)<10){
 		Redis::HSET($key,$friend['u_id'],time());
@@ -186,7 +183,7 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
-		$key='friend_request_'.$u_id
+		$key='friend_request_'.$u_id;
 		Redis::HDEL($key,$u_id);
 		$requestlist=Redis::HKEYS($key);
 		$response=json_encode($requestlist,TRUE);

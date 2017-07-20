@@ -40,11 +40,14 @@ Route::post('/multidraw', 'LuckdrawController@multiDraw');
 
 Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@match');
+
+Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
 Route::post('/removeriend', 'FriendController@removeFriend');
 Route::post('/friendlist', 'FriendController@friend_list');
 Route::post('/get_friend_request', 'FriendController@friend_list');
 Route::post('/del_friend_request', 'FriendController@reject_request');
+Route::post('/send_request', 'FriendController@send_friendrequest');
 
 Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');

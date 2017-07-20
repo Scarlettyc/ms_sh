@@ -27,30 +27,26 @@ class AccessController extends Controller
 		if(isset($data['uuid']))
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
-				if($usermodel->isExist('uuid',$data['uuid'])>0)
-				{	$usermodel->where('uuid',$data['uuid'])->update(['uuid'=>0,'updated_at'=>$datetime]);
-					
-				}
-					$usermodel->createNew($data);	
+					$userData=$usermodel->createNew($data);	
 			}
 		}
 		else {
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
-			$userfinal=$usermodel->where('uuid','=',$data['uuid'])->first();
 
 			$token=$usermodel->createTOKEN(16);
-					$logindata['u_id']=$userfinal['u_id'];
+					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
-					$logindata['access_token']=$token; 
+					$logindata['access_token']=$token;
 					$logindata['logoff']=0; 
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
-					Redis::HSET('login_data',$dmy.$userfinal['u_id'],$loginlist);
-					$userfinal['access_token']=$token;
-			$response=json_encode($userfinal,TRUE);
+					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					$userData['access_token']=$token;
+			$response=json_encode($userData,TRUE);
 			return  base64_encode($response);
 		
 	}
@@ -107,6 +103,7 @@ class AccessController extends Controller
 				$logoff=$loginTodayArr->logoff;
 				if($logoff!=0){
 					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -123,6 +120,7 @@ class AccessController extends Controller
 				else {
 					$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
+					$logindata['uuid']=$userData['uuid'];
 					$logindata['lastlogin']=time(); 
 					$logindata['access_token']=$token; 
 					$logindata['logoff']=0; 
@@ -141,6 +139,7 @@ class AccessController extends Controller
 			$account['friend_id']=$userfinal['friend_id'];
 			$account['first_login']=$firstLogin;
 			$result['user_data']['user_info']=$userfinal;
+			$result['user_data']['char_info']=$userChar;
 			$result['user_data']['account_info']=$account;
 			date_default_timezone_set("UTC");
 
