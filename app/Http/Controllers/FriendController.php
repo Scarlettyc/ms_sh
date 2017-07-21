@@ -73,11 +73,11 @@ class FriendController extends Controller
 		$requestlist=Redis::HVALS($key);
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
-			$request['u_id']=$friendArr->u_id;
-			$request['time']=time()-($friendArr->time);
-			$result['friend_request'][]=$request;
-		}
-		$response=json_encode($result,TRUE);
+			$frData['u_id']=$friendArr->u_id;
+			$frData['time']=time()-($friendArr->time);
+			$result['friend_request'][]=$frData;
+		}	
+	$response=json_encode($result,TRUE);
 		return $response;
 
 	}
