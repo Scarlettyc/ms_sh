@@ -48,8 +48,8 @@ class FriendController extends Controller
 				$key='friend_request_'.$friend['u_id'];
 				$friendData["u_id"]=$u_id;
 				$friendData["time"]=time();
-				$loginlist=json_encode($friendData,TRUE);
-				Redis::LPUSH($key,$friendData);
+				$friendre=json_encode($friendData,TRUE);
+				Redis::LPUSH($key,$friendre);
 				$result['friend_request']=$friend;
 				$response=json_encode($result,TRUE);
 				return $response;
