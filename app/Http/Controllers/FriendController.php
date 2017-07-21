@@ -120,6 +120,7 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
 		$usefriend=new UserFriendModel();
+		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$friendModel=new UserFriendModel();
 		$friendModel->where('u_id',$u_id)->$where('friend_u_id',$friend['u_id'])->first();
