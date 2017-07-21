@@ -161,9 +161,9 @@ class BaggageController extends Controller
 		}else if($ItemType === "itemtype_3")
 		{
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$ItemId)->limit(1)->update(['status'=>1,'updatedate'=>$datetime]);
-			$UserCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
+			/*$UserCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
 			$updateCoin=$UserCoin+$ItemPrice;
-			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
+			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);*/
 			$response="update Scroll";
 		}else{
 			throw new Exception("No ItemType");
