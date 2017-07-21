@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Redis;
 
 class ItemInfoUtil
 {
+	//get Resource detail information: name, type, icon, description
 	function getResourceInfo ($Item_Id)
 	{
 		$ResId=$Item_Id;
@@ -40,6 +41,7 @@ class ItemInfoUtil
 		return $response;
 	}
 
+	//get Scroll detail information: name and every resource that this Scorll needed. also display the detail information of the equipment and skills.
 	function getScrollInfo ($Item_Id,$u_id)
 	{
 		$ScrollId=$Item_Id;
@@ -126,6 +128,7 @@ class ItemInfoUtil
 		return $response;
 	}
 
+	// get the information of a Equipment: name, type, icon
 	function getEquipmentInfo ($Item_Id)
 	{
 		$EquipmentId=$Item_Id;

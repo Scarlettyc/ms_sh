@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Redis;
 
 class BaggageController extends Controller
 {
+	//according to the select, display items in the baggage
 	public function baggage(Request $request)
 	{
 		$req=$request->getContent();
@@ -46,7 +47,7 @@ class BaggageController extends Controller
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
 		if(isset($u_id)&&$access_token==$data['access_token'])
 		{
-			if($select === "All")
+			if($select === "All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']['itemtype_1']=$Resource;
@@ -57,22 +58,22 @@ class BaggageController extends Controller
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']['itemtype_2']=$Core;
 				$response=json_encode($result,TRUE);
-			}else if($select === "R")
+			}else if($select === "R")//select Resource
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']['itemtype_1']=$Resource;
 				$response=json_encode($result,TRUE);
-			}else if($select === "S")
+			}else if($select === "S")//select Scroll
 			{
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']['itemtype_3']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}else if($select === "W")
+			}else if($select === "W")//select Weapon
 			{
 				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']['itemtype_2']=$Weapon;
 				$response=json_encode($result,TRUE);
-			}else if($select === "C")
+			}else if($select === "C")//select Core
 			{
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']['itemtype_2']=$Core;
@@ -96,6 +97,7 @@ class BaggageController extends Controller
 		return $response;
 	}
 
+	//show the detail information when user click the item in the baggage
 	public function getItemInfo (Request $request)
 	{
 		$req=$request->getContent();
@@ -148,6 +150,7 @@ class BaggageController extends Controller
 		return $response;
 	}
 
+	//sell item in the baggage
 	public function sellItem (Request $request)
 	{
 		$req=$request->getContent();
@@ -167,14 +170,14 @@ class BaggageController extends Controller
 		$ItemPrice=$data['Item_Price'];
 		$ItemId=$data['Item_Id'];
 
-		if($ItemType === "itemtype_2")
+		if($ItemType === "itemtype_2")//sell Equipment
 		{
 			$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('b_equ_id',$ItemId)->limit(1)->update(array('status'=>1,'updated_at'=>$datetime));
 			$UserData=$UserModel->where('u_id',$u_id)->first();
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 			$response="update Equipment";
-		}else if($ItemType === "itemtype_3")
+		}else if($ItemType === "itemtype_3")//sell Scroll
 		{
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$ItemId)->limit(1)->update(['status'=>1,'updated_at'=>$datetime]);
 			$UserData=$UserModel->where('u_id',$u_id)->first();
