@@ -87,7 +87,6 @@ class FriendController extends Controller
 	}
 
 	public function friend_list(Request $request){
-	try{
 		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
@@ -107,10 +106,6 @@ class FriendController extends Controller
 		}
 		else {
 			return "no friend in list";
-		}
-	}
-		catch(Exception $e){
-		 throw new Exception("friend character have error");
 		}
 	}
 
