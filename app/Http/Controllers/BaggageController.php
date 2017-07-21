@@ -153,12 +153,11 @@ class BaggageController extends Controller
 
 		if($ItemType === "itemtype_2")
 		{
-			$test=$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('b_equ_id',$ItemId)->first();//->update(['status'=>1,'updatedate'=>$datetime]);
+			$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('b_equ_id',$ItemId)->update(['status'=>1,'updatedate'=>$datetime])->limit(1);
 			/*$UserData=$UserModel->where('u_id',$u_id)->first();
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
-			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
-			$response="update Equipment";*/
-			$response=$test;
+			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);*/
+			$response="update Equipment";
 		}else if($ItemType === "itemtype_3")
 		{
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$ItemId)->limit(1)->update(['status'=>1,'updatedate'=>$datetime]);
