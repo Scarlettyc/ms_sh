@@ -197,7 +197,7 @@ class FriendController extends Controller
 
  		$key='friend_coin_'.$dmy.'_'.$u_id;
  		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
- 		$sentFriends=Redis::HKEYS($key,$friend['u_id']);
+ 		$sentFriends=Redis::HKEYS($key);
  		if($sentCoin<1&&count($sentFriends)<$defindFriend['value1']){
  		$sentData["u_id"]=$friend['u_id'];
 		$sentData["friend_id"]=$friend['friend_id'];
