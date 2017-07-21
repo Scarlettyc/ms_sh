@@ -96,11 +96,6 @@ class FriendController extends Controller
 		$friend_list=$usefriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
 		$friend_user_ids=[];
 		if($friend_list){
-			// foreach($friend_list as $friend){
-
-				$friend_user_ids=$friend['friend_u_id'];
-			
-			// $result['user_friends']=$characterModel->wherein('u_id',$friend_user_ids)->get();
 			$response=json_encode($friend_list,TRUE);
 			return $response;
 		}
@@ -181,24 +176,35 @@ class FriendController extends Controller
 	public function sendCoin(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
-		$usefriend=new UserFriendModel();
-		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
+		$usermodel=new UserModel();
+		$friendmodel=new UserFriendModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
  		$defind=new DefindMstModel();
  		$defindFriend=$defind->where('defind_id',1)->first();
- 		$friendcoin=$defindFriend['value2']+$friend['u_coin'];
- 		$usefriend->update(['u_coin',$friendcoin]);
- 		$now   = new DateTime;
-		$dmy=$now->format( 'Ymd' );
+		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
+		$user=$usermodel->where('u_id',$u_id)->first();
+
+ 		$friendCoin=$defindFriend['value2']+$friend['u_coin'];
+ 		$userCoin=$defindFriend['value2']+$user['u_coin'];
+
+ 		$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
+ 		$usermodel->where('u_id',$u_id])->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+
  		$key='friend_coin_'.$dmy.'_'.$u_id;
  		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
  		$sentFriends=Redis::HKEYS($key,$friend['u_id']);
- 		if($sentCoin<1&&count($sentFriends)<10){
-		Redis::HSET($key,$friend['u_id'],time());
-     	$response=json_encode($sentFriends,TRUE);
+ 		if($sentCoin<1&&count($sentFriends)<$defindFriend['value1']){
+ 		$sentData["u_id"]=$friend['u_id'];
+		$sentData["friend_id"]=$friend['friend_id'];
+		$sentData["time"]=time();
+		$sentRe=json_encode($sentData,TRUE);
+		Redis::HSET($key,$friend['u_id'],$sentRe;
+     	$response=$sentRe;
      	return $response;
  		}
  		else {
