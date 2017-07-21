@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Redis;
 
 class BaggageUtil
 {
+	//show the quantity and icon for every item in the baggage
 	function getResource($baggage_u_id)
 	{
 		if(isset($baggage_u_id))
