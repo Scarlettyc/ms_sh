@@ -43,10 +43,12 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
+		$urData=$usermodel->where('u_id',$u_id)->first();
 		if(isset($friend)){
 			if($friend['u_id']!=$u_id){
 				$key='friend_request_'.$friend['u_id'];
 				$myData["u_id"]=$u_id;
+				$myData["friend_id"]=$urData['friend_id'];
 				$myData["time"]=time();
 				$myre=json_encode($myData,TRUE);
 				Redis::HSET($key,$u_id,$myre);
@@ -74,6 +76,7 @@ class FriendController extends Controller
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$request['u_id']=$friendArr->u_id;
+			$request['friend_id']=$friendArr->friend_id;
 			$request['time']=time()-($friendArr->time);
 			$result['friend_request'][]=$request;
 		}
