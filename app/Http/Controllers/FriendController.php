@@ -50,8 +50,8 @@ class FriendController extends Controller
 				$myData["time"]=time();
 				$myre=json_encode($myData,TRUE);
 				Redis::HSET($key,$u_id,$myre);
-				$result['friend_request']=$friend;
-				$response=json_encode($result,TRUE);
+				$mydata['friend_u_id']=$friend['u_id'];
+				$response=json_encode($$mydata,TRUE);
 				return $response;
 			}
 		else {
@@ -70,7 +70,7 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);	
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
-		$requestlist=Redis::HKEYS($key);
+		$requestlist=Redis::HVALS($key);
 		$result['friend_request_list']=$requestlist;
 		$response=json_encode($result,TRUE);
 		return $response;
