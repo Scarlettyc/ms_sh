@@ -194,7 +194,7 @@ class FriendController extends Controller
 
 			$friendmodel->where('u_id',$u_id)->where('friend_id',$friend_id)->first();
 			if($friendmodel){
- 				$key='friend_send_coin_'.$dmy.'_'.$friend['u_id']);
+ 				$key='friend_send_coin_'.$dmy.'_'.$friend['u_id'];
  				$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
  				$sentFriends=Redis::HKEYS($key);
  	 			if($sentCoin<1&&count($sentFriends)<$defindFriend['value1'])
