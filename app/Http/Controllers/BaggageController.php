@@ -34,17 +34,17 @@ class BaggageController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
-		/*$datetime=$now->format( 'Y-m-d h:m:s' );
+		$now   = new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_to;
-		&&$access_token==$data['access_token']*/
+		$access_token=$loginTodayArr->access_token;
 
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
-		if(isset($u_id))
+		if(isset($u_id)&&$access_token==$data['access_token'])
 		{
 			if($select === "All")
 			{
@@ -87,7 +87,7 @@ class BaggageController extends Controller
 			}
 		}else
 		{
-			throw new Exception("No User ID");
+			throw new Exception("there have some error of you access_token");
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check u_id",
@@ -104,29 +104,45 @@ class BaggageController extends Controller
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
-		$ItemType=$data['type']; //there are three different types: itemtype_1/itemtype_2/itemtype_3
+		$ItemType=$data['type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
 		$ItemId=$data['Item_Id'];
 		$u_id=$data['u_id'];
 
+		$now   = new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$loginToday=Redis::HGET('login_data',$dmy.$uid);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 
-		if($ItemType === "itemtype_1")
+		if(isset($u_id)&&$access_token==$data['access_token'])
 		{
-			$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
-			$response=$ResInfo;
-		}else if($ItemType === "itemtype_2")
-		{
-			$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
-			$response=$EquInfo;
-		}else if($ItemType === "itemtype_3")
-		{
-			$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
-			$response=$ScrollInfo;
-		}else
-		{
-			throw new Exception("Wrong itemtype data");
+			if($ItemType === "itemtype_1")
+			{
+				$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
+				$response=$ResInfo;
+			}else if($ItemType === "itemtype_2")
+			{
+				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
+				$response=$EquInfo;
+			}else if($ItemType === "itemtype_3")
+			{
+				$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
+				$response=$ScrollInfo;
+			}else
+			{
+				throw new Exception("Wrong itemtype data");
+				$response=[
+				'status' => 'Wrong',
+				'error' => "please check itemtype data",
+				];
+			}
+
+		}else{
+			throw new Exception("there have some error of you access_token");
 			$response=[
 			'status' => 'Wrong',
-			'error' => "please check itemtype data",
+			'error' => "please check u_id",
 			];
 		}
 		return $response;
@@ -147,7 +163,7 @@ class BaggageController extends Controller
 		$result=[];
 
 		$u_id=$data['u_id'];
-		$ItemType=$data['type'];
+		$ItemType=$data['type'];//itemtype_2(Equipment)/itemtype_3(Scroll)
 		$ItemPrice=$data['Item_Price'];
 		$ItemId=$data['Item_Id'];
 
