@@ -12,6 +12,7 @@ use App\CharacterModel;
 use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
+
 class FriendController extends Controller
 {
 	public function searchFriend(Request $request){
@@ -113,9 +114,12 @@ class FriendController extends Controller
 	}
 
 	public function addFriend(Request $request){
+
 		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
+	 	$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
@@ -128,10 +132,14 @@ class FriendController extends Controller
 			$friendData['u_id']=$u_id;
 			$friendData['friend_u_id']=$friend['u_id'];
 			$friendData['friend_status']=1;
+			$friendData['updated_at']=$datetime;
+			$friendData['createdate']=$datetime;
 
 			$insertData['u_id']=$friend['u_id'];
 			$insertData['friend_u_id']=$u_id;
 			$insertData['friend_status']=1;
+			$insertData['updated_at']=$datetime;
+			$insertData['createdate']=$datetime;
 
 			$friendModel->insert($friendData);
 			$friendModel->insert($insertData);
