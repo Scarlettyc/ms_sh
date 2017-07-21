@@ -46,12 +46,12 @@ class FriendController extends Controller
 		if(isset($friend)){
 			if($friend['u_id']!=$u_id){
 				$key='friend_request_'.$friend['u_id'];
-				$friendData["u_id"]=$u_id;
-				$friendData["time"]=time();
-				$friendre=json_encode($friendData,TRUE);
-				Redis::LPUSH($key,$friendre);
-				$result['friend_request']=$friend;
-				$response=json_encode($result,TRUE);
+				$myData["u_id"]=$u_id;
+				$myData["time"]=time();
+				$myre=json_encode($myData,TRUE);
+				Redis::HSET($key,$u_id,$myre);
+				$myData['friend_u_id']=$friend['u_id'];
+				$response=json_enode($myData,TRUE);
 				return $response;
 			}
 		else {
@@ -70,9 +70,14 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);	
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
-		$requestlist=Redis::HKEYS($key);
-		$result['friend_request_list']=$requestlist;
-		$response=json_encode($result,TRUE);
+		$requestlist=Redis::HVALS($key);
+		foreach($requestlist as $friend){
+			$friendArr=json_decode($friend);
+			$frData['u_id']=$friendArr->u_id;
+			$frData['time']=time()-($friendArr->time);
+			$result['friend_request'][]=$frData;
+		}	
+	$response=json_encode($result,TRUE);
 		return $response;
 
 	}
