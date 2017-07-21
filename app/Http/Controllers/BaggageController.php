@@ -21,6 +21,7 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
+use DB;
 use Illuminate\Support\Facades\Redis;
 
 class BaggageController extends Controller
@@ -126,6 +127,49 @@ class BaggageController extends Controller
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check itemtype data",
+			];
+		}
+		return $response;
+	}
+
+	public function sellItem (Request $request)
+	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+
+		$UserModel=new UserModel();
+		$UserBaggageResModel=new UserBaggageResModel();
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$result=[];
+
+		$u_id=$data['u_id'];
+		$ItemType=$data['type'];
+		$ItemPrice=$data['price'];
+		$ItemId=$data['ID'];
+
+		if($ItemType === "itemtype_2")
+		{
+			$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('b_equ_id',$ItemId)->limit(1)->update(['status'=>1,'updated_at'=>$datetime]);
+			$UserCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
+			$updateCoin=$UserCoin+$ItemPrice;
+			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
+			$response="update Equipment";
+		}else if($ItemType === "itemtype_3")
+		{
+			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$ItemId)->limit(1)->update(['status'=>1,'updated_at'=>$datetime]);
+			$UserCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
+			$updateCoin=$UserCoin+$ItemPrice;
+			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
+			$response="update Scroll";
+		}else{
+			throw new Exception("No ItemType");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check ItemType",
 			];
 		}
 		return $response;
