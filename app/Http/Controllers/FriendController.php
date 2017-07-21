@@ -123,8 +123,8 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$friendModel=new UserFriendModel();
-		$friendModel->where('u_id',$u_id)->$where('friend_u_id',$friend['u_id'])->first();
-		if(!$friendModel){
+		$existFriend=$friendModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+		if(!$existFriend){
 			$friendData['u_id']=$u_id;
 			$friendData['friend_u_id']=$friend['u_id'];
 			$friendData['friend_status']=1;
