@@ -98,10 +98,11 @@ class FriendController extends Controller
 		$friend_user_ids=[];
 		if($friend_list){
 			foreach($friend_list as $friend){
+
 				$friend_user_ids[]=$friend['friend_u_id'];
-			}
-			$result['user_friends']=$characterModel->wherein('u_id',$friend_user_ids)->get();
-			$response=json_encode($result,TRUE);
+			
+			// $result['user_friends']=$characterModel->wherein('u_id',$friend_user_ids)->get();
+			$response=json_encode($friend_list,TRUE);
 			return $response;
 		}
 		else {
