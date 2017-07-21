@@ -228,6 +228,9 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);
 		if(isset($data['u_id']))
 		{
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
+			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$u_id=$data['u_id'];
 			$key='friend_send_coin_'.$dmy.'_'.$u_id;
 			$coinList=Redis::HVALS($key);
