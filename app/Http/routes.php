@@ -49,7 +49,7 @@ Route::post('/del_friend_request', 'FriendController@reject_request');
 Route::post('/send_request', 'FriendController@send_friendrequest');
 Route::post('/friend_send_coin', 'FriendController@sendCoin');
 Route::post('/friend_recevie_coin', 'FriendController@recieveCoin');
-Route::post('/coinList', 'FriendController@recieveCoinList');
+Route::post('/coinlist', 'FriendController@recieveCoinList');
 
 Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
