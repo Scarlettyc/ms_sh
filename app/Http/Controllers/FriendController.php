@@ -177,42 +177,116 @@ class FriendController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$u_id=$data['u_id'];
-		$friend_id=$data['friend_id'];
-		$usermodel=new UserModel();
-		$friendmodel=new UserFriendModel();
-		$now   = new DateTime;
-		$dmy=$now->format( 'Ymd' );
-		$datetime=$now->format( 'Y-m-d h:m:s' );
- 		$defind=new DefindMstModel();
- 		$defindFriend=$defind->where('defind_id',1)->first();
-		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
-		$user=$usermodel->where('u_id',$u_id)->first();
+		if(isset($data['u_id'])&&isset($data['friend_id']))
+		{
+			$u_id=$data['u_id'];
+			$friend_id=$data['friend_id'];
+			$usermodel=new UserModel();
+			$friendmodel=new UserFriendModel();
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+ 			$defind=new DefindMstModel();
+ 			$defindFriend=$defind->where('defind_id',1)->first();
+			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
+			$user=$usermodel->where('u_id',$u_id)->first();
 
- 		$friendCoin=$defindFriend['value2']+$friend['u_coin'];
- 		$userCoin=$defindFriend['value2']+$user['u_coin'];
 
- 		$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
- 		$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+			$friendmodel->where('u_id',$u_id)->where('friend_id',$friend_id)->first();
+			if($friendmodel){
+ 				$key='friend_send_coin_'.$dmy.'_'.$friend['u_id']);
+ 				$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
+ 				$sentFriends=Redis::HKEYS($key);
+ 	 			if($sentCoin<1&&count($sentFriends)<$defindFriend['value1'])
+ 				{
+ 					$friendCoin=$defindFriend['value2']+$friend['u_coin'];
+ 					$userCoin=$defindFriend['value2']+$user['u_coin'];
+ 					$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
+ 					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+ 					$sentData["u_id"]=$friend['u_id'];
+					$sentData["friend_id"]=$friend['friend_id'];
+					$sentData["quantity"]=$defindFriend['value2'];
+					$sentData["time"]=time();
+					$sentRe=json_encode($sentData,TRUE);
+					Redis::HSET($key,$friend['u_id'],$sentRe);
+     				$response=$sentRe;
+     			return $response;
+ 				}
+ 				else {
+ 				throw new Exception("you aleady sent to this friend");
+ 				}
+ 			}
+ 			else {
+ 				throw new Exception("there is some of error of this friend");
+ 			}
+		}
+	}
 
- 		$key='friend_coin_'.$dmy.'_'.$u_id;
- 		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
- 		$sentFriends=Redis::HKEYS($key);
- 		if($sentCoin<1&&count($sentFriends)<$defindFriend['value1']){
- 		$sentData["u_id"]=$friend['u_id'];
-		$sentData["friend_id"]=$friend['friend_id'];
-		$sentData["time"]=time();
-		$sentRe=json_encode($sentData,TRUE);
-		Redis::HSET($key,$friend['u_id'],$sentRe);
-     	$response=$sentRe;
-     	return $response;
- 		}
- 		else {
- 			throw new Exception("you aleady sent to this friend");
- 		}
- 		
+	public function recieveCoinList(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		if(isset($data['u_id']))
+		{
+			$u_id=$data['u_id'];
+			$key='friend_send_coin_'.$dmy.'_'.$u_id);
+			$coinList=Redis::HVALS($key);
+			foreach($coinList as $list){
+				$listArr=json_decode($list);
+				$frData['u_id']=$listArr->u_id;
+				$frData['friend_id']=$listArr->friend_id;
+				$frData['quantity']=$listArr->quantity;
+				$frData['time']=time()-($listArr->time);
+				$result['coin_list'][]=$frData;
+		}
+		$response=json_encode($result,TRUE);
+		return $response;
+		}
 	}
 	
+	public function recieveCoin(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		if(isset($data['u_id'])&&isset($data['friend_id']))
+		{
+			$u_id=$data['u_id'];
+			$friend_id=$data['friend_id'];
+			$usermodel=new UserModel();
+			$friendmodel=new UserFriendModel();
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+ 			$defind=new DefindMstModel();
+ 			$defindFriend=$defind->where('defind_id',1)->first();
+			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
+			$user=$usermodel->where('u_id',$u_id)->first();
+
+
+			$friendmodel->where('u_id',$u_id)->where('friend_id',$friend_id)->first();
+			if($friendmodel){
+ 				$friendCoin=$defindFriend['value2']+$friend['u_coin'];
+ 				$userCoin=$defindFriend['value2']+$user['u_coin'];
+
+
+ 				$sendKey='friend_send_coin_'.$dmy.'_'.$friend['u_id'];
+ 				$receivedCoin=Redis::HEXISTS($key,$friend['u_id']);
+ 				$receiveFriends=Redis::HKEYS($key);
+ 	 			if($sentCoin<1&&count($sentFriends)<$defindFriend['value1'])
+ 				{
+ 					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+ 					$sentData["u_id"]=$friend['u_id'];
+					$sentData["friend_id"]=$friend['friend_id'];
+					$sentData["time"]=time();
+					$sentRe=json_encode($sentData,TRUE);
+					Redis::HSET($key,$friend['u_id'],$sentRe);
+     				$response=$sentRe;
+     			return $response;
+ 				}
+ 				else {
+ 				throw new Exception("you aleady sent to this friend");
+ 				}
+	}
 
 
 	public function reject_request(Request $request){
