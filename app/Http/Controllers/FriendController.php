@@ -127,6 +127,7 @@ class FriendController extends Controller
 			$friendData['u_id']=$u_id;
 			$friendData['friend_u_id']=$friend['u_id'];
 			$friendData['friend_status']=1;
+
 			$insertData['u_id']=$friend['u_id'];
 			$insertData['friend_u_id']=$u_id;
 			$insertData['friend_status']=1;
@@ -134,8 +135,8 @@ class FriendController extends Controller
 			$friendModel->insert($friendData);
 			$friendModel->insert($insertData);
 			$key='friend_request_'.$u_id;
-			Redis::HDEL($key,$u_id);
-			$result['add_friend']=$friendData;
+			Redis::HDEL($key,$friend['u_id']);
+			$result['add_friend']=$insertData;
 			$response=json_encode($result,TRUE);
 			return $response;
 		}
