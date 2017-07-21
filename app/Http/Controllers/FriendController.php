@@ -43,11 +43,24 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
-		$key='friend_request_'.$friend['u_id'];
-		Redis::HSET($key,$u_id,time());
-		$result['friend_request']=$friend;
-		$response=json_encode($result,TRUE);
-		return $response;
+		if(isset($friend)){
+			if($friend['u_id']!=$u_id){
+				$key='friend_request_'.$friend['u_id'];
+				$friendData["u_id"]=$u_id;
+				$friendData["time"]=time();
+				$friendre=json_encode($friendData,TRUE);
+				Redis::LPUSH($key,$friendre);
+				$result['friend_request']=$friend;
+				$response=json_encode($result,TRUE);
+				return $response;
+			}
+		else {
+			throw new Exception("cannot add yourself");
+		}
+	}
+	else {
+		throw new Exception("please send correct friend_id");
+	}
 		
 	}
 
