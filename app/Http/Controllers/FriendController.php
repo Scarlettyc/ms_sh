@@ -46,11 +46,11 @@ class FriendController extends Controller
 		if(isset($friend)){
 			if($friend['u_id']!=$u_id){
 				$key='friend_request_'.$friend['u_id'];
-				$friendData["u_id"]=$u_id;
-				$friendData["time"]=time();
-				$friendre=json_encode($friendData,TRUE);
-				Redis::LPUSH($key,$friendData);
-				$result['friend_request']=$friendData;
+				$myData["u_id"]=$u_id;
+				$myData["time"]=time();
+				$myRe=json_encode($myData,TRUE);
+				Redis::HSET('friend_request',$friend['u_id'],$myRe);
+				$result['friend_request']=$friend;
 				$response=json_encode($result,TRUE);
 				return $response;
 			}
