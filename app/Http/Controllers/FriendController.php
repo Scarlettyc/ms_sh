@@ -229,7 +229,7 @@ class FriendController extends Controller
 		if(isset($data['u_id']))
 		{
 			$u_id=$data['u_id'];
-			$key='friend_send_coin_'.$dmy.'_'.$u_id);
+			$key='friend_send_coin_'.$dmy.'_'.$u_id;
 			$coinList=Redis::HVALS($key);
 			foreach($coinList as $list){
 				$listArr=json_decode($list);
