@@ -71,7 +71,8 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
 		$requestlist=Redis::HVALS($key);
-		$result['friend_request_list']=$requestlist;
+		$data=json_decode($requestlist,TRUE);
+		$result['friend_request_list']=$data;
 		$response=json_encode($result,TRUE);
 		return $response;
 
