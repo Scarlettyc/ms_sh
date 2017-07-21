@@ -193,7 +193,7 @@ class FriendController extends Controller
  		$userCoin=$defindFriend['value2']+$user['u_coin'];
 
  		$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
- 		$usermodel->where('u_id',$u_id])->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+ 		$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
 
  		$key='friend_coin_'.$dmy.'_'.$u_id;
  		$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
