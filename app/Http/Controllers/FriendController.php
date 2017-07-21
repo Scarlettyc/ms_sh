@@ -163,6 +163,7 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
 		$usefriend=new UserFriendModel();	
+		$friendModel=new UserFriendModel();
 		$friend=$friendModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();	
 		if($friend){
 			$friendModel->where('friend_u_id',$friend['u_id'])->where('u_id',$u_id)->update(['friend_status',2]);
@@ -215,8 +216,10 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
+		$usermodel=new UserModel();
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$key='friend_request_'.$u_id;
-		Redis::HDEL($key,$u_id);
+		Redis::HDEL($key,$friend['u_id']);
 		$requestlist=Redis::HKEYS($key);
 		$response=json_encode($requestlist,TRUE);
 		return $response;
