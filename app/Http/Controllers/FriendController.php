@@ -158,6 +158,9 @@ class FriendController extends Controller
 	public function removeFriend(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
@@ -167,8 +170,8 @@ class FriendController extends Controller
 		$friendData=$useModel->where('friend_id',$friend_id)->first();
 		$friend=$friendModel->where('u_id',$u_id)->where('friend_u_id',$friendData['u_id'])->first();	
 		if($friend){
-			$friendModel->where('friend_u_id',$friendData['u_id'])->where('u_id',$u_id)->update(['friend_status',2]);
-			$friendModel->where('friend_u_id',$u_id)->where('u_id',$friendData['u_id'])->update(['friend_status',2]);
+			$friendModel->where('friend_u_id',$friendData['u_id'])->where('u_id',$u_id)->update(['friend_status'=>2,'updated_at'=>$datetime]);
+			$friendModel->where('friend_u_id',$u_id)->where('u_id',$friendData['u_id'])->update(['friend_status'=>2,'updated_at'=>$datetime]);
 			$friend_List=$friendModel->where('u_id',$u_id)->get();
 			$result['friend_list']=$friendData;
 			$response=json_encode($result,TRUE);
