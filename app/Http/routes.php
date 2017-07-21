@@ -30,6 +30,7 @@ Route::post('/logout', 'AccessController@logout');
 Route::controller('baggage','BaggageController');
 Route::post('/baggage','BaggageController@baggage');
 Route::post('/getItemInfo','BaggageController@getItemInfo');
+Route::post('/sellItem','BaggageController@sellItem');
 
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
