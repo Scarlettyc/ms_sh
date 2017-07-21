@@ -48,8 +48,8 @@ class FriendController extends Controller
 				$key='friend_request_'.$friend['u_id'];
 				$myData["u_id"]=$u_id;
 				$myData["time"]=time();
-				$myRe=json_encode($myData,TRUE);
-				Redis::HSET('friend_request',$friend['u_id'],$myRe);
+				$myre=json_encode($myData,TRUE);
+				Redis::HSET($key,$u_id,$myre);
 				$result['friend_request']=$friend;
 				$response=json_encode($result,TRUE);
 				return $response;
