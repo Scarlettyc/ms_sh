@@ -148,8 +148,8 @@ class BaggageController extends Controller
 
 		$u_id=$data['u_id'];
 		$ItemType=$data['type'];
-		$ItemPrice=$data['price'];
-		$ItemId=$data['ID'];
+		$ItemPrice=$data['Item_Price'];
+		$ItemId=$data['Item_Id'];
 
 		if($ItemType === "itemtype_2")
 		{
