@@ -203,7 +203,7 @@ class FriendController extends Controller
 		$sentData["friend_id"]=$friend['friend_id'];
 		$sentData["time"]=time();
 		$sentRe=json_encode($sentData,TRUE);
-		Redis::HSET($key,$friend['u_id'],$sentRe;
+		Redis::HSET($key,$friend['u_id'],$sentRe);
      	$response=$sentRe;
      	return $response;
  		}
