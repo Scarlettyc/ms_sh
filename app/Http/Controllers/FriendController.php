@@ -286,7 +286,9 @@ class FriendController extends Controller
  				else {
  				throw new Exception("you aleady sent to this friend");
  				}
+		}
 	}
+}
 
 
 	public function reject_request(Request $request){
