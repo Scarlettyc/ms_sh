@@ -27,7 +27,7 @@ class FriendController extends Controller
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$result['searched_friend']=$friend;
 		$response=json_encode($result,TRUE);
-		return $response;	
+		return base64_encode($response);	
 	}
 
 	public function suggest_friend(Request $request){
@@ -64,7 +64,7 @@ class FriendController extends Controller
 				Redis::HSET($key,$u_id,$myre);
 				$myData['friend_u_id']=$friend['u_id'];
 				$response=json_encode($myData,TRUE);
-				return $response;
+				return base64_encode($response);
 			}
 		else {
 			throw new Exception("cannot add yourself");
@@ -83,14 +83,16 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
 		$requestlist=Redis::HVALS($key);
+		$result=[]
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
-			$result['friend_request'][]=$frData;
+			$result[]=$frData;
 		}
-		$response=json_encode($result,TRUE);
+		$final['friend_request']=$result;
+		$response=json_encode($final,TRUE);
 		return $response;
 
 	}
