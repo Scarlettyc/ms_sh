@@ -234,6 +234,7 @@ class FriendController extends Controller
 			$u_id=$data['u_id'];
 			$key='friend_send_coin_'.$dmy.'_'.$u_id;
 			$coinList=Redis::HVALS($key);
+			$result=[];
 			foreach($coinList as $list){
 				$listArr=json_decode($list);
 				$frData['u_id']=$listArr->u_id;
@@ -242,13 +243,7 @@ class FriendController extends Controller
 				$frData['time']=time()-($listArr->time);
 				$result['coin_list'][]=$frData;
 			}
-		if($result){
-		$response=json_encode($result,TRUE);
-		return $response;
-		}
-		else{
-			throw new Exception("no exist coin");
-		}
+			$response=json_encode($result,TRUE);
 		}
 	}
 	
