@@ -264,9 +264,9 @@ class FriendController extends Controller
 			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 			$user=$usermodel->where('u_id',$u_id)->first();
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
-			
+
 			if($friendmodel){
-				$sentTo=$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->first;
+				$sentTo=$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->first();
 				$received=$receiveCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('received_dmy',$dmy)->get();
  				$receivedCount=$friendCoinModel->where('u_id',$u_id)->where('received_dmy',$dmy)->where('received_dmy',1)->count();
  	 			if($sentTo&&!$received&&$receivedCount<$defindFriend['value1'])
