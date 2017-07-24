@@ -243,8 +243,8 @@ class FriendController extends Controller
 				$frData['time']=time()-($listArr->time);
 				$result[]=$frData;
 			}
-			$result['coin_list']=$result;
-			$response=json_encode($result,TRUE);
+			$final['coin_list']=$result;
+			$response=json_encode($final,TRUE);
 			return $response;
 		}
 	}
