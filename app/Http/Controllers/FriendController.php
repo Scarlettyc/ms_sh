@@ -40,7 +40,7 @@ class FriendController extends Controller
 		$data=json_decode($json,TRUE);
 		$usermodel=new UserModel();
 		$lastweek=date('Y-m-d H:i:s', strtotime('last week'));
-		$lastweekUser=$usermodel->where('createdate','>=',$lastweek)->take(10)->get();
+		$lastweekUser=$usermodel->where('pass_tutorial',1)->where('createdate','>=',$lastweek)->take(10)->get();
 		$response=json_encode($lastweekUser,TRUE);
 		return $response;
 	}
