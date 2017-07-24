@@ -164,7 +164,7 @@ class ItemInfoUtil
 		{
 			$SkillMstModel=new SkillMstModel();
 			$EffectionMstModel=new EffectionMstModel();
-			$result[];
+			$result=[];
 
 			$SkillInfo=$SkillMstModel->where('skill_id',$Skill_Id)->first();
 			$SkillDataInfo=$SkillMstModel->select('skill_name','skill_icon','skill_info')->where('skill_id',$Skill_Id)->first();
