@@ -13,6 +13,7 @@ use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
+use App\UserFriendCoinReceiveModel;
 
 class FriendController extends Controller
 {
@@ -263,7 +264,6 @@ class FriendController extends Controller
 			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 			$user=$usermodel->where('u_id',$u_id)->first();
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
-			$friendCoinModel->where()
 			if($friendmodel){
 				$sentTo=$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->first;
 				$received=$receiveCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('received_dmy',$dmy)->get();
