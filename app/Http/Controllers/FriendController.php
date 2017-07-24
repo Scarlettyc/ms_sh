@@ -315,7 +315,8 @@ class FriendController extends Controller
 		$key='friend_request_'.$u_id;
 		Redis::HDEL($key,$friend['u_id']);
 		$requestlist=Redis::HKEYS($key);
-		$response=json_encode($requestlist,TRUE);
+		$result["removed_request"]=$requestlist;
+		$response=json_encode($result,TRUE);
 		return $response;
 
 	}
