@@ -232,7 +232,7 @@ class FriendController extends Controller
 			$dmy=$now->format( 'Ymd' );
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$u_id=$data['u_id'];
-			$key='friend_send_coin_'.$dmy.'_'.$u_id;
+			$key='friend_send_coin_'.$u_id;
 			$coinList=Redis::HVALS($key);
 			$result=[];
 			foreach($coinList as $list){
