@@ -264,6 +264,7 @@ class FriendController extends Controller
 			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 			$user=$usermodel->where('u_id',$u_id)->first();
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+			
 			if($friendmodel){
 				$sentTo=$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->first;
 				$received=$receiveCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('received_dmy',$dmy)->get();
@@ -272,12 +273,12 @@ class FriendController extends Controller
  				{	
  					$userCoin=$defindFriend['value2']+$user['u_coin'];
  					$userresult=$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
- 					$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->update(['fcoin_status'=>2,'received_dmy'=>$dmy,'update_at'=$datetime,'createdate'=>$datetime]);
+ 					$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->update(['fcoin_status'=>2,'received_dmy'=>$dmy,'update_at'=>$datetime,'createdate'=>$datetime]);
  					$recieveData["u_id"]=$u_id;
 					$recieveData["friend_u_id"]=$friend['u_id'];
 					$recieveData["rcoin_quanitty"]=$defindFriend['value2'];
 					$recieveData["rcoin_status"]=1;
-					$recieveData["sent_dmy"]=;
+		
 					$recieveData["update_at"]=$datetime;
 					$recieveData["createdate"]=$datetime;
  					$receiveCoinModel->insert($recieveData);
