@@ -31,7 +31,7 @@ class BaggageController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$data=json_decode($json,TRUE);
 
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
@@ -103,7 +103,7 @@ class BaggageController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$data=json_decode($json,TRUE);
 
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
@@ -157,7 +157,7 @@ class BaggageController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$data=json_decode($json,TRUE);
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
