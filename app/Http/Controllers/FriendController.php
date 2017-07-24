@@ -241,9 +241,14 @@ class FriendController extends Controller
 				$frData['quantity']=$listArr->quantity;
 				$frData['time']=time()-($listArr->time);
 				$result['coin_list'][]=$frData;
-		}
+			}
+		if($result){
 		$response=json_encode($result,TRUE);
 		return $response;
+		}
+		else{
+			throw new Exception("no exist coin");
+		}
 		}
 	}
 	
