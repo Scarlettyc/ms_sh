@@ -175,7 +175,7 @@ class FriendController extends Controller
 			$friendModel->where('friend_u_id',$friendData['u_id'])->where('u_id',$u_id)->update(['friend_status'=>2,'updated_at'=>$datetime]);
 			$friendModel->where('friend_u_id',$u_id)->where('u_id',$friendData['u_id'])->update(['friend_status'=>2,'updated_at'=>$datetime]);
 			$friend_List=$friendModel->where('u_id',$u_id)->get();
-			$result['friend_list']=$friendData;
+			$result['friend_list']=$friend_List;
 			$response=json_encode($result,TRUE);
 			return $response;
 		}
