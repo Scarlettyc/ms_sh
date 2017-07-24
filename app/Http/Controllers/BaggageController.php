@@ -30,22 +30,23 @@ class BaggageController extends Controller
 	public function baggage(Request $request)
 	{
 		$req=$request->getContent();
+		$json=base64_decode($req);
 		$data=json_decode($req,TRUE);
 
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
-		$now   = new DateTime;
+		/*$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$access_token=$loginTodayArr->access_token;*/
 
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
-		if(isset($u_id)&&$access_token==$data['access_token'])
+		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
 		{
 			if($select === "All")//get all the item from baggage
 			{
@@ -94,13 +95,14 @@ class BaggageController extends Controller
 			'error' => "please check u_id",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 
 	//show the detail information when user click the item in the baggage
 	public function getItemInfo (Request $request)
 	{
 		$req=$request->getContent();
+		$json=base64_decode($req);
 		$data=json_decode($req,TRUE);
 
 		$ItemInfoUtil=new ItemInfoUtil();
@@ -110,14 +112,14 @@ class BaggageController extends Controller
 		$ItemId=$data['Item_Id'];
 		$u_id=$data['u_id'];
 
-		$now   = new DateTime;
+		/*$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$access_token=$loginTodayArr->access_token;*/
 
-		if(isset($u_id)&&$access_token==$data['access_token'])
+		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
 		{
 			if($ItemType === "itemtype_1")
 			{
@@ -147,13 +149,14 @@ class BaggageController extends Controller
 			'error' => "please check u_id",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 
 	//sell item in the baggage
 	public function sellItem (Request $request)
 	{
 		$req=$request->getContent();
+		$json=base64_decode($req);
 		$data=json_decode($req,TRUE);
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
@@ -191,6 +194,6 @@ class BaggageController extends Controller
 			'error' => "please check ItemType",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 }

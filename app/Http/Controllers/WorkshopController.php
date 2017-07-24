@@ -15,6 +15,7 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
+use Illuminate\Support\Facades\Redis;
 class WorkshopController extends Controller
 {
 	public function workshop(Request $request)
