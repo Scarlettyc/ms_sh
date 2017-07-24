@@ -56,6 +56,7 @@ Route::post('/friend_send_coin', 'FriendController@sendCoin');
 Route::post('/friend_recevie_coin', 'FriendController@recieveCoin');
 Route::post('/coinlist', 'FriendController@recieveCoinList');
 Route::post('/suggest_friend', 'FriendController@suggest_friend');
+Route::post('/search_friend', 'FriendController@searchFriend');
 
 Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');

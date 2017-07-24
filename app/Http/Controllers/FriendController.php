@@ -25,11 +25,9 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
-		$friend_char=$characterModel->where('u_id',$friend['u_id'])->first();
-		$result['searched_friend']=$friend_char;
+		$result['searched_friend']=$friend;
 		$response=json_encode($result,TRUE);
-		return $response;
-		
+		return $response;	
 	}
 
 	public function suggest_friend(Request $request){
@@ -42,7 +40,7 @@ class FriendController extends Controller
 		$lastweek=date('Y-m-d H:i:s', strtotime('last week'));
 		$lastweekUser=$usermodel->where('pass_tutorial',1)->where('createdate','>=',$lastweek)->take(10)->get();
 		$response=json_encode($lastweekUser,TRUE);
-		return $response;
+		return  base64_encode($response);
 	}
 
 	public function send_friendrequest(Request $request){
