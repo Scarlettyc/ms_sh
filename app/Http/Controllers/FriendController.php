@@ -12,6 +12,7 @@ use App\CharacterModel;
 use App\UserFriendModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
+use App\UserFriendCoinHistoryModel;
 
 class FriendController extends Controller
 {
@@ -187,6 +188,7 @@ class FriendController extends Controller
 			$dmy=$now->format( 'Ymd' );
 			$datetime=$now->format( 'Y-m-d h:m:s' );
  			$defind=new DefindMstModel();
+ 			$friendCoinModel=new UserFriendCoinHistoryModel();
  			$defindFriend=$defind->where('defind_id',1)->first();
 			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 			$user=$usermodel->where('u_id',$u_id)->first();
@@ -195,9 +197,9 @@ class FriendController extends Controller
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
 			if($friendmodel){
  				$key='friend_send_coin_'.$friend['u_id'];
- 				$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
- 				$sentFriends=Redis::HKEYS($key);
- 	 			if($sentCoin<1&&count($sentFriends)<$defindFriend['value1'])
+ 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_id',$friend_id)->where('sent_dmy',$dmy)->get();
+ 				$sentCount=$friendCoinModel->where('u_id',$u_id)->where('sent_dmy',$dmy)->count();
+ 	 			if(!$sentTo<1&&$sentCount<$defindFriend['value1'])
  				{
  					$friendCoin=$defindFriend['value2']+$friend['u_coin'];
  					$userCoin=$defindFriend['value2']+$user['u_coin'];
@@ -205,10 +207,13 @@ class FriendController extends Controller
  					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
  					$sentData["u_id"]=$u_id;
 					$sentData["friend_id"]=$user['friend_id'];
-					$sentData["quantity"]=$defindFriend['value2'];
-					$sentData["time"]=time();
+					$sentData["fcoin_quanitty"]=$defindFriend['value2'];
+					$sentData["fcoin_status"]=1;
+					$sentData["sent_dmy"]=$dmy;
+					$sentData["update_at"]=$datetime;
+					$sentData["createdat"]=$datetime;
 					$sentRe=json_encode($sentData,TRUE);
-					Redis::HSET($key,$friend['u_id'],$sentRe);
+					$friendCoinModel->insert()
      				$response=$sentRe;
      			return $response;
  				}
