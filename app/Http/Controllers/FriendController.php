@@ -274,7 +274,6 @@ class FriendController extends Controller
      				$result['user_data']=$userresult;
      				$result['received_coin']=$friendCoin;
      				$response=json_encode($result,TRUE);
-			return $response;
      			return $response;
  				}
  				else {
