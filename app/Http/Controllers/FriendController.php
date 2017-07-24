@@ -230,24 +230,15 @@ class FriendController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
+		$friendCoinModel=new UserFriendCoinHistoryModel();
 		if(isset($data['u_id']))
 		{
 			$now   = new DateTime;
 			$dmy=$now->format( 'Ymd' );
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$u_id=$data['u_id'];
-			$key='friend_send_coin_'.$u_id;
-			$coinList=Redis::HVALS($key);
-			$result=[];
-			foreach($coinList as $list){
-				$listArr=json_decode($list);
-				$frData['u_id']=$listArr->u_id;
-				$frData['friend_id']=$listArr->friend_id;
-				$frData['quantity']=$listArr->quantity;
-				$frData['time']=time()-($listArr->time);
-				$result[]=$frData;
-			}
-			$final['coin_list']=$result;
+			$coinList=$friendCoinModel->where('u_id',$data['u_id'])->where('fcoin_status',1)->get();
+			$final['coin_list']=$coinList;
 			$response=json_encode($final,TRUE);
 			return $response;
 		}
