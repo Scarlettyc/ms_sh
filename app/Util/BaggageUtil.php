@@ -25,8 +25,11 @@ class BaggageUtil
 			$ItemMstModel=new ItemMstModel();
 			$result=[];
 
-			$baggageResource=$UserBaggageResModel->select('u_id','br_id','br_type','br_quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
-			$response=$baggageResource;
+			$item_id=$UserBaggageResModel->where('u_id',$baggage_u_id)->where('status','=',0)->pluck('br_id');
+			$item_icon=$UserBaggageResModel->where('u_id',$baggage_u_id)->where('status','=',0)->pluck('br_icon');
+			$item_quantity=$UserBaggageResModel->where('u_id',$baggage_u_id)->where('status','=',0)->pluck('br_quantity');
+
+			$response=$item_quantity;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -63,7 +66,7 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
-			$baggageWeapon=$UserBaggageEqModel->select('u_id','b_equ_id','b_equ_type','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->get();
+			$baggageWeapon=$UserBaggageEqModel->select('u_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->get();
 			$response=$baggageWeapon;
 		}else{
 			throw new Exception("No User ID");
@@ -82,7 +85,7 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
-			$baggageCore=$UserBaggageEqModel->select('u_id','b_equ_id','b_equ_type','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
+			$baggageCore=$UserBaggageEqModel->select('u_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
 			$response=$baggageCore;
 		}else{
 			throw new Exception("No User ID");
