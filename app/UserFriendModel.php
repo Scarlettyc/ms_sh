@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserFriendModel extends Model
 {
-     protected $fillable = ['friend_list_id', 'u_id', 'friend_u_id', 'friend_status','updatedate','createdate'];
+     protected $fillable = ['friend_list_id', 'u_id', 'friend_u_id', 'friend_status','updated_at','createdate'];
 
      protected $connection='mysql';
      protected $table = "User_friend_list"; 
