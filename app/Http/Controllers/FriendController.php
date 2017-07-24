@@ -33,7 +33,15 @@ class FriendController extends Controller
 	}
 
 	public function suggest_friend(Request $request){
-
+		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
+		$data=json_decode($json,TRUE);
+		$lastweek=date("Y-m-d 00:00:00",strtotime("+1
+ week"));
+		$lastweekUser=$usermodel->where('createdate','>=',$lastweek)->get();
+		$response=json_encode($lastweekUser,TRUE);
+		return $response;
 	}
 
 	public function send_friendrequest(Request $request){
