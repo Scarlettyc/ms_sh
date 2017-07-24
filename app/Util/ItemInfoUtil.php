@@ -128,7 +128,7 @@ class ItemInfoUtil
 		return $response;
 	}
 
-	// get the information of a Equipment: name, type, icon
+	// get the information of a Equipment: name, type, icon, effection
 	function getEquipmentInfo ($Item_Id)
 	{
 		$EquipmentId=$Item_Id;
@@ -152,6 +152,35 @@ class ItemInfoUtil
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check Equipment ID",
+			];
+		}
+		return $response;
+	}
+
+	function getSkillInfo ($skill_id)
+	{
+		$Skill_Id=$skill_id;
+		if(isset($Skill_Id))
+		{
+			$SkillMstModel=new SkillMstModel();
+			$EffectionMstModel=new EffectionMstModel();
+			$result[];
+
+			$SkillInfo=$SkillMstModel->where('skill_id',$Skill_Id)->first();
+			$SkillDataInfo=$SkillMstModel->select('skill_name','skill_icon','skill_info')->where('skill_id',$Skill_Id)->first();
+			$result['Skill_data']['Skill_info']=$SkillDataInfo;
+
+			$SkillEff_id=$SkillInfo['eff_id'];
+			$SkillEffInfo=$EffectionMstModel->where('eff_id',$SkillEff_id)->first();
+			$result['Skill_data']['SkillEff_info']=$SkillEffInfo;
+
+			$response=json_encode($result,TRUE);
+		}else
+		{
+			throw new Exception("Wrong Skill ID");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check Skill ID",
 			];
 		}
 		return $response;

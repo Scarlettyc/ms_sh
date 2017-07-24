@@ -9,6 +9,7 @@ use App\CharacterModel;
 use App\EquipmentMstModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
+use App\Util\ItemInfoUtil;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -27,122 +28,86 @@ class WorkshopController extends Controller
 		$SkillMstModel=new SkillMstModel();
 		$result=[];
 
-		$charData=$data;
-		$ch_org_id=$charData['ch_org_id'];
-		$ch_ws_id=$charData['ch_ws_id'];
-
-		if($ch_org_id==$ch_ws_id)
+		$u_id=$data['u_id'];
+		if(isset($u_id))
 		{
-			
-		}
+			$characterDetail=$CharacterModel->select('ch_id','ch_title','w_id','m_id','core_id','ch_lv','ch_star','ch_hp_max','ch_atk','ch_def','ch_res','ch_crit','ch_ch','ch_spd','ch_img')->where('u_id',$u_id)->first();
+			$result['Workshop_Data']['Character_info']=$characterDetail;
+			$WeaponId=$characterDetail['w_id'];
+			$weaponDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$WeaponId)->first();
+			$result['Workshop_Data']['Weapon_icon']=$weaponDetail;
+			$MovementId=$characterDetail['m_id'];
+			$movementDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$MovementId)->first();
+			$result['Workshop_Data']['Movement_icon']=$movementDetail;
+			$CoreId=$characterDetail['core_id'];
+			$coreDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$CoreId)->first();
+			$result['Workshop_Data']['Core_icon']=$coreDetail;
 
-
-
-
-
-
-
-
-
-
-
-
-		$characterData=$characterModel->where('ch_id','=',$ch_org_id)->first();
-		if(isset($characterData))
-		{
-			$result['character_data']['character_info']=$characterData;
-			$w_id_l=$characterData['w_id_l'];
-			$w_id_r=$characterData['w_id_r'];
-			$m_id=$characterData['m_id'];
-			$equ_id_1=$characterData['equ_id_1'];
-			$equ_id_2=$characterData['equ_id_2'];
-			$equ_id_3=$characterData['equ_id_3'];
-
-			$equipmentData=$equipmentMstModel->whereIn('equ_id',[$w_id_l,$w_id_r,$m_id,$equ_id_1,$equ_id_2,$equ_id_3])->get();
-			$result['equipment_data']['equipment_info']=$equipmentData;
-
-			$Equipment_a=$equipmentMstModel->where('equ_id','=',$w_id_r)->first();
-			$skill_a=$Equipment_a['skill_id'];
-			$Equipment_b=$equipmentMstModel->where('equ_id','=',$w_id_l)->first();
-			$skill_b=$Equipment_b['skill_id'];
-			$Equipment_c=$equipmentMstModel->where('equ_id','=',$m_id)->first();
-			$skill_c=$Equipment_c['skill_id'];
-					
-			$skillData=$skillMstModel->whereIn('skill_id',[$skill_a,$skill_b,$skill_c])->get();
-			$result['skill_data']['skill_info']=$skillData;
-
+			$WeaSkillId=$weaponDetail['skill_id'];
+			$weaSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$WeaSkillId)->first();
+			$result['Workshop_Data']['Weapon_skill']=$weaSkillDetail;
+			$MoveSkillId=$movementDetail['skill_id'];
+			$moveSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$MoveSkillId)->first();
+			$result['Workshop_Data']['Movement_skill']=$moveSkillDetail;
+			$CoreSkillId=$coreDetail['skill_id'];
+			$coreSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$CoreSkillId)->first();
+			$result['Workshop_Data']['Core_skill']=$coreSkillDetail;
 			$response=json_encode($result,TRUE);
-			//$response=base64_decode($response);	
-
-			return $response;
-		}else{
-			throw new Exception("Wrong Character ID!")
+		}else
+		{
+			throw new Exception("there have some error of you access_token");
 			$response=[
 			'status' => 'Wrong',
-			'error' => 'please check Character ID',
+			'error' => "please check u_id",
 			];
-		}		
+		}
 	}
 
-	public function getEquipmentInfo (Request $request)
+	public function showEquipmentInfo (Request $request)
 	{
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$EquipmentId=$data['EquId'];
+		$EquipmentMstModel=new EquipmentMstModel();
+		$EffectionMstModel=new EffectionMstModel();
+		$result=[];
 
-		if(isset($EquipmentId))
+		$equ_id=$data['equ_id'];
+		if(isset($equ_id))
 		{
-			$EquipmentMstModel=new EquipmentMstModel();
-			$EffectionMstModel=new EffectionMstModel();
-			$result=[];
-
-			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first();
-			$result['Equipment_data']['Equipment_info']=$EquipmentInfo;
-
-			$EquipmentEff_id = $EquipmentInfo['eff_id'];
-			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
-			$result['Equipment_data']['EquipmentEff_info']=$EquipmentEffInfo;
-
-			$response=json_encode($result,TRUE);
-		}else{
-			throw new Exception("Wrong Equipment ID");
+			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($equ_id);
+			$response=$EquipmentDetail;
+		}else
+		{
+			throw new Exception("Wrong Equipment ID data");
 			$response=[
 			'status' => 'Wrong',
-			'error' => "please check Equipment ID",
+			'error' => "please check Equipment ID data",
 			];
 		}
-		return $response;
 	}
 
-	public function getSkillInfo(Request $request)
+	public function showSkillInfo (Request $request)
 	{
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$SkillId=$data['SkillId'];
+		$SkillMstModel=new SkillMstModel();
+		$EffectionMstModel=new EffectionMstModel();
+		$result=[];
 
-		if(isset($SkillId))
+		$skill_id=$data['skill_id'];
+		if(isset($skill_id))
 		{
-			$SkillMstModel=new SkillMstModel();
-			$EffectionMstModel=new EffectionMstModel();
-			$result=[];
-
-			$SkillInfo = $SkillMstModel->where('skill_id', '=', $SkillId)->first();
-			$result['Skill_data']['skill_info']=$SkillInfo;
-
-			$Eff_id=$SkillInfo['eff_id'];
-			$EffInfo=$EffectionMstModel->where('eff_id', '=', $Eff_id)->first();
-			$result['skill_d']['eff_i']=$EffInfo;
-
-			$response=json_encode($result,TRUE);
-		}else{
-			throw new Exception("Wrong skill ID");
+			$SkillDetail = $ItemInfoUtil->getSkillInfo($skill_id);
+			$response=$SkillDetail;
+		}else
+		{
+			throw new Exception("Wrong Skill ID data");
 			$response=[
 			'status' => 'Wrong',
-			'error' => "please check Skill ID",
+			'error' => "please check Skill ID data",
 			];
 		}
-		return $response;
 	}
 }
