@@ -35,17 +35,17 @@ class BaggageController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
-		$now   = new DateTime;
+		/*$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$access_token=$loginTodayArr->access_token;*/
 
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
-		if(isset($u_id)&&$access_token==$data['access_token'])
+		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
 		{
 			if($select === "All")//get all the item from baggage
 			{
@@ -110,14 +110,14 @@ class BaggageController extends Controller
 		$ItemId=$data['Item_Id'];
 		$u_id=$data['u_id'];
 
-		$now   = new DateTime;
+		/*$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$access_token=$loginTodayArr->access_token;*/
 
-		if(isset($u_id)&&$access_token==$data['access_token'])
+		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
 		{
 			if($ItemType === "itemtype_1")
 			{
