@@ -197,7 +197,7 @@ class FriendController extends Controller
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
 			if($friendmodel){
  				$key='friend_send_coin_'.$friend['u_id'];
- 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_id',$friend_id)->where('sent_dmy',$dmy)->get();
+ 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend_id)->where('sent_dmy',$dmy)->get();
  				$sentCount=$friendCoinModel->where('u_id',$u_id)->where('sent_dmy',$dmy)->count();
  	 			if(!$sentTo<1&&$sentCount<$defindFriend['value1'])
  				{
