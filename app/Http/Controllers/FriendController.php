@@ -107,7 +107,7 @@ class FriendController extends Controller
 		$friend_list=$usefriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
 		$friend_user_ids=[];
 		if($friend_list){
-			$result['friend_list']=$friend_list
+			$result['friend_list']=$friend_list;
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
 		}
