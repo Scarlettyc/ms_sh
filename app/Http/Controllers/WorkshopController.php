@@ -61,6 +61,7 @@ class WorkshopController extends Controller
 			'error' => "please check u_id",
 			];
 		}
+		return $response;
 	}
 
 	public function showEquipmentInfo (Request $request)
@@ -85,6 +86,7 @@ class WorkshopController extends Controller
 			'error' => "please check Equipment ID data",
 			];
 		}
+		return $response;
 	}
 
 	public function showSkillInfo (Request $request)
@@ -109,5 +111,6 @@ class WorkshopController extends Controller
 			'error' => "please check Skill ID data",
 			];
 		}
+		return $response;
 	}
 }
