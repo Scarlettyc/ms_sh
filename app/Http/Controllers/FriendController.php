@@ -213,7 +213,7 @@ class FriendController extends Controller
 					$sentData["update_at"]=$datetime;
 					$sentData["createdate"]=$datetime;
 					$friendCoinModel->insert($sentData);
-     				$response=json_encode($friendCoinModel,TRUE);
+     				$response=json_encode($sentData,TRUE);
      			return $response;
  				}
  				else {
