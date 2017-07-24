@@ -207,9 +207,9 @@ class FriendController extends Controller
 
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
 			if($friendmodel){
- 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('sent_dmy',$dmy)->get();
+ 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('sent_dmy',$dmy)->first();
  				$sentCount=$friendCoinModel->where('u_id',$u_id)->where('sent_dmy',$dmy)->count();
- 	 			if(!$sentTo&&$sentCount<$defindFriend['value1'])
+ 	 			if(!isset($sentTo)&&$sentCount<$defindFriend['value1'])
  				{
  					$friendCoin=$defindFriend['value2']+$friend['u_coin'];
  					$userCoin=$defindFriend['value2']+$user['u_coin'];
@@ -220,7 +220,7 @@ class FriendController extends Controller
 					$sentData["fcoin_quanitty"]=$defindFriend['value2'];
 					$sentData["fcoin_status"]=1;
 					$sentData["sent_dmy"]=$dmy;
-					$sentData["update_at"]=$datetime;
+					$sentData["updated_at"]=$datetime;
 					$sentData["createdate"]=$datetime;
 					$friendCoinModel->insert($sentData);
      				$response=json_encode($sentData,TRUE);
