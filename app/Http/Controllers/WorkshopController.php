@@ -73,10 +73,10 @@ class WorkshopController extends Controller
 		$EffectionMstModel=new EffectionMstModel();
 		$result=[];
 
-		$equ_id=$data['equ_id'];
+		$Item_Id=$data['equ_id'];
 		if(isset($equ_id))
 		{
-			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($equ_id);
+			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($Item_Id);
 			$response=$EquipmentDetail;
 		}else
 		{
