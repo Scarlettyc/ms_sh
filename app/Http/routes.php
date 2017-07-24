@@ -47,7 +47,7 @@ Route::post('/battlematch', 'MatchController@match');
 
 Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
-Route::post('/removeriend', 'FriendController@removeFriend');
+Route::post('/removefriend', 'FriendController@removeFriend');
 Route::post('/friendlist', 'FriendController@friend_list');
 Route::post('/get_friend_request', 'FriendController@get_friend_request');
 Route::post('/del_friend_request', 'FriendController@reject_request');

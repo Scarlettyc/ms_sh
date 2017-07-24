@@ -83,7 +83,7 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
 		$requestlist=Redis::HVALS($key);
-		$result=[]
+		$result=[];
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
@@ -93,7 +93,7 @@ class FriendController extends Controller
 		}
 		$final['friend_request']=$result;
 		$response=json_encode($final,TRUE);
-		return $response;
+		return base64_encode($response);
 
 	}
 
@@ -149,7 +149,7 @@ class FriendController extends Controller
 			Redis::HDEL($key,$friend['u_id']);
 			$result['add_friend']=$insertData;
 			$response=json_encode($result,TRUE);
-			return $response;
+			return base64_encode($response);
 		}
 		else {
 			throw new Exception("this friend has added before");
