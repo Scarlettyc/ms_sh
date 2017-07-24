@@ -37,6 +37,7 @@ class FriendController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+		$usermodel=new UserModel();
 		$lastweek=date("Y-m-d 00:00:00",strtotime("+1
  week"));
 		$lastweekUser=$usermodel->where('createdate','>=',$lastweek)->get();
