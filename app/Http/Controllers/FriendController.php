@@ -192,7 +192,7 @@ class FriendController extends Controller
 			$user=$usermodel->where('u_id',$u_id)->first();
 
 
-			$friendmodel->where('u_id',$u_id)->where('friend_id',$friend_id)->first();
+			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
 			if($friendmodel){
  				$key='friend_send_coin_'.$friend['u_id'];
  				$sentCoin=Redis::HEXISTS($key,$friend['u_id']);
@@ -203,8 +203,8 @@ class FriendController extends Controller
  					$userCoin=$defindFriend['value2']+$user['u_coin'];
  					$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
  					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
- 					$sentData["u_id"]=$friend['u_id'];
-					$sentData["friend_id"]=$friend['friend_id'];
+ 					$sentData["u_id"]=$u_id;
+					$sentData["friend_id"]=$user['friend_id'];
 					$sentData["quantity"]=$defindFriend['value2'];
 					$sentData["time"]=time();
 					$sentRe=json_encode($sentData,TRUE);
