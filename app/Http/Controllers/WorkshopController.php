@@ -75,7 +75,7 @@ class WorkshopController extends Controller
 		$result=[];
 
 		$Item_Id=$data['equ_id'];
-		if(isset($equ_id))
+		if(isset($Item_Id))
 		{
 			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($Item_Id);
 			$response=$EquipmentDetail;
