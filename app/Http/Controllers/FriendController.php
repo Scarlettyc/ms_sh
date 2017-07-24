@@ -206,14 +206,14 @@ class FriendController extends Controller
  					$usermodel->where('u_id',$friend['u_id'])->update(['u_coin'=>$friendCoin,'updated_at'=>$datetime]);
  					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
  					$sentData["u_id"]=$u_id;
-					$sentData["friend_u_id"]=$user['friend_id'];
+					$sentData["friend_u_id"]=$friend['u_id'];
 					$sentData["fcoin_quanitty"]=$defindFriend['value2'];
 					$sentData["fcoin_status"]=1;
 					$sentData["sent_dmy"]=$dmy;
 					$sentData["update_at"]=$datetime;
-					$sentData["createdat"]=$datetime;
+					$sentData["createdate"]=$datetime;
 					$friendCoinModel->insert($sentData);
-     				$response=$sentRe;
+     				$response=json_encode($friendCoinModel,TRUE);
      			return $response;
  				}
  				else {
