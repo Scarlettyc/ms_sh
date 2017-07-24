@@ -258,29 +258,23 @@ class FriendController extends Controller
 			$dmy=$now->format( 'Ymd' );
 			$datetime=$now->format( 'Y-m-d h:m:s' );
  			$defind=new DefindMstModel();
+ 			$friendCoinModel=new UserFriendCoinHistoryModel();
  			$defindFriend=$defind->where('defind_id',1)->first();
 			$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 			$user=$usermodel->where('u_id',$u_id)->first();
-
-
 			$friendmodel->where('u_id',$u_id)->where('friend_id',$friend_id)->first();
 			if($friendmodel){
- 				$friendCoin=$defindFriend['value2']+$friend['u_coin'];
- 				$userCoin=$defindFriend['value2']+$user['u_coin'];
-
-
- 				$sendKey='friend_send_coin_'.$dmy.'_'.$friend['u_id'];
- 				$receivedCoin=Redis::HEXISTS($key,$friend['u_id']);
- 				$receiveFriends=Redis::HKEYS($key);
- 	 			if($sentCoin<1&&count($sentFriends)<$defindFriend['value1'])
- 				{
- 					$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
- 					$sentData["u_id"]=$friend['u_id'];
-					$sentData["friend_id"]=$friend['friend_id'];
-					$sentData["time"]=time();
-					$sentRe=json_encode($sentData,TRUE);
-					Redis::HSET($key,$friend['u_id'],$sentRe);
-     				$response=$sentRe;
+				$received=$friendCoinModel->where('friend_u_id',$u_id)->where('u_id',$friend['u_id'])->where('sent_dmy',$dmy)->get();
+ 				$receivedCount=$friendCoinModel->where('friend_u_id',$u_id)->where('sent_dmy',$dmy)->where('fcoin_status',2)->count();
+ 	 			if($received&&$receivedCount<$defindFriend['value1'])
+ 				{	
+ 					$userCoin=$defindFriend['value2']+$user['u_coin'];
+ 					$userresult=$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userCoin,'updated_at'=>$datetime]);
+ 					$friendCoin=$friendCoinModel->where('u_id',$friend['u_id'])->where('friend_u_id',$u_id)->update(['fcoin_status',2]);
+     				$result['user_data']=$userresult;
+     				$result['received_coin']=$friendCoin;
+     				$response=json_encode($result,TRUE);
+			return $response;
      			return $response;
  				}
  				else {
