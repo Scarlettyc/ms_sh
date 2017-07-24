@@ -71,6 +71,7 @@ class WorkshopController extends Controller
 
 		$EquipmentMstModel=new EquipmentMstModel();
 		$EffectionMstModel=new EffectionMstModel();
+		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
 		$Item_Id=$data['equ_id'];
@@ -96,6 +97,7 @@ class WorkshopController extends Controller
 
 		$SkillMstModel=new SkillMstModel();
 		$EffectionMstModel=new EffectionMstModel();
+		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
 		$skill_id=$data['skill_id'];
