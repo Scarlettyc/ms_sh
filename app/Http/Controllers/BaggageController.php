@@ -51,33 +51,33 @@ class BaggageController extends Controller
 			if($select === "All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
-				$result['Baggage_data']['itemtype_1']=$Resource;
+				$result['Baggage_data']=$Resource;
 				$Scroll=$BaggageUtil->getScroll($u_id);
-				$result['Baggage_data']['itemtype_3']=$Scroll;
+				$result['Baggage_data']=$Scroll;
 				$Weapon=$BaggageUtil->getWeapon($u_id);
-				$result['Baggage_data']['itemtype_2']=$Weapon;
+				$result['Baggage_data']=$Weapon;
 				$Core=$BaggageUtil->getCore($u_id);
-				$result['Baggage_data']['itemtype_2']=$Core;
+				$result['Baggage_data']=$Core;
 				$response=json_encode($result,TRUE);
 			}else if($select === "R")//select Resource
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
-				$result['Baggage_data']['itemtype_1']=$Resource;
+				$result['Baggage_data']=$Resource;
 				$response=json_encode($result,TRUE);
 			}else if($select === "S")//select Scroll
 			{
 				$Scroll=$BaggageUtil->getScroll($u_id);
-				$result['Baggage_data']['itemtype_3']=$Scroll;
+				$result['Baggage_data']=$Scroll;
 				$response=json_encode($result,TRUE);
 			}else if($select === "W")//select Weapon
 			{
 				$Weapon=$BaggageUtil->getWeapon($u_id);
-				$result['Baggage_data']['itemtype_2']=$Weapon;
+				$result['Baggage_data']=$Weapon;
 				$response=json_encode($result,TRUE);
 			}else if($select === "C")//select Core
 			{
 				$Core=$BaggageUtil->getCore($u_id);
-				$result['Baggage_data']['itemtype_2']=$Core;
+				$result['Baggage_data']=$Core;
 				$response=json_encode($result,TRUE);
 			}else
 			{
