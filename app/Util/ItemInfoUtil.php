@@ -146,16 +146,24 @@ class ItemInfoUtil
 		{
 			$EquipmentMstModel=new EquipmentMstModel();
 			$EffectionMstModel=new EffectionMstModel();
+			$equipment=[];
 			$result=[];
 
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first();
 			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','equ_price','icon_path')->where('equ_id','=',$EquipmentId)->first();
-			$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
+
+			$equipment['item_id']=$EquipmentInfo['equ_id'];
+			$equipment['item_name']=$EquipmentInfo['equ_name'];
+			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
+			$equipment['item_img']=$EquipmentInfo['icon_path'];
+			$equipment['item_description']=$EquipmentInfo['equ_description'];
+			$equipment['item_price']=$EquipmentInfo['equ_price'];
+
+			$result['item_data']=$equipment;
 
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
-			$result['Equipment_data']['EquipmentEff_info']=$EquipmentEffInfo;
-
+			$result['item_data']['item_info']['equipment_eff']=$EquipmentEffInfo;
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
