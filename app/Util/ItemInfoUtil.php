@@ -181,6 +181,7 @@ class ItemInfoUtil
 		}
 		return $response;
 	}
+	
 
 	// get the information of a Equipment: name, type, icon, effection
 	function getEquipmentInfo ($Item_Id)
