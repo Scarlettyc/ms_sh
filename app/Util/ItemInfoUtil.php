@@ -212,6 +212,7 @@ class ItemInfoUtil
 				$scroll_detail[]=$scroll_resource5;
 			}
 
+			$result['item_data']['item_info']['scroll_detail']=$scroll_detail;
 
 			$response=json_encode($result,TRUE);
 		}else{
