@@ -26,10 +26,20 @@ class ItemInfoUtil
 		if(isset($ResId))
 		{
 			$ResourceMstModel=new ResourceMstModel();
+			$resource=[];
 			$result=[];
 
 			$ResourceInfo = $ResourceMstModel->select('r_id','r_name','r_rarity','r_type','r_img_path','r_description')->where('r_id','=',$ResId)->first();
-			$result['Resource_data']['Resource_info']=$ResourceInfo;
+
+			$resource['item_id']=$ResourceInfo['r_id'];
+			$resource['item_name']=$ResourceInfo['r_name'];
+			$resource['item_rarity']=$ResourceInfo['r_rarity'];
+			$resource['item_img']=$ResourceInfo['r_img_path'];
+			$resource['item_description']=$ResourceInfo['r_description'];
+			$resource['item_price']=0;
+			$resource['item_info']=null;
+
+			$result['item_data']=$resource;
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Resource ID");
