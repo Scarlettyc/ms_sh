@@ -143,15 +143,14 @@ class ItemInfoUtil
 
 
 
-			//get the number of coin that user already had
+			//get the number of coin that user already had and how much coin that user need
 			$scroll_resource2=[];
 			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->first();
 
 			$scroll_resource2['item_had']=$CoinResQuantity['u_coin'];
 			$scroll_resource2['item_need']=$ScrollInfo['rd2_quantity'];
-			$scroll_resource2['item_icon']=null;
 
-			$scroll_detail[]=$scroll_resource2;
+			$result['item_data']['item_info']['scroll_coin']=$scroll_resource2;
 
 
 
