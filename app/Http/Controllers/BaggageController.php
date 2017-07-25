@@ -105,8 +105,8 @@ class BaggageController extends Controller
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
-		$ItemType=$data['type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
-		$ItemId=$data['Item_Id'];
+		$ItemType=$data['item_type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
+		$ItemId=$data['item_id'];
 		$u_id=$data['u_id'];
 
 		/*$now   = new DateTime;
@@ -118,15 +118,15 @@ class BaggageController extends Controller
 
 		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
 		{
-			if($ItemType === "itemtype_1")
+			if($ItemType == 1)
 			{
 				$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
 				$response=$ResInfo;
-			}else if($ItemType === "itemtype_2")
+			}else if($ItemType == 2)
 			{
 				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
 				$response=$EquInfo;
-			}else if($ItemType === "itemtype_3")
+			}else if($ItemType == 3)
 			{
 				$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
 				$response=$ScrollInfo;
