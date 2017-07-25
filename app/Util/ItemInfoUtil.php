@@ -238,7 +238,7 @@ class ItemInfoUtil
 			$skill['skill_name']=$SkillInfo['skill_name'];
 			$skill['skill_icon']=$SkillInfo['skill_icon'];
 			$skill['skill_info']=$SkillInfo['skill_info'];
-			$$skill['skill_eff']=$SkillEffInfo;
+			$skill['skill_eff']=$SkillEffInfo;
 
 			$result['Skill_data']=$skill;
 
