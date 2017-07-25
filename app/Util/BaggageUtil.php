@@ -53,8 +53,17 @@ class BaggageUtil
 			$UserBaggageScrollModel=new UserBaggageScrollModel();
 			$result=[];
 
-			$baggageScroll=$UserBaggageScrollModel->select('u_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
-			$response=$baggageScroll;
+			$baggageScroll=$UserBaggageScrollModel->select('bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->get();
+
+			foreach ($baggageScroll as $obj) 
+			{
+				$arry['item_id']=$obj['bsc_id'];
+				$arry['item_icon']=$obj['bsc_icon'];
+				$arry['item_quantity']=1;
+				$arry['item_type']=3;
+				$result[]=$arry;
+			}
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -72,8 +81,17 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
-			$baggageWeapon=$UserBaggageEqModel->select('u_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->get();
-			$response=$baggageWeapon;
+			$baggageWeapon=$UserBaggageEqModel->select('b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->get();
+
+			foreach ($baggageWeapon as $obj) 
+			{
+				$arry['item_id']=$obj['b_equ_id'];
+				$arry['item_icon']=$obj['b_icon_path'];
+				$arry['item_quantity']=1;
+				$arry['item_type']=2;
+				$result[]=$arry;
+			}
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
@@ -91,8 +109,17 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
-			$baggageCore=$UserBaggageEqModel->select('u_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
-			$response=$baggageCore;
+			$baggageCore=$UserBaggageEqModel->select('b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
+
+			foreach ($baggageWeapon as $obj) 
+			{
+				$arry['item_id']=$obj['b_equ_id'];
+				$arry['item_icon']=$obj['b_icon_path'];
+				$arry['item_quantity']=1;
+				$arry['item_type']=2;
+				$result[]=$arry;
+			}
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
