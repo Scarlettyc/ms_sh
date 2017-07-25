@@ -51,13 +51,10 @@ class BaggageController extends Controller
 			if($select === "All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
-				$result[]=$Resource;
 				$Scroll=$BaggageUtil->getScroll($u_id);
-				$result[]=$Scroll;
 				$Weapon=$BaggageUtil->getWeapon($u_id);
-				$result[]=$Weapon;
 				$Core=$BaggageUtil->getCore($u_id);
-				$result[]=$Core;
+				$result=array_merge($Resource,$Scroll,$Weapon,$Core);
 				$response=json_encode($result,TRUE);
 			}else if($select === "R")//select Resource
 			{
