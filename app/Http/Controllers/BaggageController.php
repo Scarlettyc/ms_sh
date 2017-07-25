@@ -30,8 +30,8 @@ class BaggageController extends Controller
 	public function baggage(Request $request)
 	{
 		$req=$request->getContent();
-		//$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
@@ -92,15 +92,15 @@ class BaggageController extends Controller
 			'error' => "please check u_id",
 			];
 		}
-		return $response;//base64_encode($response);
+		return base64_encode($response);
 	}
 
 	//show the detail information when user click the item in the baggage
 	public function getItemInfo (Request $request)
 	{
 		$req=$request->getContent();
-		$json=base64_decode($req);
-		$data=json_decode($json,TRUE);
+		//$json=base64_decode($req);
+		$data=json_decode($req,TRUE);
 
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
@@ -146,7 +146,7 @@ class BaggageController extends Controller
 			'error' => "please check u_id",
 			];
 		}
-		return base64_encode($response);
+		return $response;//base64_encode($response);
 	}
 
 	//sell item in the baggage
