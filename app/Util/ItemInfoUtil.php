@@ -219,6 +219,7 @@ class ItemInfoUtil
 		return $response;
 	}
 
+	//get the information of a skill: name, icon, info, effection
 	function getSkillInfo ($skill_id)
 	{
 		$Skill_Id=$skill_id;
