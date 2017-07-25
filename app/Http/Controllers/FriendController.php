@@ -27,7 +27,7 @@ class FriendController extends Controller
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$result['searched_friend']=$friend;
 		$response=json_encode($result,TRUE);
-		return $response;	
+		return base64_encode($response);	
 	}
 
 	public function suggest_friend(Request $request){
@@ -64,7 +64,7 @@ class FriendController extends Controller
 				Redis::HSET($key,$u_id,$myre);
 				$myData['friend_u_id']=$friend['u_id'];
 				$response=json_encode($myData,TRUE);
-				return $response;
+				return base64_encode($response);
 			}
 		else {
 			throw new Exception("cannot add yourself");
@@ -83,15 +83,17 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
 		$requestlist=Redis::HVALS($key);
+		$result=[];
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
-			$result['friend_request'][]=$frData;
+			$result[]=$frData;
 		}
-		$response=json_encode($result,TRUE);
-		return $response;
+		$final['friend_request']=$result;
+		$response=json_encode($final,TRUE);
+		return base64_encode($response);
 
 	}
 
@@ -105,8 +107,9 @@ class FriendController extends Controller
 		$friend_list=$usefriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
 		$friend_user_ids=[];
 		if($friend_list){
-			$response=json_encode($friend_list,TRUE);
-			return $response;
+			$result['friend_list']=$friend_list;
+			$response=json_encode($result,TRUE);
+			return base64_encode($response);
 		}
 		else {
 			return "no friend in list";
@@ -147,7 +150,7 @@ class FriendController extends Controller
 			Redis::HDEL($key,$friend['u_id']);
 			$result['add_friend']=$insertData;
 			$response=json_encode($result,TRUE);
-			return $response;
+			return base64_encode($response);
 		}
 		else {
 			throw new Exception("this friend has added before");
@@ -173,7 +176,7 @@ class FriendController extends Controller
 			$friendModel->where('friend_u_id',$friendData['u_id'])->where('u_id',$u_id)->update(['friend_status'=>2,'updated_at'=>$datetime]);
 			$friendModel->where('friend_u_id',$u_id)->where('u_id',$friendData['u_id'])->update(['friend_status'=>2,'updated_at'=>$datetime]);
 			$friend_List=$friendModel->where('u_id',$u_id)->get();
-			$result['friend_list']=$friendData;
+			$result['friend_list']=$friend_List;
 			$response=json_encode($result,TRUE);
 			return $response;
 		}
@@ -204,9 +207,9 @@ class FriendController extends Controller
 
 			$friendmodel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
 			if($friendmodel){
- 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('sent_dmy',$dmy)->get();
+ 				$sentTo=$friendCoinModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->where('sent_dmy',$dmy)->first();
  				$sentCount=$friendCoinModel->where('u_id',$u_id)->where('sent_dmy',$dmy)->count();
- 	 			if(!$sentTo&&$sentCount<$defindFriend['value1'])
+ 	 			if(!isset($sentTo)&&$sentCount<$defindFriend['value1'])
  				{
  					$friendCoin=$defindFriend['value2']+$friend['u_coin'];
  					$userCoin=$defindFriend['value2']+$user['u_coin'];
@@ -217,7 +220,7 @@ class FriendController extends Controller
 					$sentData["fcoin_quanitty"]=$defindFriend['value2'];
 					$sentData["fcoin_status"]=1;
 					$sentData["sent_dmy"]=$dmy;
-					$sentData["update_at"]=$datetime;
+					$sentData["updated_at"]=$datetime;
 					$sentData["createdate"]=$datetime;
 					$friendCoinModel->insert($sentData);
      				$response=json_encode($sentData,TRUE);
@@ -313,7 +316,8 @@ class FriendController extends Controller
 		$key='friend_request_'.$u_id;
 		Redis::HDEL($key,$friend['u_id']);
 		$requestlist=Redis::HKEYS($key);
-		$response=json_encode($requestlist,TRUE);
+		$result["friend_request"]=$requestlist;
+		$response=json_encode($result,TRUE);
 		return $response;
 
 	}
