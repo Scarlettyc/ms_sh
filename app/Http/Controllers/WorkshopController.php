@@ -41,23 +41,16 @@ class WorkshopController extends Controller
 
 			$WeaponId=$characterDetail['w_id'];
 			$weaponDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$WeaponId)->first();
-			//$result['Workshop_Data']['Weapon_icon']=$weaponDetail;
 			$MovementId=$characterDetail['m_id'];
 			$movementDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$MovementId)->first();
-			//$result['Workshop_Data']['Movement_icon']=$movementDetail;
 			$CoreId=$characterDetail['core_id'];
 			$coreDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$CoreId)->first();
-			//$result['Workshop_Data']['Core_icon']=$coreDetail;
-
 			$WeaSkillId=$weaponDetail['skill_id'];
 			$weaSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$WeaSkillId)->first();
-			//$result['Workshop_Data']['Weapon_skill']=$weaSkillDetail;
 			$MoveSkillId=$movementDetail['skill_id'];
 			$moveSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$MoveSkillId)->first();
-			//$result['Workshop_Data']['Movement_skill']=$moveSkillDetail;
 			$CoreSkillId=$coreDetail['skill_id'];
 			$coreSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$CoreSkillId)->first();
-			//$result['Workshop_Data']['Core_skill']=$coreSkillDetail;
 
 			$weaponData['equ_id']=$characterDetail['w_id'];
 			$weaponData['equ_icon']=$weaponDetail['icon_path'];
