@@ -111,7 +111,7 @@ class BaggageUtil
 
 			$baggageCore=$UserBaggageEqModel->select('b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->get();
 
-			foreach ($baggageWeapon as $obj) 
+			foreach ($baggageCore as $obj) 
 			{
 				$arry['item_id']=$obj['b_equ_id'];
 				$arry['item_icon']=$obj['b_icon_path'];
