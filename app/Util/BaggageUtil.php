@@ -37,7 +37,7 @@ class BaggageUtil
 			$item_icon=$UserBaggageResModel->where('u_id',$baggage_u_id)->where('status','=',0)->pluck('br_icon');
 			$item_quantity=$UserBaggageResModel->where('u_id',$baggage_u_id)->where('status','=',0)->pluck('br_quantity');*/
 
-			$response=$item_quantity;
+			$response=$BaggageResource;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
