@@ -33,8 +33,9 @@ class BaggageUtil
 				$arry['item_icon']=$obj['br_icon'];
 				$arry['item_quantity']=$obj['br_quantity'];
 				$arry['item_type']=1;
+				$result[]=$arry;
 			}
-			$response=$BaggageResource;
+			$response=$result;
 		}else{
 			throw new Exception("No User ID");
 			$response=[
