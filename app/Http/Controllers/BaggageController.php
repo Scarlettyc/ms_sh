@@ -54,7 +54,7 @@ class BaggageController extends Controller
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$Core=$BaggageUtil->getCore($u_id);
-				$result=array_merge($Resource,$Scroll,$Weapon,$Core);
+				$result['Baggage_data']=array_merge($Resource,$Scroll,$Weapon,$Core);
 				$response=json_encode($result,TRUE);
 			}else if($select === "R")//select Resource
 			{
