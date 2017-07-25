@@ -67,66 +67,152 @@ class ItemInfoUtil
 			$EffectionMstModel=new EffectionMstModel();
 			$UserBaggageResModel=new UserBaggageResModel();	
 			$result=[];
-
+			
+			$scroll=[];
+			$scroll_detail=[];
 			$ScrollInfo = $ScrollMstModel->where('sc_id','=',$ScrollId)->first();
 			$ScrollDataInfo = $ScrollMstModel->select('sc_name','rd1_quantity','rd2_quantity','rd3_quantity','rd4_quantity','rd5_quantity','sc_rarity','sc_description','sc_img_path','sc_sale_price')->where('sc_id','=',$ScrollId)->first();
-			$result['Scroll_data']['Scroll_info']=$ScrollDataInfo;
+
+			$scroll['item_id']=$ScrollInfo['sc_id'];
+			$scroll['item_name']=$ScrollInfo['sc_name'];
+			$scroll['item_rarity']=$ScrollInfo['sc_rarity'];
+			$scroll['item_img']=$ScrollInfo['sc_img_path'];
+			$scroll['item_description']=$ScrollInfo['sc_description'];
+			$scroll['item_price']=$ScrollInfo['sc_sale_price'];
+
+			$result['item_data']=$scroll;
+
+
+
+
 
 			//get equipment information and skill information from database
+			$scroll_equ=[];
 			$equ_id=$ScrollInfo['equ_id'];
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$equ_id)->first();
 			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','icon_path')->where('equ_id','=',$equ_id)->first();
-			$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
+			//$result['Equipment_data']['Equipment_info']=$EquipmentDataInfo;
 
 			$EquEff_id = $EquipmentInfo['eff_id'];
 			$EquEffectInfo = $EffectionMstModel->where('eff_id','=',$EquEff_id)->first();
-			$result['Equipment_data']['EquEffect_info']=$EquEffectInfo;
+			//$result['Equipment_data']['EquEffect_info']=$EquEffectInfo;
 
+			$scroll_equ['equ_name']=$EquEffectInfo['equ_name'];
+			$scroll_equ['equ_icon']=$EquEffectInfo['icon_path'];
+			$scroll_equ['equ_eff']=$EquEffectInfo;
+
+			$result['item_data']['item_info']['scroll_equ']=$scroll_equ;
+			
+
+
+
+
+			$scroll_skill=[];
 			$Skill_id = $EquipmentInfo['skill_id'];
 			$SkillInfo = $SkillMstModel->where('skill_id','=',$Skill_id)->first();
 			$SkillDataInfo = $SkillMstModel->select('skill_name','skill_icon','skill_info')->where('skill_id','=',$Skill_id)->first();
-			$result['Skill_data']['Skill_info']=$SkillDataInfo;
+			//$result['Skill_data']['Skill_info']=$SkillDataInfo;
 
 			$SkillEff_id = $SkillInfo['eff_id'];
 			$SkillEffectInfo = $EffectionMstModel->where('eff_id','=',$SkillEff_id)->first();
-			$result['Skill_data']['SkillEffect_info']=$SkillEffectInfo;
+			//$result['Skill_data']['SkillEffect_info']=$SkillEffectInfo;
+
+			$scroll_skill['skill_name']=$SkillInfo['skill_name'];
+			$scroll_skill['skill_icon']=$SkillInfo['skill_icon'];
+			$scroll_skill['skill_eff']=$SkillEffectInfo;
+
+			$result['item_data']['item_info']['scroll_skill']=$scroll_skill;
+
+
+
+
 
 			//get rare resource icon and the number of resource that user already had
+			$scroll_resource1=[];
 			$rare_res_id=$ScrollInfo['r_id_1'];
-			$RareResInfo = $ResourceMstModel->where('r_id','=',$rare_res_id)->pluck('r_img_path');
-			$result['Rare_Resource_data']['Rare_Resource_icon']=$RareResInfo;
-			$RareResQuantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$rare_res_id)->pluck('br_quantity');
-			$result['Rare_Resource_data']['Rare_Resource_quantity']=$RareResQuantity;
+			$RareResInfo = $ResourceMstModel->where('r_id','=',$rare_res_id)->first();
+			//$result['Rare_Resource_data']['Rare_Resource_icon']=$RareResInfo;
+			$RareResQuantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$rare_res_id)->first();
+			//$result['Rare_Resource_data']['Rare_Resource_quantity']=$RareResQuantity;
+
+			$scroll_resource1['item_had']=$RareResQuantity['br_quantity'];
+			$scroll_resource1['item_need']=$ScrollInfo['rd1_quantity'];
+			$scroll_resource1['item_icon']=$RareResInfo['r_img_path'];
+
+			$scroll_detail[]=$scroll_resource1;
+
+
 
 			//get the number of coin that user already had
+			$scroll_resource2=[];
 			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->pluck('u_coin');
 
+			$scroll_resource2['item_had']=$CoinResQuantity['u_coin'];
+			$scroll_resource2['item_need']=$ScrollInfo['rd2_quantity'];
+			$scroll_resource2['item_icon']=null;
+
+			$scroll_detail[]=$scroll_resource2;
+
+
+
+
+
 			//get normal resource 1 icon and the number or resource that user already had
+			$scroll_resource3=[];
 			$normal_res_id_1=$ScrollInfo['r_id_3'];
-			$NormalRes1Info = $ResourceMstModel->where('r_id','=',$normal_res_id_1)->pluck('r_img_path');
-			$result['Normal_Resource1_data']['Normal_Resource1_icon']=$NormalRes1Info;
-			$NormalRes1Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_1)->pluck('br_quantity');
-			$result['Normal_Resource1_data']['Normal_Resource1_quantity']=$NormalRes1Quantity;
+			$NormalRes1Info = $ResourceMstModel->where('r_id','=',$normal_res_id_1)->first();
+			//$result['Normal_Resource1_data']['Normal_Resource1_icon']=$NormalRes1Info;
+			$NormalRes1Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_1)->first();
+			//$result['Normal_Resource1_data']['Normal_Resource1_quantity']=$NormalRes1Quantity;
+
+			$scroll_resource3['item_had']=$NormalRes1Quantity['br_quantity'];
+			$scroll_resource3['item_need']=$ScrollInfo['rd3_quantity'];
+			$scroll_resource3['item_icon']=$NormalRes1Info['r_img_path'];
+
+			$scroll_detail[]=$scroll_resource3;
+
+
+
 
 			//if have normal resource 2, get normal resource 2 icon and the number or resource that user already had
 			$normal_res_id_2=$ScrollInfo['r_id_4'];
+			$scroll_resource4=[];
 			if(isset($normal_res_id_2))
 			{
-				$NormalRes2Info = $ResourceMstModel->where('r_id','=',$normal_res_id_2)->pluck('r_img_path');
-				$result['Normal_Resource2_data']['Normal_Resource2_icon']=$NormalRes2Info;
-				$NormalRes2Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_2)->pluck('br_quantity');
-				$result['Normal_Resource2_data']['Normal_Resource2_quantity']=$NormalRes2Quantity;
+				$NormalRes2Info = $ResourceMstModel->where('r_id','=',$normal_res_id_2)->first();
+				//$result['Normal_Resource2_data']['Normal_Resource2_icon']=$NormalRes2Info;
+				$NormalRes2Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_2)->first();
+				//$result['Normal_Resource2_data']['Normal_Resource2_quantity']=$NormalRes2Quantity;
+
+				$scroll_resource4['item_had']=$NormalRes2Quantity['br_quantity'];
+				$scroll_resource4['item_need']=$ScrollInfo['rd4_quantity'];
+				$scroll_resource4['item_icon']=$NormalRes2Info['r_img_path'];
+
+				$scroll_detail[]=$scroll_resource4;
 			}
+
+
+
+
+
 
 			//if have normal resource 3, get normal resource 3 icon and the number or resource that user already had
 			$normal_res_id_3=$ScrollInfo['r_id_5'];
+			$scroll_resource5=[];
 			if(isset($normal_res_id_3))
 			{
-				$NormalRes3Info = $ResourceMstModel->where('r_id','=',$normal_res_id_3)->pluck('r_img_path');
-				$result['Normal_Resource3_data']['Normal_Resource3_icon']=$NormalRes3Info;
-				$NormalRes3Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_3)->pluck('br_quantity');
-				$result['Normal_Resource3_data']['Normal_Resource3_quantity']=$NormalRes3Quantity;
+				$NormalRes3Info = $ResourceMstModel->where('r_id','=',$normal_res_id_3)->first();
+				//$result['Normal_Resource3_data']['Normal_Resource3_icon']=$NormalRes3Info;
+				$NormalRes3Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_3)->first();
+				//$result['Normal_Resource3_data']['Normal_Resource3_quantity']=$NormalRes3Quantity;
+				$scroll_resource5['item_had']=$NormalRes3Quantity['br_quantity'];
+				$scroll_resource5['item_need']=$ScrollInfo['rd5_quantity'];
+				$scroll_resource5['item_icon']=$NormalRes3Info['r_img_path'];
+
+				$scroll_detail[]=$scroll_resource5;
 			}
+
+
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("No Scroll ID");
@@ -149,8 +235,7 @@ class ItemInfoUtil
 			$equipment=[];
 			$result=[];
 
-			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first();
-			$EquipmentDataInfo = $EquipmentMstModel->select('equ_name','equ_part','equ_type','equ_price','icon_path')->where('equ_id','=',$EquipmentId)->first();
+			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first(); 
 
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
