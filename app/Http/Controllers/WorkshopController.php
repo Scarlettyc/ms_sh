@@ -21,8 +21,8 @@ class WorkshopController extends Controller
 	public function workshop(Request $request)
 	{
 		$req=$request->getContent();
-		//$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
@@ -79,13 +79,14 @@ class WorkshopController extends Controller
 			'error' => "please check u_id",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 
 	public function showEquipmentInfo (Request $request)
 	{
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 
 		$EquipmentMstModel=new EquipmentMstModel();
 		$EffectionMstModel=new EffectionMstModel();
@@ -105,13 +106,14 @@ class WorkshopController extends Controller
 			'error' => "please check Equipment ID data",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 
 	public function showSkillInfo (Request $request)
 	{
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 
 		$SkillMstModel=new SkillMstModel();
 		$EffectionMstModel=new EffectionMstModel();
@@ -131,6 +133,6 @@ class WorkshopController extends Controller
 			'error' => "please check Skill ID data",
 			];
 		}
-		return $response;
+		return base64_encode($response);
 	}
 }
