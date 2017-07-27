@@ -23,7 +23,57 @@ class SmelterController extends Controllers
 		$req=$request->getContent();
 		$data=json_decode($req,TRUE);
 
-		$
+		$ItemInfoUtil=new ItemInfoUtil();
+		$result=[];
+
+		$u_id=$data['u_id'];
+		$ItemId=$data['scroll_id'];
+		if(isset($u_id))
+		{
+			$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
+			$response=$ScrollInfo;
+		}else{
+			throw new Exception("there have some error of you access_token");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
+		return $response;
+	}
+
+	public function scrollmerage(Request $request)
+	{
+		
+	}
+
+	public function upgradeEquipmentInfo(Request $request)
+	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+
+		$ItemInfoUtil=new ItemInfoUtil();
+		$result=[];
+
+		$u_id=$data['u_id'];
+		$ItemId=$data['equ_id'];
+		if(isset($u_id))
+		{
+			$UpgradeEquInfo = $ItemInfoUtil->getEquipmentUpgradeInfo($ItemId,$u_id);
+			$response=$UpgradeEquInfo;
+		}else{
+			throw new Exception("there have some error of you access_token");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
+		return $response;
+	}
+
+	public function upgradeEquipment(Request $request)
+	{
+		
 	}
 
 

@@ -9,6 +9,7 @@ use App\SkillMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\UserBaggageResModel;
+use App\EquipmentUpgradeMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -65,7 +66,7 @@ class ItemInfoUtil
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
 			$EffectionMstModel=new EffectionMstModel();
-			$UserBaggageResModel=new UserBaggageResModel();	
+			$UserBaggageResModel=new UserBaggageResModel();
 			$result=[];
 			
 			$scroll=[];
@@ -106,7 +107,72 @@ class ItemInfoUtil
 
 			$result['item_data']['item_info']['scroll_skill']=$scroll_skill;
 
-			//get rare resource icon and the number of resource that user already had
+			$resource=[];
+			$resource1=[];
+			$resource1['r_id']=$ScrollInfo['r_id_1'];
+			$resource1['r_quantity']=$ScrollInfo['rd1_quantity'];
+			$resource[]=$resource1;
+
+			$resource2=[];
+			$resource2['r_id']=$ScrollInfo['r_id_2'];
+			$resource2['r_quantity']=$ScrollInfo['rd2_quantity'];
+			$resource[]=$resource2;
+
+			$resource3=[];
+			if(isset($ScrollInfo['r_id_3'])){
+				$resource3['r_id']=$ScrollInfo['r_id_3'];
+				$resource3['r_quantity']=$ScrollInfo['rd3_quantity'];
+				$resource[]=$resource3;
+			}
+			
+			$resource4=[];
+			if(isset($ScrollInfo['r_id_4']))
+			{
+				$resource4['r_id']=$ScrollInfo['r_id_4'];
+				$resource4['r_quantity']=$ScrollInfo['rd4_quantity'];
+				$resource[]=$resource4;
+			}
+
+			$scroll_check=1;
+
+			foreach ($resource as $obj) 
+			{
+				$resinfo=$ResourceMstModel->where('r_id',$obj['r_id'])->first();
+				$resquantity=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$obj['r_id'])->first();
+				$scroll_resource['item_had']=$resquantity['br_quantity'];
+				$scroll_resource['item_need']=$obj['r_quantity'];
+				$scroll_resource['item_icon']=$resinfo['r_img_path'];
+				if($scroll_resource['item_had']>=$scroll_resource['item_need'])
+				{
+					$scroll_resource['item_check']=1;
+				}else{
+					$scroll_resource['item_check']=0;
+					$scroll_check=0;
+				}
+				$scroll_detail[]=$scroll_resource;
+			}
+			$result['item_data']['item_info']['scroll_detail']=$scroll_detail;
+
+			//get the number of coin that user already had and how much coin that user need
+			$scroll_resource_coin=[];
+			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->first();
+
+			$scroll_resource_coin['item_had']=$CoinResQuantity['u_coin'];
+			$scroll_resource_coin['item_need']=$ScrollInfo['sc_coin'];
+			if($scroll_resource_coin['item_had']>=$scroll_resource_coin['item_need'])
+			{
+				$scroll_resource_coin['item_check']=1;
+			}else{
+				$scroll_resource_coin['item_check']=0;
+				$scroll_check=0;
+			}
+
+			$result['item_data']['item_info']['scroll_coin']=$scroll_resource_coin;
+
+			$result['item_data']['item_info']['scroll_check']=$scroll_check;
+
+			$response=json_encode($result,TRUE);
+			/*//get rare resource icon and the number of resource that user already had
 			$scroll_resource1=[];
 			$rare_res_id=$ScrollInfo['r_id_1'];
 			$RareResInfo = $ResourceMstModel->where('r_id','=',$rare_res_id)->first();
@@ -115,63 +181,57 @@ class ItemInfoUtil
 			$scroll_resource1['item_had']=$RareResQuantity['br_quantity'];
 			$scroll_resource1['item_need']=$ScrollInfo['rd1_quantity'];
 			$scroll_resource1['item_icon']=$RareResInfo['r_img_path'];
+			$scroll_resource1['item_check']=$ItemCheckUtil->CheckResource($RareResQuantity['br_quantity'],$ScrollInfo['rd1_quantity']);
 
 			$scroll_detail[]=$scroll_resource1;
 
-			//get the number of coin that user already had and how much coin that user need
-			$scroll_resource2=[];
-			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->first();
-
-			$scroll_resource2['item_had']=$CoinResQuantity['u_coin'];
-			$scroll_resource2['item_need']=$ScrollInfo['rd2_quantity'];
-
-			$result['item_data']['item_info']['scroll_coin']=$scroll_resource2;
-
 			//get normal resource 1 icon and the number or resource that user already had
-			$scroll_resource3=[];
-			$normal_res_id_1=$ScrollInfo['r_id_3'];
+			$scroll_resource2=[];
+			$normal_res_id_1=$ScrollInfo['r_id_2'];
 			$NormalRes1Info = $ResourceMstModel->where('r_id','=',$normal_res_id_1)->first();
 			$NormalRes1Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_1)->first();
 
-			$scroll_resource3['item_had']=$NormalRes1Quantity['br_quantity'];
-			$scroll_resource3['item_need']=$ScrollInfo['rd3_quantity'];
-			$scroll_resource3['item_icon']=$NormalRes1Info['r_img_path'];
+			$scroll_resource2['item_had']=$NormalRes1Quantity['br_quantity'];
+			$scroll_resource2['item_need']=$ScrollInfo['rd2_quantity'];
+			$scroll_resource2['item_icon']=$NormalRes1Info['r_img_path'];
+			$scroll_resource2['item_check']=$ItemCheckUtil->CheckResource($NormalRes1Quantity['br_quantity'],$ScrollInfo['rd2_quantity']);
 
-			$scroll_detail[]=$scroll_resource3;
+			$scroll_detail[]=$scroll_resource2;
 
 			//if have normal resource 2, get normal resource 2 icon and the number or resource that user already had
-			$normal_res_id_2=$ScrollInfo['r_id_4'];
-			$scroll_resource4=[];
+			$normal_res_id_2=$ScrollInfo['r_id_3'];
+			$scroll_resource3=[];
 			if(isset($normal_res_id_2))
 			{
 				$NormalRes2Info = $ResourceMstModel->where('r_id','=',$normal_res_id_2)->first();
 				$NormalRes2Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_2)->first();
 
-				$scroll_resource4['item_had']=$NormalRes2Quantity['br_quantity'];
-				$scroll_resource4['item_need']=$ScrollInfo['rd4_quantity'];
-				$scroll_resource4['item_icon']=$NormalRes2Info['r_img_path'];
+				$scroll_resource3['item_had']=$NormalRes2Quantity['br_quantity'];
+				$scroll_resource3['item_need']=$ScrollInfo['rd3_quantity'];
+				$scroll_resource3['item_icon']=$NormalRes2Info['r_img_path'];
+				$scroll_resource3['item_check']=$ItemCheckUtil->CheckResource($NormalRes2Quantity['br_quantity'],$ScrollInfo['rd3_quantity']);
 
-				$scroll_detail[]=$scroll_resource4;
+				$scroll_detail[]=$scroll_resource3;
 			}
 
 			//if have normal resource 3, get normal resource 3 icon and the number or resource that user already had
-			$normal_res_id_3=$ScrollInfo['r_id_5'];
-			$scroll_resource5=[];
+			$normal_res_id_3=$ScrollInfo['r_id_4'];
+			$scroll_resource4=[];
 			if(isset($normal_res_id_3))
 			{
 				$NormalRes3Info = $ResourceMstModel->where('r_id','=',$normal_res_id_3)->first();
 				$NormalRes3Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$normal_res_id_3)->first();
 
-				$scroll_resource5['item_had']=$NormalRes3Quantity['br_quantity'];
-				$scroll_resource5['item_need']=$ScrollInfo['rd5_quantity'];
-				$scroll_resource5['item_icon']=$NormalRes3Info['r_img_path'];
+				$scroll_resource4['item_had']=$NormalRes3Quantity['br_quantity'];
+				$scroll_resource4['item_need']=$ScrollInfo['rd4_quantity'];
+				$scroll_resource4['item_icon']=$NormalRes3Info['r_img_path'];
+				$scroll_resource4['item_check']=$ItemCheckUtil->CheckResource($NormalRes3Quantity['br_quantity'],$ScrollInfo['rd4_quantity']);
 
-				$scroll_detail[]=$scroll_resource5;
+				$scroll_detail[]=$scroll_resource4;
 			}
 
-			$result['item_data']['item_info']['scroll_detail']=$scroll_detail;
+			$result['item_data']['item_info']['scroll_detail']=$scroll_detail;*/
 
-			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("No Scroll ID");
 			$response=[
@@ -250,6 +310,145 @@ class ItemInfoUtil
 			$response=[
 			'status' => 'Wrong',
 			'error' => "please check Skill ID",
+			];
+		}
+		return $response;
+	}
+
+	//get Equipment upgrade detail information: name and every resource that this equipment needed. also display the detail information of the equipment and skills.
+	function getEquipmentUpgradeInfo ($Item_Id,$u_id)
+	{
+		$equ_id=$Item_Id;
+		$u_id=$u_id;
+
+		if(isset($equ_id))
+		{
+			$UserModel=new UserModel();
+			$EquipmentUpgradeMstModel=new EquipmentUpgradeMstModel();
+			$EquipmentMstModel=new EquipmentMstModel();
+			$SkillMstModel=new SkillMstModel();
+			$ResourceMstModel=new ResourceMstModel();
+			$EffectionMstModel=new EffectionMstModel();
+			$UserBaggageResModel=new UserBaggageResModel();	
+			$result=[];
+
+			//get original equipment information
+			$equipment=[];
+			$OriginEquInfo=$EquipmentMstModel->where('equ_id',$equ_id)->first();
+
+			$equipment['item_id']=$OriginEquInfo['equ_id'];
+			$equipment['item_name']=$OriginEquInfo['equ_name'];
+			$equipment['item_rarity']=$OriginEquInfo['equ_rarity'];
+			$equipment['item_img']=$OriginEquInfo['icon_path'];
+
+			$result['origin_equ']=$equipment;
+
+			//get upgraded equipment information
+			$upgrade_id=$OriginEquInfo['upgrade_id'];
+			$EquUpgradeInfo=$EquipmentUpgradeMstModel->where('upgrade_id',$upgrade_id)->first();
+
+			$equUpgrade=[];
+			$equUp_id=$EquUpgradeInfo['equ_upgrade_id'];
+			$UpgradeEquInfo=$EquipmentMstModel->where('equ_id',$equUp_id)->first();
+			
+			$equUpEff_id=$UpgradeEquInfo['eff_id'];
+			$UpgradeEquEffection=$EffectionMstModel->where('eff_id',$equUpEff_id)->first();
+
+			$equUpgrade['item_id']=$UpgradeEquInfo['equ_id'];
+			$equUpgrade['item_name']=$UpgradeEquInfo['equ_name'];
+			$equUpgrade['item_rarity']=$UpgradeEquInfo['equ_rarity'];
+			$equUpgrade['item_img']=$UpgradeEquInfo['icon_path'];
+			$equUpgrade['item_description']=$UpgradeEquInfo['equ_description'];
+			$equUpgrade['item_effection']=$UpgradeEquEffection;
+
+			$result['upgrade_equ']=$equUpgrade;
+
+			//get skill information
+			$skillUpgrade=[];
+			$skillUp_id=$UpgradeEquInfo['skill_id'];
+			$UpgradeSkillInfo=$SkillMstModel->where('skill_id',$skillUp_id)->first();
+			$skillUpeff_id=$UpgradeSkillInfo['eff_id'];
+			$UpgradeSkillEff=$EffectionMstModel->where('eff_id',$skillUpeff_id)->first();
+
+			$skillUpgrade['skill_id']=$UpgradeSkillInfo['skill_id'];
+			$skillUpgrade['skill_name']=$UpgradeSkillInfo['skill_name'];
+			$skillUpgrade['skill_icon']=$UpgradeSkillInfo['skill_icon'];
+			$skillUpgrade['skill_info']=$UpgradeSkillInfo['skill_info'];
+			$skillUpgrade['skill_eff']=$UpgradeSkillEff;
+
+			$result['upgrade_skill']=$skillUpgrade;
+
+			//get first resource icon and the number of resource that user already had 
+			$equ_resource1=[];
+			$res1_id=$EquUpgradeInfo['r_id_1'];
+			$Res1Info = $ResourceMstModel->where('r_id','=',$res1_id)->first();
+			$Res1Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$res1_id)->first();
+
+			$equ_resource1['item_had']=$Res1Quantity['br_quantity'];
+			$equ_resource1['item_need']=$EquUpgradeInfo['rd1_quantity'];
+			$equ_resource1['item_icon']=$Res1Info['r_img_path'];
+
+			$upgrade_detail[]=$equ_resource1;
+
+			//get second resource icon and the number of resource that user already had 
+			$equ_resource2=[];
+			$res2_id=$EquUpgradeInfo['r_id_2'];
+			$Res2Info = $ResourceMstModel->where('r_id','=',$res2_id)->first();
+			$Res2Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$res2_id)->first();
+
+			$equ_resource2['item_had']=$Res2Quantity['br_quantity'];
+			$equ_resource2['item_need']=$EquUpgradeInfo['rd2_quantity'];
+			$equ_resource2['item_icon']=$Res2Info['r_img_path'];
+
+			$upgrade_detail[]=$equ_resource2;
+
+			//if needed, get third resource icon and the number of resource that user already had
+			$equ_resource3=[];
+			$res3_id=$EquUpgradeInfo['r_id_3'];
+			if(isset($res3_id))
+			{
+				$Res3Info = $ResourceMstModel->where('r_id','=',$res3_id)->first();
+				$Res3Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$res3_id)->first();
+
+				$equ_resource3['item_had']=$Res3Quantity['br_quantity'];
+				$equ_resource3['item_need']=$EquUpgradeInfo['rd3_quantity'];
+				$equ_resource3['item_icon']=$Res3Info['r_img_path'];
+
+				$upgrade_detail[]=$equ_resource3;
+			}
+
+			//if needed, get forth resource icon and the number of resource that user already had
+			$equ_resource4=[];
+			$res4_id=$EquUpgradeInfo['r_id_4'];
+			if(isset($res4_id))
+			{
+				$Res4Info = $ResourceMstModel->where('r_id','=',$res4_id)->first();
+				$Res4Quantity = $UserBaggageResModel->where('u_id','=',$u_id)->where('br_id','=',$res4_id)->first();
+
+				$equ_resource4['item_had']=$Res4Quantity['br_quantity'];
+				$equ_resource4['item_need']=$EquUpgradeInfo['rd4_quantity'];
+				$equ_resource4['item_icon']=$Res4Info['r_img_path'];
+
+				$upgrade_detail[]=$equ_resource4;
+			}
+
+			$result['origin_equ']['upgrade_detail']=$upgrade_detail;
+
+			//get the number of coin that user already had and how much coin that user need			
+			$equ_resource_coin=[];
+			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->first();
+
+			$equ_resource_coin['item_had']=$CoinResQuantity['u_coin'];
+			$equ_resource_coin['item_need']=$EquUpgradeInfo['equ_coin'];
+
+			$result['origin_equ']['upgrade_coin']=$equ_resource_coin;
+
+			$response=$result;
+		}else{
+			throw new Exception("Wrong Equipment ID");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check Equipment ID",
 			];
 		}
 		return $response;
