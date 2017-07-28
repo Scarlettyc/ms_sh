@@ -124,7 +124,7 @@ class BaggageController extends Controller
 				$response=$ResInfo;
 			}else if($ItemType == 2)
 			{
-				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
+				$EquInfo = $ItemInfoUtil->getEquipmentUpgradeInfo($ItemId,$u_id);
 				$response=$EquInfo;
 			}else if($ItemType == 3)
 			{
@@ -192,5 +192,17 @@ class BaggageController extends Controller
 			];
 		}
 		return base64_encode($response);
+	}
+
+
+	public function scrollMerage (Request $request)
+	{
+
+	}
+
+
+	public function equipmentUpgrade (Request $request)
+	{
+
 	}
 }
