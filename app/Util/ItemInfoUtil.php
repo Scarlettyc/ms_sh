@@ -9,7 +9,7 @@ use App\SkillMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\UserBaggageResModel;
-use App\EquipmentUpgradeMstModel;
+use App\EquUpgradeMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
