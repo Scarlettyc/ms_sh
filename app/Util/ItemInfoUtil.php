@@ -266,7 +266,7 @@ class ItemInfoUtil
 		if(isset($equ_id))
 		{
 			$UserModel=new UserModel();
-			$EquipmentUpgradeMstModel=new EquipmentUpgradeMstModel();
+			$EquUpgradeMstModel=new EquUpgradeMstModel();
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
