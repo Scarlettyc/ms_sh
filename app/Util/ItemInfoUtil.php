@@ -273,6 +273,7 @@ class ItemInfoUtil
 			$EffectionMstModel=new EffectionMstModel();
 			$UserBaggageResModel=new UserBaggageResModel();	
 			$result=[];
+			$equipmentLV=[];
 
 			//get original equipment information
 			$equipment=[];
@@ -291,6 +292,9 @@ class ItemInfoUtil
 			$OriginEquEffection=$EffectionMstModel->where('eff_id',$equOrEff_id)->first();
 
 			$result['item_data']['item_info']['Origin_eff']=$OriginEquEffection;
+
+			$OriginEquLv=$OriginEquInfo['equ_lv'];
+			$equipmentLV[]=$OriginEquLv;
 
 			//get upgraded equipment information
 			$upgrade_id=$OriginEquInfo['upgrade_id'];
@@ -311,6 +315,11 @@ class ItemInfoUtil
 			$equUpgrade['item_effection']=$UpgradeEquEffection;
 
 			$result['item_data']['item_info']['upgrade_equ']=$equUpgrade;
+
+			$UpgradeEquLv=$UpgradeEquInfo['equ_lv'];
+			$equipmentLV[]=$UpgradeEquLv;
+
+			$result['item_data']['item_info']['equ_lv']=$equipmentLV;
 
 			//get skill information
 			$skillUpgrade=[];
