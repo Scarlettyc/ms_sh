@@ -287,7 +287,7 @@ class ItemInfoUtil
 
 			//get upgraded equipment information
 			$upgrade_id=$OriginEquInfo['upgrade_id'];
-			$EquUpgradeInfo=$EquipmentUpgradeMstModel->where('upgrade_id',$upgrade_id)->first();
+			$EquUpgradeInfo=$EquUpgradeMstModel->where('upgrade_id',$upgrade_id)->first();
 
 			$equUpgrade=[];
 			$equUp_id=$EquUpgradeInfo['equ_upgrade_id'];
