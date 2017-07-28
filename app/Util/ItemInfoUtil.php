@@ -385,7 +385,7 @@ class ItemInfoUtil
 			$result['origin_equ']['upgrade_coin']=$equ_resource_coin;
 			$result['origin_equ']['upgrade_check']=$upgrade_check;
 
-			$response=$result;
+			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
 			$response=[
