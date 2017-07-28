@@ -282,8 +282,15 @@ class ItemInfoUtil
 			$equipment['item_name']=$OriginEquInfo['equ_name'];
 			$equipment['item_rarity']=$OriginEquInfo['equ_rarity'];
 			$equipment['item_img']=$OriginEquInfo['icon_path'];
+			$equipment['item_description']=$OriginEquInfo['equ_description'];
+			$equipment['item_price']=$OriginEquInfo['equ_price'];
 
-			$result['origin_equ']=$equipment;
+			$result['item_data']=$equipment;
+
+			$equOrEff_id=$OriginEquInfo['eff_id'];
+			$OriginEquEffection=$EffectionMstModel->where('eff_id',$equOrEff_id)->first();
+
+			$result['item_data']['item_info']['Origin_eff']=$OriginEquEffection;
 
 			//get upgraded equipment information
 			$upgrade_id=$OriginEquInfo['upgrade_id'];
@@ -303,7 +310,7 @@ class ItemInfoUtil
 			$equUpgrade['item_description']=$UpgradeEquInfo['equ_description'];
 			$equUpgrade['item_effection']=$UpgradeEquEffection;
 
-			$result['upgrade_equ']=$equUpgrade;
+			$result['item_data']['item_info']['upgrade_equ']=$equUpgrade;
 
 			//get skill information
 			$skillUpgrade=[];
@@ -318,7 +325,7 @@ class ItemInfoUtil
 			$skillUpgrade['skill_info']=$UpgradeSkillInfo['skill_info'];
 			$skillUpgrade['skill_eff']=$UpgradeSkillEff;
 
-			$result['upgrade_skill']=$skillUpgrade;
+			$result['item_data']['item_info']['upgrade_skill']=$skillUpgrade;
 
 			$upgrade_detail=[];
 			$resource=[];
@@ -366,7 +373,7 @@ class ItemInfoUtil
 				}
 				$upgrade_detail[]=$upgrade_resource;
 			}
-			$result['origin_equ']['upgrade_detail']=$upgrade_detail;
+			$result['item_data']['item_info']['upgrade_detail']=$upgrade_detail;
 
 			//get the number of coin that user already had and how much coin that user need	and check if coin is enough		
 			$equ_resource_coin=[];
@@ -382,8 +389,8 @@ class ItemInfoUtil
 				$upgrade_check=0;
 			}
 
-			$result['origin_equ']['upgrade_coin']=$equ_resource_coin;
-			$result['origin_equ']['upgrade_check']=$upgrade_check;
+			$result['item_data']['item_info']['upgrade_coin']=$equ_resource_coin;
+			$result['item_data']['item_info']['upgrade_check']=$upgrade_check;
 
 			$response=json_encode($result,TRUE);
 		}else{
