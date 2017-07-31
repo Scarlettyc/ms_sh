@@ -67,6 +67,7 @@ class LoadBattleController extends Controller
  	    $eqModel=new EquipmentMstModel();
  	    $skillModel=new SkillMstModel();
     	$charData=$charaM->where('u_id',$u_id)->first();
+        $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
         $charRe['ch_title']=$charData['ch_title'];
         $charRe['ch_hp_max']=$charData['ch_hp_max'];
