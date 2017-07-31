@@ -73,7 +73,7 @@ class LoadBattleController extends Controller
  	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id])->get();
  	    $result=[];
  	    foreach ($eqData as $key => $eqEach) {
- 	    	$skillData=$skillModel->where('skill_id',$eqEach['equ_id'])->first();
+ 	    	$skillData=$skillModel->where('skill_id',$eqEach['skill_id'])->first();
  	    	$tmp['equipment']=$eqEach;
  	    	$tmp['skill']=$skillData;
  	    	$result[]=$tmp;
