@@ -11,6 +11,7 @@ use App\MatchRangeModel;
 use App\CharacterModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
+use Exception;
 class MatchController extends Controller
 {
     public function match(Request $request)
