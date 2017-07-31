@@ -60,7 +60,7 @@ class MatchController extends Controller
 					$result['match_result']=$match_uid;
 					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$match=[$u_id,$match_uid];
+					$match=json_encode([$u_id,$match_uid],TRUE);
 					$match_id='m'.time();
 					Redis::HSET('match_list',$match_id,$match);
 					$enmeydata['match_id']=$match_id;
