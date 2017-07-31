@@ -27,8 +27,8 @@ class MatchController extends Controller
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token'])
-		{
+		// if($access_token==$data['access_token'])
+		// {
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
@@ -67,10 +67,10 @@ class MatchController extends Controller
 				}
 			}
         
-    	}
-    	else{
- 	    		throw new Exception("there have some error of you access_token");
- 	    }
+    	// }
+    	// else{
+ 	   //  		throw new Exception("there have some error of you access_token");
+ 	   //  }
  	    	
  }
 }
