@@ -56,7 +56,13 @@ class MatchController extends Controller
 				else{
 					$match_uid=Redis::LPOP($matchKey);
 					$result['match_result']=$match_uid;
-					$response=json_encode($result,TRUE);
+					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
+					
+					$match=[$u_id,$match_uid];
+					$match_id='m'.time();
+					Redis::HSET('match_list',$match_id,$match);
+					$enmeydata['match_id']=$match_id;
+					$response=json_encode($enmeydata,TRUE);
 					return base64_encode($response);
 				}
 			}
