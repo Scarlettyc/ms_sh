@@ -26,13 +26,14 @@ class MatchController extends Controller
 		$data=json_decode($json,TRUE);
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		// $access_token=$loginTodayArr->access_token;
 		// if($access_token==$data['access_token'])
 		// {
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
+     		if(isset($chardata)){
      		$maxLv=$matchrange->max('user_lv_to');
      		$maxStar=$matchrange->max('star_from');
 		 	$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
@@ -66,6 +67,10 @@ class MatchController extends Controller
 					return base64_encode($response);
 				}
 			}
+		}
+		 else{
+ 	    		throw new Exception("no exist character of this user");
+ 	    }
         
     	// }
     	// else{
