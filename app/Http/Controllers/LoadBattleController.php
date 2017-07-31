@@ -76,7 +76,7 @@ class LoadBattleController extends Controller
  	    	$skillData=$skillModel->where('skill_id',$eqEach['equ_id'])->first();
  	    	$tmp['equipment']=$eqEach;
  	    	$tmp['skill']=$skillData;
- 	    	$result[]=$tnp;
+ 	    	$result[]=$tmp;
  	    }
  	    $final['chardata']=$charData;
  	    $final['eqdata']=$result;
