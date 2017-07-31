@@ -10,6 +10,7 @@ use App\EquipmentMstModel;
 use App\CharacterModel;
 use App\DefindMstModel;
 use App\MapModel;
+use App\SkillMstModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
