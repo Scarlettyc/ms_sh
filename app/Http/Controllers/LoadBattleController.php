@@ -66,20 +66,18 @@ class LoadBattleController extends Controller
  	    $charaM=new CharacterModel();
  	    $eqModel=new EquipmentMstModel();
  	    $skillModel=new SkillMstModel();
-    	$charData=$charaM->where('u_id',$u_id)->first();
+    	$charData=$charaM->select('ch_id', 'ch_title','ch_hp_max','ch_img')->where('u_id',$u_id)->first();
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
  	    $ad_id=$charData['ad_id'];
  	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id])->get();
  	    $result=[];
  	    foreach ($eqData as $key => $eqEach) {
- 	    	$skillData=$skillModel->where('skill_id',$eqEach['skill_id'])->first();
- 	    	$tmp['equipment']=$eqEach;
- 	    	$tmp['skill']=$skillData;
- 	    	$result[]=$tmp;
+ 	    	$skillData=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_chartlet','skill_info')->where('skill_id',$eqEach['skill_id'])->first();
+ 	    	$result[]=$skillData;;
  	    }
  	    $final['chardata']=$charData;
- 	    $final['eqdata']=$result;
+ 	    $final['skillData']=$result;
  	    return $final;
  	     }
 

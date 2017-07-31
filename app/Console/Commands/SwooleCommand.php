@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use swoole_server;
+use App\Http\Controllers\BattleController;
 class SwooleCommand extends Command
 {
     /**
@@ -39,9 +40,11 @@ class SwooleCommand extends Command
     {
                $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
 
-//监听数据接收事件
             $serv->on('Packet', function ($serv, $data, $clientInfo) {
-            $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$data);
+
+            $battle=new BattleController();
+            $result=$battle->battle($data);
+            $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
             var_dump($clientInfo);
 });
 //log("testtest");
