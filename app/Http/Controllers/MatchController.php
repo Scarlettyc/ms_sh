@@ -11,6 +11,7 @@ use App\MatchRangeModel;
 use App\CharacterModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
+use Exception;
 class MatchController extends Controller
 {
     public function match(Request $request)
@@ -26,13 +27,14 @@ class MatchController extends Controller
 		$data=json_decode($json,TRUE);
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token'])
-		{
+		// $access_token=$loginTodayArr->access_token;
+		// if($access_token==$data['access_token'])
+		// {
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
+     		if(isset($chardata)){
      		$maxLv=$matchrange->max('user_lv_to');
      		$maxStar=$matchrange->max('star_from');
 		 	$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
@@ -56,15 +58,25 @@ class MatchController extends Controller
 				else{
 					$match_uid=Redis::LPOP($matchKey);
 					$result['match_result']=$match_uid;
-					$response=json_encode($result,TRUE);
+					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
+					
+					$match=json_encode([$u_id,$match_uid],TRUE);
+					$match_id='m'.time();
+					Redis::HSET('match_list',$match_id,$match);
+					$enmeydata['match_id']=$match_id;
+					$response=json_encode($enmeydata,TRUE);
 					return base64_encode($response);
 				}
 			}
-        
-    	}
-    	else{
- 	    		throw new Exception("there have some error of you access_token");
+		}
+		 else{
+ 	    		throw new Exception("no exist character of this user");
  	    }
+        
+    	// }
+    	// else{
+ 	   //  		throw new Exception("there have some error of you access_token");
+ 	   //  }
  	    	
  }
 }

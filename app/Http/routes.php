@@ -47,6 +47,9 @@ Route::post('/multidraw', 'LuckdrawController@multiDraw');
 Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@match');
 
+Route::controller('load','LoadBattleController');
+Route::post('/load', 'LoadBattleController@loadingGame');
+
 Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
 Route::post('/removefriend', 'FriendController@removeFriend');
