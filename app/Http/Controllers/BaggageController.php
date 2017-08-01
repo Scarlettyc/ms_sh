@@ -219,7 +219,18 @@ class BaggageController extends Controller
 			$ScrollInfo=$ScrollMstModel->where('sc_id',$scrollId)->first();
 			$equipmentId=$ScrollInfo['equ_id'];
 			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
-			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+			$baggageEqu=[];
+			$baggageEqu['u_id']=$u_id;
+			$baggageEqu['b_equ_id']=$equipmentId;
+			$baggageEqu['b_equ_rarity']=$equipmentInfo['equ_rarity'];
+			$baggageEqu['b_equ_type']=$equipmentInfo['equ_type'];
+			$baggageEqu['b_icon_path']=$equipmentInfo['icon_path'];
+			$baggageEqu['status']=0;
+			$baggageEqu['updated_at']=$datetime;
+			$baggageEqu['created_at']=$datetime;
+			$UserBaggageEqModel->insert($baggageEqu);
+
+			/*$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);*/
 
 			$resource=[];
 			$resource1=[];
