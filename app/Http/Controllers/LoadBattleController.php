@@ -1,4 +1,4 @@
-<?php
+f<?php
 
 namespace App\Http\Controllers;
 
@@ -22,9 +22,10 @@ class LoadBattleController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+        $redis_battle=Redis::connection('battle');
     	if(isset($data)){
     		$match_id=$data['match_id'];
- 	    	$matchList=Redis::HGET('match_list',$match_id);
+ 	    	$matchList=$redis_battle->HGET('match_list',$match_id);
  	    	$matchArr=json_decode($matchList);
  	    	$u_id=$data['u_id'];
  	    	if($u_id==$matchArr[0]){
@@ -74,7 +75,7 @@ class LoadBattleController extends Controller
         $charRe['ch_img']=$charData['ch_img'];
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
- 	    $ad_id=$charData['ad_id'];
+ 	    $core_id=$charData['core_id'];
  	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id])->get();
  	    $result=[];
  	    foreach ($eqData as $key => $eqEach) {
