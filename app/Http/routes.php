@@ -31,6 +31,8 @@ Route::controller('baggage','BaggageController');
 Route::post('/baggage','BaggageController@baggage');
 Route::post('/getItemInfo','BaggageController@getItemInfo');
 Route::post('/sellItem','BaggageController@sellItem');
+Route::post('/scrollMerage','BaggageController@scrollMerage');
+Route::post('/equipmentUpgrade','BaggageController@equipmentUpgrade');
 
 Route::controller('workshop','WorkshopController');
 Route::post('/workshop','WorkshopController@workshop');

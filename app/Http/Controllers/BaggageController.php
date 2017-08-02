@@ -197,7 +197,87 @@ class BaggageController extends Controller
 
 	public function scrollMerage (Request $request)
 	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
 
+		$UserModel=new UserModel();
+		$UserBaggageResModel=new UserBaggageResModel();
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$ScrollMstModel=new ScrollMstModel();
+		$EquipmentMstModel=new EquipmentMstModel();
+		$result=[];
+
+		$u_id=$data['u_id'];
+		$scrollId=$data['scroll_id'];
+		if(isset($u_id))
+		{
+			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->limit(1)->update(array('status'=>1,'updated_at'=>$datetime));
+			$ScrollInfo=$ScrollMstModel->where('sc_id',$scrollId)->first();
+			$equipmentId=$ScrollInfo['equ_id'];
+			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
+			/*$baggageEqu=[];
+			$baggageEqu['u_id']=$u_id;
+			$baggageEqu['b_equ_id']=$equipmentId;
+			$baggageEqu['b_equ_rarity']=$equipmentInfo['equ_rarity'];
+			$baggageEqu['b_equ_type']=$equipmentInfo['equ_type'];
+			$baggageEqu['b_icon_path']=$equipmentInfo['icon_path'];
+			$baggageEqu['status']=0;
+			$baggageEqu['updated_at']=$datetime;
+			$baggageEqu['created_at']=$datetime;
+			$UserBaggageEqModel->insert($baggageEqu);*/
+
+			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+
+			$resource=[];
+			$resource1=[];
+			$resource1['r_id']=$ScrollInfo['r_id_1'];
+			$resource1['r_quantity']=$ScrollInfo['rd1_quantity'];
+			$resource[]=$resource1;
+
+			$resource2=[];
+			$resource2['r_id']=$ScrollInfo['r_id_2'];
+			$resource2['r_quantity']=$ScrollInfo['rd2_quantity'];
+			$resource[]=$resource2;
+
+			$resource3=[];
+			if(isset($ScrollInfo['r_id_3'])){
+				$resource3['r_id']=$ScrollInfo['r_id_3'];
+				$resource3['r_quantity']=$ScrollInfo['rd3_quantity'];
+				$resource[]=$resource3;
+			}
+			
+			$resource4=[];
+			if(isset($ScrollInfo['r_id_4']))
+			{
+				$resource4['r_id']=$ScrollInfo['r_id_4'];
+				$resource4['r_quantity']=$ScrollInfo['rd4_quantity'];
+				$resource[]=$resource4;
+			}
+
+			foreach ($resource as $obj)
+			{
+				$UserBaggageData=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$obj['r_id'])->first();
+				$resQuantity=$UserBaggageData['br_quantity']-$obj['r_quantity'];
+				$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$obj['r_id'])->update(array('br_quantity'=>$resQuantity,'updated_at'=>$datetime));
+			}
+
+			$UserData=$UserModel->where('u_id',$u_id)->first();
+			$updateCoin=$UserData['u_coin']-$ScrollInfo['sc_coin'];
+			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
+
+			$response='Successfully Meraged';
+		}else{
+			throw new Exception("there have some error of you access_token");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
+		return $response;
 	}
 
 
