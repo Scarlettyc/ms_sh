@@ -19,7 +19,7 @@ class BattleController extends Controller
 {
 
 	public function test($data){
-		return sjson_encode($data,TRUE);
+		return json_encode($data,TRUE);
 	}
     public function battle($data)
     {
