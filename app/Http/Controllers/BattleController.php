@@ -158,7 +158,6 @@ class BattleController extends Controller
  			$userFinalHp=$user_hp-$enemyDMG;
  			$enemyFinalHp=$enemy_hp-$userDMG;
 
- 			 			$userStun=
  			$enemyStun=$enemy_effect['eff_ch_stun'];
 
  			$userResult['ch_hp']=$user_hp;
@@ -193,7 +192,7 @@ class BattleController extends Controller
  				$critical=$critcalTimes['value2'];
  			}
  			return $critical;
- 	}
+ 		}
 
 
  
