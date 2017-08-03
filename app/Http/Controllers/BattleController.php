@@ -21,7 +21,7 @@ class BattleController extends Controller
 	public function test($data){
 		return json_encode($data,TRUE);
 	}
-    public function battle($data)
+    public function battle(Request $request)
     {
     	$req=$request->getContent();
 		$json=base64_decode($req);
