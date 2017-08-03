@@ -38,17 +38,57 @@ class SwooleCommand extends Command
      */
     public function handle()
     {
-               $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+//             $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+//             $serv->set([
+//                 'worker_num' => 4, # 4个worker
+//                 'task_worker_num' => 4, # 4个task
+//                 'heartbeat_check_interval' => 0.005,
+//                 'heartbeat_idle_time' => 0.1,
+//                 'deamonize' => true,
+//                 ]);
+//             $serv->on('Packet', function ($serv, $data, $clientInfo) {
 
-            $serv->on('Packet', function ($serv, $data, $clientInfo) {
+//             //$serv->task($data);
+//             $battle=new BattleController();
+//             $result=$battle->test($data);
+            
+//             var_dump($clientInfo);
+//               });
 
-            $battle=new BattleController();
-            $result=$battle->battle($data);
-            $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-            var_dump($clientInfo);
+
+// //启动服务器
+//             $serv->start();
+//     //     $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+
+//     //     $battle=new BattleController();
+//     //     $result=$battle->test($data);
+//     //     // $result=$battle->battle($data);
+//     //     for($i = 0 ; $i < 2 ; $i ++ ) {
+//     //     sleep(0.1);
+//     //     }
+//     // //return 数据 给 Finish
+//     //         return  $result;
+//     //     });
+
+//     //     $serv->on('Finish', function ($serv,$task_id, $data) {
+// //         $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+// //         });
+
+// // //log("testtest");
+// // //启动服务器
+// //     $serv->start();   
+
+       $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+
+//监听数据接收事件
+    $serv->on('Packet', function ($serv, $data, $clientInfo) {
+    $battle=new BattleController();
+    $result=$battle->test($data);
+    $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+    var_dump($clientInfo);
 });
-//log("testtest");
+
 //启动服务器
-    $serv->start();   
+$serv->start(); 
     }
 }

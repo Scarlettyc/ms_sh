@@ -288,7 +288,6 @@ class FriendController extends Controller
 					$recieveData["friend_u_id"]=$friend['u_id'];
 					$recieveData["rcoin_quanitty"]=$defindFriend['value2'];
 					$recieveData["rcoin_status"]=1;
-		
 					$recieveData["updated_at"]=$datetime;
 					$recieveData["createdate"]=$datetime;
  					$receiveCoinModel->insert($recieveData);

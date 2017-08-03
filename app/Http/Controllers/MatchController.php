@@ -25,6 +25,7 @@ class MatchController extends Controller
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
+		$redis_battle=Redis::connection('battle');
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		// $access_token=$loginTodayArr->access_token;
@@ -44,25 +45,25 @@ class MatchController extends Controller
 			else{
 				$matchKey='match_maxlv_star'.$match['star_from'].'star'.$match['star_to'];
 			}
-			$matchList=Redis::LLEN($matchKey);
+			$matchList=$redis_battle->LLEN($matchKey);
 
 			if($matchList==0||!$matchList){
-				Redis::LPUSH($matchKey,$u_id);
+				$redis_battle->LPUSH($matchKey,$u_id);
 				return "wait in list";
 			}
 			else {
-				$match_uid=Redis::LRANGE($matchKey,0,1);
+				$match_uid=$redis_battle->LRANGE($matchKey,0,1);
 				if($matchList==1&&$match_uid[0]==$u_id){
 					return "wait in list";
 				}
 				else{
-					$match_uid=Redis::LPOP($matchKey);
+					$match_uid=$redis_battle->LPOP($matchKey);
 					$result['match_result']=$match_uid;
 					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
 					$match=json_encode([$u_id,$match_uid],TRUE);
 					$match_id='m'.time();
-					Redis::HSET('match_list',$match_id,$match);
+					$redis_battle->HSET('match_list',$match_id,$match);
 					$enmeydata['match_id']=$match_id;
 					$response=json_encode($enmeydata,TRUE);
 					return base64_encode($response);
