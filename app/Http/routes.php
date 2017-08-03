@@ -50,6 +50,9 @@ Route::post('/battlematch', 'MatchController@match');
 Route::controller('load','LoadBattleController');
 Route::post('/load', 'LoadBattleController@loadingGame');
 
+Route::controller('battle','BattleController');
+Route::post('/testbattle', 'BattleController@battle');
+
 Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
 Route::post('/removefriend', 'FriendController@removeFriend');

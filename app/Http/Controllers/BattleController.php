@@ -139,7 +139,7 @@ class BattleController extends Controller
 				$enemy_spd=($enemy_spd)*(1+$enemy_self_effect['eff_ch_spd_per']);
  			}
  			if($user_effect){
- 				$enemy_hp=($enemy_hp-$enemy_self_effect['eff_ch_hp'])*(1-$enemy_self_effect['eff_ch_atk_per'];
+ 				$enemy_hp=($enemy_hp-$enemy_self_effect['eff_ch_hp'])*(1-$enemy_self_effect['eff_ch_atk_per']);
  				$enemy_atk=($enemy_atk-$user_effect['eff_ch_atk'])*(1-$user_effect['eff_ch_atk_per']);
  				$enemy_def=($enemy_def-$enemy_self_effect['eff_ch_def'])*(1-$enemy_self_effect['eff_ch_def_per']);
  				$enemy_crit=($enemy_crit)*(1-$enemy_self_effect['eff_ch_crit_per']);
