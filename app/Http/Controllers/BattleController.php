@@ -150,7 +150,7 @@ class BattleController extends Controller
 
 
  			$defindModel=new DefindMstModel();
- 			$defValue=$defindModel->where('defind_id',8)
+ 			$defValue=$defindModel->where('defind_id',8);
  			$Usercritical=$this->getCritical();
  			$userDMG=$user_atk*$Usercritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
  			$Enemycritical=$this->getCritical();
@@ -180,7 +180,7 @@ class BattleController extends Controller
 
  	}
 
- 	private function getCritical(){
+	private function getCritical(){
  			$defindModel=new DefindMstModel();
  			$critcalRound=$defindModel->where('defind_id',6)->first();
  			$critalNumer=random($critcalRound['value1'],$critcalRound['value2']);
@@ -193,7 +193,6 @@ class BattleController extends Controller
  			}
  			return $critical;
  		}
-
 
  
 }
