@@ -48,26 +48,29 @@ class SwooleCommand extends Command
                 ]);
             $serv->on('Packet', function ($serv, $data, $clientInfo) {
 
-            $serv->task($data);
+            //$serv->task($data);
+            $battle=new BattleController();
+            $result=$battle->test($data);
+            $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
             
             var_dump($clientInfo);
         });
         
-        $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+    //     $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
 
-        $battle=new BattleController();
-        $result=$battle->test($data);
-        // $result=$battle->battle($data);
-        for($i = 0 ; $i < 2 ; $i ++ ) {
-        sleep(0.1);
-        }
-    //return 数据 给 Finish
-            return  $result;
-        });
+    //     $battle=new BattleController();
+    //     $result=$battle->test($data);
+    //     // $result=$battle->battle($data);
+    //     for($i = 0 ; $i < 2 ; $i ++ ) {
+    //     sleep(0.1);
+    //     }
+    // //return 数据 给 Finish
+    //         return  $result;
+    //     });
 
-        $serv->on('Finish', function ($serv,$task_id, $data) {
-        $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-        });
+    //     $serv->on('Finish', function ($serv,$task_id, $data) {
+       // $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+        // });
 
 //log("testtest");
 //启动服务器
