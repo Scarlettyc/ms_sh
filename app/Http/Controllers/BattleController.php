@@ -79,10 +79,9 @@ class BattleController extends Controller
  				$userData=$characterModel->where('u_id',$u_id)->first();
  				$enemyData=$characterModel->where('u_id',$enmey_uid)->first();
  				$this->calculateEffect($userData,$enemyData);
-
-
- 		}
+ 			}
  	    	
+		}
 	}
  	private function calculateEffect($user,$enemy){
 
