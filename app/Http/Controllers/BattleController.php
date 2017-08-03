@@ -148,7 +148,6 @@ class BattleController extends Controller
  			}
 
 
-
  			$defindModel=new DefindMstModel();
  			$defValue=$defindModel->where('defind_id',8);
  			$Usercritical=$this->getCritical();
@@ -177,7 +176,7 @@ class BattleController extends Controller
 			$enemyResult['ch_stun']=$user_effect['eff_ch_stun'];
 
  		return ['user_result'=>$userResult,'enemy_result'=>$enemyResult];
-
+ 		}
  	}
 
 	private function getCritical(){
