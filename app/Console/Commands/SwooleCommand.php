@@ -56,7 +56,8 @@ class SwooleCommand extends Command
         $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
 
         $battle=new BattleController();
-        $result=$battle->battle($data);
+        $result=$battle->test($data);
+        // $result=$battle->battle($data);
         for($i = 0 ; $i < 2 ; $i ++ ) {
         sleep(0.1);
         }
