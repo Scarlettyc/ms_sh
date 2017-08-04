@@ -216,7 +216,7 @@ class ItemInfoUtil
 			{
 				if($obj != null)
 				{
-					$eff[]=$obj[];
+					$eff[]=$obj;
 				}
 			}
 
