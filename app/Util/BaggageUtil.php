@@ -102,6 +102,34 @@ class BaggageUtil
 		return $response;
 	}
 
+	function getMovement ($baggage_u_id)
+	{
+		if(isset($baggage_u_id))
+		{
+			$UserBaggageEqModel=new UserBaggageEqModel();
+			$result=[];
+
+			$baggageMovement=$UserBaggageEqModel->select('b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',2)->orderBy('b_equ_rarity','DESC')->get();
+
+			foreach ($baggageMovement as $obj)
+			{
+				$arry['item_id']=$obj['b_equ_id'];
+				$arry['item_icon']=$obj['b_icon_path'];
+				$arry['item_quantity']=1;
+				$arry['item_type']=2;
+				$result[]=$arry;
+			}
+			$response=$result;
+		}else{
+			throw new Exception("No User ID");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
+		return $response;
+	}
+
 	function getCore ($baggage_u_id)
 	{
 		if(isset($baggage_u_id))

@@ -135,4 +135,71 @@ class WorkshopController extends Controller
 		}
 		return base64_encode($response);
 	}
+
+	public function compareEquipment (Request $request)
+	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+
+		$EquipmentMstModel=new EquipmentMstModel();
+		$EffectionMstModel=new EffectionMstModel();
+		$CharacterModel=new CharacterModel();
+		$SkillMstModel=new SkillMstModel();
+		$ItemInfoUtil=new ItemInfoUtil();
+		$result=[];
+
+		$u_id=$data['u_id'];
+		$equ_id=$data['equ_id'];
+
+		if(isset($u_id))
+		{
+			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id);
+			$Skill_click_id=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('skill_id');
+			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id);
+			$result['equ_click_data']=$Equ_click_detail;
+			$result['equ_click_data']=$Skill_click_detail;
+
+			$Equ_type=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('equ_type');
+
+			if($Equ_type == 1)
+			{
+				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
+				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
+				$result['equ_now_data']=$Equ_now_detail;
+				$result['equ_now_data']=$Skill_now_detail;
+			}else if($Equ_type == 2)
+			{
+				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('m_id');
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
+				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
+				$result['equ_now_data']=$Equ_now_detail;
+				$result['equ_now_data']=$Skill_now_detail;
+			}else if($Equ_type == 3)
+			{
+				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('core_id');
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
+				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
+				$result['equ_now_data']=$Equ_now_detail;
+				$result['equ_now_data']=$Skill_now_detail;
+			}
+			$response=$result;			
+		}else{
+			throw new Exception("there have some error of you access_token");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "please check u_id",
+			];
+		}
+	}
+
+	/*public function equipEquipment (Request $request)
+	{
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+		
+	}*/
 }

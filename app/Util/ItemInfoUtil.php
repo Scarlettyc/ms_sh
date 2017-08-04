@@ -10,6 +10,7 @@ use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\EquUpgradeMstModel;
+use App\CharacterModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -209,7 +210,17 @@ class ItemInfoUtil
 
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
-			$result['item_data']['item_info']['equipment_eff']=$EquipmentEffInfo;
+
+			$eff=[];
+			$eff['eff_ch_hp']=$EquipmentEffInfo['eff_ch_hp'];
+			$eff['eff_ch_hp_per']=$EquipmentEffInfo['eff_ch_hp_per'];
+			$eff['eff_ch_hp_max']=$EquipmentEffInfo['eff_ch_hp_max'];
+			$eff['eff_ch_hp_max_per']=$EquipmentEffInfo['eff_ch_hp_max_per'];
+			$eff['eff_ch_atk']=$EquipmentEffInfo['eff_ch_atk'];
+
+			$array=array_filter($eff);
+
+			$result['item_data']['item_info']['equipment_eff']=$array;
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
@@ -219,6 +230,62 @@ class ItemInfoUtil
 			];
 		}
 		return $response;
+	}
+
+	//get the information of the equipment that user click and compare with the equipment that on the same position.
+	function compareEquipment ($u_id,$Item_Id)
+	{
+		$u_id=$u_id;
+		$EquipmentId=$Item_Id;
+		if(isset($EquipmentId))
+		{
+			$EquipmentMstModel=new EquipmentMstModel();
+			$EffectionMstModel=new EffectionMstModel();
+			$CharacterModel=new CharacterModel();
+			$SkillMstModel=new SkillMstModel();
+			$Equ_now=[];
+			$Equ_click=[];
+			$result=[];
+
+			$EquClickInfo = $EquipmentMstModel->where('equ_id',$EquipmentId)->first();
+
+			$Equ_click['item_id']=$EquClickInfo['equ_id'];
+			$Equ_click['item_name']=$EquClickInfo['equ_name'];
+			$Equ_click['item_rarity']=$EquClickInfo['equ_rarity'];
+			$Equ_click['item_img']=$EquClickInfo['icon_path'];
+			$Equ_click['item_description']=$EquClickInfo['equ_description'];
+			$Equ_click['item_price']=$EquClickInfo['equ_price'];
+
+			$result['item_data_1']=$Equ_click;
+
+			$EquEffclickId=$EquClickInfo['eff_id'];
+			$EquEffclickInfo=$EffectionMstModel->where('eff_id',$EquEffclickId)->first();
+			$result['item_data_1']['item_info']['effection']=$EquEffclickInfo;
+
+			
+
+			$EquClickType=$EquClickInfo['equ_part'];
+
+			if($EquClickType == 1)
+			{
+				$EquNowId=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
+				$EquNowInfo=$EquipmentMstModel->where('equ_id',$EquNowId)->first();
+
+				$Equ_now['item_id']=$EquNowInfo['equ_id'];
+				$Equ_now['item_name']=$EquNowInfo['equ_name'];
+				$Equ_now['item_rarity']=$EquNowInfo['equ_rarity'];
+				$Equ_now['item_img']=$EquNowInfo['icon_path'];
+				$Equ_now['item_description']=$EquNowInfo['equ_description'];
+				$Equ_now['item_price']=$EquNowInfo['equ_price'];
+
+				$result['item_data_2']=$Equ_now;
+
+				$EquEffnowId=$EquNowInfo['eff_id'];
+				$EquEffnowInfo=$EffectionMstModel->where('eff_id',$EquEffnowId)->first();
+				$result['item_data_2']['item_info']['effection']=$EquEffnowInfo;
+			}
+
+		}
 	}
 
 	//get the information of a skill: name, icon, info, effection
@@ -236,6 +303,7 @@ class ItemInfoUtil
 
 			$SkillEff_id=$SkillInfo['eff_id'];
 			$SkillEffInfo=$EffectionMstModel->where('eff_id',$SkillEff_id)->first();
+
 
 			$skill['skill_id']=$SkillInfo['skill_id'];
 			$skill['skill_name']=$SkillInfo['skill_name'];
