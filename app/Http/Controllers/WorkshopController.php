@@ -183,7 +183,7 @@ class WorkshopController extends Controller
 				$result['equ_now_data']=$Equ_now_detail;
 				$result['equ_now_data']=$Skill_now_detail;
 			}
-			$response=$result;			
+			$response=json_encode($result,TRUE);			
 		}else{
 			throw new Exception("there have some error of you access_token");
 			$response=[
