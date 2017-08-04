@@ -88,7 +88,7 @@ class ItemInfoUtil
 			$equ_id=$ScrollInfo['equ_id'];
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$equ_id)->first();
 			$EquEff_id = $EquipmentInfo['eff_id'];
-			$EquEffectInfo = $EffectionMstModel->where('eff_id','=',$EquEff_id)->first();
+			$EquEffectInfo = $EffectionMstModel->where('eff_id','=',$EquEff_id)->pluck('eff_description');
 			
 			$scroll_equ['equ_name']=$EquEffectInfo['equ_name'];
 			$scroll_equ['equ_icon']=$EquEffectInfo['icon_path'];
@@ -100,7 +100,7 @@ class ItemInfoUtil
 			$Skill_id = $EquipmentInfo['skill_id'];
 			$SkillInfo = $SkillMstModel->where('skill_id','=',$Skill_id)->first();
 			$SkillEff_id = $SkillInfo['eff_id'];
-			$SkillEffectInfo = $EffectionMstModel->where('eff_id','=',$SkillEff_id)->first();
+			$SkillEffectInfo = $EffectionMstModel->where('eff_id','=',$SkillEff_id)->pluck('eff_description');
 
 			$scroll_skill['skill_name']=$SkillInfo['skill_name'];
 			$scroll_skill['skill_icon']=$SkillInfo['skill_icon'];
@@ -250,7 +250,7 @@ class ItemInfoUtil
 			$result['item_data_1']=$Equ_click;
 
 			$EquEffclickId=$EquClickInfo['eff_id'];
-			$EquEffclickInfo=$EffectionMstModel->where('eff_id',$EquEffclickId)->first();
+			$EquEffclickInfo=$EffectionMstModel->where('eff_id',$EquEffclickId)->pluck('eff_description');
 			$result['item_data_1']['item_info']['effection']=$EquEffclickInfo;
 
 			
@@ -272,7 +272,7 @@ class ItemInfoUtil
 				$result['item_data_2']=$Equ_now;
 
 				$EquEffnowId=$EquNowInfo['eff_id'];
-				$EquEffnowInfo=$EffectionMstModel->where('eff_id',$EquEffnowId)->first();
+				$EquEffnowInfo=$EffectionMstModel->where('eff_id',$EquEffnowId)->pluck('eff_description');
 				$result['item_data_2']['item_info']['effection']=$EquEffnowInfo;
 			}
 
@@ -293,7 +293,7 @@ class ItemInfoUtil
 			$SkillInfo=$SkillMstModel->where('skill_id',$Skill_Id)->first();
 
 			$SkillEff_id=$SkillInfo['eff_id'];
-			$SkillEffInfo=$EffectionMstModel->where('eff_id',$SkillEff_id)->first();
+			$SkillEffInfo=$EffectionMstModel->where('eff_id',$SkillEff_id)->pluck('eff_description');
 
 
 			$skill['skill_id']=$SkillInfo['skill_id'];
@@ -348,7 +348,7 @@ class ItemInfoUtil
 			$result['item_data']=$equipment;
 
 			$equOrEff_id=$OriginEquInfo['eff_id'];
-			$OriginEquEffection=$EffectionMstModel->where('eff_id',$equOrEff_id)->first();
+			$OriginEquEffection=$EffectionMstModel->where('eff_id',$equOrEff_id)->pluck('eff_description');
 
 			$result['item_data']['item_info']['Origin_eff']=$OriginEquEffection;
 
@@ -364,7 +364,7 @@ class ItemInfoUtil
 			$UpgradeEquInfo=$EquipmentMstModel->where('equ_id',$equUp_id)->first();
 			
 			$equUpEff_id=$UpgradeEquInfo['eff_id'];
-			$UpgradeEquEffection=$EffectionMstModel->where('eff_id',$equUpEff_id)->first();
+			$UpgradeEquEffection=$EffectionMstModel->where('eff_id',$equUpEff_id)->pluck('eff_description');
 
 			$equUpgrade['item_id']=$UpgradeEquInfo['equ_id'];
 			$equUpgrade['item_name']=$UpgradeEquInfo['equ_name'];
@@ -385,7 +385,7 @@ class ItemInfoUtil
 			$skillUp_id=$UpgradeEquInfo['skill_id'];
 			$UpgradeSkillInfo=$SkillMstModel->where('skill_id',$skillUp_id)->first();
 			$skillUpeff_id=$UpgradeSkillInfo['eff_id'];
-			$UpgradeSkillEff=$EffectionMstModel->where('eff_id',$skillUpeff_id)->first();
+			$UpgradeSkillEff=$EffectionMstModel->where('eff_id',$skillUpeff_id)->pluck('eff_description');
 
 			$skillUpgrade['skill_id']=$UpgradeSkillInfo['skill_id'];
 			$skillUpgrade['skill_name']=$UpgradeSkillInfo['skill_name'];

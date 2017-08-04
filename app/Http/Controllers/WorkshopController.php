@@ -89,7 +89,6 @@ class WorkshopController extends Controller
 		$data=json_decode($json,TRUE);
 
 		$EquipmentMstModel=new EquipmentMstModel();
-		$EffectionMstModel=new EffectionMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
@@ -116,7 +115,6 @@ class WorkshopController extends Controller
 		$data=json_decode($json,TRUE);
 
 		$SkillMstModel=new SkillMstModel();
-		$EffectionMstModel=new EffectionMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
@@ -142,7 +140,6 @@ class WorkshopController extends Controller
 		$data=json_decode($req,TRUE);
 
 		$EquipmentMstModel=new EquipmentMstModel();
-		$EffectionMstModel=new EffectionMstModel();
 		$CharacterModel=new CharacterModel();
 		$SkillMstModel=new SkillMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
