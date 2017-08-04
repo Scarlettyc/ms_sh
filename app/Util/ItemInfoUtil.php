@@ -211,7 +211,9 @@ class ItemInfoUtil
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
 
-			$result['item_data']['item_info']['equipment_eff']=$EquipmentEffInfo;
+			$array=array_filter($EquipmentEffInfo);
+
+			$result['item_data']['item_info']['equipment_eff']=$array;
 			$response=json_encode($result,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
