@@ -191,6 +191,7 @@ class WorkshopController extends Controller
 			'error' => "please check u_id",
 			];
 		}
+		return $response;
 	}
 
 	/*public function equipEquipment (Request $request)
