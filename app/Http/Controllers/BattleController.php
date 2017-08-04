@@ -15,6 +15,7 @@ use App\DefindMstModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
+use Math;
 class BattleController extends Controller
 {
 
@@ -89,6 +90,15 @@ class BattleController extends Controller
 		$effectY=$enemyEffect['eff_ch_y'];
 		$enemyX=$enemy['x'];
 		$enemyY=$enemy['y'];
+		$effectXtill=abs($userX)+abs($effectX);
+		$effectYtill=abs($userY)+abs($effectY);
+		if(abs($enemyX)<$effectXtill&&abs($enemyY)<$effectYtill){
+			return true;
+		}
+		else {
+			return false;
+		}
+
 
 
 
@@ -132,7 +142,9 @@ class BattleController extends Controller
  			}
  
  			if($enemy_effect){
- 
+ 				
+ 				if($this->isHit($user,$enemy_effect)){
+
 				$user_hp=($user_hp-$enemy_effect['eff_ch_hp'])*(1-$enemy_effect['eff_ch_hp_per']);
 				$user_atk=($user_atk-$enemy_effect['eff_ch_atk'])*(1-$enemy_effect['eff_ch_atk_per']);
 				$user_def=($user_def-$enemy_effect['eff_ch_def'])*(1-$enemy_effect['eff_ch_def_per']);
@@ -140,7 +152,7 @@ class BattleController extends Controller
 				$user_cd=($user_cd-$enemy_effect['eff_ch_cd'])*(1-$enemy_effect['eff_ch_cd_per']);
 				$user_spd=($user_spd)*(1-$enemy_effect['eff_ch_spd_per']);
 
-				
+				}
 
  			}
  			if($enemy_self_effect){
@@ -152,12 +164,14 @@ class BattleController extends Controller
 				$enemy_spd=($enemy_spd)*(1+$enemy_self_effect['eff_ch_spd_per']);
  			}
  			if($user_effect){
+ 				if($this->isHit($enemy,$user_effect)){
  				$enemy_hp=($enemy_hp-$enemy_self_effect['eff_ch_hp'])*(1-$enemy_self_effect['eff_ch_atk_per']);
  				$enemy_atk=($enemy_atk-$user_effect['eff_ch_atk'])*(1-$user_effect['eff_ch_atk_per']);
  				$enemy_def=($enemy_def-$enemy_self_effect['eff_ch_def'])*(1-$enemy_self_effect['eff_ch_def_per']);
  				$enemy_crit=($enemy_crit)*(1-$enemy_self_effect['eff_ch_crit_per']);
  				$enemy_cd=($enemy_cd-$enemy_self_effect['eff_ch_cd'])*(1-$enemy_self_effect['eff_ch_cd_per']);
  				$enemy_spd=($enemy_spd)*(1-$enemy_self_effect['eff_ch_spd_per']);
+ 				}
  			}
 
 
