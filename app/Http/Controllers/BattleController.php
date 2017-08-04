@@ -91,6 +91,7 @@ class BattleController extends Controller
 		$enemyY=$enemy['y'];
 
 
+
 	}
  	private function calculateEffect($user,$enemy){
 
@@ -131,9 +132,7 @@ class BattleController extends Controller
  			}
  
  			if($enemy_effect){
- 				$this->isHit()
-
- 	
+ 
 				$user_hp=($user_hp-$enemy_effect['eff_ch_hp'])*(1-$enemy_effect['eff_ch_hp_per']);
 				$user_atk=($user_atk-$enemy_effect['eff_ch_atk'])*(1-$enemy_effect['eff_ch_atk_per']);
 				$user_def=($user_def-$enemy_effect['eff_ch_def'])*(1-$enemy_effect['eff_ch_def_per']);
