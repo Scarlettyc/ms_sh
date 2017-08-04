@@ -156,7 +156,8 @@ class WorkshopController extends Controller
 			$result['equ_click_data']=$Equ_click_detail;
 			$result['equ_click_data']=$Skill_click_detail;
 
-			$Equ_part=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('equ_part');
+			$Equ=$EquipmentMstModel->where('equ_id',$equ_id)->first();
+			$Equ_part=$Equ['equ_part'];
 
 			if($Equ_part == 1)
 			{
