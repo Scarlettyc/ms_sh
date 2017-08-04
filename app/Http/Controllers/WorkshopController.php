@@ -156,9 +156,9 @@ class WorkshopController extends Controller
 			$result['equ_click_data']=$Equ_click_detail;
 			$result['equ_click_data']=$Skill_click_detail;
 
-			$Equ_type=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('equ_type');
+			$Equ_part=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('equ_part');
 
-			if($Equ_type == '1')
+			if($Equ_part == '1')
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
 				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
@@ -166,7 +166,7 @@ class WorkshopController extends Controller
 				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
 				$result['equ_now_data']=$Equ_now_detail;
 				$result['equ_now_data']=$Skill_now_detail;
-			}else if($Equ_type == '2')
+			}else if($Equ_part == '2')
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('m_id');
 				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
@@ -174,7 +174,7 @@ class WorkshopController extends Controller
 				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
 				$result['equ_now_data']=$Equ_now_detail;
 				$result['equ_now_data']=$Skill_now_detail;
-			}else if($Equ_type == '3')
+			}else if($Equ_part == '3')
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('core_id');
 				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);

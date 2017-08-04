@@ -212,7 +212,7 @@ class ItemInfoUtil
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->pluck('eff_description');
 
 			$result['item_data']['item_info']['equipment_eff']=$EquipmentEffInfo;
-			$response=json_encode($result,TRUE);
+			$response=$result;
 		}else{
 			throw new Exception("Wrong Equipment ID");
 			$response=[
@@ -304,7 +304,7 @@ class ItemInfoUtil
 
 			$result['Skill_data']=$skill;
 
-			$response=json_encode($result,TRUE);
+			$response=$result;
 		}else
 		{
 			throw new Exception("Wrong Skill ID");
