@@ -211,7 +211,14 @@ class ItemInfoUtil
 			$EquipmentEff_id = $EquipmentInfo['eff_id'];
 			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->first();
 
-			$array=array_filter($EquipmentEffInfo);
+			$eff=[];
+			$eff['eff_ch_hp']=$EquipmentEffInfo['eff_ch_hp'];
+			$eff['eff_ch_hp_per']=$EquipmentEffInfo['eff_ch_hp_per'];
+			$eff['eff_ch_hp_max']=$EquipmentEffInfo['eff_ch_hp_max'];
+			$eff['eff_ch_hp_max_per']=$EquipmentEffInfo['eff_ch_hp_max_per'];
+			$eff['eff_ch_atk']=$EquipmentEffInfo['eff_ch_atk'];
+
+			$array=array_filter($eff);
 
 			$result['item_data']['item_info']['equipment_eff']=$array;
 			$response=json_encode($result,TRUE);
