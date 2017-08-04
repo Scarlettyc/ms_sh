@@ -83,7 +83,7 @@ class SwooleCommand extends Command
 //监听数据接收事件
     $serv->on('Packet', function ($serv, $data, $clientInfo) {
     $battle=new BattleController();
-    $result=$battle->test($data);
+    $result=$battle->battle($data);
     $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
     var_dump($clientInfo);
 });

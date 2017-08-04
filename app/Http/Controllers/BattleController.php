@@ -36,7 +36,6 @@ class BattleController extends Controller
 		if(isset($data)){
 			$u_id=$data['u_id'];
 			$match_id=$data['match_id'];
-
 			$matchList=$redis_battle->HGET('match_list',$match_id);
 			$matchArr=json_decode($matchList);
 			$u_id=$data['u_id'];
@@ -83,6 +82,16 @@ class BattleController extends Controller
  	    	
 		}
 	}
+	private function isHit($data,$enemy,$enemyEffect){
+		$userX=$data['x'];
+		$userY=$data['y'];
+		$effectX=$enemyEffect['eff_ch_x'];
+		$effectY=$enemyEffect['eff_ch_y'];
+		$enemyX=$enemy['x'];
+		$enemyY=$enemy['y'];
+
+
+	}
  	private function calculateEffect($user,$enemy){
 
  			$skillMstModel=new SkillMstModel();
@@ -122,12 +131,17 @@ class BattleController extends Controller
  			}
  
  			if($enemy_effect){
+ 				$this->isHit()
+
+ 	
 				$user_hp=($user_hp-$enemy_effect['eff_ch_hp'])*(1-$enemy_effect['eff_ch_hp_per']);
 				$user_atk=($user_atk-$enemy_effect['eff_ch_atk'])*(1-$enemy_effect['eff_ch_atk_per']);
 				$user_def=($user_def-$enemy_effect['eff_ch_def'])*(1-$enemy_effect['eff_ch_def_per']);
 				$user_crit=($user_crit)*(1-$enemy_effect['eff_ch_crit_per']);
 				$user_cd=($user_cd-$enemy_effect['eff_ch_cd'])*(1-$enemy_effect['eff_ch_cd_per']);
 				$user_spd=($user_spd)*(1-$enemy_effect['eff_ch_spd_per']);
+
+				
 
  			}
  			if($enemy_self_effect){
