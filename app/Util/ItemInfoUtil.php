@@ -214,7 +214,7 @@ class ItemInfoUtil
 			$eff=[];
 			foreach($EquipmentEffInfo as $obj)
 			{
-				if($obj !== 0)
+				if($obj !== null)
 				{
 					$eff[]=$obj;
 				}
