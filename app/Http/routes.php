@@ -38,6 +38,7 @@ Route::controller('workshop','WorkshopController');
 Route::post('/workshop','WorkshopController@workshop');
 Route::post('/showEquipmentInfo','WorkshopController@showEquipmentInfo');
 Route::post('/showSkillInfo','WorkshopController@showSkillInfo');
+Route::post('/compareEquipment','WorkshopController@compareEquipment');
 
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
