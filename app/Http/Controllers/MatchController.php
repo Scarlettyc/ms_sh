@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\UserModel;
 use App\MatchRangeModel;
 use App\CharacterModel;
+use App\MapModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
@@ -39,6 +40,8 @@ class MatchController extends Controller
      		$maxLv=$matchrange->max('user_lv_to');
      		$maxStar=$matchrange->max('star_from');
 		 	$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
+		 	
+
 			if($chardata['ch_lv']<$maxLv){
 			$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
 			}
@@ -57,11 +60,12 @@ class MatchController extends Controller
 					return "wait in list";
 				}
 				else{
+					$mapData=$this->chooseMap();
 					$match_uid=$redis_battle->LPOP($matchKey);
 					$result['match_result']=$match_uid;
 					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$match=json_encode([$u_id,$match_uid],TRUE);
+					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
 					$enmeydata['match_id']=$match_id;
@@ -73,11 +77,17 @@ class MatchController extends Controller
 		 else{
  	    		throw new Exception("no exist character of this user");
  	    }
-        
-    	// }
-    	// else{
- 	   //  		throw new Exception("there have some error of you access_token");
- 	   //  }
- 	    	
- }
+	 }
+
+
+    private function chooseMap(){
+    	$defindmst=new DefindMstModel();
+    	$defindData=$defindmst->where('defind_id',10)->first();
+    	$mapID=rand($defindData['value1'],$defindData['value2'] );
+    	$map=new MapModel();
+    	$mapData=$map->where('map_id',$mapID)->first();
+    	return $mapData;
+
+    }
+
 }
