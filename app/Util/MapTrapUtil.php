@@ -14,8 +14,7 @@ class MapTrapUtil
 {
 	//show the quantity and icon for every item in the baggage
 	function getTrapEff($map_id,$x1,$x2,$x3,$y)
-	{
-
+	{ 
 		$mapRelation=new MapTrapRelationMst();
 		$effect=new EffectionMstModel();
 		$trap=new TrapMstModel();
@@ -54,8 +53,9 @@ class MapTrapUtil
 	}
 
 
-	function nearStone($map_id,$x1,$x2,$x3,$y,$enemyX,$enemyY)
-	{	$mapRelation=new MapTrapRelationMst();
+	function nearStone($map_id,$user,$enemy,$map_id)
+	{	
+        $mapRelation=new MapTrapRelationMst();
 		$effect=new EffectionMstModel();
 		$trap=new TrapMstModel();
 		$mapData=$mapRelation->where(function($query){

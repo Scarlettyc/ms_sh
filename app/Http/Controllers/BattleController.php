@@ -83,9 +83,9 @@ class BattleController extends Controller
  	    	
 		}
 	}
-	private function isHit($user,$occurTime,$eff,$enemyX1,$enemyX2,$enemyX3,$enemyY,$map_id){
+	private function isHit($user,$occurTime,$eff,$enemy,$map_id){
 		$mapTrap=new MapTrapUtil();
- 		$stoneprotect=$mapTrap->nearStone($map_id,$userX,$userY,$enemyX,$enemyY);
+ 		$stoneprotect=$mapTrap->nearStone($map_id,$user,$enemy,$map_id);
  		if($stoneprotect){
  			return false;
  		}
@@ -94,14 +94,20 @@ class BattleController extends Controller
  		$userX1=$user['x1'];
  		$userX2=$user['x2'];
  		$userX3=$user['x3'];
- 		$userY=$data['y'];
+ 		$userY=$userX3['y'];
+
+ 		$enemyX1=$enemy['x1'];
+ 		$enemyX2=$enemy['x2'];
+ 		$enemyX3=$enemy['x3'];
+ 		$enemyY=$enemy['y'];
+
 
 		$effectX=abs($user['x1'])+$eff['eff_skill_spd']*$time;
 		$effectY=abs($userY)+1;
 		$bullet=$eff['eff_bullet_width'];
-		$effectXfrom=$effectX-$bulle;
+		$effectXfrom=$effectX-$bullet;
 
-		if(abs($enemyX1+1)>=$effectXfrom&&abs($enemyY+1)==$effectY){
+		if(abs($enemyX1+1)<=$effectXfrom&&abs($enemyX3+1)>=$effectX&&abs($enemyY+1)==$effectY||){
 			return true;
 		}
 		return false;
@@ -213,7 +219,7 @@ class BattleController extends Controller
 				}
 
 				if(array_key_exists('atk_eff',$eff)){
-					if($this->isHit($user,$key,$eff,$enemyX1,$enemyX2,$enemyX3,$enemyY,$map_id)){
+					if($this->isHit($data,$key,$eff,$enemy,$map_id)){
 						$enemy_hp=($enemy_hp+$eff['eff_ch_hp'])*(1+$eff['eff_ch_hp_per']);
  						$enemy_atk=($enemy_atk+$eff['eff_ch_atk'])*(1+$eff['eff_ch_atk_per']);
  						$enemy_def=($enemy_def+$eff['eff_ch_def'])*(1+$eff['eff_ch_def_per']);
