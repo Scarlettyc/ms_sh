@@ -53,20 +53,21 @@ class MapTrapUtil
 	}
 
 
-	function nearStone($map_id,$user,$enemy,$map_id)
+	function nearStone($map_id,$userX1,$userX2,$userX3,$effectXfrom,$effectX,$effectY)
 	{	
         $mapRelation=new MapTrapRelationMst();
 		$effect=new EffectionMstModel();
 		$trap=new TrapMstModel();
+
 		$mapData=$mapRelation->where(function($query){
-        				$query->Where('map_id',$map_id)->where('trap_id',3)->where('trap_x_to',abs($x1)+1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
+        				$query->Where('map_id',$map_id)->where('trap_id',3)->where('trap_x_to',abs($userX1)+1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
             				->orWhere(function($query){
-                				->Where('map_id',$map_id)->where('trap_id',3)->where('trap_x_from',abs($x1)-1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
+                				->Where('map_id',$map_id)->where('trap_id',3)->where('trap_x_from',abs($userX3)-1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
            				});
    					})->first();
 
         if($mapData){
-        	if($mapData['trap_y_from']<=abs($enemyY)&&$mapData['trap_y_from']>=abs($enemy)){
+        	if($mapData['trap_x_from']==abs($effectXfrom)||$mapData['trap_x_from']>=abs($effectX)||$mapData['trap_x_to']==abs($effectXfrom)||$mapData['trap_x_to']==abs($effectX)){
         		return true;
         		}
         	else {

@@ -84,12 +84,7 @@ class BattleController extends Controller
 		}
 	}
 	private function isHit($user,$occurTime,$eff,$enemy,$map_id){
-		$mapTrap=new MapTrapUtil();
- 		$stoneprotect=$mapTrap->nearStone($map_id,$user,$enemy,$map_id);
- 		if($stoneprotect){
- 			return false;
- 		}
- 		else {
+
  		$time=time()-$occurTime;
  		$userX1=$user['x1'];
  		$userX2=$user['x2'];
@@ -107,7 +102,13 @@ class BattleController extends Controller
 		$bullet=$eff['eff_bullet_width'];
 		$effectXfrom=$effectX-$bullet;
 
-		if(abs($enemyX1+1)<=$effectXfrom&&abs($enemyX3+1)>=$effectX&&abs($enemyY+1)==$effectY||){
+		$mapTrap=new MapTrapUtil();
+ 		$stoneprotect=$mapTrap->nearStone($map_id,$userX1,$userX2,$userX3,$effectXfrom,$effectX,$effectY);
+
+ 		if($stoneprotect){
+ 			return false
+ 		}
+ 		else  if(abs($enemyX1+1)<=$effectXfrom&&abs($enemyX3+1)>=$effectX&&abs($enemyY+1)==$effectY||){
 			return true;
 		}
 		return false;
@@ -171,7 +172,7 @@ class BattleController extends Controller
  		}
 
 
- 	private function calculateEffect($data,$user,$enemy,$map_i){
+ 	private function calculateEffect($data,$user,$enemy,$map_id){
 
  			$userX1=$data['x1'];
  			$userX2=$data['x2'];
