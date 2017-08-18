@@ -269,7 +269,7 @@ class DistanceAttackUtil
 		return $hasStone;
 	}
 
-	function nearStone($t0,$t1,$x_s,$x_e,$y_s,$y_e,$skill_spd,$map_id,$face)
+	function nearStone($t0,$t1,$x_e,$y_s,$y_e,$skill_spd,$map_id,$face_b)
 	{
 		$MapStoneRelationMst=new MapStoneRelationMst;
 
@@ -279,14 +279,14 @@ class DistanceAttackUtil
 		{
 			$t=$t1-$t0;
 			$move=$skill_spd*$t;
-			if($face == 1)
+			if($face_b == 1)
 			{
 				$bullet_loc=ceil($x_e+$move);
 				if($bullet_loc=$obj)
 				{
 					$hasStone=1;
 				}
-			}else if($face == 0)
+			}else if($face_b == 0)
 			{
 				$bullet_loc=floor($x_e-$move);
 				if($bullet_loc=$obj)
@@ -300,10 +300,50 @@ class DistanceAttackUtil
 
 	function beginNearEnemy($x_s,$x_e,$y_s,$y_e,$x1,$x2,$x3,$y)
 	{
+		$hitY=$y+1;
 		$nearEnemy=0;
-		if($x1>=$x_s&&$x1<=$x_e)
+		if($x1>=$x_s&&$x1<=$x_e&&$hitY>=$y_s&&$hitY<=$y_e)
 		{
-			
+			$nearEnemy=1;
+		}else if($x2>=$x_s&&$x2<=$x_e&&$hitY>=$y_s&&$hitY<=$y_e)
+		{
+			$nearEnemy=1;
+		}else if($x3>=$x_s&&$x3<=$x_e&&$hitY>=$y_s&&$hitY<=$y_e)
+		{
+			$nearEnemy=1;
 		}
+		return $nearEnemy;
 	}
+
+	function nearEnemy($t0,$t1,$x_e,$y_s,$y_e,$x1,$x2,$x3,$y,$skill_spd,$face_b)
+	{
+		$nearEnemy=0;
+		$hitY=$y+1;
+		$t=$t1-$t0;
+		$move=$skill_spd*$t;
+		if($face_b == 1)
+		{
+			$bullet_loc=ceil($x_e+$move);
+			if($bullet_loc=$x1|$bullet_loc=$x2|$bullet_loc=$x3)
+			{
+				if($hitY>=$y_s&&$hitY<=$y_e)
+				{
+					$nearEnemy=1;
+				}
+			}
+		}else if($face_b == 0)
+		{
+			$bullet_loc=floor($x_e-$move);
+			if($bullet_loc=$x1|$bullet_loc=$x2|$bullet_loc=$x3)
+			{
+				if($hitY>=$y_s&&$hitY<=$y_e)
+				{
+					$nearEnemy=1;
+				}
+			}
+		}
+		return $nearEnemy;
+	}
+
+	
 }

@@ -12,7 +12,9 @@ use App\CharacterModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
 use App\DefindMstModel;
+use App\NormalEffectionMstModel;
 use App\Util\MapTrapUtil;
+use App\Util\DistanceAttackUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
@@ -375,4 +377,17 @@ class BattleController extends Controller
  			}
  			return $critical;
  		}
+ 	}
+
+ 	public function longDistanceAttack(Request $request)
+ 	{
+ 		$req=$request->getContent();
+ 		$data=json_decode($req,TRUE);
+
+ 		$DistanceAttackUtil=new DistanceAttackUtil;
+ 		$NormalEffectionMstModel=new NormalEffectionMstModel;
+ 		$result=[];
+
+ 		
+ 	}
 }
