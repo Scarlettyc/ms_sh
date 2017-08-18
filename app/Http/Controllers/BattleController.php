@@ -23,7 +23,10 @@ class BattleController extends Controller
 {
 
 	public function test($data){
+
 		return json_encode($data,TRUE);
+		
+
 	}
     public function battle(Request $request)
     {
@@ -64,9 +67,9 @@ class BattleController extends Controller
 					$userResult=$final['user_result'];
 					$enemyResult=$final['enemy_result'];
 					$userJson=json_encode($userResult,TRUE);
-					// $enemyJson=json_encode($enemyResult,TRUE);
+					$enemyJson=json_encode($enemyResult,TRUE);
 					$redis_battle->LPUSH($battlekey,$userJson);
-					//$redis_battle->LPUSH($enenmyKey,$enemyJson);
+					$redis_battle->LPUSH($enenmyKey,$enemyJson);
 					$response=json_encode($final,TRUE);
 					return  base64_encode($response);
 					}
