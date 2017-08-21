@@ -36,6 +36,7 @@ class SwooleCommand extends Command
      *
      * @return mixed
      */
+
     public function handle()
     {
 //             $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
@@ -63,32 +64,29 @@ class SwooleCommand extends Command
 //     //     $battle=new BattleController();
 //     //     $result=$battle->test($data);
 //     //     // $result=$battle->battle($data);
-//     //     for($i = 0 ; $i < 2 ; $i ++ ) {
-//     //     sleep(0.1);
-//     //     }
-//     // //return 数据 给 Finish
-//     //         return  $result;
-//     //     });
-
-//     //     $serv->on('Finish', function ($serv,$task_id, $data) {
-// //         $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-// //         });
-
-// // //log("testtest");
-// // //启动服务器
-// //     $serv->start();   
+//     //     for($i = 0 ; $i < 2 ; $i ++ )
 
        $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+        $serv->set(array(
+            'worker_num'  => 8,
+            'daemonize'   => 1, //是否作为守护进程,此配置一般配合log_file使用
+            'max_request' => 1000,
+            'dispatch_mode' => 2,
+            'debug_mode' => 1,
+            'log_file'    => './storage/logs/swoole.log',
+            'heartbeat_check_interval' => 5,
+            'heartbeat_idle_time' => 10, //默认是heartbeat_check_interval的2倍,超过此设置客户端没有回应则强制断开链接
+        ));
 
 //监听数据接收事件
-    $serv->on('Packet', function ($serv, $data, $clientInfo) {
+           $serv->on('Packet', function ($serv, $data, $clientInfo) {
     $battle=new BattleController();
-    $result=$battle->battle($data);
+    $result=$battle->test($data);
     $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-    var_dump($clientInfo);
-});
+	});
+        //开启
+        $serv->start();
 
-//启动服务器
-$serv->start(); 
-    }
+}
+
 }

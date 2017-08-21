@@ -1,0 +1,161 @@
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(52826)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(52826)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(52826)
+}
+[2017-08-18 17:03:40 *26511.7]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26510.6]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26509.5]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26508.4]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26507.3]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26506.2]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26505.1]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+[2017-08-18 17:03:41 *26504.0]	WARNING	swSignalfd_onSignal: signal[1] callback is null.
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(35838)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(35838)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(35838)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(35838)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(14) "101.81.251.242"
+  ["port"]=>
+  int(53691)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(14) "101.81.251.242"
+  ["port"]=>
+  int(53691)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(14) "101.81.251.242"
+  ["port"]=>
+  int(53279)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(14) "101.81.251.242"
+  ["port"]=>
+  int(53279)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(14) "101.81.251.242"
+  ["port"]=>
+  int(49772)
+}
+[2017-08-18 17:49:09 #2364.1]	NOTICE	Server is shutdown now.
+[2017-08-18 17:49:09 #2401.1]	NOTICE	Server is shutdown now.
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(49821)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(49821)
+}
+array(4) {
+  ["server_socket"]=>
+  int(7)
+  ["server_port"]=>
+  int(6380)
+  ["address"]=>
+  string(9) "127.0.0.1"
+  ["port"]=>
+  int(49821)
+}
+[2017-08-18 17:54:13 #2675.1]	NOTICE	Server is shutdown now.
