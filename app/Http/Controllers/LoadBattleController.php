@@ -40,7 +40,6 @@ class LoadBattleController extends Controller
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
- 	    	$mapData=$this->chooseMap();
  	    	$userData=$this->getData($u_id);
  	    	$enemyData=$this->getData($enmey_uid);
  	    	$result['user_data']=$userData;
@@ -53,15 +52,6 @@ class LoadBattleController extends Controller
 		}
     }
 
-    private function chooseMap(){
-    	$defindmst=new DefindMstModel();
-    	$defindData=$defindmst->where('defind_id',10)->first();
-    	$mapID=rand($defindData['value1'],$defindData['value2'] );
-    	$map=new MapModel();
-    	$mapData=$map->where('map_id',$mapID)->first();
-    	return $mapData;
-
-    }
     private function getData($u_id){
 
  	    $charaM=new CharacterModel();
