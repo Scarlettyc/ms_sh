@@ -35,7 +35,7 @@ class BattleController extends Controller
 		$characterModel=new CharacterModel();
 		$redis_battle=Redis::connection('battle');
 		$mapTrap=new MapTrapUtil();
-		$key='battle_test'.$u_id;
+		$key='battle_test_'.$u_id;
 		$hit=0;
 		$userBattleData=$redis_battle->LRANGE($key,1,1);
 		$userData=$characterModel->where('u_id',$u_id)->first();
@@ -88,7 +88,6 @@ class BattleController extends Controller
 				$result['hp']=$userHP;
 				$result['spd']=$userSpd;
 				$result['time']=time();
-				$redis_battle->LPUSH($key,$userJson);
 
 		return $userJson;
 		
