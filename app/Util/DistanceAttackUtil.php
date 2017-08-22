@@ -12,6 +12,7 @@ use Exception;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
+use App\RaEffModel;
 
 class DistanceAttackUtil
 {
@@ -343,6 +344,30 @@ class DistanceAttackUtil
 			}
 		}
 		return $nearEnemy;
+	}
+
+	public function raSkills($effID,$x1,$x2,$y,$enmeyX1,$enemyX2,$enmeyY){
+
+		$raEff=new RaEffModel();
+		$eff=$raEff->where('radiation_eff_id',$effID)->first();
+		if($x1<$x2){
+		$effX_from=$x1+$eff['eff_skill_x_left'];
+		$effX_to=$x2+$eff['eff_skill_x_right'];
+		}
+		else {
+		$effX_from=$x2-$eff['eff_skill_x_left'];
+		$effX_to=$x1+$eff['eff_skill_x_right'];
+		}
+
+		$effY_from=($y+1)-$eff['eff_skill_y_top'];
+		$effY_to=($y+1)+$eff['eff_skill_y_down'];
+
+		if($enmeyX1>=$effX_from&&$enmeyX1<=$effX_to&&$effY_from<=$enmeyY&&$effY_to>=$enmeyY||$enmeyX2>=$effX_from&&$enmeyX2<=$effX_to&&$effY_from<=$enmeyY&&$effY_to>=$enmeyY){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	

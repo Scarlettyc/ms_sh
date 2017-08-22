@@ -80,9 +80,9 @@ class SwooleCommand extends Command
 
 //监听数据接收事件
            $serv->on('Packet', function ($serv, $data, $clientInfo) {
-    $battle=new BattleController();
-    $result=$battle->test($data);
-    $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+           $battle=new BattleController();
+           $result=$battle->test($data);
+           $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
 	});
         //开启
         $serv->start();

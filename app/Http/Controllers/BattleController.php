@@ -13,6 +13,8 @@ use App\SkillMstModel;
 use App\EffectionMstModel;
 use App\DefindMstModel;
 use App\NormalEffectionMstModel;
+use App\BuffEffMstModel;
+use App\NormalEffectionMstModel;
 use App\Util\MapTrapUtil;
 use App\Util\DistanceAttackUtil;
 use Illuminate\Support\Facades\Redis;
@@ -23,15 +25,79 @@ class BattleController extends Controller
 {
 
 	public function test($data){
+		$x1=$data['x1'];
+		$x2=$data['x2'];
+		$y=$data['y'];
+		$direction=$data['direction'];
+		$u_id=$data['u_id'];
+		$normalEff=new NormalEffectionMstModel();
+		$skillMstModel=new SkillMstModel();
+		$characterModel=new CharacterModel();
+		$redis_battle=Redis::connection('battle');
+		$mapTrap=new MapTrapUtil();
+		$key='battle_test'.$u_id;
+		$hit=0;
+		$userBattleData=$redis_battle->LRANGE($key,1,1);
+		$userData=$characterModel->where('u_id',$u_id)->first();
+		$userHP=$userData['ch_hp_max'];
+		$userSpd=$userData['ch_spd'];
+		if(isset($userBattleData['eff'])){
 
-		return json_encode($data,TRUE);
+			$occuredTime=time()-$userBattleData['time'];
+			$eff=$normalEff->where('normal_eff_id',$userBattleData['eff']['normal_eff_id'])->first();
+			$effspd=$eff['eff_skill_spd'];
+			$direction=$eff['direction'];
+			$range=$occuredTime*$effspd*$direction;
+			$occurX=$eff['x']+$range;
+			$occurY=$eff['y'];
+			$bulletfrom=$occurX-$eff['eff_bullet_width'];
+			$trap=$mapTrap->where('map_trap_id',1)->first();
+			if($trap['trap_x_from']-$occurX<=1&&$trap_y_from<=$occurY&&$trap_y_to>=$occurY){
+				$hit=1;
+			}
+			if($hit!=1){
+				if(abs($range)<$eff_skill_x){
+					$result['eff']=$userBattleData['eff']['normal_eff_id'];
+				}
+			}
+		}
+			$result['hit']=$hit;
+
+			if(isset($data['skill_id'])){
+				$skill_id=$data['skill_id'];
+				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
+				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
+				$result['eff']=$eff['normal_eff_id'];	
+			}
+
+			if($x2>$x1){
+					$result['x']=$x1;
+				}
+				else{
+					$result['x']=$x2;
+				}
+				$result['direction']=$direction;
+				$result['y']=$y+1;
+				$result['hp']=$userHP;
+				$result['spd']=$userSpd;
+				$result['time']=time();
+				$userJson=json_encode($result,TRUE);
+				$redis_battle->LPUSH($key,$userJson);
+				$result['direction']=$direction;
+				$result['y']=$y+1;
+				$result['hp']=$userHP;
+				$result['spd']=$userSpd;
+				$result['time']=time();
+				$redis_battle->LPUSH($key,$userJson);
+
+		return $userJson;
 		
 
 	}
-    public function battle(Request $request)
+    public function battle($request)
     {
-    	$req=$request->getContent();
-		$json=base64_decode($req);
+    	//$req=$request->getContent();
+		$json=base64_decode($request);
 		$redis_battle=Redis::connection('battle');
 		$characterModel=new CharacterModel();
 	 	//dd($json);
@@ -129,7 +195,10 @@ class BattleController extends Controller
 
  			$skillMstModel=new SkillMstModel();
  			$effectMstModel=new EffectionMstModel();
+ 			$buffEff=new BuffEffMstModel();
  			$mapTrap=new MapTrapUtil();
+ 			$normalEff=new NormalEffectionMstModel();
+ 			$jumpEff= new JumpEffModel();
 
  			$trap=$mapTrap->getTrapEff($map_id,$userX1,$userX2,$userX3,$userY);
  			if(isset($trap)){
@@ -141,14 +210,22 @@ class BattleController extends Controller
  			
  			if(array_key_exists('self_eff_id',$data)){
  				$user_self_buff=$skillMstModel->where('skill_id',$data['self_eff_id'])->first();
- 				$selfEff=$effectMstModel->Where('eff_id',$user_self_buff['eff_id'])->first();
+ 				$selfEff=$buffEff->Where('eff_id',$user_self_buff['eff_id'])->first();
  				$selfEff['self_skill_last']=$selfEff['eff_skill_x']/$selfEff['eff_skill_spd'];
  				$user['eff'][time()]['self_eff']=$selfEff;
  			}
- 			if(array_key_exists('enemy_eff_id',$data)){
+ 			if(array_key_exists('atk_eff_id',$data)){
  				$user_ef=$skillMstModel->where('skill_id',$data['enemy_eff_id'])->first();
- 				$atkEff=$effectMstModel->Where('eff_id',$user_ef['eff_id'])->first();
- 				$atkEFF['atk_skill_last']=$atkEff['eff_skill_x']/$atkEff['eff_skill_spd'];
+ 				if($user_ef['eff_group_id']==1||$user_ef['eff_group_id']==2){
+ 					$atkEff=$normalEff->where('normal_eff_id',$user_ef['eff_id'])->first();
+ 				}
+ 				else if($user_ef['eff_group_id']==3){
+ 					$atkEff=$jumpEff->where('jump_eff_id',$user_ef['eff_id'])->first();
+ 				}
+ 				else if($user_ef['eff_group_id']==4){
+ 					$atkEff=$RaEffModel->where('radiation_eff_id',$user_ef['eff_id'])->first();
+ 				}
+ 				$atkEff['atk_skill_last']=$atkEff['eff_skill_x']/$atkEff['eff_skill_spd'];
  				$user['eff'][time()]['atk_eff']=$atkEff;
  			}				
       			$user_hp=$user['ch_hp'];
