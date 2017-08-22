@@ -83,11 +83,6 @@ class BattleController extends Controller
 				$result['time']=time();
 				$userJson=json_encode($result,TRUE);
 				$redis_battle->LPUSH($key,$userJson);
-				$result['direction']=$direction;
-				$result['y']=$y+1;
-				$result['hp']=$userHP;
-				$result['spd']=$userSpd;
-				$result['time']=time();
 
 		return $userJson;
 		
