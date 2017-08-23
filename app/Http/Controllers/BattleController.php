@@ -14,7 +14,7 @@ use App\EffectionMstModel;
 use App\DefindMstModel;
 use App\BuffEffMstModel;
 use App\NormalEffectionMstModel;
-use App\Util\MapTrapRelationMst;
+use App\MapTrapRelationMst;
 use App\Util\DistanceAttackUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
@@ -63,14 +63,13 @@ class BattleController extends Controller
 		}
 			$result['hit']=$hit;
 
-			if($data['skill_id']!=0){
+			if(isset($data['skill_id'])){
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				$result['eff']=$eff['normal_eff_id'];	
+				$result['skill_id']=$skill_id;	
 			}
 
-			if($x2>$x1){
 					$result['x']=$x1;
 				}
 				else{
