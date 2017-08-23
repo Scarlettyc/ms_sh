@@ -41,10 +41,11 @@ class BattleController extends Controller
 		$userData=$characterModel->where('u_id',$u_id)->first();
 		$userHP=$userData['ch_hp_max'];
 		$userSpd=$userData['ch_spd'];
-		if(isset($userBattleData['eff'])){
+		if(isset($userBattleData['skill_id'])){
 
 			$occuredTime=time()-$userBattleData['time'];
-			$eff=$normalEff->where('normal_eff_id',$userBattleData['eff']['normal_eff_id'])->first();
+			$skill=$skillMstModel->where('skill_id',$userBattleData['skill_id'])->first();
+			$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
 			$effspd=$eff['eff_skill_spd'];
 			$direction=$eff['direction'];
 			$range=$occuredTime*$effspd*$direction;
@@ -57,7 +58,7 @@ class BattleController extends Controller
 			}
 			if($hit!=1){
 				if(abs($range)<$eff_skill_x){
-					$result['eff']=$userBattleData['eff']['normal_eff_id'];
+					$result['skill_id']=$userBattleData['skill_id'];
 				}
 			}
 		}
