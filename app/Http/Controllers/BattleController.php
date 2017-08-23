@@ -63,7 +63,7 @@ class BattleController extends Controller
 		}
 			$result['hit']=$hit;
 
-			if(isset($data['skill_id'])){
+			if($data['skill_id']!=0){
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
