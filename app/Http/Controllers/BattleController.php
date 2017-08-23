@@ -69,7 +69,7 @@ class BattleController extends Controller
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
 				$result['skill_id']=$skill_id;	
 			}
-				if($x1>$x2)
+				if($x1>$x2){
 					$result['x']=$x1;
 				}
 				else{
