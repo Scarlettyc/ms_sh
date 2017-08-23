@@ -24,7 +24,8 @@ use Math;
 class BattleController extends Controller
 {
 
-	public function test($data){
+	public function test($json){
+		$data=json_decode($json,TRUE);
 		$x1=$data['x1'];
 		$x2=$data['x2'];
 		$y=$data['y'];
