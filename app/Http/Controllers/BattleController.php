@@ -53,11 +53,12 @@ class BattleController extends Controller
 				$finalX=$eff['eff_skill_spd']*5;
 				$finalY=$y+1;
 				$trap=$mapTrap->where('map_trap_id',1)->first();
-				if($trap['trap_x_from']-$finalX<=1&&$trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
+				if($trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
 					$hit=1;
 				}
+
 				if($hit!=1){
-					if(abs($range)<$eff_skill_x){
+					if(abs($finalX)<$eff['eff_skill_x']){
 						$tmp['time']=round(microtime(true)*10000);
 						$tmp['skill_id']=$skillid['skill_id'];
 						$result['skill'][]=$tmp;
