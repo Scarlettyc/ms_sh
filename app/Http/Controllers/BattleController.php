@@ -45,7 +45,7 @@ class BattleController extends Controller
 			if(isset($userBattleData['skill'])){
 				foreach($userBattleData['skill'] as $key=>$eff){
 
-					$occuredTime=(microtime(true)*10000)-$key;
+					$occuredTime=round(microtime(true)*10000)-$key;
 					$skill=$skillMstModel->where('skill_id',$eff)->first();
 					$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
 					$effspd=$eff['eff_skill_spd'];
@@ -72,7 +72,7 @@ class BattleController extends Controller
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				$result['skill'][(microtime(true)*10000)]=$skill_id;	
+				$result['skill'][round(microtime(true)*10000)]=$skill_id;	
 			}
 				if($x1>$x2){
 					$result['x']=$x1;
@@ -85,7 +85,7 @@ class BattleController extends Controller
 				$result['y']=$y+1;
 				$result['hp']=$userHP;
 				$result['spd']=$userSpd;
-				$result['time']=(microtime(true)*10000);
+				$result['time']=round(microtime(true)*10000);
 				$userJson=json_encode($result,TRUE);
 				$redis_battle->LPUSH($key,$userJson);
 
