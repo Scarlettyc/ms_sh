@@ -373,7 +373,7 @@ class BattleController extends Controller
 
  		foreach($effects as $eff){
 				if(array_key_exists('self_eff',$eff)){
-					if($eff['skill_last']<=（$eff['eff_skill_x']/$eff['eff_skill_spd'])){
+					if($eff['skill_last']<=($eff['eff_skill_x']/$eff['eff_skill_spd'])){
 
 						$user_hp=($user_hp+$eff['eff_ch_hp'])*(1+$eff['eff_ch_hp_per']);
  						$user_atk=($user_atk+$eff['eff_ch_atk'])*(1+$eff['eff_ch_atk_per']); 
