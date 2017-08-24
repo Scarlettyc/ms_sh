@@ -42,8 +42,8 @@ class BattleController extends Controller
 		$userHP=$userData['ch_hp_max'];
 		$userSpd=$userData['ch_spd'];
 		if($userBattleData){
-			if(isset($userBattleData['eff'])){
-				foreach($userBattleData['eff'] as $key=>$eff){
+			if(isset($userBattleData['skill'])){
+				foreach($userBattleData['skill'] as $key=>$eff){
 
 					$occuredTime=time()-$key;
 					$skill=$skillMstModel->where('skill_id',$eff)->first();
@@ -60,7 +60,7 @@ class BattleController extends Controller
 				}
 				if($hit!=1){
 					if(abs($range)<$eff_skill_x){
-					$result['skill_id']=$userBattleData['skill_id'];
+					$result['skill'][$key]=$eff;
 						}
 					}
 				}
@@ -72,7 +72,7 @@ class BattleController extends Controller
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				$result['eff'][time()]=$skill_id;	
+				$result['skill'][time()]=$skill_id;	
 			}
 				if($x1>$x2){
 					$result['x']=$x1;
