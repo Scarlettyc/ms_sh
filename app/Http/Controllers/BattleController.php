@@ -43,10 +43,10 @@ class BattleController extends Controller
 		$userSpd=$userData['ch_spd'];
 		if($userBattleData){
 			if(isset($userBattleData['skill'])){
-				foreach($userBattleData['skill'] as $key=>$eff){
+				foreach($userBattleData['skill'] as $skillid){
 
-					$occuredTime=round(microtime(true)*10000)-$key;
-					$skill=$skillMstModel->where('skill_id',$eff)->first();
+					$occuredTime=round(microtime(true)*10000)-$skillid['time'];
+					$skill=$skillMstModel->where('skill_id',$skillid['skill_id'])->first();
 					$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
 					$effspd=$eff['eff_skill_spd'];
 					$direction=$eff['direction'];
@@ -56,11 +56,13 @@ class BattleController extends Controller
 					$bulletfrom=$occurX-$eff['eff_bullet_width'];
 					$trap=$mapTrap->where('map_trap_id',1)->first();
 				if($trap['trap_x_from']-$occurX<=1&&$trap_y_from<=$occurY&&$trap_y_to>=$occurY){
-				$hit=1;
+					$hit=1;
 				}
 				if($hit!=1){
 					if(abs($range)<$eff_skill_x){
-					$result['skill'][$key]=$eff;
+						$tmp['time']=$skillid['time'];
+						$tmp['skill_id']=$skillid['skill_id'];
+						$result['skill'][]=$tmp;
 						}
 					}
 				}
@@ -72,7 +74,10 @@ class BattleController extends Controller
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				$result['skill'][round(microtime(true)*10000)]=$skill_id;	
+				$timekey=round(microtime(true)*10000);
+				$tmp['time']=$timekey;
+				$tmp['skill_id']=$skill_id;
+				$result['skill'][]=$tmp;
 			}
 				if($x1>$x2){
 					$result['x']=$x1;
