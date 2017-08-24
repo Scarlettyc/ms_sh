@@ -384,8 +384,8 @@ class BattleController extends Controller
  						$user_eff_skill_cd=$eff['eff_skill_cd']-(time()-$key);
  						$user_eff_skill_spd=$eff['eff_skill_spd'];
  						$self_skill_last=($eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
-					if($eff['self_skill_last']!=($eff['eff_skill_x']/$eff['eff_skill_spd']){
-						$eff['self_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['self_skill_last'];
+					if($eff['self_skill_last']!=($eff['eff_skill_x']/$eff['eff_skill_spd']
+					{ 		$eff['self_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['self_skill_last'];
 					 	// $final['eff'][$key]['self_eff']=$eff;
 					 	$result['eff']['self_eff'][]=$eff;
 							}
