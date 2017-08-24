@@ -383,8 +383,8 @@ class BattleController extends Controller
  						$user_spd=($user_spd)*(1+$eff['eff_ch_spd_per']);
  						$user_eff_skill_cd=$eff['eff_skill_cd']-(time()-$key);
  						$user_eff_skill_spd=$eff['eff_skill_spd'];
- 						$self_skill_last=（$eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
-					if($eff['self_skill_last']!=（$eff['eff_skill_x']/$eff['eff_skill_spd']){
+ 						$self_skill_last=($eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
+					if($eff['self_skill_last']!=($eff['eff_skill_x']/$eff['eff_skill_spd']){
 						$eff['self_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['self_skill_last'];
 					 	// $final['eff'][$key]['self_eff']=$eff;
 					 	$result['eff']['self_eff'][]=$eff;
@@ -403,9 +403,9 @@ class BattleController extends Controller
  						$enemy_spd=($enemy_spd)*(1+$eff['eff_ch_spd_per']);
  						$enemy_eff_skill_cd=$eff['eff_skill_cd']-(time()-$key);
  						$enemy_eff_skill_spd=$eff['eff_skill_spd'];
- 						$atk_skill_last=（$eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
+ 						$atk_skill_last=($eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
 						$enemy_stun=$eff['eff_ch_stun'];
-						if($eff['atk_skill_last']!=（$eff['eff_skill_x']/$eff['eff_skill_spd']){
+						if($eff['atk_skill_last']!=($eff['eff_skill_x']/$eff['eff_skill_spd']){
 						$eff['atk_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['atk_skill_last'];
 					 	// $final['eff'][$key]['self_eff']=$eff;
 					 	$result['eff']['atk_eff'][]=$eff;
