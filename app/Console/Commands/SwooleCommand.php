@@ -46,8 +46,8 @@ class SwooleCommand extends Command
             'dispatch_mode' => 2,
             'debug_mode' => 1,
             'log_file'    => './storage/logs/swoole.log',
-            'heartbeat_check_interval' => 5,
-            'heartbeat_idle_time' => 10, 
+            'heartbeat_check_interval' => 60,
+            'heartbeat_idle_time' => 600, 
         ));
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();

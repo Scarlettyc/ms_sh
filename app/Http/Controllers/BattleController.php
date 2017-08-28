@@ -41,31 +41,32 @@ class BattleController extends Controller
 		$userData=$characterModel->where('u_id',$u_id)->first();
 		$userHP=$userData['ch_hp_max'];
 		$userSpd=$userData['ch_spd'];
-
-			if(isset($data['skill_id'])){
+		if(isset($data['skill_id'])){
 				$skill_id=$data['skill_id'];
 				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
 				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				$timekey=round(microtime(true)*10000);
-				$tmp['time']=$timekey;
-				$tmp['skill_id']=$skill_id;
-				$result['skill'][]=$tmp;
-				$finalX=$eff['eff_skill_spd']*5;
-				$finalY=$y+1;
-				$trap=$mapTrap->where('map_trap_id',1)->first();
-				if($trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
-					$hit=1;
-				}
+				while($time<$eff['eff_skill_dur']){
+					$timekey=$this->getMillisecond();
+					$tmp['time']=$timekey;
+					$tmp['skill_id']=$skill_id;
+					$result['skill'][]=$tmp;
+					$finalX=$eff['eff_skill_spd']*5;
+					$finalY=$y+1;
+					$trap=$mapTrap->where('map_trap_id',1)->first();
+					if($trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
+						$hit=1;
+					}
 
-				if($hit!=1){
-					if(abs($finalX)<$eff['eff_skill_x']){
-						$tmp['time']=round(microtime(true)*10000);
-						$tmp['skill_id']=$skillid['skill_id'];
-						$result['skill'][]=$tmp;
+					if($hit!=1){
+						if(abs($finalX)<$eff['eff_skill_x']){
+							$tmp['time']=$this->getMillisecond();
+							$tmp['skill_id']=$skill_id;
+							$result['skill'][]=$tmp;
 						}
 					}
-			}
-			if($x1>$x2){
+					$time=$time+5;
+				}
+				if($x1>$x2){
 					$result['x']=$x1;
 			}
 			else{
@@ -77,13 +78,20 @@ class BattleController extends Controller
 				$result['y']=$y+1;
 				$result['hp']=$userHP;
 				$result['spd']=$userSpd;
-				$result['time']=round(microtime(true)*10000);
+				$result['time']=$this->getMillisecond();
 				$userJson=json_encode($result,TRUE);
 				$redis_battle->LPUSH($key,$userJson);
 
-		return $userJson;
+			return $userJson;
+			}
+			
 
 	}
+
+	private function getMillisecond() {
+		list($t1, $t2) = explode(' ', microtime());     
+		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
+}
 
  //    public function battle($request)
  //    {
