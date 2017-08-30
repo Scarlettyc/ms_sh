@@ -17,6 +17,8 @@ use App\NormalEffectionMstModel;
 use App\MapTrapRelationMst;
 use App\Util\DistanceAttackUtil;
 use Illuminate\Support\Facades\Redis;
+use App\BattleNormalRewardsMst;
+use App\BattleSpecialRewardsMst;
 use DateTime;
 use Exception;
 use Math;
@@ -50,10 +52,10 @@ class BattleController extends Controller
 					$tmp['time']=$timekey;
 					$tmp['skill_id']=$skill_id;
 					$result['skill'][]=$tmp;
-					$finalX=$eff['eff_skill_spd']*5;
+					$finalX=$eff['eff_skill_spd']*10;
 					$finalY=$y+1;
 					$trap=$mapTrap->where('map_trap_id',1)->first();
-					if($trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
+					if($finalX+abs($x2)-$trap['trap_x_from']<1&&$trap['trap_y_from']&&$trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
 						$hit=1;
 					}
 
@@ -92,6 +94,16 @@ class BattleController extends Controller
 		list($t1, $t2) = explode(' ', microtime());     
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 }
+
+
+  public function BattleWinReward($u_id){
+  	$baNorReward=new BattleNormalRewardsMst();
+  	$baSpReward=new BattleSpecialRewardsMst();
+  	$defind=new DefindMstModel();
+  	
+
+  }
+
 
  //    public function battle($request)
  //    {

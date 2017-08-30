@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\UserModel;
 use Exception;
 use DateTime;
 use App\CharacterModel;
 use App\UserFriendModel;
+use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
@@ -320,6 +320,48 @@ class FriendController extends Controller
 		return $response;
 
 	}
+	public function friend_details(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$usermodel=new UserModel();
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$characterModel=new CharacterModel();
+		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->frist();
+		$result["friend_details"]=$friendCharacter;
+		$response=json_encode($result,TRUE);
+	}
+
+	public function like_friend(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+
+		$userModel=new UserModel();
+		$userFriend=new UserFriendModel();
+		$friend=$userModel->select('like_number','u_id')->where('friend_id',$friend_id);
+		$likeStatus=$userFriend->select('like_status')->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+		if($likeStatus==0){
+			$friendLIkeNum=$friend['like_number']+1;
+			$userModel->update(['like_number'=>$friendLIkeNum])->where('u_id',$friend['u_id']);
+			$userFriend->update(['like_status'=>1])->where('u_id',$u_id)->where('friend_u_id',$friend['u_id']);
+			$result['u_id']=$u_id;
+			$result['friend_id']=$friend_id;
+			$result['like_status']=1;
+			$result['like_number']=$friendLIkeNum;
+			$response=json_encode($result,TRUE);
+			return $response;
+		}
+		else if($likeStatus==1){
+			throw new Exception("you already liked this friend", 1);
+		}
+	}
+
 
 
  }
