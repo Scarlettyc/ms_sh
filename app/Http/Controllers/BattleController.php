@@ -100,7 +100,7 @@ class BattleController extends Controller
   private function BattleNormalRewards($u_id,$map_id){
   	$baNorReward=new BattleNormalRewardsMst();
   	$datetime=$now->format('Y-m-d h:m:s');
-  	$norReward=$baNorReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>'，$datetime)->get();
+  	$norReward=$baNorReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
   	$count=count($norReward);
 	shuffle($norReward);
 	$baggageUtil=new BaggageUtil();
@@ -191,7 +191,7 @@ class BattleController extends Controller
  	    	
 		}
 	}
-	
+
 	private function isHit($user,$occurTime,$eff,$enemy,$map_id){
 
  		$time=time()-$occurTime;
