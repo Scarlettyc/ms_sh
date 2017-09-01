@@ -423,7 +423,7 @@ class FriendController extends Controller
 		if($friend_login['status']==0){
 			$result['time']=time();
 			$result['status']=0;
-			$key="friend_match_".$u_id；
+			$key="friend_match_".$u_id;
 			Redis::HSET($key,$friend['u_id'],$result);
 			return 'success send friend match request';
 		}
