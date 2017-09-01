@@ -126,7 +126,7 @@ class BattleController extends Controller
   		foreach ($levels as $key => $level) {
   			$baggageUtil->levelMissionReward($u_id,$level['level']);
   		}
-  		 $characterModel->update(array('ch_lv'=>$levels[0]['level'])->where('u_id',$u_id);
+  		 $characterModel->update(array('ch_lv'=>$levels[0]['level']))->where('u_id',$u_id);
   	}
   }
 
