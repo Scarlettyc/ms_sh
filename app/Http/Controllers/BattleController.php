@@ -112,7 +112,7 @@ class BattleController extends Controller
   	$datetime=$now->format('Y-m-d h:m:s');
   	$defindData=$defindMstModel->where('defind_id',16)->first(); 
   	$random=rand($defindData['value1'],$defindData['value2']);
-  	$spReward=$baSpReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>'，$datetime)->where('rate_from','<=',$random)->where('rate_to','>',$random)->get();
+  	$spReward=$baSpReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('rate_from','<=',$random)->where('rate_to','>',$random)->get();
   	$baggageUtil=new BaggageUtil();
 	$baggageUtil->insertToBaggage($u_id,$norReward);
   }
