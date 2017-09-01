@@ -34,7 +34,7 @@ class TutorialController extends Controller
 			if($characterModel->isExist('u_id',$uid)==0)
 			{
  				$now   = new DateTime;
-				$datetime=$now->format( 'Y-m-d h:m:s' );
+				$datetime=$now->format('Y-m-d h:m:s');
 				$char['ch_title']=$data['title'];
 				$char['createdate']=$datetime;
 				$char['u_id']=$uid;
@@ -58,7 +58,6 @@ class TutorialController extends Controller
 		$data=json_decode($json,TRUE);
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		$data=json_decode($json,TRUE);
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
