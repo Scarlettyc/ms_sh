@@ -458,7 +458,7 @@ class FriendController extends Controller
 		
 		$friend_id=$data['friend_id'];
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
-		$key="friend_match_".$friend['u_id'])
+		$key="friend_match_".$friend['u_id'];
 		$friend_match=Redis::HGET($key,$u_id);
 		$friendList=json_decode($friend_match,TRUE);
 		$defindModel=new DefindMstModel();
