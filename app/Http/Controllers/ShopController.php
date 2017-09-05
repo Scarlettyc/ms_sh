@@ -40,8 +40,7 @@ class ShopController extends Controller
 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
-		//$times=json_decode($ref_times);
-		$time=(int)$ref_times;
+		$time=$ref_times['0'];
 		if($time<=6)
 		{
 			$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
