@@ -75,7 +75,7 @@ class ShopController extends Controller
 			$resource['r_position']=$obj['order_id'];
 			$resourceList[]=$resource;
 		}
-		return $ref_times;
+		return $time;
 	}
 
 	public function buyResource(Request $request)
