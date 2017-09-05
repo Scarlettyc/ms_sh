@@ -30,6 +30,7 @@ class ShopController extends Controller
 
 		$UserResHistory=new UserResourcePurchaseHistoryModel;
 		$ResourceMstModel=new ResourceMstModel;
+		$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
 		$UserModel=new UserModel;
 		$resource=[];
 		$resourceList=[];
