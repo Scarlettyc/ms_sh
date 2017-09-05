@@ -39,9 +39,10 @@ class ShopController extends Controller
 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$ref_times=$redis_shop->LRANGE($shopkey,-1,-1);
-		if($ref_times<=6)
+		$times=(int)$ref_times;
+		if($times<=6)
 		{
-			$need_gem=$StoreGemRefreashMstModel->where('id_ref',$ref_times)->pluck('gem');
+			$need_gem=$StoreGemRefreashMstModel->where('id_ref',$times)->pluck('gem');
 		}else{
 			$need_gem=100;
 		}
@@ -179,16 +180,17 @@ class ShopController extends Controller
 		$u_id = $data['u_id'];
 		$shopkey='shop'.$u_id.$dmy;
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,-1,-1);
+		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+		$times=(int)$ref_times;
 		if(isset($ref_times))
 		{
-			if($ref_times<=5)
+			if($times<=5)
 			{
-				$spend_gem=$StoreGemRefreashMstModel->where('id_ref',$ref_times)->pluck('gem');
+				$spend_gem=$StoreGemRefreashMstModel->where('id_ref',$times)->pluck('gem');
 			}else{
 				$spend_gem=100;
 			}
-			$updateRef=$ref_times+1;
+			$updateRef=$times+1;
 			$redis_shop->LPUSH($shopkey,$updateRef);
 		}else{
 			$spend_gem=0;
