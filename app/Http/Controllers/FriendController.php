@@ -5,11 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use App\UserModel;
 use Exception;
 use DateTime;
 use App\CharacterModel;
 use App\UserFriendModel;
+use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
@@ -320,6 +320,202 @@ class FriendController extends Controller
 		return $response;
 
 	}
+	public function friend_details(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$usermodel=new UserModel();
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$characterModel=new CharacterModel();
+		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->frist();
+		$result["friend_details"]=$friendCharacter;
+		$response=json_encode($result,TRUE);
+	}
+
+	public function like_friend(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+
+		$userModel=new UserModel();
+		$userFriend=new UserFriendModel();
+		$friend=$userModel->select('like_number','u_id')->where('friend_id',$friend_id);
+		$likeStatus=$userFriend->select('like_status')->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+		if($likeStatus==0){
+			$friendLIkeNum=$friend['like_number']+1;
+			$userModel->update(['like_number'=>$friendLIkeNum])->where('u_id',$friend['u_id']);
+			$userFriend->update(['like_status'=>1])->where('u_id',$u_id)->where('friend_u_id',$friend['u_id']);
+			$result['u_id']=$u_id;
+			$result['friend_id']=$friend_id;
+			$result['like_status']=1;
+			$result['like_number']=$friendLIkeNum;
+			$response=json_encode($result,TRUE);
+			return $response;
+		}
+		else if($likeStatus==1){
+			throw new Exception("you already liked this friend", 1);
+		}
+	}
+
+	public function sendMessage(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$message=$data['message'];
+		$useModel=new UserModel();	
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key='friend_message'.$u_id.'_'.$friend['u_id'];
+		$sendMessage['message']=$message;
+		$sendMessage['time']=time();
+		$messageJson=json_encode($sendMessage,TRUE);
+		Redis::LPUSH($key,$messageJson);
+		$result['u_id']=$u_id;
+		$result['friend_id']=$friend_id;
+		$result['message']=$message;
+		$response=json_encode($result,TRUE);
+		return $response;
+	}
+
+	public function receiveMessage(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$useModel=new UserModel();	
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key='friend_message_'.$friend['u_id'].'_'.$u_id;
+		$redislist=Redis::LRANGE($key,1,10);
+		$messageList=json_decode($redislist,TRUE);
+		return $messageList;
+	}
+
+   public function deleteAllMessageHistory(Request $request){
+   		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$useModel=new UserModel();	
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key='friend_message'.$friend['u_id'].'_'.$u_id;
+		Redis::LTRIM($key,1,0);
+		return 'success delete all message';
+   }
+
+   public function friendMatchRequest(Request $request){
+   		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$dmy=$now->format( 'Ymd' );
+		$friend_login=Redis::HGET('login_data',$dmy.$friend['u_id']);
+		$status=0;
+		if($friend_login['status']==0){
+			$result['time']=time();
+			$result['status']=0;
+			$key="friend_match_".$u_id;
+			Redis::HSET($key,$friend['u_id'],$result);
+			return 'success send friend match request';
+		}
+		else {
+			throw new Exception("you friend not online", 1);
+		}
+
+   }
+   public function rejectMatchRequest(Request $request){
+   		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key="friend_match_".$friend['u_id'];
+		$friend_match=Redis::HGET($key,$u_id);
+		$friendList=json_decode($friend_match,TRUE);
+		$result['time']=$friendList['time'];
+		$result['status']=2;
+		$reply=json_decode($result,TRUE);
+		Redis::HSET($key,$friend['u_id'],$reply);
+		return $reply;
+
+   }
+
+   public function approveMatchRequest(Request $request){
+   	  	$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		
+		$friend_id=$data['friend_id'];
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key="friend_match_".$friend['u_id'];
+		$friend_match=Redis::HGET($key,$u_id);
+		$friendList=json_decode($friend_match,TRUE);
+		$defindModel=new DefindMstModel();
+		$defindTime=$defindModel->Where('defind_id',12)->first();
+		if(time()-$result['time']>=$defindTime){
+			throw new Exception("time out", 1);
+		}
+		else if($friendList['status']==0) {
+		$result['time']=$friendList['time'];
+		$result['status']=1;
+		$reply=json_decode($result,TRUE);
+		Redis::HSET($key,$friend['u_id'],$reply);
+		}
+		return $reply;
+   }
+
+
+   public function cancelFriendMatch(Request $request){
+   	  	$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		
+		$friend_id=$data['friend_id'];
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key="friend_match_".$u_id;
+		$friend_match=Redis::HGET($key,$friend['u_id']);
+		$friendList=json_decode($friend_match,TRUE);
+		$result['time']=$friendList['time'];
+		$result['status']=3;
+		$reply=json_decode($result,TRUE);
+		Redis::HSET($key,$friend['u_id'],$reply);
+		return $reply;
+   }
+
+   public function waittingMatch(Request $request){
+   		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$friend_id=$data['friend_id'];
+		$friend=$usermodel->where('friend_id',$friend_id)->first();
+		$key="friend_match_".$friend['u_id'];
+		$friend_match=Redis::HGET($key,$friend['u_id']);
+		$friendList=json_decode($friend_match,TRUE);
+		$defindModel=new DefindMstModel();
+		$defindTime=$defindModel->Where('defind_id',12)->first();
+   	 	while(time()-$friendList['time']<$defindTime){
+   	 		$friend_match=Redis::HGET($key,$friend['u_id']);
+			$friendList=json_decode($friend_match,TRUE);
+			if($friendList['status']!=0){
+				break;
+			}
+
+   	 	}
+   	 	return 'stop wait';
+   }
 
 
  }

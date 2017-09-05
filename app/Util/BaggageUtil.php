@@ -157,4 +157,91 @@ class BaggageUtil
 		}
 		return $response;
 	}
+	function insertToBaggage($u_id,$rewards){
+
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$UserBaggageResModel=new UserBaggageResModel();
+		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$eqModel=new EquipmentMstModel();
+		$scrModel=new ScrollMstModel();
+		$reModel=new ResourceMstModel();
+		$datetime=$now->format('Y-m-d h:m:s');
+		try{
+		foreach($rewards as $reward){
+			if($reward['item_type']==1){
+				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
+				$result['u_id']=$u_id;
+				$result['br_id']=$reData['r_id'];
+				$result['br_icon']=$reData['r_img_path'];
+				$result['br_rarity']=$reData['r_rarity'];
+				$result['br_quantity']=$reward['item_quantity'];
+				$result['status']=0;
+				$result['updated_at']=$datetime;
+				$result['created_at']=$datetime;
+				$UserBaggageEqModel->insert($result);
+			}
+			else if($reward['item_type']==2){
+				for ($i=0;;$i<$reward['item_quantity'];$i++) {
+					$eqData=$eqModel->where('equ_id',$reward['item_org_id'])->first();
+					$result['u_id']=$u_id;
+					$result['b_equ_id']=$eqData['equ_id'];
+					$result['b_icon_path']=$eqData['icon_path'];
+					$result['b_equ_rarity']=$eqData['equ_rarity'];
+					$result['b_equ_type']=$eqData['equ_type'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageEqModel->insert($result);
+				}
+			}
+			else if($reward['item_type']==3){
+				for ($i=0;;$i<$reward['item_quantity'];$i++) {
+					$scrData=$scrModel->where('sc_id',$reward['item_org_id'])->first();
+					$result['u_id']=$u_id;
+					$result['bsc_id']=$scrData['sc_id'];
+					$result['bsc_icon']=$scrData['sc_img_path'];
+					$result['bsc_rarity']=$scrData['sc_rarity'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageScrollModel->insert($result);
+				}
+			}
+			$missionlist[]=$reward['misson_id'];
+		 }
+		 return $missionlist;
+
+		}catch(Exception $e){
+			throw new Exception("there have some errors of insert to baggage");
+		}
+
+	}
+	public function getReward($mission){
+		$eqModel=new EquipmentMstModel();
+		$scrModel=new ScrollMstModel();
+		$reModel=new ResourceMstModel();
+		if($mission['item_type']==1){
+			$reData=$reModel->where('r_id',$mission['item_org_id'])->first();
+			$result['item_name']=$reData['r_name'];
+			$result['item_description']=$reData['r_description'];
+			$result['item_image']=$reData['r_img_path'];
+		}
+		else if($mission['item_type']==2){
+			$$eqData=$eqModel->where('equ_id',$mission['item_org_id'])->first();
+			$result['item_name']=$reData['equ_name'];
+			$result['item_description']=$reData['equ_description'];
+			$result['item_image']=$reData['icon_path'];
+		}
+		else if($mission['item_type']==3){
+			$scrData=$scrModel->where('sc_id',$mission['item_org_id'])->first();
+			$result['item_name']=$reData['sc_name'];
+			$result['item_description']=$reData['sc_description'];
+			$result['item_image']=$reData['sc_img_path'];
+		}
+			$result['item_org_id']=$mission['item_org_id'];
+			$result['item_quantity']=$mission['item_quantity'];
+			$result['item_type']=$mission['item_type'];
+			
+			return $result;
+	}
 }
