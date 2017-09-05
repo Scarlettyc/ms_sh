@@ -432,6 +432,10 @@ class BattleController extends Controller
 					 	// $final['eff'][$key]['self_eff']=$eff;
 					 	$result['eff']['self_eff'][]=$eff;
 							}
+						}
+					}
+				}
+			}
 			
 <<<<<<< HEAD
 <<<<<<< Updated upstream
