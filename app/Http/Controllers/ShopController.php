@@ -180,7 +180,7 @@ class ShopController extends Controller
 		$u_id = $data['u_id'];
 		$shopkey='shop'.$u_id.$dmy;
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,-1,-1);
+		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
 		$times=(int)$ref_times;
 		if(isset($ref_times))
 		{
