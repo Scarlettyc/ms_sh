@@ -134,7 +134,7 @@ class ShopController extends Controller
 				if($updateGem>=0)
 				{
 					$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
-					$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->update(['order_status'=>1,'updated_at'=>$datetime]);
+					$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->update(['order_status'=>1,'updated_at'=>$datetime]);
 				}else{
 					throw new Exception("Don't have enough Gem!");
 				}
