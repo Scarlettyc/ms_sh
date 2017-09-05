@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use DateTime;
 
-class ShopController extends Controllers
+class ShopController extends Controller
 {
 	public function shop(Request $request)
 	{
