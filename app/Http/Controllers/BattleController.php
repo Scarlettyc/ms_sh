@@ -432,7 +432,202 @@ class BattleController extends Controller
 					 	// $final['eff'][$key]['self_eff']=$eff;
 					 	$result['eff']['self_eff'][]=$eff;
 							}
+						}
+					}
+				}
+			}
 			
+<<<<<<< HEAD
+<<<<<<< Updated upstream
+	// 				}
+	// 			}
+
+	// 			if(array_key_exists('atk_eff',$eff)){
+	// 				if($this->isHit($user,$occurTime,$eff,$enemy,$map_id)){
+	// 					$enemy_hp=($enemy_hp+$eff['eff_ch_hp'])*(1+$eff['eff_ch_hp_per']);
+ // 						$enemy_atk=($enemy_atk+$eff['eff_ch_atk'])*(1+$eff['eff_ch_atk_per']);
+ // 						$enemy_def=($enemy_def+$eff['eff_ch_def'])*(1+$eff['eff_ch_def_per']);
+	// 					$enemy_crit=($enemy_crit)*(1+$eff['eff_ch_crit_per']);
+ // 						$enemy_cd=($enemy_cd+$eff['eff_ch_cd'])*(1+$eff['eff_ch_cd_per']);
+ // 						$enemy_spd=($enemy_spd)*(1+$eff['eff_ch_spd_per']);
+ // 						$enemy_eff_skill_cd=$eff['eff_skill_cd']-(time()-$key);
+ // 						$enemy_eff_skill_spd=$eff['eff_skill_spd'];
+ // 						$atk_skill_last=($eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
+	// 					$enemy_stun=$eff['eff_ch_stun'];
+	// 					if($eff['atk_skill_last']!=($eff['eff_skill_x']/$eff['eff_skill_spd'])){
+	// 					$eff['atk_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['atk_skill_last'];
+	// 				 	// $final['eff'][$key]['self_eff']=$eff;
+	// 				 	$result['eff']['atk_eff'][]=$eff;
+	// 							}
+	// 						}
+	// 					}
+	// 				}	
+	// 			}
+
+	// 	$result["user_hp"]=$user_hp;
+ // 		$result["user_atk"]=$user_atk;
+ // 		$result["user_def"]=$user_def;
+ // 		$result["user_crit"]=$user_crit;
+ // 		$result["user_cd"]=$user_cd;
+ // 		$result["user_spd"]=$user_spd;
+ // 		$result["user_eff_skill_cd"]=$user_eff_skill_cd;
+ // 		$result["user_eff_skill_spd"]=$user_eff_skill_spd;
+ // 		$result["self_skill_last"]=$self_skill_last;
+	// 	$result["enemy_hp"]=$enemy_hp;
+ // 		$result["enemy_atk"]=$enemy_atk;
+ // 		$result["enemy_def"]=$enemy_def;
+ // 		$result["enemy_crit"]=$enemy_crit;
+ // 		$result["enemy_cd"]=$enemy_cd;
+ // 		$result["enemy_spd"]=$enemy_spd;
+ // 		$result["enemy_eff_skill_cd"]=$enemy_eff_skill_cd;
+ // 		$result["enemy_eff_skill_spd"]=$enemy_eff_skill_spd;
+ // 		$result["atk_skill_last"]=$atk_skill_last;
+ // 		$result['enemy_stun']=$enemy_stun;
+ // 		return $result;
+
+ // 	}
+
+	// private function getCritical(){
+ // 			$defindModel=new DefindMstModel();
+ // 			$critcalRound=$defindModel->where('defind_id',6)->first();
+ // 			$critalNumer=random($critcalRound['value1'],$critcalRound['value2']);
+ // 			$critcalTimes=$defindModel->where('defind_id',7)->first();
+ // 			if($critalNumer<$user_crit){
+ // 				$critical=$critcalTimes['value2'];
+ // 			}
+ // 			else {
+ // 				$critical=$critcalTimes['value2'];
+ // 			}
+ // 			return $critical;
+ // 		}
+ // 	}
+
+ // 	public function longDistanceAttack(Request $request)
+ // 	{
+ // 		$req=$request->getContent();
+ // 		$data=json_decode($req,TRUE);
+
+ // 		$DistanceAttackUtil=new DistanceAttackUtil;
+ // 		$NormalEffectionMstModel=new NormalEffectionMstModel;
+ // 		$result=[];
+
+ 		
+ // 	}
+=======
+					}
+				}
+
+				if(array_key_exists('atk_eff',$eff)){
+					if($this->isHit($user,$occurTime,$eff,$enemy,$map_id)){
+						$enemy_hp=($enemy_hp+$eff['eff_ch_hp'])*(1+$eff['eff_ch_hp_per']);
+ 						$enemy_atk=($enemy_atk+$eff['eff_ch_atk'])*(1+$eff['eff_ch_atk_per']);
+ 						$enemy_def=($enemy_def+$eff['eff_ch_def'])*(1+$eff['eff_ch_def_per']);
+						$enemy_crit=($enemy_crit)*(1+$eff['eff_ch_crit_per']);
+ 						$enemy_cd=($enemy_cd+$eff['eff_ch_cd'])*(1+$eff['eff_ch_cd_per']);
+ 						$enemy_spd=($enemy_spd)*(1+$eff['eff_ch_spd_per']);
+ 						$enemy_eff_skill_cd=$eff['eff_skill_cd']-(time()-$key);
+ 						$enemy_eff_skill_spd=$eff['eff_skill_spd'];
+ 						$atk_skill_last=（$eff['eff_skill_x']/$eff['eff_skill_spd'])-time()-$key;
+						$enemy_stun=$eff['eff_ch_stun'];
+						if($eff['atk_skill_last']!=（$eff['eff_skill_x']/$eff['eff_skill_spd']){
+						$eff['atk_skill_last']=$eff['eff_skill_x']/$eff['eff_skill_spd']-$eff['atk_skill_last'];
+					 	// $final['eff'][$key]['self_eff']=$eff;
+					 	$result['eff']['atk_eff'][]=$eff;
+								}
+							}
+						}
+					}	
+				}
+
+		$result["user_hp"]=$user_hp;
+ 		$result["user_atk"]=$user_atk;
+ 		$result["user_def"]=$user_def;
+ 		$result["user_crit"]=$user_crit;
+ 		$result["user_cd"]=$user_cd;
+ 		$result["user_spd"]=$user_spd;
+ 		$result["user_eff_skill_cd"]=$user_eff_skill_cd;
+ 		$result["user_eff_skill_spd"]=$user_eff_skill_spd;
+ 		$result["self_skill_last"]=$self_skill_last;
+		$result["enemy_hp"]=$enemy_hp;
+ 		$result["enemy_atk"]=$enemy_atk;
+ 		$result["enemy_def"]=$enemy_def;
+ 		$result["enemy_crit"]=$enemy_crit;
+ 		$result["enemy_cd"]=$enemy_cd;
+ 		$result["enemy_spd"]=$enemy_spd;
+ 		$result["enemy_eff_skill_cd"]=$enemy_eff_skill_cd;
+ 		$result["enemy_eff_skill_spd"]=$enemy_eff_skill_spd;
+ 		$result["atk_skill_last"]=$atk_skill_last;
+ 		$result['enemy_stun']=$enemy_stun;
+ 		return $result;
+
+ 	}
+
+	private function getCritical(){
+ 			$defindModel=new DefindMstModel();
+ 			$critcalRound=$defindModel->where('defind_id',6)->first();
+ 			$critalNumer=random($critcalRound['value1'],$critcalRound['value2']);
+ 			$critcalTimes=$defindModel->where('defind_id',7)->first();
+ 			if($critalNumer<$user_crit){
+ 				$critical=$critcalTimes['value2'];
+ 			}
+ 			else {
+ 				$critical=$critcalTimes['value2'];
+ 			}
+ 			return $critical;
+ 		}
+ 	}
+
+ 	public function longDistanceAttack(Request $request)
+ 	{
+ 		$req=$request->getContent();
+ 		$data=json_decode($req,TRUE);
+ 		$redis_battle=Redis::connection('battle');
+ 		$now=new DateTime;
+		$dmy=$now->format( 'Ymd' );
+
+ 		$DistanceAttackUtil=new DistanceAttackUtil;
+ 		$NormalEffectionMstModel=new NormalEffectionMstModel;
+ 		$SkillMstModel=new SkillMstModel;
+ 		$result=[];
+
+ 		if(isset($data))
+ 		{
+ 			$xu1=$data['x1_u'];
+	 		$xu2=$data['x2_u'];		
+	 		$yu=$data['y_u'];
+	 		$xe1=$data['x1_e'];
+	 		$xe2=$data['x2_e'];
+	 		$ye=$data['y_e'];
+	 		$face=$data['face'];
+	 		$skill_id=$data['skill_id'];
+	 		$time=$data['time'];
+	 		$u_id=$data['u_id'];
+
+	 		$match_id=$data['match_id'];
+	 		$matchList=$redis_battle->HGET('match_list',$match_id);
+	 		$matchArr=json_decode($matchList);
+	 		if(isset($matchArr))
+	 		{
+	 			$enmey_uid=$matchArr['enmey_uid'];
+			 	$map_id=$matchArr['map_id'];
+			}
+			else {
+				throw new Exception("there is no exist match");
+			}
+
+	 		$originalLoc=$DistanceAttackUtil->originalLoc($xu1,$xu2,$yu,$face,$skill_id);
+
+	 		$skillInfo=$SkillMstModel->where('skill_id',$skill_id)->first();
+	 		$eff_id=$skillInfo['eff_id'];
+	 		$longAtkKey='battle_data'.$match_id.'_'.$u_id;
+	 		if($skillInfo['eff_group_id'] == 1)
+	 		{
+	 			
+	 		}
+ 		}
+ 	}
+>>>>>>> Stashed changes
+=======
 					}
 				}
 
@@ -505,4 +700,5 @@ class BattleController extends Controller
 
  		
  	}
+>>>>>>> 80f10641c31d590691b0be8da54f1322f33936ef
 }

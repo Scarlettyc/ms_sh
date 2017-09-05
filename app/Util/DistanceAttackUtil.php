@@ -16,7 +16,7 @@ use App\RaEffModel;
 
 class DistanceAttackUtil
 {
-	function originalLoc ($x1,$x2,$x3,$y,$face,$skill_id)
+	function originalLoc ($x1,$x2,$y,$face,$skill_id)
 	{
 		$SkillMstModel=new SkillMstModel();
 		$EffectionMstModel=new EffectionMstModel();
@@ -33,9 +33,9 @@ class DistanceAttackUtil
 		{
 			if($skill_y == 1)
 			{
-				$start_x=$x3+1;
+				$start_x=$x2+1;
 				$start_y=$y+1;
-				$end_x=$x3+$skill_x;
+				$end_x=$x2+$skill_x;
 				$end_y=$y+1;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -44,7 +44,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3+$bullet_width;
+				$b_end_x=$x2+$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -52,9 +52,9 @@ class DistanceAttackUtil
 				$bullet_position['y_e']=$b_end_y;
 			}else if($skill_y == 2)
 			{
-				$start_x=$x3+1;
+				$start_x=$x2+1;
 				$start_y=$y+1;
-				$end_x=$x3+$skill_x;
+				$end_x=$x2+$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -63,7 +63,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3+$bullet_width;
+				$b_end_x=$x2+$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -71,9 +71,9 @@ class DistanceAttackUtil
 				$bullet_position['y_e']=$b_end_y;
 			}else if($skill_y == 3)
 			{
-				$start_x=$x3+1;
+				$start_x=$x2+1;
 				$start_y=$y;
-				$end_x=$x3+$skill_x;
+				$end_x=$x2+$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -82,7 +82,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3+$bullet_width;
+				$b_end_x=$x2+$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -90,9 +90,9 @@ class DistanceAttackUtil
 				$bullet_position['y_e']=$b_end_y;
 			}else if($skill_y == 4)
 			{
-				$start_x=$x3+1;
+				$start_x=$x2+1;
 				$start_y=$y-1;
-				$end_x=$x3+$skill_x;
+				$end_x=$x2+$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -101,7 +101,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3+$bullet_width;
+				$b_end_x=$x2+$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -109,9 +109,9 @@ class DistanceAttackUtil
 				$bullet_position['y_e']=$b_end_y;
 			}else if($skill_y == 5)
 			{
-				$start_x=$x3+1;
+				$start_x=$x2+1;
 				$start_y=$y-1;
-				$end_x=$x3+$skill_x;
+				$end_x=$x2+$skill_x;
 				$end_y=$y+3;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -120,7 +120,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3+$bullet_width;
+				$b_end_x=$x2+$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -136,7 +136,7 @@ class DistanceAttackUtil
 			{
 				$start_x=$x1-1;
 				$start_y=$y+1;
-				$end_x=$x3-$skill_x;
+				$end_x=$x2-$skill_x;
 				$end_y=$y+1;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -145,7 +145,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3-$bullet_width;
+				$b_end_x=$x2-$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -155,7 +155,7 @@ class DistanceAttackUtil
 			{
 				$start_x=$x1-1;
 				$start_y=$y+1;
-				$end_x=$x3-$skill_x;
+				$end_x=$x2-$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -164,7 +164,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3-$bullet_width;
+				$b_end_x=$x2-$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -174,7 +174,7 @@ class DistanceAttackUtil
 			{
 				$start_x=$x1-1;
 				$start_y=$y;
-				$end_x=$x3-$skill_x;
+				$end_x=$x2-$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -183,7 +183,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3-$bullet_width;
+				$b_end_x=$x2-$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -193,7 +193,7 @@ class DistanceAttackUtil
 			{
 				$start_x=$x1-1;
 				$start_y=$y-1;
-				$end_x=$x3-$skill_x;
+				$end_x=$x2-$skill_x;
 				$end_y=$y+2;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -202,7 +202,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3-$bullet_width;
+				$b_end_x=$x2-$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -212,7 +212,7 @@ class DistanceAttackUtil
 			{
 				$start_x=$x1-1;
 				$start_y=$y-1;
-				$end_x=$x3-$skill_x;
+				$end_x=$x2-$skill_x;
 				$end_y=$y+3;
 				$skill_position['x_s']=$start_x;
 				$skill_position['y_s']=$start_y;
@@ -221,7 +221,7 @@ class DistanceAttackUtil
 
 				$b_start_x=$start_x;
 				$b_start_y=$start_y;
-				$b_end_x=$x3-$bullet_width;
+				$b_end_x=$x2-$bullet_width;
 				$b_end_y=$end_y;
 				$bullet_position['x_s']=$b_start_x;
 				$bullet_position['y_s']=$b_start_y;
@@ -299,7 +299,7 @@ class DistanceAttackUtil
 		return $hasStone;
 	}
 
-	function beginNearEnemy($x_s,$x_e,$y_s,$y_e,$x1,$x2,$x3,$y)
+	function beginNearEnemy($x_s,$x_e,$y_s,$y_e,$x1,$x2,$y)
 	{
 		$hitY=$y+1;
 		$nearEnemy=0;
@@ -309,40 +309,63 @@ class DistanceAttackUtil
 		}else if($x2>=$x_s&&$x2<=$x_e&&$hitY>=$y_s&&$hitY<=$y_e)
 		{
 			$nearEnemy=1;
-		}else if($x3>=$x_s&&$x3<=$x_e&&$hitY>=$y_s&&$hitY<=$y_e)
-		{
-			$nearEnemy=1;
 		}
 		return $nearEnemy;
 	}
 
-	function nearEnemy($t0,$t1,$x_e,$y_s,$y_e,$x1,$x2,$x3,$y,$skill_spd,$face_b)
+	function nearEnemy($t0,$t1,$x_e,$y_s,$y_e,$x1,$x2,$y,$skill_spd,$face_b,$face_e)
 	{
 		$nearEnemy=0;
 		$hitY=$y+1;
 		$t=$t1-$t0;
 		$move=$skill_spd*$t;
-		if($face_b == 1)
+		if($face_e == 1)
 		{
-			$bullet_loc=ceil($x_e+$move);
-			if($bullet_loc=$x1|$bullet_loc=$x2|$bullet_loc=$x3)
+			if($face_b == 1)
 			{
-				if($hitY>=$y_s&&$hitY<=$y_e)
+				$bullet_loc=$x_e+$move;
+				if($bullet_loc>=$x1&&$bullet_loc<=$x2)
 				{
-					$nearEnemy=1;
+					if($hitY>=$y_s&&$hitY<=$y_e)
+					{
+						$nearEnemy=1;
+					}
+				}
+			}else if($face_b == 0)
+			{
+				$bullet_loc=$x_e-$move;
+				if($bullet_loc>=$x1&&$bullet_loc<=$x2)
+				{
+					if($hitY>=$y_s&&$hitY<=$y_e)
+					{
+						$nearEnemy=1;
+					}
 				}
 			}
-		}else if($face_b == 0)
+		}else if($face_e == 0)
 		{
-			$bullet_loc=floor($x_e-$move);
-			if($bullet_loc=$x1|$bullet_loc=$x2|$bullet_loc=$x3)
+			if($face_b == 1)
 			{
-				if($hitY>=$y_s&&$hitY<=$y_e)
+				$bullet_loc=$x_e+$move;
+				if($bullet_loc>=$x2&&$bullet_loc<=$x1)
 				{
-					$nearEnemy=1;
+					if($hitY>=$y_s&&$hitY<=$y_e)
+					{
+						$nearEnemy=1;
+					}
+				}
+			}else if($face_b == 0)
+			{
+				$bullet_loc=$x_e-$move;
+				if($bullet_loc>=$x2&&$bullet_loc<=$x1)
+				{
+					if($hitY>=$y_s&&$hitY<=$y_e)
+					{
+						$nearEnemy=1;
+					}
 				}
 			}
-		}
+		}		
 		return $nearEnemy;
 	}
 

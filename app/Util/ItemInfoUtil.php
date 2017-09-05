@@ -275,8 +275,8 @@ class ItemInfoUtil
 				$EquEffnowInfo=$EffectionMstModel->where('eff_id',$EquEffnowId)->pluck('eff_description');
 				$result['item_data_2']['item_info']['effection']=$EquEffnowInfo;
 			}
-
 		}
+		return $result;
 	}
 
 	//get the information of a skill: name, icon, info, effection

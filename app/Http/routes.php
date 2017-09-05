@@ -41,6 +41,12 @@ Route::post('/showSkillInfo','WorkshopController@showSkillInfo');
 Route::post('/compareEquipment','WorkshopController@compareEquipment');
 Route::post('/equipEquipment','WorkshopController@equipEquipment');
 
+Route::controller('shop','ShopController');
+Route::post('/shop','ShopController@shop');
+Route::post('/buyResource','ShopController@buyResource');
+Route::post('/refreashRareResource','ShopController@refreashRareResource');
+Route::post('/buyCoin','ShopController@buyCoin');
+
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/freedraw', 'LuckdrawController@draw');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
