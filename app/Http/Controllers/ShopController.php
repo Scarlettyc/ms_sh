@@ -199,7 +199,7 @@ class ShopController extends Controller
 		}
 		
 		$updateGem=$UserInfo['u_gem']-$spend_gem;
-		$UserModel->where('u_id',$u_id)->update('u_gem'=>$updateGem);
+		$UserModel->where('u_id',$u_id)->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
 
 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 
