@@ -20,7 +20,11 @@ use App\Util\BaggageUtil;
 class MissionController extends Controller
 {
 
-	public function levelMissionReward($u_id,$lv){
+	public function levelMissionReward(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$uid=$data['u_id'];
 
 		$key='mission_level'.$u_id;
 		$charModel=new CharacterModel();
