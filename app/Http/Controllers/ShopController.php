@@ -58,11 +58,7 @@ class ShopController extends Controller
 			}
 		}
 
-		$UserResInfo=$UserResHistory->where(function($u_id){
-			$query->where('u_id',$u_id)->where('order_status',0);
-		})->orwhere(function($u_id){
-			$query->where('u_id',$u_id)->where('order_status',1);
-		})->get();
+		$UserResInfo=$UserResHistory->where('u_id',$u_id)->whereBetween('order_status',array(0,1))->get();
 
 		foreach($UserResInfo as $obj)
 		{
