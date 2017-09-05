@@ -93,13 +93,13 @@ class ShopController extends Controller
 		$u_id=$data['u_id'];
 		$r_id=$data['r_id'];
 		$quantity=$data['quantity'];
+		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 
 		if($r_id<=5)
 		{
 			$currency=$data['currency'];
 			if($currency == 1)
 			{
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 				$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
 				$usedGem=$resInfo['r_gem_price']*$quantity;
 				$updateGem=$userGem-$usedGem;
@@ -111,7 +111,6 @@ class ShopController extends Controller
 				}
 			}else if($currency == 2)
 			{
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 				$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
 				$usedCoin=$resInfo['r_coin_price']*$quantity;
 				$updateCoin=$userCoin-$usedCoin;
@@ -131,7 +130,6 @@ class ShopController extends Controller
 			if (isset($resStoreInfo)) 
 			{
 				$r_id=$resStoreInfo['r_id'];
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 				$updateGem=$userGem-$resInfo['r_gem_price'];
 				if($updateGem>=0)
 				{
