@@ -229,7 +229,7 @@ class ShopController extends Controller
 				$resource['r_name']=$resourceInfo['r_name'];
 				$resource['r_price']=$resourceInfo['r_gem_price'];
 				$resource['r_img_path']=$resourceInfo['r_img_path'];
-				$resource['r_position']=$$order_id;
+				$resource['r_position']=$order_id;
 				$resourceList[]=$resource;
 			}
 		}else{
