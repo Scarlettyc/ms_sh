@@ -42,7 +42,8 @@ class ShopController extends Controller
 		$times=(int)$ref_times;
 		if($times<=6)
 		{
-			$need_gem=$StoreGemRefreashMstModel->where('id_ref',$times)->pluck('gem');
+			$gem=$StoreGemRefreashMstModel->where('id_ref',$times)->first();
+			$need_gem=$gem['gem'];
 		}else{
 			$need_gem=100;
 		}
@@ -186,7 +187,8 @@ class ShopController extends Controller
 		{
 			if($times<=5)
 			{
-				$spend_gem=$StoreGemRefreashMstModel->where('id_ref',$times)->pluck('gem');
+				$gem=$StoreGemRefreashMstModel->where('id_ref',$times)->first();
+				$spend_gem=$gem['gem'];
 			}else{
 				$spend_gem=100;
 			}
