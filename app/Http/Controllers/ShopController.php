@@ -211,10 +211,10 @@ class ShopController extends Controller
 				$status=$obj['order_status'];
 				if($status == 0)
 				{
-					$UserResHistory->where('r_pur_id',$id)->update('order_status'=>2,'updated_at'=>$datetime);
+					$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>2,'updated_at'=>$datetime]);
 				}else if($status == 1)
 				{
-					$UserResHistory->where('r_pur_id',$id)->update('order_status'=>3,'updated_at'=>$datetime);
+					$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>3,'updated_at'=>$datetime]);
 				}
 			}
 
