@@ -4,9 +4,11 @@ namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\UserModel;
 
 class Kernel extends ConsoleKernel
 {
+    $UserModel=new UserModel;
     /**
      * The Artisan commands provided by your application.
      *
@@ -27,7 +29,5 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-      $schedule->command('swoole:start')->dailyAt('18:48');
-
     }
 }
