@@ -94,13 +94,14 @@ class ShopController extends Controller
 		$r_id=$data['r_id'];
 		$quantity=$data['quantity'];
 		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
+		$UserInfo=$UserModel->where('u_id',$u_id)->first();
+		$userGem=$UserInfo['u_gem'];
 
 		if($r_id<=5)
 		{
 			$currency=$data['currency'];
 			if($currency == 1)
 			{
-				$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
 				$usedGem=$resInfo['r_gem_price']*$quantity;
 				$updateGem=$userGem-$usedGem;
 				if($updateGem>=0)
@@ -125,7 +126,6 @@ class ShopController extends Controller
 		{
 			$order_id=$data['order_id'];
 			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->first();
-			$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
 
 			if (isset($resStoreInfo)) 
 			{
