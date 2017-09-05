@@ -125,7 +125,7 @@ class ShopController extends Controller
 		}else if($r_id>=6)
 		{
 			$order_id=$data['order_id'];
-			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('oreder_status' = 0)->first();
+			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('oreder_status',0)->first();
 			$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
 
 			if (isset($resStoreInfo)) 
