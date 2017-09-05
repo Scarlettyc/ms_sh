@@ -39,7 +39,7 @@ class ShopController extends Controller
 		$shopkey='shop'.$u_id.$dmy;
 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+		$ref_times=$redis_shop->LRANGE($shopkey,1,1);
 		$times=(int)$ref_times;
 		if($times<=6)
 		{
@@ -180,7 +180,7 @@ class ShopController extends Controller
 		$u_id = $data['u_id'];
 		$shopkey='shop'.$u_id.$dmy;
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+		$ref_times=$redis_shop->LRANGE($shopkey,1,1);
 		$times=(int)$ref_times;
 		if(isset($ref_times))
 		{
