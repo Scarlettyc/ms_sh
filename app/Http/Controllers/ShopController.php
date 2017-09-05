@@ -74,7 +74,7 @@ class ShopController extends Controller
 			$resource['r_position']=$obj['order_id'];
 			$resourceList[]=$resource;
 		}
-		return $time;
+		return $resourceList;
 	}
 
 	public function buyResource(Request $request)
@@ -181,8 +181,7 @@ class ShopController extends Controller
 		$shopkey='shop'.$u_id.$dmy;
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
-		$times=json_decode($ref_times);
-		$time=(int)$times;
+		$time=$ref_times['0'];
 		if(isset($ref_times))
 		{
 			if($time<=5)
