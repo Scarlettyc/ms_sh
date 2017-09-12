@@ -52,38 +52,32 @@ class MapTrapUtil
 		return $mapEff;
 	}
 
+    function isHitStone($map_id,$effX,$effLastX,$effY){
+        $mapRelation=new MapTrapRelationMst();
+            $mapData=$mapRelation->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_from','<=',$effX)->where('trap_x_to','>=',$effLastX)->where('trap_y_from','<=',$effY)->where('trap_y_from','<=',$effY)->where('trap_y_to','>=',$effY)->get();
+            return $mapData;
+    }
 
-	// function nearStone($map_id,$userX1,$userX2,$effectXfrom,$effectX,$effectY)
-	// {	
- //        $mapRelation=new MapTrapRelationMst();
-	// 	$effect=new EffectionMstModel();
-	// 	$trap=new TrapMstModel();
- //        if($direction==1){
-	// 	      $mapData=$mapRelation->where(function($query){
- //        				$query->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_to',abs($userX1)+1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
- //            				->orWhere(function($query){
- //                				->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_from',abs($userX3)-1)->where('trap_y_from','<=',abs($y)->where('trap_y_to','>',abs($y)-1)
- //           				});
- //   					})->first();
- //                }
-
- //        if($mapData){
- //        	if($mapData['trap_x_from']==abs($effectXfrom)||$mapData['trap_x_from']>=abs($effectX)||$mapData['trap_x_to']==abs($effectXfrom)||$mapData['trap_x_to']==abs($effectX)){
- //        		return true;
- //        		}
- //        	else {
- //        		return false;
- //        	}
- //        }
- //        return false;
- //    }
 
         function checkEffstone($map_id,$effectXfrom,$effectXto,$effectYfrom,$effectYto)
     {       $mapRelation=new MapTrapRelationMst();
             $mapData=$mapRelation->where(function($query){
-                     $query->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_from','<=',$effectXto)->where('trap_y_to','>=',$effectYto->where('trap_y_from','>=',$effectYfrom)
+                     $query->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_from','<=',$effectXto)->get();
+            $result=[];
+            foreach($mapData as $trap){
+            $ajoin=$this->computRectJoinUnion($effectXfrom,$effectXto,$effectYfrom,$effectYto,$trap['trap_x_from'],$trap['trap_x_to'],$trap['trap_y_from'],$trap['trap_y_to']);
+                if(isset($ajoin)){
+                    $effectXfrom=$ajoin['effXfrom'];
+                    $effXto=$ajoin['effXto'];
+                    $effYfrom=$ajoin['effYfrom'];
+                    $effYto=$ajoin['effYto'];
+                }
+
+            }
 
 
-    }
+                return ['effXfrom'=>$effXfrom,'effXto'=>$effXto,'effYfrom'=>$effYfrom,'effYto'=>$effYto];
 
+
+    } 
 }
