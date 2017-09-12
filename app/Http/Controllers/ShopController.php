@@ -30,6 +30,8 @@ class ShopController extends Controller
 
 		$UserResHistory=new UserResourcePurchaseHistoryModel;
 		$ResourceMstModel=new ResourceMstModel;
+		$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
+		$UserModel=new UserModel;
 		$resource=[];
 		$resourceList=[];
 
@@ -37,10 +39,12 @@ class ShopController extends Controller
 		$shopkey='shop'.$u_id.$dmy;
 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,-1,-1);
-		if($ref_times<=6)
+		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+		$time=$ref_times['0'];
+		if($time<=6)
 		{
-			$need_gem=$StoreGemRefreashMstModel->where('id_ref',$ref_times)->pluck('gem');
+			$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
+			$need_gem=$gem['gem'];
 		}else{
 			$need_gem=100;
 		}
@@ -57,11 +61,7 @@ class ShopController extends Controller
 			}
 		}
 
-		$UserResInfo=$UserResHistory->where(function($query){
-			$query->where('u_id',$u_id)->where('order_status',0);
-		})->orwhere(function($query){
-			$query->where('u_id',$u_id)->where('order_status',1);
-		})->get();
+		$UserResInfo=$UserResHistory->where('u_id',$u_id)->whereBetween('order_status',array(0,1))->get();
 
 		foreach($UserResInfo as $obj)
 		{
@@ -93,14 +93,15 @@ class ShopController extends Controller
 		$u_id=$data['u_id'];
 		$r_id=$data['r_id'];
 		$quantity=$data['quantity'];
+		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
+		$UserInfo=$UserModel->where('u_id',$u_id)->first();
+		$userGem=$UserInfo['u_gem'];
 
 		if($r_id<=5)
 		{
 			$currency=$data['currency'];
 			if($currency == 1)
 			{
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
-				$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
 				$usedGem=$resInfo['r_gem_price']*$quantity;
 				$updateGem=$userGem-$usedGem;
 				if($updateGem>=0)
@@ -111,7 +112,6 @@ class ShopController extends Controller
 				}
 			}else if($currency == 2)
 			{
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 				$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
 				$usedCoin=$resInfo['r_coin_price']*$quantity;
 				$updateCoin=$userCoin-$usedCoin;
@@ -125,18 +125,16 @@ class ShopController extends Controller
 		}else if($r_id>=6)
 		{
 			$order_id=$data['order_id'];
-			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('oreder_status',0)->first();
-			$userGem=$UserModel->where('u_id',$u_id)->pluck('u_gem');
+			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->first();
 
 			if (isset($resStoreInfo)) 
 			{
 				$r_id=$resStoreInfo['r_id'];
-				$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 				$updateGem=$userGem-$resInfo['r_gem_price'];
 				if($updateGem>=0)
 				{
 					$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
-					$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->update(['order_status'=>1,'updated_at'=>$datetime]);
+					$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->update(['order_status'=>1,'updated_at'=>$datetime]);
 				}else{
 					throw new Exception("Don't have enough Gem!");
 				}
@@ -182,16 +180,18 @@ class ShopController extends Controller
 		$u_id = $data['u_id'];
 		$shopkey='shop'.$u_id.$dmy;
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,-1,-1);
+		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+		$time=$ref_times['0'];
 		if(isset($ref_times))
 		{
-			if($ref_times<=5)
+			if($time<=5)
 			{
-				$spend_gem=$StoreGemRefreashMstModel->where('id_ref',$ref_times)->pluck('gem');
+				$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
+				$spend_gem=$gem['gem'];
 			}else{
 				$spend_gem=100;
 			}
-			$updateRef=$ref_times+1;
+			$updateRef=$time+1;
 			$redis_shop->LPUSH($shopkey,$updateRef);
 		}else{
 			$spend_gem=0;
@@ -228,7 +228,7 @@ class ShopController extends Controller
 				$resource['r_name']=$resourceInfo['r_name'];
 				$resource['r_price']=$resourceInfo['r_gem_price'];
 				$resource['r_img_path']=$resourceInfo['r_img_path'];
-				$resource['r_position']=$$order_id;
+				$resource['r_position']=$order_id;
 				$resourceList[]=$resource;
 			}
 		}else{
