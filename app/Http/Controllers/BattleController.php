@@ -164,8 +164,8 @@ class BattleController extends Controller
 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
      	if($userExist>0){
      		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
-     		$userBattleData=$redis_battle->LRANGE($battlekey,1,1);
-			$enemyJson=$redis_battle->LRANGE($battlekey,1,1);
+     		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+			$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
 			$enemy=json_decode($enemyJson);
 			$userData=json_decode($userBattleData);
 			if($data['skill_id']){
@@ -181,14 +181,36 @@ class BattleController extends Controller
  	    if($data['skill_id']){
  	    		$effhit=$attackhitutil->getEff($skill_id,$user,$enemy,$direction);
  	    	}
- 	   		if(isset($effhit['isHit'])){
- 	    		$userBattleData=$redis_battle->LRANGE($battlekey,1,1);
-				$enemyJson=$redis_battle->LRANGE($battlekey,1,1);
+ 	   	if(isset($effhit['atkeff'])){
+ 	    		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+				$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
 				$atkeff=$effhit['atkeff'];
 				if(isset($userBattleData)&&isset($enemyJson)){
 					$enemy=json_decode($enemyJson);
 					$userData=json_decode($userBattleData);
+					$user_hp=$userData['ch_hp'];
+       				$user_atk=$userData['ch_atk'];
+       				$user_def=$userData['ch_def'];
+       			// $user_res=$user['res'];
+       				$user_crit=$userData['ch_crit'];
+       				$user_cd=$userData['ch_cd'];
+       				$user_speed=$userData['ch_spd']; 
+
+       				$enemy_hp=$enemy["enemy_hp"];
+ 					$enemy_atk=$enemy["enemy_atk"];
+ 					$enemy_def=$enemy["enemy_def"];
+ 					$enemy_crit=$enemy["enemy_crit"];
+ 					$enemy_cd=$enemy["enemy_cd"];
+ 					$enemy_spd=$enemy["enemy_spd"];
+
+					$usercritical=1;
+ 					if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
+ 						$usercritical=$this->getCritical();
+ 					}
+
+ 					$userDMG=($atkeff['eff_skill_atk_point']*$user_atk+$atkeff['eff_skill_base'])*$usercritical*(1-(1-$enemy_def)/(1+$enemy_def));
 				}
+
 			}
 			else {
 				$userData=$characterModel->where('u_id',$$u_id)->first();
@@ -212,6 +234,7 @@ class BattleController extends Controller
  			$enemy_cd=$enemy["enemy_cd"];
  			$enemy_spd=$enemy["enemy_spd"];
 			$userDMG=$user_atk*$usercritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
+
  	    }
 	}
 }
@@ -310,188 +333,6 @@ class BattleController extends Controller
 	// 	return false;
 		
 	// }
-
- 	private function initialEffect($data,$user,$enemy,$map_id){
-
- 			$userX1=$data['x1'];
- 			$userX2=$data['x2'];
- 			$userX3=$data['x3'];
-			$userY=$data['y'];
-
- 			$skillMstModel=new SkillMstModel();
- 			$effectMstModel=new EffectionMstModel();
- 			$buffEff=new BuffEffMstModel();
- 			$mapTrap=new MapTrapUtil();
- 			$normalEff=new NormalEffectionMstModel();
- 			$jumpEff= new JumpEffModel();
-
- 			$trap=$mapTrap->getTrapEff($map_id,$userX1,$userX2,$userX3,$userY);
- 			if(isset($trap)){
- 				if($trap['trap_id']==1){
- 					$trap['visible']=0;
- 				}
- 				$trap['visible']=1;
- 			}
- 			
- 			if(array_key_exists('self_eff_id',$data)){
- 				$user_self_buff=$skillMstModel->where('skill_id',$data['self_eff_id'])->first();
- 				$selfEff=$buffEff->Where('eff_id',$user_self_buff['eff_id'])->first();
- 				$selfEff['self_skill_last']=$selfEff['eff_skill_x']/$selfEff['eff_skill_spd'];
- 				$user['eff'][time()]['self_eff']=$selfEff;
- 			}
- 			if(array_key_exists('atk_eff_id',$data)){
- 				$user_ef=$skillMstModel->where('skill_id',$data['enemy_eff_id'])->first();
- 				if($user_ef['eff_group_id']==1||$user_ef['eff_group_id']==2){
- 					$atkEff=$normalEff->where('normal_eff_id',$user_ef['eff_id'])->first();
- 				}
- 				else if($user_ef['eff_group_id']==3){
- 					$atkEff=$jumpEff->where('jump_eff_id',$user_ef['eff_id'])->first();
- 				}
- 				else if($user_ef['eff_group_id']==4){
- 					$atkEff=$RaEffModel->where('radiation_eff_id',$user_ef['eff_id'])->first();
- 				}
- 				$atkEff['atk_skill_last']=$atkEff['eff_skill_x']/$atkEff['eff_skill_spd'];
- 				$user['eff'][time()]['atk_eff']=$atkEff;
- 			}				
-      			$user_hp=$user['ch_hp'];
-       			$user_atk=$user['ch_atk'];
-       			$user_def=$user['ch_def'];
-       			// $user_res=$user['res'];
-       			$user_crit=$user['ch_crit'];
-       			$user_cd=$user['ch_cd'];
-       			$user_speed=$user['ch_spd'];      
-
-     			$defindModel=new DefindMstModel();
-     			$defValue=$defindModel->where('defind_id',8);
-     			$Usercritical=$this->getCritical();
-     			$userDMG=$user_atk*$Usercritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
-     			$userResult['ch_hp']=$user_hp;
-    			$userResult['ch_atk']=$user_atk;
-    			$userResult['ch_def']=$user_def;
-    			$userResult['ch_crit']=$user_crit;
-    			$userResult['ch_cd']=$user_cd;
-    			$userResult['ch_spd']=$user_speed;
-    			$userResult['time']=time();
-    			$userResult['location']=['x1'=>$userX1,'x2'=>$userX2,'x3'=>$userX3,'y'=>$userY];
-    			$userResult['trap']=$trap;
-
- 				return ['user_result'=>$userResult];
- 		}
-
- 	private function calculateEffect($data,$user,$enemy,$map_id){
-
- 			$userX1=$data['x1'];
- 			$userX2=$data['x2'];
- 			$userX3=$data['x3'];
-			$userY=$data['y'];
-
- 			$enemyX1=$enemy['x1'];
- 			$enemyX2=$enemy['x2'];
- 			$enemyX3=$enemy['x3'];
-			$enemyY=$enemy['y'];
-
-
-			$user_hp=$user['ch_hp'];
-       		$user_atk=$user['ch_atk'];
-       		$user_def=$user['ch_def'];
-       			// $user_res=$user['res'];
-       		$user_crit=$user['ch_crit'];
-       		$user_cd=$user['ch_cd'];
-       		$user_speed=$user['ch_spd'];   
-
-       		$self_skill_last=0;
-       		$atk_skill_last=0;
-       		$user_stun=0;
-       		$enemy_stun=0;
-
-			$defindModel=DefindMstModel();
-			$defValue=$defindModel->where('defind_id',13);
-
-
-			$final=[];
-
-			if(array_key_exists('eff',$key->$user)){
-				$result=$this->getEFf($effects,$user_hp,$user_atk,$user_def,$user_crit,$user_cd,$user_spd,$user_eff_skill_cd,$user_eff_skill_spd,$self_skill_last,$enemy_hp,$enemy_atk,$enemy_def,$enemy_crit,$enemy_cd,$enemy_spd,$enemy_eff_skill_cd,$enemy_eff_skill_spd,$atk_skill_last,$enemy_stun);
-			
-					$user_hp=$result["user_hp"];
- 					$user_atk=$result["user_atk"];
- 					$user_def=$result["user_def"];
- 					$user_crit=$result["user_crit"];
- 					$user_cd=$result["user_cd"];
- 					$user_spd=$result["user_spd"];
- 					$user_eff_skill_cd=$result["user_eff_skill_cd"];
- 					$user_eff_skill_spd=$result["user_eff_skill_spd"];
- 					$self_skill_last=$result["self_skill_last"];
-					$enemy_hp=$result["enemy_hp"];
- 					$enemy_atk=$result["enemy_atk"];
- 					$enemy_def=$result["enemy_def"];
- 					$enemy_crit=$result["enemy_crit"];
- 					$enemy_cd=$result["enemy_cd"];
- 					$enemy_spd=$result["enemy_spd"];
- 					$enemy_eff_skill_cd=$result["enemy_eff_skill_cd"];
- 					$enemy_eff_skill_spd=$result["enemy_eff_skill_spd"];
- 					$atk_skill_last=$result["atk_skill_last"];
- 					$enemy_stun=$result['enemy_stun'];
- 					if(isset($result['eff'])){
- 						$userResult['eff']=$result['eff'];
- 					}
-
-			}
-
-			if(array_key_exists('eff',$key->$enemy)){
-				
-				$result=$this->getEFf($effects,$user_hp,$user_atk,$user_def,$user_crit,$user_cd,$user_spd,$user_eff_skill_cd,$user_eff_skill_spd,$self_skill_last,$enemy_hp,$enemy_atk,$enemy_def,$enemy_crit,$enemy_cd,$enesult["user_def"];
- 					$user_crit=$result["user_crit"];
- 					$user_cd=$result["user_cd"];
- 					$user_spd=$result["user_spd"];
- 					$user_eff_skill_cd=$result["user_eff_skill_cd"];
- 					$user_eff_skill_spd=$result["user_eff_skill_spd"];
- 					$self_skill_last=$result["self_skill_last"];
-					$enemy_hp=$result["enemy_hp"];
- 					$enemy_atk=$result["enemy_atk"];
- 					$enemy_def=$result["enemy_def"];
- 					$enemy_crit=$result["enemy_crit"];
- 					$enemy_cd=$result["enemy_cd"];
- 					$enemy_spd=$result["enemy_spd"];
- 					$enemy_eff_skill_cd=$result["enemy_eff_skill_cd"];
- 					$enemy_eff_skill_spd=$result["enemy_eff_skill_spd"];
- 					$atk_skill_last=$result["atk_skill_last"];
- 					$user_stun=$result['enemy_stun'];
-					if(isset($result['eff'])){
- 						$userResult['eff']=$result['eff'];
- 					}
-
-				}
-
- 			$defValue=$defindModel->where('defind_id',8);
- 			$usercritical=$this->getCritical();
- 			$userDMG=$user_atk*$usercritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
- 			$Enemycritical=$this->getCritical();
- 			$enemyDMG=$enemy_atk*$Enemycritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
- 			$userFinalHp=$user_hp-$enemyDMG;
- 			$enemyFinalHp=$enemy_hp-$userDMG;
-
- 			$enemyStun=$enemy_effect['eff_ch_stun'];
-
- 			$userResult['ch_hp']=$user_hp;
-			$userResult['ch_atk']=$user_atk;
-			$userResult['ch_def']=$user_def;
-			$userResult['ch_crit']=$user_crit;
-			$userResult['ch_cd']=$user_cd;
-			$userResult['ch_spd']=$user_speed;
-			$userResult['ch_stun']=$user_stun;
-
-
-			$enemyResult['ch_hp']=$enemy_hp;
-			$enemyResult['ch_atk']=$enemy_atk;
-			$enemyResult['ch_def']=$enemy_def;
-			$enemyResult['ch_crit']=$enemy_crit;
-			$enemyResult['ch_cd']=$enemy_cd;
-			$enemyResult['ch_spd']=$enemy_speed;
-			$enemyResult['ch_stun']=$enemy_stun;
-
- 		return ['user_result'=>$userResult,'enemy_result'=>$enemyResult];
-	}
 
 
 	private function getCritical(){

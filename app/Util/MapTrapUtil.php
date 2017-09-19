@@ -2,6 +2,7 @@
 namespace App\Util;
 use App\Http\Requests;
 use App\MapTrapRelationMst;
+use App\Map_Stone_Relation_mst;
 use App\MapModel;
 use App\TrapMstModel;
 use App\EffectionMstModel;
@@ -59,25 +60,45 @@ class MapTrapUtil
     }
 
 
-        function checkEffstone($map_id,$effectXfrom,$effectXto,$effectYfrom,$effectYto)
+        function checkEffstone($map_id,$effX,$effY,$effR,$effAngle)
     {       $mapRelation=new MapTrapRelationMst();
+            $mapStone=new MapStoneRelationMst();
             $mapData=$mapRelation->where(function($query){
-                     $query->Where('map_id',$map_id)->where('trap_id',1)->where('trap_x_from','<=',$effectXto)->get();
+                     $query->Where('map_id',$map_id)->where('trap_id',1)->get();
+
+
             $result=[];
+
             foreach($mapData as $trap){
-            $ajoin=$this->computRectJoinUnion($effectXfrom,$effectXto,$effectYfrom,$effectYto,$trap['trap_x_from'],$trap['trap_x_to'],$trap['trap_y_from'],$trap['trap_y_to']);
-                if(isset($ajoin)){
-                    $effectXfrom=$ajoin['effXfrom'];
-                    $effXto=$ajoin['effXto'];
-                    $effYfrom=$ajoin['effYfrom'];
-                    $effYto=$ajoin['effYto'];
+                $trapLength=abs($trap['trap_x_to']-$trap['trap_x_from']);
+                $trapHeight=abs($trap['trap_y_to']-$trap['trap_y_from']);
+                $intersects=$this->intersects($effR,$effAngle,$effX,$effY,$trap['trap_center_x'],$trap['trap_center_y'],$trapLength,$trapHeight));
+                if($intersects){
+                    return true;
+                    break;
                 }
-
+                return false;
             }
-
-
-                return ['effXfrom'=>$effXfrom,'effXto'=>$effXto,'effYfrom'=>$effYfrom,'effYto'=>$effYto];
-
-
+            return false;
     } 
+
+    function  intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
+{
+    $circleDistanceX = abs($circleX - $RectX);
+    $circleDistanceY = abs($circleY - $$RectY);
+
+    $distance=sqrt(pow(($circleDistanceX),2)+pow($circleDistanceY,2));
+    $agnle=asin($circleDistanceX/$distance);
+    if ($circleDistanceX > ($RecWidth/2 + $circleR)||$agnle>$effAngle) { return false; }
+    if ($circleDistanceY > ($RecHeight/2 +$circleR)) { return false; }
+
+   if ($circleDistanceX <=($RecWidth/2 + $circleR)&&$agnle<=$effAngle) { return true; }
+    if ($circleDistanceY <= ($RecHeight/2 +$circleR)&&$agnle<=$effAngle) { return true; }
+
+    $cornerDistance_sq = ($circleDistanceX- $RecWidth/2)^2 +
+                         ($circleDistanceY - $RecHeight/2)^2;
+   
+
+    return ($cornerDistance_sq <= (($circleR^2)&&$agnle<=$effAngle);
+}
 }

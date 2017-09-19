@@ -8,11 +8,13 @@ use App\Http\Requests;
 
 use App\UserModel;
 use App\MatchRangeModel;
+use App\MapTrapRelationMst;
 use App\CharacterModel;
 use App\MapModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
+use DB;
 class MatchController extends Controller
 {
     public function match(Request $request)
@@ -85,8 +87,12 @@ class MatchController extends Controller
     	$defindData=$defindmst->where('defind_id',10)->first();
     	$mapID=rand($defindData['value1'],$defindData['value2'] );
     	$map=new MapModel();
-    	$mapData=$map->where('map_id',$mapID)->first();
-    	return $mapData;
+    	$trapData = DB::table('Map_Trap_Relation_mst')
+            ->join('Trap_mst', 'Map_Trap_Relation_mst.trap_id','=','Trap_mst.trap_id')
+            ->select('Map_Trap_Relation_mst.map_id', 'Map_Trap_Relation_mst.trap_id','Trap_mst.trap_type','Trap_mst.trap_name', 'Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
+            ->where('map_id',$mapID)
+            ->get();
+    	return $trapData;
 
     }
 
