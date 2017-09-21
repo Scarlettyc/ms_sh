@@ -32,17 +32,20 @@ class AttackHitUtil()
 			$eff_group=$skillData['eff_group_id'];
 			if($eff_group==2){
 				$atkEff=$atkRecEffModel->where('atk_re_eff_id',$skillData['atk_eff_id'])->first();
-
 				$ishit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
+				if($ishit){
+					return ['hit'=>1,'atkeff'=>$atkEff];
+				}
 			}
 			else {
 				$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
-				$ishit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$occurtime);
+				$ishit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp'],$occurtime);
 				if($ishit){
-					return ['atkeff'=>$atkEff];
-					}
+					return ['hit'=>1,'atkeff'=>$atkEff];
+				}
+
 			}
-			else return null;
+
 		}
 		else if(isset($skillData['enemy_buff_eff_id']){
 			$enemyBuffEff=$buffEffModel->where('buff_eff_id',$skillData['enemy_buff_eff_id'])->first();
@@ -52,14 +55,15 @@ class AttackHitUtil()
 	}
 
 
-	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'],$occurtime)
+	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'],$occurtime,$eme)
 	{
 		$mapUtil=new MapTrapUtil();
 		$defindMst=new DefindMstModel();
 		$defindData=$defindMst->where('defind_id',17)->first();
 
-		if($atkEff['$eff_skill_dur']==0)
-		{
+		$mileSecond=$this->getMillisecond();
+ 		if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
+ 				
 			$distance=0;
 			if($atkEff['eff_skill_circle_center']==0){
 				if($direction>=0)
@@ -72,15 +76,16 @@ class AttackHitUtil()
 					}
 					$effY=$user['y'];				
 			}
- 		else if($atkEff['eff_skill_circle_center']==1){
- 			$effX=$user['x'];
- 			$effY=$user['y'];			
- 		}
- 		else if($atkEff['eff_skill_circle_center']==2){
- 			$effY=$user['y']+$defindData['value2'];
- 			$effX=$user['x'];	
- 		}
- 		$radius=$atkEff['eff_skill_radius'];
+ 			else if($atkEff['eff_skill_circle_center']==1){
+ 				$effX=$user['x'];
+ 				$effY=$user['y'];			
+ 			}
+
+ 			else if($atkEff['eff_skill_circle_center']==2){
+ 				$effY=$user['y']+$defindData['value2'];
+ 				$effX=$user['x'];	
+ 			}
+ 			$radius=$atkEff['eff_skill_radius'];
  			if($this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt'])){
  				return false;
  			}
@@ -88,15 +93,17 @@ class AttackHitUtil()
  		 		$distance=sqrt(pow(($effX-$enemy['x']),2)+pow(($effY-$enemy['y']),2));
  				$agnle=asin($effX/$distance);
  				$atkEffAngle=$atkEff['eff_skill_angle'];
-			if($distance<=$radius&&$agnle<=$atkEffAngle)
- 			{
-				return true;
+				if($distance<=$radius&&$agnle<=$atkEffAngle)
+ 				{	if($atkEff['eff_condtion']==2){
+ 						if($atkEff[''])
+ 					}
+ 						return true;
+ 				}
 				}
-			else {
-					return false;
+				else {
+						return false;
 				}
- 			}
- 		}
+			 }
  	}
 }
 
@@ -149,12 +156,11 @@ class AttackHitUtil()
     private function checkSkillInterrput($map_id,$effX,$effY,$effR,$interrput){
     	$mapUtil=new MapTrapUtil();
     	$interrput=false;
-    		if($interrput==3){
+    		if($interrput==3||$interrput==2){
     			$interrput=$mapUtil->checkEffstone($map_id,$effX,$effY,$effR,$effAngle);
 
     		}
     	return $interrput;
-	
     } 
 
   

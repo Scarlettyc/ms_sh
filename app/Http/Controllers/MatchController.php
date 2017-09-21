@@ -11,6 +11,7 @@ use App\MatchRangeModel;
 use App\MapTrapRelationMst;
 use App\CharacterModel;
 use App\MapModel;
+use App\Util\CharSkillEffUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
@@ -37,15 +38,16 @@ class MatchController extends Controller
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
+     		$charSkillUtil=new CharSkillEffUtil();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
      		if(isset($chardata)){
-     		$maxLv=$matchrange->max('user_lv_to');
-     		$maxStar=$matchrange->max('star_from');
-		 	$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
+     			$maxLv=$matchrange->max('user_lv_to');
+     			$maxStar=$matchrange->max('star_from');
+		 		$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
 		 	
 
 			if($chardata['ch_lv']<$maxLv){
-			$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
+				$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
 			}
 			else{
 				$matchKey='match_maxlv_star'.$match['star_from'].'star'.$match['star_to'];
@@ -62,6 +64,7 @@ class MatchController extends Controller
 					return "wait in list";
 				}
 				else{
+					$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 					$mapData=$this->chooseMap();
 					$match_uid=$redis_battle->LPOP($matchKey);
 					$result['match_result']=$match_uid;
@@ -70,7 +73,12 @@ class MatchController extends Controller
 					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
-					$enmeydata['match_id']=$match_id;
+					$result['match_id']=$match_id;
+					$result['userData']['eff']=$effect;
+					$result['userData']['char']=$chardata;
+					$result['mapData'=$mapData;
+					$result['enemyData']=$enmeydata;
+
 					$response=json_encode($enmeydata,TRUE);
 					return base64_encode($response);
 				}
