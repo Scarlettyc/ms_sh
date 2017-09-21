@@ -142,6 +142,7 @@ class BattleController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
 		$characterModel=new CharacterModel();
+		$skillMstModel=new SkillMstModel();
 		if(isset($data)){
 			$u_id=$data['u_id'];
 			$match_id=$data['match_id'];
@@ -174,8 +175,14 @@ class BattleController extends Controller
 
 		}
 		if($data['skill_id']){
-			
-			$effResult=$attackhitutil->getEff($skill_id,$user,$enemy,$data['direction'],$mileTime);
+			$skill=$skillMstModel->where('skill_id',$skill_id)->first();
+			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
+			if($checkCD){
+					$effResult=$attackhitutil->getEff($skill_id,$user,$enemy,$data['direction'],$mileTime);
+				}
+			else {
+					throw new Exception("there skill still in cd time");
+				}
 			}
 		if($userData['skill']){
 				foreach ($userData['skill'] as $key => $skills) {
@@ -235,6 +242,31 @@ class BattleController extends Controller
  	    }
 	}
 }
+
+	private function checkSkillCD($skill,$match_id,$u_id){
+		$attackhitutil=new AttackHitUtil();
+		$redis_battle=Redis::connection('battle');
+		$skill_id=$skill['skill_id'];
+		$skill_cd=$skill['skill_cd'];
+		$skill_key='skill_'.$match_id.'_'.$u_id;
+		$skillTime=$redis_battle->HGET($skill_key,$$skill_id);
+		$current=$attackhitutil->getMillisecond();
+		if($skillTime){
+			if($current-$skillTime>=$skill_cd){
+				$redis_battle->HSET($skill_key,$$skill_id,$current);
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			$redis_battle->HSET($skill_key,$$skill_id,$current);
+			return true;
+		}
+
+
+	}
 	private function getCritical(){
  			$defindModel=new DefindMstModel();
  			$critcalRound=$defindModel->where('defind_id',6)->first();
