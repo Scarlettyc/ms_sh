@@ -12,10 +12,9 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
 use App\RaEffModel;
-
 use DB;
 
-class CharSkillEffUtil()
+class CharSkillEffUtil
 {
 
  	public function getCharSkill($char_id){

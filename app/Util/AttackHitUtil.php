@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
 
-class AttackHitUtil()
+class AttackHitUtil
 {
 
 	public function getEff($skill_id,$user,$enemy,$occurtime){
