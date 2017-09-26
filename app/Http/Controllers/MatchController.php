@@ -76,7 +76,7 @@ class MatchController extends Controller
 					$result['match_id']=$match_id;
 					$result['userData']['eff']=$effect;
 					$result['userData']['char']=$chardata;
-					$result['mapData'=$mapData;
+					$result['mapData']=$mapData;
 					$result['enemyData']=$enmeydata;
 
 					$response=json_encode($enmeydata,TRUE);
