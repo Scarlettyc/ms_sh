@@ -60,10 +60,12 @@ class NotifyCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-        echo "message: ".$frame->data."\n";
-        foreach($reqs as $fd){
-            $server->push($fd, $frame->data);
-            }
+            echo "message: ".$frame->data."\n";
+            foreach ($server->connections as $key => $value) {  
+                if($frame->fd != $value){  
+                    $server->push($value, "test:".$frame->data);  
+                }  
+        }  
     });
 
         $serv->on('Close', function($server, $fd) {
