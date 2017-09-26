@@ -21,7 +21,7 @@ class CharSkillEffUtil
  		$atkCircle=new AtkCircleEffModel();
 		$atkRec=new AtkRecEffModel();
 		$buffEff=new BuffEffModel();
-	 	$skill_data=DB::select('select c.* from  User_Character a, Equipment_mst b, Skill_mst c where b.equ_id in (a.w_id, a.m_id, a.core_id) and a.ch_id='.$char_id.' and c.skill_id= b.skill_id;')->get();
+	 	$skill_data=DB::select('select c.* from  User_Character a, Equipment_mst b, Skill_mst c where b.equ_id in (a.w_id, a.m_id, a.core_id) and a.ch_id='.$char_id.' and c.skill_id= b.skill_id;');
 	 	$result=[];
 	 	foreach ($skill_data as $key => $skill) {
 	 		if($skill['self_buff_eff_id']!=0){
