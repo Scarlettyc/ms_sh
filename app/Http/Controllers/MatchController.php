@@ -9,6 +9,7 @@ use App\Http\Requests;
 use App\UserModel;
 use App\MatchRangeModel;
 use App\MapTrapRelationMst;
+use App\DefindMstModel;
 use App\CharacterModel;
 use App\MapModel;
 use App\Util\CharSkillEffUtil;
