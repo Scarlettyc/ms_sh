@@ -183,7 +183,7 @@ class BattleController extends Controller
 			else {
 					throw new Exception("there skill still in cd time");
 				}
-			}
+		}
 		if($userData['skill']){
 				foreach ($userData['skill'] as $key => $skills) {
 					$effResult=$attackhitutil->getEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);

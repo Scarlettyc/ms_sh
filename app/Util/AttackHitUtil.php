@@ -3,17 +3,15 @@ namespace App\Util;
 use App\Http\Requests;
 use App\EffectionMstModel;
 use App\SkillMstModel;
-use App\EffectionMstModel;
 use App\MapStoneRelationMst;
-use App\AtkCircleEffModel;
-use App\AtkRecEffModel;
+use App\AtkEffectionMst;
+use App\BuffEffectionMst;
 use App\Util\MapTrapUtil;
 use App\DefindMstModel;
 use Exception;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
-use App\RaEffModel;
 
 class AttackHitUtil()
 {
@@ -94,11 +92,8 @@ class AttackHitUtil()
  				$agnle=asin($effX/$distance);
  				$atkEffAngle=$atkEff['eff_skill_angle'];
 				if($distance<=$radius&&$agnle<=$atkEffAngle)
- 				{	if($atkEff['eff_condtion']==2){
- 						if($atkEff[''])
- 					}
+ 				{	
  						return true;
- 				}
 				}
 				else {
 						return false;
@@ -152,13 +147,11 @@ class AttackHitUtil()
 		return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
 }
 
-
     private function checkSkillInterrput($map_id,$effX,$effY,$effR,$interrput){
     	$mapUtil=new MapTrapUtil();
     	$interrput=false;
     		if($interrput==3||$interrput==2){
     			$interrput=$mapUtil->checkEffstone($map_id,$effX,$effY,$effR,$effAngle);
-
     		}
     	return $interrput;
     } 
