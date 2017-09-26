@@ -241,7 +241,6 @@ class BattleController extends Controller
 
  	    }
 	}
-}
 
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
