@@ -163,7 +163,8 @@ class AccessController extends Controller
 	}
 
 	public function test (Request $request){
- 	phpinfo();
+ 	//phpinfo();
+		return view('testview');
  	}
  	private function getEquip($userChar){
  		$equipMstModel=new EquipmentMstModel();

@@ -3,6 +3,8 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use swoole_server;
+use App\Http\Controllers\MatchController;
 
 class NotifySocket extends Command
 {
@@ -37,6 +39,7 @@ class NotifySocket extends Command
      */
     public function handle()
     {
+        $serv = new swoole_server("0.0.0.0/0", 6385, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
         //
     }
 }
