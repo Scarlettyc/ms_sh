@@ -90,7 +90,9 @@ class MatchController extends Controller
  	    }
 	 }
 
-
+	public function testWebsocket($data){
+var_dump($data);
+}
     private function chooseMap(){
     	$defindmst=new DefindMstModel();
     	$defindData=$defindmst->where('defind_id',10)->first();
