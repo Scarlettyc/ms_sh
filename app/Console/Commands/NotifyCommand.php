@@ -61,16 +61,21 @@ class NotifyCommand extends Command
             echo "message: ".$frame->data."\n";
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
-                 $result=$matchController->match($frame->data);
-                if($result)
-                    {
+                 $result=$matchController->match($frame->fd,$frame->data);
+                if($resultList)
+                {  
                     if($frame->fd == $value){  
-                        $server->push($value, $result);  
+                        $server->push($value, $resultList['u_id_1']);  
                     }
+                    else if ($frame->fd == $resultList['client_id']){
+
+                        $server->push($value, $resultList['u_id_2']);  
+                    }
+
 
                 }
                 else {
-                    return 'waitting';
+                    $server->push($value, 'waitting');  
                 }  
         }  
     });

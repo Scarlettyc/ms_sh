@@ -19,7 +19,7 @@ use Exception;
 use DB;
 class MatchController extends Controller
 {
-    public function match($data)
+    public function match($clientID,$data)
     {
   //   	$req=$request->getContent();
 		// $json=base64_decode($req);
@@ -54,9 +54,11 @@ class MatchController extends Controller
 				$matchKey='match_maxlv_star'.$match['star_from'].'star'.$match['star_to'];
 			}
 			$matchList=$redis_battle->LLEN($matchKey);
-
+			$list['u_id_1']=$u_id;
+			$list['client_id']=$clientID;
+			$list_data=json_encode($list,TRUE);
 			if($matchList==0||!$matchList){
-				$redis_battle->LPUSH($matchKey,$u_id);
+				$redis_battle->LPUSH($matchKey,$list_data);
 				return null;
 			}
 			else {
@@ -67,7 +69,10 @@ class MatchController extends Controller
 				else{
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 					$mapData=$this->chooseMap();
-					$match_uid=$redis_battle->LPOP($matchKey);
+					$match_result=$redis_battle->LPOP($matchKey);
+					$resultList=json_decode($match_result,TRUE);
+
+					$resultList['u_id_2']=$u_id;
 					//$result['match_result']=$match_uid;
 					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
@@ -81,7 +86,7 @@ class MatchController extends Controller
 					// $result['enemyData']=$enmeydata;
 
 					// $response=json_encode($enmeydata,TRUE);
-					return $match_uid;
+					return $resultList;
 				}
 			}
 		}
