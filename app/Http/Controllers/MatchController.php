@@ -63,7 +63,7 @@ class MatchController extends Controller
 			}
 			else {
 				$match_uid=$redis_battle->LRANGE($matchKey,0,1);
-				if($matchList==1&&$match_uid['u_id_1']==$u_id||$matchList==1){
+				if($matchList==1&&$match_uid[0]['u_id_1']==$u_id){
 					return null;
 				}
 				else{
