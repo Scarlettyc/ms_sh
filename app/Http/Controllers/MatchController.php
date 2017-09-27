@@ -29,10 +29,10 @@ class MatchController extends Controller
 		//push to match list
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
-		$data=json_decode($json,TRUE);
+		// $data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
+		// $loginToday=Redis::HGET('login_data',$dmy.$u_id);
+		// $loginTodayArr=json_decode($loginToday);
 		// $access_token=$loginTodayArr->access_token;
 		// if($access_token==$data['access_token'])
 		// {
