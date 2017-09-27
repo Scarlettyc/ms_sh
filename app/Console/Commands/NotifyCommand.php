@@ -62,7 +62,7 @@ class NotifyCommand extends Command
             foreach ($server->connections as $key => $value) {  
                 if($frame->fd == $value){  
                     $matchController=new MatchController();
-                    $result=$matchController->testWebsocket($req->fd);
+                    $result=$matchController->testWebsocket($frame->data);
                     $server->push($value, $result);  
 
                 }  
