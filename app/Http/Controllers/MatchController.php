@@ -63,7 +63,7 @@ class MatchController extends Controller
 			}
 			else {
 				$match_uid=$redis_battle->LRANGE($matchKey,0,1);
-				if($matchList==1&&$match_uid[0]['u_id_1']==$u_id){
+				if($matchList==1&&$match_uid['u_id_1']==$u_id){
 					return null;
 				}
 				else{
@@ -76,7 +76,7 @@ class MatchController extends Controller
 					//$result['match_result']=$match_uid;
 					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
+					// $match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
 					// $match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
 					// $result['match_id']=$match_id;
