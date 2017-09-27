@@ -19,13 +19,13 @@ use Exception;
 use DB;
 class MatchController extends Controller
 {
-    public function match(Request $request)
+    public function match($data)
     {
-    	$req=$request->getContent();
-		$json=base64_decode($req);
-	 	//dd($json);
-		$data=json_decode($json,TRUE);
-		$u_id=$data['u_id'];
+  //   	$req=$request->getContent();
+		// $json=base64_decode($req);
+	 // 	//dd($json);
+		// $data=json_decode($json,TRUE);
+		$u_id=$data;
 		//push to match list
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
@@ -57,31 +57,31 @@ class MatchController extends Controller
 
 			if($matchList==0||!$matchList){
 				$redis_battle->LPUSH($matchKey,$u_id);
-				return "wait in list";
+				return null;
 			}
 			else {
 				$match_uid=$redis_battle->LRANGE($matchKey,0,1);
 				if($matchList==1&&$match_uid[0]==$u_id){
-					return "wait in list";
+					return null;
 				}
 				else{
-					$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 					$mapData=$this->chooseMap();
 					$match_uid=$redis_battle->LPOP($matchKey);
-					$result['match_result']=$match_uid;
-					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
+					//$result['match_result']=$match_uid;
+					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
-					$match_id='m'.time();
-					$redis_battle->HSET('match_list',$match_id,$match);
-					$result['match_id']=$match_id;
-					$result['userData']['eff']=$effect;
-					$result['userData']['char']=$chardata;
-					$result['mapData']=$mapData;
-					$result['enemyData']=$enmeydata;
+					// $match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
+					// $match_id='m'.time();
+					// $redis_battle->HSET('match_list',$match_id,$match);
+					// $result['match_id']=$match_id;
+					// $result['userData']['eff']=$effect;
+					// $result['userData']['char']=$chardata;
+					// $result['mapData']=$mapData;
+					// $result['enemyData']=$enmeydata;
 
-					$response=json_encode($enmeydata,TRUE);
-					return base64_encode($response);
+					// $response=json_encode($enmeydata,TRUE);
+					return $match_uid;
 				}
 			}
 		}

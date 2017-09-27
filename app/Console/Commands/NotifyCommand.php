@@ -60,10 +60,13 @@ class NotifyCommand extends Command
         global $reqs;
             echo "message: ".$frame->data."\n";
             foreach ($server->connections as $key => $value) {  
-                if($frame->fd == $value){  
-                    $matchController=new MatchController();
-                    $result=$matchController->testWebsocket($frame->data);
-                    $server->push($value, $result);  
+                 $matchController=new MatchController();
+                 $result=$matchController->match($frame->data);
+                if($result)
+                    {
+                    if($frame->fd == $value){  
+                        $server->push($value, $result);  
+                    }
 
                 }  
         }  
