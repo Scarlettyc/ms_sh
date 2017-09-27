@@ -62,8 +62,10 @@ class MatchController extends Controller
 				return null;
 			}
 			else {
-				$match_uid=$redis_battle->LRANGE($matchKey,0,1);
+				$match_uidJson=$redis_battle->LRANGE($matchKey,0,1);
+				$match_uid=json_encode($match_uidJson,TRUE);
 				if($matchList==1&&$match_uid['u_id_1']==$u_id){
+					var_dump($match_uid);
 					return null;
 				}
 				else{
