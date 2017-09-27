@@ -106,7 +106,7 @@ class MatchController extends Controller
     	$map=new MapModel();
     	$trapData = DB::table('Map_Trap_Relation_mst')
             ->join('Trap_mst', 'Map_Trap_Relation_mst.trap_id','=','Trap_mst.trap_id')
-            ->select('Map_Trap_Relation_mst.map_id', 'Map_Trap_Relation_mst.trap_id','Trap_mst.trap_type','Trap_mst.trap_name', 'Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
+            ->select('Map_Trap_Relation_mst.map_id as map_id ', 'Map_Trap_Relation_mst.trap_id','Trap_mst.trap_type','Trap_mst.trap_name', 'Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
             ->where('map_id',$mapID)
             ->get();
     	return $trapData;
