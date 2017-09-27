@@ -85,9 +85,7 @@ class MatchController extends Controller
 				}
 			}
 		}
-		 else{
- 	    		throw new Exception("no exist character of this user");
- 	    }
+ 			return null;
 	 }
 
 	public function testWebsocket($data){

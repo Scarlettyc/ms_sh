@@ -68,6 +68,9 @@ class NotifyCommand extends Command
                         $server->push($value, $result);  
                     }
 
+                }
+                else {
+                    return 'waitting';
                 }  
         }  
     });
