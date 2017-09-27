@@ -91,7 +91,7 @@ class MatchController extends Controller
 	 }
 
 	public function testWebsocket($data){
-var_dump($data);
+		return $data."lalalla";
 }
     private function chooseMap(){
     	$defindmst=new DefindMstModel();

@@ -51,8 +51,6 @@ class NotifyCommand extends Command
         $serv->on('Open', function($server, $req) {
             global $reqs;
         $reqs[]=$req->fd;
-        $matchController=new MatchController();
-        $matchController->testWebsocket($req->fd);
        // $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
 
         //var_dump(count($reqs));//输出长连接数
@@ -62,8 +60,11 @@ class NotifyCommand extends Command
         global $reqs;
             echo "message: ".$frame->data."\n";
             foreach ($server->connections as $key => $value) {  
-                if($frame->fd != $value){  
-                    $server->push($value, "test:".$frame->data);  
+                if($frame->fd == $value){  
+                    $matchController=new MatchController();
+                    $result=$matchController->testWebsocket($req->fd);
+                    $server->push($value, $result);  
+
                 }  
         }  
     });
