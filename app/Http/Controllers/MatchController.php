@@ -79,7 +79,7 @@ class MatchController extends Controller
 					//$result['match_result']=$match_uid;
 					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData['map_id']],TRUE);
+					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData],TRUE);
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
 					// $result['match_id']=$match_id;
@@ -103,13 +103,7 @@ class MatchController extends Controller
     	$defindmst=new DefindMstModel();
     	$defindData=$defindmst->where('defind_id',10)->first();
     	$mapID=rand($defindData['value1'],$defindData['value2'] );
-    	$map=new MapModel();
-    	$trapData = DB::table('Map_Trap_Relation_mst')
-            ->join('Trap_mst', 'Map_Trap_Relation_mst.trap_id','=','Trap_mst.trap_id')
-            ->select('Map_Trap_Relation_mst.map_id as map_id ', 'Map_Trap_Relation_mst.trap_id','Trap_mst.trap_type','Trap_mst.trap_name', 'Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
-            ->where('map_id',$mapID)
-            ->get();
-    	return $trapData;
+    	return $mapID;
 
     }
 
