@@ -58,7 +58,7 @@ class NotifyCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-            echo "message: ".$frame->data."\n".$frame->fb.;
+            echo "message: ".$frame->data."\n".$frame->fb."\n";
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $resultList=$matchController->match($frame->fd,$frame->data);
