@@ -66,11 +66,8 @@ class NotifyCommand extends Command
                 if($resultList)
                 {  
                     if($frame->fd == $value){  
-                        $server->push($value, $resultList['u_id_1']);  
-                    }
-                    if ($frame->fd == $resultList['client_id']){
-
-                        $server->push($value, $resultList['u_id_2']);  
+                        $server->push($value, $resultList['u_id_1']); 
+                        $server->push($resultList['client_id'], $resultList['u_id_2']);   
                     }
                 }
                 else {
