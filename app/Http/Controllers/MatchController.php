@@ -76,8 +76,7 @@ class MatchController extends Controller
 
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
-					$result['match_result']=$match_uid;
-					$result['map_id']=$mapData;
+					$resultList['map_id']=$mapData;
 					
 					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
