@@ -97,9 +97,10 @@ class MatchController extends Controller
      	$matchrange=new MatchRangeModel();
      	$characterModel=new CharacterModel();
      	$charSkillUtil=new CharSkillEffUtil();
+     	$chardata=$characterModel->where('u_id',$u_id)->first();
 	 	$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 	 	$enmeydata=$usermodel->where('u_id',$match_uid)->first();
-	 	$chardata=$characterModel->where('u_id',$u_id)->first();
+	 	
 	 	$result['match_id']=$match_id;
 		$result['userData']['eff']=$effect;
 		$result['userData']['char']=$chardata;
