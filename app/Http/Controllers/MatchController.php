@@ -66,7 +66,6 @@ class MatchController extends Controller
 				
 				$match_uid=json_decode($match_uidJson[0],TRUE);
 				if($matchList==1&&$match_uid['u_id_1']==$u_id){
-					var_dump($match_uid);
 					return null;
 				}
 				else{

@@ -62,8 +62,6 @@ class NotifyCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-            echo "message: ".$frame->data."\n";
-
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $string=$frame->data;
@@ -82,7 +80,8 @@ class NotifyCommand extends Command
                                 $result1=$tag.'["Message",{"u_id":"'.$resultList['u_id_1'].'"}]"';
                                  $result2=$tag.'["Message",{"u_id":"'.$resultList['u_id_2'].'"}]"';
                                 $server->push($resultList['client_id_2'], $result1); 
-                                $server->push($resultList['client_id'], $result2);   
+                                $server->push($resultList['client_id'], $result2);
+                                $break;   
                             }
                         }
 
@@ -91,6 +90,7 @@ class NotifyCommand extends Command
                             $server->push($value, "");  
                         }  
                 }
+
         }  
     });
 
