@@ -69,26 +69,26 @@ class MatchController extends Controller
 					return null;
 				}
 				else{
-					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+					$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 					$mapData=$this->chooseMap();
 					$match_result=$redis_battle->LPOP($matchKey);
 					$resultList=json_decode($match_result,TRUE);
 
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
-					//$result['match_result']=$match_uid;
-					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
+					$result['match_result']=$match_uid;
+					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
 					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData],TRUE);
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
-					// $result['match_id']=$match_id;
-					// $result['userData']['eff']=$effect;
-					// $result['userData']['char']=$chardata;
-					// $result['mapData']=$mapData;
-					// $result['enemyData']=$enmeydata;
+					$result['match_id']=$match_id;
+					$result['userData']['eff']=$effect;
+					$result['userData']['char']=$chardata;
+					$result['mapData']=$mapData;
+					$result['enemyData']=$enmeydata;
 
-					// $response=json_encode($enmeydata,TRUE);
+					$response=json_encode($result,TRUE);
 					return $resultList;
 				}
 			}
