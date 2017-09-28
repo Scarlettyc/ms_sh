@@ -76,6 +76,7 @@ class MatchController extends Controller
 					$resultList=json_decode($match_result,TRUE);
 
 					$resultList['u_id_2']=$u_id;
+					$resultList['client_id_2']=$clientID;
 					//$result['match_result']=$match_uid;
 					// $enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					

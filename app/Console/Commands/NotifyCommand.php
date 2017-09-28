@@ -66,11 +66,20 @@ class NotifyCommand extends Command
             echo "message: ".$frame->data."\n";
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
-                 $resultList=$matchController->match($frame->fd,$frame->data);
+                 $string=$frame->data;
+                 $array=explode('Message',$string); 
+
+                 $tag = str_replace('["', '',$array[0] );
+                 $ustring = str_replace('",', '',$array[1] );
+                 $ustring = str_replace(']', '',$ustring );
+                 $uslist=json_decode($ustring,TRUE);
+                 $u_id=$uslist["u_id"];
+
+                 $resultList=$matchController->match($frame->fd,$u_id);
                 if($resultList)
                 {  
-                    if($frame->fd == $value){  
-                        $server->push($value, $resultList['u_id_1']); 
+                    if($frame->fd == $resultList['client_id_2']){  
+                        $server->push($resultList['client_id_2'], $resultList['u_id_1']); 
                         $server->push($resultList['client_id'], $resultList['u_id_2']);   
                     }
                 }
