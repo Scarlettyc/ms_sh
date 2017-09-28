@@ -78,9 +78,16 @@ class NotifyCommand extends Command
                         {  
                             if($frame->fd == $resultList['client_id_2']){ 
                                 $result1=$tag.'["Message",{"u_id":"'.$resultList['u_id_1'].'"}]"';
+
+
+
                                  $result2=$tag.'["Message",{"u_id":"'.$resultList['u_id_2'].'"}]"';
-                                $server->push($resultList['client_id_2'], $result1); 
-                                $server->push($resultList['client_id'], $result2);
+
+                                $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$result['u_id_2'],$resultList['match_id'],$resultList['map_id']);
+                                $uData2=$matchController->finalMatchResult($result['u_id_2'],$resultList['u_id_1'],$resultList['match_id'],$resultList['map_id']);
+                                $server->push($resultList['client_id_2'], $uData1); 
+                                $server->push($resultList['client_id'], $uData2);
+
                                 $break;   
                             }
                         }

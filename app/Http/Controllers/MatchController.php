@@ -77,24 +77,40 @@ class MatchController extends Controller
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
 					$result['match_result']=$match_uid;
+					$result['match_id']=$match_uid;
+					
 					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
 					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData],TRUE);
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
-					$result['match_id']=$match_id;
-					$result['userData']['eff']=$effect;
-					$result['userData']['char']=$chardata;
-					$result['mapData']=$mapData;
-					$result['enemyData']=$enmeydata;
-
-					$response=json_encode($result,TRUE);
+					$resultList['match_id']=$match_id;
 					return $resultList;
 				}
 			}
 		}
  			return null;
 	 }
+
+
+	 public function finalMatchResult ($u_id,$enemy_uid,$match_id,$mapData){
+	 	$usermodel=new UserModel();
+     	$matchrange=new MatchRangeModel();
+     	$characterModel=new CharacterModel();
+     	$charSkillUtil=new CharSkillEffUtil();
+	 	$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+	 	$enmeydata=$usermodel->where('u_id',$match_uid)->first();
+	 	$chardata=$characterModel->where('u_id',$u_id)->first();
+	 	$result['match_id']=$match_id;
+		$result['userData']['eff']=$effect;
+		$result['userData']['char']=$chardata;
+		$result['mapData']=$mapData;
+		$result['enemyData']=$enmeydata;
+		$response=json_encode($result,TRUE);
+		return $response;
+
+	 }
+
 
 	public function testWebsocket($data){
 		return $data."lalalla";
