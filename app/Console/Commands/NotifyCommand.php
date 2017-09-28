@@ -62,30 +62,34 @@ class NotifyCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-            print_r($frame);
             echo "message: ".$frame->data."\n";
+
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $array=explode('Message',$string); 
+                 if(count($array)>1){
+                    $tag = str_replace('["', '',$array[0] );
+                    $ustring = str_replace('",', '',$array[1]);
+                    $ustring = str_replace(']', '',$ustring );
+                    $uslist=json_decode($ustring,TRUE);
+                    $u_id=$uslist["u_id"];
 
-                 $tag = str_replace('["', '',$array[0] );
-                 $ustring = str_replace('",', '',$array[1] );
-                 $ustring = str_replace(']', '',$ustring );
-                 $uslist=json_decode($ustring,TRUE);
-                 $u_id=$uslist["u_id"];
+                    $resultList=$matchController->match($frame->fd,$u_id);
+                        if($resultList)
+                        {  
+                            if($frame->fd == $resultList['client_id_2']){ 
+                                $result1=$tag.'["Message",{"u_id":"'.$resultList['u_id_1'].'"}]"';
+                                 $result2=$tag.'["Message",{"u_id":"'.$resultList['u_id_2'].'"}]"';
+                                $server->push($resultList['client_id_2'], $result1); 
+                                $server->push($resultList['client_id'], $result2);   
+                            }
+                        }
 
-                 $resultList=$matchController->match($frame->fd,$u_id);
-                if($resultList)
-                {  
-                    if($frame->fd == $resultList['client_id_2']){  
-                        $server->push($resultList['client_id_2'], $resultList['u_id_1']); 
-                        $server->push($resultList['client_id'], $resultList['u_id_2']);   
-                    }
+                        else {
+                            $server->push($value, $frame->data);  
+                        }  
                 }
-                else {
-                    $server->push($value, $frame->data);  
-                }  
         }  
     });
 
