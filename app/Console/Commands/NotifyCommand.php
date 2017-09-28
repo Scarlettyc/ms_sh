@@ -42,7 +42,11 @@ class NotifyCommand extends Command
     {
 	 $reqs=array(); //保持客户端的长连接在这个数组里
         $serv = new swoole_websocket_server("0.0.0.0",6385,SWOOLE_BASE);
-        $serv->set(['worker_num' => 4,'daemonize'   => 0]);
+        $serv->set(['worker_num' => 2,'daemonize'   => 0,
+            'log_file'=> './storage/logs/websocket.log',
+            'heartbeat_check_interval' => 60,
+            'heartbeat_idle_time' => 600
+    ]);
 //如下可以设置多端口监听
 //$server = new swoole_websocket_server("0.0.0.0", 9501, SWOOLE_BASE);
 //$server->addlistener('0.0.0.0', 9502, SWOOLE_SOCK_UDP);
