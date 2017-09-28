@@ -87,7 +87,8 @@ class NotifyCommand extends Command
                         }
 
                         else {
-                            $server->push($value, $frame->data);  
+                             $result1=$tag.'["Message",{"waitting"}]"';
+                            $server->push($value, "");  
                         }  
                 }
         }  
