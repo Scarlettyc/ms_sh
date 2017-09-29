@@ -91,9 +91,13 @@ class NotifyCommand extends Command
                         }
 
                         else {
-                             $result1=$tag.'["Message",{"waitting"}]"';
-                            $server->push($value, "");  
+                                $result1=$tag.'["Message",{"waitting"}]"';
+                                $server->push($value, $result1);  
                         }  
+                }
+                else {
+                            $result1=$tag.'["Message",{"waitting"}]"';
+                            $server->push($value, $result1);  
                 }
 
         }  
