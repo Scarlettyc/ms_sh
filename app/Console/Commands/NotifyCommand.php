@@ -66,8 +66,8 @@ class NotifyCommand extends Command
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $array=explode('Message',$string); 
-                 $tag = str_replace('["', '',$array[0] );
-                 if(count($array)>1){
+                 $tag = str_replace('["', '',$array[0]);
+                 if(count($array)>1&&$tag==42){
                     $ustring = str_replace('",', '',$array[1]);
                     $ustring = str_replace(']', '',$ustring );
                     $uslist=json_decode($ustring,TRUE);
@@ -106,9 +106,6 @@ class NotifyCommand extends Command
         $serv->on('Close', function($server, $fd) {
             echo "connection close: ".$fd."\n";
         });
-
         $serv->start();
-	       
- 
     }
 }
