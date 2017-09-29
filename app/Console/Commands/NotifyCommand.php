@@ -66,8 +66,8 @@ class NotifyCommand extends Command
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $array=explode('Message',$string); 
+                 $tag = str_replace('["', '',$array[0] );
                  if(count($array)>1){
-                    $tag = str_replace('["', '',$array[0] );
                     $ustring = str_replace('",', '',$array[1]);
                     $ustring = str_replace(']', '',$ustring );
                     $uslist=json_decode($ustring,TRUE);
