@@ -80,9 +80,9 @@ class NotifyCommand extends Command
 
                                 $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$resultList['u_id_2'],$resultList['match_id'],$resultList['map_id']);
                                 $uData2=$matchController->finalMatchResult($resultList['u_id_2'],$resultList['u_id_1'],$resultList['match_id'],$resultList['map_id']);
-                                $result1=$tag.'["Message",'.$uData1.'"]';
+                                $result1=$tag.'["Message",'.$uData1.']';
 
-                                $result2=$tag.'["Message",'.$uData2.'"]';                             
+                                $result2=$tag.'["Message",'.$uData2.']';                             
                                 $server->push($resultList['client_id_2'], $result1); 
                                 $server->push($resultList['client_id'], $result2);
 
