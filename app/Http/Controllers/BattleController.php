@@ -162,6 +162,7 @@ class BattleController extends Controller
      	$defValue=$defindModel->where('defind_id',8);
      	list($t1, $t2) = explode(' ', microtime());
 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+		$effResult=[];
      	if($userExist>0){
      		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
      		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
@@ -184,61 +185,51 @@ class BattleController extends Controller
 					throw new Exception("there skill still in cd time");
 				}
 		}
+
 		if($userData['skill']){
 				foreach ($userData['skill'] as $key => $skills) {
 					$effResult=$attackhitutil->getEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
 				}
 		}
- 	   	if(isset($effhit['atkeff'])){
- 	    		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-				$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
-				$atkeff=$effhit['atkeff'];
-				if(isset($userBattleData)&&isset($enemyJson)){
-					$enemy=json_decode($enemyJson);
-					$userData=json_decode($userBattleData);
-					$user_hp=$userData['ch_hp'];
-       				$user_atk=$userData['ch_atk'];
-       				$user_def=$userData['ch_def'];
+
+ 	   	if(isset($effResult['atkeff'])){
+ 	   		$atkeff=$effResult['atkeff']
+ 	    			$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+					$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+					
+					if(isset($userBattleData)&&isset($enemyJson)){
+						$enemy=json_decode($enemyJson);
+						$userData=json_decode($userBattleData);
+						$user_hp=$userData['ch_hp'];
+       					$user_atk=$userData['ch_atk'];
+       					$user_def=$userData['ch_def'];
        			// $user_res=$user['res'];
-       				$user_crit=$userData['ch_crit'];
-       				$user_cd=$userData['ch_cd'];
-       				$user_speed=$userData['ch_spd']; 
+       					$user_crit=$userData['ch_crit'];
+       					$user_cd=$userData['ch_cd'];
+       					$user_speed=$userData['ch_spd']; 
 
-       				$enemy_hp=$enemy["enemy_hp"];
- 					$enemy_atk=$enemy["enemy_atk"];
- 					$enemy_def=$enemy["enemy_def"];
- 					$enemy_crit=$enemy["enemy_crit"];
- 					$enemy_cd=$enemy["enemy_cd"];
- 					$enemy_spd=$enemy["enemy_spd"];
+       					$enemy_hp=$enemy["enemy_hp"];
+ 						$enemy_atk=$enemy["enemy_atk"];
+ 						$enemy_def=$enemy["enemy_def"];
+ 						$enemy_crit=$enemy["enemy_crit"];
+ 						$enemy_cd=$enemy["enemy_cd"];
+ 						$enemy_spd=$enemy["enemy_spd"];
 
-					$usercritical=1;
- 					if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
- 						$usercritical=$this->getCritical();
- 					}
+						$usercritical=1;
+ 						if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
+ 							$usercritical=$this->getCritical();
+ 						}
+ 						$userDMG=($atkeff['eff_skill_atk_point']*$user_atk+$atkeff['eff_skill_base'])*$usercritical*(1-(1-$enemy_def)/(1+$enemy_def));
 
- 					$userDMG=($atkeff['eff_skill_atk_point']*$user_atk+$atkeff['eff_skill_base'])*$usercritical*(1-(1-$enemy_def)/(1+$enemy_def));
+					}
+				}
+
+
 				}
 
 			}
 
-			$user_atk=$atkeff['eff_skill_atk'];
-
-			$user_hp=$userData['ch_hp'];
-       		$user_atk=$userData['ch_atk'];
-       		$user_def=$userData['ch_def'];
-       			// $user_res=$user['res'];
-       		$user_crit=$userData['ch_crit'];
-       		$user_cd=$userData['ch_cd'];
-       		$user_speed=$userData['ch_spd']; 
-
-       		$enemy_hp=$enemy["enemy_hp"];
- 			$enemy_atk=$enemy["enemy_atk"];
- 			$enemy_def=$enemy["enemy_def"];
- 			$enemy_crit=$enemy["enemy_crit"];
- 			$enemy_cd=$enemy["enemy_cd"];
- 			$enemy_spd=$enemy["enemy_spd"];
-			$userDMG=$user_atk*$usercritical*(1-(1-$enemy_def*$defValue['value1'])/(1+$enemy_def*$defValue['value1']));
-
+			
  	    }
 	}
 
@@ -249,7 +240,7 @@ class BattleController extends Controller
 		$skill_cd=$skill['skill_cd'];
 		$skill_key='skill_'.$match_id.'_'.$u_id;
 		$skillTime=$redis_battle->HGET($skill_key,$$skill_id);
-		$current=$attackhitutil->getMillisecond();
+		$current=$this->getMillisecond();
 		if($skillTime){
 			if($current-$skillTime>=$skill_cd){
 				$redis_battle->HSET($skill_key,$$skill_id,$current);

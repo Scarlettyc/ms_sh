@@ -4,7 +4,7 @@ use App\Http\Requests;
 use App\CharacterModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
-use App\AtkCircleEffModel;
+use App\AtkEffectionMst;
 use App\AtkRecEffModel;
 use App\BuffEffModel;
 use Exception;
@@ -18,9 +18,8 @@ class CharSkillEffUtil
 {
 
  	public function getCharSkill($char_id){
- 		$atkCircle=new AtkCircleEffModel();
-		$atkRec=new AtkRecEffModel();
-		$buffEff=new BuffEffModel();
+ 		$atkEff=new AtkEffectionMst();
+		$buffEff=new BuffEffectionMst();
 	 	$skill_data=DB::select('select c.* from  User_Character a, Equipment_mst b, Skill_mst c where b.equ_id in (a.w_id, a.m_id, a.core_id) and a.ch_id='.$char_id.' and c.skill_id= b.skill_id;');
 	 	$result=[];
 	 	foreach ($skill_data as $key => $skill) {
@@ -31,13 +30,7 @@ class CharSkillEffUtil
 	 			$enmeyBuff=$enemyBuffEff->where('buff_eff_id',$skill['enemy_buff_eff_id'])->first();
 	 		}
 	 		if($skill['atk_eff_id']!=0){
-	 			if($eff_group_id==2){
 	 				$atkEff=$atkRec->where('atk_re_eff_id',$skill['atk_eff_id'])->first();
-	 			}
-	 			else {
-	 				$atkEff=$atkCircle->where('atk_circ_eff_id',$skill['atk_eff_id'])->first();
-	 			}
-
 	 		}
 	 		$eff['self_buff']=$selfbuff;
 	 		$eff['enemy_buff']=$enmeyBuff;
