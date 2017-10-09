@@ -99,13 +99,20 @@ class BattleController extends Controller
 
 
   private function BattleNormalRewards($u_id,$map_id){
+  	$characterModel=new CharacterModel();
   	$baNorReward=new BattleNormalRewardsMst();
   	$datetime=$now->format('Y-m-d h:m:s');
+	$charData=$characterModel->where('u_id',$u_id)->first();
+
   	$norReward=$baNorReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
+  	$exp=$charData['ch_exp']+$norReward['exp'];
+  	$isLevelUP=$this->levelUP($u_id,$exp,$charData['ch_lv']);
   	$count=count($norReward);
 	shuffle($norReward);
 	$baggageUtil=new BaggageUtil();
 	$baggageUtil->insertToBaggage($u_id,$norReward);
+	return $isLevelUP;
+
   }
 
   private function BattleSpeRewards($u_id,$map_id){
@@ -128,7 +135,9 @@ class BattleController extends Controller
   			$baggageUtil->levelMissionReward($u_id,$level['level']);
   		}
   		 $characterModel->update(array('ch_lv'=>$levels[0]['level']))->where('u_id',$u_id);
+  		 return 1;
   	}
+  		return 0;
   }
 
 	public function battle($request)
@@ -141,7 +150,6 @@ class BattleController extends Controller
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$characterModel=new CharacterModel();
 		$skillMstModel=new SkillMstModel();
 		if(isset($data)){
 			$u_id=$data['u_id'];
@@ -220,9 +228,21 @@ class BattleController extends Controller
  							$usercritical=$this->getCritical();
  						}
  						$userDMG=($atkeff['eff_skill_atk_point']*$user_atk+$atkeff['eff_skill_base'])*$usercritical*(1-(1-$enemy_def)/(1+$enemy_def));
+ 						$enemyHP=$enemy_hp-$userDMG;
 
+ 						if($enemy['eff_group_id']==1||$enemy['eff_group_id']==2){
+ 							$enemyCritical=$this->getCritical();
+ 						}
+ 						$enemyDMG=($enemy['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 						$userHp=$userHp-$enemyDMG;
+						$battleCheck=$this->winCheck($userHp,$enemyHP,$u_id,$map_id);
+						$reuslt['ch_hp']=$userHp;
+						$result['win']=$battleCheck['win'];
+						$result['end']=$battleCheck['end'];
+						$result['leveluP']=$battleCheck['leveluP'];
+
+						}
 					}
-				}
 
 
 				}
@@ -231,6 +251,24 @@ class BattleController extends Controller
 
 			
  	    }
+	}
+
+	private function winCheck($userHp,$enemyHP,$u_id,$map_id){
+		$win=0;
+		$end=0;
+		if($userHp>0&&$enemyHP<=0){
+		 	$win=1;
+		 	$end=1;
+		 	$isLevelUP=$this->BattleNormalRewards($u_id,$map_id);
+		 	$this->BattleSpeRewards($u_id,$map_id);
+
+		}
+		else if($userHp<=0&&$enemyHP>0||$userHp<=0&&$enemyHP<=0){
+			$win=0;
+		 	$end=1;
+		 	$isLevelUP=$this->BattleNormalRewards($u_id,$map_id);
+		}
+		return ['win'=>$win,'end'=>$end,'leveluP'=>$isLevelUP];
 	}
 
 	private function checkSkillCD($skill,$match_id,$u_id){
