@@ -140,7 +140,7 @@ class BattleController extends Controller
   		return 0;
   }
 
-	public function battle($request)
+	public function battle($u_id,$enmey_uid,$data)
 {	    //$req=$request->getContent();
 		//$json=base64_decode($request);
 		$data=json_decode($request,TRUE);
@@ -151,18 +151,6 @@ class BattleController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
 		$skillMstModel=new SkillMstModel();
-		if(isset($data)){
-			$u_id=$data['u_id'];
-			$match_id=$data['match_id'];
-			$matchList=$redis_battle->HGET('match_list',$match_id);
-			$matchArr=json_decode($matchList);
-			if(isset($matchArr)){
-			 $enmey_uid=$matchArr['enmey_uid'];
-			 $map_id=$matchArr['map_id'];
-			}
-			else {
-				throw new Exception("there is no exist match");
-			}
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
  	    $userExist=$redis_battle->LLEN($battlekey);
  	    $attackhitutil=new AttackHitUtil();
@@ -171,87 +159,121 @@ class BattleController extends Controller
      	list($t1, $t2) = explode(' ', microtime());
 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
 		$effResult=[];
+		$userData=$characterModel->where('u_id',$$u_id)->first();
+		$enemy=$characterModel->where('u_id',$enmey_ui)->first();
+		$user_hp=$userData['ch_hp_max;'];
+		$enmey_hp=$enemy['ch_hp_max'];
+		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
      	if($userExist>0){
-     		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
      		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
 			$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
-			$enemy=json_decode($enemyJson);
-			$userData=json_decode($userBattleData);
-
-		}else{
-			$userData=$characterModel->where('u_id',$$u_id)->first();
-			$enemy=$characterModel->where('u_id',$enmey_ui)->first();
-
+			if($userBattleData&&$enemyJson){
+				$enemy=json_decode($enemyJson);
+				$userData=json_decode($userBattleData);
+				$user_hp=$userData['ch_hp'];
+				$enmey_hp=$enemy['ch_hp'];
+			}
 		}
-		if($data['skill_id']){
-			$skill=$skillMstModel->where('skill_id',$skill_id)->first();
-			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
-			if($checkCD){
-					$effResult=$attackhitutil->getEff($skill_id,$user,$enemy,$data['direction'],$mileTime);
+		$effects=[];
+		$enemy_effects=[];
+		if($data['skill']){
+			foreach ($userData['skill'] as $key => $skill) {
+
+				$checkCD=$this->checkSkillCD($skill['skill_id'],$match_id,$u_id);
+				if($checkCD){
+					$effResult=$attackhitutil->getSelfEff($skill['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);	
+
+				$effects[]=$effResult;
 				}
-			else {
-					throw new Exception("there skill still in cd time");
-				}
+			}
+			
 		}
 
 		if($userData['skill']){
 				foreach ($userData['skill'] as $key => $skills) {
-					$effResult=$attackhitutil->getEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
+					$effResult=$attackhitutil->getSelfEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
+					$effects[]=$effResult;
 				}
 		}
 
- 	   	if(isset($effResult['atkeff'])){
- 	   		$atkeff=$effResult['atkeff']
- 	    			$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-					$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
-					
-					if(isset($userBattleData)&&isset($enemyJson)){
-						$enemy=json_decode($enemyJson);
-						$userData=json_decode($userBattleData);
-						$user_hp=$userData['ch_hp'];
-       					$user_atk=$userData['ch_atk'];
-       					$user_def=$userData['ch_def'];
-       			// $user_res=$user['res'];
-       					$user_crit=$userData['ch_crit'];
-       					$user_cd=$userData['ch_cd'];
-       					$user_speed=$userData['ch_spd']; 
+		if($enemy['skill']){
+				foreach ($enemy['skill'] as $key => $skills) {
+					$enemyEffResult=$attackhitutil->getEnmeyEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
 
-       					$enemy_hp=$enemy["enemy_hp"];
- 						$enemy_atk=$enemy["enemy_atk"];
- 						$enemy_def=$enemy["enemy_def"];
- 						$enemy_crit=$enemy["enemy_crit"];
- 						$enemy_cd=$enemy["enemy_cd"];
- 						$enemy_spd=$enemy["enemy_spd"];
-
-						$usercritical=1;
- 						if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
- 							$usercritical=$this->getCritical();
- 						}
- 						$userDMG=($atkeff['eff_skill_atk_point']*$user_atk+$atkeff['eff_skill_base'])*$usercritical*(1-(1-$enemy_def)/(1+$enemy_def));
- 						$enemyHP=$enemy_hp-$userDMG;
-
- 						if($enemy['eff_group_id']==1||$enemy['eff_group_id']==2){
- 							$enemyCritical=$this->getCritical();
- 						}
- 						$enemyDMG=($enemy['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
- 						$userHp=$userHp-$enemyDMG;
-						$battleCheck=$this->winCheck($userHp,$enemyHP,$u_id,$map_id);
-						$reuslt['ch_hp']=$userHp;
-						$result['win']=$battleCheck['win'];
-						$result['end']=$battleCheck['end'];
-						$result['leveluP']=$battleCheck['leveluP'];
-
-						}
-					}
-
-
+					$enemy_effects[]=$enemyEffResult;
 				}
-
-			}
-
+		}
 			
- 	    }
+ 			//$user_shield=$userData['ch_shield'];
+  			$user_atk=$userData['ch_atk'];
+  			$user_def=$userData['ch_def'];
+  			$user_crit=$userData['ch_crit '];
+  			$user_cd=$userData['ch_cd'];
+  			$user_spd=$userData['ch_spd'];
+
+  		foreach($effects as $effResult){
+	 		if(isset($effResult['selfbuff'])){
+	 			$selfBuff=$effResult['selfbuff'];
+       			$user_hp=($user_hp+$selfBuff['eff_ch_hp'])*(1+$selfBuff['eff_ch_hp_per']);
+ 				$user_atk=$user_atk*(1+$selfBuff['eff_ch_hp_per']);
+ 				$user_def=$user_def*(1+$selfBuff['eff_ch_def_per']);
+ 				$user_crit=$user_crit*(1+$selfBuff['eff_ch_crit_per']);
+ 				$user_cd=$user_cd*(1-$selfBuff['eff_ch_cd']);
+ 				$user_spd=$user_spd*(1-$selfBuff['eff_ch_spd_per']);
+ 				$user_stuck=$selfBuff['eff_ch_stuck'];
+ 				$user_clear_buff=$selfBuff['eff_ch_clear_buff'];
+	 		}
+		}
+		foreach($enemy_effects as $enemyEffResult){
+
+		if(isset($enemyEffResult['enemyBuff'])){
+
+			$userBuff=$enemyEffResult['userBuff'];
+     		$user_hp=($user_hp+$userBuff['eff_ch_hp'])*(1-$userBuff['eff_ch_hp_per']);
+ 			$user_atk=$user_atk*(1-$userBuff['eff_ch_hp_per']);
+ 			$user_def=$user_def*(1-$userBuff['eff_ch_def_per']);
+ 			$user_crit=$user_crit*(1-$userBuff['eff_ch_crit_per']);
+ 			$user_cd=$user_cd*(1+$userBuff['eff_ch_cd']);
+ 			$user_spd=$user_spd*(1+$userBuff['eff_ch_spd_per']);
+ 			$user_stun=$userBuff['eff_ch_stun'];
+ 			$user_stuck=$userBuff['eff_ch_stuck'];
+	 	}
+
+ 	   	if(isset($enemyEffResult['atk_eff']['eff'])){
+ 	   				$atkeff=$enemyEffResult['atkeff']['eff'];
+					$enemyCritical=1;
+ 					if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
+ 							$enemyCritical=$this->getCritical();
+ 					}
+ 					$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 					$user_hp=$user_hp-$enemyDMG;
+ 					if($enemyEffResult['atkeff']['end']==0){
+ 					$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+					$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+
+ 					}
+
+		}
 	}
+
+
+			$battleCheck=$this->winCheck($user_hp,$enmey_hp,$u_id,$map_id);
+			$result['win']=$battleCheck['win'];
+			$result['battle_end']=$battleCheck['end'];
+			$result['level_uP']=$battleCheck['leveluP'];
+			$result['ch_hp']=$user_hp;
+			$result['ch_atk']=$user_atk;
+			$result['ch_def']=$user_def;
+			$result['ch_crit']=$ch_crit;
+			$result['ch_cd']=$ch_crit;
+  			$result['ch_spd']=$user_spd; 			
+
+	}
+}
+
+
+
+
 
 	private function winCheck($userHp,$enemyHP,$u_id,$map_id){
 		$win=0;
@@ -308,5 +330,64 @@ class BattleController extends Controller
  			}
  			return $critical;
  	}
+
+
+
+ 	 public function getData($data){
+ 	 	$dmy=$now->format( 'Ymd' );
+ 	 	$match_id=$data['match_id'];
+ 	 	$redis_battle=Redis::connection('battle');
+		$match_id=$data['match_id'];
+		$matchList=$redis_battle->HGET('match_list',$match_id);
+		$u_id=$data['u_id'];
+		$matchArr=json_decode($matchList);
+		if(isset($matchArr)){
+			if($matchArr['u_id_1']==$u_id){
+				$enmey_uid=$matchArr['u_id_2'];
+			}
+			else{
+				$enmey_uid=$matchArr['u_id_1'];
+			}
+			$map_id=$matchArr['map_id'];
+			$key='match_history'.$match_id.'_'.$u_id;
+			$count=$redis_battle->LLEN($key);
+			$data['time']=$this->getMillisecond();
+			$dataJson=json_encode($data,TRUE);
+			if($count==0){
+			$redis_battle->LPUSH($key,$dataJson);
+			return $enmey_uid;
+			}
+			else{
+				$redis_battle->LPUSH($key,$dataJson);
+				return null;
+			}
+
+ 	 }
+	 public function finalMatchResult ($data){
+	 	$match_id=$data['match_id'];
+	 	$u_id=$data['u_id'];
+
+	 	$usermodel=new UserModel();
+     	$matchrange=new MatchRangeModel();
+     	$characterModel=new CharacterModel();
+     	$charSkillUtil=new CharSkillEffUtil();
+     	$chardata=$characterModel->where('u_id',$u_id)->first();
+	 	$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+	 	$enmeydata=$usermodel->where('u_id',$enemy_uid)->first();
+	 	
+	 	$result['match_id']=$match_id;
+		$result['userData']['eff']=$effect;
+		$result['userData']['char']=$chardata;
+		$result['mapData']=$mapData;
+		$result['enemyData']=$enmeydata;
+		$response=json_encode($result,TRUE);
+		return $response;
+
+	 }
+
+	 public function getMillisecond() {
+		list($t1, $t2) = explode(' ', microtime());
+		return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+}
 
 }

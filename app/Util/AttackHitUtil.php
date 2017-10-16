@@ -15,22 +15,35 @@ use Illuminate\Support\Facades\Redis;
 
 class AttackHitUtil
 {
-
-	public function getEff($skill_id,$user,$enemy,$occurtime){
+	public function getSelfEff($skill_id,$user,$enemy,$occurtime){
 		$skillModel=new SkillMstModel();
  		$buffEffModel= new BuffEffectionMst();
  		$atkEffModel=new AtkEffectionMst();
 		$skillData=$skillModel->where('skill_id',$skill_id)->first();
 		$result=[];
 		if($skillData['self_buff_eff_id']!=0){
+			$mileSecond=$this->getMillisecond();
 			$buffEff=$buffEffModel->where('buff_eff_id',$skillData['self_eff_id'])->first();
-			$result['selfbuff']=$buffEff;
+			if($mileSecond-$occurtime<=$buffEff['eff_skill_dur']){
+				$result['selfbuff']=$buffEff;
+			}
 		}
+		return $result;
+	}
+
+	public function getEnmeyEff($skill_id,$user,$enemy,$occurtime){
+		$skillModel=new SkillMstModel();
+ 		$buffEffModel= new BuffEffectionMst();
+ 		$atkEffModel=new AtkEffectionMst();
+		$skillData=$skillModel->where('skill_id',$skill_id)->first();
+		$result=[];
+		$mileSecond=$this->getMillisecond();
+
 		if($skillData['atk_eff_id']!=0){
 			$eff_bullet_width=$skillData['eff_bullet_width'];
 			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
-
-			if($eff_bullet_width!=0){
+			if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
+				if($eff_bullet_width!=0){
 
 				$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
 				if($hit['hit']){
@@ -38,38 +51,39 @@ class AttackHitUtil
 					$result['hit']=1;
 					$$result['end']=0;
 				}
-				else if($hit['end']&&!$hit['hit']){
+					else if($hit['end']&&!$hit['hit']){
 					$reuslt['atk_eff']['eff']=$hit['atk_eff'];
 					$result['atk_eff']['hit']=0;
 					$result['atk_eff']['end']=1;
-				}
-
-			}
+						}
+					}
 			else {
 
-				 $hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp'],$occurtime);
+				 $hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp']);
 					$result['atk_eff']['eff']= $atkEff;
 					$result['atk_eff']['hit']=$hit['hit'];
 					$result['atk_eff']['end']=$hit['end'];
 				}
+			}
 		}
 		else if(isset($skillData['enemy_buff_eff_id']){
+			
 			$enemyBuffEff=$buffEffModel->where('buff_eff_id',$skillData['enemy_buff_eff_id'])->first();
-			$result['enemyBuff']=$enemyBuffEff];
+			if($mileSecond-$occurtime<=$enemyBuffEff['eff_skill_dur']){
+			$result['enemyBuff']=$enemyBuffEff;
+			}
 		}
 		return $result;
 
 	}
 
 
-	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'],$occurtime,$eme)
+	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'])
 	{
 		$mapUtil=new MapTrapUtil();
 		$defindMst=new DefindMstModel();
 		$defindData=$defindMst->where('defind_id',17)->first();
 
-		$mileSecond=$this->getMillisecond();
- 		if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
  				
 			$distance=0;
 			if($atkEff['eff_skill_circle_center']==0){
@@ -96,7 +110,7 @@ class AttackHitUtil
  			$interrput=$this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt']);
  			$end=$interrput['end'];
  			if($interrput['interrput']){
- 				return ['hit'=>false,'end'=>ture];
+ 				return ['hit'=>0,'end'=>1];
  			}
  			else {
  		 	$distance=sqrt(pow(($effX-$enemy['x']),2)+pow(($effY-$enemy['y']),2));
@@ -109,16 +123,13 @@ class AttackHitUtil
 						return ['hit'=>1,'end'=>$end];
 				}
 			}
-			 
- 	}
 }
 
 
-	public function longDisEff($map_id,$atkEff,$effX,$effY,$effTime,$direction,$enemyX,$enemyY){
+	public function longDisEff($map_id,$atkEff,$effX,$effY,$direction,$enemyX,$enemyY){
 				$effModel=new AtkEffModel();
 				$eff_id=$atkEff['atk_eff_id'];
 				$mileSecond=$this->getMillisecond();
-				$stayTime=$mileSecond-$effTime;
 				$defindMst=new DefindMstModel();
 				$defindData=$defindMst->where('defind_id',17)->first();
 				$stone=false;
@@ -141,13 +152,7 @@ class AttackHitUtil
 					$distance=sqrt(pow(($effLastX-$enemy['x']),2)+pow(($effY-$enemy['y']),2))-$eff['eff_skill_radius'];
 					if($distance<=$defindData['value1']){
 						$hit=true;
-					}else{
-						$skillDur=$eff['eff_skill_dur'];
-						if($skillDur<=$stayTime){
-							$end=ture;
-						}
 					}
-
 				}
 
 			return ['hit'=>$hit,'stone'=>$stone,'end'=>$end];		
