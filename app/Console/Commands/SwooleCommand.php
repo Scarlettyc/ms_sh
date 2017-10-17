@@ -52,71 +52,71 @@ class SwooleCommand extends Command
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
         ));
-        $this->serv->on('Task', array($this, 'onTask'));
+        // $this->serv->on('Task', array($this, 'onTask'));
 
-        $this->serv->on('Finish', array($this, 'onFinish'));
+        // $this->serv->on('Finish', array($this, 'onFinish'));
 
-        $this->serv->start();
+        // $this->serv->start();
 
-    }
-    public function onReceive(swoole_server $serv, $fd, $from_id, $data) {
+//     }
+//     public function onReceive(swoole_server $serv, $fd, $from_id, $data) {
 
-//echo "Get Message From Client {$fd}:{$data}n";
+// //echo "Get Message From Client {$fd}:{$data}n";
 
-// send a task to task worker.
+// // send a task to task worker.
 
-        $serv->task($data);
+//         $serv->task($data);
 
-    }
+//     }
 
-    public function onTask($serv, $task_id, $from_id, $data) {
-        $battle=new BattleController();
-        $result=$battle->getData($data);
-          if($result){
-            $i=0
-            do {
+//     public function onTask($serv, $task_id, $from_id, $data) {
+//         $battle=new BattleController();
+//         $result=$battle->getData($data);
+//           if($result){
+//             $i=0
+//             do {
+//                 $key='match_history'.$data['match_id'].'_'.$result;
+//                 $count=$redis_battle->LLEN($key);
+//                 sleep(2);
+//                 $i++;
+//             //检查数据池中的数据，如果数据池中数据少于配置值，则向数据池中补充数据
+//                 if ($count>0) {
+//                      $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+//                 } else if($i>=20){
+//                     break;
+//                 }
+//                 } while (true);
+//             }
+//         }
+
+// }
+
+//     public function onFinish($serv, $task_id, $data) {
+
+//         echo "Task {$task_id} finishn";
+
+//         echo "Result: {$data}n";
+
+// }
+
+        $serv->on('Packet', function ($serv, $data, $clientInfo) {
+             $battle=new BattleController();
+             $result=$battle->getData($data);
+             if($result){
                 $key='match_history'.$data['match_id'].'_'.$result;
                 $count=$redis_battle->LLEN($key);
-                sleep(2);
-                $i++;
-            //检查数据池中的数据，如果数据池中数据少于配置值，则向数据池中补充数据
-                if ($count>0) {
-                     $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-                } else if($i>=20){
-                    break;
-                }
-                } while (true);
-            }
-        }
+                if($count>0){
+                    $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);
+                } 
+                else {
+                    wait(600);
+                }  
+             }
 
-}
+             $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
+             });
+        $serv->start(); 
 
-    public function onFinish($serv, $task_id, $data) {
-
-        echo "Task {$task_id} finishn";
-
-        echo "Result: {$data}n";
-
-}
-
-    //     $serv->on('Packet', function ($serv, $data, $clientInfo) {
-    //          $battle=new BattleController();
-    //          $result=$battle->getData($data);
-    //          if($result){
-    //             $key='match_history'.$data['match_id'].'_'.$result;
-    //             $count=$redis_battle->LLEN($key);
-    //             if($count>0){
-    //                 $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);
-    //             } 
-    //             else {
-    //                 wait(600);
-    //             }  
-    //          }
-
-    //          $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
-    //          });
-    //     $serv->start(); 
-
-    // }
+    }
 
 }
