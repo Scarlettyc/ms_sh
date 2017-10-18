@@ -361,6 +361,7 @@ class BattleController extends Controller
 				return null;
 			}
 
+ 	 	}
  	 }
 	 public function finalMatchResult ($data){
 	 	$match_id=$data['match_id'];
