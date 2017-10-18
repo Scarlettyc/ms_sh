@@ -181,7 +181,7 @@ class BaggageUtil
 				$UserBaggageEqModel->insert($result);
 			}
 			else if($reward['item_type']==2){
-				for ($i=0;;$i<$reward['item_quantity'];$i++) {
+				for ($i=0;$i<$reward['item_quantity'];$i++) {
 					$eqData=$eqModel->where('equ_id',$reward['item_org_id'])->first();
 					$result['u_id']=$u_id;
 					$result['b_equ_id']=$eqData['equ_id'];
