@@ -195,7 +195,7 @@ class BaggageUtil
 				}
 			}
 			else if($reward['item_type']==3){
-				for ($i=0;;$i<$reward['item_quantity'];$i++) {
+				for ($i=0;$i<$reward['item_quantity'];$i++) {
 					$scrData=$scrModel->where('sc_id',$reward['item_org_id'])->first();
 					$result['u_id']=$u_id;
 					$result['bsc_id']=$scrData['sc_id'];
