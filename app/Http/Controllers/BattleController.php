@@ -269,7 +269,6 @@ class BattleController extends Controller
   			$result['ch_spd']=$user_spd; 			
 
 	}
-}
 
 
 
