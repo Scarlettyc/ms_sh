@@ -47,7 +47,7 @@ class SwooleCommand extends Command
             'dispatch_mode' => 2,
             'debug_mode' => 1,
             'task_worker_num' => 8, 
-            'task_ipc_mode' => 3
+            'task_ipc_mode' => 3,
             'log_file'    => './storage/logs/swoole.log',
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
