@@ -333,6 +333,7 @@ class BattleController extends Controller
 
 
  	 public function getData($data){
+ 	 	$now   = new DateTime;
  	 	$dmy=$now->format( 'Ymd' );
  	 	$match_id=$data['match_id'];
  	 	$redis_battle=Redis::connection('battle');
