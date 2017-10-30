@@ -1,4 +1,4 @@
-<?php
+1<?php
 namespace App\Util;
 use App\Http\Requests;
 use App\EffectionMstModel;
@@ -47,12 +47,12 @@ class AttackHitUtil
 
 				$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
 				if($hit['hit']){
-					$reuslt['atk_eff']=$hit['atk_eff'];
+					$result['atk_eff']=$hit['atk_eff'];
 					$result['hit']=1;
-					$$result['end']=0;
+					$result['end']=0;
 				}
 					else if($hit['end']&&!$hit['hit']){
-					$reuslt['atk_eff']['eff']=$hit['atk_eff'];
+					$result['atk_eff']['eff']=$hit['atk_eff'];
 					$result['atk_eff']['hit']=0;
 					$result['atk_eff']['end']=1;
 						}

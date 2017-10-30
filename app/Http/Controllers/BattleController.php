@@ -266,7 +266,11 @@ class BattleController extends Controller
 			$result['ch_def']=$user_def;
 			$result['ch_crit']=$ch_crit;
 			$result['ch_cd']=$ch_crit;
-  			$result['ch_spd']=$user_spd; 			
+  			$result['ch_spd']=$user_spd; 		
+  			$response=json_encode($result,TRUE);
+  			$redis_battle->LPUSH($battlekey,$response);
+
+  			return 	$response;
 
 	}
 
