@@ -7,6 +7,11 @@ use App\EffectionMstModel;
 use App\AtkEffectionMst;
 use App\AtkRecEffModel;
 use App\BuffEffModel;
+use App\CharAttModel;
+use App\EqAttrmstModel;
+use App\UserBaggageEqModel;
+use App\EquipmentMstModel;
+use App\DefindMstModel;
 use Exception;
 use Carbon\Carbon;
 use DateTime;
@@ -38,6 +43,31 @@ class CharSkillEffUtil
 	 		$result[]=$eff;
 	 	}
 	 	return $result;
+
+	 }
+
+	 public function calculateCharAttr($u_id){
+	 	$charModel=new CharacterModel();
+	 	$charAttr=new CharAttModel();
+	 	$eqAttr=new EqAttrmstModel();
+	 	$eqModel=new EquipmentMstModel();
+	 	$userEqModel=new UserBaggageEqModel();
+	 	$defindModel=new DefindMstModel();
+	 	$defindData=$defindModel->where('defind_id',20)->first();
+	 	$charData=$charModel->where('u_id',$u_id)->first();
+	 	$charAttData=$charAttr->where('ch_lv',$charData['ch_lv'])->first();
+	 	$userEqData=$userEqModel->where('u_id',$u_id)->where('status',1)->first();
+	 	$eqData=$eqModel->where('equ_id',$userEqData['b_equ_id'])->first();
+	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_attribute_id'])->first();
+	 	$userStam=($charAttData['base_stamina']+$userEqData['eff_ch_stam']);
+	 	$userHp=$userStam*$charAttData['stamina_hp_ratio']+$charData['ch_lv']*$defindData['value1']-$defindData['value2'];
+	 	$userArmor=$charAttData['base_armor']+$eqAttData['eff_ch_armor'];
+	 	$userAtk=$charAttData['base_atk']+$userEqData['eff_ch_armor'];
+	 	$crit=$userEqData['eff_ch_crit_per'];
+	 	$now   = new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+	 	$charModel->update(['ch_hp_max'=>$userHp,'ch_stam'=>$userStam,'ch_atk'=>$userAtk,'ch_armor'=>$userArmor,'ch_crit'=>$crit,'update_at'=>$datetime]);
+
 
 	 }
 

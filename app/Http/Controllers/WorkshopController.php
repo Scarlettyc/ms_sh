@@ -17,6 +17,7 @@ use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
+use App\Util\CharSkillEffUtil
 class WorkshopController extends Controller
 {
 	public function workshop(Request $request)
@@ -209,6 +210,7 @@ class WorkshopController extends Controller
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ImgMstModel=new ImgMstModel();
+		$charUtil=new CharSkillEffUtil();
 		$result=[];
 
 		$u_id=$data['u_id'];
@@ -329,8 +331,11 @@ class WorkshopController extends Controller
 				$img=$ImgMstModel->where('w_id',$w_id)->where('m_id',$m_id)->where('core_id',$equ_id)->first();
 
 				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'ch_hp_max'=>$hp_updated,'ch_atk'=>$atk_updated,'ch_def'=>$def_updated,'ch_crit'=>$crit_updated,'ch_cd'=>$cd_updated,'ch_img'=>$img['img_id']]);
-
+				
 				$response='Core changed';
+				
+
+
 			}else{
 				throw new Exception("Change equipment error");
 				$response=[
