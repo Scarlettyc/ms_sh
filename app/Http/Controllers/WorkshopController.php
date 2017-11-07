@@ -7,11 +7,13 @@ use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
+use App\UserBaggageEqModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
 use App\ImgMstModel;
 use App\Util\ItemInfoUtil;
 use Exception;
+use App\Util\CharSkillEffUtil;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
@@ -38,7 +40,7 @@ class WorkshopController extends Controller
 		if(isset($u_id))
 		{
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
-			$characterInfo=$CharacterModel->select('ch_id','ch_title','ch_lv','ch_star','ch_hp_max','ch_atk','ch_def','ch_res','ch_crit','ch_cd','ch_spd','ch_img')->where('u_id',$u_id)->first();
+			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
 			$result['Workshop_Data']['Character_info']=$characterInfo;
 
 			$WeaponId=$characterDetail['w_id'];
@@ -211,6 +213,7 @@ class WorkshopController extends Controller
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ImgMstModel=new ImgMstModel();
 		$charUtil=new CharSkillEffUtil();
+		$UserBaggageEqModel=new UserBaggageEqModel();
 		$result=[];
 
 		$u_id=$data['u_id'];
@@ -231,110 +234,20 @@ class WorkshopController extends Controller
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
 
-			if($Equ_part == 1)
-			{
-				$EquOld=$EquipmentMstModel->where('equ_id',$w_id)->first();
-				$effOld_id=$EquOld['eff_id'];
-				$effOld=$EffectionMstModel->where('eff_id',$effOld_id)->first();
+			$UserBaggageEqModel->equipNewWeapon($u_id,$equ_id,$Equ_part);
+			if($Equ_part==1){
+				$CharacterModel->update(['w_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
+			}
+			else if($Equ_part==2){
+				$CharacterModel->update(['m_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
 
-				$effNew_id=$EquNew['eff_id'];
-				$effNew=$EffectionMstModel->where('eff_id',$effNew_id)->first();
-
-				$hp_old=$effOld['eff_ch_hp_max'];
-				$hp_new=$effNew['eff_ch_hp_max'];
-				$hp_updated=$hp-$hp_old+$hp_new;
-
-				$atk_old=$effOld['eff_ch_atk'];
-				$atk_new=$effNew['eff_ch_atk'];
-				$atk_updated=$atk-$atk_old+$atk_new;
-
-				$def_old=$effOld['eff_ch_def'];
-				$def_new=$effNew['eff_ch_def'];
-				$def_updated=$def-$def_old+$def_new;
-
-				$crit_old=$effOld['eff_ch_crit_per'];
-				$crit_new=$effNew['eff_ch_crit_per'];
-				$crit_updated=$crit-$crit_old+$crit_new;
-
-				$cd_old=$effOld['eff_ch_cd'];
-				$cd_new=$effNew['eff_ch_cd'];
-				$cd_updated=$cd-$cd_old+$cd_new;
-
-				$img=$ImgMstModel->where('w_id',$equ_id)->where('m_id',$m_id)->where('core_id',$core_id)->first();
-
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'ch_hp_max'=>$hp_updated,'ch_atk'=>$atk_updated,'ch_def'=>$def_updated,'ch_crit'=>$crit_updated,'ch_cd'=>$cd_updated,'ch_img'=>$img['img_id']]);
-
-				$response='Weapon changed';
-			}else if($Equ_part == 2)
-			{
-				$EquOld=$EquipmentMstModel->where('equ_id',$m_id)->first();
-				$effOld_id=$EquOld['eff_id'];
-				$effOld=$EffectionMstModel->where('eff_id',$effOld_id)->first();
-
-				$effNew_id=$EquNew['eff_id'];
-				$effNew=$EffectionMstModel->where('eff_id',$effNew_id)->first();
-
-				$hp_old=$effOld['eff_ch_hp_max'];
-				$hp_new=$effNew['eff_ch_hp_max'];
-				$hp_updated=$hp-$hp_old+$hp_new;
-
-				$atk_old=$effOld['eff_ch_atk'];
-				$atk_new=$effNew['eff_ch_atk'];
-				$atk_updated=$atk-$atk_old+$atk_new;
-
-				$def_old=$effOld['eff_ch_def'];
-				$def_new=$effNew['eff_ch_def'];
-				$def_updated=$def-$def_old+$def_new;
-
-				$crit_old=$effOld['eff_ch_crit_per'];
-				$crit_new=$effNew['eff_ch_crit_per'];
-				$crit_updated=$crit-$crit_old+$crit_new;
-
-				$cd_old=$effOld['eff_ch_cd'];
-				$cd_new=$effNew['eff_ch_cd'];
-				$cd_updated=$cd-$cd_old+$cd_new;
-
-				$img=$ImgMstModel->where('w_id',$w_id)->where('m_id',$equ_id)->where('core_id',$core_id)->first();
-
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'ch_hp_max'=>$hp_updated,'ch_atk'=>$atk_updated,'ch_def'=>$def_updated,'ch_crit'=>$crit_updated,'ch_cd'=>$cd_updated,'ch_img'=>$img['img_id']]);
-
-				$response='Movement changed';
-			}else if($Equ_part == 3)
-			{
-				$EquOld=$EquipmentMstModel->where('equ_id',$core_id)->first();
-				$effOld_id=$EquOld['eff_id'];
-				$effOld=$EffectionMstModel->where('eff_id',$effOld_id)->first();
-
-				$effNew_id=$EquNew['eff_id'];
-				$effNew=$EffectionMstModel->where('eff_id',$effNew_id)->first();
-
-				$hp_old=$effOld['eff_ch_hp_max'];
-				$hp_new=$effNew['eff_ch_hp_max'];
-				$hp_updated=$hp-$hp_old+$hp_new;
-
-				$atk_old=$effOld['eff_ch_atk'];
-				$atk_new=$effNew['eff_ch_atk'];
-				$atk_updated=$atk-$atk_old+$atk_new;
-
-				$def_old=$effOld['eff_ch_def'];
-				$def_new=$effNew['eff_ch_def'];
-				$def_updated=$def-$def_old+$def_new;
-
-				$crit_old=$effOld['eff_ch_crit_per'];
-				$crit_new=$effNew['eff_ch_crit_per'];
-				$crit_updated=$crit-$crit_old+$crit_new;
-
-				$cd_old=$effOld['eff_ch_cd'];
-				$cd_new=$effNew['eff_ch_cd'];
-				$cd_updated=$cd-$cd_old+$cd_new;
-
-				$img=$ImgMstModel->where('w_id',$w_id)->where('m_id',$m_id)->where('core_id',$equ_id)->first();
-
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'ch_hp_max'=>$hp_updated,'ch_atk'=>$atk_updated,'ch_def'=>$def_updated,'ch_crit'=>$crit_updated,'ch_cd'=>$cd_updated,'ch_img'=>$img['img_id']]);
-				
-				$response='Core changed';
-				
-
+			}
+			else if($Equ_part==2){
+				$CharacterModel->update(['core_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
+			}
+			$newchar=$charUtil->calculatCharEq($u_id);
+			$result['change_part']=$Equ_part;
+			$result['character']=$newchar;
 
 			}else{
 				throw new Exception("Change equipment error");
@@ -350,6 +263,7 @@ class WorkshopController extends Controller
 			'error' => "please check u_id",
 			];
 		}
+		$response=json_encode($result,TRUE);	
 		return $response;
 	}
 }

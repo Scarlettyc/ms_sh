@@ -22,6 +22,7 @@ use App\BattleSpecialRewardsMst;
 use App\LevelUPModel;
 use App\Util\BaggageUtil;
 use App\Util\AttackHitUtil;
+use App\Util\CharSkillEffUtil
 use DateTime;
 use Exception;
 use Math;
@@ -129,12 +130,15 @@ class BattleController extends Controller
   	$levelupMst=new LevelUPModel();
   	$baggageUtil=new BaggageUtil();
 	$characterModel=new CharacterModel();
+	$chaEffutil=new CharSkillEffUtil();
+
   	$levels=$levelupMst->where('level','<',$lv)->where('exp','<',$exp)->orderBy('level','DESC')->get();
   	if(isset($levels)){
   		foreach ($levels as $key => $level) {
   			$baggageUtil->levelMissionReward($u_id,$level['level']);
   		}
-  		 $characterModel->update(array('ch_lv'=>$levels[0]['level']))->where('u_id',$u_id);
+  		 $characterModel->update(array('ch_lv'=>$levels[0]['level'],'update_at'=>$datetime))->where('u_id',$u_id);
+  		 $chaEffutil->calculatCharEq($u_id);
   		 return 1;
   	}
   		return 0;

@@ -3,6 +3,7 @@
 namespace App;
 use DB;
 use Carbon\Carbon;
+use DateTime;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,4 +13,11 @@ class UserBaggageEqModel extends Model
 
 	protected $connection = 'mysql';
 	protected $table = "User_Baggage_Eq";
+	public function equipNewEq($u_id,$b_equ_id,$equ_part){
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+
+		$this->update('status'=>0,'updated_at'=>$datetime)->where('u_id',$u_id)->where('status',1)->where('equ_part',$equ_part);
+		$this->update('status'=>1,'updated_at'=>$datetime)->where('b_equ_id',$b_equ_id)->where('u_id',$u_id)->where('equ_part',$equ_part);
+	}
 }
