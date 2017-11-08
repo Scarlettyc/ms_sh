@@ -162,6 +162,17 @@ class AccessController extends Controller
 		
 	}
 
+	public function showStatus(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$usermodel=new UserModel();
+		$u_id=$data['u_id'];
+		$userMoney=$usermodel->select('u_coin','u_gem')->where('u_id',$u_id)->first();
+
+		$response=json_encode($userMoney,TRUE);
+	}
+
 	public function test (Request $request){
  	//phpinfo();
 		return view('testview');

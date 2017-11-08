@@ -26,6 +26,7 @@ Route::controller('tutorial','TutorialController');
 Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
+Route::post('/uservalue','AccessController@showStatus');
 
 Route::controller('baggage','BaggageController');
 Route::post('/baggage','BaggageController@baggage');
