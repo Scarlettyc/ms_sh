@@ -256,13 +256,6 @@ class WorkshopController extends Controller
 				'error' => "please check workshop controller",
 				];
 			}
-		}else{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
 		$response=json_encode($result,TRUE);	
 		return $response;
 	}
