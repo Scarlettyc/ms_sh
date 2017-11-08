@@ -171,6 +171,7 @@ class AccessController extends Controller
 		$userMoney=$usermodel->select('u_coin','u_gem')->where('u_id',$u_id)->first();
 
 		$response=json_encode($userMoney,TRUE);
+		return $response;
 	}
 
 	public function test (Request $request){
