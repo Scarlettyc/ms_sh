@@ -19,7 +19,7 @@ use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
-use App\Util\CharSkillEffUtil
+use App\Util\CharSkillEffUtil;
 class WorkshopController extends Controller
 {
 	public function workshop(Request $request)
