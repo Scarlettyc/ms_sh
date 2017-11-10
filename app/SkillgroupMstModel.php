@@ -6,9 +6,9 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class EffectionGroupMstModel extends Model
+class SkillgroupMstModel extends Model
 {
-	protected $fillable = ['eff_group_id','effection_name','updated_at','created_at'];
+	protected $fillable = ['skill_group_id','skillection_name','updated_at','created_at'];
 	protected $connection = 'mysql';
-	protected $table = "Effection_group_mst"
+	protected $table = "Skill_group_mst"
 }

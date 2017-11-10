@@ -244,18 +244,17 @@ class BattleController extends Controller
 	 	}
 
  	   	if(isset($enemyEffResult['atk_eff']['eff'])){
- 	   				$atkeff=$enemyEffResult['atkeff']['eff'];
-					$enemyCritical=1;
- 					if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
- 							$enemyCritical=$this->getCritical();
- 					}
- 					$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
- 					$user_hp=$user_hp-$enemyDMG;
- 					if($enemyEffResult['atkeff']['end']==0){
- 					$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-					$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
-
- 					}
+ 	 		$atkeff=$enemyEffResult['atkeff']['eff'];
+			$enemyCritical=1;
+ 			if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
+ 				$enemyCritical=$this->getCritical();
+ 			}
+ 			$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 			$user_hp=$user_hp-$enemyDMG;
+ 			if($enemyEffResult['atkeff']['end']==0){
+ 				$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+				$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+ 			}
 
 		}
 	}

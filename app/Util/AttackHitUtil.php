@@ -44,25 +44,25 @@ class AttackHitUtil
 			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 			if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
 				if($eff_bullet_width!=0){
-
-				$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
-				if($hit['hit']){
-					$result['atk_eff']=$hit['atk_eff'];
-					$result['hit']=1;
-					$result['end']=0;
-				}
+					$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
+					if($hit['hit']){
+						$result['atk_eff']=$hit['atk_eff'];
+						$result['hit']=1;
+						$result['end']=0;
+					}
 					else if($hit['end']&&!$hit['hit']){
 					$result['atk_eff']['eff']=$hit['atk_eff'];
 					$result['atk_eff']['hit']=0;
 					$result['atk_eff']['end']=1;
 						}
 					}
-			else {
+				else {
 
-				 $hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp']);
+				 	$hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp']);
 					$result['atk_eff']['eff']= $atkEff;
 					$result['atk_eff']['hit']=$hit['hit'];
 					$result['atk_eff']['end']=$hit['end'];
+					$result['skill_group']=$$skillData['skill_group'];
 				}
 			}
 		}
