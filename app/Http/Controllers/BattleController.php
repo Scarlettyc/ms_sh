@@ -17,6 +17,8 @@ use App\NormalEffectionMstModel;
 use App\MapTrapRelationMst;
 use App\Util\DistanceAttackUtil;
 use Illuminate\Support\Facades\Redis;
+use App\EquipmentMstModel;
+use App\EqAttrmstModel;
 use App\BattleNormalRewardsMst;
 use App\BattleSpecialRewardsMst;
 use App\LevelUPModel;
@@ -159,6 +161,8 @@ class BattleController extends Controller
  	    $userExist=$redis_battle->LLEN($battlekey);
  	    $attackhitutil=new AttackHitUtil();
  	    $defindModel=new DefindMstModel();
+ 	    $eqAttr=new EqAttrmstModel();
+ 	    $eqModel=new EquipmentMstModel();
      	$defValue=$defindModel->where('defind_id',8);
      	list($t1, $t2) = explode(' ', microtime());
 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
@@ -209,11 +213,18 @@ class BattleController extends Controller
 		}
 			
  			//$user_shield=$userData['ch_shield'];
-  			$user_atk=$userData['ch_atk'];
+			$eqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$userData['m_id'],$userData['core_id']);
+			$eqAtk= $eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$eqAtt);
+			$enemyEqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$enemy['m_id'],$enemy['core_id']);
+			$enemyEqAtk=$eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$enemyEqAtt);
+
+			
+  			$user_atk=$userData['ch_atk']+$eqAtk;
   			$user_def=$userData['ch_def'];
   			$user_crit=$userData['ch_crit '];
   			$user_cd=$userData['ch_cd'];
   			$user_spd=$userData['ch_spd'];
+  			$enemy_atk=$enemy['ch_atk']+$enemyEqAtk;
 
   		foreach($effects as $effResult){
 	 		if(isset($effResult['selfbuff'])){
@@ -245,11 +256,16 @@ class BattleController extends Controller
 
  	   	if(isset($enemyEffResult['atk_eff']['eff'])){
  	 		$atkeff=$enemyEffResult['atkeff']['eff'];
-			$enemyCritical=1;
- 			if($atkeff['eff_group_id']==1||$atkeff['eff_group_id']==2){
- 				$enemyCritical=$this->getCritical();
- 			}
- 			$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 	 		if($enemyEffResult['skill_group']==0){
+$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
+ 	 			
+ 	 		}
+
+ 	 		else if($enemyEffResult['skill_group']==1){
+ 	 			$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
+ 	 		}
+ 	 		$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+
  			$user_hp=$user_hp-$enemyDMG;
  			if($enemyEffResult['atkeff']['end']==0){
  				$userBattleData=$redis_battle->LRANGE($battlekey,0,0);

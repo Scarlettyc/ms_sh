@@ -1,4 +1,4 @@
-1<?php
+<?php
 namespace App\Util;
 use App\Http\Requests;
 use App\EffectionMstModel;
