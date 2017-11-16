@@ -181,7 +181,7 @@ class AccessController extends Controller
 		$result['ch_lv']=$userDetails['ch_lv'];
 		$result['ch_exp']=$userDetails['ch_exp'];
 		$result['ch_ranking']=$userDetails['ch_ranking'];
-		//$response=json_encode($result,TRUE);
+		$response=json_encode($result,TRUE);
 		 return $response;
 	}
 
