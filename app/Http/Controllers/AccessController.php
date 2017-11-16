@@ -172,9 +172,8 @@ class AccessController extends Controller
 		$userMoney=$userModel->select('u_id','u_coin','u_gem')->where('u_id',$u_id)->first();
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
 		$userImg=urldecode($userDetails['ch_img']);
-		$userMoneyArr=json_decode($userMoney);
-		$userDetailsArr=json_decode($userDetails);
-		$result=array_merge($userMoneyArr,$userDetailsArr);
+		$result['u_id']=$userMoney['u_id'];
+		$result['ch_img']=$userImg;
 
 		$response=json_encode($result,TRUE);
 		return $response;
