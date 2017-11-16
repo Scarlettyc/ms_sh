@@ -174,7 +174,7 @@ class AccessController extends Controller
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
 		$result['u_gem']=$userMoney['u_gem'];
-		$result['ch_img']=$userDetails['ch_img'];
+		$result['ch_img']=strval($userDetails['ch_img']);
 		$result['ch_title']=$userDetails['ch_title'];
 		$result['ch_lv']=$userDetails['ch_lv'];
 		$result['ch_exp']=$userDetails['ch_exp'];
