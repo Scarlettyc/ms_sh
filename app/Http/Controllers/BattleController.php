@@ -213,7 +213,7 @@ class BattleController extends Controller
 		}
 			
  			//$user_shield=$userData['ch_shield'];
-			$eqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$userData['m_id'],$userData['core_id']);
+			$eqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$userData['m_id'],$userData['core_id']]);
 			$eqAtk= $eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$eqAtt);
 			$enemyEqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$enemy['m_id'],$enemy['core_id']);
 			$enemyEqAtk=$eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$enemyEqAtt);
