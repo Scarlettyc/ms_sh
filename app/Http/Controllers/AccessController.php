@@ -166,9 +166,10 @@ class AccessController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
 		$u_id=$data['u_id'];
-		$userDetails=$usermodel->select('u_coin','u_gem','ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
+
+		$userDetails=$charModel->select('u_coin','u_gem','ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
 
 		$response=json_encode($userDetails,TRUE);
 		return $response;
