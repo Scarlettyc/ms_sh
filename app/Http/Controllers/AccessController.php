@@ -180,7 +180,7 @@ class AccessController extends Controller
 		$result['ch_exp']=$userDetails['ch_exp'];
 		$result['ch_ranking']=$userDetails['ch_ranking'];
 		$response=json_encode($result,TRUE);
-		// return $response;
+		 return $response;
 	}
 
 	public function test (Request $request){
