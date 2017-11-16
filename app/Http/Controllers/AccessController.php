@@ -173,7 +173,7 @@ class AccessController extends Controller
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
 		$userImg=urldecode($userDetails['ch_img']);
 		$userMoneyArr=json_decode($userMoney);
-		$userDetailsArr=son_decode($userDetails);
+		$userDetailsArr=json_decode($userDetails);
 		$result=array_merge($userMoneyArr,$userDetailsArr);
 
 		$response=json_encode($result,TRUE);
