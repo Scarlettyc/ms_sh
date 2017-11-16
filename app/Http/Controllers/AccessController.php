@@ -173,15 +173,16 @@ class AccessController extends Controller
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
-		echo $userDetails['ch_img'];
+		echo $userDetails['ch_img']
 		$result['u_gem']=$userMoney['u_gem'];
-		$result['ch_img']=$userDetails['ch_img'];
+		$result['ch_img']=urldecode($userDetails['ch_img']);
+		echo $result['ch_img'];
 		$result['ch_title']=$userDetails['ch_title'];
 		$result['ch_lv']=$userDetails['ch_lv'];
 		$result['ch_exp']=$userDetails['ch_exp'];
 		$result['ch_ranking']=$userDetails['ch_ranking'];
 		$response=json_encode($result,TRUE);
-		 //return $response;
+		 return $response;
 	}
 
 	public function test (Request $request){
