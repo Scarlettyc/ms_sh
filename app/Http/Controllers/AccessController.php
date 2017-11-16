@@ -171,7 +171,7 @@ class AccessController extends Controller
 		$u_id=$data['u_id'];
 		$userMoney=$userModel->select('u_id','u_coin','u_gem')->where('u_id',$u_id)->first();
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
-		$userImg=json_decode($userDetails['ch_img']);
+		$userImg=urldecode($userDetails['ch_img']);
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
 		$result['u_gem']=$userMoney['u_gem'];
