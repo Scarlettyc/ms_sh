@@ -48,8 +48,8 @@ class BaggageUtil
 
 	function getScroll ($baggage_u_id)
 	{
-		if(isset($baggage_u_id))
-		{
+		// if(isset($baggage_u_id))
+		// {
 			$UserBaggageScrollModel=new UserBaggageScrollModel();
 			$result=[];
 
@@ -64,20 +64,20 @@ class BaggageUtil
 				$result[]=$arry;
 			}
 			$response=$result;
-		}else{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
+		// }else{
+		// 	throw new Exception("No User ID");
+		// 	$response=[
+		// 	'status' => 'Wrong',
+		// 	'error' => "please check u_id",
+		// 	];
+		// }
 		return $response;
 	}
 
 	function getWeapon ($baggage_u_id)
 	{
-		if(isset($baggage_u_id))
-		{
+		// if(isset($baggage_u_id))
+		// {
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
@@ -92,20 +92,20 @@ class BaggageUtil
 				$result[]=$arry;
 			}
 			$response=$result;
-		}else{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
+		// }else{
+		// 	throw new Exception("No User ID");
+		// 	$response=[
+		// 	'status' => 'Wrong',
+		// 	'error' => "please check u_id",
+		// 	];
+		// }
 		return $response;
 	}
 
 	function getMovement ($baggage_u_id)
 	{
-		if(isset($baggage_u_id))
-		{
+		// if(isset($baggage_u_id))
+		// {
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
@@ -120,20 +120,20 @@ class BaggageUtil
 				$result[]=$arry;
 			}
 			$response=$result;
-		}else{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
+		// }else{
+		// 	throw new Exception("No User ID");
+		// 	$response=[
+		// 	'status' => 'Wrong',
+		// 	'error' => "please check u_id",
+		// 	];
+		// }
 		return $response;
 	}
 
 	function getCore ($baggage_u_id)
 	{
-		if(isset($baggage_u_id))
-		{
+		// if(isset($baggage_u_id))
+		// {
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$result=[];
 
@@ -148,13 +148,13 @@ class BaggageUtil
 				$result[]=$arry;
 			}
 			$response=$result;
-		}else{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
+		// }else{
+		// 	throw new Exception("No User ID");
+		// 	$response=[
+		// 	'status' => 'Wrong',
+		// 	'error' => "please check u_id",
+		// 	];
+		// }
 		return $response;
 	}
 	function insertToBaggage($u_id,$rewards){
