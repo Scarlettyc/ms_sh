@@ -89,7 +89,6 @@ class BaggageController extends Controller
 				'error' => "please check select data",
 				];
 			}
-		}
 		return base64_encode($response);
 	}
 
