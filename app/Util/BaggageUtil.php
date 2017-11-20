@@ -19,8 +19,8 @@ class BaggageUtil
 	//show the quantity and icon for every item in the baggage
 	function getResource($baggage_u_id)
 	{
-		if($baggage_u_id!=null)
-		{
+		// if($baggage_u_id!=null)
+		// {
 			$UserBaggageResModel=new UserBaggageResModel();
 			$ItemMstModel=new ItemMstModel();
 			$result=[];
@@ -36,14 +36,14 @@ class BaggageUtil
 				$result[]=$arry;
 			}
 			$response=$result;
-		}else{
-			throw new Exception("No User ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
-		return $response;
+		// }else{
+		// 	throw new Exception("No User ID");
+		// 	$response=[
+		// 	'status' => 'Wrong',
+		// 	'error' => "please check u_id",
+		// 	];
+		// }
+		 return $response;
 	}
 
 	function getScroll ($baggage_u_id)
