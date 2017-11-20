@@ -19,7 +19,7 @@ class BaggageUtil
 	//show the quantity and icon for every item in the baggage
 	function getResource($baggage_u_id)
 	{
-		if($baggage_u_id)
+		if($baggage_u_id!=null)
 		{
 			$UserBaggageResModel=new UserBaggageResModel();
 			$ItemMstModel=new ItemMstModel();
