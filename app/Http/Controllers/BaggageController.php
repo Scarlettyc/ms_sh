@@ -1,4 +1,4 @@
-<?php
+f<?php
 
 namespace App\Http\Controllers;
 use App\Http\Requests;
@@ -47,8 +47,6 @@ class BaggageController extends Controller
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
-		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
-		{
 			if($select === "All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
@@ -91,13 +89,6 @@ class BaggageController extends Controller
 				'error' => "please check select data",
 				];
 			}
-		}else
-		{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
 		}
 		return base64_encode($response);
 	}
