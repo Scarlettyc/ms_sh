@@ -46,7 +46,7 @@ class BaggageController extends Controller
 		$access_token=$loginTodayArr->access_token;*/
 		
 		$u_id=$data['u_id'];
-		$select=$json['select']; //there are five different types: All/R/S/W/C
+		$select=$data['select']; //there are five different types: All/R/S/W/C
 			if($select ===0)//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
