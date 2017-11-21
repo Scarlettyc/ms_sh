@@ -44,10 +44,9 @@ class BaggageController extends Controller
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;*/
-
-		$userBaggageChoice=$data;
-		$u_id=$userBaggageChoice['u_id'];
-		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
+		
+		$u_id=$data['u_id'];
+		$select=$json['select']; //there are five different types: All/R/S/W/C
 			if($select ===0)//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
@@ -82,14 +81,8 @@ class BaggageController extends Controller
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=$Core;
 				$response=json_encode($result,TRUE);
-			}else
-			{
-				throw new Exception("Wrong select data");
-				$response=[
-				'status' => 'Wrong',
-				'error' => "please check select data",
-				];
 			}
+
 		return base64_encode($response);
 	}
 
