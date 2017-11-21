@@ -82,6 +82,9 @@ class BaggageController extends Controller
 				$result['Baggage_data']=$Core;
 				$response=json_encode($result,TRUE);
 			}
+			else {
+				return null;
+			}
 
 		return base64_encode($response);
 	}
