@@ -56,27 +56,27 @@ class BaggageController extends Controller
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=array_merge($Resource,$Scroll,$Weapon,$Movement,$Core);
 				$response=json_encode($result,TRUE);
-			}else if($select ==1)//select Resource
+			}else if($select ===1)//select Resource
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']=$Resource;
 				$response=json_encode($result,TRUE);
-			}else if($select == 2)//select Scroll
+			}else if($select === 2)//select Scroll
 			{
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}else if($select == 3)//select Weapon
+			}else if($select ===3)//select Weapon
 			{
 				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']=$Weapon;
 				$response=json_encode($result,TRUE);
-			}else if($select == 4)
+			}else if($select === 4)
 			{
 				$Movement=$BaggageUtil->getMovement($u_id);
 				$result['Baggage_data']=$Movement;
 				$response=json_encode($result,TRUE);
-			}else if($select == 5)//select Core
+			}else if($select === 5)//select Core
 			{
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=$Core;
