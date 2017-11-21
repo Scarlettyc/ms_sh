@@ -23,6 +23,7 @@ use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
 use DB;
+use Log;
 use Illuminate\Support\Facades\Redis;
 
 class BaggageController extends Controller
@@ -33,7 +34,7 @@ class BaggageController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		log::info($json);
+		Log::info($json);
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
