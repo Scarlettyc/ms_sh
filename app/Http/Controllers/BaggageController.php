@@ -33,7 +33,7 @@ class BaggageController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-
+		log::info($json);
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
@@ -47,7 +47,7 @@ class BaggageController extends Controller
 		$userBaggageChoice=$data;
 		$u_id=$userBaggageChoice['u_id'];
 		$select=$userBaggageChoice['select']; //there are five different types: All/R/S/W/C
-			if($select ==0)//get all the item from baggage
+			if($select ===0)//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$Scroll=$BaggageUtil->getScroll($u_id);
@@ -56,12 +56,12 @@ class BaggageController extends Controller
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=array_merge($Resource,$Scroll,$Weapon,$Movement,$Core);
 				$response=json_encode($result,TRUE);
-			}else if($select ===1)//select Resource
+			}else if($select =="1")//select Resource
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']=$Resource;
 				$response=json_encode($result,TRUE);
-			}else if($select === 2)//select Scroll
+			}else if($select ===2)//select Scroll
 			{
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']=$Scroll;
