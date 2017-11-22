@@ -46,7 +46,7 @@ class BaggageController extends Controller
 		
 		$u_id=$data['u_id'];
 		$select=$data['eq_choose']; //there are five different types: All/R/S/W/C
-			if($select ===0)//get all the item from baggage
+			if($select ==="All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$Scroll=$BaggageUtil->getScroll($u_id);
