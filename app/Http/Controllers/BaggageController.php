@@ -60,22 +60,22 @@ class BaggageController extends Controller
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']=$Resource;
 				$response=json_encode($result,TRUE);
-			}else if($select ===2)//select Scroll
+			}else if($select ==="S")//select Scroll
 			{
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}else if($select ===3)//select Weapon
+			}else if($select ==="w")//select Weapon
 			{
 				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']=$Weapon;
 				$response=json_encode($result,TRUE);
-			}else if($select === 4)
+			}else if($select ==="M")
 			{
 				$Movement=$BaggageUtil->getMovement($u_id);
 				$result['Baggage_data']=$Movement;
 				$response=json_encode($result,TRUE);
-			}else if($select === 5)//select Core
+			}else if($select ==="C")//select Core
 			{
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=$Core;
