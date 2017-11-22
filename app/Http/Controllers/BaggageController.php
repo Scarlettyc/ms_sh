@@ -47,7 +47,7 @@ class BaggageController extends Controller
 		$access_token=$loginTodayArr->access_token;*/
 		
 		$u_id=$data['u_id'];
-		$select=$data['select']; //there are five different types: All/R/S/W/C
+		$select=$data['eq_choose']; //there are five different types: All/R/S/W/C
 			if($select ===0)//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
@@ -84,10 +84,10 @@ class BaggageController extends Controller
 				$response=json_encode($result,TRUE);
 			}
 			else {
-				return null;
+				return $json;
 			}
 
-		return base64_encode($response);
+		return base64_encode($json);
 	}
 
 	//show the detail information when user click the item in the baggage
