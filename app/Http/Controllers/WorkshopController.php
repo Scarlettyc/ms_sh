@@ -43,42 +43,46 @@ class WorkshopController extends Controller
 			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
 			$result['Workshop_Data']['Character_info']=$characterInfo;
 
-			$WeaponId=$characterDetail['w_id'];
-			$weaponDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$WeaponId)->first();
-			$MovementId=$characterDetail['m_id'];
-			$movementDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$MovementId)->first();
-			$CoreId=$characterDetail['core_id'];
-			$coreDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$CoreId)->first();
-			$WeaSkillId=$weaponDetail['skill_id'];
-			$weaSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$WeaSkillId)->first();
-			$MoveSkillId=$movementDetail['skill_id'];
-			$moveSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$MoveSkillId)->first();
-			$CoreSkillId=$coreDetail['skill_id'];
-			$coreSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$CoreSkillId)->first();
+			// $WeaponId=$characterDetail['w_id'];
+			// $weaponDetail=$EquipmentMstModel->select('special_skill_id','','icon_path')->where('equ_id',$WeaponId)->first();
+			// $MovementId=$characterDetail['m_id'];
+			// $movementDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$MovementId)->first();
+			// $CoreId=$characterDetail['core_id'];
+			// $coreDetail=$EquipmentMstModel->select('skill_id','icon_path')->where('equ_id',$CoreId)->first();
+			// $WeaSkillId=$weaponDetail['skill_id'];
+			// $weaSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$WeaSkillId)->first();
+			// $MoveSkillId=$movementDetail['skill_id'];
+			// $moveSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$MoveSkillId)->first();
+			// $CoreSkillId=$coreDetail['skill_id'];
+			// $coreSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$CoreSkillId)->first();
 
 
 			$weaponData['equ_id']=$characterDetail['w_id'];
 			// $weaponData['equ_icon']=$weaponDetail['icon_path'];
 			// $weaponData['skill_id']=$weaponDetail['skill_id'];
 			// $weaponData['skill_icon']=$weaSkillDetail['skill_icon'];
-			$result['Workshop_Data']['Weapon_Data']=$weaponData;
+			// $result['Workshop_Data']['Weapon_Data']=$weaponData;
 
-			$movementData['equ_id']=$characterDetail['m_id'];
+			// $movementData['equ_id']=$characterDetail['m_id'];
 			// $movementData['equ_icon']=$movementDetail['icon_path'];
 			// $movementData['skill_id']=$movementDetail['skill_id'];
 			// $movementData['skill_icon']=$moveSkillDetail['skill_icon'];
-			$result['Workshop_Data']['Movement_Data']=$movementData;
+			// $result['Workshop_Data']['Movement_Data']=$movementData;
 
-			$coreData['equ_id']=$characterDetail['core_id'];
+			// $coreData['equ_id']=$characterDetail['core_id'];
 			// $coreData['equ_icon']=$coreDetail['icon_path'];
 			// $coreData['skill_id']=$coreDetail['skill_id'];
 			// $coreData['skill_icon']=$coreSkillDetail['skill_icon'];
-			$result['Workshop_Data']['Core_Data']=$coreData;
+			// $result['Workshop_Data']['Core_Data']=$coreData;
 
-			$result['character']['ch_hp_max']=$characterDetail['ch_hp_max'];
-			$result['character']['ch_atk']=$characterDetail['ch_atk'];
-			$result['character']['ch_armor']=$characterDetail['ch_armor'];
-			$result['character']['ch_crit']=$characterDetail['ch_crit'];
+			$result['w_id']=$characterDetail['w_id'];
+			$result['m_id']=$characterDetail['m_id'];
+			$result['core_id']=$characterDetail['core_id'];
+
+			$result['ch_stam']=$characterDetail['ch_stam'];
+			$result['ch_atk']=$characterDetail['ch_atk'];
+			$result['ch_armor']=$characterDetail['ch_armor'];
+			$result['ch_crit']=$characterDetail['ch_crit'];
 			$response=json_encode($result,TRUE);
 		}else
 		{
