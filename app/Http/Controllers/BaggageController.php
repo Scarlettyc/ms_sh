@@ -55,7 +55,7 @@ class BaggageController extends Controller
 				$Core=$BaggageUtil->getCore($u_id);
 				$result['Baggage_data']=array_merge($Resource,$Scroll,$Weapon,$Movement,$Core);
 				$response=json_encode($result,TRUE);
-			}else if($select =="1")//select Resource
+			}else if($select ==="R")//select Resource
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
 				$result['Baggage_data']=$Resource;
@@ -85,7 +85,7 @@ class BaggageController extends Controller
 				return base64_encode($json);
 			}
 
-		return base64_encode($json);
+		return base64_encode($response);
 	}
 
 	//show the detail information when user click the item in the baggage
