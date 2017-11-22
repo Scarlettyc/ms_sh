@@ -65,7 +65,7 @@ class BaggageController extends Controller
 				$Scroll=$BaggageUtil->getScroll($u_id);
 				$result['Baggage_data']=$Scroll;
 				$response=json_encode($result,TRUE);
-			}else if($select ==="w")//select Weapon
+			}else if($select ==="W")//select Weapon
 			{
 				$Weapon=$BaggageUtil->getWeapon($u_id);
 				$result['Baggage_data']=$Weapon;
