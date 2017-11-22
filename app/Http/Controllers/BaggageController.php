@@ -33,9 +33,7 @@ class BaggageController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	dd($json);
 		$data=json_decode($json,TRUE);
-		Log::info($data);
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
 
@@ -84,7 +82,7 @@ class BaggageController extends Controller
 				$response=json_encode($result,TRUE);
 			}
 			else {
-				return $json;
+				return base64_encode($json);
 			}
 
 		return base64_encode($json);
