@@ -30,9 +30,9 @@ class BaggageUtil
 			foreach ($BaggageResource as $obj) 
 			{
 				$arry['item_id']=$obj['br_id'];
-				$arry['item_icon']=$obj['br_icon'];
+				// $arry['item_icon']=$obj['br_icon'];
 				$arry['item_quantity']=$obj['br_quantity'];
-				$arry['item_type']=1;
+				// $arry['item_type']=1;
 				$result[]=$arry;
 			}
 			$response=$result;
@@ -58,9 +58,9 @@ class BaggageUtil
 			foreach ($baggageScroll as $obj) 
 			{
 				$arry['item_id']=$obj['bsc_id'];
-				$arry['item_icon']=$obj['bsc_icon'];
+				// $arry['item_icon']=$obj['bsc_icon'];
 				$arry['item_quantity']=1;
-				$arry['item_type']=3;
+				// $arry['item_type']=3;
 				$result[]=$arry;
 			}
 			$response=$result;
@@ -86,9 +86,9 @@ class BaggageUtil
 			foreach ($baggageWeapon as $obj) 
 			{
 				$arry['item_id']=$obj['b_equ_id'];
-				$arry['item_icon']=$obj['b_icon_path'];
+				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
-				$arry['item_type']=2;
+				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
 			$response=$result;
@@ -114,9 +114,9 @@ class BaggageUtil
 			foreach ($baggageMovement as $obj)
 			{
 				$arry['item_id']=$obj['b_equ_id'];
-				$arry['item_icon']=$obj['b_icon_path'];
+				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
-				$arry['item_type']=2;
+				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
 			$response=$result;
@@ -142,9 +142,9 @@ class BaggageUtil
 			foreach ($baggageCore as $obj) 
 			{
 				$arry['item_id']=$obj['b_equ_id'];
-				$arry['item_icon']=$obj['b_icon_path'];
+				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
-				$arry['item_type']=2;
+				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
 			$response=$result;

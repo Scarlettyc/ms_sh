@@ -58,19 +58,19 @@ class WorkshopController extends Controller
 
 
 			$weaponData['equ_id']=$characterDetail['w_id'];
-			$weaponData['equ_icon']=$weaponDetail['icon_path'];
+			// $weaponData['equ_icon']=$weaponDetail['icon_path'];
 			// $weaponData['skill_id']=$weaponDetail['skill_id'];
 			// $weaponData['skill_icon']=$weaSkillDetail['skill_icon'];
 			$result['Workshop_Data']['Weapon_Data']=$weaponData;
 
 			$movementData['equ_id']=$characterDetail['m_id'];
-			$movementData['equ_icon']=$movementDetail['icon_path'];
+			// $movementData['equ_icon']=$movementDetail['icon_path'];
 			// $movementData['skill_id']=$movementDetail['skill_id'];
 			// $movementData['skill_icon']=$moveSkillDetail['skill_icon'];
 			$result['Workshop_Data']['Movement_Data']=$movementData;
 
 			$coreData['equ_id']=$characterDetail['core_id'];
-			$coreData['equ_icon']=$coreDetail['icon_path'];
+			// $coreData['equ_icon']=$coreDetail['icon_path'];
 			// $coreData['skill_id']=$coreDetail['skill_id'];
 			// $coreData['skill_icon']=$coreSkillDetail['skill_icon'];
 			$result['Workshop_Data']['Core_Data']=$coreData;
