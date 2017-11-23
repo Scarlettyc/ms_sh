@@ -113,26 +113,21 @@ class BaggageController extends Controller
 			if($ItemType == 1)
 			{
 				$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
-				$response=$ResInfo;
+				$result=$ResInfo;
 			}else if($ItemType == 2)
 			{
 				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id);
-				$response=$EquInfo;
+				$result=$EquInfo;
 			}else if($ItemType == 3)
 			{
 				$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
-				$response=$ScrollInfo;
-			}else
-			{
-				throw new Exception("Wrong itemtype data");
-				$response=[
-				'status' => 'Wrong',
-				'error' => "please check itemtype data",
-				];
+				$result=$ScrollInfo;
 			}
+			$response=json_encode($result,TRUE);
+			return base64_encode($response);
 
 		}
-		return $response;//base64_encode($response);
+		return null;//base64_encode($response);
 	}
 
 	//sell item in the baggage

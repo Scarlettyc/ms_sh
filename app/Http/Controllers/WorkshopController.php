@@ -37,7 +37,7 @@ class WorkshopController extends Controller
 		$coreData=[];
 
 		$u_id=$data['u_id'];
-		if(isset($u_id))
+		if($u_id)
 		{
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
@@ -83,15 +83,9 @@ class WorkshopController extends Controller
 			$result['ch_armor']=$characterDetail['ch_armor'];
 			$result['ch_crit']=$characterDetail['ch_crit'];
 			$response=json_encode($result,TRUE);
-		}else
-		{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
+				return base64_encode($response);
 		}
-		return base64_encode($response);
+	
 	}
 
 	public function showEquipmentInfo (Request $request)
