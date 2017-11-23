@@ -228,7 +228,7 @@ class ItemInfoUtil
 			'error' => "please check Equipment ID",
 			];
 		}
-		return $response;
+		return $equipment;
 	}
 
 	//get the information of the equipment that user click and compare with the equipment that on the same position.
