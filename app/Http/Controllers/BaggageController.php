@@ -93,7 +93,7 @@ class BaggageController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$data=json_decode($json,TRUE);
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 		$ItemType=$data['item_type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
