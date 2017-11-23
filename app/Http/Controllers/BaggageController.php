@@ -96,7 +96,6 @@ class BaggageController extends Controller
 		$data=json_decode($req,TRUE);
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
-
 		$ItemType=$data['item_type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
 		$ItemId=$data['item_id'];
 		$u_id=$data['u_id'];
@@ -107,9 +106,6 @@ class BaggageController extends Controller
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;*/
-
-		if($u_id)
-		{
 			if($ItemType == 1)
 			{
 				$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
@@ -125,9 +121,6 @@ class BaggageController extends Controller
 			}
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
-
-		}
-		return null;//base64_encode($response);
 	}
 
 	//sell item in the baggage
