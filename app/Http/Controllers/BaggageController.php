@@ -108,7 +108,7 @@ class BaggageController extends Controller
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;*/
 
-		if(isset($u_id)/*&&$access_token==$data['access_token']*/)
+		if($u_id)
 		{
 			if($ItemType == 1)
 			{
@@ -131,12 +131,6 @@ class BaggageController extends Controller
 				];
 			}
 
-		}else{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
 		}
 		return $response;//base64_encode($response);
 	}
