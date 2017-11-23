@@ -100,6 +100,7 @@ class BaggageController extends Controller
 		$ItemId=$data['item_id'];
 		$u_id=$data['u_id'];
 
+
 		/*$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
@@ -112,7 +113,7 @@ class BaggageController extends Controller
 				$result=$ResInfo;
 			}else if($ItemType == 2)
 			{
-				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id);
+				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId;
 				$result=$EquInfo;
 			}else if($ItemType == 3)
 			{
