@@ -11,7 +11,6 @@ use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\EquUpgradeMstModel;
 use App\CharacterModel;
-use App\SkillMstModel;
 use App\EqAttrmstModel;
 use Exception;
 use App\Exceptions\Handler;
