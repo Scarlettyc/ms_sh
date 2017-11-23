@@ -210,7 +210,7 @@ class ItemInfoUtil
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
 
-			$eqAtr=$eqAttrmstModel->where('equ_att_id')->$EquipmentInfo['equ_attribute_id'];
+			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_attribute_id'])->first();
 
 			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
 			$equipment['eff_ch_atk']=$eqAtr['eff_ch_atk'];
