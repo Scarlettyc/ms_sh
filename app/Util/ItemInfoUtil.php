@@ -11,6 +11,8 @@ use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\EquUpgradeMstModel;
 use App\CharacterModel;
+use App\SkillMstModel;
+use App\EqAttrmstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -193,7 +195,8 @@ class ItemInfoUtil
 		if(isset($EquipmentId))
 		{
 			$EquipmentMstModel=new EquipmentMstModel();
-			$EffectionMstModel=new EffectionMstModel();
+			$skillMstModel=new SkillMstModel();
+			$eqAttrmstModel=new EqAttrmstModel();
 			$equipment=[];
 			$result=[];
 
@@ -202,17 +205,25 @@ class ItemInfoUtil
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
-			$equipment['item_img']=$EquipmentInfo['icon_path'];
+			//$equipment['item_img']=$EquipmentInfo['icon_path'];
+			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
-			$result['item_data']=$equipment;
 
-			$EquipmentEff_id = $EquipmentInfo['eff_id'];
-			$EquipmentEffInfo = $EffectionMstModel->where('eff_id','=',$EquipmentEff_id)->pluck('eff_description');
+			$eqAtr=$eqAttrmstModel->where('equ_att_id')->$EquipmentInfo['equ_attribute_id'];
 
-			$result['item_data']['item_info']['equipment_eff']=$EquipmentEffInfo;
-			$response=$result;
+			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
+			$equipment['eff_ch_atk']=$eqAtr['eff_ch_atk'];
+			$equipment['eff_ch_armor']=$eqAtr['eff_ch_armor'];
+			if($equipment!=0){
+				$equipment['eff_ch_crit_per']=$eqAtr['eff_ch_crit_per'];
+			}
+
+			$skillInfo = $skillMstModel->select('skill_info')->where('skill_id','=',$EquipmentInfo['special_skill_id'])->first();
+			$equipment['skill_info']=$skillInfo;
+
+			$response=json_encode($equipment,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
 			$response=[
