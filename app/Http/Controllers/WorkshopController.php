@@ -108,7 +108,8 @@ class WorkshopController extends Controller
 		if(isset($Item_Id))
 		{
 			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($Item_Id);
-			$response=$EquipmentDetail;
+			$response=json_encode($EquipmentDetail,TRUE);
+
 		}else
 		{
 			throw new Exception("Wrong Equipment ID data");
