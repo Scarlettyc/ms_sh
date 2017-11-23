@@ -138,16 +138,13 @@ class ItemInfoUtil
 	// get the information of a Equipment: name, type, icon, effection
 	function getEquipmentInfo ($Item_Id)
 	{
-		$EquipmentId=$Item_Id;
-		if(isset($EquipmentId))
-		{
 			$EquipmentMstModel=new EquipmentMstModel();
 			$skillMstModel=new SkillMstModel();
 			$eqAttrmstModel=new EqAttrmstModel();
 			$equipment=[];
 			$result=[];
 
-			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$EquipmentId)->first(); 
+			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
 
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
@@ -169,12 +166,6 @@ class ItemInfoUtil
 
 			$skillInfo = $skillMstModel->select('skill_info')->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
 			$equipment['skill_info']=$skillInfo['skill_info'];
-		}else{
-			throw new Exception("Wrong Equipment ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check Equipment ID",
-			];
 		}
 		return $equipment;
 	}
