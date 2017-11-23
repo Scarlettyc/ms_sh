@@ -113,7 +113,7 @@ class BaggageController extends Controller
 				$result=$ResInfo;
 			}else if($ItemType == 2)
 			{
-				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId;
+				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId);
 				$result=$EquInfo;
 			}else if($ItemType == 3)
 			{
