@@ -92,7 +92,7 @@ class BaggageController extends Controller
 	public function getItemInfo (Request $request)
 	{
 		$req=$request->getContent();
-		//$json=base64_decode($req);
+		$json=base64_decode($req);
 		$data=json_decode($req,TRUE);
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
