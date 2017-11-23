@@ -41,7 +41,6 @@ class WorkshopController extends Controller
 		{
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
-			$result['Workshop_Data']['Character_info']=$characterInfo;
 
 			// $WeaponId=$characterDetail['w_id'];
 			// $weaponDetail=$EquipmentMstModel->select('special_skill_id','','icon_path')->where('equ_id',$WeaponId)->first();
