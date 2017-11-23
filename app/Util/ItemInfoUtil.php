@@ -79,102 +79,31 @@ class ItemInfoUtil
 			$scroll['item_name']=$ScrollInfo['sc_name'];
 			$scroll['item_rarity']=$ScrollInfo['sc_rarity'];
 			$scroll['item_img']=$ScrollInfo['sc_img_path'];
-			$scroll['item_description']=$ScrollInfo['sc_description'];
+			// $scroll['item_description']=$ScrollInfo['sc_description'];
 			$scroll['item_price']=$ScrollInfo['sc_sale_price'];
-
-			$result['item_data']=$scroll;
-
-			//get equipment information and skill information from database
-			$scroll_equ=[];
-			$equ_id=$ScrollInfo['equ_id'];
-			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$equ_id)->first();
-			$EquEff_id = $EquipmentInfo['eff_id'];
-			$EquEffectInfo = $EffectionMstModel->where('eff_id','=',$EquEff_id)->pluck('eff_description');
-			
-			$scroll_equ['equ_name']=$EquEffectInfo['equ_name'];
-			$scroll_equ['equ_icon']=$EquEffectInfo['icon_path'];
-			$scroll_equ['equ_eff']=$EquEffectInfo;
-
-			$result['item_data']['item_info']['scroll_equ']=$scroll_equ;
-			
-			$scroll_skill=[];
-			$Skill_id = $EquipmentInfo['skill_id'];
-			$SkillInfo = $SkillMstModel->where('skill_id','=',$Skill_id)->first();
-			$SkillEff_id = $SkillInfo['eff_id'];
-			$SkillEffectInfo = $EffectionMstModel->where('eff_id','=',$SkillEff_id)->pluck('eff_description');
-
-			$scroll_skill['skill_name']=$SkillInfo['skill_name'];
-			$scroll_skill['skill_icon']=$SkillInfo['skill_icon'];
-			$scroll_skill['skill_eff']=$SkillEffectInfo;
-
-			$result['item_data']['item_info']['scroll_skill']=$scroll_skill;
+			$scroll['coin_need']=$ScrollInfo['sc_coin'];
 
 			$resource=[];
-			$resource1=[];
-			$resource1['r_id']=$ScrollInfo['r_id_1'];
-			$resource1['r_quantity']=$ScrollInfo['rd1_quantity'];
-			$resource[]=$resource1;
+			// $resource1=[];
+			$resouceUse=[];
 
-			$resource2=[];
-			$resource2['r_id']=$ScrollInfo['r_id_2'];
-			$resource2['r_quantity']=$ScrollInfo['rd2_quantity'];
-			$resource[]=$resource2;
-
-			$resource3=[];
-			if(isset($ScrollInfo['r_id_3'])){
-				$resource3['r_id']=$ScrollInfo['r_id_3'];
-				$resource3['r_quantity']=$ScrollInfo['rd3_quantity'];
-				$resource[]=$resource3;
-			}
-			
-			$resource4=[];
-			if(isset($ScrollInfo['r_id_4']))
-			{
-				$resource4['r_id']=$ScrollInfo['r_id_4'];
-				$resource4['r_quantity']=$ScrollInfo['rd4_quantity'];
-				$resource[]=$resource4;
-			}
-
-			$scroll_check=1;
-
-			//get every resource and check if enough
-			foreach ($resource as $obj) 
-			{
-				$resinfo=$ResourceMstModel->where('r_id',$obj['r_id'])->first();
-				$resquantity=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$obj['r_id'])->first();
-				$scroll_resource['item_had']=$resquantity['br_quantity'];
-				$scroll_resource['item_need']=$obj['r_quantity'];
-				$scroll_resource['item_icon']=$resinfo['r_img_path'];
-				if($scroll_resource['item_had']>=$scroll_resource['item_need'])
-				{
-					$scroll_resource['item_check']=1;
-				}else{
-					$scroll_resource['item_check']=0;
-					$scroll_check=0;
+			$resouce[]=$this->getResourceName($r_id_1,$rd1_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_2,$rd2_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_3,$rd3_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_4,$rd4_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_5,$rd5_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_6,$rd6_quantity,$u_id);
+			$resouce[]=$this->getResourceName($r_id_7,$rd7_quantity,$u_id);
+			foreach ($variable as $resouce) {
+				if($variable!=null){
+				$resouceUse[]=$variable;
 				}
-				$scroll_detail[]=$scroll_resource;
 			}
-			$result['item_data']['item_info']['scroll_detail']=$scroll_detail;
+			$scroll['resouce']=$resouceUse;
+			$user=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
+			$scroll['coin_have']=$user['u_coin'];
 
-			//get the number of coin that user already had and how much coin that user need
-			$scroll_resource_coin=[];
-			$CoinResQuantity = $UserModel->where('u_id','=',$u_id)->first();
-
-			$scroll_resource_coin['item_had']=$CoinResQuantity['u_coin'];
-			$scroll_resource_coin['item_need']=$ScrollInfo['sc_coin'];
-			if($scroll_resource_coin['item_had']>=$scroll_resource_coin['item_need'])
-			{
-				$scroll_resource_coin['item_check']=1;
-			}else{
-				$scroll_resource_coin['item_check']=0;
-				$scroll_check=0;
-			}
-
-			$result['item_data']['item_info']['scroll_coin']=$scroll_resource_coin;
-
-			$result['item_data']['item_info']['scroll_check']=$scroll_check;
-
-			$response=json_encode($result,TRUE);
+			$response=json_encode($scroll,TRUE);
 
 		}else{
 			throw new Exception("No Scroll ID");
@@ -184,6 +113,25 @@ class ItemInfoUtil
 			];
 		}
 		return $response;
+	}
+
+	private function getResourceName($r_id,$r_quantity,$u_id){
+		$useBaggageRe=new UserBaggageResModel();
+			if($r_quantity){
+				$resource=$ResourceMstModel->select('r_name','r_img_path')->where('r_id',$r_id)->first();
+				$resource['rd1_quantity']=$r_quantity;
+				$resource['r_id_1']=$r_id;
+				$userRe=$useBaggageRe->select('br_quantity')->where('u_id',$u_id)->where('br_id',$r_id)->first();
+				if($userRe){
+					$resource['u_have']=$userRe['br_quantity'];
+				}
+				else{
+					$resource['u_have']=0;
+				}
+				return $resource;
+			}
+			return null;
+
 	}
 
 
