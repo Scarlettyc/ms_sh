@@ -219,7 +219,7 @@ class ItemInfoUtil
 				$equipment['eff_ch_crit_per']=$eqAtr['eff_ch_crit_per'];
 			}
 
-			$skillInfo = $skillMstModel->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
+			$skillInfo = $skillMstModel->select('skill_info')->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
 			$equipment['skill_info']=$skillInfo['skill_info'];
 
 			$response=json_encode($equipment,TRUE);
