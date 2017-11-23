@@ -221,8 +221,6 @@ class ItemInfoUtil
 
 			$skillInfo = $skillMstModel->select('skill_info')->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
 			$equipment['skill_info']=$skillInfo['skill_info'];
-
-			$response=json_encode($equipment,TRUE);
 		}else{
 			throw new Exception("Wrong Equipment ID");
 			$response=[
