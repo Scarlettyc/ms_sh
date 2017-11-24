@@ -21,21 +21,13 @@ class MatchController extends Controller
 {
     public function match($clientID,$data)
     {
-  //   	$req=$request->getContent();
-		// $json=base64_decode($req);
-	 // 	//dd($json);
-		// $data=json_decode($json,TRUE);
 		$u_id=$data;
 		//push to match list
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		// $data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
-		// $loginToday=Redis::HGET('login_data',$dmy.$u_id);
-		// $loginTodayArr=json_decode($loginToday);
-		// $access_token=$loginTodayArr->access_token;
-		// if($access_token==$data['access_token'])
-		// {
+
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
@@ -43,16 +35,14 @@ class MatchController extends Controller
      		$chardata=$characterModel->where('u_id',$u_id)->first();
      		if(isset($chardata)){
      			$maxLv=$matchrange->max('user_lv_to');
-     			$maxStar=$matchrange->max('star_from');
-		 		$match=$matchrange->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->first();
+     			$maxStar=$matchrange->max('user_ranking');
+		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->first();
 		 	
 
 			if($chardata['ch_lv']<$maxLv){
-				$matchKey='match_below_maxlv_star'.$match['star_from'].'to'.$match['star_to'];
+				$matchKey='battle_match'.$match['user_ranking'];
 			}
-			else{
-				$matchKey='match_maxlv_star'.$match['star_from'].'star'.$match['star_to'];
-			}
+
 			$matchList=$redis_battle->LLEN($matchKey);
 			$list['u_id_1']=$u_id;
 			$list['client_id']=$clientID;

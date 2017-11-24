@@ -106,10 +106,8 @@ class BattleController extends Controller
   	$baNorReward=new BattleNormalRewardsMst();
   	$datetime=$now->format('Y-m-d h:m:s');
 	$charData=$characterModel->where('u_id',$u_id)->first();
-
-  	$norReward=$baNorReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
-  	$exp=$charData['ch_exp']+$norReward['exp'];
-  	$isLevelUP=$this->levelUP($u_id,$exp,$charData['ch_lv']);
+	$cha_ranking=$charData['ch_ranking'];
+  	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$cha_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
   	$count=count($norReward);
 	shuffle($norReward);
 	$baggageUtil=new BaggageUtil();
