@@ -212,7 +212,7 @@ class WorkshopController extends Controller
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-
+		
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ImgMstModel=new ImgMstModel();
@@ -236,9 +236,7 @@ class WorkshopController extends Controller
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
 
-			
-			$UserBaggageEqModel->update(['status'=>0,'updated_at'=>$datetime])->where('u_id',$u_id)->where('status',1)->where('equ_part',$equ_part);
-			$UserBaggageEqModel->update(['status'=>1,'updated_at'=>$datetime])->where('b_equ_id',$b_equ_id)->where('u_id',$u_id)->where('equ_part',$equ_part);
+			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part);
 			if($Equ_part==1){
 				$CharacterModel->update(['w_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
 			}
