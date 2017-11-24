@@ -70,7 +70,7 @@ class CharSkillEffUtil
 	 	$crit=round($eqAttData['eff_ch_crit_per']/100);
 	 	$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-	 	$charModel->update(['ch_hp_max'=>$userHp,'ch_stam'=>$userStam,'ch_atk'=>$userAtk,'ch_armor'=>$userArmor,'ch_crit'=>$crit,'update_at'=>$datetime])->where('u_id',$u_id);
+	 	$charModel->where('u_id',$u_id)->update(['ch_hp_max'=>$userHp,'ch_stam'=>$userStam,'ch_atk'=>$userAtk,'ch_armor'=>$userArmor,'ch_crit'=>$crit,'update_at'=>$datetime]);
 	 	$result['ch_hp_max']=$userHp;
 	 	$result['ch_stam']=$userStam;
 	 	$result['ch_atk']=$userAtk;
