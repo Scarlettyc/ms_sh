@@ -235,7 +235,7 @@ class WorkshopController extends Controller
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
 
-			$UserBaggageEqModel->equipNewWeapon($u_id,$equ_id,$Equ_part);
+			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part);
 			if($Equ_part==1){
 				$CharacterModel->update(['w_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
 			}
