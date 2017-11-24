@@ -248,10 +248,20 @@ class WorkshopController extends Controller
 				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'updated_at'=>$datetime]);
 			}
 			$newchar=$charUtil->calculatCharEq($u_id);
+			if($newchar){
+
+				return base64_encode("success");
+			}
+			else{
+			throw new Exception("there have some error of workshop equiment");
+			$response=[
+			'status' => 'Wrong',
+			'error' => "equip  error",
+			];
+			}
 			$result['change_part']=$Equ_part;
 			$result['character']=$newchar;
-
-		$response=json_encode($result,TRUE);	
-		return $response;
+	
+		
 	}
 }
