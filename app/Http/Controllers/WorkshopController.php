@@ -238,14 +238,14 @@ class WorkshopController extends Controller
 
 			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part);
 			if($Equ_part==1){
-				$CharacterModel->update(['w_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'update_at'=>$datetime]);
 			}
 			else if($Equ_part==2){
-				$CharacterModel->update(['m_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'update_at'=>$datetime]);
 
 			}
 			else if($Equ_part==2){
-				$CharacterModel->update(['core_id'=>$equ_id,'update_at'=>$datetime])->where('u_id',$u_id);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'update_at'=>$datetime]);
 			}
 			$newchar=$charUtil->calculatCharEq($u_id);
 			$result['change_part']=$Equ_part;
