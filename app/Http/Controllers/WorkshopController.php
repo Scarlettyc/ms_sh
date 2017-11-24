@@ -212,7 +212,7 @@ class WorkshopController extends Controller
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		
+
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ImgMstModel=new ImgMstModel();
@@ -238,14 +238,14 @@ class WorkshopController extends Controller
 
 			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part);
 			if($Equ_part==1){
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'update_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'updated_at'=>$datetime]);
 			}
 			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'update_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'updated_at'=>$datetime]);
 
 			}
 			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'update_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'updated_at'=>$datetime]);
 			}
 			$newchar=$charUtil->calculatCharEq($u_id);
 			$result['change_part']=$Equ_part;
