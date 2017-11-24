@@ -56,8 +56,8 @@ class CharSkillEffUtil
 	 	$defindData=$defindModel->where('defind_id',20)->first();
 	 	$charData=$charModel->where('u_id',$u_id)->first();
 	 	$charAttData=$charAttr->where('ch_lv',$charData['ch_lv'])->first();
-	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->where('status',1)->first();
-	 	$legData=$eqModel->where('equ_id',$charData['m_id'])->where('equ_part',2)->where('status',1)->first();
+	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->first();
+	 	$legData=$eqModel->where('equ_id',$charData['m_id'])->where('equ_part',2)->first();
 	 	$eqData=$eqModel->where('equ_id',$charData['w_id'])->where('equ_part',1)->first();
 	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_attribute_id'])->first();
 	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_attribute_id'])->first();
