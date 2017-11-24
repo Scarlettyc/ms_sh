@@ -222,8 +222,6 @@ class WorkshopController extends Controller
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
 
-		if(isset($u_id))
-		{
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$w_id=$characterDetail['w_id'];
 			$m_id=$characterDetail['m_id'];
@@ -252,13 +250,6 @@ class WorkshopController extends Controller
 			$result['change_part']=$Equ_part;
 			$result['character']=$newchar;
 
-			}else{
-				throw new Exception("Change equipment error");
-				$response=[
-				'status' => 'Wrong',
-				'error' => "please check workshop controller",
-				];
-			}
 		$response=json_encode($result,TRUE);	
 		return $response;
 	}
