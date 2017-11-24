@@ -165,7 +165,11 @@ class ItemInfoUtil
 			}
 
 			$skillInfo = $skillMstModel->select('skill_id','skill_info','skill_name','skill_icon')->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
+			$equipment['skill_id']=$skillInfo['skill_id'];
+			$equipment['skill_name']=$skillInfo['skill_name'];
 			$equipment['skill_info']=$skillInfo['skill_info'];
+			$equipment['skill_icon']=$skillInfo['skill_icon'];
+
 		return $equipment;
 	}
 
