@@ -15,11 +15,6 @@ class UserBaggageEqModel extends Model
 	protected $connection = 'mysql';
 	protected $table = "User_Baggage_Eq";
 
-
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of 312961b... update value
 	public function equipNewEq($u_id,$b_equ_id,$equ_part){
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
