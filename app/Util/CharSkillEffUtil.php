@@ -96,7 +96,7 @@ class CharSkillEffUtil
 	 	$backWeapon2=$this->mapEQ($u_id,'E01,',0);
 	 	$backWeapon3=$this->mapEQ($u_id,'G01,',0);
 	 	$userEqModel->insert($backWeapon1,$backWeapon2,$backWeapon3);
-	 	$charModel->where('u_id',$u_id)->update(['w_id'=>$weaponID,'m_id'=>$legID,'core_id'=>$coreID,'updated_at'=>$datetime]);
+	 	$charModel->where('u_id',$u_id)->update(['w_id'=>$wepaon['equ_id'],'w_bag_id'=>$weaponID,'m_id'=>$leg['equ_id'],'m_bag_id'=>$legID,'core_id'=>$core,'core_bag_id'=>$coreID,'updated_at'=>$datetime]);
 
 	 }
 	 private function mapEQ($u_id,$code,$status){
