@@ -67,7 +67,7 @@ class CharSkillEffUtil
 	 	$userHp=$userStam*$charAttData['stamina_hp_ratio']+$charData['ch_lv']*$defindData['value1']-$defindData['value2'];
 	 	$userArmor=$charAttData['base_armor']+$eqAttData['eff_ch_armor']+$legAttData['eff_ch_armor']+$asAttData['eff_ch_armor'];
 	 	$userAtk=$charAttData['base_atk']+$eqAttData['eff_ch_atk']+$legAttData['eff_ch_atk']+$asAttData['eff_ch_atk'];
-	 	$crit=round($eqAttData['eff_ch_crit_per']/100);
+	 	$crit=$eqAttData['eff_ch_crit_per'];
 	 	$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 	 	$charModel->where('u_id',$u_id)->update(['ch_hp_max'=>$userHp,'ch_stam'=>$userStam,'ch_atk'=>$userAtk,'ch_armor'=>$userArmor,'ch_crit'=>$crit,'updated_at'=>$datetime]);

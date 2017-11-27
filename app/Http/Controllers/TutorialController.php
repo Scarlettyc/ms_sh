@@ -11,6 +11,7 @@ use App\UserModel;
 use App\CharacterModel;
 use Exception;
 use DateTime;
+use EquipmentMstModel;
 use Illuminate\Support\Facades\Redis;
 class TutorialController extends Controller
 {
