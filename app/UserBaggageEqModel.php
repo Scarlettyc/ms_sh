@@ -20,7 +20,7 @@ class UserBaggageEqModel extends Model
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 
-		$this->where('u_id',$u_id)->where('status',1)->where('b_equ_type',$equ_part)->('user_beq_id',$w_id)->update(['status'=>0,'updated_at'=>$datetime]);
+		$this->where('u_id',$u_id)->where('status',1)->where('b_equ_type',$equ_part)->where('user_beq_id',$w_id)->update(['status'=>0,'updated_at'=>$datetime]);
 		$this->where('b_equ_id',$b_equ_id)->where('u_id',$u_id)->where('b_equ_type',$equ_part)->where('user_beq_id',$user_beq_id)->update(['status'=>1,'updated_at'=>$datetime]);
 	}
 }
