@@ -16,7 +16,8 @@ class UserBaggageEqModel extends Model
 	protected $table = "User_Baggage_Eq";
 
 
-	public function equipNewEq($u_id,$b_equ_id,$equ_part,$w_id,$user_beq_id){
+
+	public function equipNewEq($u_id,$b_equ_id,$equ_part){
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 
