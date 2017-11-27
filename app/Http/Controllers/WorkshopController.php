@@ -56,7 +56,7 @@ class WorkshopController extends Controller
 			// $coreSkillDetail=$SkillMstModel->select('skill_icon')->where('skill_id',$CoreSkillId)->first();
 
 
-			$weaponData['equ_id']=$characterDetail['w_id'];
+			// $weaponData['user_beq_id']=$characterDetail['w_id'];
 			// $weaponData['equ_icon']=$weaponDetail['icon_path'];
 			// $weaponData['skill_id']=$weaponDetail['skill_id'];
 			// $weaponData['skill_icon']=$weaSkillDetail['skill_icon'];
@@ -98,7 +98,7 @@ class WorkshopController extends Controller
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
-		$Item_Id=$data['equ_id'];
+		$Item_Id=$data['user_beq_id'];
 		if(isset($Item_Id))
 		{
 			$EquipmentDetail = $ItemInfoUtil->getEquipmentInfo($Item_Id);
@@ -155,6 +155,7 @@ class WorkshopController extends Controller
 
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
+
 
 		if(isset($u_id))
 		{
@@ -213,6 +214,7 @@ class WorkshopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 
+
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ImgMstModel=new ImgMstModel();
@@ -222,6 +224,7 @@ class WorkshopController extends Controller
 
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
+		$user_beq_id=$data['user_beq_id'];
 
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$w_id=$characterDetail['w_id'];
@@ -236,16 +239,16 @@ class WorkshopController extends Controller
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
 
-			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part);
+			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part,$w_id,$user_beq_id);
 			if($Equ_part==1){
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'updated_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'updated_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$user_beq_id,'updated_at'=>$datetime]);
 
 			}
 			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'updated_at'=>$datetime]);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			$newchar=$charUtil->calculatCharEq($u_id);
 			if($newchar){

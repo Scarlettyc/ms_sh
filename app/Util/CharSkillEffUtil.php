@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Redis;
 use App\RaEffModel;
 use DB;
 
+
 class CharSkillEffUtil
 {
 
@@ -67,7 +68,7 @@ class CharSkillEffUtil
 	 	$userHp=$userStam*$charAttData['stamina_hp_ratio']+$charData['ch_lv']*$defindData['value1']-$defindData['value2'];
 	 	$userArmor=$charAttData['base_armor']+$eqAttData['eff_ch_armor']+$legAttData['eff_ch_armor']+$asAttData['eff_ch_armor'];
 	 	$userAtk=$charAttData['base_atk']+$eqAttData['eff_ch_atk']+$legAttData['eff_ch_atk']+$asAttData['eff_ch_atk'];
-	 	$crit=$eqAttData['eff_ch_crit_per'];
+	 	$crit=$eqAttData['eff_ch_crit_per']+$asAttData['eff_ch_crit_per']+$legAttData['legAttData'];
 	 	$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 	 	$charModel->where('u_id',$u_id)->update(['ch_hp_max'=>$userHp,'ch_stam'=>$userStam,'ch_atk'=>$userAtk,'ch_armor'=>$userArmor,'ch_crit'=>$crit,'updated_at'=>$datetime]);
@@ -77,6 +78,36 @@ class CharSkillEffUtil
 	 	$result['ch_armor']=$userArmor;
 	 	$result['ch_crit']=$crit;
 	 	return $result;
+	 }
+	 public function sendEq($u_id){
+	 	$now   = new DateTime;
+	 	$datetime=$now->format('Y-m-d h:m:s');
+	 	$charModel=new CharacterModel();
+	 	$userEqModel=new UserBaggageEqModel();
+	 	$eqModel=new EquipmentMstModel();
+	 	$core=$this->mapEQ($u_id,'CORE1',1);
+	 	$coreID=$userEqModel->insertGetId($core);
+	 	$leg=$this->mapEQ($u_id,'LEG1',1);
+	 	$legID=$userEqModel->insertGetId($leg);
+	 	$wepaon=$this->mapEQ($u_id,'A01',1);
+	 	$weaponID=$userEqModel->insertGetId($wepaon);
+	 	$backWeapon1=$this->mapEQ($u_id,'C01,',0);
+	 	$backWeapon2=$this->mapEQ($u_id,'E01,',0);
+	 	$backWeapon3=$this->mapEQ($u_id,'G01,',0);
+	 	$userEqModel->insert($backWeapon1,$backWeapon2,$backWeapon3);
+	 	$charModel->where('u_id',$u_id)->update(['w_id'=>$weaponID,'m_id'=>$legID,'core_id'=>$coreID,'updated_at'=>$datetime]);
+
+	 }
+	 private function mapEQ($u_id,$code,$status){
+	 	$eqData=$eqModel->where('equ_code',$code)->where('equ_lv',1)->first();
+	 	$result['u_id']=$u_id;
+	 	$result['b_equ_id']=$coreData['equ_id'];
+	 	$result['b_equ_rarity']=$coreData['equ_rarity'];
+	 	$result['b_icon_path']=$coreData['icon_path'];
+	 	$result['status']=$status;
+	 	$result['updated_at']=$datetime;
+	 	$result['created_at']=$datetime;
+	    return $result;	
 	 }
 
 	 public function  equipLaChar($u_id,$equ_id,$equ_part){ 

@@ -13,6 +13,7 @@ use Exception;
 use DateTime;
 use EquipmentMstModel;
 use UserBaggageEqModel;
+use App\Util\CharSkillEffUtil;
 use Illuminate\Support\Facades\Redis;
 class TutorialController extends Controller
 {
@@ -27,6 +28,7 @@ class TutorialController extends Controller
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
+		$charUtil=new CharSkillEffUtil();
 
 		if($access_token==$data['access_token'])
 		{
@@ -41,8 +43,11 @@ class TutorialController extends Controller
 				$char['createdate']=$datetime;
 				$char['u_id']=$uid;
 				$characterModel->insert($char);
+				$charUtil->sendEq($u_id);
 				$finalChar=$characterModel->where('u_id',$uid)->first();
 				$response['user_data']['character_info']=json_encode($finalChar,TRUE);
+
+				
 				return base64_encode($response);
 			}
 			else {
