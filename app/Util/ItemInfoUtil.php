@@ -12,6 +12,7 @@ use App\UserBaggageResModel;
 use App\EquUpgradeMstModel;
 use App\CharacterModel;
 use App\EqAttrmstModel;
+use App\UserBaggageEqModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -136,16 +137,18 @@ class ItemInfoUtil
 
 
 	// get the information of a Equipment: name, type, icon, effection
-	function getEquipmentInfo ($Item_Id)
+	function getEquipmentInfo ($Item_Id,$u_id)
 	{
 			$EquipmentMstModel=new EquipmentMstModel();
 			$skillMstModel=new SkillMstModel();
 			$eqAttrmstModel=new EqAttrmstModel();
+			$userBaggage=new UserBaggageEqModel();
 			$equipment=[];
 			$result=[];
+			$baggeData=$userBaggage->where('u_id',$u_id)->where('b_equ_id',$Item_Id)->first();
 
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
-
+			$equipment['user_beq_id']=$baggeData['user_beq_id'];
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
