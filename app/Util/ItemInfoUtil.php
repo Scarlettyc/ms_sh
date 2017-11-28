@@ -93,8 +93,7 @@ class ItemInfoUtil
 			$resouce[]=$this->getResourceName($r_id_3,$rd3_quantity,$u_id);
 			$resouce[]=$this->getResourceName($r_id_4,$rd4_quantity,$u_id);
 			$resouce[]=$this->getResourceName($r_id_5,$rd5_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_6,$rd6_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_7,$rd7_quantity,$u_id);
+
 			foreach ($variable as $resouce) {
 				if($variable!=null){
 				$resouceUse[]=$variable;

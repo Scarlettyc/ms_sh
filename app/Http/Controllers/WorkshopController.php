@@ -239,16 +239,19 @@ class WorkshopController extends Controller
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
 
-			$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$Equ_part,$w_id,$user_beq_id);
+		
 			if($Equ_part==1){
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_bag_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_bag_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
 
 			}
-			else if($Equ_part==2){
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$user_beq_id,'updated_at'=>$datetime]);
+			else if($Equ_part==3){
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_bag_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			$newchar=$charUtil->calculatCharEq($u_id);
 			if($newchar){
