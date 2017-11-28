@@ -261,8 +261,5 @@ class WorkshopController extends Controller
 			}
 			
 			 return base64_encode("some error");
-			}
-	
-		
 	}
 }
