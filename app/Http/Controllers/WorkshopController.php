@@ -243,30 +243,25 @@ class WorkshopController extends Controller
 			if($Equ_part==1){
 				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_bag_id'],$user_beq_id);
 				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$newchar=$charUtil->calculatCharEq($u_id);
+				return base64_encode("success");
 			}
 			else if($Equ_part==2){
 				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_bag_id'],$user_beq_id);
 				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$newchar=$charUtil->calculatCharEq($u_id);
+				return base64_encode("success");
 
 			}
 			else if($Equ_part==3){
 				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_bag_id'],$user_beq_id);
 				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
-			}
-			$newchar=$charUtil->calculatCharEq($u_id);
-			if($newchar){
-
+				$newchar=$charUtil->calculatCharEq($u_id);
 				return base64_encode("success");
 			}
-			else{
-			throw new Exception("there have some error of workshop equiment");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "equip  error",
-			];
+			
+			 return base64_encode("some error");
 			}
-			$result['change_part']=$Equ_part;
-			$result['character']=$newchar;
 	
 		
 	}
