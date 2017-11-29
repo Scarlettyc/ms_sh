@@ -349,7 +349,7 @@ class BaggageController extends Controller
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce3Qu)->update(['br_quantity'=>$resouce3Qu,'updated_at'=>$datetime]);
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce4Qu)->update(['br_quantity'=>$resouce4Qu,'updated_at'=>$datetime]);
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce5Qu)->update(['br_quantity'=>$resouce5Qu,'updated_at'=>$datetime]);
-			$charmodel->where('u_id',$u_id)->update(['w_id'=>$upgradeEquId,'w_bag_id',$w_bag_id,'updated_at'=>$datetime]);
+			$charmodel->where('u_id',$u_id)->update(['w_id'=>$upgradeEquId,'w_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 			$response="Successfully upgrade weapon";
 
 		return base64_encode($response);;
