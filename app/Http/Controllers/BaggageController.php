@@ -275,7 +275,7 @@ class BaggageController extends Controller
 
 			// $charmodel->where('u_id',$u_id)->update(['w_id'=>$w_bag_id])
 
-			$userRe1=$userBag->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_1'])->first();
+			$userRe1=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_1'])->first();
 				if($userRe1['br_quantity']<$upgradeInfo['rd1_quantity']){
 					throw new Exception("no enough resouce1");
 					$response=[
@@ -286,7 +286,7 @@ class BaggageController extends Controller
 				else{
 					$resouce1Qu=$userRe1['br_quantity']-$upgradeInfo['rd1_quantity'];
 				}
-			$userRe2=$userBag->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_2'])->first();
+			$userRe2=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_2'])->first();
 				if($userRe2['br_quantity']<$upgradeInfo['rd2_quantity']){
 					throw new Exception("no enough resouce2");
 					$response=[
@@ -298,7 +298,7 @@ class BaggageController extends Controller
 					$resouce2Qu=$userRe2['br_quantity']-$upgradeInfo['rd2_quantity'];
 				}
 
-			$userRe3=$userBag->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_3'])->first();
+			$userRe3=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_3'])->first();
 				if($userRe2['br_quantity']<$upgradeInfo['rd3_quantity']){
 					throw new Exception("no enough resouce3");
 					$response=[
@@ -309,7 +309,7 @@ class BaggageController extends Controller
 				else{
 					$resouce3Qu=$userRe3['br_quantity']-$upgradeInfo['rd3_quantity'];
 			}
-			$userRe4=$userBag->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_4'])->first();
+			$userRe4=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_4'])->first();
 				if($userRe4['br_quantity']<$upgradeInfo['rd4_quantity']){
 					throw new Exception("no enough resouce1");
 					$response=[
@@ -321,7 +321,7 @@ class BaggageController extends Controller
 					$resouce4Qu=$userRe4['br_quantity']-$upgradeInfo['rd4_quantity'];
 			}
 
-			$userRe5=$userBag->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_4'])->first();
+			$userRe5=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$upgradeInfo['r_id_4'])->first();
 				if($userRe5['br_quantity']<$upgradeInfo['rd5_quantity']){
 					throw new Exception("no enough resouce1");
 					$response=[
