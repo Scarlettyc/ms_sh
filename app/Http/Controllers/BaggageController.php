@@ -269,9 +269,17 @@ class BaggageController extends Controller
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
 
 			$upgradeInfo=$EquUpgradeMstModel->where('equ_id',$equipmentId)->first();
-
+			if(isset($upgradeInfo)){
 			$upgradeEquId=$upgradeInfo['equ_upgrade_id'];
 			$upgradeEquInfo=$EquipmentMstModel->where('equ_id',$upgradeEquId)->first();
+			}
+			else{
+				throw new Exception("upgradeInfo is null");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "please check u_id",
+					];
+			}
 
 			// $charmodel->where('u_id',$u_id)->update(['w_id'=>$w_bag_id])
 
