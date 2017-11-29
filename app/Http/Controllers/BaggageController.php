@@ -248,7 +248,8 @@ class BaggageController extends Controller
 	public function equipmentUpgrade (Request $request)
 	{
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
@@ -267,8 +268,8 @@ class BaggageController extends Controller
 		$equipmentId=$data['equ_id'];
 		$user_beq_id=$data['user_beq_id'];
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
-
 			$upgradeInfo=$EquUpgradeMstModel->where('equ_id',$equipmentId)->first();
+
 			if(isset($upgradeInfo)){
 			$upgradeEquId=$upgradeInfo['equ_upgrade_id'];
 			$upgradeEquInfo=$EquipmentMstModel->where('equ_id',$upgradeEquId)->first();
