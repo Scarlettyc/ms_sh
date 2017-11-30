@@ -142,7 +142,7 @@ class BaggageController extends Controller
 
 		$u_id=$data['u_id'];
 		$ItemType=$data['item_type'];//itemtype:2(Equipment)/itemtype:3(Scroll)
-		$ItemId=$data['item_Id'];
+		$ItemId=$data['item_id'];
 
 		if($ItemType == 2)//sell Equipment
 		{	$EquipmentMstModel=new EquipmentMstModel();
