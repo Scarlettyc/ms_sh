@@ -151,6 +151,7 @@ class WorkshopController extends Controller
 			$result['up_equ']['eff_ch_atk']=$comEquAtr['eff_ch_atk'];
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
 			$result['up_equ']['eff_ch_crit_per']=$comEquAtr['eff_ch_crit_per'];
+			$resource=[];
 			if($eqUpData['rd1_quantity']>0){
 				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_1'])->first();
 				$tmp['r_id']=$eqUpData['r_id_1'];
