@@ -56,7 +56,7 @@ class ItemInfoUtil
 	}
 
 	//get Scroll detail information: name and every resource that this Scorll needed. also display the detail information of the equipment and skills.
-	function getScrollInfo ($Item_Id,$u_id)
+	function getdata ($Item_Id,$u_id)
 	{
 		$ScrollId=$Item_Id;
 		$u_id=$u_id;
@@ -414,5 +414,75 @@ class ItemInfoUtil
 			];
 		}
 		return $response;
+	}
+	public function validateResource($u_id,$data){
+		$UserBaggageResModel=new UserBaggageResModel();
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+
+			$userRe1=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_1'])->first();
+				if($userRe1['br_quantity']<$data['rd1_quantity']){
+					throw new Exception("no enough resouce1");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+				}
+				else{
+					$resouce1Qu=$userRe1['br_quantity']-$data['rd1_quantity'];
+				}
+			$userRe2=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_2'])->first();
+				if($userRe2['br_quantity']<$data['rd2_quantity']){
+					throw new Exception("no enough resouce2");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+				}
+				else{
+					$resouce2Qu=$userRe2['br_quantity']-$data['rd2_quantity'];
+				}
+
+			$userRe3=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_3'])->first();
+				if($userRe2['br_quantity']<$data['rd3_quantity']){
+					throw new Exception("no enough resouce3");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+				}
+				else{
+					$resouce3Qu=$userRe3['br_quantity']-$data['rd3_quantity'];
+			}
+			$userRe4=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->first();
+				if($userRe4['br_quantity']<$data['rd4_quantity']){
+					throw new Exception("no enough resouce1");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+				}
+				else{
+					$resouce4Qu=$userRe4['br_quantity']-$data['rd4_quantity'];
+			}
+
+			$userRe5=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->first();
+				if($userRe5['br_quantity']<$data['rd5_quantity']){
+					throw new Exception("no enough resouce1");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+				}
+				else{
+					$resouce5Qu=$userRe5['br_quantity']-$data['rd5_quantity'];
+			}
+
+			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce1Qu)->update(['br_quantity'=>$resouce1Qu,'updated_at'=>$datetime]);
+			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce2Qu)->update(['br_quantity'=>$resouce2Qu,'updated_at'=>$datetime]);
+			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce3Qu)->update(['br_quantity'=>$resouce3Qu,'updated_at'=>$datetime]);
+			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce4Qu)->update(['br_quantity'=>$resouce4Qu,'updated_at'=>$datetime]);
+			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resouce5Qu)->update(['br_quantity'=>$resouce5Qu,'updated_at'=>$datetime]);
 	}
 }
