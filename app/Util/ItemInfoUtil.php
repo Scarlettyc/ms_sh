@@ -71,7 +71,7 @@ class ItemInfoUtil
 			$userData=$UserModel->where('u_id',$u_id)->first();
 			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
 			$result['coin_have']=$userData['u_coin'];
-			$result['coin_need']=$scrollData['sc_coin']
+			$result['coin_need']=$scrollData['sc_coin'];
 			$result['sc_id']=$scrollData['sc_id'];
 			$result['sc_name']=$scrollData['sc_name'];
 
