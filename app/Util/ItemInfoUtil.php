@@ -235,8 +235,7 @@ class ItemInfoUtil
 	function getSkillInfo ($skill_id)
 	{
 		$Skill_Id=$skill_id;
-		if(isset($Skill_Id))
-		{
+
 			$SkillMstModel=new SkillMstModel();
 			$EffectionMstModel=new EffectionMstModel();
 			$skill=[];
@@ -257,14 +256,6 @@ class ItemInfoUtil
 			$result['Skill_data']=$skill;
 
 			$response=$result;
-		}else
-		{
-			throw new Exception("Wrong Skill ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check Skill ID",
-			];
-		}
 		return $response;
 	}
 
