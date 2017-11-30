@@ -152,31 +152,46 @@ class WorkshopController extends Controller
 				$r1Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_1'])->first();
 				$result['r1']['r_id']=$eqUpData['r_id_1'];
 				$result['r1']['r_qu_need']=$eqUpData['rd1_quantity'];
+				if($r1Qu['br_quantity']){
 				$result['r1']['r_qu_have']=$r1Qu['br_quantity'];
+				}
+				$result['r1']['r_qu_have']=0;
 			}
 			if($eqUpData['rd2_quantity']>0){
 				$r2Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_2'])->first();
 				$result['r2']['r_id']=$eqUpData['r_id_2'];
 				$result['r2']['r_qu_need']=$eqUpData['rd2_quantity'];
+				if($r2Qu['br_quantity']){
 				$result['r2']['r_qu_have']=$r2Qu['br_quantity'];
+				}
+				$result['r2']['r_qu_have']=0;
 			}
 			if($eqUpData['rd3_quantity']>0){
 				$r3Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_3'])->first();
 				$result['r3']['r_id']=$eqUpData['r_id_3'];
 				$result['r3']['r_qu_need']=$eqUpData['rd3_quantity'];
+				if($r3Qu['br_quantity']){
 				$result['r3']['r_qu_have']=$r3Qu['br_quantity'];
+				}
+				$result['r3']['r_qu_have']=0;
 			}
 			if($eqUpData['rd4_quantity']>0){
 				$r4Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_4'])->first();
 				$result['r4']['r_id']=$eqUpData['r_id_4'];
 				$result['r4']['r_qu_need']=$eqUpData['rd4_quantity'];
+				if($r4Qu['br_quantity']){
 				$result['r4']['r_qu_have']=$r4Qu['br_quantity'];
+				}
+				$result['r4']['r_qu_have']=0;
 			}
 			if($eqUpData['rd5_quantity']>0){
 				$r5Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_5'])->first();
 				$result['r5']['r_id']=$eqUpData['r_id_5'];
 				$result['r5']['r_qu_need']=$eqUpData['rd5_quantity'];
+				if($r5Qu['br_quantity']){
 				$result['r5']['r_qu_have']=$r5Qu['br_quantity'];
+				}
+				$result['r5']['r_qu_have']=0;
 			}
 
 			$response=json_encode($result,TRUE);			
