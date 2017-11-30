@@ -142,24 +142,28 @@ class BaggageController extends Controller
 
 		$u_id=$data['u_id'];
 		$ItemType=$data['type'];//itemtype:2(Equipment)/itemtype:3(Scroll)
-		$ItemPrice=$data['Item_Price'];
 		$ItemId=$data['Item_Id'];
 
 
 		if($ItemType == 2)//sell Equipment
-		{	
-			
+		{	$EquipmentMstModel=new EquipmentMstModel();
 			$bag_id=$data['user_beq_id'];
+
 			$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('user_beq_id',$bag_id)->update(array('status'=>9,'updated_at'=>$datetime));
-			$eqData=
+			$eqData=$EquipmentMstModel->where('equ_id',$ItemId)->first();
 			$UserData=$UserModel->where('u_id',$u_id)->first();
-			$ItemPrice=
+			$ItemPrice=$eqData['equ_price'];
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 			$response="update Equipment";
 		}else if($ItemType == 3)//sell Scroll
-		{	$bag_id=$data['user_bsc_id'];
+		{	
+			$ScrollMstModel=new ScrollMstModel();
+
+			$bag_id=$data['user_bsc_id'];
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
+			$scData=$ScrollMstModel->where('sc_id',$ItemId)->first();
+			$ItemPrice=$scData['sc_coin'];
 			$UserData=$UserModel->where('u_id',$u_id)->first();
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
