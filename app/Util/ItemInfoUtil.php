@@ -145,6 +145,7 @@ class ItemInfoUtil
 			$skillMstModel=new SkillMstModel();
 			$eqAttrmstModel=new EqAttrmstModel();
 			$userBaggage=new UserBaggageEqModel();
+			$eqUpgrade=new EquUpgradeMstModel();
 			$equipment=[];
 			$result=[];
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('b_equ_id',$Item_Id)->first();
@@ -159,7 +160,7 @@ class ItemInfoUtil
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
-
+			$equipment['upgrade']=$eqUpgrade->where('equ_id',$Item_Id)->count();
 			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_attribute_id'])->first();
 
 			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
