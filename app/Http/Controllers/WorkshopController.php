@@ -135,9 +135,10 @@ class WorkshopController extends Controller
 
 			// $bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
 			$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
-			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_att_id'])->first();
+			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
 			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
-			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$eqUpData['equ_upgrade_id'])->first();
+			$comEqData=$EquipmentMstModel->where('equ_id',$eqUpData['equ_upgrade_id'])->first();
+			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$result['coin']=$eqUpData['equ_coin'];
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
