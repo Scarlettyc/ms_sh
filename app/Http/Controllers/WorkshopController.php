@@ -133,7 +133,7 @@ class WorkshopController extends Controller
 		$equ_id=$data['equ_id'];
 		$user_beq_id=$data['user_beq_id'];
 
-			$bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
+			$equData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
 			$eff_ch_stam=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_att_id'])->first();
 			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
