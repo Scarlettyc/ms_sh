@@ -125,8 +125,8 @@ class WorkshopController extends Controller
 		$equ_id=$data['equ_id'];
 
 			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id,$u_id);
-			$Skill_click_id=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('special_skill_id');
-			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id);
+			$Skill_click_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
+			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id['special_skill_id']);
 			$result['equ_click_data']=$Equ_click_detail;
 			$result['equ_click_data']=$Skill_click_detail;
 
@@ -137,16 +137,16 @@ class WorkshopController extends Controller
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
 				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
-				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('special_skill_id');
-				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
+				$Skill_now_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
+				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id['special_skill_id']);
 				$result['equ_now_data']=$Equ_now_detail;
 				$result['equ_now_data']=$Skill_now_detail;
 			}else if($Equ_part == 2)
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('m_id');
 				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
-				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('special_skill_id');
-				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
+				$Skill_now_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
+				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id['special_skill_id']);
 				$result['equ_now_data']=$Equ_now_detail;
 				$result['equ_now_data']=$Skill_now_detail;
 			}else if($Equ_part == 3)
