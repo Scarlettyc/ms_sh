@@ -124,9 +124,6 @@ class WorkshopController extends Controller
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
 
-
-		if(isset($u_id))
-		{
 			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id);
 			$Skill_click_id=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('skill_id');
 			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id);
@@ -162,13 +159,6 @@ class WorkshopController extends Controller
 				$result['equ_now_data']=$Skill_now_detail;
 			}
 			$response=json_encode($result,TRUE);			
-		}else{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
 		return $response;
 	}
 
