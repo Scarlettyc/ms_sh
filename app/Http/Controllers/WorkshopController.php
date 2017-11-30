@@ -136,7 +136,7 @@ class WorkshopController extends Controller
 			if($Equ_part == 1)
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
 				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
 				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
 				$result['equ_now_data']=$Equ_now_detail;
@@ -144,7 +144,7 @@ class WorkshopController extends Controller
 			}else if($Equ_part == 2)
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('m_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
 				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
 				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
 				$result['equ_now_data']=$Equ_now_detail;
@@ -152,7 +152,7 @@ class WorkshopController extends Controller
 			}else if($Equ_part == 3)
 			{
 				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('core_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id);
+				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
 				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('skill_id');
 				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
 				$result['equ_now_data']=$Equ_now_detail;
