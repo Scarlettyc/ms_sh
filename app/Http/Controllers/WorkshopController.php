@@ -124,7 +124,7 @@ class WorkshopController extends Controller
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
 
-			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id);
+			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id,$u_id);
 			$Skill_click_id=$EquipmentMstModel->where('equ_id',$equ_id)->pluck('skill_id');
 			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id);
 			$result['equ_click_data']=$Equ_click_detail;
