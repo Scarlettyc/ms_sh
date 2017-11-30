@@ -139,6 +139,7 @@ class WorkshopController extends Controller
 			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
 			$comEqData=$EquipmentMstModel->where('equ_id',$eqUpData['equ_upgrade_id'])->first();
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
+			$result['equ_name']=$equData['equ_name'];
 			$result['coin']=$eqUpData['equ_coin'];
 			$result['equ_atr']['equ_id']=$equ_id;
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];

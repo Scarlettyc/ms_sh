@@ -141,7 +141,7 @@ class BaggageController extends Controller
 		$result=[];
 
 		$u_id=$data['u_id'];
-		$ItemType=$data['type'];//itemtype:2(Equipment)/itemtype:3(Scroll)
+		$ItemType=$data['item_type'];//itemtype:2(Equipment)/itemtype:3(Scroll)
 		$ItemId=$data['Item_Id'];
 
 
