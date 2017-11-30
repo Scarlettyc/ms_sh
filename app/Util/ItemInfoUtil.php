@@ -61,8 +61,6 @@ class ItemInfoUtil
 		$ScrollId=$Item_Id;
 		$u_id=$u_id;
 
-		if(isset($ScrollId))
-		{
 			$UserModel=new UserModel();
 			$ScrollMstModel=new ScrollMstModel();
 			$EquipmentMstModel=new EquipmentMstModel();
@@ -70,68 +68,73 @@ class ItemInfoUtil
 			$ResourceMstModel=new ResourceMstModel();
 			$EffectionMstModel=new EffectionMstModel();
 			$UserBaggageResModel=new UserBaggageResModel();
-			$result=[];
-			
-			$scroll=[];
-			$scroll_detail=[];
-			$ScrollInfo = $ScrollMstModel->where('sc_id','=',$ScrollId)->first();
+			$userData=$UserModel->where('u_id',$u_id)->first();
+			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
+			$result['coin_have']=$userData['u_coin'];
+			$result['coin_need']=$scrollData['sc_coin']
+			$result['sc_id']=$scrollData['sc_id'];
+			$result['sc_name']=$scrollData['sc_name'];
 
-			$scroll['item_id']=$ScrollInfo['sc_id'];
-			$scroll['item_name']=$ScrollInfo['sc_name'];
-			$scroll['item_rarity']=$ScrollInfo['sc_rarity'];
-			$scroll['item_img']=$ScrollInfo['sc_img_path'];
-			// $scroll['item_description']=$ScrollInfo['sc_description'];
-			$scroll['item_price']=$ScrollInfo['sc_sale_price'];
-			$scroll['coin_need']=$ScrollInfo['sc_coin'];
-
-			$resource=[];
-			// $resource1=[];
-			$resouceUse=[];
-
-			$resouce[]=$this->getResourceName($r_id_1,$rd1_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_2,$rd2_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_3,$rd3_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_4,$rd4_quantity,$u_id);
-			$resouce[]=$this->getResourceName($r_id_5,$rd5_quantity,$u_id);
-
-			foreach ($variable as $resouce) {
-				if($variable!=null){
-				$resouceUse[]=$variable;
-				}
-			}
-			$scroll['resouce']=$resouceUse;
-			$user=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
-			$scroll['coin_have']=$user['u_coin'];
-
-			$response=json_encode($scroll,TRUE);
-
-		}else{
-			throw new Exception("No Scroll ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check Scroll id",
-			];
-		}
-		return $response;
-	}
-
-	private function getResourceName($r_id,$r_quantity,$u_id){
-		$useBaggageRe=new UserBaggageResModel();
-			if($r_quantity){
-				$resource=$ResourceMstModel->select('r_name','r_img_path')->where('r_id',$r_id)->first();
-				$resource['rd1_quantity']=$r_quantity;
-				$resource['r_id_1']=$r_id;
-				$userRe=$useBaggageRe->select('br_quantity')->where('u_id',$u_id)->where('br_id',$r_id)->first();
-				if($userRe){
-					$resource['u_have']=$userRe['br_quantity'];
+			if($scrollData['rd1_quantity']>0){
+				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_1'])->first();
+				$tmp['r_id']=$scrollData['r_id_1'];
+				$tmp['r_qu_need']=$scrollData['rd1_quantity'];
+				if($r1Qu['br_quantity']){
+				$tmp['r_qu_have']=$r1Qu['br_quantity'];
 				}
 				else{
-					$resource['u_have']=0;
+				$tmp['r_qu_have']=0;
 				}
-				return $resource;
+				$resource[]=$tmp; 
 			}
-			return null;
+			if($scrollData['rd2_quantity']>0){
+				$r2Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_2'])->first();
+				$tmp['r_id']=$scrollData['r_id_2'];
+				$tmp['r_qu_need']=$scrollData['rd2_quantity'];
+				if($r2Qu['br_quantity']){
+				$tmp['r_qu_have']=$r2Qu['br_quantity'];
+				}else{
+				$tmp['r_qu_have']=0;	
+				}
+				$resource[]=$tmp;	
+			}
+			if($scrollData['rd3_quantity']>0){
+				$r3Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_3'])->first();
+				$tmp['r_id']=$scrollData['r_id_3'];
+				$tmp['r_qu_need']=$scrollData['rd3_quantity'];
+				if($r3Qu['br_quantity']){
+				$tmp['r_qu_have']=$r3Qu['br_quantity'];
+				}else{
+				$tmp['r_qu_have']=0;
+				}
+				$resource[]=$tmp;	
+			}
+			if($scrollData['rd4_quantity']>0){
+				$r4Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_4'])->first();
+				$tmp['r_id']=$scrollData['r_id_4'];
+				$tmp['r_qu_need']=$scrollData['rd4_quantity'];
+				if($r4Qu['br_quantity']){
+				$tmp['r_qu_have']=$r4Qu['br_quantity'];
+				}else{
+				$tmp['r_qu_have']=0;
+				}
+				$resource[]=$tmp;
+			}
+			if($scrollData['rd5_quantity']>0){
+				$r5Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_5'])->first();
+				$tmp['r_id']=$scrollData['r_id_5'];
+				$tmp['r_qu_need']=$scrollData['rd5_quantity'];
+				if($r5Qu['br_quantity']){
+				$tmp['r_qu_have']=$r5Qu['br_quantity'];
+				}else{
+				$tmp['r_qu_have']=0;
+				}$resource[]=$tmp;
+			}
 
+
+			$result['resource']=$resource;
+
+		return $result;
 	}
 
 
@@ -180,8 +183,7 @@ class ItemInfoUtil
 	{
 		$u_id=$u_id;
 		$EquipmentId=$Item_Id;
-		if(isset($EquipmentId))
-		{
+
 			$EquipmentMstModel=new EquipmentMstModel();
 			$EffectionMstModel=new EffectionMstModel();
 			$CharacterModel=new CharacterModel();
@@ -227,7 +229,6 @@ class ItemInfoUtil
 				$EquEffnowInfo=$EffectionMstModel->where('eff_id',$EquEffnowId)->pluck('eff_description');
 				$result['item_data_2']['item_info']['effection']=$EquEffnowInfo;
 			}
-		}
 		return $result;
 	}
 

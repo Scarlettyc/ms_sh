@@ -109,16 +109,13 @@ class BaggageController extends Controller
 		$access_token=$loginTodayArr->access_token;*/
 			if($ItemType == 1)
 			{
-				$ResInfo = $ItemInfoUtil->getResourceInfo($ItemId);
-				$result=$ResInfo;
+				$result = $ItemInfoUtil->getResourceInfo($ItemId);
 			}else if($ItemType == 2)
 			{
-				$EquInfo = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id);
-				$result=$EquInfo;
+				$result = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id);
 			}else if($ItemType == 3)
 			{
-				$ScrollInfo = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
-				$result=$ScrollInfo;
+				$result = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
 			}
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
@@ -154,7 +151,7 @@ class BaggageController extends Controller
 			$ItemPrice=$eqData['equ_price'];
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
-			$response="update Equipment";
+			$response="sold Equipment";
 		}else if($ItemType == 3)//sell Scroll
 		{	
 			$ScrollMstModel=new ScrollMstModel();
@@ -166,7 +163,7 @@ class BaggageController extends Controller
 			$UserData=$UserModel->where('u_id',$u_id)->first();
 			$updateCoin=$UserData['u_coin']+$ItemPrice;
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
-			$response="update Scroll";
+			$response="sold Scroll";
 		}else{
 			throw new Exception("No ItemType");
 			$response=[
@@ -196,9 +193,8 @@ class BaggageController extends Controller
 
 		$u_id=$data['u_id'];
 		$scrollId=$data['scroll_id'];
-		if(isset($u_id))
-		{
-			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->limit(1)->update(array('status'=>1,'updated_at'=>$datetime));
+		$bag_id=$data['user_bsc_id'];
+			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$bag_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$ScrollInfo=$ScrollMstModel->where('sc_id',$scrollId)->first();
 			$equipmentId=$ScrollInfo['equ_id'];
 			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
@@ -216,14 +212,14 @@ class BaggageController extends Controller
 			$resource[]=$resource2;
 
 			$resource3=[];
-			if(isset($ScrollInfo['r_id_3'])){
+			if($ScrollInfo['r_id_3']){
 				$resource3['r_id']=$ScrollInfo['r_id_3'];
 				$resource3['r_quantity']=$ScrollInfo['rd3_quantity'];
 				$resource[]=$resource3;
 			}
 			
 			$resource4=[];
-			if(isset($ScrollInfo['r_id_4']))
+			if($ScrollInfo['r_id_4'])
 			{
 				$resource4['r_id']=$ScrollInfo['r_id_4'];
 				$resource4['r_quantity']=$ScrollInfo['rd4_quantity'];
@@ -242,13 +238,7 @@ class BaggageController extends Controller
 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 
 			$response='Successfully Meraged';
-		}else{
-			throw new Exception("there have some error of you access_token");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check u_id",
-			];
-		}
+
 		return $response;
 	}
 
