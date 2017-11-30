@@ -155,7 +155,9 @@ class WorkshopController extends Controller
 				if($r1Qu['br_quantity']){
 				$result['r1']['r_qu_have']=$r1Qu['br_quantity'];
 				}
+				else{
 				$result['r1']['r_qu_have']=0;
+				}
 			}
 			if($eqUpData['rd2_quantity']>0){
 				$r2Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_2'])->first();
@@ -163,8 +165,8 @@ class WorkshopController extends Controller
 				$result['r2']['r_qu_need']=$eqUpData['rd2_quantity'];
 				if($r2Qu['br_quantity']){
 				$result['r2']['r_qu_have']=$r2Qu['br_quantity'];
-				}
-				$result['r2']['r_qu_have']=0;
+				}else{
+				$result['r2']['r_qu_have']=0;}
 			}
 			if($eqUpData['rd3_quantity']>0){
 				$r3Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_3'])->first();
@@ -172,8 +174,9 @@ class WorkshopController extends Controller
 				$result['r3']['r_qu_need']=$eqUpData['rd3_quantity'];
 				if($r3Qu['br_quantity']){
 				$result['r3']['r_qu_have']=$r3Qu['br_quantity'];
-				}
+				}else{
 				$result['r3']['r_qu_have']=0;
+				}	
 			}
 			if($eqUpData['rd4_quantity']>0){
 				$r4Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_4'])->first();
@@ -181,8 +184,9 @@ class WorkshopController extends Controller
 				$result['r4']['r_qu_need']=$eqUpData['rd4_quantity'];
 				if($r4Qu['br_quantity']){
 				$result['r4']['r_qu_have']=$r4Qu['br_quantity'];
-				}
+				}else{
 				$result['r4']['r_qu_have']=0;
+				}
 			}
 			if($eqUpData['rd5_quantity']>0){
 				$r5Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_5'])->first();
@@ -190,8 +194,9 @@ class WorkshopController extends Controller
 				$result['r5']['r_qu_need']=$eqUpData['rd5_quantity'];
 				if($r5Qu['br_quantity']){
 				$result['r5']['r_qu_have']=$r5Qu['br_quantity'];
-				}
+				}else{
 				$result['r5']['r_qu_have']=0;
+				}
 			}
 
 			$response=json_encode($result,TRUE);			
