@@ -8,6 +8,9 @@ use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
 use App\UserBaggageEqModel;
+use App\UserBaggageResModel;
+use App\EqAttrmstModel;
+use App\EquUpgradeMstModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
 use App\ImgMstModel;
@@ -113,53 +116,70 @@ class WorkshopController extends Controller
 	public function compareEquipment (Request $request)
 	{
 		$req=$request->getContent();
+		$json=base64_decode($req);
 		$data=json_decode($req,TRUE);
 
 		$EquipmentMstModel=new EquipmentMstModel();
 		$CharacterModel=new CharacterModel();
 		$SkillMstModel=new SkillMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
+		$EqAttrmstModel=new EqAttrmstModel();
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$EquUpgradeMstModel=new EquUpgradeMstModel();
+		$UserBaggageResModel =new UserBaggageResModel();
 		$result=[];
 
 		$u_id=$data['u_id'];
 		$equ_id=$data['equ_id'];
+		$user_beq_id=$data['user_beq_id'];
 
-			$Equ_click_detail=$ItemInfoUtil->getEquipmentInfo($equ_id,$u_id);
-			$Skill_click_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
-			$Skill_click_detail=$ItemInfoUtil->getSkillInfo($Skill_click_id['special_skill_id']);
-			$result['equ_click_data']=$Equ_click_detail;
-			$result['skill_click_data']=$Skill_click_detail;
-
-			$Equ=$EquipmentMstModel->where('equ_id',$equ_id)->first();
-			$Equ_part=$Equ['equ_part'];
-
-			if($Equ_part == 1)
-			{
-				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('w_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
-				$Skill_now_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
-				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id['special_skill_id']);
-				$result['equ_now_data']=$Equ_now_detail;
-				$result['skill_now_data']=$Skill_now_detail;
-			}else if($Equ_part == 2)
-			{
-				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('m_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
-				$Skill_now_id=$EquipmentMstModel->select('special_skill_id')->where('equ_id',$equ_id)->first();
-				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id['special_skill_id']);
-				$result['equ_now_data']=$Equ_now_detail;
-				$result['skill_now_data']=$Skill_now_detail;
-			}else if($Equ_part == 3)
-			{
-				$Equ_now_id=$CharacterModel->where('u_id',$u_id)->pluck('core_id');
-				$Equ_now_detail=$ItemInfoUtil->getEquipmentInfo($Equ_now_id,$u_id);
-				$Skill_now_id=$EquipmentMstModel->where('equ_id',$Equ_now_id)->pluck('special_skill_id');
-				$Skill_now_detail=$ItemInfoUtil->getSkillInfo($Skill_now_id);
-				$result['equ_now_data']=$Equ_now_detail;
-				$result['skill_now_data']=$Skill_now_detail;
+			$bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
+			$eff_ch_stam=$EquipmentMstModel->where('equ_id',$equ_id)->first();
+			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_att_id'])->first();
+			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
+			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$eqUpData['equ_upgrade_id'])->first();
+			$result['coin']=$eqUpData['equ_coin'];
+			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
+			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
+			$result['equ_atr']['eff_ch_armor']=$equAtr['eff_ch_armor'];
+			$result['equ_atr']['eff_ch_crit_per']=$equAtr['eff_ch_crit_per'];
+			$result['up_equ']['eff_ch_stam']=$comEquAtr['eff_ch_stam'];
+			$result['up_equ']['eff_ch_atk']=$comEquAtr['eff_ch_atk'];
+			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
+			$result['up_equ']['eff_ch_crit_per']=$comEquAtr['eff_ch_crit_per'];
+			if($eqUpData['rd1_quantity']>0){
+				$r1Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_1'])->first();
+				$result['r1']['r_id']=$eqUpData['r_id_1'];
+				$result['r1']['r_qu_need']=$eqUpData['rd1_quantity'];
+				$result['r1']['r_qu_have']=$r1Qu['br_quantity'];
 			}
+			if($eqUpData['rd2_quantity']>0){
+				$r2Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_2'])->first();
+				$result['r2']['r_id']=$eqUpData['r_id_2'];
+				$result['r2']['r_qu_need']=$eqUpData['rd2_quantity'];
+				$result['r2']['r_qu_have']=$r2Qu['br_quantity'];
+			}
+			if($eqUpData['rd3_quantity']>0){
+				$r3Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_3'])->first();
+				$result['r3']['r_id']=$eqUpData['r_id_3'];
+				$result['r3']['r_qu_need']=$eqUpData['rd3_quantity'];
+				$result['r3']['r_qu_have']=$r3Qu['br_quantity'];
+			}
+			if($eqUpData['rd4_quantity']>0){
+				$r4Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_4'])->first();
+				$result['r4']['r_id']=$eqUpData['r_id_4'];
+				$result['r4']['r_qu_need']=$eqUpData['rd4_quantity'];
+				$result['r4']['r_qu_have']=$r4Qu['br_quantity'];
+			}
+			if($eqUpData['rd5_quantity']>0){
+				$r5Qu=$UserBaggageResModel->select('br_rarity')->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_5'])->first();
+				$result['r5']['r_id']=$eqUpData['r_id_5'];
+				$result['r5']['r_qu_need']=$eqUpData['rd5_quantity'];
+				$result['r5']['r_qu_have']=$r5Qu['br_quantity'];
+			}
+
 			$response=json_encode($result,TRUE);			
-		return $response;
+		return base64_encode($response);
 	}
 
 	//after user change equipment, adjust the attributes of chararcter and change the character image
