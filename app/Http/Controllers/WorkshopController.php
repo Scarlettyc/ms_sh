@@ -117,7 +117,7 @@ class WorkshopController extends Controller
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
-		$data=json_decode($req,TRUE);
+		$data=json_decode($json,TRUE);
 
 		$EquipmentMstModel=new EquipmentMstModel();
 		$CharacterModel=new CharacterModel();
