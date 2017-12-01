@@ -34,6 +34,7 @@ class WorkshopController extends Controller
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$SkillMstModel=new SkillMstModel();
+		$eqUpgrade=new EquUpgradeMstModel();
 		$result=[];
 		$weaponData=[];
 		$movementData=[];
@@ -55,6 +56,7 @@ class WorkshopController extends Controller
 			$result['ch_atk']=$characterDetail['ch_atk'];
 			$result['ch_armor']=$characterDetail['ch_armor'];
 			$result['ch_crit']=$characterDetail['ch_crit'];
+			$result['upgrade']=$eqUpgrade->where('equ_id',$result['w_id'])->count();
 			$response=json_encode($result,TRUE);
 				return base64_encode($response);
 		}
