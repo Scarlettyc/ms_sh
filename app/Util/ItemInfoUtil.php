@@ -74,6 +74,7 @@ class ItemInfoUtil
 			$result['coin_need']=$scrollData['sc_coin'];
 			$result['sc_id']=$scrollData['sc_id'];
 			$result['sc_name']=$scrollData['sc_name'];
+			$result['sc_coin']=$scrollData['sc_coin'];
 
 			if($scrollData['rd1_quantity']>0){
 				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_1'])->first();
