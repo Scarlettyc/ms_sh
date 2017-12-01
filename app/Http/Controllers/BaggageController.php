@@ -265,8 +265,11 @@ class BaggageController extends Controller
 
 			}
 
+			$nextUpgarde=$EquUpgradeMstModel->where('equ_id',$upgradeEquId)->count();
 			$result['equ_id']=$upgradeEquId;
 			$result['user_beq_id']=$w_bag_id;
+			$result['upgrade']=$nextUpgarde;
+
 			$response=json_encode($result,TRUE);
 
 		return base64_encode($response);;
