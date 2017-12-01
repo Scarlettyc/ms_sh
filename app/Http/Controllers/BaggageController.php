@@ -178,7 +178,8 @@ class BaggageController extends Controller
 	public function scrollMerage (Request $request)
 	{
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
@@ -208,7 +209,7 @@ class BaggageController extends Controller
 
 			$response='Successfully Meraged';
 
-		return $response;
+		return base64_encode($response);
 	}
 
 
