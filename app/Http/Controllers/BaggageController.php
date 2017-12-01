@@ -262,7 +262,7 @@ class BaggageController extends Controller
 					$charmodel->update(['w_id'=>$upgradeEquId,'w_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
 				else if($eqDetail['b_equ_type']==2){
-					$charmodel->>where('u_id',$u_id)->update(['core_id'=>$upgradeEquId,'core_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
+					$charmodel->where('u_id',$u_id)->update(['core_id'=>$upgradeEquId,'core_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
 
 			}
