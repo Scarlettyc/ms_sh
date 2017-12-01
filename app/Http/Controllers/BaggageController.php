@@ -265,7 +265,9 @@ class BaggageController extends Controller
 
 			}
 
-			$response="Successfully upgrade weapon";
+			$result['equ_id']=$upgradeEquId;
+			$result['user_beq_id']=$w_bag_id;
+			$response=json_encode($result,TRUE);
 
 		return base64_encode($response);;
 	}
