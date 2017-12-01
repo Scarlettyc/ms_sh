@@ -495,6 +495,6 @@ class ItemInfoUtil
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_3'])->update(['br_quantity'=>$resouce3Qu,'updated_at'=>$datetime]);
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->update(['br_quantity'=>$resouce4Qu,'updated_at'=>$datetime]);
 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_5'])->update(['br_quantity'=>$resouce5Qu,'updated_at'=>$datetime]);
-			$UserModel->where('u_id',$u_id)->update('equ_coin',$coin);
+			$UserModel->where('u_id',$u_id)->update('u_coin',$coin);
 	}
 }
