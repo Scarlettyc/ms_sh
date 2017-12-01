@@ -421,7 +421,7 @@ class ItemInfoUtil
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id);
+		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 			$userRe1=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_1'])->first();
 				if($userValue['u_coin']<$data['equ_coin']){
 					throw new Exception("no enough coin");
