@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class EquipmentMstModel extends Model
 {
-	protected $fillable = ['equ_id','equ_group','equ_code','equ_name','equ_rarity','equ_lv','equ_attribute_id','special_skill_id','normal_skill_id','equ_part' ,'upgrade_id','equ_price','icon_path','equ_description','createdate','updatedate'];
+	protected $fillable = ['equ_id','equ_group','equ_type','equ_code','equ_name','equ_rarity','equ_lv','equ_attribute_id','special_skill_id','normal_skill_id','equ_part' ,'upgrade_id','equ_price','icon_path','equ_description','createdate','updatedate'];
 
 	protected $connection = 'mysql';
 	protected $table = "Equipment_mst";
