@@ -189,6 +189,7 @@ class BaggageController extends Controller
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
+			$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
 		$u_id=$data['u_id'];
