@@ -189,7 +189,7 @@ class BaggageController extends Controller
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
-			$ItemInfoUtil=new ItemInfoUtil();
+		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 
 		$u_id=$data['u_id'];
@@ -204,6 +204,7 @@ class BaggageController extends Controller
 			$ItemInfoUtil->validateResource($u_id,$scrollInfo,3);
 
 			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+			$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
 
 			$response='Successfully Meraged';
 
