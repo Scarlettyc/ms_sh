@@ -56,7 +56,7 @@ class ItemInfoUtil
 	}
 
 	//get Scroll detail information: name and every resource that this Scorll needed. also display the detail information of the equipment and skills.
-	function getdata ($Item_Id,$u_id)
+	function getScrollInfo ($Item_Id,$u_id)
 	{
 		$ScrollId=$Item_Id;
 		$u_id=$u_id;
