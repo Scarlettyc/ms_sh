@@ -200,7 +200,7 @@ class BaggageController extends Controller
 			$equipmentId=$ScrollInfo['equ_id'];
 			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
 
-			$ItemInfoUtil->validateResource($u_id,$scrollInfo);
+			$ItemInfoUtil->validateResource($u_id,$scrollInfo,3);
 
 			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
 
@@ -247,7 +247,7 @@ class BaggageController extends Controller
 					];
 			}
 
-			$ItemInfoUtil->validateResource($u_id,$upgradeInfo);
+			$ItemInfoUtil->validateResource($u_id,$upgradeInfo,2);
 
 			// $charmodel->where('u_id',$u_id)->update(['w_id'=>$w_bag_id])
 

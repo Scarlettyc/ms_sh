@@ -416,7 +416,7 @@ class ItemInfoUtil
 		}
 		return $response;
 	}
-	public function validateResource($u_id,$data){
+	public function validateResource($u_id,$data,$type){
 		$UserModel=new UserModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$now=new DateTime;
@@ -424,15 +424,31 @@ class ItemInfoUtil
 		$dmy=$now->format( 'Ymd' );
 		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 			$userRe1=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_1'])->first();
-				if($userValue['u_coin']<$data['equ_coin']){
+
+				if($type==2){
+					if($userValue['u_coin']<$data['equ_coin']){
 					throw new Exception("no enough coin");
 					$response=[
 						'status' => 'Wrong',
 						'error' => "no enough resources",
 					];
-				}
-				else{
+					}
+					else{
 					$coin=$userValue['u_coin']-$data['equ_coin'];
+					}
+				}
+				else if($type==3){
+					if($userValue['u_coin']<$data['sc_coin']){
+					throw new Exception("no enough coin");
+					$response=[
+						'status' => 'Wrong',
+						'error' => "no enough resources",
+					];
+					}
+					else{
+					$coin=$userValue['u_coin']-$data['sc_coin'];
+					}
+
 				}
 				if($userRe1['br_quantity']<$data['rd1_quantity']){
 					throw new Exception("no enough resouce1");
