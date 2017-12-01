@@ -197,7 +197,7 @@ class BaggageController extends Controller
 
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$bag_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$scrollInfo=$ScrollMstModel->where('sc_id',$scrollId)->first();
-			$equipmentId=$ScrollInfo['equ_id'];
+			$equipmentId=$scrollInfo['equ_id'];
 			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
 
 			$ItemInfoUtil->validateResource($u_id,$scrollInfo,3);
