@@ -255,11 +255,13 @@ class BaggageController extends Controller
 
 			$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id',$u_id)->update(['status'=>2,'updated_at'=>$datetime]);
 			$w_bag_id=$UserBaggageEqModel->insertGetId(['u_id'=>$u_id,'b_equ_id'=>$upgradeEquId,'b_equ_rarity'=>$upgradeEquInfo['equ_rarity'],'b_equ_type'=>$upgradeEquInfo['equ_type'],'b_icon_path'=>$upgradeEquInfo['icon_path'],'status'=>$eqDetail['status'],'updated_at'=>$datetime,'created_at'=>$datetime]);
+			
+
 			if($eqDetail['status']==1){
-				if($upgradeEquInfo['equ_type']==1){
+				if($eqDetail['equ_type']==1){
 					$charmodel->update(['w_id'=>$upgradeEquId,'w_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
-				else if($upgradeEquInfo['equ_type']==2){
+				else if($eqDetail['equ_type']==2){
 					$charmodel->update(['core_id'=>$upgradeEquId,'core_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
 
