@@ -90,7 +90,7 @@ class BaggageUtil
 				$arry['item_id']=$obj['b_equ_id'];
 				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
-				$arry['upgrade']=$eqUpgrade->where('equ_id',$b_equ_id)->count();
+				$arry['upgrade']=$eqUpgrade->where('equ_id',$obj['b_equ_id'])->count();
 				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
