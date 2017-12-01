@@ -46,9 +46,11 @@ class WorkshopController extends Controller
 			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
 
 			$result['w_id']=$characterDetail['w_id'];
+			$result['w_bag_id']=$characterDetail['w_bag_id'];
 			$result['m_id']=$characterDetail['m_id'];
+			$result['m_bag_id']=$characterDetail['m_bag_id'];
 			$result['core_id']=$characterDetail['core_id'];
-
+			$result['core_bag_id']=$characterDetail['core_bag_id'];
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
 			$result['ch_armor']=$characterDetail['ch_armor'];

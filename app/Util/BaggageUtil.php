@@ -6,6 +6,7 @@ use Illuminate\Http\JsonResponse;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
+use App\EquUpgradeMstModel;
 use App\ItemMstModel;
 use Exception;
 use App\Exceptions\Handler;
@@ -28,7 +29,7 @@ class BaggageUtil
 			$BaggageResource=$UserBaggageResModel->select('user_br_id','br_id','br_icon','br_quantity')->where('u_id',$baggage_u_id)->where('status','=',0)->orderBy('br_rarity','DESC')->get();
 
 			foreach ($BaggageResource as $obj) 
-			{
+			{	$arry['user_br_id']=$obj['user_br_id'];
 				$arry['item_id']=$obj['br_id'];
 				// $arry['item_icon']=$obj['br_icon'];
 				$arry['item_quantity']=$obj['br_quantity'];
@@ -56,7 +57,7 @@ class BaggageUtil
 			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
 
 			foreach ($baggageScroll as $obj) 
-			{
+			{	$arry['user_bsc_id']=$obj['user_bsc_id'];
 				$arry['item_id']=$obj['bsc_id'];
 				// $arry['item_icon']=$obj['bsc_icon'];
 				$arry['item_quantity']=1;
@@ -79,15 +80,17 @@ class BaggageUtil
 		// if(isset($baggage_u_id))
 		// {
 			$UserBaggageEqModel=new UserBaggageEqModel();
+			$eqUpgrade=new EquUpgradeMstModel();
 			$result=[];
 
 			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->orderBy('b_equ_rarity','DESC')->get();
 
 			foreach ($baggageWeapon as $obj) 
-			{
+			{	$arry['user_beq_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
+				$arry['upgrade']=$eqUpgrade->where('equ_id',$b_equ_id)->count();
 				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
@@ -112,7 +115,7 @@ class BaggageUtil
 			$baggageMovement=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',2)->orderBy('b_equ_rarity','DESC')->get();
 
 			foreach ($baggageMovement as $obj)
-			{
+			{	$arry['user_beq_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
@@ -140,7 +143,7 @@ class BaggageUtil
 			$baggageCore=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',3)->orderBy('b_equ_rarity','DESC')->get();
 
 			foreach ($baggageCore as $obj) 
-			{
+			{	$arry['user_beq_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
