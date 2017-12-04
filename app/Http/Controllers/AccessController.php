@@ -16,16 +16,13 @@ use Log;
 use DateTime;
 class AccessController extends Controller
 {
-	public function quickLogin(Request $request){
-		$req=$request->getContent();
-		$json=base64_decode($req);
-		$data=json_decode($json,TRUE);
+	private function quickLogin($user_name,$user_password,$uuid,$os){
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
-		if(isset($data['uuid']))
-		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
+		if(isset($uuid))
+		{  	if(($os='ios'&&strlen($uuid)==40)||($os='android'&&strlen($uuid)==37))
 			{
 					$userData=$usermodel->createNew($data);	
 			}
@@ -69,7 +66,7 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
         $userData=$data;
-		if(isset($data['user_name'])&&isset($data['password']))
+		if($data['user_name']&&$data['password'])
 		{  	
 			if(strpos($data['user_name'],'@')){ 
 				$userData=$usermodel->where('email','=',$data['user_name'])->
@@ -92,6 +89,7 @@ class AccessController extends Controller
 		
 		$u_id=$userData['u_id'];
 		$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
+
 		if($userData['pass_tutorial']&&$userChar)
 		{	
 			$result['user_data']['character_info']=$userChar;
@@ -149,15 +147,13 @@ class AccessController extends Controller
 			$result['user_data']['user_info']=$userfinal;
 			$result['user_data']['char_info']=$userChar;
 			$result['user_data']['account_info']=$account;
-			date_default_timezone_set("UTC");
 
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);
 		}
 		else {
-
-			throw new Exception("no available account");
+			$this->quickLogin($data['user_name'],$data['password'],$data['uuid'],$data['os']);
 		}
 		
 	}
