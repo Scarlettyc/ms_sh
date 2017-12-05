@@ -25,7 +25,7 @@ class AccessController extends Controller
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{		
 					$data['email']=$data['user_name'];
-					array_remove($data, 'user_name'); 
+					unset($data['user_name']);
 					$userData=$usermodel->createNew($data);	
 			}
 		}
