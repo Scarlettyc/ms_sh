@@ -50,7 +50,7 @@ class AccessController extends Controller
 			$result['fb_id']=$userfinal['fb_id'];
 			$result['pass_tutorial']=$userfinal['pass_tutorial'];
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
-			$result['u_login_count']=1
+			$result['u_login_count']=1;
 			$result['uuid']=$userfinal['uuid'];
 			$result['first_login']=0;
 
