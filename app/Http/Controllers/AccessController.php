@@ -100,12 +100,6 @@ class AccessController extends Controller
 		if(isset($userData)){
 		
 		$u_id=$userData['u_id'];
-		$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
-		if($userData['pass_tutorial']&&$userChar)
-		{	
-			$result['user_data']['character_info']=$userChar;
-			$result['user_data']['equipment_info']=$this->getEquip($userChar);
-		}
 				
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
