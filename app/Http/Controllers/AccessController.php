@@ -16,13 +16,14 @@ use Log;
 use DateTime;
 class AccessController extends Controller
 {
-	private function quickLogin($user_name,$user_password,$uuid,$os){
+	private function quickLogin($data){
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
+		$data
 		if(isset($uuid))
-		{  	if(($os='ios'&&strlen($uuid)==40)||($os='android'&&strlen($uuid)==37))
+		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
 					$userData=$usermodel->createNew($data);	
 			}
@@ -153,7 +154,7 @@ class AccessController extends Controller
 			return  base64_encode($response);
 		}
 		else {
-			$this->quickLogin($data['user_name'],$data['password'],$data['uuid'],$data['os']);
+			$this->quickLogin($data);
 		}
 		
 	}
