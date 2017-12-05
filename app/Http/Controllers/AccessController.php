@@ -32,9 +32,7 @@ class AccessController extends Controller
 		}
 
 		 $userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
-
-
-			$token=$usermodel->createTOKEN(16);
+		$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
 					$logindata['os']=$data['os'];
@@ -46,6 +44,15 @@ class AccessController extends Controller
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 					$userfinal['access_token']=$token;
+			$result['u_id']=$userfinal['u_id'];;
+			$result['access_token']=$token;
+			$result['email']=$userfinal['email'];
+			$result['fb_id']=$userfinal['fb_id'];
+			$result['pass_tutorial']=$userfinal['pass_tutorial'];
+			$result['u_vip_lv']=$userfinal['u_vip_lv'];
+			$result['u_login_count']=1
+			$result['uuid']=$userfinal['uuid'];
+			$result['first_login']=0;
 
 			$response=json_encode($userfinal,TRUE);
 			return  base64_encode($response);
@@ -82,20 +89,10 @@ class AccessController extends Controller
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
 		}
 		else {
-			throw new Exception("no info of this account");
-			
+			throw new Exception("no info of this account");	
 		}
 		if(isset($userData)){
-		
-		$u_id=$userData['u_id'];
-		$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
-
-		if($userData['pass_tutorial']&&$userChar)
-		{	
-			$result['user_data']['character_info']=$userChar;
-			$result['user_data']['equipment_info']=$this->getEquip($userChar);
-		}
-				
+			$u_id=$userData['u_id'];	
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
@@ -139,15 +136,15 @@ class AccessController extends Controller
 				}
 			
 			$userfinal=$usermodel->where('u_id','=',$userData['u_id'])->first();
-			$userfinal['access_token']=$token;
-			$account['email']=$userfinal['email'];
-			$account['fb_id']=$userfinal['fb_id'];
-			$account['friend_id']=$userfinal['friend_id'];
-			$account['first_login']=$firstLogin;
-			$result['user_data']['user_info']=$userfinal;
-			$result['user_data']['char_info']=$userChar;
-			$result['user_data']['account_info']=$account;
-
+			$result['u_id']=$userfinal['u_id'];;
+			$result['access_token']=$token;
+			$result['email']=$userfinal['email'];
+			$result['fb_id']=$userfinal['fb_id'];
+			$result['pass_tutorial']=$userfinal['pass_tutorial'];
+			$result['u_vip_lv']=$userfinal['u_vip_lv'];
+			$result['u_login_count']=$userfinal['u_login_count'];
+			$result['uuid']=$userfinal['uuid'];
+			$result['first_login']=$firstLogin;
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);
