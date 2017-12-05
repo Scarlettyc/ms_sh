@@ -16,11 +16,16 @@ use Log;
 use DateTime;
 class AccessController extends Controller
 {
-	private function quickLogin($data){
+
+	public function quickLogin(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
+
 		if($data['uuid'])
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{		
@@ -74,7 +79,7 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 	    Redis::connection('default');
         $userData=$data;
-		if($data['user_name']&&$data['password'])
+		if(isset($data['user_name'])&&isset($data['password']))
 		{  	
 			if(strpos($data['user_name'],'@')){ 
 				$userData=$usermodel->where('email','=',$data['user_name'])->
@@ -93,7 +98,15 @@ class AccessController extends Controller
 			throw new Exception("no info of this account");	
 		}
 		if(isset($userData)){
-			$u_id=$userData['u_id'];	
+		
+		$u_id=$userData['u_id'];
+		$userChar=$characterModel->where('u_id','=',$userData['u_id'])->first();
+		if($userData['pass_tutorial']&&$userChar)
+		{	
+			$result['user_data']['character_info']=$userChar;
+			$result['user_data']['equipment_info']=$this->getEquip($userChar);
+		}
+				
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
@@ -151,7 +164,8 @@ class AccessController extends Controller
 			return  base64_encode($response);
 		}
 		else {
-			$this->quickLogin($data);
+
+			throw new Exception("no available account");
 		}
 	}
 

@@ -181,11 +181,15 @@ class BaggageController extends Controller
 <<<<<<< HEAD
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
+<<<<<<< HEAD
 		$dmy=$now->format( 'Ymd' );
 =======
 		$data=json_decode($req,TRUE);
 		$now=new DateTime;
 >>>>>>> parent of 97f1d43... update merge scroll
+=======
+		$now=new DateTime;
+>>>>>>> parent of 68e51f9... update quick login
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 
