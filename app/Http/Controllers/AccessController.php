@@ -21,7 +21,7 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
-		if($data[$uuid])
+		if($data['uuid'])
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{
 					$userData=$usermodel->createNew($data);	
