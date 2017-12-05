@@ -33,7 +33,7 @@ class AccessController extends Controller
 			throw new Exception("oppos, give me a correct uuid");
 		}
 
-		 $userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
+		$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
 		$token=$usermodel->createTOKEN(16);
 					$logindata['u_id']=$userData['u_id'];
 					$logindata['uuid']=$userData['uuid'];
@@ -45,7 +45,6 @@ class AccessController extends Controller
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
-					$userfinal['access_token']=$token;
 			$result['u_id']=$userfinal['u_id'];;
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
@@ -154,7 +153,6 @@ class AccessController extends Controller
 		else {
 			$this->quickLogin($data);
 		}
-		
 	}
 
 	public function showStatus(Request $request){
