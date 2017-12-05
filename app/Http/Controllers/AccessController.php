@@ -86,7 +86,7 @@ class AccessController extends Controller
 				where('password',$data['password'])->first();
 			}
 		}
-		else if(isset($data['fb_id'])){
+		else if($data['fb_id']){
 			$userData=$usermodel->where('fb_id','=',$data['fb_id'])->first();
 		}
 		else {
