@@ -57,7 +57,7 @@ class AccessController extends Controller
 			$result['u_login_count']=1;
 			$result['uuid']=$userfinal['uuid'];
 			$result['first_login']=1;
-
+			$firstLogin=1;
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		
@@ -97,8 +97,7 @@ class AccessController extends Controller
 		}
 		if(isset($userData)){
 		
-		$u_id=$userData['u_id'];
-				
+			$u_id=$userData['u_id'];	
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
@@ -123,7 +122,6 @@ class AccessController extends Controller
 					else {
 						throw new Exception("login error!");
 					}
-				$firstLogin=0;
 				}
 				else {
 					$token=$usermodel->createTOKEN(16);
@@ -138,11 +136,15 @@ class AccessController extends Controller
 					$datetime=$now->format( 'Y-m-d h:m:s' );
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
-					$firstLogin=1;
 				}
+				$loginToday=Redis::HGET('login_data',$dmy.$uid);
+			if($loginToday){
+				$firstLogin=1;
+			}
 			
-			$userfinal=$usermodel->where('u_id','=',$userData['u_id'])->first();
-			$result['u_id']=$userfinal['u_id'];;
+			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
+			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
+			$result['u_id']=$userfinal['u_id'];
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
 			$result['fb_id']=$userfinal['fb_id'];
@@ -152,7 +154,6 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['first_login']=$firstLogin;
 			$response=json_encode($result,TRUE);
-
 			return  base64_encode($response);
 		}
 		else {

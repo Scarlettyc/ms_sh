@@ -25,7 +25,7 @@ class TutorialController extends Controller
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		$charUtil=new CharSkillEffUtil();
+		
 
 		if($access_token==$data['access_token'])
 		{
@@ -40,9 +40,9 @@ class TutorialController extends Controller
 				$char['createdate']=$datetime;
 				$char['u_id']=$uid;
 				$characterModel->insert($char);
-				$charUtil->sendEq($u_id);
+				
 				$finalChar=$characterModel->where('u_id',$uid)->first();
-				$response['user_data']['character_info']=json_encode($finalChar,TRUE);
+				$response['character_info']=json_encode($finalChar,TRUE);
 
 				
 				return base64_encode($response);
@@ -63,14 +63,17 @@ class TutorialController extends Controller
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$charUtil=new CharSkillEffUtil();
+		$usermodel=new UserModel();
+		$characterModel=new CharacterModel();
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
+		$eq_id=$data['eq_id'];
 
 		if(isset($data['u_id'])&&$access_token==$data['access_token'])
 		{
 			$uid=$data['u_id'];
-			$usermodel=new UserModel();
-			$characterModel=new CharacterModel();
+			$charUtil->sendEq($u_id);
 			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1]);
 			$finalUser=$usermodel->where('u_id',$uid)->first();
 			$response['user_data']['user_info']=json_encode($finalUser,TRUE);
