@@ -23,7 +23,9 @@ class AccessController extends Controller
 		$usermodel=new UserModel();
 		if($data['uuid'])
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
-			{
+			{		
+					$data['email']=$data['user_name'];
+					array_remove($data, 'user_name'); 
 					$userData=$usermodel->createNew($data);	
 			}
 		}
@@ -54,7 +56,7 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['first_login']=0;
 
-			$response=json_encode($userfinal,TRUE);
+			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		
 	}
