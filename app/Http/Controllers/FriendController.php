@@ -90,7 +90,7 @@ class FriendController extends Controller
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
-			$ch_title=$characterModel->select('ch_title')->where('u_id',$u_id)->first();
+			$ch_title=$characterModel->select('ch_title')->where('u_id',$friendArr->u_id)->first();
 			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
 		}
