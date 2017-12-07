@@ -82,7 +82,7 @@ class LoginRewardController extends Controller
 			$loginCount=1;
 			}
 
-		$userModel->where('u_id',$uid)->update(['u_login_count'=>$loginCount,'updated_at'=>$datetime]);
+		$userModel->where('u_id',$uid)->update(['u_login_count'=>$loginCount,'updated_at'=>$datetime,'u_get_reward'=>1]);
 		$getReward['u_id']=$uid;
 		$getReward['createtime']=time();
 		$todayreward['today_rewards']=$getReward;

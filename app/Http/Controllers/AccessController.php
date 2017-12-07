@@ -56,8 +56,8 @@ class AccessController extends Controller
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
 			$result['u_login_count']=1;
 			$result['uuid']=$userfinal['uuid'];
-			$result['first_login']=1;
-			$firstLogin=1;
+			$result['u_get_reward']=0;
+			
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		
@@ -101,7 +101,7 @@ class AccessController extends Controller
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
-			$firstLogin=0;
+			$firstLogin=$userData['get_reward'];
 			if($loginToday){
 				$loginTodayArr=json_decode($loginToday);
 				$token=$usermodel->createTOKEN(16);
@@ -137,10 +137,6 @@ class AccessController extends Controller
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
-				$loginToday=Redis::HGET('login_data',$dmy.$u_id);
-			if($loginToday){
-				$firstLogin=1;
-			}
 			
 			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
 			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
@@ -150,9 +146,9 @@ class AccessController extends Controller
 			$result['fb_id']=$userfinal['fb_id'];
 			$result['pass_tutorial']=$userfinal['pass_tutorial'];
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
-			$result['u_login_count']=$userfinal['u_login_count'];
+			$result['u_login_count']=$userfinal['u_login_count']+1;
 			$result['uuid']=$userfinal['uuid'];
-			$result['first_login']=$firstLogin;
+			$result['get_reward']=$userData['get_reward'];;
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		}
@@ -205,9 +201,11 @@ class AccessController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
+		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
 		//dd($data);
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
@@ -222,6 +220,7 @@ class AccessController extends Controller
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($logindata,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
+			$usermodel->where('u_id',$u_id)->update(['u_get_reward'=>0,'updated_at'=>$datetime]);
 			$response="success logout";
 			return  base64_encode($response);
 	}
