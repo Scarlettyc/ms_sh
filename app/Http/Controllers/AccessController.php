@@ -137,7 +137,7 @@ class AccessController extends Controller
 					$loginlist=json_encode($logindata,TRUE);
 					Redis::HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
-				$loginToday=Redis::HGET('login_data',$dmy.$uid);
+				$loginToday=Redis::HGET('login_data',$dmy.$u_id);
 			if($loginToday){
 				$firstLogin=1;
 			}
