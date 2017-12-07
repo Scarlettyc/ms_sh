@@ -146,7 +146,7 @@ class AccessController extends Controller
 			$result['fb_id']=$userfinal['fb_id'];
 			$result['pass_tutorial']=$userfinal['pass_tutorial'];
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
-			$result['u_login_count']=$userfinal['u_login_count']+1;
+			$result['u_login_count']=$userfinal['u_login_count'];
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
 			$response=json_encode($result,TRUE);
@@ -220,7 +220,7 @@ class AccessController extends Controller
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($logindata,TRUE);
 			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
-			$usermodel->where('u_id',$u_id)->update(['u_get_reward'=>0,'updated_at'=>$datetime]);
+			$usermodel->where('u_id',$u_id)->update(['updated_at'=>$datetime]);
 			$response="success logout";
 			return  base64_encode($response);
 	}
