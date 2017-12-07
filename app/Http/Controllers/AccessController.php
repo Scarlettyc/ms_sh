@@ -101,7 +101,7 @@ class AccessController extends Controller
 			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
-			$firstLogin=$userData['get_reward'];
+			$firstLogin=$userData['u_get_reward'];
 			if($loginToday){
 				$loginTodayArr=json_decode($loginToday);
 				$token=$usermodel->createTOKEN(16);
@@ -148,7 +148,7 @@ class AccessController extends Controller
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
 			$result['u_login_count']=$userfinal['u_login_count']+1;
 			$result['uuid']=$userfinal['uuid'];
-			$result['get_reward']=$userData['get_reward'];
+			$result['get_reward']=$userData['u_get_reward'];
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		}
