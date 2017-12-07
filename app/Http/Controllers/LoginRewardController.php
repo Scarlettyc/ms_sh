@@ -66,7 +66,7 @@ class LoginRewardController extends Controller
 		$uid=$data['u_id'];
 		$loginToday=Redis::HGET('login_data',$dmy.$uid);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_to;
+		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token'])
 		{ 	
 			$userModel=new UserModel();
