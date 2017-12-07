@@ -83,12 +83,15 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$key='friend_request_'.$u_id;
 		$requestlist=Redis::HVALS($key);
+		$characterModel=new CharacterModel();
 		$result=[];
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
+			$ch_title=$characterModel->select('ch_title')->where('u_id',$u_id)->first();
+			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
 		}
 		$final['friend_request']=$result;
