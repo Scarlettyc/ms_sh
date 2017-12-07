@@ -148,7 +148,7 @@ class AccessController extends Controller
 			$result['u_vip_lv']=$userfinal['u_vip_lv'];
 			$result['u_login_count']=$userfinal['u_login_count']+1;
 			$result['uuid']=$userfinal['uuid'];
-			$result['get_reward']=$userData['get_reward'];;
+			$result['get_reward']=$userData['get_reward'];
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		}
