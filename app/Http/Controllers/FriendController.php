@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
+use UserFriendCoinHistoryModel;
 use DB;
 
 class FriendController extends Controller
@@ -114,11 +115,11 @@ class FriendController extends Controller
 		$userfriend=new UserFriendModel();
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
+		$friendCoin=new UserFriendCoinHistoryModel();
 
 		$friendList=DB::table('User_friend_list')
 					->join('User','User.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
-					->join('User_Friend_Coin_History','User_friend_list.friend_u_id','=','User_Friend_Coin_History.friend_u_id')
 					->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv','User_Friend_Coin_History.fcoin_status')
 					->where('User_friend_list.u_id',$data['u_id'])
 					->orderby('User_Character.ch_ranking','DESC')
@@ -130,7 +131,7 @@ class FriendController extends Controller
 		$friend_user_ids=[];
 		if($friendList){
 			foreach($friendList as $friend){
-				
+
 				$loginToday=Redis::HGET('login_data',$dmy.$friend->u_id);
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
@@ -138,6 +139,12 @@ class FriendController extends Controller
 				}
 				else{
 					$friend->logoff=0;
+				}
+				$friendCoin=$friendCoin->select('fcoin_status')->where('u_id',$data['u_id'])->where('friend_u_id',$friend->u_id)->where('sent_dmy',$dmy)->first();
+				if($friendCoin){
+					$friend->fcoin_status=$friendCoin['fcoin_status'];
+				}else{
+					$friend->fcoin_status=0;
 				}
 				$result['friend_list'][]=$friend;
 			}
