@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
+use DB;
 
 class FriendController extends Controller
 {
@@ -113,29 +114,27 @@ class FriendController extends Controller
 		$userfriend=new UserFriendModel();
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
-		$friend_list=$userfriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
+
+		$friendList=DB::table('User_friend_list')
+					->join('User','User.u_id','=','User_friend_list.friend_u_id')
+					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
+					->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
+					->orderby('User_Character.ch_ranking')
+					->get();
+		;
 		$key='friend_request_'.$data['u_id'];
 		$requestCount=Redis::HLEN($key);
 		$friend_user_ids=[];
-		if($friend_list){
+		if($friendList){
 			foreach($friend_list as $friend){
-				$char=$characterModel->select('ch_lv','ch_ranking','ch_title')->where('u_id',$friend['friend_u_id'])->first();
-				$friendUser=$usermodel->select('friend_id','profile_img','like_number')->where('u_id',$friend['friend_u_id'])->first();
-				$friendData['u_id']=$friend['friend_u_id'];
-				$friendData['friend_id']=$friendUser['friend_id'];
-				$friendData['ch_lv']=$char['ch_lv'];
-				$friendData['ch_ranking']=$char['ch_ranking'];
-				$friendData['ch_title']=$char['ch_title'];	
-				$friendData['profile_img']=$friendUser['profile_img'];
-				$friendData['like_number']=$friendUser['like_number'];
 				$result['friend_list'][]=$friendData;
 				$loginToday=Redis::HGET('login_data',$dmy.$friend['friend_u_id']);
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
-					$friendData['logoff']=$loginTodayArr->logoff;
+					$friend['logoff']=$loginTodayArr->logoff;
 				}
 				else{
-					$friendData['logoff']=0;
+					$friend['logoff']=0;
 				}
 			}
 			$result['requestCount']=$requestCount;
