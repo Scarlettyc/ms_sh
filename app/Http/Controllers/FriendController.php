@@ -108,14 +108,23 @@ class FriendController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		$usefriend=new UserFriendModel();
+		$userfriend=new UserFriendModel();
 		$characterModel=new CharacterModel();
 		$friend_list=$usefriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
 		$key='friend_request_'.$data['u_id'];
 		$requestCount=Redis::HLEN($key);
 		$friend_user_ids=[];
 		if($friend_list){
-			$result['friend_list']=$friend_list;
+			foreach($friend_list as $friend){
+				$char=$characterModel->select('ch_lv','ch_ranking','ch_title')->where('u_id',$friend['friend_u_id'])->first();
+				$friendUser=$userfriend->select('profile_img','like_number')->('u_id',$friend['friend_u_id'])->first();
+				$friendData['ch_lv']=$char['ch_lv'];
+				$friendData['ch_ranking']=$char['ch_ranking'];
+				$friendData['ch_title']=$char['ch_title'];
+				$friendData['profile_img']=$friendUser['profile_img'];
+				$friendData['like_number']=$friendUser['like_number'];
+				$result['friend_list'][]=$friendData;
+			}
 			$result['requestCount']=$requestCount;
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
