@@ -108,9 +108,12 @@ class FriendController extends Controller
 		$usefriend=new UserFriendModel();
 		$characterModel=new CharacterModel();
 		$friend_list=$usefriend->where('u_id',$data['u_id'])->where('friend_status',1)->get();
+		$key='friend_request_'.$u_id;
+		$requestCount=Redis::HLEN($key);
 		$friend_user_ids=[];
 		if($friend_list){
 			$result['friend_list']=$friend_list;
+			$result['requestCount']=$requestCount;
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
 		}
