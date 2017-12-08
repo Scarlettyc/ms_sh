@@ -85,7 +85,7 @@ class FriendController extends Controller
 		$requestlist=Redis::HVALS($key);
 		$characterModel=new CharacterModel();
 		$result=[];
-		if($requestlist){
+		if($requestlist!=null){
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
