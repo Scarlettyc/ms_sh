@@ -117,7 +117,7 @@ class FriendController extends Controller
 		if($friend_list){
 			foreach($friend_list as $friend){
 				$char=$characterModel->select('ch_lv','ch_ranking','ch_title')->where('u_id',$friend['friend_u_id'])->first();
-				$friendUser=$userfriend->select('profile_img','like_number')->('u_id',$friend['friend_u_id'])->first();
+				$friendUser=$userfriend->select('profile_img','like_number')->where('u_id',$friend['friend_u_id'])->first();
 				$friendData['ch_lv']=$char['ch_lv'];
 				$friendData['ch_ranking']=$char['ch_ranking'];
 				$friendData['ch_title']=$char['ch_title'];
