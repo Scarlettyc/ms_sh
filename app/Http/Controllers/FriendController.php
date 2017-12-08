@@ -132,10 +132,10 @@ class FriendController extends Controller
 				$loginToday=Redis::HGET('login_data',$dmy.$friend->u_id);
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
-					$friend['logoff']=$loginTodayArr->logoff;
+					$friend->logoff=$loginTodayArr->logoff;
 				}
 				else{
-					$friend['logoff']=0;
+					$friend->logoff=0;
 				}
 				$result['friend_list'][]=$friend;
 			}
