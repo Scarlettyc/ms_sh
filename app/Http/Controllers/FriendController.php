@@ -122,13 +122,14 @@ class FriendController extends Controller
 					->orderby('User_Character.ch_ranking')
 					->get();
 		;
+
 		$key='friend_request_'.$data['u_id'];
 		$requestCount=Redis::HLEN($key);
 		$friend_user_ids=[];
 		if($friendList){
 			foreach($friendList as $friend){
 				
-				$loginToday=Redis::HGET('login_data',$dmy.$friend['friend_u_id']);
+				$loginToday=Redis::HGET('login_data',$dmy.$friend->u_id;
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
 					$friend['logoff']=$loginTodayArr->logoff;
