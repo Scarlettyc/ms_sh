@@ -88,7 +88,7 @@ class FriendController extends Controller
 		if(isset($requestlist)){
 			foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
-			if($friendArr){
+			if($friendArr!=null){
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
