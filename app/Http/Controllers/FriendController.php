@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
+use Illuminate\Support\Facades\Redis;
 
 class FriendController extends Controller
 {
@@ -108,6 +109,8 @@ class FriendController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
 		$userfriend=new UserFriendModel();
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
@@ -127,7 +130,13 @@ class FriendController extends Controller
 				$friendData['profile_img']=$friendUser['profile_img'];
 				$friendData['like_number']=$friendUser['like_number'];
 				$result['friend_list'][]=$friendData;
-			}
+				$loginToday=Redis::HGET('login_data',$dmy.$friend['friend_u_id']);
+				if($loginToday){
+				$friendData['logoff']=$loginTodayArr->logoff;
+				}else{
+					$friendData['logoff']=0;
+				}
+
 			$result['requestCount']=$requestCount;
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
