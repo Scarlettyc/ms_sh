@@ -126,7 +126,7 @@ class FriendController extends Controller
 		$requestCount=Redis::HLEN($key);
 		$friend_user_ids=[];
 		if($friendList){
-			foreach($friend_list as $friend){
+			foreach($friendList as $friend){
 				$result['friend_list'][]=$friendData;
 				$loginToday=Redis::HGET('login_data',$dmy.$friend['friend_u_id']);
 				if($loginToday){
