@@ -85,6 +85,7 @@ class FriendController extends Controller
 		$requestlist=Redis::HVALS($key);
 		$characterModel=new CharacterModel();
 		$result=[];
+		if($requestlist){
 		foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
@@ -94,6 +95,7 @@ class FriendController extends Controller
 			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
 		}
+	}
 		$final['friend_request']=$result;
 		$response=json_encode($final,TRUE);
 		return base64_encode($response);
