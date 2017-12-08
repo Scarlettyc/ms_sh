@@ -88,12 +88,14 @@ class FriendController extends Controller
 		if(isset($requestlist)){
 			foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
+			if($friendArr){
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
 			$ch_title=$characterModel->select('ch_title')->where('u_id',$friendArr->u_id)->first();
 			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
+			}
 		}
 	}
 		$final['friend_request']=$result;
