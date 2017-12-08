@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
-use Illuminate\Support\Facades\Redis;
 
 class FriendController extends Controller
 {
