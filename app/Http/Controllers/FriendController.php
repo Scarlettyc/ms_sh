@@ -119,7 +119,8 @@ class FriendController extends Controller
 					->join('User','User.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
 					->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
-					->orderby('User_Character.ch_ranking')
+					->where('User_friend_list.u_id',$data['u_id'])
+					->orderby('User_Character.ch_ranking','DESC')
 					->get();
 		;
 
