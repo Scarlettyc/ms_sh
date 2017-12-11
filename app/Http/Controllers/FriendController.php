@@ -122,6 +122,7 @@ class FriendController extends Controller
 					->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
 					->where('User_friend_list.u_id',$data['u_id'])
 					->orderby('User_Character.ch_ranking','DESC')
+					->orderBy('User_Character.ch_title', 'ASC')
 					->get();
 
 		$key='friend_request_'.$data['u_id'];
@@ -368,7 +369,7 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
-		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->frist();
+		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->first();
 		$result["friend_details"]=$friendCharacter;
 		$response=json_encode($result,TRUE);
 		 return base64_encode($response);
