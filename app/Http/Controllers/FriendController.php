@@ -139,7 +139,7 @@ class FriendController extends Controller
 					$friend->logoff=0;
 				}
 				$friendCoin=$friendCoinModel->select('fcoin_status')->where('u_id',$data['u_id'])->where('friend_u_id',$friend->u_id)->where('sent_dmy',$dmy)->first();
-				if($friendCoinModel){
+				if($friendCoin['fcoin_status']){
 					$friend->fcoin_status=$friendCoin['fcoin_status'];
 				}else{
 					$friend->fcoin_status=0;
