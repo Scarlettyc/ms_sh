@@ -114,7 +114,7 @@ class FriendController extends Controller
 		$userfriend=new UserFriendModel();
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
-		$friendCoin=new UserFriendCoinHistoryModel();
+		$friendCoinModel=new UserFriendCoinHistoryModel();
 
 		$friendList=DB::table('User_friend_list')
 					->join('User','User.u_id','=','User_friend_list.friend_u_id')
@@ -123,7 +123,6 @@ class FriendController extends Controller
 					->where('User_friend_list.u_id',$data['u_id'])
 					->orderby('User_Character.ch_ranking','DESC')
 					->get();
-		;
 
 		$key='friend_request_'.$data['u_id'];
 		$requestCount=Redis::HLEN($key);
@@ -139,8 +138,8 @@ class FriendController extends Controller
 				else{
 					$friend->logoff=0;
 				}
-				$friendCoin=$friendCoin->select('fcoin_status')->where('u_id',$data['u_id'])->where('friend_u_id',$friend->u_id)->where('sent_dmy',$dmy)->first();
-				if($friendCoin){
+				$friendCoin=$friendCoinModel->select('fcoin_status')->where('u_id',$data['u_id'])->where('friend_u_id',$friend->u_id)->where('sent_dmy',$dmy)->first();
+				if($friendCoinModel){
 					$friend->fcoin_status=$friendCoin['fcoin_status'];
 				}else{
 					$friend->fcoin_status=0;
