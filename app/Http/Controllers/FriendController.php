@@ -369,7 +369,7 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
-		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->first();
+		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$friend['u_id'])->first();
 		$result["friend_details"]=$friendCharacter;
 		$response=json_encode($result,TRUE);
 		 return base64_encode($response);
