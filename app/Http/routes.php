@@ -75,10 +75,11 @@ Route::post('/coinlist', 'FriendController@recieveCoinList');
 Route::post('/suggest_friend', 'FriendController@suggest_friend');
 Route::post('/search_friend', 'FriendController@searchFriend');
 Route::post('/like_friend','FriendController@like_friend');
-Route::post('/friend_details','FriendController@friend_details');
+Route::post('/friendDetails','FriendController@friend_details');
 Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
+
 
 
 

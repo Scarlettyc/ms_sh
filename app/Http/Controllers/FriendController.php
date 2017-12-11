@@ -228,8 +228,7 @@ class FriendController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		if(isset($data['u_id'])&&isset($data['friend_id']))
-		{
+		if(isset($data)){
 			$u_id=$data['u_id'];
 			$friend_id=$data['friend_id'];
 			$usermodel=new UserModel();
