@@ -262,7 +262,7 @@ class FriendController extends Controller
 					$sentData["createdate"]=$datetime;
 					$friendCoinModel->insert($sentData);
      				$response=json_encode($sentData,TRUE);
-     			return $response;
+     			return  base64_encode($response);
  				}
  				else {
  				throw new Exception("you aleady sent to this friend");
@@ -371,6 +371,7 @@ class FriendController extends Controller
 		$friendCharacter=$characterModel->where('u_id',$friend['u_id'])->frist();
 		$result["friend_details"]=$friendCharacter;
 		$response=json_encode($result,TRUE);
+		 return base64_encode($response);
 	}
 
 	public function like_friend(Request $request){
