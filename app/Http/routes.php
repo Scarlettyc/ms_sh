@@ -76,9 +76,13 @@ Route::post('/suggest_friend', 'FriendController@suggest_friend');
 Route::post('/search_friend', 'FriendController@searchFriend');
 Route::post('/like_friend','FriendController@like_friend');
 Route::post('/friendDetails','FriendController@friend_details');
+Route::post('/sendMessage','FriendController@sendMessage');
+Route::post('/receiveMessage','FriendController@receiveMessage');
+
 Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
+
 
 
 

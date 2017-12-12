@@ -434,7 +434,7 @@ class FriendController extends Controller
 		$useModel=new UserModel();	
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$key='friend_message_'.$friend['u_id'].'_'.$u_id;
-		$redislist=Redis::LRANGE($key,1,10);
+		$redislist=Redis::LRANGE($key,0,1);
 		$messageList=json_decode($redislist,TRUE);
 		return $messageList;
 	}
