@@ -104,6 +104,7 @@ class AccessController extends Controller
 			$firstLogin=$userData['u_get_reward'];
 			if($loginToday){
 				$loginTodayArr=json_decode($loginToday);
+				log::info($loginToday);
 				$token=$usermodel->createTOKEN(16);
 				$status=$loginTodayArr->status;
 				$logoff=$loginTodayArr->logoff;
