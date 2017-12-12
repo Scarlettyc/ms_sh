@@ -218,7 +218,7 @@ class FriendController extends Controller
 			$friend_List=$friendModel->where('u_id',$u_id)->get();
 			$result['friend_list']=$friend_List;
 			$response=json_encode($result,TRUE);
-			return $response;
+			return base64_encode($response);
 		}
 		else{
 			throw new Exception("no friend found");
