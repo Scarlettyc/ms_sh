@@ -38,8 +38,8 @@ class LuckdrawController extends Controller
 
 		if($data)
 		{
-			$normalDrawJosn==Redis::HGET('luckdrawfree'.1,$dmy.$data['u_id']);
-			$gemDrawJson==Redis::HGET('luckdrawfree'.2,$dmy.$data['u_id']);
+			$normalDrawJosn==Redis::HGET('luckdrawfree1',$dmy.$data['u_id']);
+			$gemDrawJson==Redis::HGET('luckdrawfree2',$dmy.$data['u_id']);
 			$normalDrawData=json_decode($normalDrawJosn,TRUE);
 			$gemDrawData=json_decode($gemDrawJson,TRUE);
 			$coinLuck=$luckdraw->where('draw_type',1)->first();
