@@ -20,12 +20,59 @@ use Exception;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 class LuckdrawController extends Controller
-{
- 	public function draw(Request $request){
+{	
+	public function showLuck(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
+		// Redis::connection('default');
+		$now   = new DateTime;
+		$date=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$luckdraw=new Luck_draw_rewardsModel();
+		$defindMstModel=new DefindMstModel();
+
+		if($data)
+		{
+			$normalDrawJosn==Redis::HGET('luckdrawfree'.1,$dmy.$data['u_id']);
+			$gemDrawJson==Redis::HGET('luckdrawfree'.2,$dmy.$data['u_id']);
+			$normalDrawData=json_decode($normalDrawJosn,TRUE);
+			$gemDrawData=json_decode($gemDrawJson,TRUE);
+			$coinLuck=$luckdraw->where('draw_type',1)->first();
+			$gemLuck=$luckdraw->where('draw_type',2)->first();
+			if($normalDrawData){
+				$coinDraw=0;
+				$coinTimeUtil=($coinLuck['free_draw_duration']+$normalDrawData['createtime'])-time();
+				}
+			else {
+				$coinDraw=1;
+				$coinTimeUtil=$coinLuck['free_draw_duration'];
+			}
+
+			if($gemDrawData){
+				$gemDraw=0;
+				$gemTimeUtil=($gemLuck['free_draw_duration']+$gemDrawData['createtime'])-time();
+			}
+			else {
+				$gemDraw=1;
+				$gemTimeUtil=$gemLuck['free_draw_duration'];
+			}
+			$result['coinDraw']=$coinDraw;
+			$result['coinTimeUtil']=$coinTimeUtil;
+			$result['gemDraw']=$coinDraw;
+			$result['gemTimeUtil']=$coinTimeUtil;
+			$response=json_encode($result,TRUE);
+ 	    	return base64_encode($response);
+		}
+	}
+ 	public function draw(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	//dd($json);
 		// Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
@@ -100,49 +147,82 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();	
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
-
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token']){
 			$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
-		   if($drawtype==1){
-		   $defindData=$defindMstModel->where('defind_id',3)->first(); 
-		   $rate=rand($defindData['value1'], $defindData['value2']);
-		   $payBy=$userData['u_coin'];
-			}
-		   else {
-		   	$defindData=$defindMstModel->where('defind_id',4)->first(); 
-		   	$rate=rand($defindData['value1'], $defindData['value2']);
-		   	 $payBy=$userData['u_gem'];
-		   } 
-		   
-		   $drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
-		   if($drawresult){
-				$draw=$this->chooseBaggage($drawresult,$data,1);
-
-		   		if($drawtype==1){
-		   			$draw['spent_coin']=$drawresult['draw_spend'];
-		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
-		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
-		   		}
+		   $gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
+		   $luckdata=$luckdraw->where('draw_type',$drawtype)->first();
+		   if($gotToday){
+		   		$todaydraw=json_decode($gotToday,TRUE);
+		   	  if($drawtype==1){
+		   		$defindData=$defindMstModel->where('defind_id',3)->first(); 
+		  		 $rate=rand($defindData['value1'], $defindData['value2']);
+		   		$payBy=$userData['u_coin'];
+					}
 		   		else {
-		   			$draw['spent_gem']=$drawresult['draw_spend'];
-		   			$userGem=$userData['u_gem']-$drawresult['draw_spend'];
-		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
-		   		}
+		   			$defindData=$defindMstModel->where('defind_id',4)->first(); 
+		   			$rate=rand($defindData['value1'], $defindData['value2']);
+		   	 		$payBy=$userData['u_gem'];
+		  		} 
+		   
+		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
+		   		if($drawresult){
+						$draw=$this->chooseBaggage($drawresult,$data,1);
+
+		   			if($drawtype==1){
+		   				$draw['spent_coin']=$drawresult['draw_spend'];
+		   				$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
+		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
+		   			}
+		   			else {
+		   				$draw['spent_gem']=$drawresult['draw_spend'];
+		   				$userGem=$userData['u_gem']-$drawresult['draw_spend'];
+		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
+		   			}
 
 		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
-
-		   	$response=json_encode($result,TRUE);
- 	    	return base64_encode($response);
-		   	}
+				$result['timeuntil']=($luckdata['free_draw_duration']+$todaydraw['createtime'])-time();
+		   		$response=json_encode($result,TRUE);
+ 	    		return base64_encode($response);
+		   			}
 		 
-			else{
-				throw new Exception("sorry, no avaliable prize");
-			}
+				else{
+					throw new Exception("sorry, no avaliable prize");
+					}
+
+		  	 }
+		   		else{
+
+		  	 		if($drawtype==1){
+		   				$defindData=$defindMstModel->where('defind_id',3)->first(); 
+		  				$rate=rand($defindData['value1'], $defindData['value2']);
+					}
+		   			else {
+		   			$defindData=$defindMstModel->where('defind_id',4)->first(); 
+		   			$rate=rand($defindData['value1'], $defindData['value2']);
+		   			} 
+		   
+		   			$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+		   	 		if($drawresult){
+		  	 			$draw=$this->chooseBaggage($drawresult,$data,0);
+		 				Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		   				$result['luckdraw']=$draw;
+
+						$result['timeuntil']=$luckdata['free_draw_duration'];
+						$response=json_encode($result,TRUE);
+ 	    				return base64_encode($response);
+ 						}
+					else{
+						throw new Exception("sorry, no avaliable prize");
+					}
+
+		   	}
+
+		 
 		}
 		else{
     	throw new Exception("there have some error of you access_token");

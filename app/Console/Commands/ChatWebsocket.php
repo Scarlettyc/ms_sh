@@ -3,6 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use swoole_websocket_server;
+use swoole_server;
+use App\Http\Controllers\FriendController  
 
 class ChatWebsocket extends Command
 {
@@ -37,6 +40,8 @@ class ChatWebsocket extends Command
      */
     public function handle()
     {
-        //
+        $ws_server = new swoole_websocket_server('0.0.0.0', 6386);
+        
+
     }
 }
