@@ -32,7 +32,7 @@ class LuckdrawController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		//$access_token=$loginTodayArr->access_token;
 		$luckdraw=new Luck_draw_rewardsModel();
 		$defindMstModel=new DefindMstModel();
 
