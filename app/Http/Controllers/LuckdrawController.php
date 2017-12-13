@@ -37,8 +37,8 @@ class LuckdrawController extends Controller
 		$result=[];
 		if($access_token==$data['access_token'])
 		{
-			$normalDrawJosn==$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
-			$gemDrawJson==$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
+			$normalDrawJosn=$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
+			$gemDrawJson=$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
 			$normalDrawData=json_decode($normalDrawJosn,TRUE);
 			$gemDrawData=json_decode($gemDrawJson,TRUE);
 			$coinLuck=$luckdraw->where('draw_type',1)->first();
