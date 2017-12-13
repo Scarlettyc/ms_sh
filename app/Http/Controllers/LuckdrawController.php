@@ -50,6 +50,7 @@ class LuckdrawController extends Controller
 			else {
 				$coinDraw=1;
 				$coinTimeUtil=$coinLuck['free_draw_duration'];
+
 			}
 
 			if($gemDrawData){
@@ -60,10 +61,17 @@ class LuckdrawController extends Controller
 				$gemDraw=1;
 				$gemTimeUtil=$gemLuck['free_draw_duration'];
 			}
+			$discount=$defindMstModel->where('defind_id',22)->first();
 			$result['coinDraw']=$coinDraw;
+			$result['coinSpend']=$coinLuck['draw_spend'];
+			$result['MucoinSpend']=$coinLuck['draw_spend']*10*$discount['value1'];
 			$result['coinTimeUtil']=$coinTimeUtil;
-			$result['gemDraw']=$coinDraw;
-			$result['gemTimeUtil']=$coinTimeUtil;
+
+			$result['gemDraw']=$gemDraw;
+			$result['gemSpend']=$gemLuck['draw_spend'];
+			$result['MugemSpend']=$gemLuck['draw_spend']*10*$discount['value2'];;
+
+			$result['gemTimeUtil']=$gemTimeUtil;
 			$response=json_encode($result,TRUE);
  	    	return base64_encode($response);
 		}
