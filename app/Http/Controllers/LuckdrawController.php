@@ -26,11 +26,11 @@ class LuckdrawController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		// Redis::connection('default');
+		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisLuck::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		//$access_token=$loginTodayArr->access_token;
 		$luckdraw=new Luck_draw_rewardsModel();
@@ -38,8 +38,8 @@ class LuckdrawController extends Controller
 
 		if($data)
 		{
-			$normalDrawJosn==Redis::HGET('luckdrawfree1',$dmy.$data['u_id']);
-			$gemDrawJson==Redis::HGET('luckdrawfree2',$dmy.$data['u_id']);
+			$normalDrawJosn==$redisLuck::HGET('luckdrawfree1',$dmy.$data['u_id']);
+			$gemDrawJson==$redisLuck::HGET('luckdrawfree2',$dmy.$data['u_id']);
 			$normalDrawData=json_decode($normalDrawJosn,TRUE);
 			$gemDrawData=json_decode($gemDrawJson,TRUE);
 			$coinLuck=$luckdraw->where('draw_type',1)->first();
@@ -73,12 +73,12 @@ class LuckdrawController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
-		// Redis::connection('default');
+		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisLuck::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 
@@ -89,7 +89,7 @@ class LuckdrawController extends Controller
 			$luckdraw=new Luck_draw_rewardsModel();
 			$characterModel=new CharacterModel();
 			$defindMstModel=new DefindMstModel();
-			$gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
+			$gotToday=$redisLuck::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
 			if($gotToday){
 				$todaydraw=json_decode($gotToday,TRUE);
 				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
@@ -114,7 +114,7 @@ class LuckdrawController extends Controller
 		   	 if($drawresult){
 
 		  	 		$draw=$this->chooseBaggage($drawresult,$data,0);
-		 			Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		 			$redisLuck::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   			$result['luckdraw']=$draw;
 					$response=json_encode($result,TRUE);
  	    			return base64_encode($response);
@@ -136,7 +136,7 @@ class LuckdrawController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		// Redis::connection('default');
+		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
@@ -147,13 +147,13 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();	
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisLuck::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token']){
 			$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
-		   $gotToday=Redis::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
+		   $gotToday=$redisLuck::HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
 		   $luckdata=$luckdraw->where('draw_type',$drawtype)->first();
 		   if($gotToday){
 		   		$todaydraw=json_decode($gotToday,TRUE);
@@ -183,7 +183,7 @@ class LuckdrawController extends Controller
 		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 		   			}
 
-		   		Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
+		   		$redisLuck::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
 		   		$result['luckdraw']=$draw;
 				$result['timeuntil']=($luckdata['free_draw_duration']+$todaydraw['createtime'])-time();
 		   		$response=json_encode($result,TRUE);
@@ -209,7 +209,7 @@ class LuckdrawController extends Controller
 		   			$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		   	 		if($drawresult){
 		  	 			$draw=$this->chooseBaggage($drawresult,$data,0);
-		 				Redis::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
+		 				$redisLuck::HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   				$result['luckdraw']=$draw;
 
 						$result['timeuntil']=$luckdata['free_draw_duration'];
@@ -236,11 +236,11 @@ class LuckdrawController extends Controller
 		$json=base64_decode($req);
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
-		// Redis::connection('default');
+		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisLuck::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token']){
@@ -277,7 +277,7 @@ class LuckdrawController extends Controller
 		   		if($drawresult){
 		   		
 		   			$draw=$this->chooseBaggage($drawresult,$data,1);
-		   			Redis::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
+		   			$redisLuck::HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
 		   			$result[]=$draw;
 
 					} 

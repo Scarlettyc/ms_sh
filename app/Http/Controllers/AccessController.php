@@ -98,7 +98,7 @@ class AccessController extends Controller
 		if(isset($userData)){
 		
 			$u_id=$userData['u_id'];	
-			$loginToday=Redis::HGET('login_data',$dmy.$userData['u_id']);
+			$loginToday=$redis_login::HGET('login_data',$dmy.$userData['u_id']);
 			$logoff=0;
 			$token='';
 			$firstLogin=$userData['u_get_reward'];
@@ -204,8 +204,9 @@ class AccessController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
+		$redis_login=Redis::connection('default');
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redis_login::HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		$usermodel=new UserModel();
@@ -222,7 +223,7 @@ class AccessController extends Controller
 			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($logindata,TRUE);
-			Redis::HSET('login_data',$dmy.$u_id,$loginlist);
+			$redis_login::HSET('login_data',$dmy.$u_id,$loginlist);
 			$usermodel->where('u_id',$u_id)->update(['updated_at'=>$datetime]);
 			$response="success logout";
 			return  base64_encode($response);
