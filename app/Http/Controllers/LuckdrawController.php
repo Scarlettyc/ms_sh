@@ -24,7 +24,6 @@ class LuckdrawController extends Controller
 	public function showLuck(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
@@ -32,11 +31,11 @@ class LuckdrawController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		//$access_token=$loginTodayArr->access_token;
+		$access_token=$loginTodayArr->access_token;
 		$luckdraw=new Luck_draw_rewardsModel();
 		$defindMstModel=new DefindMstModel();
 		$result=[];
-		if($data)
+		if($access_token==$data['access_token'])
 		{
 			$normalDrawJosn==$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
 			$gemDrawJson==$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
