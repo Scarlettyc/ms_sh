@@ -353,7 +353,7 @@ class LuckdrawController extends Controller
 		   				$baReNew['br_quantity']=$drawresult['item_quantity'];
 		   				$baReNew['status']=0;
 		   				$baReNew['updated_at']=$date;
-		   				$baReNew['createdate']=$date;
+		   				$baReNew['created_at']=$date;
 		   				$baReModel->insert($baReNew);
 		   			}
 		   		}
