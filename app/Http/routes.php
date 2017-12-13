@@ -49,9 +49,10 @@ Route::post('/refreashRareResource','ShopController@refreashRareResource');
 Route::post('/buyCoin','ShopController@buyCoin');
 
 Route::controller('luckdraw','LuckdrawController');
-Route::post('/freedraw', 'LuckdrawController@draw');
+Route::post('/showluck', 'LuckdrawController@showLuck');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
 Route::post('/multidraw', 'LuckdrawController@multiDraw');
+
 
 Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@match');
