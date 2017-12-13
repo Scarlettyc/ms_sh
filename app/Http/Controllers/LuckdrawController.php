@@ -35,7 +35,7 @@ class LuckdrawController extends Controller
 		//$access_token=$loginTodayArr->access_token;
 		$luckdraw=new Luck_draw_rewardsModel();
 		$defindMstModel=new DefindMstModel();
-
+		$result=[];
 		if($data)
 		{
 			$normalDrawJosn==$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
