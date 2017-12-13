@@ -369,8 +369,8 @@ class LuckdrawController extends Controller
 		   				$baEqNew['b_equ_rarity']=$equData['equ_rarity'];
 		   				$baEqNew['b_icon_path']=$equData['icon_path'];
 		   				$baEqNew['status']=0;
-		   				$baEqNew['updatedate']=$date;
-		   				$baEqNew['createdate']=$date;
+		   				$baEqNew['updated_at']=$date;
+		   				$baEqNew['created_at']=$date;
 		   				$baEqModel->insert($baEqNew);
 		   				}
 		   			}
@@ -385,8 +385,8 @@ class LuckdrawController extends Controller
 		   				$baScNew['bsc_rarity']=$scData['sc_rarity'];
 		   				$baScNew['bsc_icon']=$scData['sc_img_path'];
 		   				$baScNew['status']=0;
-		   				$baScNew['updatedate']=$date;
-		   				$baScNew['createdate']=$date;
+		   				$baScNew['updated_at']=$date;
+		   				$baScNew['created_at']=$date;
 		   				$baScModel->insert($baScNew);
 		   				}		   			
 		 			}
