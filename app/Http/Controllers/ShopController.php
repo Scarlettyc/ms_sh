@@ -215,7 +215,9 @@ class ShopController extends Controller
 	// 	return $response;
 	// }
 
-	public function rareResourceList
+	public function rareResourceList (Request $request){
+		
+	}
 	public function refreashRareResource(Request $request)
 	{
 		$req=$request->getContent();
