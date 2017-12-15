@@ -124,7 +124,7 @@ class ShopController extends Controller
 
 		var_dump($times);
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-		$totalSpend=$shopData['item_min_quantity']*$times*$shopData['item_spend'];
+		$totalSpend=$times*$shopData['item_spend'];
 		var_dump($totalSpend);
 		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 		if($userData['u_coin']<$totalSpend){
