@@ -151,7 +151,6 @@ class ShopController extends Controller
 		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$userGem=$UserInfo['u_gem'];
-		if()
 			if($r_id<=5)
 			{
 				$currency=$data['currency'];
