@@ -220,7 +220,7 @@ class LuckdrawController extends Controller
 		   	 		if($drawresult){
 		  	 			$draw=$this->chooseBaggage($drawresult,$data,0);
 		 				$redisLuck->HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
-		   				$result['luckdraw']=$draw;
+		   				$result['luckdraw'][]=$draw;
 
 						$result['timeuntil']=$luckdata['free_draw_duration'];
 						$response=json_encode($result,TRUE);
@@ -289,7 +289,7 @@ class LuckdrawController extends Controller
 		   		
 		   			$draw=$this->chooseBaggage($drawresult,$data,1);
 		   			$redisLuck->HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
-		   			$result[]=$draw;
+		   			$result['luckdraw'][]=$draw;
 
 					} 
 				}
@@ -305,9 +305,7 @@ class LuckdrawController extends Controller
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 		   		}
 
-		   		$final['luckdraw']=$result;
-
-		   		$response=json_encode($final,TRUE);
+		   		$response=json_encode($result,TRUE);
  	    		return base64_encode($response);
  	    	}
  	    	else{
