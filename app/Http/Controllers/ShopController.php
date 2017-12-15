@@ -10,6 +10,7 @@ use App\UserModel;
 use App\UserBaggageResModel;
 use App\StoreGemRefreashMstModel;
 use App\StoreGemToCoinMstModel;
+use App\InAppPurchaseModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -19,6 +20,29 @@ use DateTime;
 
 class ShopController extends Controller
 {
+	public function shopCoin(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$redisShop= Redis::connection('default');
+		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$inAppModel=new InAppPurchaseModel();
+		if($access_token==$data['access_token']){
+		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_quantity','item_spend')->where('start_date','<=',$datetime)->where('end_date','<=',$datetime)->get();
+		$response=json_encode($resourceShop,TRUE);
+ 	    return base64_encode($response);
+ 		}
+ 		else {
+ 			return base64_encode("there is something wrong with token");
+ 		}
+	}
+
+
 	public function shop(Request $request)
 	{
 		$req=$request->getContent();
