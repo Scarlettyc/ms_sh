@@ -296,7 +296,7 @@ class LuckdrawController extends Controller
 				
 		   		if($drawtype==1){
 		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity['value1'];
-		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity['value1']*$discount['value1'];;
+		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity['value1']*$discount['value1'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
 		   		else {
