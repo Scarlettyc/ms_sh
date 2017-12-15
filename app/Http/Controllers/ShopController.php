@@ -34,7 +34,7 @@ class ShopController extends Controller
 		$access_token=$loginTodayArr->access_token;
 		$inAppModel=new InAppPurchaseModel();
 		if($access_token==$data['access_token']){
-		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend'*100)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$result['shop_list']=$resourceShop;
 		$response=json_encode($result,TRUE);
  	    return base64_encode($response);
@@ -122,9 +122,10 @@ class ShopController extends Controller
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
 
-
+		var_dump($times);
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$shopData['item_min_quantity']*$times*$shopData['item_spend'];
+		var_dump($totalSpend);
 		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 		if($userData['u_coin']<$totalSpend){
 			return base64_encode("no enough coin");
@@ -235,6 +236,8 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redis_shop=Redis::connection('default');
+
+
 
 	}
 	public function refreashRareResource(Request $request)
