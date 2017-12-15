@@ -181,7 +181,7 @@ class LuckdrawController extends Controller
 		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
 		   		if($drawresult){
 						$draw=$this->chooseBaggage($drawresult,$data,1);
-
+						$result['luckdraw'][]=$draw;
 		   			if($drawtype==1){
 		   				$result['spent_coin']=$drawresult['draw_spend'];
 		   				$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
@@ -194,7 +194,7 @@ class LuckdrawController extends Controller
 		   			}
 
 		   		$redisLuck->HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
-		   		$result['luckdraw']=$draw;
+		   	
 				$result['timeuntil']=($luckdata['free_draw_duration']+$todaydraw['createtime'])-time();
 		   		$response=json_encode($result,TRUE);
  	    		return base64_encode($response);
