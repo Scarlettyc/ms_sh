@@ -66,12 +66,15 @@ class LuckdrawController extends Controller
 			$result['coinSpend']=$coinLuck['draw_spend'];
 			$result['MucoinSpend']=$coinLuck['draw_spend']*10*$discount['value1'];
 			$result['coinTimeUtil']=$coinTimeUtil;
+			$result['coinMaxTime']=$coinLuck['free_draw_duration'];
 
 			$result['gemDraw']=$gemDraw;
 			$result['gemSpend']=$gemLuck['draw_spend'];
 			$result['MugemSpend']=$gemLuck['draw_spend']*10*$discount['value2'];;
 
 			$result['gemTimeUtil']=$gemTimeUtil;
+			$result['gemMaxTime']=$gemLuck['free_draw_duration'];
+
 			$response=json_encode($result,TRUE);
  	    	return base64_encode($response);
 		}
