@@ -258,7 +258,7 @@ class BaggageUtil
 		$date=$now->format( 'Y-m-d h:m:s' );
 		if($item_type==1){
 			$itemData=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$item_id)->first();
-		   	$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
+		   	$rescourceData=$rescourceModel->where('r_id',$item_id)->first();
 			if($itemData){
 				$br_quanitty=$itemData['br_quantity']+$quantity;
 		   				$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$item_id)->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
