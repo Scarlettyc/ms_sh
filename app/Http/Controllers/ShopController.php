@@ -28,7 +28,7 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redisShop= Redis::connection('default');
-		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		$inAppModel=new InAppPurchaseModel();
