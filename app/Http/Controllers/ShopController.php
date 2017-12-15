@@ -117,7 +117,7 @@ class ShopController extends Controller
 		$u_id=$data['u_id'];
 		$item_id=$data['item_id'];
 		$item_type=$data['item_type'];
-		$times=$data['item_max_times'];
+		$times=$data['item_times'];
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$shopData['item_min_quantity']*$times*$shopData['item_spend'];
 		$userData=$UserModel->where('u_id',$u_id)->first();
@@ -216,7 +216,7 @@ class ShopController extends Controller
 	// }
 
 	public function rareResourceList (Request $request){
-		
+
 	}
 	public function refreashRareResource(Request $request)
 	{
