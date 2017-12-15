@@ -33,7 +33,7 @@ class ShopController extends Controller
 		$access_token=$loginTodayArr->access_token;
 		$inAppModel=new InAppPurchaseModel();
 		if($access_token==$data['access_token']){
-		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_quantity','item_spend')->where('start_date','<=',$datetime)->where('end_date','<=',$datetime)->get();
+		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_quantity','item_spend')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$response=json_encode($resourceShop,TRUE);
  	    return base64_encode($response);
  		}
