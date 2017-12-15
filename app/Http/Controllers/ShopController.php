@@ -138,7 +138,7 @@ class ShopController extends Controller
 				$boughtData['item_quantity']=$shopData['item_min_quantity']*$times;
 				$boughtData['spent']=$totalSpend;
 				$boughtJson=json_encode($boughtData,TRUE);
-				$redisShop->LLPUSH('buy_resource',$boughtJson);
+				$redisShop->LPUSH('buy_resource',$boughtJson);
 				return base64_encode($boughtJson);
 		}
 	}
