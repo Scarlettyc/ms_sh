@@ -247,4 +247,33 @@ class BaggageUtil
 			
 			return $result;
 	}
+
+	public function updateBaggageResource($u_id,$item_id,$item_type,$quantity){
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$UserBaggageResModel=new UserBaggageResModel();
+		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$now   = new DateTime;
+		$date=$now->format( 'Y-m-d h:m:s' );
+		if($item_type==1){
+			$itemData=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$item_id)->first();
+		   	$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
+			if($itemData){
+				$br_quanitty=$itemData['br_quantity']+$quantity;
+		   				$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$item_id)->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
+			}
+			else{
+					   	$baReNew['u_id']=$u_id;
+		   				$baReNew['br_id']=$item_id;
+		   				$baReNew['br_icon']=$
+		   				$baReNew['br_rarity']=$rescourceData['r_rarity'];
+		   				$baReNew['br_type']=$item_type;
+		   				$baReNew['br_quantity']=$quantity;
+		   				$baReNew['status']=0;
+		   				$baReNew['updated_at']=$date;
+		   				$baReNew['created_at']=$date;
+		   				$baReModel->insert($baReNew);
+			}
+
+		}
+	}
 }

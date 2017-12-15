@@ -45,7 +45,7 @@ Route::post('/equipEquipment','WorkshopController@equipEquipment');
 Route::controller('shop','ShopController');
 Route::post('/shoplist','ShopController@shopCoin');
 Route::post('/shop','ShopController@shop');
-Route::post('/buyResource','ShopController@buyResource');
+Route::post('/buyResource','ShopController@buyResouceBYCoin');
 Route::post('/refreashRareResource','ShopController@refreashRareResource');
 Route::post('/buyCoin','ShopController@buyCoin');
 

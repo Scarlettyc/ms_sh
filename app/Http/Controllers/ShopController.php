@@ -15,6 +15,7 @@ use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
+use App\Util\BaggageUtil;
 use Carbon\Carbon;
 use DateTime;
 
@@ -101,6 +102,34 @@ class ShopController extends Controller
 		return $resourceList;
 	}
 
+	public function buyResouceBYCoin(Request $request){
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+
+		$UserModel=new UserModel;
+		$inAppModel=new InAppPurchaseModel();
+		$BaggageUtil=new BaggageUtil();
+
+		$u_id=$data['u_id'];
+		$item_id=$data['item_id'];
+		$item_type=$data['item_type'];
+		$quantity=$data['quantity'];
+		$times=$data['item_max_times'];
+		$shopData=$inAppModel->select('item_spend')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$totalSpend=$quantity*$times*$shopData['item_spend'];
+		$userData=$UserModel->where('u_id',$u_id)->first();
+		if($userData['u_coin']<$totalSpend){
+			return base64_encode("no enough coin");
+		}
+		else{	$coin=$userData['u_coin']-$totalSpend;
+				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$quantity);
+		}
+	}
+
 	public function buyResource(Request $request)
 	{	
 		$req=$request->getContent();
@@ -115,31 +144,32 @@ class ShopController extends Controller
 		$UserBaggageResModel=new UserBaggageResModel;
 
 		$u_id=$data['u_id'];
-		$r_id=$data['r_id'];
+		$item_id=$data['item_id'];
+		$item_type=$data['item_type'];
 		$quantity=$data['quantity'];
 		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$userGem=$UserInfo['u_gem'];
-
-		if($r_id<=5)
-		{
-			$currency=$data['currency'];
-			if($currency == 1)
+		if()
+			if($r_id<=5)
 			{
-				$usedGem=$resInfo['r_gem_price']*$quantity;
-				$updateGem=$userGem-$usedGem;
-				if($updateGem>=0)
+				$currency=$data['currency'];
+				if($currency == 1)
 				{
-					$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
-				}else{
+					$usedGem=$resInfo['r_gem_price']*$quantity;
+					$updateGem=$userGem-$usedGem;
+					if($updateGem>=0)
+					{
+						$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
+					}else{
 					throw new Exception("Don't have enough Gem!");
-				}
-			}else if($currency == 2)
-			{
-				$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
-				$usedCoin=$resInfo['r_coin_price']*$quantity;
-				$updateCoin=$userCoin-$usedCoin;
-				if($updateCoin>=0)
+					}
+				}else if($currency == 2)
+				{
+					$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
+					$usedCoin=$resInfo['r_coin_price']*$quantity;
+					$updateCoin=$userCoin-$usedCoin;
+					if($updateCoin>=0)
 				{
 					$UserModel->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 				}else{
