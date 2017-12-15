@@ -121,11 +121,8 @@ class ShopController extends Controller
 		$item_id=$data['item_id'];
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
-
-		var_dump($times);
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$times*$shopData['item_spend'];
-		var_dump($totalSpend);
 		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 		if($userData['u_coin']<$totalSpend){
 			return base64_encode("no enough coin");
