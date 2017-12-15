@@ -7,6 +7,7 @@ use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeMstModel;
+use App\ResourceMstModel;
 use App\ItemMstModel;
 use Exception;
 use App\Exceptions\Handler;
