@@ -265,6 +265,7 @@ class LuckdrawController extends Controller
  				$draw_quantity=$defindMstModel->where('defind_id',2)->first();
  				$chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		 		$result=[];
+		 		$discount=$defindMstModel->where('defind_id',22)->first();
 			 if($drawtype==1&&$userData['u_coin']<$draw_quantity['value1']*$luckdata['draw_spend']){
 					throw new Exception("no enough coins");
 			 }
@@ -295,11 +296,11 @@ class LuckdrawController extends Controller
 				
 		   		if($drawtype==1){
 		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity['value1'];
-		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity['value1'];
+		   			$userCoin=$userData['u_coin']-$drawresult['draw_spend']*$draw_quantity['value1']*$discount['value1'];;
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
 		   		}
 		   		else {
-		   			$result['spent_gem']=$drawresult['draw_spend']*$draw_quantity['value1'];
+		   			$result['spent_gem']=$drawresult['draw_spend']*$draw_quantity['value1']*$discount['value2'];
 		   			$userGem=$userData['u_gem']-$drawresult['draw_spend']*$draw_quantity['value1'];
 		   	 		$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
 		   		}
