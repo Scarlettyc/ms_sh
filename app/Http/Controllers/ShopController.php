@@ -128,92 +128,93 @@ class ShopController extends Controller
 		else{	$coin=$userData['u_coin']-$totalSpend;
 				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
 				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$quantity);
+				return base64_encode("successfully bought resources");
 		}
 	}
 
-	public function buyResource(Request $request)
-	{	
-		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
-		$now=new DateTime;
-		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$dmy=$now->format( 'Ymd' );
+	// public function buyResource(Request $request)
+	// {	
+	// 	$req=$request->getContent();
+	// 	$data=json_decode($req,TRUE);
+	// 	$now=new DateTime;
+	// 	$datetime=$now->format( 'Y-m-d h:m:s' );
+	// 	$dmy=$now->format( 'Ymd' );
 
-		$UserModel=new UserModel;
-		$UserResHistory=new UserResourcePurchaseHistoryModel;
-		$ResourceMstModel=new ResourceMstModel;
-		$UserBaggageResModel=new UserBaggageResModel;
+	// 	$UserModel=new UserModel;
+	// 	$UserResHistory=new UserResourcePurchaseHistoryModel;
+	// 	$ResourceMstModel=new ResourceMstModel;
+	// 	$UserBaggageResModel=new UserBaggageResModel;
 
-		$u_id=$data['u_id'];
-		$item_id=$data['item_id'];
-		$item_type=$data['item_type'];
-		$quantity=$data['quantity'];
-		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
-		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$userGem=$UserInfo['u_gem'];
-			if($r_id<=5)
-			{
-				$currency=$data['currency'];
-				if($currency == 1)
-				{
-					$usedGem=$resInfo['r_gem_price']*$quantity;
-					$updateGem=$userGem-$usedGem;
-					if($updateGem>=0)
-					{
-						$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
-					}else{
-					throw new Exception("Don't have enough Gem!");
-					}
-				}else if($currency == 2)
-				{
-					$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
-					$usedCoin=$resInfo['r_coin_price']*$quantity;
-					$updateCoin=$userCoin-$usedCoin;
-					if($updateCoin>=0)
-				{
-					$UserModel->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
-				}else{
-					throw new Exception("Don't have enough Coin!");
-				}
-			}
-		}else if($r_id>=6)
-		{
-			$order_id=$data['order_id'];
-			$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->first();
+	// 	$u_id=$data['u_id'];
+	// 	$item_id=$data['item_id'];
+	// 	$item_type=$data['item_type'];
+	// 	$quantity=$data['quantity'];
+	// 	$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
+	// 	$UserInfo=$UserModel->where('u_id',$u_id)->first();
+	// 	$userGem=$UserInfo['u_gem'];
+	// 		if($r_id<=5)
+	// 		{
+	// 			$currency=$data['currency'];
+	// 			if($currency == 1)
+	// 			{
+	// 				$usedGem=$resInfo['r_gem_price']*$quantity;
+	// 				$updateGem=$userGem-$usedGem;
+	// 				if($updateGem>=0)
+	// 				{
+	// 					$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
+	// 				}else{
+	// 				throw new Exception("Don't have enough Gem!");
+	// 				}
+	// 			}else if($currency == 2)
+	// 			{
+	// 				$userCoin=$UserModel->where('u_id',$u_id)->pluck('u_coin');
+	// 				$usedCoin=$resInfo['r_coin_price']*$quantity;
+	// 				$updateCoin=$userCoin-$usedCoin;
+	// 				if($updateCoin>=0)
+	// 			{
+	// 				$UserModel->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
+	// 			}else{
+	// 				throw new Exception("Don't have enough Coin!");
+	// 			}
+	// 		}
+	// 	}else if($r_id>=6)
+	// 	{
+	// 		$order_id=$data['order_id'];
+	// 		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->first();
 
-			if (isset($resStoreInfo)) 
-			{
-				$r_id=$resStoreInfo['r_id'];
-				$updateGem=$userGem-$resInfo['r_gem_price'];
-				if($updateGem>=0)
-				{
-					$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
-					$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->update(['order_status'=>1,'updated_at'=>$datetime]);
-				}else{
-					throw new Exception("Don't have enough Gem!");
-				}
-			}else{
-				throw new Exception("Already sold out!");
-			}
-		}
+	// 		if (isset($resStoreInfo)) 
+	// 		{
+	// 			$r_id=$resStoreInfo['r_id'];
+	// 			$updateGem=$userGem-$resInfo['r_gem_price'];
+	// 			if($updateGem>=0)
+	// 			{
+	// 				$UserModel->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
+	// 				$UserResHistory->where('u_id',$u_id)->where('order_id',$order_id)->where('order_status',0)->update(['order_status'=>1,'updated_at'=>$datetime]);
+	// 			}else{
+	// 				throw new Exception("Don't have enough Gem!");
+	// 			}
+	// 		}else{
+	// 			throw new Exception("Already sold out!");
+	// 		}
+	// 	}
 
-		$userBagRes=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->first();
-		if(isset($userBagRes))
-		{
-			if($userBagRes['status']==0)
-			{
-				$updateQuantity=$userBagRes['br_quantity']+$quantity;
-				$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->update(['br_quantity'=>$updateQuantity,'updated_at'=>$datetime]);
-			}else if($userBagRes['status']==1)
-			{
-				$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->update(['br_quantity'=>$quantity,'status'=>0,'updated_at'=>$datetime]);
-			}
-		}else{
-			$UserBaggageResModel->insert(['u_id'=>$u_id,'br_id'=>$r_id,'br_icon'=>$resInfo['r_img_path'],'br_rarity'=>$resInfo['r_rarity'],'br_type'=>$resInfo['r_type'],'br_quantity'=>$quantity,'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
-		}
-		$response='Buy successfully';
-		return $response;
-	}
+	// 	$userBagRes=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->first();
+	// 	if(isset($userBagRes))
+	// 	{
+	// 		if($userBagRes['status']==0)
+	// 		{
+	// 			$updateQuantity=$userBagRes['br_quantity']+$quantity;
+	// 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->update(['br_quantity'=>$updateQuantity,'updated_at'=>$datetime]);
+	// 		}else if($userBagRes['status']==1)
+	// 		{
+	// 			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$r_id)->update(['br_quantity'=>$quantity,'status'=>0,'updated_at'=>$datetime]);
+	// 		}
+	// 	}else{
+	// 		$UserBaggageResModel->insert(['u_id'=>$u_id,'br_id'=>$r_id,'br_icon'=>$resInfo['r_img_path'],'br_rarity'=>$resInfo['r_rarity'],'br_type'=>$resInfo['r_type'],'br_quantity'=>$quantity,'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+	// 	}
+	// 	$response='Buy successfully';
+	// 	return $response;
+	// }
 
 	public function refreashRareResource(Request $request)
 	{
