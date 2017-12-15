@@ -45,63 +45,63 @@ class ShopController extends Controller
 	}
 
 
-	public function shop(Request $request)
-	{
-		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
-		$now=new DateTime;
-		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$dmy=$now->format( 'Ymd' );
-		$redis_shop=Redis::connection('default');
+	// public function shop(Request $request)
+	// {
+	// 	$req=$request->getContent();
+	// 	$data=json_decode($req,TRUE);
+	// 	$now=new DateTime;
+	// 	$datetime=$now->format( 'Y-m-d h:m:s' );
+	// 	$dmy=$now->format( 'Ymd' );
+	// 	$redis_shop=Redis::connection('default');
 
-		$UserResHistory=new UserResourcePurchaseHistoryModel;
-		$ResourceMstModel=new ResourceMstModel;
-		$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
-		$UserModel=new UserModel;
-		$resource=[];
-		$resourceList=[];
+	// 	$UserResHistory=new UserResourcePurchaseHistoryModel;
+	// 	$ResourceMstModel=new ResourceMstModel;
+	// 	$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
+	// 	$UserModel=new UserModel;
+	// 	$resource=[];
+	// 	$resourceList=[];
 
-		$u_id=$data['u_id'];
-		$shopkey='shop'.$u_id.$dmy;
-		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
-		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
-		$time=$ref_times['0'];
-		if($time<=6)
-		{
-			$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
-			$need_gem=$gem['gem'];
-		}else{
-			$need_gem=100;
-		}
+	// 	$u_id=$data['u_id'];
+	// 	$shopkey='shop'.$u_id.$dmy;
+	// 	$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
+	// 	$UserInfo=$UserModel->where('u_id',$u_id)->first();
+	// 	$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+	// 	$time=$ref_times['0'];
+	// 	if($time<=6)
+	// 	{
+	// 		$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
+	// 		$need_gem=$gem['gem'];
+	// 	}else{
+	// 		$need_gem=100;
+	// 	}
 
-		$resourceList['need_gem']=$need_gem;
+	// 	$resourceList['need_gem']=$need_gem;
 
-		if(empty($resStoreInfo))
-		{
-			for($x=1;$x<=5;$x++)
-			{
-				$r_id = rand(1,5);
-				$order_id = $x;
-				$UserResHistory->insert(['u_id'=>$u_id,'r_id'=>$r_id,'order_id'=>$order_id,'order_status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
-			}
-		}
+	// 	if(empty($resStoreInfo))
+	// 	{
+	// 		for($x=1;$x<=5;$x++)
+	// 		{
+	// 			$r_id = rand(1,5);
+	// 			$order_id = $x;
+	// 			$UserResHistory->insert(['u_id'=>$u_id,'r_id'=>$r_id,'order_id'=>$order_id,'order_status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+	// 		}
+	// 	}
 
-		$UserResInfo=$UserResHistory->where('u_id',$u_id)->whereBetween('order_status',array(0,1))->get();
+	// 	$UserResInfo=$UserResHistory->where('u_id',$u_id)->whereBetween('order_status',array(0,1))->get();
 
-		foreach($UserResInfo as $obj)
-		{
-			$r_id=$obj['r_id'];
-			$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
-			$resource['r_id']=$r_id;
-			$resource['r_name']=$resInfo['r_name'];
-			$resource['r_price']=$resInfo['r_price'];
-			$resource['r_img_path']=$resInfo['r_img_path'];
-			$resource['r_position']=$obj['order_id'];
-			$resourceList[]=$resource;
-		}
-		return $resourceList;
-	}
+	// 	foreach($UserResInfo as $obj)
+	// 	{
+	// 		$r_id=$obj['r_id'];
+	// 		$resInfo=$ResourceMstModel->where('r_id',$r_id)->first();
+	// 		$resource['r_id']=$r_id;
+	// 		$resource['r_name']=$resInfo['r_name'];
+	// 		$resource['r_price']=$resInfo['r_price'];
+	// 		$resource['r_img_path']=$resInfo['r_img_path'];
+	// 		$resource['r_position']=$obj['order_id'];
+	// 		$resourceList[]=$resource;
+	// 	}
+	// 	return $resourceList;
+	// }
 
 	public function buyResouceBYCoin(Request $request){
 		$req=$request->getContent();
@@ -109,26 +109,37 @@ class ShopController extends Controller
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-
+		$redisShop= Redis::connection('default');
+		
 		$UserModel=new UserModel;
 		$inAppModel=new InAppPurchaseModel();
 		$BaggageUtil=new BaggageUtil();
+		$redis_shop=Redis::connection('default');
 
 		$u_id=$data['u_id'];
 		$item_id=$data['item_id'];
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
-	
+
+
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$shopData['item_min_quantity']*$times*$shopData['item_spend'];
-		$userData=$UserModel->where('u_id',$u_id)->first();
+		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 		if($userData['u_coin']<$totalSpend){
 			return base64_encode("no enough coin");
 		}
-		else{	$coin=$userData['u_coin']-$totalSpend;
+		else{	
+				$coin=$userData['u_coin']-$totalSpend;
 				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
 				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$shopData['item_min_quantity']*$times);
-				return base64_encode("successfully bought resources!");
+				$boughtData['u_id']=$u_id;
+				$boughtData['item_type']=$item_type;
+				$boughtData['item_id']=$item_id;
+				$boughtData['item_quantity']=$shopData['item_min_quantity']*$times;
+				$boughtData['spent']=$totalSpend;
+				$boughtJson=json_encode($boughtData,TRUE);
+				$redisShop->LLPUSH('buy_resource',$boughtJson);
+				return base64_encode($boughtJson);
 		}
 	}
 
@@ -217,6 +228,12 @@ class ShopController extends Controller
 	// }
 
 	public function rareResourceList (Request $request){
+		$req=$request->getContent();
+		$data=json_decode($req,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$redis_shop=Redis::connection('default');
 
 	}
 	public function refreashRareResource(Request $request)
