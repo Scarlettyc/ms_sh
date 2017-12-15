@@ -194,7 +194,7 @@ class LuckdrawController extends Controller
 		   			}
 
 		   		$redisLuck->HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
-		   		$result['luckdraw']=$draw;
+		   		$result['luckdraw'][]=$draw;
 				$result['timeuntil']=($luckdata['free_draw_duration']+$todaydraw['createtime'])-time();
 		   		$response=json_encode($result,TRUE);
  	    		return base64_encode($response);
