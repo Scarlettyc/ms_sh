@@ -115,8 +115,8 @@ class LuckdrawController extends Controller
 		  		$rate=rand($defindData['value1'], $defindData['value2']);
 				}
 		   		else {
-		   		$defindData=$defindMstModel->where('defind_id',4)->first(); 
-		   		$rate=rand($defindData['value1'], $defindData['value2']);
+		   		$defindData2=$defindMstModel->where('defind_id',4)->first(); 
+		   		$rate=rand($defindData2['value1'], $defindData2['value2']);
 		   		} 
 		   
 
