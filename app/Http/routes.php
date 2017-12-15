@@ -43,6 +43,7 @@ Route::post('/compareEquipment','WorkshopController@compareEquipment');
 Route::post('/equipEquipment','WorkshopController@equipEquipment');
 
 Route::controller('shop','ShopController');
+Route::post('/shoplist','ShopController@shopCoin');
 Route::post('/shop','ShopController@shop');
 Route::post('/buyResource','ShopController@buyResource');
 Route::post('/refreashRareResource','ShopController@refreashRareResource');
