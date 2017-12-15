@@ -46,6 +46,9 @@ class LuckdrawController extends Controller
 			if($normalDrawData){
 				$coinDraw=0;
 				$coinTimeUtil=($coinLuck['free_draw_duration']+$normalDrawData['createtime'])-time();
+				if($coinTimeUtil<=0){
+					$coinTimeUtil=$coinLuck['free_draw_duration']+$coinTimeUtil;
+				}
 				}
 			else {
 				$coinDraw=1;
@@ -56,6 +59,9 @@ class LuckdrawController extends Controller
 			if($gemDrawData){
 				$gemDraw=0;
 				$gemTimeUtil=($gemLuck['free_draw_duration']+$gemDrawData['createtime'])-time();
+				if($gemTimeUtil<=0){
+					$gemTimeUtil=$gemLuck['free_draw_duration']+$gemTimeUtil;
+				}
 			}
 			else {
 				$gemDraw=1;
