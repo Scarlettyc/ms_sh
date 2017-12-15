@@ -136,7 +136,7 @@ class ShopController extends Controller
 				$boughtData['u_id']=$u_id;
 				$boughtData['item_type']=$item_type;
 				$boughtData['item_id']=$item_id;
-				$boughtData['item_quantity']=$shopData['item_min_quantity']*$times;
+				$boughtData['item_quantity']=($shopData['item_min_quantity']*$times);
 				$boughtData['spent']=$totalSpend;
 				$boughtJson=json_encode($boughtData,TRUE);
 				$redisShop->LPUSH('buy_resource',$boughtJson);
