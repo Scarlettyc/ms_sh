@@ -252,6 +252,7 @@ class BaggageUtil
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$rescourceModel=new ResourceMstModel();
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		if($item_type==1){
