@@ -105,7 +105,8 @@ class ShopController extends Controller
 
 	public function buyResouceBYCoin(Request $request){
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
