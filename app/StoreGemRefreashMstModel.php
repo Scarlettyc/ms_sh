@@ -6,9 +6,9 @@ use Carbon\Carbon;
 
 use Illuminate\Database\Eloquent\Model;
 
-class StoreGemRefreashMstModel extends Model
+class StoreReRewardModel extends Model
 {
-	protected $fillable = ['id_ref','gem'];
+	protected $fillable = ['store_reward_id','max_times' ,'item_id' ,'item_type' ,'item_quantity' ,'first_gem_spend' ,'rate_from' ,'rate_to' ,'gem_increament' ,'sme','end_datetime','updated_at','created_at'];
 	protected $connection='mysql';
-	protected $table = "Store_gem_refreash_mst";
+	protected $table = "Store_refresh_reward_mst";
 }
