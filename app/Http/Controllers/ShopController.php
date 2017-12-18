@@ -181,13 +181,15 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 
 		if($data){
-		$key='store_rare';
+		$key='store_rare_'.$u_id.'_'.$dmy;
 		$u_id=$data['u_id'];
-		$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
+		$listCount=$redis_shop->LLEN($key);
 		$rewardList=[];
 		$idList=[];
 	
-			if($rewardJson){
+			if($listCount>0){
+				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
+				$rewardJson=$json=base64_decode($rewardList);
 				return base64_encode($rewardJson);
 			}
 			else{	for($i=1;$i<=6;$i++){
@@ -195,9 +197,10 @@ class ShopController extends Controller
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					if(!$reward){
-
 					}
 					$rewardList['reward'][]=$reward;	
+					$rewardData=json_decode($reward,TRUE);
+					$rewardList=$redis_shop->LLPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=10;
@@ -207,6 +210,23 @@ class ShopController extends Controller
 			}
 		}
 	}
+		public function buyFromRefreshList(Request $request){
+			$req=$request->getContent();
+			$json=base64_decode($req);
+			$data=json_decode($json,TRUE);
+			$
+			$now=new DateTime;
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+			$dmy=$now->format( 'Ymd' );
+			$position=$data['number'];
+			$u_id=$data['u_id'];
+			$redis_shop=Redis::connection('default');
+			$key='store_rare';
+			$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
+			$rewardData=base64_decode($rewardJson);
+			$rewardData
+
+		}
 
 	// public function refreashRareResource(Request $request)
 	// {
