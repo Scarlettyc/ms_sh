@@ -200,7 +200,7 @@ class ShopController extends Controller
 					}
 					$rewardList['reward'][]=$reward;	
 					$rewardData=json_decode($reward,TRUE);
-					$rewardList=$redis_shop->LLPUSH($key,$rewardData);
+					$rewardList=$redis_shop->LPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=10;
