@@ -185,16 +185,20 @@ class ShopController extends Controller
 		$u_id=$data['u_id'];
 		$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
 		$rewardList=[];
+		$idList='';
 	
 			if($rewardJson){
 				return base64_encode($rewardJson);
 			}
 			else{	for($i=0;$i<=6;$i++){
 					$number=rand($rate['value1'],$rate['value2']);
-					$reward=$storeReModel->select('item_id','item_type','item_quantity','first_gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->first();
-					$rewardList[]=$reward;
+					$reward=$storeReModel->select('item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->limit(1)->get();
+					$idList=$idList.','.$reward['store_reward_id'];
+					$rewardList['reward'][]=$reward;
 				}
 				$rewardList['times']=0;
+				$rewardList['spend_gem']=$reward['first_gem_spend'];
+				$rewardList['next_gem']=$reward['first_gem_spend']+$reward['gem_increament']*0;
 				$data=json_encode($rewardList,TRUE);
 				return base64_encode($data);
 			}
