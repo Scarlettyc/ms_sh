@@ -189,7 +189,7 @@ class ShopController extends Controller
 	
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
-				$rewardJson=$json=base64_decode($rewardList);
+				$rewardJson=json_encode($rewardList);
 				return base64_encode($rewardJson);
 			}
 			else{	for($i=1;$i<=6;$i++){
