@@ -199,7 +199,7 @@ class ShopController extends Controller
 					if(!$reward){
 					}
 					$rewardList['reward'][]=$reward;	
-					$rewardData=json_decode($reward,TRUE);
+					$rewardData=json_encode($reward,TRUE);
 					$rewardList=$redis_shop->LPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
