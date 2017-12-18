@@ -186,8 +186,6 @@ class ShopController extends Controller
 		$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
 		$rewardList=[];
 		$idList=[];
-		$first=0;
-		$gem_increament=0;
 	
 			if($rewardJson){
 				return base64_encode($rewardJson);
@@ -197,12 +195,10 @@ class ShopController extends Controller
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;	
-					$first=$reward['first_gem_spend'];
-					$gem_increament=$reward['gem_increament']*0+$reward['first_gem_spend'];
 				}
 				$rewardList['times']=0;
-				$rewardList['spend_gem']=$first;
-				$rewardList['next_gem']=$gem_increament;
+				$rewardList['spend_gem']=10;
+				$rewardList['next_gem']=20;
 				$data=json_encode($rewardList,TRUE);
 				return base64_encode($data);
 			}
