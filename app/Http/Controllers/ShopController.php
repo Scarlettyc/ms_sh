@@ -254,7 +254,7 @@ class ShopController extends Controller
 				return base64_encode("no enough gems");
 			}else{
 				$BaggageUtil->updateBaggageResource($u_id,$reward['item_id'],$reward['item_type'],$reward['item_quantity']);
-				$user_gem=$user_gem-$gem_spend;
+				$user_gem=$user_gem['u_gem']-$gem_spend;
 				$userModel->where('u_id',$u_id)->update('user_gem',$user_gem);
 				$reward['status']=1;
 				$reward=json_encode($reward,TRUE);
