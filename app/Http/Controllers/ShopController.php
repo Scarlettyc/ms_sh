@@ -181,8 +181,8 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 
 		if($data){
-		$key='store_rare_'.$u_id.'_'.$dmy;
 		$u_id=$data['u_id'];
+		$key='store_rare_'.$u_id.'_'.$dmy;
 		$listCount=$redis_shop->LLEN($key);
 		$rewardList=[];
 		$idList=[];
