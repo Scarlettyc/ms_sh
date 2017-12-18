@@ -266,16 +266,26 @@ class BaggageUtil
 			else{
 					   	$baReNew['u_id']=$u_id;
 		   				$baReNew['br_id']=$item_id;
-		   				$baReNew['br_icon']=$
 		   				$baReNew['br_rarity']=$rescourceData['r_rarity'];
 		   				$baReNew['br_type']=$item_type;
 		   				$baReNew['br_quantity']=$quantity;
 		   				$baReNew['status']=0;
 		   				$baReNew['updated_at']=$date;
 		   				$baReNew['created_at']=$date;
-		   				$baReModel->insert($baReNew);
+		   				$UserBaggageResModel->insert($baReNew);
 			}
 
+		}
+		else if($item_type==2){
+						$baScNew['u_id']=$u_id;
+		   				$baScNew['bsc_id']=$item_id;
+		   				$baScNew['bsc_rarity']=$rescourceData['r_rarity'];
+		   				$baScNew['br_type']=$item_type;
+		   				$baScNew['br_quantity']=$quantity;
+		   				$baScNew['status']=0;
+		   				$baScNew['updated_at']=$date;
+		   				$baScNew['created_at']=$date;
+		   				$UserBaggageScrollModel->insert($baScNew);
 		}
 	}
 }

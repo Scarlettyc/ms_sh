@@ -181,11 +181,20 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 		$refresh=$defindMst->where('defind_id',25)->first();
 		if($data){
-		$u_id=$data['u_id'];
-		$key='store_rare_'.$u_id.'_'.$dmy;
-		$listCount=$redis_shop->LLEN($key);
-		$rewardList=[];
-		$idList=[];
+			$u_id=$data['u_id'];
+			$listCount=0;
+		
+			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
+		if($times){
+			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
+			$listCount=$redis_shop->LLEN($key);
+			}
+			else{
+				$key='store_rare_'.$u_id.'_'.$dmy.'_'.0;
+				$listCount=$redis_shop->LLEN($key);	
+			}
+			$rewardList=[];
+			$idList=[];
 		
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
@@ -200,7 +209,6 @@ class ShopController extends Controller
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;	
-					//$rewardData=json_encode($reward,TRUE);
 					$redis_shop->LPUSH($key,$reward);
 				}
 				$rewardList['times']=0;
@@ -215,18 +223,47 @@ class ShopController extends Controller
 			$req=$request->getContent();
 			$json=base64_decode($req);
 			$data=json_decode($json,TRUE);
-			$
 			$now=new DateTime;
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$dmy=$now->format( 'Ymd' );
 			$position=$data['number'];
 			$u_id=$data['u_id'];
+			$userModel=new UserModel();
 			$redis_shop=Redis::connection('default');
 			$key='store_rare';
-			$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
-			$rewardData=base64_decode($rewardJson);
+			$times=$data['times'];
+			$from=$times*6-1;
+			$to=$times*6-1+6;
+			$rewardData=$redis_shop->LRANGE($key,$to-$position,$to-$position);
+			$reward=json_decode($rewardData,TRUE);
+			$gem_spend=$reward['gem_spend'];
+			$user_gem=$userModel->select('u_gem')->where('u_id',$u_id)->first();
+			if($user_gem['u_gem']<$gem_spend){
+				return base64_encode("no enough gems");
+			}else{
+				$BaggageUtil->updateBaggageResource($u_id,$reward['item_id'],$reward['item_type'],$reward['quantity'];
+				$user_gem=$user_gem-$gem_spend;
+				$userModel->where('u_id',$u_id)->update('user_gem',$user_gem);
+				$reward['status']=1;
+				$reward=json_encode($reward,TRUE);
+				$redis_shop->LSET($key,$to-$position,$reward)
+				return base64_encode('successfully bought');
+			}
+			
+		}
+
+		public function refreashRareResource(Request $request){
+			$req=$request->getContent();
+			$json=base64_decode($req);
+			$data=json_decode($json,TRUE);
+			$now=new DateTime;
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+			$dmy=$now->format( 'Ymd' );
+			$times=$data['times'];
+
 
 		}
+
 
 	// public function refreashRareResource(Request $request)
 	// {
