@@ -241,6 +241,7 @@ class ShopController extends Controller
 			$u_id=$data['u_id'];
 			$userModel=new UserModel();
 			$redis_shop=Redis::connection('default');
+			$BaggageUtil=new BaggageUtil();
 			
 			$times=$redis_shop->HGET('refresh_times',$dmy.$u_id);
 			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
