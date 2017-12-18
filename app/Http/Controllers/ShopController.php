@@ -246,7 +246,6 @@ class ShopController extends Controller
 			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
 			$listCount=$redis_shop->LLEN($key);
 			$rewardData=$redis_shop->LRANGE($key,$listCount-$position,$listCount-$position);
-			$reward=json_decode($rewardData,TRUE);
 			$gem_spend=$reward['gem_spend'];
 			$user_gem=$userModel->select('u_gem')->where('u_id',$u_id)->first();
 			if($user_gem['u_gem']<$gem_spend){
