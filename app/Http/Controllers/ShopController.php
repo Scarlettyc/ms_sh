@@ -181,11 +181,11 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 
 		if($data){
-
 		$key='store_rare';
+		$u_id=$data['u_id'];
 		$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
 		$rewardList=[];
-		$u_id=$data['u_id'];
+	
 			if($rewardJson){
 				return base64_encode($rewardJson);
 			}
