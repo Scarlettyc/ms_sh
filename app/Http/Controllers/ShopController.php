@@ -179,7 +179,6 @@ class ShopController extends Controller
 		$storeReModel=new StoreReRewardModel();
 		$defindMst=new DefindMstModel();
 		$rate=$defindMst->where('defind_id',23)->first();
-
 		if($data){
 		$u_id=$data['u_id'];
 		$key='store_rare_'.$u_id.'_'.$dmy;
@@ -192,8 +191,10 @@ class ShopController extends Controller
 				$rewardJson=json_encode($rewardList);
 				return base64_encode($rewardJson);
 			}
-			else{	for($i=1;$i<=6;$i++){
+			else{	
+				for($i=1;$i<=6;$i++){
 					$number=rand($rate['value1'],$rate['value2']);
+					var_dump($number);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;	
