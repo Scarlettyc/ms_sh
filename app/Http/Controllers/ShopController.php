@@ -190,6 +190,7 @@ class ShopController extends Controller
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
 				$rewardJson=json_encode($rewardList,TRUE);
+				$rewardJson=str_replace("\\","",$rewardJson);
 				return base64_encode($rewardJson);
 			}
 			else{	
