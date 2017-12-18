@@ -242,7 +242,7 @@ class ShopController extends Controller
 			$userModel=new UserModel();
 			$redis_shop=Redis::connection('default');
 			
-			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
+			$times=$redis_shop->HGET('refresh_times',$dmy.$u_id);
 			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
 			$listCount=$redis_shop->LLEN($key);
 			$rewardData=$redis_shop->LRANGE($key,$listCount-$position,$listCount-$position);
@@ -271,7 +271,7 @@ class ShopController extends Controller
 			$dmy=$now->format( 'Ymd' );
 			$redis_shop=Redis::connection('default');
 			$u_id=$data['u_id'];
-			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
+			$times=$redis_shop->HGET('refresh_times',$dmy.$u_id);
 
 
 			if($times==5){
