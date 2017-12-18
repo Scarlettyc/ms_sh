@@ -189,7 +189,6 @@ class ShopController extends Controller
 	
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
-				$rewardJson=json_encode($rewardList);
 				return base64_encode($rewardJson);
 			}
 			else{	
@@ -198,7 +197,7 @@ class ShopController extends Controller
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;	
-					$rewardData=json_encode($reward,TRUE);
+					//$rewardData=json_encode($reward,TRUE);
 					$rewardList=$redis_shop->LPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
