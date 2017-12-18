@@ -253,7 +253,7 @@ class ShopController extends Controller
 			
 		}
 
-		public function refreashRareResource(Request $request){
+		public function refreshResource(Request $request){
 			$req=$request->getContent();
 			$json=base64_decode($req);
 			$data=json_decode($json,TRUE);
