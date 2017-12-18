@@ -283,7 +283,7 @@ class ShopController extends Controller
 				$defindMst=new DefindMstModel();
 				$refresh=$defindMst->where('defind_id',25)->first();
 				$spend=($times+1)*$defindMst['value2'];
-				$redis_shop->HGET('refresh_tiems',$dmy.$u_id,$times+1);
+				$redis_shop->HGET('refresh_times',$dmy.$u_id,$times+1);
 				$result['times']=$times+1;
 				$result['spend']=$spend;
 				$response=json_encode($result,TRUE);
