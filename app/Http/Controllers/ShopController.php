@@ -185,7 +185,7 @@ class ShopController extends Controller
 		$u_id=$data['u_id'];
 		$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
 		$rewardList=[];
-		$idList='0';
+		$idList=[];
 	
 			if($rewardJson){
 				return base64_encode($rewardJson);
@@ -193,7 +193,7 @@ class ShopController extends Controller
 			else{	for($i=0;$i<=6;$i++){
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->first();
-					$idList=$idList.','.$reward['store_reward_id'];
+					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;
 				}
 				$rewardList['times']=0;
