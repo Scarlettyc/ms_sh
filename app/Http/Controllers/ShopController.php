@@ -206,7 +206,8 @@ class ShopController extends Controller
 				$result['spend_gem']=$refresh['value2']*($times+1);
 				$result['next_gem']=$refresh['value2']*($times+2);
 				}
-				$result['refresh_time']=time()-$refreshDuration['value1'];
+
+				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$rewardJson=json_encode($result,TRUE);
 				$rewardJson=str_replace("\\","",$rewardJson);
 				return base64_encode($rewardJson);
@@ -223,7 +224,7 @@ class ShopController extends Controller
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=$refresh['value1'];
 				$rewardList['next_gem']=$refresh['value2'];
-				$rewardList['refresh_time']=$refreshDuration['value1'];
+				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$data=json_encode($rewardList,TRUE);
 				return base64_encode($data);
 			}
