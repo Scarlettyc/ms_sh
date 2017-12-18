@@ -186,19 +186,20 @@ class ShopController extends Controller
 		$listCount=$redis_shop->LLEN($key);
 		$rewardList=[];
 		$idList=[];
-	
+		
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
 				return base64_encode($rewardJson);
 			}
 			else{	
 				for($i=1;$i<=6;$i++){
+					$reward=array();
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
 					$rewardList['reward'][]=$reward;	
-					//$rewardData=json_encode($reward,TRUE);
-					$rewardList=$redis_shop->LPUSH($key,$reward);
+					$rewardData=json_encode($reward,TRUE);
+					$rewardList=$redis_shop->LPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=$refresh['value1'];
