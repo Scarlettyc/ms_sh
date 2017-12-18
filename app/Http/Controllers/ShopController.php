@@ -199,85 +199,85 @@ class ShopController extends Controller
 		}
 	}
 
-	public function refreashRareResource(Request $request)
-	{
-		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
-		$now=new DateTime;
-		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$dmy=$now->format( 'Ymd' );
-		$redis_shop=Redis::connection('default');
+	// public function refreashRareResource(Request $request)
+	// {
+	// 	$req=$request->getContent();
+	// 	$data=json_decode($req,TRUE);
+	// 	$now=new DateTime;
+	// 	$datetime=$now->format( 'Y-m-d h:m:s' );
+	// 	$dmy=$now->format( 'Ymd' );
+	// 	$redis_shop=Redis::connection('default');
 
-		$UserResHistory=new UserResourcePurchaseHistoryModel;
-		$ResourceMstModel=new ResourceMstModel;
-		$UserModel=new UserModel;
-		$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
-		$resource=[];
-		$resourceList=[];
+	// 	$UserResHistory=new UserResourcePurchaseHistoryModel;
+	// 	$ResourceMstModel=new ResourceMstModel;
+	// 	$UserModel=new UserModel;
+	// 	$StoreGemRefreashMstModel=new StoreGemRefreashMstModel;
+	// 	$resource=[];
+	// 	$resourceList=[];
 
-		$u_id = $data['u_id'];
-		$shopkey='shop'.$u_id.$dmy;
-		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-		$ref_times=$redis_shop->LRANGE($shopkey,0,0);
-		$time=$ref_times['0'];
-		if(isset($ref_times))
-		{
-			if($time<=5)
-			{
-				$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
-				$spend_gem=$gem['gem'];
-			}else{
-				$spend_gem=100;
-			}
-			$updateRef=$time+1;
-			$redis_shop->LPUSH($shopkey,$updateRef);
-		}else{
-			$spend_gem=0;
-			$redis_shop->LPUSH($shopkey,1);
-		}
+	// 	$u_id = $data['u_id'];
+	// 	$shopkey='shop'.$u_id.$dmy;
+	// 	$UserInfo=$UserModel->where('u_id',$u_id)->first();
+	// 	$ref_times=$redis_shop->LRANGE($shopkey,0,0);
+	// 	$time=$ref_times['0'];
+	// 	if(isset($ref_times))
+	// 	{
+	// 		if($time<=5)
+	// 		{
+	// 			$gem=$StoreGemRefreashMstModel->where('id_ref',$time)->first();
+	// 			$spend_gem=$gem['gem'];
+	// 		}else{
+	// 			$spend_gem=100;
+	// 		}
+	// 		$updateRef=$time+1;
+	// 		$redis_shop->LPUSH($shopkey,$updateRef);
+	// 	}else{
+	// 		$spend_gem=0;
+	// 		$redis_shop->LPUSH($shopkey,1);
+	// 	}
 		
-		$updateGem=$UserInfo['u_gem']-$spend_gem;
-		$UserModel->where('u_id',$u_id)->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
+	// 	$updateGem=$UserInfo['u_gem']-$spend_gem;
+	// 	$UserModel->where('u_id',$u_id)->update(['u_gem'=>$updateGem,'updated_at'=>$datetime]);
 
-		$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
+	// 	$resStoreInfo=$UserResHistory->where('u_id',$u_id)->get();
 
-		if(isset($resStoreInfo))
-		{
-			foreach($resStoreInfo as $obj)
-			{
-				$id=$obj['r_pur_id'];
-				$status=$obj['order_status'];
-				if($status == 0)
-				{
-					$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>2,'updated_at'=>$datetime]);
-				}else if($status == 1)
-				{
-					$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>3,'updated_at'=>$datetime]);
-				}
-			}
+	// 	if(isset($resStoreInfo))
+	// 	{
+	// 		foreach($resStoreInfo as $obj)
+	// 		{
+	// 			$id=$obj['r_pur_id'];
+	// 			$status=$obj['order_status'];
+	// 			if($status == 0)
+	// 			{
+	// 				$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>2,'updated_at'=>$datetime]);
+	// 			}else if($status == 1)
+	// 			{
+	// 				$UserResHistory->where('r_pur_id',$id)->update(['order_status'=>3,'updated_at'=>$datetime]);
+	// 			}
+	// 		}
 
-			for($x=1;$x<=5;$x++)
-			{
-				$r_id = rand(6,10);
-				$order_id = $x;
-				$UserResHistory->insert(['u_id'=>$u_id,'r_id'=>$r_id,'order_id'=>$order_id,'order_status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
-				$resourceInfo=$ResourceMstModel->where('r_id',$r_id)->first();
-				$resource['r_id']=$r_id;
-				$resource['r_name']=$resourceInfo['r_name'];
-				$resource['r_price']=$resourceInfo['r_gem_price'];
-				$resource['r_img_path']=$resourceInfo['r_img_path'];
-				$resource['r_position']=$order_id;
-				$resourceList[]=$resource;
-			}
-		}else{
-			throw new Exception("there have some error");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check UserResourcePurchaseHistory table",
-			];
-		}
-		return $resourceList;
-	}
+	// 		for($x=1;$x<=5;$x++)
+	// 		{
+	// 			$r_id = rand(6,10);
+	// 			$order_id = $x;
+	// 			$UserResHistory->insert(['u_id'=>$u_id,'r_id'=>$r_id,'order_id'=>$order_id,'order_status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+	// 			$resourceInfo=$ResourceMstModel->where('r_id',$r_id)->first();
+	// 			$resource['r_id']=$r_id;
+	// 			$resource['r_name']=$resourceInfo['r_name'];
+	// 			$resource['r_price']=$resourceInfo['r_gem_price'];
+	// 			$resource['r_img_path']=$resourceInfo['r_img_path'];
+	// 			$resource['r_position']=$order_id;
+	// 			$resourceList[]=$resource;
+	// 		}
+	// 	}else{
+	// 		throw new Exception("there have some error");
+	// 		$response=[
+	// 		'status' => 'Wrong',
+	// 		'error' => "please check UserResourcePurchaseHistory table",
+	// 		];
+	// 	}
+	// 	return $resourceList;
+	// }
 
 	public function buyCoin(Request $request)
 	{	
