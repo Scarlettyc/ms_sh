@@ -196,11 +196,9 @@ class ShopController extends Controller
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->whereNotIn('store_reward_id',$idList)->first();
 					$idList[]=$reward['store_reward_id'];
-					if(!$reward){
-					}
 					$rewardList['reward'][]=$reward;	
 					$rewardData=json_encode($reward,TRUE);
-					$rewardList=$redis_shop->LPUSH($key,$rewardData);
+					//$rewardList=$redis_shop->LPUSH($key,$rewardData);
 				}
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=10;
