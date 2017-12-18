@@ -180,6 +180,7 @@ class ShopController extends Controller
 		$defindMst=new DefindMstModel();
 		$rate=$defindMst->where('defind_id',23)->first();
 		$refresh=$defindMst->where('defind_id',25)->first();
+		$refreshDuration=$defindMst->where('defind_id',26)->first();
 		if($data){
 			$u_id=$data['u_id'];
 			$listCount=0;
@@ -199,9 +200,16 @@ class ShopController extends Controller
 		
 			if($listCount>0){
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
-				$rewardJson=json_encode($rewardList,TRUE);
+				$result['reward']=$rewardList;
+				$result['times']=$times;
+				if($times>0)
+				$result['spend_gem']=$refresh['value2']*($times+1);
+				$result['next_gem']=$refresh['value2']*($times+2);
+				}
+				$
+				$result['refresh_time']=$refreshDuration['value1']-;
+				$rewardJson=json_encode($result,TRUE);
 				$rewardJson=str_replace("\\","",$rewardJson);
-
 				return base64_encode($rewardJson);
 			}
 			else{	
@@ -216,6 +224,7 @@ class ShopController extends Controller
 				$rewardList['times']=0;
 				$rewardList['spend_gem']=$refresh['value1'];
 				$rewardList['next_gem']=$refresh['value2'];
+				$rewardList['refresh_time']=$refreshDuration['value1'];
 				$data=json_encode($rewardList,TRUE);
 				return base64_encode($data);
 			}
