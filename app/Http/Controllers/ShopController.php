@@ -255,7 +255,7 @@ class ShopController extends Controller
 			}else{
 				$BaggageUtil->updateBaggageResource($u_id,$reward['item_id'],$reward['item_type'],$reward['item_quantity']);
 				$user_gem=$user_gem['u_gem']-$gem_spend;
-				$userModel->where('u_id',$u_id)->update(['user_gem',$user_gem]);
+				$userModel->where('u_id',$u_id)->update(['user_gem'=>$user_gem]);
 				$reward['status']=1;
 				$reward=json_encode($reward,TRUE);
 				$redis_shop->LSET($key,$to-$position,$reward);
