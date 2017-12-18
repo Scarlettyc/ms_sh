@@ -229,6 +229,7 @@ class ShopController extends Controller
 			}
 		}
 	}
+	
 		public function buyFromRefreshList(Request $request){
 			$req=$request->getContent();
 			$json=base64_decode($req);
