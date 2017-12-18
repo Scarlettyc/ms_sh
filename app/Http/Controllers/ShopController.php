@@ -190,7 +190,7 @@ class ShopController extends Controller
 			$listCount=$redis_shop->LLEN($key);
 			}
 			else{
-				$key='store_rare_'.$u_id.'_'.$dmy.'_'.0;
+				$key='store_rare_'.$u_id.'_'.$dmy.'_0';
 				$listCount=$redis_shop->LLEN($key);	
 			}
 			$rewardList=[];
