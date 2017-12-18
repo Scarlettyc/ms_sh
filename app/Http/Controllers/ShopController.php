@@ -258,7 +258,7 @@ class ShopController extends Controller
 				$userModel->where('u_id',$u_id)->update(['u_gem'=>$user_gem]);
 				$reward['status']=1;
 				$reward=json_encode($reward,TRUE);
-				$redis_shop->LSET($key,$to-$position,$reward);
+				$redis_shop->LSET($key,$listCount-$position,$reward);
 				return base64_encode('successfully bought');
 			}
 			
