@@ -224,7 +224,6 @@ class ShopController extends Controller
 			$key='store_rare';
 			$rewardJson=$redis_shop->HGET($key,$dmy.'_'.$u_id);
 			$rewardData=base64_decode($rewardJson);
-			$rewardData
 
 		}
 
