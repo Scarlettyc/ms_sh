@@ -192,7 +192,7 @@ class ShopController extends Controller
 			else{
 				$key='store_rare_'.$u_id.'_'.$dmy.'_0';
 				$listCount=$redis_shop->LLEN($key);	
-				$redis_shop->HGET('refresh_times',$dmy.$u_id,0);
+				$redis_shop->HSET('refresh_times',$dmy.$u_id,0);
 			}
 			$rewardList=[];
 			$idList=[];
@@ -201,6 +201,7 @@ class ShopController extends Controller
 				$rewardList=$redis_shop->LRANGE($key,0,$listCount);
 				$rewardJson=json_encode($rewardList,TRUE);
 				$rewardJson=str_replace("\\","",$rewardJson);
+
 				return base64_encode($rewardJson);
 			}
 			else{	
