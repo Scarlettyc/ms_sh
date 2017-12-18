@@ -184,7 +184,7 @@ class ShopController extends Controller
 			$u_id=$data['u_id'];
 			$listCount=0;
 		
-			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
+			$times=$redis_shop->HGET('refresh_times',$dmy.$u_id);
 		if($times){
 			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
 			$listCount=$redis_shop->LLEN($key);
@@ -192,6 +192,7 @@ class ShopController extends Controller
 			else{
 				$key='store_rare_'.$u_id.'_'.$dmy.'_0';
 				$listCount=$redis_shop->LLEN($key);	
+				$redis_shop->HGET('refresh_times',$dmy.$u_id,0);
 			}
 			$rewardList=[];
 			$idList=[];
@@ -230,11 +231,11 @@ class ShopController extends Controller
 			$u_id=$data['u_id'];
 			$userModel=new UserModel();
 			$redis_shop=Redis::connection('default');
-			$key='store_rare';
-			$times=$data['times'];
-			$from=$times*6-1;
-			$to=$times*6-1+6;
-			$rewardData=$redis_shop->LRANGE($key,$to-$position,$to-$position);
+			
+			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
+			$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
+			$listCount=$redis_shop->LLEN($key);
+			$rewardData=$redis_shop->LRANGE($key,$listCount-$position,$listCount-$position);
 			$reward=json_decode($rewardData,TRUE);
 			$gem_spend=$reward['gem_spend'];
 			$user_gem=$userModel->select('u_gem')->where('u_id',$u_id)->first();
@@ -259,8 +260,24 @@ class ShopController extends Controller
 			$now=new DateTime;
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$dmy=$now->format( 'Ymd' );
-			$times=$data['times'];
+			$redis_shop=Redis::connection('default');
+			$u_id=$data['u_id'];
+			$times=$redis_shop->HGET('refresh_tiems',$dmy.$u_id);
 
+
+			if($times==5){
+				return base64_encode("you only have five times chance!");
+			}
+			else {
+				$defindMst=new DefindMstModel();
+				$refresh=$defindMst->where('defind_id',25)->first();
+				$spend=($times+1)*$defindMst['value2'];
+				$redis_shop->HGET('refresh_tiems',$dmy.$u_id,$times+1);
+				$result['times']=$times+1;
+				$result['spend']=$spend;
+				$response=json_encode($result,TRUE);
+				return base64_encode($response);
+			}
 
 		}
 
