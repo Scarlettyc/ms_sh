@@ -189,7 +189,7 @@ class ShopController extends Controller
 				return base64_encode($rewardJson);
 			}
 			else{	for($i=0;$i<=6;$i++){
-					$number=rand($rate['value1',$rate['value2']);
+					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('item_id','item_type','item_quantity','gem')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->where('start_datetime','<=',$datetime)->where('end_datetime','>=',$datetime)->first();
 					$rewardList[]=$reward;
 				}
