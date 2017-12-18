@@ -195,7 +195,8 @@ class ShopController extends Controller
 					$rewardList[]=$reward;
 				}
 				$rewardList['times']=0;
-				return base64_encode($rewardList);
+				$data=json_encode($rewardList,TRUE);
+				return base64_encode($data);
 			}
 		}
 	}
