@@ -108,7 +108,7 @@ class ShopController extends Controller
 		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token']&&$data{
+		if($access_token==$data['access_token']&&$data){
 				$u_id=$data['u_id'];
 				$listCount=0;
 				$times=$redisShop->HGET('refresh_times',$dmy.$u_id);
