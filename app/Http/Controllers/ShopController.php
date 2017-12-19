@@ -259,7 +259,7 @@ class ShopController extends Controller
 		$get_coin=$buyType['coin'];
 		$key="store_buy_coin_".$u_id;
 		if($access_token==$data['access_token']){
-			if($UserInfo['u_gem']<$spend_gem){
+			if($UserInfo['u_gem']-$spend_gem>0){
 				$updateGem=$UserInfo['u_gem']-$spend_gem;
 				$updateCoin=$UserInfo['u_coin']+$get_coin;
 
