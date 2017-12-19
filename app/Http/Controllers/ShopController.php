@@ -252,7 +252,7 @@ class ShopController extends Controller
 			$UserModel=new UserModel;
 			$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
 			if($access_token==$data['access_token']){
-				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 
 				$response=json_encode($coinList,TRUE);
 				return base64_encode($response);
@@ -278,7 +278,7 @@ class ShopController extends Controller
 			$GemPurchaseBundleMst=new GemPurchaseBundleMst;
 			if($access_token==$data['access_token']){
 				$userData=$UserModel->select('country','os')->where('u_id',$u_id)->first();
-				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->get();
+				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->get();
 				$response=json_encode($gemList,TRUE);
 				return base64_encode($response);
 			}
