@@ -129,7 +129,7 @@ class ShopController extends Controller
 			if($listCount>0){
 				$rewardList=$redisShop->LRANGE($key,0,$listCount);
 				$rewardList=array_reverse($rewardList);
-				foreach($rewardList as $each)
+				foreach($rewardList as $each){
 					$tempList[]=json_decode($each,TRUE);
 				}
 				$result['reward']=$tempList;
@@ -166,10 +166,10 @@ class ShopController extends Controller
 				return base64_encode($data);
 				}
 			}
-			else {
+		else {
  			return base64_encode("there is something wrong with token");
- 			}
-		}
+ 		}
+	}
 
 		public function buyFromRefreshList(Request $request){
 			$req=$request->getContent();
