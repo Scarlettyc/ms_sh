@@ -108,12 +108,11 @@ class ShopController extends Controller
 		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token']){
-			if($data){
+		if($access_token==$data['access_token']&&$data{
 				$u_id=$data['u_id'];
 				$listCount=0;
 				$times=$redisShop->HGET('refresh_times',$dmy.$u_id);
-			if($times){
+			if($times>0){
 				$key='store_rare_'.$u_id.'_'.$dmy.'_'.$times;
 				$listCount=$redisShop->LLEN($key);
 				}
@@ -129,10 +128,10 @@ class ShopController extends Controller
 				$rewardList=$redisShop->LRANGE($key,0,$listCount);
 				$result['reward']=$rewardList;
 				$result['times']=$times;
-				if($times>0)
+				if($times>0){
 				$result['spend_gem']=$refresh['value2']*($times+1);
 				$result['next_gem']=$refresh['value2']*($times+2);
-				}
+			}
 
 				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$rewardJson=json_encode($result,TRUE);
