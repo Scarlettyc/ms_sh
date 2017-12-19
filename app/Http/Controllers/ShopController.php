@@ -259,7 +259,7 @@ class ShopController extends Controller
 				$reward['status']=1;
 				$reward=json_encode($reward,TRUE);
 				$redis_shop->LSET($key,$listCount-$position,$reward);
-				return base64_encode('successfully bought');
+				return base64_encode('successfully');
 			}
 			
 		}
@@ -376,25 +376,40 @@ class ShopController extends Controller
 	public function buyCoin(Request $request)
 	{	
 		$req=$request->getContent();
-		$data=json_decode($req,TRUE);
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$now=new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$redis_shop=Redis::connection('default');
 
 		$u_id=$data['u_id'];
-		$id=$data['id'];
+		$coin=$data['coin'];
 
 		$UserModel=new UserModel;
 		$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
-		$buyType=$StoreGemToCoinMstModel->where('u_id',$u_id)->first();
+		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->first();
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
-
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];
+		$key="store_buy_coin".$u_id;
+		if($UserInfo['u_gem']<$spend_gem){
+			$updateGem=$UserInfo['u_gem']-$spend_gem;
+			$updateCoin=$UserInfo['u_coin']+$get_coin;
 
-		$updateGem=$UserInfo['u_gem']-$spend_gem;
-		$updateCoin=$UserInfo['u_coin']+$get_coin;
-
-		$UserModel->where('u_id',$u_id)->update(['u_gem'=>$updateGem,'u_coin'=>$updateCoin]);
-
-		$response='Buy successfully';
-		return $response;		
+			$UserModel->where('u_id',$u_id)->update(['u_gem'=>$updateGem,'u_coin'=>$updateCoin]);
+			$buyData['u_id']=$u_id;
+			$buyData['datetime']=time();
+			$buyData['spend_gem']=$spend_gem;
+			$buyData['bought_coin']=$get_coin;
+			$buyData['gem_before']=$UserInfo['u_gem'];
+			$buyData['coin_before']=$UserInfo['u_coin'];
+			$data=json_encode($buyData,TRUE);
+			$redis_shop->LPUSH($key,$data);
+			return base64_encode('successfully');
+		}
+		else{
+			return base64_encode("no enough gems");	
+		}	
 	}
 }
