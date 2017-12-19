@@ -267,5 +267,6 @@ class ShopController extends Controller
 		else {
  			return base64_encode("there is something wrong with token");
  			}
+ 		}
 
 }
