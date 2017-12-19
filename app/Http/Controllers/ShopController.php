@@ -218,6 +218,7 @@ class ShopController extends Controller
 					$response=json_encode($result,TRUE);
 					return base64_encode($response);
 				}
+			}
 			else {
  			return base64_encode("there is something wrong with token");
  			}
