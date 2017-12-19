@@ -12,6 +12,7 @@ use App\StoreReRewardModel;
 use App\StoreGemToCoinMstModel;
 use App\InAppPurchaseModel;
 use App\DefindMstModel;
+use App\GemPurchaseBundleMst;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -236,6 +237,57 @@ class ShopController extends Controller
 
 		}
 
+		public function getCoinList(Request $request){
+			$req=$request->getContent();
+			$json=base64_decode($req);
+			$data=json_decode($json,TRUE);
+			$now=new DateTime;
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+			$dmy=$now->format( 'Ymd' );
+			$redisShop=Redis::connection('default');
+			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+			$loginTodayArr=json_decode($loginToday);
+			$access_token=$loginTodayArr->access_token;
+			$u_id=$data['u_id'];
+			$UserModel=new UserModel;
+			$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
+			if($access_token==$data['access_token']){
+				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+
+				$response=json_encode($coinList,TRUE);
+				return base64_encode($response);
+			}
+			else {
+				return base64_encode("there is something wrong with token");
+			}
+		}
+
+		public function getGemList(Request $request){
+			$req=$request->getContent();
+			$json=base64_decode($req);
+			$data=json_decode($json,TRUE);
+			$now=new DateTime;
+			$datetime=$now->format( 'Y-m-d h:m:s' );
+			$dmy=$now->format( 'Ymd' );
+			$redisShop=Redis::connection('default');
+			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+			$loginTodayArr=json_decode($loginToday);
+			$access_token=$loginTodayArr->access_token;
+			$u_id=$data['u_id'];
+			$UserModel=new UserModel;
+			$GemPurchaseBundleMst=new GemPurchaseBundleMst;
+			if($access_token==$data['access_token']){
+				$userData=$UserModel->select('country','os')->where('u_id',$u_id)->first();
+				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->get();
+				$response=json_encode($gemList,TRUE);
+				return base64_encode($response);
+			}
+			else {
+				return base64_encode("there is something wrong with token");
+			}
+
+		}
+
 	public function buyCoin(Request $request)
 	{	
 		$req=$request->getContent();
@@ -252,7 +304,7 @@ class ShopController extends Controller
 		$coin=$data['coin'];
 		$UserModel=new UserModel;
 		$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
-		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->first();
+		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$UserInfo=$UserModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];

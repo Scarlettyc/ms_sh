@@ -48,8 +48,9 @@ Route::post('/shop','ShopController@shop');
 Route::post('/buyResource','ShopController@buyResouceBYCoin');
 Route::post('/rareResourceList','ShopController@rareResourceList');
 Route::post('/refresh','ShopController@refreshResource');
-// Route::post('/buyRareResouce','ShopController@buyFromRefreshList');
 Route::post('/buyCoin','ShopController@buyCoin');
+Route::post('/coinList','ShopController@getCoinList');
+Route::post('/gemList','ShopController@getGemList');
 
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/showluck', 'LuckdrawController@showLuck');
