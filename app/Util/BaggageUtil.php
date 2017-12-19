@@ -276,7 +276,7 @@ class BaggageUtil
 			}
 
 		}
-		else if($item_type==2){
+		else if($item_type==3){
 						$baScNew['u_id']=$u_id;
 		   				$baScNew['bsc_id']=$item_id;
 		   				$baScNew['bsc_rarity']=$rescourceData['r_rarity'];
