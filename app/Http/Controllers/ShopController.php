@@ -242,7 +242,7 @@ class ShopController extends Controller
 		$UserInfo=$UserModel->where('u_id',$u_id)->first();
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];
-		$key="store_buy_coin".$u_id;
+		$key="store_buy_coin_".$u_id;
 		if($access_token==$data['access_token']){
 			if($UserInfo['u_gem']<$spend_gem){
 				$updateGem=$UserInfo['u_gem']-$spend_gem;
