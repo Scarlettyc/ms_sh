@@ -57,7 +57,7 @@ class ShopController extends Controller
 		$UserModel=new UserModel;
 		$inAppModel=new InAppPurchaseModel();
 		$BaggageUtil=new BaggageUtil();
-		$redis_shop=Redis::connection('default');
+
 
 		$u_id=$data['u_id'];
 		$item_id=$data['item_id'];
@@ -66,6 +66,9 @@ class ShopController extends Controller
 		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$times*$shopData['item_spend'];
 		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
+		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token']){
 			if($userData['u_coin']<$totalSpend){
 			return base64_encode("no enough coin");
@@ -102,6 +105,9 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 		$refresh=$defindMst->where('defind_id',25)->first();
 		$refreshDuration=$defindMst->where('defind_id',26)->first();
+		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		if($access_token==$data['access_token']){
 			if($data){
 				$u_id=$data['u_id'];
@@ -174,6 +180,9 @@ class ShopController extends Controller
 			$reward=json_decode($rewardData[0],True);
 			$gem_spend=$reward['gem_spend'];
 			$user_gem=$userModel->select('u_gem')->where('u_id',$u_id)->first();
+			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+			$loginTodayArr=json_decode($loginToday);
+			$access_token=$loginTodayArr->access_token;
 			if($access_token==$data['access_token']){
 				if($user_gem['u_gem']<$gem_spend){
 				return base64_encode("no enough gems");
@@ -203,6 +212,9 @@ class ShopController extends Controller
 			$redis_shop=Redis::connection('default');
 			$u_id=$data['u_id'];
 			$times=$redis_shop->HGET('refresh_times',$dmy.$u_id);
+			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+			$loginTodayArr=json_decode($loginToday);
+			$access_token=$loginTodayArr->access_token;
 			if($access_token==$data['access_token']){
 
 				if($times==5){
@@ -234,7 +246,9 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redis_shop=Redis::connection('default');
-
+		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		$u_id=$data['u_id'];
 		$coin=$data['coin'];
 		$UserModel=new UserModel;
