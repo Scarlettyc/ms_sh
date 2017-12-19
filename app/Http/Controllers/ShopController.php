@@ -123,11 +123,15 @@ class ShopController extends Controller
 				$redisShop->HSET('refresh_times',$dmy.$u_id,0);
 			}
 			$rewardList=[];
+			$tempList=[];
 			$idList=[];
 		
 			if($listCount>0){
 				$rewardList=$redisShop->LRANGE($key,0,$listCount);
-				$result['reward']=$rewardList;
+				for($i=$listCount;$i>=0;$i--){
+					$tempList[]=json_decode($rewardList[$i],TRUE);
+				}
+				$result['reward']=$tempList;
 				$result['times']=$times;
 
 				if($times>0){
@@ -141,7 +145,6 @@ class ShopController extends Controller
 
 				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$rewardJson=json_encode($result,TRUE);
-				$rewardJson=str_replace("\\","",$rewardJson);
 				return base64_encode($rewardJson);
 			}
 			else{	
