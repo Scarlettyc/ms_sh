@@ -255,8 +255,8 @@ class BaggageUtil
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$rescourceModel=new ResourceMstModel();
-		$
-		$now   = new DateTime;
+		$ScrollMstModel= new ScrollMstModel();
+				$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		if($item_type==1){
 			$itemData=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$item_id)->first();
