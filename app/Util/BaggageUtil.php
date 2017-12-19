@@ -7,6 +7,7 @@ use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeMstModel;
+use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\ItemMstModel;
 use Exception;
@@ -254,6 +255,7 @@ class BaggageUtil
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$rescourceModel=new ResourceMstModel();
+		$
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		if($item_type==1){
@@ -277,9 +279,10 @@ class BaggageUtil
 
 		}
 		else if($item_type==3){
+			$scrollData=$ScrollMstModel->where('sc_id',$item_id)->first();
 						$baScNew['u_id']=$u_id;
 		   				$baScNew['bsc_id']=$item_id;
-		   				$baScNew['bsc_rarity']=$rescourceData['r_rarity'];
+		   				$baScNew['bsc_rarity']=$scrollData['sc_rarity'];
 		   				$baScNew['br_type']=$item_type;
 		   				$baScNew['br_quantity']=$quantity;
 		   				$baScNew['status']=0;
