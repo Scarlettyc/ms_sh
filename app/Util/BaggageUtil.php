@@ -283,8 +283,6 @@ class BaggageUtil
 						$baScNew['u_id']=$u_id;
 		   				$baScNew['bsc_id']=$item_id;
 		   				$baScNew['bsc_rarity']=$scrollData['sc_rarity'];
-		   				$baScNew['br_type']=$item_type;
-		   				$baScNew['br_quantity']=$quantity;
 		   				$baScNew['status']=0;
 		   				$baScNew['updated_at']=$date;
 		   				$baScNew['created_at']=$date;
