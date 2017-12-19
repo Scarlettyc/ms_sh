@@ -128,8 +128,9 @@ class ShopController extends Controller
 		
 			if($listCount>0){
 				$rewardList=$redisShop->LRANGE($key,0,$listCount);
-				for($i=$listCount;$i>=0;$i--){
-					$tempList[]=json_decode($rewardList[$i],TRUE);
+				$rewardList=array_reverse($rewardList);
+				foreach($rewardList as $each)
+					$tempList[]=json_decode($each,TRUE);
 				}
 				$result['reward']=$tempList;
 				$result['times']=$times;
