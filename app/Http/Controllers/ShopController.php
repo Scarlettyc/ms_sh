@@ -254,7 +254,7 @@ class ShopController extends Controller
 		$UserModel=new UserModel;
 		$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
 		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->first();
-		$UserInfo=$UserModel->where('u_id',$u_id)->first();
+		$UserInfo=$UserModel->select('u_gem')->where('u_id',$u_id)->first();
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];
 		$key="store_buy_coin_".$u_id;
@@ -273,10 +273,10 @@ class ShopController extends Controller
 				$data=json_encode($buyData,TRUE);
 				$redisShop->LPUSH($key,$data);
 				return base64_encode('successfully');
-			}
-			else{
-				return base64_encode("no enough gems");	
-			}
+				}
+				else{
+					return base64_encode("no enough gems");	
+				}
 		}
 		else {
  			return base64_encode("there is something wrong with token");
