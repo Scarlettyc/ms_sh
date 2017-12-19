@@ -254,7 +254,7 @@ class ShopController extends Controller
 		$UserModel=new UserModel;
 		$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
 		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->first();
-		$UserInfo=$UserModel->select('u_gem')->where('u_id',$u_id)->first();
+		$UserInfo=$UserModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];
 		$key="store_buy_coin_".$u_id;
