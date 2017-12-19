@@ -129,10 +129,15 @@ class ShopController extends Controller
 				$rewardList=$redisShop->LRANGE($key,0,$listCount);
 				$result['reward']=$rewardList;
 				$result['times']=$times;
+
 				if($times>0){
 				$result['spend_gem']=$refresh['value2']*($times+1);
 				$result['next_gem']=$refresh['value2']*($times+2);
-			}
+				}
+				else{
+				$result['spend_gem']=$refresh['value1'];
+				$result['next_gem']=$refresh['value2'];
+				}
 
 				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$rewardJson=json_encode($result,TRUE);
