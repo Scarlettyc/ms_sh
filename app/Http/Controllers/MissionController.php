@@ -100,7 +100,7 @@ class MissionController extends Controller
 		$userRecord['times']=$missionReward['times'];
 		$userRecord['status']=$status;
 		$userRecord['datetime']=time();
-		$record=json_decode($userRecord,TRUE);
+		$record=json_encode($userRecord,TRUE);
 		$redis_mission->HSET($key,$mission_id,$record);
 	}
 
