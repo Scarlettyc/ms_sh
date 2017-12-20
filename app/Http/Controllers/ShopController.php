@@ -360,7 +360,7 @@ class ShopController extends Controller
 				$dailySpend=$redisShop->HGET($spentKey,$u_id);
 				$dailySpendData=json_decode($dailySpend,TRUE);
 				$spendData['coin']=$dailySpendData['coin']+$coin;
-				$spendData['gem']=$dailySpendData['coin']+$gem;
+				$spendData['gem']=$dailySpendData['gem']+$gem;
 				$spendJson=json_encode($spendData,TRUE);
 				$mission->archiveMission(5,$u_id,$spendData['coin']);
 				$mission->archiveMission(6,$u_id,$spendData['gem']);
