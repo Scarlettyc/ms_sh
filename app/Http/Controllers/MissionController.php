@@ -56,11 +56,11 @@ class MissionController extends Controller
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity','coin','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$result=[];
 		foreach ($missionReward as $value) {
-			$record=$redis_mission->HGET($key,$value['misson_id']);
+			$record=$redis_mission->HGET($key,$value['mission_id']);
 			if($record){
 				$recordData=json_encode($record,TRUE);
 				if($recordData['times']<$value['times']){
@@ -80,7 +80,7 @@ class MissionController extends Controller
 
 	}
 
-	public function archiveMission($misson_id,$u_id,$times){
+	public function archiveMission($mission_id,$u_id,$times){
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -88,7 +88,7 @@ class MissionController extends Controller
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$misson_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$key='mission_daily_'.$dmy.'_'.$u_id;
 		if($missionReward['times']==$times){
 			$status=2;
@@ -100,7 +100,7 @@ class MissionController extends Controller
 		$userRecord['times']=$missionReward['times'];
 		$userRecord['status']=$status;
 		$userRecord['datetime']=time();
-		$record=$redis_mission->HSET($key,$value['misson_id'],$record);
+		$record=$redis_mission->HSET($key,$value['mission_id'],$record);
 	}
 
 	public function listMisstion(Request $request){
