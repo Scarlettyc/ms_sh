@@ -81,7 +81,6 @@ class MissionController extends Controller
 	}
 
 	public function archiveMission($mission_id,$u_id,$times){
-		$u_id=$data['u_id'];
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
