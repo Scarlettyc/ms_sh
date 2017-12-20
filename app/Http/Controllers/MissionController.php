@@ -81,9 +81,6 @@ class MissionController extends Controller
 	}
 
 	public function archiveMission($mission_id,$u_id,$times){
-		$req=$request->getContent();
-		$json=base64_decode($req);
-		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
