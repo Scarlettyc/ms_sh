@@ -16,7 +16,6 @@ use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\EquipmentMstModel;
 use App\Util\BaggageUtil;
-use Illuminate\Support\Facades\Redis;
 
 class MissionController extends Controller
 {
