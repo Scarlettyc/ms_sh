@@ -153,7 +153,7 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
 			$missionKey='mission_daily_'.$dmy.'_'.$u_id;
-			$missionRecord=$redis_login->HGET($key,1);
+			$missionRecord=$redis_login->HGET($missionKey,1);
 			if(!$missionRecord){
 				$mission->archiveMission(1,$u_id,1);
 			}
