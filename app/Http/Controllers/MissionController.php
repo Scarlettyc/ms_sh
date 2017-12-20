@@ -16,6 +16,7 @@ use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\EquipmentMstModel;
 use App\Util\BaggageUtil;
+use Illuminate\Support\Facades\Redis;
 
 class MissionController extends Controller
 {
@@ -42,6 +43,68 @@ class MissionController extends Controller
 			$response=json_encode($history,TRUE);
 			$MisstionResult=Redis::LPUSH($key,$resultJson);
 		}
+	}
+
+	public function dailyMission(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$missionModel=new MissionRewardsModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$redis_mission=Redis::connection('default');
+		$charModel=new CharacterModel();
+		$chaData=$charModel->where('u_id',$u_id)->first();
+		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime）->where('end_date','>=',$datetime)->get();
+			$key='mission_daily_'.$dmy.'_'.$u_id;
+			$result=[];
+		foreach ($missionReward as $value) {
+			$record=$redis_mission->HGET($key,$value['misson_id']);
+			if($record){
+				$recordData=json_encode($record,TRUE);
+				if($recordData['times']<$value['times']){
+					$$value['times']=$recordData['times'];
+				}
+
+				$value['status']=$recordData['status'];
+			}
+			else{
+				$value['status']=0;
+			}
+			
+			$reslut['daily_mission'][]=$value;
+		}
+		$response=json_encode($reslut,TRUE);
+		return  base64_encode($response);
+
+	}
+
+	public function archiveMission($mission_id,$u_id,$times){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$missionModel=new MissionRewardsModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$redis_mission=Redis::connection('default');
+		$charModel=new CharacterModel();
+		$chaData=$charModel->where('u_id',$u_id)->first();
+		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime）->where('end_date','>=',$datetime)->first();
+		$key='mission_daily_'.$dmy.'_'.$u_id;
+		if($missionReward['times']==$times){
+			$status=2;
+		}
+		else{
+			$status=1;
+		}
+
+		$userRecord['times']=$missionReward['times'];
+		$record=$redis_mission->HSET($key,$value['misson_id'],$record);
+
 	}
 
 	public function listMisstion(Request $request){
