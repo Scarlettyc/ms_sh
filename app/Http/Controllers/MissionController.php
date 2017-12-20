@@ -62,7 +62,7 @@ class MissionController extends Controller
 		foreach ($missionReward as $value) {
 			$record=$redis_mission->HGET($key,$value['mission_id']);
 			if($record){
-				$recordData=json_encode($record,TRUE);
+				$recordData=json_decode($record,TRUE);
 				if($recordData['times']<$value['times']){
 					$$value['times']=$recordData['times'];
 				}
