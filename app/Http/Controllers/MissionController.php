@@ -80,7 +80,7 @@ class MissionController extends Controller
 
 	}
 
-	public function archiveMission($mission_id,$u_id,$times){
+	public function archiveMission($misson_id,$u_id,$times){
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -88,7 +88,7 @@ class MissionController extends Controller
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$missionReward=$missionModel->select('misson_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$misson_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$key='mission_daily_'.$dmy.'_'.$u_id;
 		if($missionReward['times']==$times){
 			$status=2;
