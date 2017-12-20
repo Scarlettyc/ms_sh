@@ -85,6 +85,7 @@ class ShopController extends Controller
 				$boughtData['spent']=$totalSpend;
 				$boughtJson=json_encode($boughtData,TRUE);
 				$redisShop->LPUSH('buy_resource',$boughtJson);
+				$this->RecordSpend($u_id,$totalSpend,0);
 				return base64_encode($boughtJson);
 			}
 		}
@@ -203,6 +204,7 @@ class ShopController extends Controller
 					$reward['status']=1;
 					$reward=json_encode($reward,TRUE);
 					$redisShop->LSET($key,$listCount-$position,$reward);
+					$this->RecordSpend($u_id,0,$gem_spend);
 					return base64_encode('successfully');
 					}
 				}
@@ -335,6 +337,7 @@ class ShopController extends Controller
 				$buyData['coin_before']=$UserInfo['u_coin'];
 				$data=json_encode($buyData,TRUE);
 				$redisShop->LPUSH($key,$data);
+				$this->RecordSpend($u_id,0,$spend_gem);
 				return base64_encode('successfully');
 				}
 				else{
@@ -344,6 +347,17 @@ class ShopController extends Controller
 		else {
  			return base64_encode("there is something wrong with token");
  			}
+ 		}
+
+ 		private function RecordSpend($u_id,$coin,$gem){
+ 				$spentKey='daily_spend_'.$dmy;
+				$dailySpend=$redisShop->HGET($spentKey,$u_id);
+				$dailySpendData=json_decode($dailySpend,TRUE);
+				$spendData['coin']=$dailySpendData['coin']+$coin;
+				$spendData['gem']=$dailySpendData['coin']+$gem;
+				$spendJson=json_encode($spendData,TRUE);
+				$redisShop->HSET($spentKey,$u_id,$spendJson);
+
  		}
 
 }

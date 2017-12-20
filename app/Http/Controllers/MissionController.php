@@ -72,6 +72,7 @@ class MissionController extends Controller
 			}
 			else{
 				$value['status']=0;
+				$value['archive']=0;
 			}
 			
 			$reslut['daily_mission'][]=$value;

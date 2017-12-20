@@ -157,7 +157,14 @@ class AccessController extends Controller
 			if(!$missionRecord){
 				$mission->archiveMission(1,$u_id,1);
 			}
-
+			$spentKey='daily_spend_'.$dmy;
+			$spendRecord=$redis_login->HGET($spentKey,$u_id);
+			if(!$spendRecord){
+				$spend['coin']=0;
+				$spend['gem']=0;
+				$spendjson=base64_encode($spend);
+				$redis_login->HSET($spentKey,$u_id,$spendjson);
+			}
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);
