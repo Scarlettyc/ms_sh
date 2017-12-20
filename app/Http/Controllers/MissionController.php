@@ -130,7 +130,7 @@ class MissionController extends Controller
 		$userData=$userModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$coin=$userData['u_coin']+$missionReward['coin'];
 		$gem=$userData['u_gem']+$missionReward['gem'];
-		$userModel->where('u_id',$u_id)->updaet(['u_coin'=>$coin,'u_gem'=>$gem,'updated_at'=>$datetime]);
+		$userModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'u_gem'=>$gem,'updated_at'=>$datetime]);
 		$key='mission_daily_'.$dmy.'_'.$u_id;
 		$redis_mission=Redis::connection('default');
 		$missionJson=$redis_mission->HGET($key,$mission_id);
