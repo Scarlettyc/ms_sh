@@ -12,6 +12,7 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
+use App\Http\Controllers\MissionController;
 use Log;
 use DateTime;
 class AccessController extends Controller
@@ -72,6 +73,7 @@ class AccessController extends Controller
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
 		$equipmentModel=new EquipmentMstModel();
+		$mission=new MissionController();
 		$result=[];
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -150,7 +152,11 @@ class AccessController extends Controller
 			$result['u_login_count']=$userfinal['u_login_count'];
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
+			// $missionKey=
+			// $redis_login->
+
 			$response=json_encode($result,TRUE);
+
 			return  base64_encode($response);
 		}
 		else {

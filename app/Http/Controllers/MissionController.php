@@ -103,8 +103,9 @@ class MissionController extends Controller
 		}
 
 		$userRecord['times']=$missionReward['times'];
+		$userRecord['status']=$status;
+		$userRecord['datetime']=time();
 		$record=$redis_mission->HSET($key,$value['misson_id'],$record);
-
 	}
 
 	public function listMisstion(Request $request){
