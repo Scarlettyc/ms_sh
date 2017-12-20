@@ -117,6 +117,7 @@ class MissionController extends Controller
 		$missionModel=new MissionRewardsModel();
 		$BaggageUtil=new BaggageUtil();
 		$CharacterModel=new CharacterModel();
+		$userModel=new UserModel();
 		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
 		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$charaData['ch_lv'])->where('user_lv_to','>',$charaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		if($missionReward['item_id']>0){
