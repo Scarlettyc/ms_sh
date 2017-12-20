@@ -140,6 +140,7 @@ class MissionController extends Controller
 		$userRecord['datetime']=time();
 		$record=json_encode($userRecord,TRUE);
 		$redis_mission->HSET($key,$mission_id,$record);
+		return base64_encode('successfully');
 
 	}
 	// public function listMisstion(Request $request){
