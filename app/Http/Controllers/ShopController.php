@@ -352,6 +352,9 @@ class ShopController extends Controller
 
  		private function RecordSpend($u_id,$coin,$gem){
  				$mission=new MissionController();
+ 				$now=new DateTime;
+				$datetime=$now->format( 'Y-m-d h:m:s' );
+				$dmy=$now->format( 'Ymd' );
  				$spentKey='daily_spend_'.$dmy;
 				$dailySpend=$redisShop->HGET($spentKey,$u_id);
 				$dailySpendData=json_decode($dailySpend,TRUE);
