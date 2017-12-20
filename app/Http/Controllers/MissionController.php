@@ -113,7 +113,7 @@ class MissionController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$mission_id=$data['mission_id'];
-		$mission_type=$data['mission_type']
+		$mission_type=$data['mission_type'];
 		$missionModel=new MissionRewardsModel();
 		$BaggageUtil=new BaggageUtil();
 		$CharacterModel=new CharacterModel();
