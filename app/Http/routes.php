@@ -89,6 +89,9 @@ Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
 
+Route::controller('mission','MissionController');
+Route::post('/daily_mission', 'MissionController@dailyMission');
+Route::post('/daily_mission', 'MissionController@dailyMission');
 
 
 
