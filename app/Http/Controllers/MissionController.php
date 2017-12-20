@@ -64,9 +64,10 @@ class MissionController extends Controller
 			if($record){
 				$recordData=json_decode($record,TRUE);
 				if($recordData['times']<$value['times']){
-					$$value['times']=$recordData['times'];
+					$value['times']=$recordData['times'];
 				}
 
+				$value['archive']=$recordData['times'];
 				$value['status']=$recordData['status'];
 			}
 			else{
