@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Redis;
 use App\Util\BaggageUtil;
 use Carbon\Carbon;
 use DateTime;
+use App\Http\Controllers\MissionController;
 
 class ShopController extends Controller
 {
@@ -350,13 +351,17 @@ class ShopController extends Controller
  		}
 
  		private function RecordSpend($u_id,$coin,$gem){
+ 				$mission=new MissionController();
  				$spentKey='daily_spend_'.$dmy;
 				$dailySpend=$redisShop->HGET($spentKey,$u_id);
 				$dailySpendData=json_decode($dailySpend,TRUE);
 				$spendData['coin']=$dailySpendData['coin']+$coin;
 				$spendData['gem']=$dailySpendData['coin']+$gem;
 				$spendJson=json_encode($spendData,TRUE);
+				$mission->archiveMission(5,$u_id,$spendData['coin']);
+				$mission->archiveMission(6,$u_id,$spendData['gem']);
 				$redisShop->HSET($spentKey,$u_id,$spendJson);
+
 
  		}
 
