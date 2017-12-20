@@ -117,12 +117,13 @@ class MissionController extends Controller
 		$missionModel=new MissionRewardsModel();
 		$BaggageUtil=new BaggageUtil();
 		$CharacterModel=new CharacterModel();
-		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$charaData['ch_lv'])->where('user_lv_to','>',$charaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		if($missionReward['item_id']>0){
 			$BaggageUtil->updateBaggageResource($u_id,$missionReward['item_id'],$missionReward['item_type'],$missionReward['item_quantity']);
 		}
 
-		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
+
 		$exp=$charaData['ch_exp']+$missionReward['exp'];
 		$CharacterModel->where('u_id',$u_id)->update(['ch_exp'=>$exp,'updated_at'=>$datetime]);
 		$userData=$userModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
