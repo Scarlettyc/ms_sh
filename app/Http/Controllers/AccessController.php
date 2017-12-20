@@ -152,8 +152,11 @@ class AccessController extends Controller
 			$result['u_login_count']=$userfinal['u_login_count'];
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
-			// $missionKey=
-			// $redis_login->
+			$missionKey='mission_daily_'.$dmy.'_'.$u_id;
+			$missionRecord=$redis_login->HGET($key,1);
+			if(!$missionRecord){
+				$mission->archiveMission(1,$u_id,1);
+			}
 
 			$response=json_encode($result,TRUE);
 
