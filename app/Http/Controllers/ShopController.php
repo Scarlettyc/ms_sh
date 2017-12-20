@@ -361,8 +361,6 @@ class ShopController extends Controller
 				$mission->archiveMission(5,$u_id,$spendData['coin']);
 				$mission->archiveMission(6,$u_id,$spendData['gem']);
 				$redisShop->HSET($spentKey,$u_id,$spendJson);
-
-
  		}
 
 }

@@ -56,7 +56,7 @@ class MissionController extends Controller
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$result=[];
 		foreach ($missionReward as $value) {
@@ -89,13 +89,11 @@ class MissionController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
+		$userModel=new UserModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity',"coin",'exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$key='mission_daily_'.$dmy.'_'.$u_id;
 		if($missionReward['times']>=$times){
-			$status=2;
-		}
-		else{
 			$status=1;
 		}
 
@@ -106,48 +104,84 @@ class MissionController extends Controller
 		$redis_mission->HSET($key,$mission_id,$record);
 	}
 
-	public function listMisstion(Request $request){
+	public function collectMissionReward(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$uid=$data['u_id'];
-		$key='mission_level'.$uid;
+		$u_id=$data['u_id'];
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$mission_id=$data['mission_id'];
+		$mission_type=$data['mission_type']
 		$missionModel=new MissionRewardsModel();
-		$charModel=new CharacterModel();
-		$charData=$charModel->Where('u_id',$uid)->first();
-		$user_lv=$charData['ch_lv'];
-		$MisstionResult=Redis::LRANGE($key,1,1);
-		$datetime=$now->format('Y-m-d h:m:s');
-		$misstionList=$missionModel->where('mission_type',2)->where('start_date','<=',$datetime)->where('end_date','<=',$datetime)->get();
-		$baggageUtil=new BaggageUtil();
-		if(isset($MisstionResult)){
-			$tookRewardlevel=$MisstionResult['level'];
-			$resutl=[];
-			foreach ($misstionList as $key => $mission) {
-				$reward=$baggageUtil->getReward($mission);
-				if($misstion['user_lv_to']>$tookRewardlevel&&$misstion['user_lv_to']<=$user_lv){
-					$reward['mission_status']=0;
-				}
-				else {
-					$reward['mission_status']=1;
-				}
-				$result['mission_list'][]=$reward;
-			}
+		$BaggageUtil=new BaggageUtil();
+		$CharacterModel=new CharacterModel();
+		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		if($missionReward['item_id']>0){
+			$BaggageUtil->updateBaggageResource($u_id,$missionReward['item_id'],$missionReward['item_type'],$missionReward['item_quantity']);
 		}
-		else {
-			foreach ($misstionList as $key => $mission) {
-				$reward=$baggageUtil->getReward($mission);
-				if($misstion['user_lv_to']<=$user_lv){
-					$reward['mission_status']=0;
-				}
-				else {
-					$reward['mission_status']=1;
-				}
-				$result['mission_list'][]=$reward;
-			}
-		}	
-			$response=json_encode($result,TRUE);
-			return  base64_encode($response);
+
+		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
+		$exp=$charaData['ch_exp']+$missionReward['exp'];
+		$CharacterModel->where('u_id',$u_id)->update(['ch_exp'=>$exp,'updated_at'=>$datetime]);
+		$userData=$userModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
+		$coin=$userData['u_coin']+$missionReward['coin'];
+		$gem=$userData['u_gem']+$missionReward['gem'];
+		$userModel->where('u_id',$u_id)->updaet(['u_coin'=>$coin,'u_gem'=>$gem,'updated_at'=>$datetime]);
+		$key='mission_daily_'.$dmy.'_'.$u_id;
+		$redis_mission=Redis::connection('default');
+		$missionJson=$redis_mission->HGET($key,$mission_id);
+		$missionData=json_decode($missionJson,TRUE);
+		$userRecord['times']=$missionData['times'];
+		$userRecord['status']=2;
+		$userRecord['datetime']=time();
+		$record=json_encode($userRecord,TRUE);
+		$redis_mission->HSET($key,$mission_id,$record);
+
 	}
+	// public function listMisstion(Request $request){
+	// 	$req=$request->getContent();
+	// 	$json=base64_decode($req);
+	// 	$data=json_decode($json,TRUE);
+	// 	$uid=$data['u_id'];
+	// 	$key='mission_level'.$uid;
+	// 	$missionModel=new MissionRewardsModel();
+	// 	$charModel=new CharacterModel();
+	// 	$charData=$charModel->Where('u_id',$uid)->first();
+	// 	$user_lv=$charData['ch_lv'];
+	// 	$MisstionResult=Redis::LRANGE($key,1,1);
+	// 	$datetime=$now->format('Y-m-d h:m:s');
+	// 	$misstionList=$missionModel->where('mission_type',2)->where('start_date','<=',$datetime)->where('end_date','<=',$datetime)->get();
+	// 	$baggageUtil=new BaggageUtil();
+	// 	if(isset($MisstionResult)){
+	// 		$tookRewardlevel=$MisstionResult['level'];
+	// 		$resutl=[];
+	// 		foreach ($misstionList as $key => $mission) {
+	// 			$reward=$baggageUtil->getReward($mission);
+	// 			if($misstion['user_lv_to']>$tookRewardlevel&&$misstion['user_lv_to']<=$user_lv){
+	// 				$reward['mission_status']=0;
+	// 			}
+	// 			else {
+	// 				$reward['mission_status']=1;
+	// 			}
+	// 			$result['mission_list'][]=$reward;
+	// 		}
+	// 	}
+	// 	else {
+	// 		foreach ($misstionList as $key => $mission) {
+	// 			$reward=$baggageUtil->getReward($mission);
+	// 			if($misstion['user_lv_to']<=$user_lv){
+	// 				$reward['mission_status']=0;
+	// 			}
+	// 			else {
+	// 				$reward['mission_status']=1;
+	// 			}
+	// 			$result['mission_list'][]=$reward;
+	// 		}
+	// 	}	
+	// 		$response=json_encode($result,TRUE);
+	// 		return  base64_encode($response);
+	// }
 
  }
