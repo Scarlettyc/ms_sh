@@ -356,6 +356,7 @@ class ShopController extends Controller
 				$datetime=$now->format( 'Y-m-d h:m:s' );
 				$dmy=$now->format( 'Ymd' );
  				$spentKey='daily_spend_'.$dmy;
+ 				$redisShop=Redis::connection('default');
 				$dailySpend=$redisShop->HGET($spentKey,$u_id);
 				$dailySpendData=json_decode($dailySpend,TRUE);
 				$spendData['coin']=$dailySpendData['coin']+$coin;
