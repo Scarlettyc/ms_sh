@@ -260,6 +260,7 @@ class ShopController extends Controller
 			$access_token=$loginTodayArr->access_token;
 			$u_id=$data['u_id'];
 			$UserModel=new UserModel;
+			
 			$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
 			if($access_token==$data['access_token']){
 				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
