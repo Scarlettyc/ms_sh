@@ -49,6 +49,7 @@ class MissionController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
+		$mission_type=$data['mission_type'];
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -81,6 +82,7 @@ class MissionController extends Controller
 		return  base64_encode($response);
 
 	}
+
 
 	public function archiveMission($mission_id,$u_id,$times){
 		$missionModel=new MissionRewardsModel();

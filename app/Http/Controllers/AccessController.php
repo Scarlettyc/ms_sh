@@ -120,7 +120,7 @@ class AccessController extends Controller
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']=$loginTodayArr->createdate; 
 					$loginlist=json_encode($logindata,TRUE);
-					$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					// $redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
 					else {
 						throw new Exception("login error!");
@@ -138,21 +138,9 @@ class AccessController extends Controller
 					$logindata['createdate']=time(); 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
 					$loginlist=json_encode($logindata,TRUE);
-					$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					// $redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
-			
-			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
-			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
-			$result['u_id']=$userfinal['u_id'];
-			$result['access_token']=$token;
-			$result['email']=$userfinal['email'];
-			$result['fb_id']=$userfinal['fb_id'];
-			$result['pass_tutorial']=$userfinal['pass_tutorial'];
-			$result['u_vip_lv']=$userfinal['u_vip_lv'];
-			$result['u_login_count']=$userfinal['u_login_count'];
-			$result['uuid']=$userfinal['uuid'];
-			$result['get_reward']=$userData['u_get_reward'];
-			$missionKey='mission_daily_'.$dmy.'_'.$u_id;
+				$missionKey='mission_daily_'.$dmy.'_'.$u_id;
 			$missionRecord=$redis_login->HGET($missionKey,1);
 			if(!$missionRecord){
 				$mission->archiveMission(1,$u_id,1);
@@ -165,6 +153,19 @@ class AccessController extends Controller
 				$spendjson=json_encode($spend);
 				$redis_login->HSET($spentKey,$u_id,$spendjson);
 			}
+			
+			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
+			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
+			$result['u_id']=$userfinal['u_id'];
+			$result['access_token']=$token;
+			$result['email']=$userfinal['email'];
+			$result['fb_id']=$userfinal['fb_id'];
+			$result['pass_tutorial']=$userfinal['pass_tutorial'];
+			$result['u_vip_lv']=$userfinal['u_vip_lv'];
+			$result['u_login_count']=$userfinal['u_login_count'];
+			$result['uuid']=$userfinal['uuid'];
+			$result['get_reward']=$userData['u_get_reward'];
+			$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);
