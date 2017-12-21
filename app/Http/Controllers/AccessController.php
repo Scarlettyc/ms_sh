@@ -162,7 +162,7 @@ class AccessController extends Controller
 			if(!$spendRecord){
 				$spend['coin']=0;
 				$spend['gem']=0;
-				$spendjson=base64_encode($spend);
+				$spendjson=json_encode($spend);
 				$redis_login->HSET($spentKey,$u_id,$spendjson);
 			}
 			$response=json_encode($result,TRUE);
