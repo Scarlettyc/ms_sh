@@ -142,7 +142,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		if($access_token==$data['access_token']){
 			$chaData=$charModel->where('u_id',$u_id)->first();
-			$missionReward=$missionModel->select('mission_id','user_lv_from as lv','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+			$missionReward=$missionModel->select('mission_id','user_lv_from as lv','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$missionJson=$redis_mission->HGET($key,$mission_id);
 			if($missionJson){
@@ -151,10 +151,11 @@ class MissionController extends Controller
 					$missionReward['times']=$recordData['times'];
 				}
 
-				$missionReward['archive']=$missionStatus['times'];
-				$missionReward['status']=$missionStatus['status'];
+				$result['archive']=$missionStatus['times'];
+				$result['status']=$missionStatus['status'];
 			}
 				else{
+
 				$missionReward['status']=0;
 				$missionReward['archive']=0;
 			}
