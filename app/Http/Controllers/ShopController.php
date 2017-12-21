@@ -43,7 +43,7 @@ class ShopController extends Controller
  	    return base64_encode($response);
  		}
  		else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  		}
 	}
 
@@ -91,7 +91,7 @@ class ShopController extends Controller
 			}
 		}
 		else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  		}
 	}
 
@@ -169,7 +169,7 @@ class ShopController extends Controller
 				}
 			}
 		else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  		}
 	}
 
@@ -210,7 +210,7 @@ class ShopController extends Controller
 					}
 				}
 			else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  			}
 			
 		}
@@ -231,7 +231,7 @@ class ShopController extends Controller
 			if($access_token==$data['access_token']){
 
 				if($times==5){
-					return base64_encode("you only have five times chance!");
+					 throw new Exception("you only have five times chance!");
 				}
 				else {
 					$defindMst=new DefindMstModel();
@@ -245,7 +245,7 @@ class ShopController extends Controller
 				}
 			}
 			else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  			}
 
 		}
@@ -272,7 +272,7 @@ class ShopController extends Controller
 				return base64_encode($response);
 			}
 			else {
-				return base64_encode("there is something wrong with token");
+				throw new Exception("there is something wrong with token");
 			}
 		}
 
@@ -298,7 +298,7 @@ class ShopController extends Controller
 				return base64_encode($response);
 			}
 			else {
-				return base64_encode("there is something wrong with token");
+				throw new Exception("there is something wrong with token");
 			}
 
 		}
@@ -346,7 +346,7 @@ class ShopController extends Controller
 				}
 		}
 		else {
- 			return base64_encode("there is something wrong with token");
+ 			throw new Exception("there is something wrong with token");
  			}
  		}
 

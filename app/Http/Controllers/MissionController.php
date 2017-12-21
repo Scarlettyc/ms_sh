@@ -55,14 +55,19 @@ class MissionController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
+		$loginToday=$redis_mission->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		$chaData=$charModel->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		if($access_token==$data['access_token']){
+			$chaData=$charModel->where('u_id',$u_id)->first();
+			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$result=[];
-		foreach ($missionReward as $value) {
-			$record=$redis_mission->HGET($key,$value['mission_id']);
-			if($record){
+			foreach ($missionReward as $value) {
+				$record=$redis_mission->HGET($key,$value['mission_id']);
+				if($record){
 				$recordData=json_decode($record,TRUE);
 				if($recordData['times']<$value['times']){
 					$value['times']=$recordData['times'];
@@ -77,10 +82,15 @@ class MissionController extends Controller
 			}
 			
 			$reslut['daily_mission'][]=$value;
+			}
+			$response=json_encode($reslut,TRUE);
+			return  base64_encode($response);
 		}
-		$response=json_encode($reslut,TRUE);
-		return  base64_encode($response);
+		else{
+			throw new Exception("there is something wrong with token");
 
+		}
+		
 	}
 
 
@@ -123,29 +133,37 @@ class MissionController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$CharacterModel=new CharacterModel();
 		$userModel=new UserModel();
-		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$charaData['ch_lv'])->where('user_lv_to','>',$charaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-		if($missionReward['item_id']>0){
-			$BaggageUtil->updateBaggageResource($u_id,$missionReward['item_id'],$missionReward['item_type'],$missionReward['item_quantity']);
-		}
-
-
-		$exp=$charaData['ch_exp']+$missionReward['exp'];
-		$CharacterModel->where('u_id',$u_id)->update(['ch_exp'=>$exp,'updated_at'=>$datetime]);
-		$userData=$userModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
-		$coin=$userData['u_coin']+$missionReward['coin'];
-		$gem=$userData['u_gem']+$missionReward['gem'];
-		$userModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'u_gem'=>$gem,'updated_at'=>$datetime]);
-		$key='mission_daily_'.$dmy.'_'.$u_id;
 		$redis_mission=Redis::connection('default');
-		$missionJson=$redis_mission->HGET($key,$mission_id);
-		$missionData=json_decode($missionJson,TRUE);
-		$userRecord['times']=$missionData['times'];
-		$userRecord['status']=2;
-		$userRecord['datetime']=time();
-		$record=json_encode($userRecord,TRUE);
-		$redis_mission->HSET($key,$mission_id,$record);
+		$loginToday=$redis_mission->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
+		if($access_token==$data['access_token']){
+			$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
+			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$charaData['ch_lv'])->where('user_lv_to','>',$charaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+			if($missionReward['item_id']>0){
+			$BaggageUtil->updateBaggageResource($u_id,$missionReward['item_id'],$missionReward['item_type'],$missionReward['item_quantity']);
+			}
+			$exp=$charaData['ch_exp']+$missionReward['exp'];
+			$CharacterModel->where('u_id',$u_id)->update(['ch_exp'=>$exp,'updated_at'=>$datetime]);
+			$userData=$userModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
+			$coin=$userData['u_coin']+$missionReward['coin'];
+			$gem=$userData['u_gem']+$missionReward['gem'];
+			$userModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'u_gem'=>$gem,'updated_at'=>$datetime]);
+			$key='mission_daily_'.$dmy.'_'.$u_id;
+			$missionJson=$redis_mission->HGET($key,$mission_id);
+			$missionData=json_decode($missionJson,TRUE);
+			$userRecord['times']=$missionData['times'];
+			$userRecord['status']=2;
+			$userRecord['datetime']=time();
+			$record=json_encode($userRecord,TRUE);
+			$redis_mission->HSET($key,$mission_id,$record);
 		return base64_encode('successfully');
+		}
+		else{
+			throw new Exception("there is something wrong with token");
+		}
 
 	}
 	// public function listMisstion(Request $request){
