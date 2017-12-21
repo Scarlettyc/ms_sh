@@ -90,7 +90,7 @@ Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
 
 Route::controller('mission','MissionController');
-Route::post('/daily_mission', 'MissionController@dailyMission');
+Route::post('/daily_mission', 'MissionController@missionList');
 Route::post('/collect_mission', 'MissionController@collectMissionReward');
 
 

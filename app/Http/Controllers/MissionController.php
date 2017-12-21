@@ -45,7 +45,7 @@ class MissionController extends Controller
 		}
 	}
 
-	public function dailyMission(Request $request){
+	public function missionList(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
@@ -167,48 +167,5 @@ class MissionController extends Controller
 		}
 
 	}
-	// public function listMisstion(Request $request){
-	// 	$req=$request->getContent();
-	// 	$json=base64_decode($req);
-	// 	$data=json_decode($json,TRUE);
-	// 	$uid=$data['u_id'];
-	// 	$key='mission_level'.$uid;
-	// 	$missionModel=new MissionRewardsModel();
-	// 	$charModel=new CharacterModel();
-	// 	$charData=$charModel->Where('u_id',$uid)->first();
-	// 	$user_lv=$charData['ch_lv'];
-	// 	$MisstionResult=Redis::LRANGE($key,1,1);
-	// 	$datetime=$now->format('Y-m-d h:m:s');
-	// 	$misstionList=$missionModel->where('mission_type',2)->where('start_date','<=',$datetime)->where('end_date','<=',$datetime)->get();
-	// 	$baggageUtil=new BaggageUtil();
-	// 	if(isset($MisstionResult)){
-	// 		$tookRewardlevel=$MisstionResult['level'];
-	// 		$resutl=[];
-	// 		foreach ($misstionList as $key => $mission) {
-	// 			$reward=$baggageUtil->getReward($mission);
-	// 			if($misstion['user_lv_to']>$tookRewardlevel&&$misstion['user_lv_to']<=$user_lv){
-	// 				$reward['mission_status']=0;
-	// 			}
-	// 			else {
-	// 				$reward['mission_status']=1;
-	// 			}
-	// 			$result['mission_list'][]=$reward;
-	// 		}
-	// 	}
-	// 	else {
-	// 		foreach ($misstionList as $key => $mission) {
-	// 			$reward=$baggageUtil->getReward($mission);
-	// 			if($misstion['user_lv_to']<=$user_lv){
-	// 				$reward['mission_status']=0;
-	// 			}
-	// 			else {
-	// 				$reward['mission_status']=1;
-	// 			}
-	// 			$result['mission_list'][]=$reward;
-	// 		}
-	// 	}	
-	// 		$response=json_encode($result,TRUE);
-	// 		return  base64_encode($response);
-	// }
 
  }
