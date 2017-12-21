@@ -159,7 +159,8 @@ class MissionController extends Controller
 				$missionReward['status']=0;
 				$missionReward['archive']=0;
 			}
-			$response=json_encode($missionReward,TRUE);
+			$result['mission_detail']=$missionReward;
+			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 		}
 		else{
