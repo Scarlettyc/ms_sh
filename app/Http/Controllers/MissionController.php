@@ -137,6 +137,7 @@ class MissionController extends Controller
 		$loginToday=$redis_mission->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
+		$missionModel=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
 		if($access_token==$data['access_token']){
