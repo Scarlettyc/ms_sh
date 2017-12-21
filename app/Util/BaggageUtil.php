@@ -289,4 +289,25 @@ class BaggageUtil
 		   				$UserBaggageScrollModel->insert($baScNew);
 		}
 	}
+
+	 	public function RecordSpend($u_id,$coin,$gem){
+ 				$mission=new MissionController();
+ 				$now=new DateTime;
+				$datetime=$now->format( 'Y-m-d h:m:s' );
+				$dmy=$now->format( 'Ymd' );
+ 				$spentKey='daily_spend_'.$dmy;
+ 				$redisShop=Redis::connection('default');
+				$dailySpend=$redisShop->HGET($spentKey,$u_id);
+				$dailySpendData=json_decode($dailySpend,TRUE);
+				$spendData['coin']=$dailySpendData['coin']+$coin;
+				$spendData['gem']=$dailySpendData['gem']+$gem;
+				$spendJson=json_encode($spendData,TRUE);
+				if($spendData['coin']>0){
+				$mission->archiveMission(5,$u_id,$spendData['coin']);
+				}
+				if($spendData['gem']>0){
+				$mission->archiveMission(6,$u_id,$spendData['gem']);
+				}
+				$redisShop->HSET($spentKey,$u_id,$spendJson);
+ 		}
 }

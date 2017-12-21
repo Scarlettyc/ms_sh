@@ -16,6 +16,7 @@ use App\EquipmentMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\DefindMstModel;
+use App\Util\BaggageUtil;
 use Exception;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
@@ -157,6 +158,7 @@ class LuckdrawController extends Controller
 		$characterModel=new CharacterModel();	
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
+		$BaggageUtil=new BaggageUtil();
 		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
@@ -186,11 +188,13 @@ class LuckdrawController extends Controller
 		   				$result['spent_coin']=$drawresult['draw_spend'];
 		   				$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
 		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
+		   				$BaggageUtil->RecordSpend($u_id,$userCoin,0);
 		   			}
 		   			else {
 		   				$result['spent_gem']=$drawresult['draw_spend'];
 		   				$userGem=$userData['u_gem']-$drawresult['draw_spend'];
 		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_gem"=>$userGem]);
+		   				$BaggageUtil->RecordSpend($u_id,0,$userGem);
 		   			}
 
 		   		$redisLuck->HSET('luckdraw'.$drawtype,$date.$data['u_id'],json_encode($draw,TRUE));
@@ -229,6 +233,7 @@ class LuckdrawController extends Controller
 					else{
 						throw new Exception("sorry, no avaliable prize");
 					}
+
 
 		   	}
 

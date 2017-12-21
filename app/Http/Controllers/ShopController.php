@@ -86,7 +86,7 @@ class ShopController extends Controller
 				$boughtData['spent']=$totalSpend;
 				$boughtJson=json_encode($boughtData,TRUE);
 				$redisShop->LPUSH('buy_resource',$boughtJson);
-				$this->RecordSpend($u_id,$totalSpend,0);
+				$BaggageUtil->RecordSpend($u_id,$totalSpend,0);
 				return base64_encode($boughtJson);
 			}
 		}
@@ -205,7 +205,7 @@ class ShopController extends Controller
 					$reward['status']=1;
 					$reward=json_encode($reward,TRUE);
 					$redisShop->LSET($key,$listCount-$position,$reward);
-					$this->RecordSpend($u_id,0,$gem_spend);
+					$BaggageUtil->RecordSpend($u_id,0,$gem_spend);
 					return base64_encode('successfully');
 					}
 				}
@@ -312,6 +312,7 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redisShop=Redis::connection('default');
+		$BaggageUtil=new BaggageUtil();
 		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
@@ -338,7 +339,7 @@ class ShopController extends Controller
 				$buyData['coin_before']=$UserInfo['u_coin'];
 				$data=json_encode($buyData,TRUE);
 				$redisShop->LPUSH($key,$data);
-				$this->RecordSpend($u_id,0,$spend_gem);
+				$BaggageUtil->RecordSpend($u_id,0,$spend_gem);
 				return base64_encode('successfully');
 				}
 				else{
@@ -348,27 +349,6 @@ class ShopController extends Controller
 		else {
  			throw new Exception("there is something wrong with token");
  			}
- 		}
-
- 		private function RecordSpend($u_id,$coin,$gem){
- 				$mission=new MissionController();
- 				$now=new DateTime;
-				$datetime=$now->format( 'Y-m-d h:m:s' );
-				$dmy=$now->format( 'Ymd' );
- 				$spentKey='daily_spend_'.$dmy;
- 				$redisShop=Redis::connection('default');
-				$dailySpend=$redisShop->HGET($spentKey,$u_id);
-				$dailySpendData=json_decode($dailySpend,TRUE);
-				$spendData['coin']=$dailySpendData['coin']+$coin;
-				$spendData['gem']=$dailySpendData['gem']+$gem;
-				$spendJson=json_encode($spendData,TRUE);
-				if($spendData['coin']>0){
-				$mission->archiveMission(5,$u_id,$spendData['coin']);
-				}
-				if($spendData['gem']>0){
-				$mission->archiveMission(6,$u_id,$spendData['gem']);
-				}
-				$redisShop->HSET($spentKey,$u_id,$spendJson);
  		}
 
 }
