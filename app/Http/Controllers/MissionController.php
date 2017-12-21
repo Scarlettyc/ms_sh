@@ -63,7 +63,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		if($access_token==$data['access_token']){
 			$chaData=$charModel->where('u_id',$u_id)->first();
-			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',1)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$result=[];
 			foreach ($missionReward as $value) {
@@ -77,7 +77,7 @@ class MissionController extends Controller
 				$value['archive']=$recordData['times'];
 				$value['status']=$recordData['status'];
 			}
-			else{
+				else{
 				$value['status']=0;
 				$value['archive']=0;
 			}
@@ -92,6 +92,76 @@ class MissionController extends Controller
 
 		}
 		
+	}
+	public function getLevelMission(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$mission_type=$data['mission_type'];
+		$missionModel=new MissionRewardsModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$redis_mission=Redis::connection('default');
+		$loginToday=$redis_mission->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
+		if($access_token==$data['access_token']){
+			$missionReward=$missionModel->select('mission_id','user_lv_from' as 'lv')->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+
+			$reslut['daily_mission']=$missionReward;
+			$response=json_encode($reslut,TRUE);
+			return  base64_encode($response);
+		}
+		else{
+			throw new Exception("there is something wrong with token");
+		}
+
+	}
+
+	public function getMissionDetails(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$mission_type=$data['mission_type'];
+		$mission_id=$data['mission_id'];
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$redis_mission=Redis::connection('default');
+		$loginToday=$redis_mission->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
+		if($access_token==$data['access_token']){
+			$missionReward=$missionModel->select('mission_id','user_lv_from' as 'lv','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+			$key='mission_daily_'.$dmy.'_'.$u_id;
+			$missionStatus=$redis_mission->HGET($key,$mission_id);
+			if($missionJson){
+				$missionStatus=json_decode($missionJson,TRUE);
+				if($missionStatus['times']<$missionReward['times']){
+					$missionReward['times']=$recordData['times'];
+				}
+
+				$missionReward['archive']=$missionStatus['times'];
+				$missionReward['status']=$missionStatus['status'];
+			}
+				else{
+				$missionReward['status']=0;
+				$missionReward['archive']=0;
+			}
+			$response=json_encode($missionReward,TRUE);
+			return  base64_encode($response);
+		}
+		else{
+			throw new Exception("there is something wrong with token");
+		}
+
 	}
 
 
