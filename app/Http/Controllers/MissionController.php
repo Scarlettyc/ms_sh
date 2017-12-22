@@ -111,7 +111,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		if($access_token==$data['access_token']){
 			$chaData=$charModel->where('u_id',$u_id)->first();
-			$missionReward=$missionModel->select('mission_id','user_lv_from as lv')->where('user_lv_to','>',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$missionReward=$missionModel->select('mission_id','user_lv_from as lv')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 
 			$reslut['daily_mission']=$missionReward;
 			$response=json_encode($reslut,TRUE);
