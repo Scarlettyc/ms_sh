@@ -404,9 +404,6 @@ class FriendController extends Controller
 		}
 	}
 
-	public function Chatsystem(){
-		
-	}
 
 	public function sendMessage(Request $request){
 		$req=$request->getContent();

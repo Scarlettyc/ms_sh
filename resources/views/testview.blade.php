@@ -10,8 +10,8 @@ ws.onclose = function(evt){console.log('WebSocketClosed!');};
 ws.onerror = function(evt){console.log('WebSocketError!');}; 
 
 </script>
-
-
-<p>test test</p>
+　<?php
+phpinfo();
+?>
 </div>
 @endsection
