@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
 use DB;
+use Log;
 class MatchController extends Controller
 {
     public function match($clientID,$data)
@@ -28,6 +29,7 @@ class MatchController extends Controller
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
+		Log::info($loginTodayArr);
 		$access_token=$loginTodayArr->access_token;
 		//push to match list
 		$now   = new DateTime;;
