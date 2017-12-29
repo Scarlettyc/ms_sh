@@ -46,7 +46,7 @@ class MatchController extends Controller
      		$ch_star=$chardata['ch_star'];
      		if(isset($chardata)){
      			$maxStar=$matchrange->max('user_ranking');
-		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->where('star_from','<='$ch_star)->where('star_to','>='$ch_star)
+		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first()
 				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'];
 				$matchList=$redis_battle->LLEN($matchKey);
