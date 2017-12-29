@@ -21,6 +21,8 @@ class MatchController extends Controller
 {
     public function match($clientID,$data)
     {
+    	$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
 		$u_id=$data['u_id'];
 		$access_token=$data['access_token'];
 		$redisMatch= Redis::connection('default');
