@@ -29,7 +29,7 @@ class MatchController extends Controller
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		Log::info($loginTodayArr);
+		Log::info($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		//push to match list
 		$now   = new DateTime;;
