@@ -65,15 +65,14 @@ class NotifyCommand extends Command
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $string=$frame->data;
-                 $array=explode('Message',$string); 
+                 $array=explode('BattleMatch',$string); 
                  $tag = str_replace('["', '',$array[0]);
                  if(count($array)>1&&$tag==42){
                     $ustring = str_replace('",', '',$array[1]);
                     $ustring = str_replace(']', '',$ustring );
                     $uslist=json_decode($ustring,TRUE);
                     $u_id=$uslist["u_id"];
-
-                    $resultList=$matchController->match($frame->fd,$u_id);
+                    $resultList=$matchController->match($frame->fd,$uslist);
                         if($resultList['match_id'])
                         {  
                             if($frame->fd == $resultList['client_id_2']){ 
