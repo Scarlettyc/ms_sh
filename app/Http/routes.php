@@ -60,7 +60,7 @@ Route::post('/multidraw', 'LuckdrawController@multiDraw');
 
 
 Route::controller('match','MatchController');
-Route::post('/battlematch', 'MatchController@match');
+Route::post('/battlematch', 'MatchController@testWebsocket');
 
 Route::controller('load','LoadBattleController');
 Route::post('/load', 'LoadBattleController@loadingGame');

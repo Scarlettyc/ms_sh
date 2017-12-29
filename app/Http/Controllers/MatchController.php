@@ -117,8 +117,11 @@ class MatchController extends Controller
 	 }
 
 
-	public function testWebsocket($data){
-		return $data."lalalla";
+	public function testWebsocket(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$this->match(2,$data);
 }
     private function chooseMap(){
     	$defindmst=new DefindMstModel();
