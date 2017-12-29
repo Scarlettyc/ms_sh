@@ -58,11 +58,11 @@ class MatchController extends Controller
 				$match_uidJson=$redis_battle->LRANGE($matchKey,0,1);
 				
 				$match_uid=json_decode($match_uidJson[0],TRUE);
-				if($matchList==1&&$match_uid['u_id_1']==$u_id){
-					return 'waiting';
+				if($matchList==1||$match_uid['u_id_1']==$u_id){
+					return "waiting";
 				}
 				else{
-					$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 					$mapData=$this->chooseMap();
 					$match_result=$redis_battle->LPOP($matchKey);
 					$resultList=json_decode($match_result,TRUE);
@@ -77,6 +77,7 @@ class MatchController extends Controller
 					$match_id='m'.time();
 					$redis_battle->HSET('match_list',$match_id,$match);
 					$resultList['match_id']=$match_id;
+
 					return $resultList;
 				}
 			}
