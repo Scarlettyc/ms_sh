@@ -43,20 +43,16 @@ class MatchController extends Controller
      		$characterModel=new CharacterModel();
      		$charSkillUtil=new CharSkillEffUtil();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
+     		$ch_star=$chardata['ch_star'];
      		if(isset($chardata)){
-     			$maxLv=$matchrange->max('user_lv_to');
      			$maxStar=$matchrange->max('user_ranking');
-		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->first();
-		 	
-
-			if($chardata['ch_lv']<$maxLv){
-				$matchKey='battle_match'.$match['user_ranking'];
-			}
-
-			$matchList=$redis_battle->LLEN($matchKey);
-			$list['u_id_1']=$u_id;
-			$list['client_id']=$clientID;
-			$list_data=json_encode($list,TRUE);
+		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->where('star_from','<='$ch_star)->where('star_to','>='$ch_star)
+		 		->first()
+				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'];
+				$matchList=$redis_battle->LLEN($matchKey);
+				$list['u_id_1']=$u_id;
+				$list['client_id']=$clientID;
+				$list_data=json_encode($list,TRUE);
 			if($matchList==0||!$matchList){
 				$redis_battle->LPUSH($matchKey,$list_data);
 				return null;
