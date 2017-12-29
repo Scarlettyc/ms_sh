@@ -88,7 +88,7 @@ class MatchController extends Controller
  			return null;
  		}
  		else{
- 			 throw new Exception("there is something wrong with token");
+ 			return null;
  		}
 	 }
 
