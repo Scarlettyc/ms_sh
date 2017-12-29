@@ -21,11 +21,17 @@ class MatchController extends Controller
 {
     public function match($clientID,$data)
     {
-		$u_id=$data;
+		$u_id=$data['u_id'];
+		$access_token=$data['access_token'];
+		$redisMatch= Redis::connection('default');
+		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
 		//push to match list
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		// $data=json_decode($json,TRUE);
+		if($access_token==$data['access_token']){
 		$redis_battle=Redis::connection('battle');
 
      		$usermodel=new UserModel();
@@ -78,7 +84,12 @@ class MatchController extends Controller
 				}
 			}
 		}
+
  			return null;
+ 		}
+ 		else{
+ 			 throw new Exception("there is something wrong with token");
+ 		}
 	 }
 
 

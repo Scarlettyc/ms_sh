@@ -33,8 +33,7 @@ class BattleController extends Controller
 
 	public function test($json){
 		$data=json_decode($json,TRUE);
-		$x1=$data['x1'];
-		$x2=$data['x2'];
+		$x=$data['x'];
 		$y=$data['y'];
 		$direction=$data['direction'];
 		$u_id=$data['u_id'];
@@ -104,16 +103,21 @@ class BattleController extends Controller
   private function BattleNormalRewards($u_id,$map_id){
   	$characterModel=new CharacterModel();
   	$baNorReward=new BattleNormalRewardsMst();
+  	$chaEffutil=new CharSkillEffUtil();
   	$datetime=$now->format('Y-m-d h:m:s');
 	$charData=$characterModel->where('u_id',$u_id)->first();
 	$cha_ranking=$charData['ch_ranking'];
   	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$cha_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
   	$count=count($norReward);
+  	$isLevelUP=0;
 	shuffle($norReward);
 	$baggageUtil=new BaggageUtil();
 	$baggageUtil->insertToBaggage($u_id,$norReward);
+	if($norReward['exp']>0){
+	$chaEffutil->levelUP($u_id,$norReward['exp']);
+	$isLevelUP=1;
+		}
 	return $isLevelUP;
-
   }
 
   private function BattleSpeRewards($u_id,$map_id){
@@ -166,7 +170,7 @@ class BattleController extends Controller
 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
 		$effResult=[];
 		$userData=$characterModel->where('u_id',$$u_id)->first();
-		$enemy=$characterModel->where('u_id',$enmey_ui)->first();
+		$enemy=$characterModel->where('u_id',$enmey_uid)->first();
 		$user_hp=$userData['ch_hp_max;'];
 		$enmey_hp=$enemy['ch_hp_max'];
 		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
@@ -252,28 +256,26 @@ class BattleController extends Controller
  			$user_stuck=$userBuff['eff_ch_stuck'];
 	 	}
 
- 	   	if(isset($enemyEffResult['atk_eff']['eff'])){
- 	 		$atkeff=$enemyEffResult['atkeff']['eff'];
- 	 		if($enemyEffResult['skill_group']==0){
-$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
+ 	   		if(isset($enemyEffResult['atk_eff']['eff'])&&$enemyEffResult['atk_eff']['hit']==1){
+ 	 				$atkeff=$enemyEffResult['atkeff']['eff'];
+ 	 				if($enemyEffResult['skill_group']==0){
+					$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
  	 			
- 	 		}
+ 	 				}
 
- 	 		else if($enemyEffResult['skill_group']==1){
- 	 			$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
- 	 		}
- 	 		$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 	 				else if($enemyEffResult['skill_group']==1){
+ 	 				$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
+ 	 				}
+ 	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
 
- 			$user_hp=$user_hp-$enemyDMG;
- 			if($enemyEffResult['atkeff']['end']==0){
- 				$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-				$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+ 					$user_hp=$user_hp-$enemyDMG;
+ 					if($enemyEffResult['atkeff']['end']==0){
+ 						$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+						$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
  			}
 
 		}
 	}
-
-
 			$battleCheck=$this->winCheck($user_hp,$enmey_hp,$u_id,$map_id);
 			$result['win']=$battleCheck['win'];
 			$result['battle_end']=$battleCheck['end'];
@@ -286,9 +288,7 @@ $enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
   			$result['ch_spd']=$user_spd; 		
   			$response=json_encode($result,TRUE);
   			$redis_battle->LPUSH($battlekey,$response);
-
   			return 	$response;
-
 	}
 
 

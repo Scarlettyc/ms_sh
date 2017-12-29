@@ -120,7 +120,6 @@ class MissionController extends Controller
 		else{
 			throw new Exception("there is something wrong with token");
 		}
-
 	}
 
 	public function getMissionDetails(Request $request){

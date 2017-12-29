@@ -43,27 +43,26 @@ class AttackHitUtil
 			$eff_bullet_width=$skillData['eff_bullet_width'];
 			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 			if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
-				if($eff_bullet_width!=0){
-					$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
-					if($hit['hit']){
-						$result['atk_eff']=$hit['atk_eff'];
-						$result['hit']=1;
-						$result['end']=0;
-					}
-					else if($hit['end']&&!$hit['hit']){
-					$result['atk_eff']['eff']=$hit['atk_eff'];
-					$result['atk_eff']['hit']=0;
-					$result['atk_eff']['end']=1;
-						}
-					}
-				else {
-
+				// if($eff_bullet_width!=0){
+				// 	$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
+				// 	if($hit['hit']){
+				// 		$result['atk_eff']=$hit['atk_eff'];
+				// 		$result['hit']=1;
+				// 		$result['end']=0;
+				// 	}
+				// 	else if($hit['end']&&!$hit['hit']){
+				// 	$result['atk_eff']['eff']=$hit['atk_eff'];
+				// 	$result['atk_eff']['hit']=0;
+				// 	$result['atk_eff']['end']=1;
+				// 		}
+				// 	}
+				// else {
 				 	$hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp']);
 					$result['atk_eff']['eff']= $atkEff;
 					$result['atk_eff']['hit']=$hit['hit'];
 					$result['atk_eff']['end']=$hit['end'];
 					$result['skill_group']=$$skillData['skill_group'];
-				}
+				// }
 			}
 		}
 		else if(isset($skillData['enemy_buff_eff_id']){
@@ -86,42 +85,43 @@ class AttackHitUtil
 
  				
 			$distance=0;
-			if($atkEff['eff_skill_circle_center']==0){
-				if($direction>=0)
-					{
-						$effX=$user['x']+$defindData['value1'];
+			$effXfrom=$user['x'];
+			$effYfrom=$user['x'];
+			// if($atkEff['eff_skill_circle_center']==0){
+			// 	if($direction>=0)
+			// 		{
+			// 			$effX=$user['x']+$defindData['value1'];
 						
-					}
-					else {
-						$effX=$user['x']-$defindData['value1'];
-					}
-					$effY=$user['y'];				
-			}
- 			else if($atkEff['eff_skill_circle_center']==1){
- 				$effX=$user['x'];
- 				$effY=$user['y'];			
- 			}
+			// 		}
+			// 		else {
+			// 			$effX=$user['x']-$defindData['value1'];
+			// 		}
+			// 		$effY=$user['y'];				
+			// }
+ 		// 	else if($atkEff['eff_skill_circle_center']==1){
+ 		// 		$effX=$user['x'];
+ 		// 		$effY=$user['y'];			
+ 		// 	}
 
- 			else if($atkEff['eff_skill_circle_center']==2){
- 				$effY=$user['y']+$defindData['value2'];
- 				$effX=$user['x'];	
- 			}
- 			$radius=$atkEff['eff_skill_radius'];
+ 		// 	else if($atkEff['eff_skill_circle_center']==2){
+ 		// 		$effY=$user['y']+$defindData['value2'];
+ 		// 		$effX=$user['x'];	
+ 		// 	}
+ 			// $radius=$atkEff['eff_skill_radius'];
+
  			$interrput=$this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt']);
  			$end=$interrput['end'];
  			if($interrput['interrput']){
  				return ['hit'=>0,'end'=>1];
  			}
  			else {
- 		 	$distance=sqrt(pow(($effX-$enemy['x']),2)+pow(($effY-$enemy['y']),2));
- 			$agnle=asin($effX/$distance);
- 			$atkEffAngle=$atkEff['eff_skill_angle'];
-			if($distance<=$radius&&$agnle<=$atkEffAngle)
- 				{		return ['hit'=>1,'end'=>$end];
-				}
-				else {
-						return ['hit'=>1,'end'=>$end];
-				}
+ 		 	$effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
+ 		 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
+ 		 	if($enemy['x']>=$effXfrom&&$enemy['x']<=$effXto&&$enemy['y']>=$effYfrom&&$enemy['y']<=$effYto){
+ 		 		return ['hit'=>1,'end'=>1];
+ 		 	}else{
+ 		 		return ['hit'=>0,'end'=>0];
+ 		 	}
 			}
 }
 
