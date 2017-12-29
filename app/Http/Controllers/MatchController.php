@@ -29,24 +29,21 @@ class MatchController extends Controller
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
-		Log::info($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		//push to match list
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		// $data=json_decode($json,TRUE);
 		if($access_token==$data['access_token']){
 		$redis_battle=Redis::connection('battle');
-
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
      		$charSkillUtil=new CharSkillEffUtil();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
      		$ch_star=$chardata['ch_star'];
+	
      		if(isset($chardata)){
-     			$maxStar=$matchrange->max('user_ranking');
-		 		$match=$matchrange->where('user_ranking',$chardata['user_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
+		 		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
 				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'];
 				$matchList=$redis_battle->LLEN($matchKey);
