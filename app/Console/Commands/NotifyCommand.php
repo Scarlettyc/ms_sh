@@ -76,7 +76,7 @@ class NotifyCommand extends Command
 
                         if(isset($resultList))
                         { 
-                            Log::info($resultList)；
+                            Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 
 
                                 $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$resultList['u_id_2'],$resultList['match_id'],$resultList['map_id']);
