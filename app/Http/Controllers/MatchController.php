@@ -50,6 +50,7 @@ class MatchController extends Controller
 				$matchList=$redis_battle->LLEN($matchKey);
 				$list['u_id_1']=$u_id;
 				$list['client_id']=$clientID;
+				$list['create_date']=time();
 				$list_data=json_encode($list,TRUE);
 			if($matchList==0||!$matchList){
 				$redis_battle->LPUSH($matchKey,$list_data);
