@@ -115,7 +115,8 @@ class MatchController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$this->match(2,$data);
+		$result=$this->match(2,$data);
+		return $result;
 }
     private function chooseMap(){
     	$defindmst=new DefindMstModel();
