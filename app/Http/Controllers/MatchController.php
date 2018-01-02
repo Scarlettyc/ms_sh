@@ -20,19 +20,19 @@ use DB;
 use Log;
 class MatchController extends Controller
 {
-    public function match($clientID,$data)
+    public function match($clientID,$u_id,$access_token)
     {
     	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		$u_id=$data['u_id'];
+		// $u_id=$data['u_id'];
 		$access_token=$data['access_token'];
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday,TRUE);
-		$access_token=$loginTodayArr["access_token"];
+		$access_token2=$loginTodayArr["access_token"];
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		if($access_token==$data['access_token']){
+		if($access_token2==$access_token){
 		$redis_battle=Redis::connection('battle');
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
@@ -63,8 +63,10 @@ class MatchController extends Controller
 				}
 				else{
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+
 					$mapData=$this->chooseMap();
 					$match_result=$redis_battle->LPOP($matchKey);
+					Log::info($match_result);
 					$resultList=json_decode($match_result,TRUE);
 
 					$resultList['u_id_2']=$u_id;
@@ -83,7 +85,7 @@ class MatchController extends Controller
 			}
 		}
 
- 			return null;
+ 			return "error";
  		}
  		else{
  			return null;

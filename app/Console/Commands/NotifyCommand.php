@@ -66,14 +66,13 @@ class NotifyCommand extends Command
             foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $string=$frame->data;
-                 $array=explode('BattleMatch',$string); 
-                 $tag = str_replace('["', '',$array[0]);
+                 $tag=substr($string,0,2);
                  if(count($array)>1&&$tag==42){
-                    $ustring = str_replace('",', '',$array[1]);
-                    $ustring = str_replace(']', '',$ustring );
-                    $uslist=json_decode($ustring,TRUE);
-                    $u_id=$uslist["u_id"];
-                    $resultList=$matchController->match($frame->fd,$uslist);
+                    $ustring=substr($string,2);
+                    $uslist= json_decode($ustring);
+                    $u_id=$uslist[1]->u_id;
+                    $access_token=$uslist[1]->access_token;
+                    $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      Log::info($resultList);
                         if(isset($resultList))
                         { 
