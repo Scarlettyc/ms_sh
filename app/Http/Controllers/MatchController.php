@@ -28,7 +28,7 @@ class MatchController extends Controller
 		$access_token=$data['access_token'];
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
+		$loginTodayArr=json_decode($loginToday,TRUE);
 		$access_token=$loginTodayArr["access_token"];
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
