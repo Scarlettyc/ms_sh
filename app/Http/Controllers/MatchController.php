@@ -52,14 +52,14 @@ class MatchController extends Controller
 				$list_data=json_encode($list,TRUE);
 			if($matchList==0||!$matchList){
 				$redis_battle->LPUSH($matchKey,$list_data);
-				return 'waiting';
+				return null;
 			}
 			else {
 				$match_uidJson=$redis_battle->LRANGE($matchKey,0,1);
 				
 				$match_uid=json_decode($match_uidJson[0],TRUE);
 				if($matchList==1&&$match_uid['u_id_1']==$u_id){
-					return "waiting";
+					return null;
 				}
 				else{
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
@@ -83,10 +83,10 @@ class MatchController extends Controller
 			}
 		}
 
- 			return 'error';
+ 			return null;
  		}
  		else{
- 			return 'error';
+ 			return null;
  		}
 	 }
 

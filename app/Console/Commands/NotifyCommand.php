@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use swoole_websocket_server;
 use swoole_server;
 use App\Http\Controllers\MatchController;
+use Log;
 
 class NotifyCommand extends Command
 {
@@ -74,9 +75,9 @@ class NotifyCommand extends Command
                     $u_id=$uslist["u_id"];
                     $resultList=$matchController->match($frame->fd,$uslist);
 
-                        if(isset($resultList))
+                        if($resultList)
                         { 
-                            Log::info($resultList);
+                            //Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 
 
                                 $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$resultList['u_id_2'],$resultList['match_id'],$resultList['map_id']);
