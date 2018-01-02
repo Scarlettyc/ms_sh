@@ -67,7 +67,7 @@ class NotifyCommand extends Command
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $tag=substr($string,0,2);
-                 if(count($array)>1&&$tag==42){
+                 if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
                     $u_id=$uslist[1]->u_id;
