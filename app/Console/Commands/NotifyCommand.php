@@ -74,8 +74,8 @@ class NotifyCommand extends Command
                     $uslist=json_decode($ustring,TRUE);
                     $u_id=$uslist["u_id"];
                     $resultList=$matchController->match($frame->fd,$uslist);
-
-                        if($resultList)
+                    Log::($resultList);
+                        if(isset($resultList))
                         { 
                             //Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 
