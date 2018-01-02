@@ -86,7 +86,6 @@ class NotifyCommand extends Command
                                 $result2=$tag.'["Message",'.$uData2.']';                             
                                 $server->push($resultList['client_id_2'], $result1); 
                                 $server->push($resultList['client_id'], $result2);
-
                                 $break;   
                             }
                         }
