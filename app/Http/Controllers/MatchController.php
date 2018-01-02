@@ -26,7 +26,7 @@ class MatchController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		// $u_id=$data['u_id'];
 		$redisMatch= Redis::connection('default');
-		$loginToday=$redisMatch->HGET('login_data',$dmy.$data['u_id']);
+		$loginToday=$redisMatch->HGET('login_data',$dmy.$u_id);
 		$loginTodayArr=json_decode($loginToday,TRUE);
 		$access_token2=$loginTodayArr["access_token"];
 		$now   = new DateTime;
@@ -72,7 +72,7 @@ class MatchController extends Controller
 					$resultList['client_id_2']=$clientID;
 					$resultList['map_id']=$mapData;
 					
-					$enmeydata=$usermodel->where('u_id',$match_uid)->first();
+					//$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
 					$match=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'map_id'=>$mapData],TRUE);
 					$match_id='m'.time();
