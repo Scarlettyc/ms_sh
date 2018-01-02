@@ -93,19 +93,19 @@ class MatchController extends Controller
 
 
 	 public function finalMatchResult ($u_id,$enemy_uid,$match_id,$mapData){
-	 	$usermodel=new UserModel();
-     	$matchrange=new MatchRangeModel();
-     	$characterModel=new CharacterModel();
-     	$charSkillUtil=new CharSkillEffUtil();
-     	$chardata=$characterModel->where('u_id',$u_id)->first();
-	 	$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
-	 	$enmeydata=$usermodel->where('u_id',$enemy_uid)->first();
+	 	//$usermodel=new UserModel();
+     	//$matchrange=new MatchRangeModel();
+     	// $characterModel=new CharacterModel();
+     	// $charSkillUtil=new CharSkillEffUtil();
+     	//$chardata=$characterModel->where('u_id',$u_id)->first();
+	 	//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
+	 	//$enmeydata=$usermodel->where('u_id',$enemy_uid)->first();
 	 	
 	 	$result['match_id']=$match_id;
-		$result['userData']['eff']=$effect;
-		$result['userData']['char']=$chardata;
-		$result['mapData']=$mapData;
-		$result['enemyData']=$enmeydata;
+		//$result['userData']['eff']=$effect;
+		//$result['userData']['char']=$chardata;
+		//$result['mapData']=$mapData;
+		//$result['enemyData']=$enmeydata;
 		$response=json_encode($result,TRUE);
 		return $response;
 
