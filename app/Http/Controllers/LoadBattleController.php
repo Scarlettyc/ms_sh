@@ -31,7 +31,7 @@ class LoadBattleController extends Controller
         $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
         $loginTodayArr=json_decode($loginToday,TRUE);
         $access_token=$loginTodayArr["access_token"];
-    	if(isset($data)&&$access_token==$data['access_token']){
+    	if($access_token==$data['access_token']){
     		$match_id=$data['match_id'];
  	    	$matchList=$redis_battle->HGET('match_list',$match_id);
 
