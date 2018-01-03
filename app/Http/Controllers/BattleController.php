@@ -361,6 +361,7 @@ class BattleController extends Controller
 		$match_id=$data['match_id'];
 		$matchList=$redis_battle->HGET('match_list',$match_id);
 		$u_id=$data['u_id'];
+		
 		$matchArr=json_decode($matchList);
 		if(isset($matchArr)){
 			if($matchArr['u_id_1']==$u_id){
