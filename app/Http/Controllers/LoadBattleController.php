@@ -22,6 +22,8 @@ class LoadBattleController extends Controller
     	$req=$request->getContent();
 		$json=base64_decode($req);
 	 	//dd($json);
+        $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
         $redis_battle=Redis::connection('battle');
         $redisLoad= Redis::connection('default');
