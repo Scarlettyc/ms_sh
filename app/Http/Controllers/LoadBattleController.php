@@ -26,13 +26,14 @@ class LoadBattleController extends Controller
     	if(isset($data)){
     		$match_id=$data['match_id'];
  	    	$matchList=$redis_battle->HGET('match_list',$match_id);
- 	    	$matchArr=json_decode($matchList);
+
+ 	    	$matchArr=json_decode($matchList,TRUE);
  	    	$u_id=$data['u_id'];
- 	    	if($u_id==$matchArr[0]){
- 	    		$enmey_uid=$matchArr[1];
+ 	    	if($u_id==$matchArr['u_id']){
+ 	    		$enmey_uid=$matchArr['enemy_uid'];
  	    	}
- 	    	else if($u_id==$matchArr[1]){
-				$enmey_uid=$matchArr[0];
+ 	    	else if($u_id==$matchArr['enemy_uid']){
+				$enmey_uid=$matchArr['u_id'];
  	    	}
  	    	else{
  	    		throw new Exception("wrong match_id");
