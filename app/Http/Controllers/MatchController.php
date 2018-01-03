@@ -76,7 +76,7 @@ class MatchController extends Controller
 					
 					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid['u_id_1'],'map_id'=>$mapData,'create_date'=>time()],TRUE);
 					$match_id='m'.time();
-					$redis_battle->HSET('match_list',$matchResult,$match);
+					$redis_battle->HSET('match_list',$match_id,$matchResult);
 					$resultList['match_id']=$match_id;
 
 					return $resultList;
