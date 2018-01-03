@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\UserModel;
-use App\EquipmentMstModel;
-use 
+use App\EquipmentMstModel; 
 use App\CharacterModel;
 use App\DefindMstModel;
 use App\MapModel;
