@@ -59,10 +59,29 @@ class MapTrapUtil
             return $mapData;
     }
 
+    // public function getMapData($map_id){
+    //     $mapModel=new MapModel();
+    //     $trapMst=new TrapMstModel();
+    //     $mapRelation=new MapTrapRelationMst();
+    //     $mapData=$MapModel->where('map_id',$map_id)->first();
+    //     $friendList=DB::table('Map_mst')
+    //                 ->join('Map_Trap_Relation_mst','Map_mst.map_id','=','Map_Trap_Relation_mst.map_id')
+    //                 ->join('Trap_mst','Trap_mst.trap_id','=','User_friend_list.friend_u_id')
+    //                 ->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
+    //                 ->where('User_friend_list.u_id',$data['u_id'])
+    //                 ->where('User_friend_list.friend_status',1)
+    //                 ->orderby('User_Character.ch_ranking','DESC')
+    //                 ->orderBy('User_Character.ch_title', 'ASC')
+    //                 ->get();
+
+
+        
+    // }
 
         function checkEffstone($map_id,$effX,$effY,$effR,$effAngle)
     {       $mapRelation=new MapTrapRelationMst();
             $mapStone=new MapStoneRelationMst();
+
             $mapData=$mapRelation->where(function($query){
                      $query->Where('map_id',$map_id)->where('trap_id',1)->get();
 
@@ -82,23 +101,24 @@ class MapTrapUtil
             return false;
     } 
 
-    function  intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
-{
-    $circleDistanceX = abs($circleX - $RectX);
-    $circleDistanceY = abs($circleY - $$RectY);
+//     function  intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
+// {
+//     $circleDistanceX = abs($circleX - $RectX);
+//     $circleDistanceY = abs($circleY - $$RectY);
 
-    $distance=sqrt(pow(($circleDistanceX),2)+pow($circleDistanceY,2));
-    $agnle=asin($circleDistanceX/$distance);
-    if ($circleDistanceX > ($RecWidth/2 + $circleR)||$agnle>$effAngle) { return false; }
-    if ($circleDistanceY > ($RecHeight/2 +$circleR)) { return false; }
+//     $distance=sqrt(pow(($circleDistanceX),2)+pow($circleDistanceY,2));
+//     $agnle=asin($circleDistanceX/$distance);
+//     if ($circleDistanceX > ($RecWidth/2 + $circleR)||$agnle>$effAngle) { return false; }
+//     if ($circleDistanceY > ($RecHeight/2 +$circleR)) { return false; }
 
-   if ($circleDistanceX <=($RecWidth/2 + $circleR)&&$agnle<=$effAngle) { return true; }
-    if ($circleDistanceY <= ($RecHeight/2 +$circleR)&&$agnle<=$effAngle) { return true; }
+//    if ($circleDistanceX <=($RecWidth/2 + $circleR)&&$agnle<=$effAngle) { return true; }
+//     if ($circleDistanceY <= ($RecHeight/2 +$circleR)&&$agnle<=$effAngle) { return true; }
 
-    $cornerDistance_sq = ($circleDistanceX- $RecWidth/2)^2 +
-                         ($circleDistanceY - $RecHeight/2)^2;
+//     $cornerDistance_sq = ($circleDistanceX- $RecWidth/2)^2 +
+//                          ($circleDistanceY - $RecHeight/2)^2;
    
 
-    return ($cornerDistance_sq <= (($circleR^2)&&$agnle<=$effAngle);
-}
+//     return ($cornerDistance_sq <= (($circleR^2)&&$agnle<=$effAngle);
+// }
+
 }
