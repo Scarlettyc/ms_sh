@@ -25,6 +25,7 @@ class LoadBattleController extends Controller
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
+        $u_id=$data['u_id'];
         $redis_battle=Redis::connection('battle');
         $redisLoad= Redis::connection('default');
         $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
@@ -35,7 +36,7 @@ class LoadBattleController extends Controller
  	    	$matchList=$redis_battle->HGET('match_list',$match_id);
 
  	    	$matchArr=json_decode($matchList,TRUE);
- 	    	$u_id=$data['u_id'];
+ 	    	
  	    	if($u_id==$matchArr['u_id']){
  	    		$enmey_uid=$matchArr['enemy_uid'];
  	    	}
