@@ -7,10 +7,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\UserModel;
 use App\EquipmentMstModel;
+use 
 use App\CharacterModel;
 use App\DefindMstModel;
 use App\MapModel;
 use App\SkillMstModel;
+use App\UserBaggageEqModel;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
@@ -58,6 +60,7 @@ class LoadBattleController extends Controller
  	    $charaM=new CharacterModel();
  	    $eqModel=new EquipmentMstModel();
  	    $skillModel=new SkillMstModel();
+        $UserBaggageEqModel=new UserBaggageEqModel();
     	$charData=$charaM->where('u_id',$u_id)->first();
         $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
@@ -67,10 +70,10 @@ class LoadBattleController extends Controller
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
  	    $core_id=$charData['core_id'];
- 	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id])->get();
+ 	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id,$core_id])->where()->get();
  	    $result=[];
  	    foreach ($eqData as $key => $eqEach) {
- 	    	$skillData=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_chartlet','skill_info')->where('skill_id',$eqEach['skill_id'])->first();
+ 	    	$skillData=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_chartlet','skill_info')->where('special_skill_id',$eqEach['skill_id'])->first();
  	    	$result[]=$skillData;;
  	    }
  	    $final['chardata']=$charRe;
