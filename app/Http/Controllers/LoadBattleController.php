@@ -80,4 +80,27 @@ class LoadBattleController extends Controller
  	    return $final;
  	     }
 
+    public function loadMap(Request $request){
+        $req=$request->getContent();
+        $json=base64_decode($req);
+        //dd($json);
+        $data=json_decode($json,TRUE);
+        $redis_battle=Redis::connection('battle');
+        $match_id=$data['match_id'];
+        if(isset($data)){
+            $matchList=$redis_battle->HGET('match_list',$match_id);
+
+            $matchArr=json_decode($matchList,TRUE);
+            $u_id=$data['u_id'];
+            if($u_id==$matchArr['u_id']){
+                $enmey_uid=$matchArr['enemy_uid'];
+            }
+            else if($u_id==$matchArr['enemy_uid']){
+                $enmey_uid=$matchArr['u_id'];
+            }
+            else{
+                throw new Exception("wrong match_id");
+            }
+        }
+
 }
