@@ -64,6 +64,7 @@ Route::post('/battlematch', 'MatchController@testWebsocket');
 
 Route::controller('load','LoadBattleController');
 Route::post('/load', 'LoadBattleController@loadingGame');
+Route::post('/loadmap', 'LoadBattleController@loadMap');
 
 Route::controller('battle','BattleController');
 Route::post('/testbattle', 'BattleController@battle');
