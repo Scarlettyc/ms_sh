@@ -63,7 +63,7 @@ class MapTrapUtil
     public function getMapData($map_id){
         $mapModel=new MapModel();
         $trapMst=new TrapMstModel();
-        $mapRelation=new MapTrapRelationMst();
+        // $mapRelation=new MapTrapRelationMst();
         $mapData=$MapModel->where('map_id',$map_id)->first();
         $mapList=DB::table('Map_mst')
                     ->join('Map_Trap_Relation_mst','Map_mst.map_id','=','Map_Trap_Relation_mst.map_id')
