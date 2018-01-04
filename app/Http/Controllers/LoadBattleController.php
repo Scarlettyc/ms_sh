@@ -118,5 +118,6 @@ class LoadBattleController extends Controller
             return  base64_encode($response);
 
         }
+    }
 
 }
