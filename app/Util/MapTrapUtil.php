@@ -29,7 +29,7 @@ class MapTrapUtil
                                 ->where('trap_id',1)
                 				->where('trap_x_from','<=',abs($x2))
                 				->where('trap_x_to','>=',abs($x3))->where('trap_y_from','<=',abs($y))->where('trap_y_to','>',abs($y))
-           				});
+           				})
    					})->first();
 
          if(!$grass){
