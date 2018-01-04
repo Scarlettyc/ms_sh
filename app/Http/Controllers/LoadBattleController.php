@@ -118,7 +118,7 @@ class LoadBattleController extends Controller
             $mapId=$matchArr['map_id'];
             $mapData=$mapTrapUtil->getMapData($mapId);
             $result["map_data"]=$mapData;
-            $response=json_encode($mapData,TRUE);
+            $response=json_encode($result,TRUE);
             return  base64_encode($response);
 
         }
