@@ -76,28 +76,28 @@ class MapTrapUtil
         
     }
 
-        function checkEffstone($map_id,$effX,$effY,$effR,$effAngle)
-    {       $mapRelation=new MapTrapRelationMst();
-            $mapStone=new MapStoneRelationMst();
+    //     function checkEffstone($map_id,$effX,$effY,$effR,$effAngle)
+    // {       $mapRelation=new MapTrapRelationMst();
+    //         $mapStone=new MapStoneRelationMst();
 
-            $mapData=$mapRelation->where(function($query){
-                     $query->Where('map_id',$map_id)->where('trap_id',1)->get();
+    //         $mapData=$mapRelation->where(function($query){
+    //                  $query->Where('map_id',$map_id)->where('trap_id',1)->get();
 
 
-            $result=[];
+    //         $result=[];
 
-            foreach($mapData as $trap){
-                $trapLength=abs($trap['trap_x_to']-$trap['trap_x_from']);
-                $trapHeight=abs($trap['trap_y_to']-$trap['trap_y_from']);
-                $intersects=$this->intersects($effR,$effAngle,$effX,$effY,$trap['trap_center_x'],$trap['trap_center_y'],$trapLength,$trapHeight);
-                if($intersects){
-                    return true;
-                    break;
-                }
-                return false;
-            }
-            return false;
-    } 
+    //         foreach($mapData as $trap){
+    //             $trapLength=abs($trap['trap_x_to']-$trap['trap_x_from']);
+    //             $trapHeight=abs($trap['trap_y_to']-$trap['trap_y_from']);
+    //             $intersects=$this->intersects($effR,$effAngle,$effX,$effY,$trap['trap_center_x'],$trap['trap_center_y'],$trapLength,$trapHeight);
+    //             if($intersects){
+    //                 return true;
+    //                 break;
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    // } 
 
 //     function intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
 // {
