@@ -89,7 +89,7 @@ class MapTrapUtil
             foreach($mapData as $trap){
                 $trapLength=abs($trap['trap_x_to']-$trap['trap_x_from']);
                 $trapHeight=abs($trap['trap_y_to']-$trap['trap_y_from']);
-                $intersects=$this->intersects($effR,$effAngle,$effX,$effY,$trap['trap_center_x'],$trap['trap_center_y'],$trapLength,$trapHeight));
+                $intersects=$this->intersects($effR,$effAngle,$effX,$effY,$trap['trap_center_x'],$trap['trap_center_y'],$trapLength,$trapHeight);
                 if($intersects){
                     return true;
                     break;
