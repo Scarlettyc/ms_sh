@@ -10,7 +10,7 @@ use Exception;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
-
+use DB;
 class MapTrapUtil
 {
 	//show the quantity and icon for every item in the baggage
