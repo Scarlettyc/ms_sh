@@ -43,7 +43,7 @@ class MatchController extends Controller
      		if(isset($chardata)){
 		 		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
-				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'];
+				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
 				$matchList=$redis_battle->LLEN($matchKey);
 				$list['u_id_1']=$u_id;
 				$list['client_id']=$clientID;
