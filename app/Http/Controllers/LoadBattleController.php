@@ -12,6 +12,7 @@ use App\DefindMstModel;
 use App\MapModel;
 use App\SkillMstModel;
 use App\UserBaggageEqModel;
+use App\Util\MapTrapUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
@@ -87,32 +88,35 @@ class LoadBattleController extends Controller
  	    return $final;
  	     }
 
-    // public function loadMap(Request $request){
-    //     $req=$request->getContent();
-    //     $json=base64_decode($req);
-    //     //dd($json);
-    //     $data=json_decode($json,TRUE);
-    //     $redisLoad= Redis::connection('default');
-    //     $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
-    //     $loginTodayArr=json_decode($loginToday,TRUE);
-    //     $access_token=$loginTodayArr["access_token"];
-    //     $redis_battle=Redis::connection('battle');
-    //     $match_id=$data['match_id'];
-    //     if(isset($data)&&$access_token==$data['access_token']){
-    //         $matchList=$redis_battle->HGET('match_list',$match_id);
-    //         $matchArr=json_decode($matchList,TRUE);
-    //         $u_id=$data['u_id'];
-    //         if($u_id==$matchArr['u_id']){
-    //             $enmey_uid=$matchArr['enemy_uid'];
-    //         }
-    //         else if($u_id==$matchArr['enemy_uid']){
-    //             $enmey_uid=$matchArr['u_id'];
-    //         }
-    //         else{
-    //             throw new Exception("wrong match_id");
-    //         }
-    //         $mapId=$matchArr['map_id'];
+    public function loadMap(Request $request){
+        $req=$request->getContent();
+        $json=base64_decode($req);
+        $mapTrapUtil=new MapTrapUtil();
+        $data=json_decode($json,TRUE);
+        $redisLoad= Redis::connection('default');
+        $u_id=$data['u_id'];
+        $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
+        $loginTodayArr=json_decode($loginToday,TRUE);
+        $access_token=$loginTodayArr["access_token"];
+        $redis_battle=Redis::connection('battle');
+        $match_id=$data['match_id'];
+        if(isset($data)&&$access_token==$data['access_token']){
+            $matchList=$redis_battle->HGET('match_list',$match_id);
+            $matchArr=json_decode($matchList,TRUE);
+            if($u_id==$matchArr['u_id']){
+                $enmey_uid=$matchArr['enemy_uid'];
+            }
+            else if($u_id==$matchArr['enemy_uid']){
+                $enmey_uid=$matchArr['u_id'];
+            }
+            else{
+                throw new Exception("wrong match_id");
+            }
+            $mapId=$matchArr['map_id'];
+            $mapData=$mapTrapUtil->getMapData($mapId);
+            $response=json_encode($mapData,TRUE);
+            return  base64_encode($response);
 
-    //     }
+        }
 
 }

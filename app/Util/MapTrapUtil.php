@@ -59,24 +59,21 @@ class MapTrapUtil
             return $mapData;
     }
 
-    // public function getMapData($map_id){
-    //     $mapModel=new MapModel();
-    //     $trapMst=new TrapMstModel();
-    //     $mapRelation=new MapTrapRelationMst();
-    //     $mapData=$MapModel->where('map_id',$map_id)->first();
-    //     $friendList=DB::table('Map_mst')
-    //                 ->join('Map_Trap_Relation_mst','Map_mst.map_id','=','Map_Trap_Relation_mst.map_id')
-    //                 ->join('Trap_mst','Trap_mst.trap_id','=','User_friend_list.friend_u_id')
-    //                 ->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
-    //                 ->where('User_friend_list.u_id',$data['u_id'])
-    //                 ->where('User_friend_list.friend_status',1)
-    //                 ->orderby('User_Character.ch_ranking','DESC')
-    //                 ->orderBy('User_Character.ch_title', 'ASC')
-    //                 ->get();
-
+    public function getMapData($map_id){
+        $mapModel=new MapModel();
+        $trapMst=new TrapMstModel();
+        $mapRelation=new MapTrapRelationMst();
+        $mapData=$MapModel->where('map_id',$map_id)->first();
+        $mapList=DB::table('Map_mst')
+                    ->join('Map_Trap_Relation_mst','Map_mst.map_id','=','Map_Trap_Relation_mst.map_id')
+                    ->join('Trap_mst','Trap_mst.trap_id','=','Map_Trap_Relation_mst.trap_id')
+                    ->select('Map_Trap_Relation_mst.trap_id','Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Map_Trap_Relation_mst.trap_center_x','Map_Trap_Relation_mst.trap_center_y','Trap_mst.trap_name','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
+                    ->where('Map_mst.map_id',$map_id)
+                    ->get();
+        return   $mapList;      
 
         
-    // }
+    }
 
         function checkEffstone($map_id,$effX,$effY,$effR,$effAngle)
     {       $mapRelation=new MapTrapRelationMst();
@@ -101,7 +98,7 @@ class MapTrapUtil
             return false;
     } 
 
-//     function  intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
+//     function intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
 // {
 //     $circleDistanceX = abs($circleX - $RectX);
 //     $circleDistanceY = abs($circleY - $$RectY);
