@@ -25,7 +25,8 @@ class MapTrapUtil
         				->where('trap_x_from','>=',abs($x1))
         				->where('trap_x_to','<=',abs($x2))->where('trap_y_from','<=',abs($y))->where('trap_y_to','>',abs($y))
             				->orWhere(function($query){
-                				->Where('map_id',$map_id)->where('trap_id',1)
+                				Where('map_id',$map_id)
+                                ->where('trap_id',1)
                 				->where('trap_x_from','<=',abs($x2))
                 				->where('trap_x_to','>=',abs($x3))->where('trap_y_from','<=',abs($y))->where('trap_y_to','>',abs($y))
            				});
