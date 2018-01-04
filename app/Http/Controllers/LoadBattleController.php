@@ -91,6 +91,9 @@ class LoadBattleController extends Controller
     public function loadMap(Request $request){
         $req=$request->getContent();
         $json=base64_decode($req);
+        $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
+        $data=json_decode($json,TRUE);
         $mapTrapUtil=new MapTrapUtil();
         $data=json_decode($json,TRUE);
         $redisLoad= Redis::connection('default');
