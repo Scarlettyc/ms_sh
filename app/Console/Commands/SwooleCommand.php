@@ -101,9 +101,10 @@ class SwooleCommand extends Command
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();
-             $result=$battle->getData($data);
+             $arr=json_decode($data,TRUE);
+             $result=$battle->getData($arr);
              if($result){
-                $key='match_history'.$data['match_id'].'_'.$result;
+                $key='match_history'.$arr['match_id'].'_'.$result;
                 $count=$redis_battle->LLEN($key);
                 if($count>0){
                     $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);

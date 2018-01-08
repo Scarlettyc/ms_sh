@@ -72,7 +72,6 @@ class MapTrapUtil
                     ->where('Map_mst.map_id',$map_id)
                     ->get();
         return   $mapList;      
-
         
     }
 
