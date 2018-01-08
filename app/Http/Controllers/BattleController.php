@@ -364,11 +364,11 @@ class BattleController extends Controller
 		
 		$matchArr=json_decode($matchList);
 		if(isset($matchArr)){
-			if($matchArr['u_id_1']==$u_id){
-				$enmey_uid=$matchArr['u_id_2'];
+			if($matchArr['u_id']==$u_id){
+				$enmey_uid=$matchArr['enemy_uid'];
 			}
 			else{
-				$enmey_uid=$matchArr['u_id_1'];
+				$enmey_uid=$matchArr['u_id'];
 			}
 			$map_id=$matchArr['map_id'];
 			$key='match_history'.$match_id.'_'.$u_id;
