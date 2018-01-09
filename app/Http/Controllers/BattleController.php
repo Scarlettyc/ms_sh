@@ -367,8 +367,8 @@ class BattleController extends Controller
 		Log::info($matchArr);
 
 		if(isset($matchArr)){
-			if($matchArr->u_id==$u_id){
-				$enmey_uid=$matchArr->enemy_uid;
+			if($matchArr['u_id']==$u_id){
+				$enmey_uid=$matchArr['enemy_uid'];
 			}
 			else{
 				$enmey_uid=$matchArr->u_id;
