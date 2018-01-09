@@ -371,9 +371,9 @@ class BattleController extends Controller
 				$enmey_uid=$matchArr['enemy_uid'];
 			}
 			else{
-				$enmey_uid=$matchArr->u_id;
+				$enmey_uid=$matchArr['u_id'];
 			}
-			$map_id=$matchArr->map_id;
+			$map_id=$matchArr['map_id'];
 			$key='match_history'.$match_id.'_'.$u_id;
 			$count=$redis_battle->LLEN($key);
 			$data['time']=$this->getMillisecond();
