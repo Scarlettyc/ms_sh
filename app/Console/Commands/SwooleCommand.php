@@ -106,9 +106,12 @@ class SwooleCommand extends Command
              $redis_battle=Redis::connection('battle');
              if($result){
                 $key='match_history'.$arr['match_id'].'_'.$result;
-                // $count=$redis_battle->LLEN($key);
-                // if($count>0){
-                    $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);
+                    if($result['u_id']==$arr['u_id']){
+                    $result=$battle->battle($result['u_id'],$result['enemy_uid'],$data);
+                    }
+                    else {
+                        $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
+                    }
                 // } 
              }
 
