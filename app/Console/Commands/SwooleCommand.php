@@ -106,13 +106,10 @@ class SwooleCommand extends Command
              $redis_battle=Redis::connection('battle');
              if($result){
                 $key='match_history'.$arr['match_id'].'_'.$result;
-                $count=$redis_battle->LLEN($key);
-                if($count>0){
+                // $count=$redis_battle->LLEN($key);
+                // if($count>0){
                     $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);
-                } 
-                else {
-                    sleep(600);
-                }  
+                // } 
              }
 
              $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);

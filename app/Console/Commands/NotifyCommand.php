@@ -92,7 +92,7 @@ class NotifyCommand extends Command
 
                         else {
                                 $result1=$tag.'["BattleMatch",{"waitting"}]"';
-                                $server->push($resultList, $result1);  
+                                $server->push($value, $result1);  
                         }  
                 }
                 else {
