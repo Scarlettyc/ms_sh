@@ -103,20 +103,19 @@ class SwooleCommand extends Command
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
+                Log::info($data);
              $result=$battle->getData($arr);
              $redis_battle=Redis::connection('battle');
-             if($result){
-                Log::info($result);
-                $key='match_history'.$arr['match_id'].'_'.$result;
-
-                    if($result['u_id']==$arr['u_id']){
-                    $result=$battle->battle($result['u_id'],$result['enemy_uid'],$data);
-                    }
-                    else {
-                        $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
-                    }
-                // } 
-             }
+             // if($result){
+             //    Log::info($result);
+             //    $key='match_history'.$arr['match_id'].'_'.$result;
+             //    if($result['u_id']==$arr['u_id']){
+             //        $result=$battle->battle($result['u_id'],$result['enemy_uid'],$data);
+             //        }
+             //        else {
+             //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
+             //        }
+             // }
 
              $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);
              });
