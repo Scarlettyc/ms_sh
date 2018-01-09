@@ -74,7 +74,7 @@ class NotifyCommand extends Command
                     $access_token=$uslist[1]->access_token;
                     $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      Log::info($resultList);
-                        if(isset($resultList))
+                        if(is_array($resultList))
                         { 
                             //Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 
@@ -92,7 +92,7 @@ class NotifyCommand extends Command
 
                         else {
                                 $result1=$tag.'["BattleMatch",{"waitting"}]"';
-                                $server->push($value, $result1);  
+                                $server->push($resultList, $result1);  
                         }  
                 }
                 else {
