@@ -111,7 +111,7 @@ class SwooleCommand extends Command
                     $result=$battle->battle($result['u_id_1'],$result['u_id_2'],$data);
                 } 
                 else {
-                    wait(600);
+                    sleep(600);
                 }  
              }
 
