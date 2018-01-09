@@ -103,6 +103,7 @@ class SwooleCommand extends Command
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
              $result=$battle->getData($arr);
+             $redis_battle=Redis::connection('battle');
              if($result){
                 $key='match_history'.$arr['match_id'].'_'.$result;
                 $count=$redis_battle->LLEN($key);
