@@ -389,6 +389,17 @@ class BattleController extends Controller
 
  	 	}
  	 }
+
+ 	 public function testBattle(Request $request){
+ 	 	$header=$request->header('Content-Type');
+ 		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$data=json_decode($json,TRUE);
+		$this->getData($data);
+ 	 }
+
 	 public function finalMatchResult ($data){
 	 	$match_id=$data['match_id'];
 	 	$u_id=$data['u_id'];
