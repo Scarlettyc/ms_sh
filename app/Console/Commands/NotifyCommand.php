@@ -74,7 +74,7 @@ class NotifyCommand extends Command
                     $access_token=$uslist[1]->access_token;
                     $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      Log::info($resultList);
-                        if(is_array($resultList))
+                        if(isset($resultList))
                         { 
                             //Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 

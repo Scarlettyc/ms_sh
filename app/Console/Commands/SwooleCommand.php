@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 use swoole_server;
 use App\Http\Controllers\BattleController;
+use Log;
 class SwooleCommand extends Command
 {
     /**
@@ -105,7 +106,9 @@ class SwooleCommand extends Command
              $result=$battle->getData($arr);
              $redis_battle=Redis::connection('battle');
              if($result){
+                Log::info($result);
                 $key='match_history'.$arr['match_id'].'_'.$result;
+
                     if($result['u_id']==$arr['u_id']){
                     $result=$battle->battle($result['u_id'],$result['enemy_uid'],$data);
                     }
