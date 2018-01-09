@@ -67,7 +67,7 @@ Route::post('/load', 'LoadBattleController@loadingGame');
 Route::post('/loadmap', 'LoadBattleController@loadMap');
 
 Route::controller('battle','BattleController');
-Route::post('/testbattle', 'BattleController@battle');
+Route::post('/testbattle', 'BattleController@testBattle');
 
 Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
