@@ -153,7 +153,9 @@ class FriendController extends Controller
 			return base64_encode($response);
 		}
 		else {
-			return "no friend in list";
+			$result['requestCount']=[];
+			$response=json_encode($result,TRUE);
+			return base64_encode($response);
 		}
 	}
 
