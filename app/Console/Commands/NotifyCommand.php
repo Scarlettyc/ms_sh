@@ -6,7 +6,10 @@ use Illuminate\Console\Command;
 use swoole_websocket_server;
 use swoole_server;
 use App\Http\Controllers\MatchController;
+use Illuminate\Support\Facades\Redis;
 use Log;
+use DateTime;
+
 
 class NotifyCommand extends Command
 {
@@ -67,16 +70,26 @@ class NotifyCommand extends Command
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $tag=substr($string,0,2);
+                 $now   = new DateTime;
+                 $dmy=$now->format( 'Ymd' );
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
                     $u_id=$uslist[1]->u_id;
                     $access_token=$uslist[1]->access_token;
-                    $resultList=$matchController->match($frame->fd,$u_id,$access_token);
-                     Log::info($resultList);
+                    $redis_battle=Redis::connection('battle');
+                    $battleKey='battle_status'.$dmy;
+                    $inBattle=$redis_battle->HGET($battleKey,$u_id);
+                    if($inBattle&&$inBattle['status']!=1){
+                          $result1=$tag.'["BattleMatch",{"error"}]"';
+                        $server->push($value, $tag);  
+                    }
+                    else{
+
+                        $resultList=$matchController->match($frame->fd,$u_id,$access_token);
+                     // Log::info($resultList);
                         if(isset($resultList))
                         { 
-                            //Log::info($resultList);
                             if($frame->fd == $resultList['client_id_2']){ 
 
                                 $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$resultList['u_id_2'],$resultList['match_id'],$resultList['map_id']);
@@ -94,9 +107,6 @@ class NotifyCommand extends Command
                                 $result1=$tag.'["BattleMatch",{"waitting"}]"';
                                 $server->push($value, $result1);  
                         }  
-                }
-                else {
-                            $server->push($value, $tag);  
                 }
         }  
     });
