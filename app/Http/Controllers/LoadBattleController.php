@@ -34,17 +34,12 @@ class LoadBattleController extends Controller
         $access_token=$loginTodayArr["access_token"];
     	if($access_token==$data['access_token']){
     		$match_id=$data['match_id'];
- 	    	$matchList=$redis_battle->HGET('match_list',$match_id);
+            $battleKey='battle_status'.$dmy;
+ 	    	$matchList=$redis_battle->HGET($battleKey,$u_id);
 
  	    	$matchArr=json_decode($matchList,TRUE);
  	    	
- 	    	if($u_id==$matchArr['u_id']){
- 	    		$enmey_uid=$matchArr['enemy_uid'];
- 	    	}
- 	    	else if($u_id==$matchArr['enemy_uid']){
-				$enmey_uid=$matchArr['u_id'];
- 	    	}
- 	    	else{
+            if($matchArr['match_id']!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
 

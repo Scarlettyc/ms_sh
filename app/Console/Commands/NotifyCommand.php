@@ -80,8 +80,8 @@ class NotifyCommand extends Command
                     $redis_battle=Redis::connection('battle');
                     $battleKey='battle_status'.$dmy;
                     $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                    if($inBattle&&$inBattle['status']!=1){
-                          $result1=$tag.'["BattleMatch",{"error"}]"';
+                    if(is_array($inBattle)&&$inBattle['status']!=1){
+                        $result1=$tag.'["BattleMatch",{"error"}]"';
                         $server->push($value, $tag);  
                     }
                     else{
