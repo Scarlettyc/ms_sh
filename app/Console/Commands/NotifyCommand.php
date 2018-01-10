@@ -107,8 +107,9 @@ class NotifyCommand extends Command
                                 $result1=$tag.'["BattleMatch",{"waitting"}]"';
                                 $server->push($value, $result1);  
                         }  
-                }
-        }  
+                     }
+                } 
+            } 
     });
 
         $serv->on('Close', function($server, $fd) {
