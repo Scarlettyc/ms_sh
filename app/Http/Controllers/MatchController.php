@@ -77,7 +77,7 @@ class MatchController extends Controller
 					
 					
 					$battleKey='battle_status'.$dmy;
-					$enmeyBattle=$redis_battle->HGET($battleKey.$match_uid['u_id_1']);
+					$enmeyBattle=$redis_battle->HGET($battleKey,$match_uid['u_id_1']);
 					$enmeyBattleData=json_decode($enmeyBattle,TRUE);
 					if(isset($enmeyBattleData)){
 						$match_id=$enmeyBattleData['match_id'];
