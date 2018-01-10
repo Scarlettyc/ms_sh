@@ -42,11 +42,12 @@ class LoadBattleController extends Controller
             if($matchArr['match_id']!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
+            $enemy_uid=$matchArr['enemy_uid'];
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
  	    	$userData=$this->getData($u_id);
- 	    	$enemyData=$this->getData($enmey_uid);
+ 	    	$enemyData=$this->getData($enemy_uid);
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
