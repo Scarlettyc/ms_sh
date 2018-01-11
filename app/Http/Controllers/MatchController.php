@@ -114,6 +114,7 @@ class MatchController extends Controller
 		$loginTodayArr=json_decode($loginToday,TRUE);
 		$access_token2=$loginTodayArr["access_token"];
 		$characterModel=new CharacterModel();
+		$matchrange=new MatchRangeModel();
 		if($access_token2==$access_token){
 			$redis_battle=Redis::connection('battle');
 			$chardata=$characterModel->where('u_id',$u_id)->first();
@@ -134,7 +135,7 @@ class MatchController extends Controller
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$access_token=$data['access_token'];
-		$result=$this->match(2,$u_id,$access_token);
+		$result=$this->closeMatch($u_id,$access_token);
 		return $result;
 }
     private function chooseMap(){
