@@ -104,19 +104,7 @@ class MatchController extends Controller
 
 
 	 public function finalMatchResult ($u_id,$enemy_uid,$match_id,$mapData){
-	 	//$usermodel=new UserModel();
-     	//$matchrange=new MatchRangeModel();
-     	// $characterModel=new CharacterModel();
-     	// $charSkillUtil=new CharSkillEffUtil();
-     	//$chardata=$characterModel->where('u_id',$u_id)->first();
-	 	//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
-	 	//$enmeydata=$usermodel->where('u_id',$enemy_uid)->first();
-	 	
 	 	$result['match_id']=$match_id;
-		//$result['userData']['eff']=$effect;
-		//$result['userData']['char']=$chardata;
-		//$result['mapData']=$mapData;
-		//$result['enemyData']=$enmeydata;
 		$response=json_encode($result,TRUE);
 		return $response;
 
@@ -124,7 +112,6 @@ class MatchController extends Controller
 	 public function closeMatch($u_id,$access_token){
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		// $u_id=$data['u_id'];
 		$redisMatch= Redis::connection('default');
 		$loginToday=$redisMatch->HGET('login_data',$dmy.$u_id);
 		$loginTodayArr=json_decode($loginToday,TRUE);
@@ -137,8 +124,7 @@ class MatchController extends Controller
      		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
 		 	$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
-
-
+		 	$match_result=$redis_battle->HDEL($matchKey,$u_id);
 		}
 
 	 }
@@ -148,7 +134,9 @@ class MatchController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$result=$this->match(2,$data);
+		$u_id=$data['u_id'];
+		$access_token=$data['access_token'];
+		$result=$this->match(2,$u_id,$access_token);
 		return $result;
 }
     private function chooseMap(){
