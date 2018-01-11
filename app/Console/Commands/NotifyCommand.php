@@ -75,18 +75,19 @@ class NotifyCommand extends Command
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
-                    $u_id=$uslist[1]->u_id;
-                    $access_token=$uslist[1]->access_token;
-                    $redis_battle=Redis::connection('battle');
-                    $battleKey='battle_status'.$dmy;
-                    $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                    if(is_array($inBattle)&&$inBattle['status']==1){
-                        $result1=$tag.'["BattleMatch",{"error"}]"';
-                        $server->push($value, $tag);  
-                    }
-                    else{
+                    if($uslist[0]=="BattleMatch"){
+                        $u_id=$uslist[1]->u_id;
+                        $access_token=$uslist[1]->access_token;
+                        $redis_battle=Redis::connection('battle');
+                        $battleKey='battle_status'.$dmy;
+                        $inBattle=$redis_battle->HGET($battleKey,$u_id);
+                        if(is_array($inBattle)&&$inBattle['status']==1){
+                            $result1=$tag.'["BattleMatch",{"error"}]"';
+                            $server->push($value, $tag);  
+                        }
+                        else{
 
-                        $resultList=$matchController->match($frame->fd,$u_id,$access_token);
+                            $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      // Log::info($resultList);
                         if(isset($resultList))
                         { 
@@ -108,9 +109,18 @@ class NotifyCommand extends Command
                                 $server->push($value, $result1);  
                         }  
                      }
-                } 
-            } 
+                }
+                 if($uslist[0]=="CloseMatch"){
+                    $u_id=$uslist[1]->u_id;
+                    $access_token=$uslist[1]->access_token;
+                    $matchController->closeMatch($u_id,$access_token);
+                    $result1=$tag.'["CloseMatch",{"match canceled"}]"';
+                    $server->push($value, $result1);  
+                 }
+            }
+        } 
     });
+
 
         $serv->on('Close', function($server, $fd) {
             echo "connection close: ".$fd."\n";
