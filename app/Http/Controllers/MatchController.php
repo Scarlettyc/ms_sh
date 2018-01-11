@@ -62,8 +62,7 @@ class MatchController extends Controller
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 
 					$mapData=$this->chooseMap();
-					$match_result=$redis_battle->HDEL($matchKey,$u_id);
-					Log::info($match_result);
+					$match_result=$redis_battle->HGET($matchKey,$u_id);
 					$resultList=json_decode($match_result,TRUE);
 
 					$resultList['u_id_2']=$u_id;
@@ -71,8 +70,6 @@ class MatchController extends Controller
 					$resultList['map_id']=$mapData;
 					
 					//$enmeydata=$usermodel->where('u_id',$match_uid)->first();
-					
-					
 					
 					$battleKey='battle_status'.$dmy;
 					$enmeyBattle=$redis_battle->HGET($battleKey,$match_uid);
@@ -89,12 +86,12 @@ class MatchController extends Controller
 					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'create_date'=>time()]);
 
                     $inBattle=$redis_battle->HSET($battleKey,$u_id,$matchResult);
+                   	$redis_battle->HDEL($matchKey,$u_id);
 					$resultList['match_id']=$match_id;
 					return $resultList;
 				}
 			}
 		}
-
  			return "error";
  		}
  		else{
@@ -124,7 +121,8 @@ class MatchController extends Controller
      		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
 		 	$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
-		 	$match_result=$redis_battle->HDEL($matchKey,$u_id);
+		 	$redis_battle->HDEL($matchKey,$u_id);
+		 	return null;
 		}
 
 	 }
