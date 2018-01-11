@@ -55,7 +55,7 @@ class MatchController extends Controller
 			}
 			else {
 				$match_uid=$redis_battle->HKEYS($matchKey);
-				if($matchList==1&&$match_uid==$u_id){
+				if($matchList==1&&$match_uid[0]==$u_id){
 					return $clientID;
 				}
 				else{
@@ -72,7 +72,7 @@ class MatchController extends Controller
 					//$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
 					$battleKey='battle_status'.$dmy;
-					$enmeyBattle=$redis_battle->HGET($battleKey,$match_uid);
+					$enmeyBattle=$redis_battle->HGET($battleKey,$match_uid[0]);
 					$enmeyBattleData=json_decode($enmeyBattle,TRUE);
 					if(isset($enmeyBattleData)){
 						$match_id=$enmeyBattleData['match_id'];
@@ -83,7 +83,7 @@ class MatchController extends Controller
 						$map_id=$mapData;
 
 					}
-					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'create_date'=>time()]);
+					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid[0],'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'create_date'=>time()]);
 
                     $inBattle=$redis_battle->HSET($battleKey,$u_id,$matchResult);
                    	$redis_battle->HDEL($matchKey,$u_id);
