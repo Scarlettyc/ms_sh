@@ -49,7 +49,7 @@ class MatchController extends Controller
 				$list['client_id']=$clientID;
 				$list['create_date']=time();
 				$list_data=json_encode($list,TRUE);
-			if($matchList==1||!$matchCount==0){
+			if($matchList==1||$matchCount==0){
 				$redis_battle->HSET($matchKey,$u_id,$list_data);
 				return $clientID;
 			}
