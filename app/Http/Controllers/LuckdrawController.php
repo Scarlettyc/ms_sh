@@ -181,6 +181,7 @@ class LuckdrawController extends Controller
 		  		} 
 		   
 		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_spend','<=',$payBy)->first();
+		   		$u_id=$data['u_id'];
 		   		if($drawresult){
 						$draw=$this->chooseBaggage($drawresult,$data,1);
 						$result['luckdraw'][]=$draw;
@@ -188,7 +189,7 @@ class LuckdrawController extends Controller
 		   				$result['spent_coin']=$drawresult['draw_spend'];
 		   				$userCoin=$userData['u_coin']-$drawresult['draw_spend'];
 		   	 			$usermodel->where('u_id',$data['u_id'])->update(["u_coin"=>$userCoin]);
-		   				$BaggageUtil->RecordSpend($u_id,$userCoin,0);
+		   				$BaggageUtil->RecordSpend($data['u_id'],$userCoin,0);
 		   			}
 		   			else {
 		   				$result['spent_gem']=$drawresult['draw_spend'];
