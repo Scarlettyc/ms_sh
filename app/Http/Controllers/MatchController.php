@@ -62,9 +62,8 @@ class MatchController extends Controller
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 
 					$mapData=$this->chooseMap();
-					$match_result=$redis_battle->HGET($matchKey,$u_id);
-					$resultList=json_decode($match_result,TRUE);
-
+					$match_result=$redis_battle->HGETALL($matchKey);
+					$resultList=json_decode($match_result[0],TRUE);
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
 					$resultList['map_id']=$mapData;
