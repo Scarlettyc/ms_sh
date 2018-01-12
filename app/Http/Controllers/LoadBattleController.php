@@ -99,23 +99,23 @@ class LoadBattleController extends Controller
         $access_token=$loginTodayArr["access_token"];
         $redis_battle=Redis::connection('battle');
         $match_id=$data['match_id'];
+        $battleKey='battle_status'.$dmy;
         if(isset($data)&&$access_token==$data['access_token']){
-            $matchList=$redis_battle->HGET('match_list',$match_id);
+            $matchList=$redis_battle->HGET($battleKey,$u_id);
             $matchArr=json_decode($matchList,TRUE);
-            if($u_id==$matchArr['u_id']){
-                $enmey_uid=$matchArr['enemy_uid'];
-            }
-            else if($u_id==$matchArr['enemy_uid']){
-                $enmey_uid=$matchArr['u_id'];
+            if($match_id==$matchArr['match_id']){
+                $mapId=$matchArr['map_id'];
+                $mapData=$mapTrapUtil->getMapData($mapId);
+                $result["map_data"]=$mapData;
+                $response=json_encode($result,TRUE);
+             return  base64_encode($response);
             }
             else{
-                throw new Exception("wrong match_id");
+                throw new Exception("wrong match id", 1);
+                
             }
-            $mapId=$matchArr['map_id'];
-            $mapData=$mapTrapUtil->getMapData($mapId);
-            $result["map_data"]=$mapData;
-            $response=json_encode($result,TRUE);
-            return  base64_encode($response);
+            
+           
 
         }
     }
