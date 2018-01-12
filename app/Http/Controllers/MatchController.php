@@ -150,7 +150,7 @@ class MatchController extends Controller
 		$battleKey='battle_status'.$dmy;
 		$battleStatus=$redis_battle->HGET($battleKey,$matchKey[0]);
 		if($battleStatus['status']==1){
-			$redis_battle->HDEL($battleKey,$matchKey[0]);
+			$redis_battle->HDEL($matchKey,$matchKey[0]);
 		}
 	}
 	public function testWebsocket(Request $request){
