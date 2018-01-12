@@ -83,7 +83,7 @@ class NotifyCommand extends Command
                         $matchController->validateMatch($u_id);
                         $battleKey='battle_status'.$dmy;
                         $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                        $match_uid=$redis_battle->HKEYS($matchKey);
+                    //    $match_uid=$redis_battle->HKEYS($matchKey);
                             $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      // Log::info($resultList);
                             if(isset($resultList))

@@ -145,14 +145,15 @@ class MatchController extends Controller
      	$ch_star=$chardata['ch_star'];
      	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
-		$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
-		$matchKey=$redis_battle->HKEYS($matchKey);
+		$waitmatch='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
+		$matchKey=$redis_battle->HKEYS($waitmatch);
 		$battleKey='battle_status'.$dmy;
 		foreach ($matchKey as $key) {
+			Log::info($key);
 			$battleStatus=$redis_battle->HGET($battleKey,$key);
 			$battleList=json_decode($battleStatus,TRUE);
-			if($battleList['status']==1){
-				$redis_battle->HDEL($matchKey,$key);
+			if($battleList&&$battleList['status']==1){
+				$redis_battle->HDEL($waitmatch,$key);
 			}
 		}
 	}
