@@ -75,11 +75,12 @@ class NotifyCommand extends Command
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
-                    $matchController->validateMatch($u_id);
+                  
                     if($uslist[0]=="BattleMatch"){
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
                         $redis_battle=Redis::connection('battle');
+                        $matchController->validateMatch($u_id);
                         $battleKey='battle_status'.$dmy;
                         $inBattle=$redis_battle->HGET($battleKey,$u_id);
                         $match_uid=$redis_battle->HKEYS($matchKey);
