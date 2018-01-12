@@ -69,7 +69,7 @@ class MatchController extends Controller
 				//	$match_result=$redis_battle->HGETALL($matchKey);
 					//Log::info($match_result->$match_key);
 					$resultList=json_decode($match_result,TRUE);
-						
+					$resultList['u_id_1']=$match_uid[0];
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
 					$resultList['map_id']=$mapData;
