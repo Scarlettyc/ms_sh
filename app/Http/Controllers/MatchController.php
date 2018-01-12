@@ -63,11 +63,12 @@ class MatchController extends Controller
 					$mapData=$this->chooseMap();
 
 					$match_result=$redis_battle->HGET($matchKey,$match_uid[0]);
+					$waitUser=json_decode($match_result,TRUE);
 					$redis_battle->HDEL($matchKey,$match_uid[0]);
 					// Log::info($match_result);
 					$resultList=json_decode($match_result,TRUE);
 					$resultList['u_id_1']=$match_uid[0];
-					$resultList['client_id']=$match_result['client_id'];
+					$resultList['client_id']=$waitUser['client_id'];
 					$resultList['u_id_2']=$u_id;
 					$resultList['client_id_2']=$clientID;
 					$resultList['map_id']=$mapData;
