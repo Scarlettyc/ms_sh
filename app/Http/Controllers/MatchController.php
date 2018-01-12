@@ -135,7 +135,24 @@ class MatchController extends Controller
 
 	 }
 
-
+	public function validateMatch($u_id){
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$redis_battle=Redis::connection('battle');
+		$characterModel=new CharacterModel();
+		$matchrange=new MatchRangeModel();
+		$chardata=$characterModel->where('u_id',$u_id)->first();
+     	$ch_star=$chardata['ch_star'];
+     	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
+		 		->first();
+		$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
+		$matchKey=$redis_battle->HKEYS($matchKey);
+		$battleKey='battle_status'.$dmy;
+		$battleStatus=$redis_battle->HGET($battleKey,$matchKey[0]);
+		if($battleStatus['status']==1){
+			$redis_battle->HDEL($battleKey,$matchKey[0]);
+		}
+	}
 	public function testWebsocket(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);

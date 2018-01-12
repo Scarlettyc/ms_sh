@@ -75,23 +75,19 @@ class NotifyCommand extends Command
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
+                    $matchController->validateMatch($u_id);
                     if($uslist[0]=="BattleMatch"){
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
                         $redis_battle=Redis::connection('battle');
                         $battleKey='battle_status'.$dmy;
                         $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                        if(is_array($inBattle)&&$inBattle['status']==1){
-                            $result1=$tag.'["BattleMatch",{"error"}]"';
-                            $server->push($value, $tag);  
-                        }
-                        else{
-
+                        $match_uid=$redis_battle->HKEYS($matchKey);
                             $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                      // Log::info($resultList);
-                        if(isset($resultList))
-                        { 
-                            if($frame->fd == $resultList['client_id_2']){ 
+                            if(isset($resultList))
+                            { 
+                                 if($frame->fd == $resultList['client_id_2']){ 
 
                                 $uData1=$matchController->finalMatchResult($resultList['u_id_1'],$resultList['u_id_2'],$resultList['match_id'],$resultList['map_id']);
                                 $uData2=$matchController->finalMatchResult($resultList['u_id_2'],$resultList['u_id_1'],$resultList['match_id'],$resultList['map_id']);
@@ -103,20 +99,15 @@ class NotifyCommand extends Command
                                 $break;   
                             }
                         }
-
-                        else {
-                                $result1=$tag.'["BattleMatch",{"waitting"}]"';
-                                $server->push($value, $result1);  
-                        }  
+ 
                      }
-                }
-                 if($uslist[0]=="CloseMatch"){
-                    $u_id=$uslist[1]->u_id;
-                    $access_token=$uslist[1]->access_token;
-                    $matchController->closeMatch($u_id,$access_token);
-                    $result1=$tag.'["CloseMatch",{"match canceled"}]"';
-                    $server->push($value, $result1);  
-                 }
+                    if($uslist[0]=="CloseMatch"){
+                        $u_id=$uslist[1]->u_id;
+                        $access_token=$uslist[1]->access_token;
+                        $matchController->closeMatch($u_id,$access_token);
+                        $result1=$tag.'["CloseMatch",{"match canceled"}]"';
+                        $server->push($value, $result1);  
+                    }
             }
         } 
     });
