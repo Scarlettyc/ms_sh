@@ -149,13 +149,19 @@ class MatchController extends Controller
 		$matchKey=$redis_battle->HKEYS($waitmatch);
 		$battleKey='battle_status'.$dmy;
 		foreach ($matchKey as $key) {
-			Log::info($key);
 			$battleStatus=$redis_battle->HGET($battleKey,$key);
 			$battleList=json_decode($battleStatus,TRUE);
 			if($battleList&&$battleList['status']==1){
+				Log::info($key);
 				$redis_battle->HDEL($waitmatch,$key);
 			}
 		}
+		$myStatus=$redis_battle->HGET($battleKey,$u_id);
+		$mybattleList=json_decode($myStatus,TRUE);
+		if($mybattleList&&$mybattleList['status']==1){
+			$redis_battle->HDEL($waitmatch,$u_id);
+		}
+
 	}
 	public function testWebsocket(Request $request){
 		$req=$request->getContent();
