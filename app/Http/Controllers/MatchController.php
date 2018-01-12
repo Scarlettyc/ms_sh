@@ -148,9 +148,12 @@ class MatchController extends Controller
 		$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
 		$matchKey=$redis_battle->HKEYS($matchKey);
 		$battleKey='battle_status'.$dmy;
-		$battleStatus=$redis_battle->HGET($battleKey,$matchKey[0]);
-		if($battleStatus['status']==1){
-			$redis_battle->HDEL($matchKey,$matchKey[0]);
+		foreach ($matchKey as $key) {
+			$battleStatus=$redis_battle->HGET($battleKey,$key);
+			$battleList=json_decode($battleStatus,TRUE);
+			if($battleList['status']==1){
+				$redis_battle->HDEL($matchKey,$key);
+			}
 		}
 	}
 	public function testWebsocket(Request $request){
