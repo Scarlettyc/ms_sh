@@ -62,10 +62,9 @@ class MatchController extends Controller
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
 
 					$mapData=$this->chooseMap();
-					$match_key=$redis_battle->HKEYS($matchKey);
 
-					$match_result=$redis_battle->HGET($matchKey,$match_key[0]);
-					Log::info($match_result);
+					$match_result=$redis_battle->HGET($matchKey,$match_uid[0]);
+					// Log::info($match_result);
 					$resultList=json_decode($match_result,TRUE);
 				//	$match_result=$redis_battle->HGETALL($matchKey);
 					//Log::info($match_result->$match_key);
@@ -91,8 +90,11 @@ class MatchController extends Controller
 					}
 					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid[0],'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'create_date'=>time()]);
 
+					$matchResult2=json_encode(['u_id'=>$match_uid[0],'enemy_uid'=>$u_id,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'create_date'=>time()]);
+
                     $inBattle=$redis_battle->HSET($battleKey,$u_id,$matchResult);
-                   	$redis_battle->HDEL($matchKey,$u_id);
+                    $inBattle=$redis_battle->HSET($battleKey,$match_uid[0],$matchResult);
+                   	$redis_battle->HDEL($matchKey,$match_uid[0]);
 					$resultList['match_id']=$match_id;
 					return $resultList;
 				}
