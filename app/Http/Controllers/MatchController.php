@@ -57,10 +57,10 @@ class MatchController extends Controller
 				$match_uid=$redis_battle->HKEYS($matchKey);
 				if($matchList==1&&$match_uid[0]==$u_id){
 					return $clientID;
-				}
+						}
 				else{
 					//$effect=$charSkillUtil->getCharSkill($chardata['ch_id']);
-
+					$redis_battle->HDEL($matchKey,$match_uid[0]);
 					$mapData=$this->chooseMap();
 
 					$match_result=$redis_battle->HGET($matchKey,$match_uid[0]);
@@ -94,7 +94,7 @@ class MatchController extends Controller
 
                     $inBattle=$redis_battle->HSET($battleKey,$u_id,$matchResult);
                     $inBattle=$redis_battle->HSET($battleKey,$match_uid[0],$matchResult2);
-                   	$redis_battle->HDEL($matchKey,$match_uid[0]);
+                  
 					$resultList['match_id']=$match_id;
 					return $resultList;
 				}
