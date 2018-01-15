@@ -35,7 +35,6 @@ class BattleController extends Controller
 	public function test($data){
 		$x=$data['x'];
 		$y=$data['y'];
-		$direction=$data['direction'];
 		$u_id=$data['u_id'];
 		$characterModel=new CharacterModel();
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
