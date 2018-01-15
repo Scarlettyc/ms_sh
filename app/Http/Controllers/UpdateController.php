@@ -32,7 +32,7 @@ class UpdateController extends Controller
 		$email=$data['email'];
 		$u_id=$data['u_id'];
 		$usermodel=new UserModel();
-		$usermodel->where('u_id',$u_id)->udpate(['email'=>$email,'updated_at'=>$datetime]);
+		$usermodel->where('u_id',$u_id)->update(['email'=>$email,'updated_at'=>$datetime]);
 		return base64_encode('successfully');	
 		}
 		else {
@@ -61,7 +61,7 @@ class UpdateController extends Controller
 				throw new Exception("wrong password");
 				}
 			else{
-				$usermodel->where('u_id',$u_id)->udpate(['password'=>$newPw,'updated_at'=>$datetime]);
+				$usermodel->where('u_id',$u_id)->update(['password'=>$newPw,'updated_at'=>$datetime]);
 				return base64_encode('successfully');
 			}
 		}
