@@ -33,13 +33,41 @@ class BattleController extends Controller
 {
 
 	public function test($data){
+		$now   = new DateTime;;
+		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
 		$y=$data['y'];
 		$u_id=$data['u_id'];
 		$characterModel=new CharacterModel();
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
+		$charData['x']=$x;
+		$charData['y']=$y;
+		$charData['time']=time();
 		$charJson=json_encode($charData);
-		return $charJson;
+		$redis_battle=Redis::connection('battle');
+		$matchKey='battle_status'.$dmy;
+		$battle_status=$redis_battle->HGET($matchKey,$u_id);
+		$battleData=json_decode($battle_status,TRUE);
+		$enemy_uid=$battleData['enemy_uid'];
+		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		$redis_battle->LPUSH($battlekey,$charJson);
+		$enemykey='battle_data'.$match_id.'_'.$u_id;
+		$enemyJson=$redis_battle->LRANGE($enemykey,0,0);
+		if(is_null($enemyJson)){
+			$enemy_charData['x']=-1000;
+			$enemy_charData['y']=-290;
+		}
+		else {
+			$enemy_charData['x']=$battleData['x'];
+			$enemy_charData['y']=$battleData['y'];
+		}
+			$enemy_charData['time']=time();
+			// $enemyJson=json_decode($enemy_charData,TRUE);
+		$result['user_data']=$charData;
+		$result['enemy_data']=$enemy_charData;
+		$response=json_decode($result,TRUE);
+		return $response;
 
 	}
 
