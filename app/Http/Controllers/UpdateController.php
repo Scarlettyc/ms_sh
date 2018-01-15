@@ -55,7 +55,7 @@ class UpdateController extends Controller
 		$usermodel=new UserModel();
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$oldPw=$data['old_password'];
-			$newPw=$data['old_password'];
+			$newPw=$data['new_password'];
 			$u_id=$data['u_id'];
 			$password=$usermodel->select('password')->where('u_id',$u_id)->first();
 			if($oldPw!=$password['password']){
