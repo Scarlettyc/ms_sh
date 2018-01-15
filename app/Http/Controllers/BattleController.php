@@ -38,60 +38,10 @@ class BattleController extends Controller
 		$y=$data['y'];
 		$direction=$data['direction'];
 		$u_id=$data['u_id'];
-		$normalEff=new NormalEffectionMstModel();
-		$skillMstModel=new SkillMstModel();
 		$characterModel=new CharacterModel();
-		$redis_battle=Redis::connection('battle');
-		$mapTrap=new MapTrapRelationMst();
-		$key='battle_test_'.$u_id;
-		$hit=0;
-		$userBattleData=$redis_battle->LRANGE($key,1,1);
-		$userData=$characterModel->where('u_id',$u_id)->first();
-		$userHP=$userData['ch_hp_max'];
-		$userSpd=$userData['ch_spd'];
-		if(isset($data['skill_id'])){
-				$skill_id=$data['skill_id'];
-				$skill=$skillMstModel->where('skill_id',$skill_id)->first();
-				$eff=$normalEff->where('normal_eff_id',$skill['enemy_eff_id'])->first();
-				while($time<$eff['eff_skill_dur']){
-					$timekey=$this->getMillisecond();
-					$tmp['time']=$timekey;
-					$tmp['skill_id']=$skill_id;
-					$result['skill'][]=$tmp;
-					$finalX=$eff['eff_skill_spd']*10;
-					$finalY=$y+1;
-					$trap=$mapTrap->where('map_trap_id',1)->first();
-					if($finalX+abs($x2)-$trap['trap_x_from']<1&&$trap['trap_y_from']&&$trap['trap_y_from']<=$finalY&&$trap['trap_y_to']>=$finalY){
-						$hit=1;
-					}
-
-					if($hit!=1){
-						if(abs($finalX)<$eff['eff_skill_x']){
-							$tmp['time']=$this->getMillisecond();
-							$tmp['skill_id']=$skill_id;
-							$result['skill'][]=$tmp;
-						}
-					}
-					$time=$time+5;
-				}
-				if($x1>$x2){
-					$result['x']=$x1;
-			}
-			else{
-					$result['x']=$x2;
-			}
-
-				$result['hit']=$hit;
-				$result['direction']=$direction;
-				$result['y']=$y+1;
-				$result['hp']=$userHP;
-				$result['spd']=$userSpd;
-				$result['time']=$this->getMillisecond();
-				$userJson=json_encode($result,TRUE);
-				$redis_battle->LPUSH($key,$userJson);
-
-			return $userJson;
-			}
+		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
+		$charJson=json_encode($charData);
+		return $charJson;
 
 	}
 
