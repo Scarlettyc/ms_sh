@@ -46,6 +46,7 @@ class UpdateController extends Controller
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$redis_login=Redis::connection('default');
 		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
