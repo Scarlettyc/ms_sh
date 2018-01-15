@@ -96,6 +96,9 @@ Route::post('/collect_mission', 'MissionController@collectMissionReward');
 Route::post('/getMissionDetails', 'MissionController@getMissionDetails');
 Route::post('/getLevelMission', 'MissionController@getLevelMission');
 
+Route::controller('updateinfo','UpdateController');
+Route::post('/udpate_email', 'UpdateController@updateEmail');
+Route::post('/udpate_pw', 'UpdateController@updatePassword');
 
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
