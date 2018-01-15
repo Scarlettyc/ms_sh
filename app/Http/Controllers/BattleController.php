@@ -32,8 +32,7 @@ use Log;
 class BattleController extends Controller
 {
 
-	public function test($json){
-		$data=json_decode($json,TRUE);
+	public function test($data){
 		$x=$data['x'];
 		$y=$data['y'];
 		$direction=$data['direction'];
