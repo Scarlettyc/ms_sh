@@ -55,13 +55,14 @@ class BattleController extends Controller
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0);
-		if(is_null($enemyJson)){
+		$enmeyData=json_decode($enemyJson,TRUE);
+		if(is_null($enmeyData)){
 			$enemy_charData['x']=-1000;
 			$enemy_charData['y']=-290;
 		}
 		else {
-			$enemy_charData['x']=$battleData['x'];
-			$enemy_charData['y']=$battleData['y'];
+			$enemy_charData['x']=$enmeyData['x'];
+			$enemy_charData['y']=$enmeyData['y'];
 		}
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
