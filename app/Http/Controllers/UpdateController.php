@@ -86,11 +86,12 @@ class UpdateController extends Controller
 			$result['profile_img']=$userData['profile_img'];
 			$result['ch_img']=strval($userDetails['ch_img']);
 			$result['ch_title']=$userDetails['ch_title'];
-			
 			$response=json_encode($result,TRUE);
-
 			return base64_encode($response);
 
+		}
+				else {
+			throw new Exception("there have some error of you access_token");
 		}
 	}
  }
