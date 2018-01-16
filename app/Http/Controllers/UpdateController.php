@@ -71,15 +71,15 @@ class UpdateController extends Controller
 		$now   = new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
+		$usermodel=new UserModel();
 		$redis_login=Redis::connection('default');
 		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
 		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
-		$usermodel=new UserModel();
 		$CharacterModel=new CharacterModel();
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
-			$userData=$userModel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
-			$userDetails=$charModel->select('ch_img','ch_title')->where('u_id',$u_id)->first();
+			$userData=$usermodel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
+			$userDetails=$CharacterModel->select('ch_img','ch_title')->where('u_id',$u_id)->first();
 			$result['u_id']=$userData['u_id'];
 			$result['email']=$userData['email'];
 			$result['fb_id']=$userData['fb_id'];
