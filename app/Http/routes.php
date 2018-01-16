@@ -99,6 +99,7 @@ Route::post('/getLevelMission', 'MissionController@getLevelMission');
 Route::controller('updateinfo','UpdateController');
 Route::post('/udpate_email', 'UpdateController@updateEmail');
 Route::post('/udpate_pw', 'UpdateController@updatePassword');
+Route::post('/refresh_setting', 'UpdateController@refreshSetting');
 
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

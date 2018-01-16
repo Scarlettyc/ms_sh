@@ -26,6 +26,7 @@ class AccessController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
+		$characterModel=new CharacterModel();
 
 		if($data['uuid'])
 		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
@@ -49,6 +50,7 @@ class AccessController extends Controller
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
 					$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
 			$result['u_id']=$userfinal['u_id'];;
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
@@ -58,6 +60,7 @@ class AccessController extends Controller
 			$result['u_login_count']=1;
 			$result['uuid']=$userfinal['uuid'];
 			$result['u_get_reward']=0;
+			$result['haveChar']=$haveChar;
 			
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
@@ -165,6 +168,7 @@ class AccessController extends Controller
 			$result['u_login_count']=$userfinal['u_login_count'];
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
+			$result['haveChar']=$haveChar;
 			$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 			$response=json_encode($result,TRUE);
 

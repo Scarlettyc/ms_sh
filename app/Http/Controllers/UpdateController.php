@@ -54,20 +54,42 @@ class UpdateController extends Controller
 		$access_token=$loginTodayArr->access_token;
 		$usermodel=new UserModel();
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
-			$oldPw=$data['old_password'];
 			$newPw=$data['new_password'];
 			$u_id=$data['u_id'];
 			$password=$usermodel->select('password')->where('u_id',$u_id)->first();
-			if($oldPw!=$password['password']){
-				throw new Exception("wrong password");
-				}
-			else{
 				$usermodel->where('u_id',$u_id)->update(['password'=>$newPw,'updated_at'=>$datetime]);
 				return base64_encode('successfully');
-			}
 		}
 		else {
 			throw new Exception("there have some error of you access_token");
+		}
+	}
+	public function refreshSetting(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$now   = new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$redis_login=Redis::connection('default');
+		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
+		$loginTodayArr=json_decode($loginToday);
+		$access_token=$loginTodayArr->access_token;
+		$usermodel=new UserModel();
+		$CharacterModel=new CharacterModel();
+		if(isset($data['u_id'])&&$access_token==$data['access_token']){
+			$userData=$userModel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
+			$userDetails=$charModel->select('ch_img','ch_title')->where('u_id',$u_id)->first();
+			$result['u_id']=$userMoney['u_id'];
+			$result['email']=$userMoney['email'];
+			$result['fb_id']=$userMoney['fb_id'];
+			$result['profile_img']=$userMoney['profile_img'];
+			$result['ch_img']=strval($userDetails['ch_img']);
+			$result['ch_title']=$userDetails['ch_title'];
+			$response=json_encode($result,TRUE);
+
+			return base64_encode($response);
+
 		}
 	}
  }
