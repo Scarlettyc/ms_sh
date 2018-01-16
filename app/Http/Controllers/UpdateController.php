@@ -78,6 +78,7 @@ class UpdateController extends Controller
 		$access_token=$loginTodayArr->access_token;
 		$CharacterModel=new CharacterModel();
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
+			$u_id=$data['u_id'];
 			$userData=$usermodel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
 			$userDetails=$CharacterModel->select('ch_img','ch_title')->where('u_id',$u_id)->first();
 			$result['u_id']=$userData['u_id'];
