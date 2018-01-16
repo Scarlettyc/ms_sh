@@ -375,7 +375,7 @@ class BattleController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$result=$this->getData($data);
+		$result=$this->test($data);
 		var_dump($result);
  	 }
 
