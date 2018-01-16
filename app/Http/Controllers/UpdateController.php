@@ -80,12 +80,13 @@ class UpdateController extends Controller
 		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$userData=$userModel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
 			$userDetails=$charModel->select('ch_img','ch_title')->where('u_id',$u_id)->first();
-			$result['u_id']=$userMoney['u_id'];
-			$result['email']=$userMoney['email'];
-			$result['fb_id']=$userMoney['fb_id'];
-			$result['profile_img']=$userMoney['profile_img'];
+			$result['u_id']=$userData['u_id'];
+			$result['email']=$userData['email'];
+			$result['fb_id']=$userData['fb_id'];
+			$result['profile_img']=$userData['profile_img'];
 			$result['ch_img']=strval($userDetails['ch_img']);
 			$result['ch_title']=$userDetails['ch_title'];
+			
 			$response=json_encode($result,TRUE);
 
 			return base64_encode($response);
