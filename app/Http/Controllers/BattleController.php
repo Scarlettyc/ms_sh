@@ -32,7 +32,7 @@ use Log;
 class BattleController extends Controller
 {
 
-	public function test($data){
+	public function test($data,$clientInfo){
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
@@ -43,6 +43,8 @@ class BattleController extends Controller
 		$charData['x']=$x;
 		$charData['y']=$y;
 		$charData['time']=time();
+		$charData['address']=$clientInfo['address'];
+		$charData['port']=$clientInfo['port'];
 		$charJson=json_encode($charData);
 		$redis_battle=Redis::connection('battle');
 		$matchKey='battle_status'.$dmy;
@@ -55,6 +57,7 @@ class BattleController extends Controller
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
+		Log::info($data);
 		if(is_null($enemyJson)){
 			$enemy_charData['x']=-1000;
 			$enemy_charData['y']=-290;
@@ -64,7 +67,7 @@ class BattleController extends Controller
 			   $enmeyData=json_decode($each,TRUE);
 			   $enemy_charData['x']=$enmeyData['x'];
 				$enemy_charData['y']=$enmeyData['y'];
-				Log::info($each);
+				
 			}
 			// //$enmeyData=json_decode($enemyJson[0],TRUE);
 			// $enemy_charData['x']=$enmeyData['x'];
