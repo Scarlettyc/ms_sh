@@ -62,10 +62,13 @@ class BattleController extends Controller
 		else {
 			foreach ($enemyJson as $key => $each) {
 			   $enmeyData=json_decode($each,TRUE);
+			   $enemy_charData['x']=$enmeyData['x'];
+				$enemy_charData['y']=$enmeyData['y'];
+				Log::info($each);
 			}
-			//$enmeyData=json_decode($enemyJson[0],TRUE);
-			$enemy_charData['x']=$enmeyData['x'];
-			$enemy_charData['y']=$enmeyData['y'];
+			// //$enmeyData=json_decode($enemyJson[0],TRUE);
+			// $enemy_charData['x']=$enmeyData['x'];
+			// $enemy_charData['y']=$enmeyData['y'];
 		}
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
