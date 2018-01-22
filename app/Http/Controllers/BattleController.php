@@ -83,7 +83,7 @@ class BattleController extends Controller
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemy_charData;
 		$response=json_encode($result,TRUE);
-		return  base64_encode($response);
+		return  $response;
 
 	}
 
