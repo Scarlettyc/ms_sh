@@ -47,8 +47,8 @@ class BattleController extends Controller
 		$charData['port']=$clientInfo['port'];
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
-			$charData['skill_group']=$data['skill_group'];
 		}
+		$charData['skill_group']=1;
 		$charJson=json_encode($charData);
 		$redis_battle=Redis::connection('battle');
 		$matchKey='battle_status'.$dmy;
