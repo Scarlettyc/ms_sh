@@ -73,13 +73,16 @@ class LoadBattleController extends Controller
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
  	    $core_id=$charData['core_id'];
- 	    $eqData=$eqModel->whereIn('equ_id',[$weapon_id,$movement_id,$core_id])->get();
+ 	    $eqData=$eqModel->select('special_skill_id','normal_skill_id')->where('equ_id',$weapon_id)->first();
+        $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
+        $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
- 	    foreach ($eqData as $key => $eqEach) {
- 	    	$skillData=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_chartlet','skill_info')->where('skill_id',$eqEach['special_skill_id'])->first();
- 	    	$result[]=$skillData;;
- 	    }
- 	    $final['chardata']=$charRe;
+        $result['special_skill']=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_info')->where('skill_id',$eqData['special_skill_id'])->first();
+        $result['normal_skill']=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_info')->where('skill_id',$eqData['normal_skill_id'])->first();
+        $result['core_skill']=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_info')->where('skill_id',$coreData['normaspecial_skill_idl_skill_id'])->first();
+        $result['movement_skill']=$skillModel->select('skill_id', 'skill_name','skill_icon','skill_info')->where('skill_id',$moveData['special_skill_id'])->first();
+ 	    
+        $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
  	     }
