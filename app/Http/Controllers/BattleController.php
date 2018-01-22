@@ -45,7 +45,7 @@ class BattleController extends Controller
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
-		if(isset($data['skill_id']){
+		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
 		}
 		$charJson=json_encode($charData);
