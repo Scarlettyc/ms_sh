@@ -47,6 +47,7 @@ class BattleController extends Controller
 		$charData['port']=$clientInfo['port'];
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
+			$charData['skill_group']=$data['skill_group'];
 		}
 		$charJson=json_encode($charData);
 		$redis_battle=Redis::connection('battle');
@@ -72,6 +73,7 @@ class BattleController extends Controller
 				$enemy_charData['y']=$enmeyData['y'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
+					$enemy_charData['skill_group']=$enmeyData['skill_group'];
 				}
 			}
 			// //$enmeyData=json_decode($enemyJson[0],TRUE);
