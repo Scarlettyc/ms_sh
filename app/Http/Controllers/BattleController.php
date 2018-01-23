@@ -39,6 +39,8 @@ class BattleController extends Controller
 		$y=$data['y'];
 		$u_id=$data['u_id'];
 		$characterModel=new CharacterModel();
+		$skillModel=new SkillMstModel();
+		$attackhitutil=new AttackHitUtil();
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
 		$charData['x']=$x;
 		$charData['y']=$y;
@@ -48,7 +50,8 @@ class BattleController extends Controller
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
 		}
-		$charData['skill_group']=1;
+		$skill_group=$skillModel->where('skill_id',$charData['skill_id'])->pluck('skill_group');
+		$charData['skill_group']=$skill_group;
 		$charJson=json_encode($charData);
 		$redis_battle=Redis::connection('battle');
 		$matchKey='battle_status'.$dmy;
@@ -61,20 +64,35 @@ class BattleController extends Controller
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
-		Log::info($data);
+		// Log::info($data);
 		if(is_null($enemyJson)){
-			$enemy_charData['x']=-1000;
+			$enemy_charData['x']=1000;
 			$enemy_charData['y']=-290;
 		}
 		else {
 			foreach ($enemyJson as $key => $each) {
 			   $enmeyData=json_decode($each,TRUE);
-			   $enemy_charData['x']=$enmeyData['x'];
+			   $enemy_charData['x']=-($enmeyData['x']);
 				$enemy_charData['y']=$enmeyData['y'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
+					$atkeff=$attackhitutil->getatkEff($skill_id,$charData,$enemy_charData);
 				}
+			}
+			if($atkeff){ 
+				if($enemy_charData['skill_group']==0){
+					$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
+ 	 			
+ 	 				}
+
+ 	 			else if($enemy_charData['skill_group']==1){
+ 	 				$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
+ 	 				}
+ 	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 	 				$hpMax=$charData['ch_hp_max';
+					$charData['ch_hp_max']=$hpMax-$enemyDMG;
+
 			}
 			// //$enmeyData=json_decode($enemyJson[0],TRUE);
 			// $enemy_charData['x']=$enmeyData['x'];
@@ -285,9 +303,6 @@ class BattleController extends Controller
   			$redis_battle->LPUSH($battlekey,$response);
   			return 	$response;
 	}
-
-
-
 
 
 	private function winCheck($userHp,$enemyHP,$u_id,$map_id){

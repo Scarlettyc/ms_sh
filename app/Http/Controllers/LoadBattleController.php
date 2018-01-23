@@ -115,7 +115,6 @@ class LoadBattleController extends Controller
             }
             else{
                 throw new Exception("wrong match id", 1);
-                
             }
             
            

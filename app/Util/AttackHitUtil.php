@@ -76,6 +76,25 @@ class AttackHitUtil
 
 	}
 
+	public function getatkEff($skill_id,$user,$enemy){
+		$atkEffModel=new AtkEffectionMst();
+		$skillModel=new SkillMstModel();
+		$skillData=$skillModel->select('atk_eff_id')->where('skill_id',$skill_id)->first();
+		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
+		$effXfrom=$enemy['x'];
+		$effYfrom=$enemy['x'];
+		$effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
+ 		$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
+ 		 	if($user['x']>=$effXfrom&&$user['x']<=$effXto&&$user['y']>=$effYfrom&&$user['y']<=$effYto){
+ 		 		return $atkEff;
+ 		 	}
+ 		 	else {
+ 		 		return null;
+ 		 	}
+
+
+	}
+
 
 	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'])
 	{
