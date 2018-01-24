@@ -90,9 +90,8 @@ class BattleController extends Controller
  	 				$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
  	 				}
  	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
- 	 				$hpMax=$charData['ch_hp_max';
+ 	 				$hpMax=$charData['ch_hp_max'];
 					$charData['ch_hp_max']=$hpMax-$enemyDMG;
-
 			}
 			// //$enmeyData=json_decode($enemyJson[0],TRUE);
 			// $enemy_charData['x']=$enmeyData['x'];
