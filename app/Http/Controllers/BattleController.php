@@ -41,7 +41,21 @@ class BattleController extends Controller
 		$characterModel=new CharacterModel();
 		$skillModel=new SkillMstModel();
 		$attackhitutil=new AttackHitUtil();
+		$redis_battle=Redis::connection('battle');
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		$userHistory=$redis_battle->LLEN($battlekey);
+		$charData=[];
+		if($userHistory>0){
+			$userJson=$redis_battle->LRANGE($battlekey,0,0);
+			$userData=json_decode($userJson,TRUE);
+			$charData['ch_hp_max']=$userData['ch_hp_max'];
+			$charData['ch_stam']=$userData['ch_stam'];
+			$charData['ch_atk']=$userData['ch_atk'];
+			$charData['ch_armor']=$userData['ch_crit'];
+		}else{
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
+		}
+
 		$charData['x']=$x;
 		$charData['y']=$y;
 		$charData['time']=time();
@@ -54,14 +68,14 @@ class BattleController extends Controller
 		}
 
 		$charJson=json_encode($charData);
-		$redis_battle=Redis::connection('battle');
+		
 		$matchKey='battle_status'.$dmy;
 		$battle_status=$redis_battle->HGET($matchKey,$u_id);
 		$battleData=json_decode($battle_status,TRUE);
 		$enemy_uid=$battleData['enemy_uid'];
 		$match_id=$battleData['match_id'];
 		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
