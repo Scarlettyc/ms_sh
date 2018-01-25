@@ -82,15 +82,16 @@ class BattleController extends Controller
 					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData);
 				}
 				if($atkeff){ 
+					$enemy_atk=$enemy_charData['ch_atk'];
 					if($enemy_charData['skill_group']==0){
-						$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
+						$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point'];
  	 			
  	 					}
 
  	 				else if($enemy_charData['skill_group']==1){
- 	 					$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
+ 	 					$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
  	 				}
- 	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+ 	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemy_charData['ch_crit']*(1-(1-$charData['ch_stam'])/(1+$charData['ch_stam']));
  	 				$hpMax=$charData['ch_hp_max'];
 					$charData['ch_hp_max']=$hpMax-$enemyDMG;
 				}
