@@ -95,17 +95,17 @@ class AttackHitUtil
 
 	}
 
-
-	private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'])
-	{
-		$mapUtil=new MapTrapUtil();
-		$defindMst=new DefindMstModel();
-		$defindData=$defindMst->where('defind_id',17)->first();
+// 
+	// private function checkHit($map_id,$atkEff,$direction,$user['x'],$user['y'],$enemy['x'],$enemy['y'])
+	// {
+	// 	$mapUtil=new MapTrapUtil();
+	// 	$defindMst=new DefindMstModel();
+	// 	$defindData=$defindMst->where('defind_id',17)->first();
 
  				
-			$distance=0;
-			$effXfrom=$user['x'];
-			$effYfrom=$user['x'];
+	// 		$distance=0;
+	// 		$effXfrom=$user['x'];
+	// 		$effYfrom=$user['x'];
 			// if($atkEff['eff_skill_circle_center']==0){
 			// 	if($direction>=0)
 			// 		{
@@ -128,21 +128,21 @@ class AttackHitUtil
  		// 	}
  			// $radius=$atkEff['eff_skill_radius'];
 
- 			$interrput=$this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt']);
- 			$end=$interrput['end'];
- 			if($interrput['interrput']){
- 				return ['hit'=>0,'end'=>1];
- 			}
- 			else {
- 		 	$effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
- 		 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
- 		 	if($enemy['x']>=$effXfrom&&$enemy['x']<=$effXto&&$enemy['y']>=$effYfrom&&$enemy['y']<=$effYto){
- 		 		return ['hit'=>1,'end'=>1];
- 		 	}else{
- 		 		return ['hit'=>0,'end'=>0];
- 		 	}
-			}
-}
+//  			$interrput=$this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt']);
+//  			$end=$interrput['end'];
+//  			if($interrput['interrput']){
+//  				return ['hit'=>0,'end'=>1];
+//  			}
+//  			else {
+//  		 	$effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
+//  		 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
+//  		 	if($enemy['x']>=$effXfrom&&$enemy['x']<=$effXto&&$enemy['y']>=$effYfrom&&$enemy['y']<=$effYto){
+//  		 		return ['hit'=>1,'end'=>1];
+//  		 	}else{
+//  		 		return ['hit'=>0,'end'=>0];
+//  		 	}
+// 			}
+// }
 
 
 	public function longDisEff($map_id,$atkEff,$effX,$effY,$direction,$enemyX,$enemyY){

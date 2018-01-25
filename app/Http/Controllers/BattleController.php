@@ -405,7 +405,9 @@ class BattleController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$result=$this->test($data);
+		$charData['address']='1111';
+		$charData['port']=2;
+		$result=$this->test($data,$charData);
 		var_dump($result);
  	 }
 
