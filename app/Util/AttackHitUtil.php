@@ -65,7 +65,7 @@ class AttackHitUtil
 				// }
 			}
 		}
-		else if(isset($skillData['enemy_buff_eff_id']){
+		else if(isset($skillData['enemy_buff_eff_id'])){
 			
 			$enemyBuffEff=$buffEffModel->where('buff_eff_id',$skillData['enemy_buff_eff_id'])->first();
 			if($mileSecond-$occurtime<=$enemyBuffEff['eff_skill_dur']){
