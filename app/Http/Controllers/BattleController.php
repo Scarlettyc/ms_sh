@@ -53,11 +53,14 @@ class BattleController extends Controller
 		$charData=[];
 		if($userHistory>0){
 			$userJson=$redis_battle->LRANGE($battlekey,0,0);
-			$userData=json_decode($userJson,TRUE);
-			$charData['ch_hp_max']=$userData['ch_hp_max'];
-			$charData['ch_stam']=$userData['ch_stam'];
-			$charData['ch_atk']=$userData['ch_atk'];
-			$charData['ch_armor']=$userData['ch_crit'];
+			foreach ($userJson as $key => $each) {
+				$userData=json_decode($each,TRUE);
+				$charData['ch_hp_max']=$userData['ch_hp_max'];
+				$charData['ch_stam']=$userData['ch_stam'];
+				$charData['ch_atk']=$userData['ch_atk'];
+				$charData['ch_armor']=$userData['ch_crit'];
+			}
+			
 		}else{
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
 		}
