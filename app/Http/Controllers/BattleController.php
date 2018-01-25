@@ -79,7 +79,7 @@ class BattleController extends Controller
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
-					$atkeff=$attackhitutil->getatkEff($skill_id,$charData,$enemy_charData);
+					$atkeff=$attackhitutil->getatkEff($$enemy_charData['skill_id'],$charData,$enemy_charData);
 				}
 				if($atkeff){ 
 					if($enemy_charData['skill_group']==0){
