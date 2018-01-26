@@ -50,7 +50,8 @@ class BattleController extends Controller
 		if($battleData){
 			$enemy_uid=$battleData['enemy_uid'];
 			$match_id=$battleData['match_id'];
-		
+			$clientId=$battleData['client'];
+			$enemy_clientId=$battleData['enmey_client'];
 			$battlekey='battle_data'.$match_id.'_'.$u_id;
 			$userExist=$redis_battle->LLEN($battlekey);
 		
@@ -69,8 +70,13 @@ class BattleController extends Controller
 				}
 		
 			}
-
-		$charData['x']=$x;
+		if($enemy_clientId>$clientId){
+			$charData['x']=-$x;
+		}
+		else {
+			$charData['x']=$x;
+		}
+		
 		$charData['y']=$y;
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
@@ -88,9 +94,14 @@ class BattleController extends Controller
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
 		// Log::info($data);
-		if(is_null($enemyJson)){
+		if(is_null($enemyJson)&&$enemy_clientId>$clientId){
+			$enemy_charData['x']=-1000;
+			$enemy_charData['y']=-290;
+		}
+		else if(is_null($enemyJson)&&$enemy_clientId>$clientId){
 			$enemy_charData['x']=1000;
 			$enemy_charData['y']=-290;
+
 		}
 		else {
 			foreach ($enemyJson as $key => $each) {
