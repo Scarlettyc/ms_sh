@@ -49,12 +49,14 @@ class BattleController extends Controller
 		$enemy_uid=$battleData['enemy_uid'];
 		$match_id=$battleData['match_id'];
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
-		$userJson=$redis_battle->LRANGE($battlekey,0,0);
+		$userExist=$redis_battle->LLEN($battlekey);
+		
 		$charData=[];
-		if(is_null($userJson)){
+		if($userExist<=1{
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
 		}
 		else{
+			$userJson=$redis_battle->LRANGE($battlekey,0,0);
 			foreach ($userJson as $key => $each) {
 				$userData=json_decode($each,TRUE);
 				$charData['ch_hp_max']=$userData['ch_hp_max'];
@@ -62,6 +64,7 @@ class BattleController extends Controller
 				$charData['ch_atk']=$userData['ch_atk'];
 				$charData['ch_crit']=$userData['ch_crit'];
 			}
+		
 		}
 
 		$charData['x']=$x;
