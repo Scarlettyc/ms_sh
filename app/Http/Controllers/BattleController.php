@@ -46,26 +46,29 @@ class BattleController extends Controller
 		$matchKey='battle_status'.$dmy;
 		$battle_status=$redis_battle->HGET($matchKey,$u_id);
 		$battleData=json_decode($battle_status,TRUE);
-		$enemy_uid=$battleData['enemy_uid'];
-		$match_id=$battleData['match_id'];
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
-		$userExist=$redis_battle->LLEN($battlekey);
 		
-		$charData=[];
-		if($userExist<=1){
-			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
-		}
-		else{
-			$userJson=$redis_battle->LRANGE($battlekey,0,0);
-			foreach ($userJson as $key => $each) {
-				$userData=json_decode($each,TRUE);
-				$charData['ch_hp_max']=$userData['ch_hp_max'];
-				$charData['ch_stam']=$userData['ch_stam'];
-				$charData['ch_atk']=$userData['ch_atk'];
-				$charData['ch_crit']=$userData['ch_crit'];
+		if($battleData){
+			$enemy_uid=$battleData['enemy_uid'];
+			$match_id=$battleData['match_id'];
+		
+			$battlekey='battle_data'.$match_id.'_'.$u_id;
+			$userExist=$redis_battle->LLEN($battlekey);
+		
+			$charData=[];
+			if($userExist<=1){
+				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
 			}
+			else{
+				$userJson=$redis_battle->LRANGE($battlekey,0,0);
+				foreach ($userJson as $key => $each) {
+					$userData=json_decode($each,TRUE);
+					$charData['ch_hp_max']=$userData['ch_hp_max'];
+					$charData['ch_stam']=$userData['ch_stam'];
+					$charData['ch_atk']=$userData['ch_atk'];
+					$charData['ch_crit']=$userData['ch_crit'];
+				}
 		
-		}
+			}
 
 		$charData['x']=$x;
 		$charData['y']=$y;
@@ -126,6 +129,11 @@ class BattleController extends Controller
 		$result['enemy_data']=$enemy_charData;
 		$response=json_encode($result,TRUE);
 		return  $response;
+		}
+		else {
+			return null;
+		}
+
 
 	}
 
