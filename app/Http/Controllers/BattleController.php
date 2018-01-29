@@ -84,8 +84,8 @@ class BattleController extends Controller
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
 		// Log::info($data);
+		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
 		if(is_null($enemyJson)){
-			$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
 			$enemy_charData['x']=-1000;
 			$enemy_charData['y']=-290;
 		}
