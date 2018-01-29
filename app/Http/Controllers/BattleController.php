@@ -123,7 +123,7 @@ class BattleController extends Controller
  	 				}
  	 					
  	 					$hpMax=$charData['ch_hp_max'];
-						$charData['ch_hp_max']=$hpMax-$enemyDMG;
+						$charData['ch_hp_max']=round($hpMax-$enemyDMG);
 				}
 				}
 
