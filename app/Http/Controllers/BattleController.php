@@ -94,7 +94,7 @@ class BattleController extends Controller
 		else {
 			foreach ($enemyJson as $key => $each) {
 			   $enmeyData=json_decode($each,TRUE);
-			   $enemy_charData['x']=-($enmeyData['x']);
+			   $enemy_charData['x']=$enmeyData['x'];
 				$enemy_charData['y']=$enmeyData['y'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
