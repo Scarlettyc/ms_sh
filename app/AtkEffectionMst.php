@@ -9,7 +9,7 @@ class AtkEffectionMst extends Model
 {
 	protected $fillable = [  'atk_eff_id',
   'eff_name',
-  'eff_skill_hit_lenght',
+  'eff_skill_hit_henght',
   'eff_skill_hit_width',
   'eff_skill_hit_radius',
   'eff_skill_hit_angle',

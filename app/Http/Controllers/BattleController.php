@@ -81,13 +81,11 @@ class BattleController extends Controller
 			$charData['skill_group']=$skill_group['skill_group'];
 		}
 		
-		
-		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
-	
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
 		// Log::info($data);
 		if(is_null($enemyJson)){
+			$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
 			$enemy_charData['x']=-1000;
 			$enemy_charData['y']=-290;
 		}
@@ -96,7 +94,10 @@ class BattleController extends Controller
 			   $enmeyData=json_decode($each,TRUE);
 			   		$enemy_charData['x']=$enmeyData['x'];
 					$enemy_charData['y']=$enmeyData['y'];
-
+					$enemy_charData['ch_hp_max']=$enmeyData['ch_hp_max'];
+					$enemy_charData['ch_stam']=$enmeyData['ch_stam'];
+					$enemy_charData['ch_atk']=$enmeyData['ch_atk'];
+					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
