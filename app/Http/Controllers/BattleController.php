@@ -46,7 +46,6 @@ class BattleController extends Controller
 		$matchKey='battle_status'.$dmy;
 		$battle_status=$redis_battle->HGET($matchKey,$u_id);
 		$battleData=json_decode($battle_status,TRUE);
-		
 		if($battleData){
 			$enemy_uid=$battleData['enemy_uid'];
 			$match_id=$battleData['match_id'];
@@ -82,10 +81,9 @@ class BattleController extends Controller
 			$charData['skill_group']=$skill_group['skill_group'];
 		}
 		
-		$charJson=json_encode($charData);
-		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
 		
-		$redis_battle->LPUSH($battlekey,$charJson);
+		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
+	
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
 		$enemyJson=$redis_battle->LRANGE($enemykey,0,0); 
 		// Log::info($data);
@@ -128,6 +126,12 @@ class BattleController extends Controller
 			// $enemyJson=json_decode($enemy_charData,TRUE);
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemy_charData;
+		
+		if($clientId>$enemy_clientId){
+			$charData['x']=-$charData['x'];
+		}
+		$charJson=json_encode($charData);
+		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
 		return  $response;
 		}
