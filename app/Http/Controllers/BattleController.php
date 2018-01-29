@@ -81,7 +81,7 @@ class BattleController extends Controller
 			$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
 			$charData['skill_group']=$skill_group['skill_group'];
 		}
-
+		
 		$charJson=json_encode($charData);
 		$enemy_charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$enemy_uid)->first();
 		
