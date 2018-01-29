@@ -76,9 +76,13 @@ class AttackHitUtil
 
 	}
 
-	public function getatkEff($skill_id,$user,$enemy){
+	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
+		if($clientId>$enemy_clientId){
+			$user['x']=-$user['x'];
+		}
+
 		$skillData=$skillModel->select('atk_eff_id')->where('skill_id',$skill_id)->first();
 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 		$effXfrom=$enemy['x'];

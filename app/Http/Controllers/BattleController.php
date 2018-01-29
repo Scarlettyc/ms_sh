@@ -94,18 +94,13 @@ class BattleController extends Controller
 		else {
 			foreach ($enemyJson as $key => $each) {
 			   $enmeyData=json_decode($each,TRUE);
-			   if($clientId>$enemy_clientId){
-			   		$enemy_charData['x']=-($enmeyData['x']);
+			   		$enemy_charData['x']=$enmeyData['x'];
 					$enemy_charData['y']=$enmeyData['y'];
-				}else{
-					$enemy_charData['x']=$enmeyData['x'];
-					$enemy_charData['y']=$enmeyData['y'];
-				}
 
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
-					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData);
+					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId);
 					if($atkeff){ 
 						$enemy_atk=$enemy_charData['ch_atk'];
 						if($enemy_charData['skill_group']==0){
@@ -131,6 +126,13 @@ class BattleController extends Controller
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
 		$result['user_data']=$charData;
+		if($clientId>$enemy_clientId){
+			$enemy_charData['x']=-($enmeyData['x']);
+			$enemy_charData['y']=$enmeyData['y'];
+		}else{
+			$enemy_charData['x']=$enmeyData['x'];
+			$enemy_charData['y']=$enmeyData['y'];
+		}
 		$result['enemy_data']=$enemy_charData;
 		
 		if($clientId>$enemy_clientId){
