@@ -79,7 +79,7 @@ class AttackHitUtil
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
-		if($clientId>$enemy_clientId){
+		if($clientID>$enemy_clientId){
 			$user['x']=-$user['x'];
 		}
 
