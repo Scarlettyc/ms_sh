@@ -127,9 +127,6 @@ class BattleController extends Controller
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
 		$result['user_data']=$charData;
-		if($clientId>$enemy_clientId){
-			$enemy_charData['x']=-($enemy_charData['x']);
-		}
 		$result['enemy_data']=$enemy_charData;
 		
 		if($clientId>$enemy_clientId){
