@@ -101,6 +101,7 @@ class BattleController extends Controller
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
+					$enemy_charData['end']=$enmeyData['end'];
 					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId);
 					if($atkeff){ 
 						$enemy_atk=$enemy_charData['ch_atk'];
@@ -137,7 +138,7 @@ class BattleController extends Controller
 		if($charData['ch_hp_max']<=0){
 			$result['end']=1;
 		}
-		else if($enmeyData['end']==1){
+		else if($enemy_charData['end']==1){
 			$result['end']=2;
 		}
 		else {
