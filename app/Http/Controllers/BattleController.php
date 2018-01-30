@@ -126,7 +126,7 @@ class BattleController extends Controller
 						$charData['ch_hp_max']=round($hpMax-$enemyDMG);
 				}
 				}
-				if(isset($enmeyData['end'])&&$enmeyData['end']==1){
+				if($enmeyData['end']==1){
 					$result['end']=2;
 				}
 			}
