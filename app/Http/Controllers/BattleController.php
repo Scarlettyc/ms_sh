@@ -75,7 +75,6 @@ class BattleController extends Controller
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
-		$result['end']=0;
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
 			$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
@@ -124,11 +123,8 @@ class BattleController extends Controller
  	 					
  	 					$hpMax=$charData['ch_hp_max'];
 						$charData['ch_hp_max']=round($hpMax-$enemyDMG);
-				}
-				}
-				if($enmeyData['end']==1){
-					$result['end']=2;
-				}
+					}
+				}	
 			}
 		}
 			$enemy_charData['time']=time();
@@ -140,6 +136,12 @@ class BattleController extends Controller
 		$result['enemy_data']=$enemy_charData;
 		if($charData['ch_hp_max']<=0){
 			$result['end']=1;
+		}
+		else if($enmeyData['end']==1){
+			$result['end']=2;
+		}
+		else {
+			$result['end']=0;
 		}
 		if($clientId>$enemy_clientId){
 			$charData['x']=-$charData['x'];
