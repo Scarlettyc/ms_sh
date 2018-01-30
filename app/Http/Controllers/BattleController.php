@@ -75,6 +75,7 @@ class BattleController extends Controller
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
+		$result['end']=0;
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
 			$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
@@ -120,11 +121,13 @@ class BattleController extends Controller
  	 					else if($enemy_charData['skill_group']==1){
  	 					$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy_charData['ch_lv'],2)*2;
  	 					$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy_charData['ch_crit']*(1-(1-$charData['ch_stam'])/(1+$charData['ch_stam'])));
- 	 				}
  	 					
  	 					$hpMax=$charData['ch_hp_max'];
 						$charData['ch_hp_max']=round($hpMax-$enemyDMG);
 				}
+				}
+				if(isset($enmeyData['end'])&&$enmeyData['end']==0){
+					$result['end']=2;
 				}
 
 			}
@@ -143,12 +146,10 @@ class BattleController extends Controller
 		if($charData['ch_hp_max']<=0){
 			$result['end']=1;
 		}
-		else{
-			$result['end']=0;
-		}
 		if($clientId>$enemy_clientId){
 			$charData['x']=-$charData['x'];
 		}
+		$charData['end']=$result['end'];
 		$charJson=json_encode($charData);
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
