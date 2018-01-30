@@ -133,11 +133,11 @@ class BattleController extends Controller
 			$enemy_charData['x']=-($enemy_charData['x']);
 		}
 		$result['enemy_data']=$enemy_charData;
-		if($charData['ch_hp_max']<=0){
-			$result['end']=1;
-		}
-		else if($enemy_charData['end']==1){
+		 if($enemy_charData['end']==1){
 			$result['end']=2;
+		}
+		else if($charData['ch_hp_max']<=0){
+			$result['end']=1;
 		}
 		else {
 			$result['end']=0;
