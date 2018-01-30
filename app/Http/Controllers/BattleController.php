@@ -129,12 +129,7 @@ class BattleController extends Controller
 				if(isset($enmeyData['end'])&&$enmeyData['end']==0){
 					$result['end']=2;
 				}
-
 			}
-			
-			// //$enmeyData=json_decode($enemyJson[0],TRUE);
-			// $enemy_charData['x']=$enmeyData['x'];
-			// $enemy_charData['y']=$enmeyData['y'];
 		}
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
