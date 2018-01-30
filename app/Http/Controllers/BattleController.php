@@ -149,12 +149,11 @@ class BattleController extends Controller
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
 		return  $response;
+			}
 		}
 		else {
 			return null;
 		}
-
-
 	}
 
 	private function getMillisecond() {
