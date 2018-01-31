@@ -125,8 +125,11 @@ class BattleController extends Controller
  	 						}
 
  	 						else if($enemy_charData['skill_group']==2){
- 	 							$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy_charData['ch_lv'],2)*2;
+ 	 							$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
  	 							$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy_charData['ch_crit']*(1-(1-$charData['ch_stam'])/(1+$charData['ch_stam'])));
+ 	 							$hpMax=$charData['ch_hp_max'];
+								$charData['ch_hp_max']=round($hpMax-$enemyDMG);
+
 							}
 				}	
 			}
