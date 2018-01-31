@@ -72,9 +72,14 @@ class BattleController extends Controller
 		
 		$charData['x']=$x;		
 		$charData['y']=$y;
+
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
+		$charData['direction']=1;
+		if(isset($data['direction'])){
+			$charData['direction']=$data['direction'];
+		}
 		if(isset($data['skill_id'])){
 			$charData['skill_id']=$data['skill_id'];
 			$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
@@ -102,7 +107,8 @@ class BattleController extends Controller
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
 					$enemy_charData['end']=$enmeyData['end'];
-					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId);
+					$enemy_charData['direction']=$enmeyData['direction'];
+					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
 					if($atkeff){ 
 						$enemy_atk=$enemy_charData['ch_atk'];
 						$randCrit=rand(1,100);
@@ -111,7 +117,6 @@ class BattleController extends Controller
 							}else{
 								$critBool=1;
 							}
-
 							if($enemy_charData['skill_group']==1){
 								$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point'];
 								$enemyDMG=$enemy_atk*$critBool;
