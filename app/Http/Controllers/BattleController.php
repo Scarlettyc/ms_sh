@@ -103,11 +103,11 @@ class BattleController extends Controller
 					$enemy_charData['ch_stam']=$enmeyData['ch_stam'];
 					$enemy_charData['ch_atk']=$enmeyData['ch_atk'];
 					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
+					$enemy_charData['direction']=$enmeyData['direction'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];
 					$enemy_charData['end']=$enmeyData['end'];
-					$enemy_charData['direction']=$enmeyData['direction'];
 					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
 					if($atkeff){ 
 						$enemy_atk=$enemy_charData['ch_atk'];
