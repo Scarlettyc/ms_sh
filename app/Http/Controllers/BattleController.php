@@ -136,6 +136,7 @@ class BattleController extends Controller
 		$result['user_data']=$charData;
 		if($clientId>$enemy_clientId){
 			$enemy_charData['x']=-($enemy_charData['x']);
+			$enemy_charData['direction']=-($enemy_charData['direction']);
 		}
 		$result['enemy_data']=$enemy_charData;
 		 if($enemy_charData['end']==1){
