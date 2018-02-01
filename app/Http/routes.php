@@ -101,6 +101,10 @@ Route::post('/udpate_email', 'UpdateController@updateEmail');
 Route::post('/udpate_pw', 'UpdateController@updatePassword');
 Route::post('/refresh_setting', 'UpdateController@refreshSetting');
 
+Route::controller('event','EventController');
+Route::post('/get_event', 'EventController@getEventList');
+
+
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   

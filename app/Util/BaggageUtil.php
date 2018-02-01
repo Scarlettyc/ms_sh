@@ -57,7 +57,7 @@ class BaggageUtil
 			$UserBaggageScrollModel=new UserBaggageScrollModel();
 			$result=[];
 
-			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
+			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon','sc_img_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
 
 			foreach ($baggageScroll as $obj) 
 			{	$arry['user_bsc_id']=$obj['user_bsc_id'];
