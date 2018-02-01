@@ -67,7 +67,7 @@ class BaggageUtil
 				$arry['item_quantity']=1;
 				// $arry['item_type']=3;
 				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['bsc_id'])->first();
-				$arry['sc_img_path']=$scrollMst['sc_img_path']
+				$arry['sc_img_path']=$scrollMst['sc_img_path'];
 				$result[]=$arry;
 			}
 			$response=$result;
