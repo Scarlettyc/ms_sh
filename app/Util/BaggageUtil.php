@@ -56,6 +56,7 @@ class BaggageUtil
 		// {
 			$UserBaggageScrollModel=new UserBaggageScrollModel();
 			$result=[];
+			$scrollMstModel=new ScrollMstModel();
 
 			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
 
@@ -65,6 +66,8 @@ class BaggageUtil
 				// $arry['item_icon']=$obj['bsc_icon'];
 				$arry['item_quantity']=1;
 				// $arry['item_type']=3;
+				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['bsc_id'])->first();
+				$arry['sc_img_path']=$scrollMst['sc_img_path']
 				$result[]=$arry;
 			}
 			$response=$result;
