@@ -81,9 +81,12 @@ class BattleController extends Controller
 			$charData['direction']=$data['direction'];
 		}
 		if(isset($data['skill_id'])){
-			$charData['skill_id']=$data['skill_id'];
-			$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
-			$charData['skill_group']=$skill_group['skill_group'];
+			$checkCD=$this->checkSkillCD($data['skill_id'],$match_id,$u_id);
+			if($checkCD){
+				$charData['skill_id']=$data['skill_id'];
+				$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
+				$charData['skill_group']=$skill_group['skill_group'];
+			}
 		}
 		
 		$enemykey='battle_data'.$match_id.'_'.$enemy_uid;
