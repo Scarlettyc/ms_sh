@@ -209,7 +209,7 @@ class BaggageController extends Controller
 
 			$response='Successfully Meraged';
 
-		return $response;
+		return base64_encode($response);
 	}
 
 
