@@ -28,16 +28,21 @@ class CheckUserToken
         $dmy=$now->format( 'Ymd' );
         $datetime=$now->format( 'Y-m-d h:m:s' );
         $access_token=$data['access_token'];
-        $redisLoad= Redis::connection('default');
-        $loginToday=$redisLoad->HGET('login_data',$u_id);
+        $redis= Redis::connection('default');
+        $loginToday=$redis->HGET('login_data',$u_id);
         $loginTodayArr=json_decode($loginToday,TRUE);
-        $access_token2=$loginTodayArr->access_token;
+        if(is_null($loginTodayArr)){
+             $access_token2=$loginTodayArr->access_token;
 
-        if($access_token==$access_token2){
-        return $next($request);
-        }
-        else{
+            if($access_token==$access_token2){
+            return $next($request);
+            }
+            else{
             throw new Exception("there is something wrong with token");
+            }
+        }else{
+            throw new Exception("there is something login data");
+
         }
 
     }
