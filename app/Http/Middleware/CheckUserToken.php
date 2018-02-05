@@ -22,7 +22,6 @@ class CheckUserToken
     {
         $req=$request->getContent();
         $json=base64_decode($req);
-        //dd($json);
         $data=json_decode($json,TRUE);
         $u_id=$data['u_id'];
         $now   = new DateTime;
@@ -32,9 +31,9 @@ class CheckUserToken
         $redis= Redis::connection('default');
         $loginToday=$redis->HGET('login_data',$u_id);
         $loginTodayArr=json_decode($loginToday,TRUE);
-        if(is_null($loginTodayArr)){
-             $access_token2=$loginTodayArr->access_token;
 
+        if(!is_null($loginTodayArr)){
+             $access_token2=$loginTodayArr['access_token'];
             if($access_token==$access_token2){
             return $next($request);
             }
