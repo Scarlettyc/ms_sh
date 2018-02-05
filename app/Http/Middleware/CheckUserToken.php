@@ -42,7 +42,6 @@ class CheckUserToken
             }
         }else{
             throw new Exception("there is something login data");
-
         }
 
     }
