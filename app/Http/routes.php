@@ -14,35 +14,44 @@
 Route::get('now', function () {
     return date("Y-m-d H:i:s");
 });
-
 Route::auth();
 Route::controller('access','AccessController');
+Route::controller('tutorial','TutorialController');
+Route::controller('baggage','BaggageController');
+Route::controller('workshop','WorkshopController');
+Route::controller('shop','ShopController');
+Route::controller('match','MatchController');
+Route::controller('load','LoadBattleController');
+Route::controller('battle','BattleController');
+Route::controller('friend','FriendController');
+Route::controller('loginreward','LoginRewardController');
+Route::controller('updateinfo','UpdateController');
+Route::controller('event','EventController');
+
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
+
+Route::group(['middleware'=>'checktoken'],function()){
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
 
-Route::controller('tutorial','TutorialController');
 Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
 Route::post('/logout', 'AccessController@logout');
 Route::post('/uservalue','AccessController@showStatus');
 
-Route::controller('baggage','BaggageController');
+
 Route::post('/baggage','BaggageController@baggage');
 Route::post('/getItemInfo','BaggageController@getItemInfo');
 Route::post('/sellItem','BaggageController@sellItem');
 Route::post('/scrollMerage','BaggageController@scrollMerage');
 Route::post('/equipmentUpgrade','BaggageController@equipmentUpgrade');
 
-Route::controller('workshop','WorkshopController');
 Route::post('/workshop','WorkshopController@workshop');
 Route::post('/showEquipmentInfo','WorkshopController@showEquipmentInfo');
 Route::post('/showSkillInfo','WorkshopController@showSkillInfo');
 Route::post('/compareEquipment','WorkshopController@compareEquipment');
 Route::post('/equipEquipment','WorkshopController@equipEquipment');
-
-Route::controller('shop','ShopController');
 Route::post('/shoplist','ShopController@shopCoin');
 Route::post('/shop','ShopController@shop');
 Route::post('/buyResource','ShopController@buyResouceBYCoin');
@@ -58,18 +67,13 @@ Route::post('/showluck', 'LuckdrawController@showLuck');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
 Route::post('/multidraw', 'LuckdrawController@multiDraw');
 
-
-Route::controller('match','MatchController');
 Route::post('/battlematch', 'MatchController@testWebsocket');
 
-Route::controller('load','LoadBattleController');
+
 Route::post('/load', 'LoadBattleController@loadingGame');
 Route::post('/loadmap', 'LoadBattleController@loadMap');
-
-Route::controller('battle','BattleController');
 Route::post('/testbattle', 'BattleController@testBattle');
 
-Route::controller('friend','FriendController');
 Route::post('/addfriend', 'FriendController@addFriend');
 Route::post('/removefriend', 'FriendController@removeFriend');
 Route::post('/friendlist', 'FriendController@friend_list');
@@ -86,7 +90,6 @@ Route::post('/friendDetails','FriendController@friend_details');
 Route::post('/sendMessage','FriendController@sendMessage');
 Route::post('/receiveMessage','FriendController@receiveMessage');
 
-Route::controller('loginreward','LoginRewardController');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
 
@@ -96,14 +99,14 @@ Route::post('/collect_mission', 'MissionController@collectMissionReward');
 Route::post('/getMissionDetails', 'MissionController@getMissionDetails');
 Route::post('/getLevelMission', 'MissionController@getLevelMission');
 
-Route::controller('updateinfo','UpdateController');
+
 Route::post('/udpate_email', 'UpdateController@updateEmail');
 Route::post('/udpate_pw', 'UpdateController@updatePassword');
 Route::post('/refresh_setting', 'UpdateController@refreshSetting');
 
-Route::controller('event','EventController');
-Route::post('/get_event', 'EventController@getEventList');
 
+Route::post('/get_event', 'EventController@getEventList');
+}
 
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {

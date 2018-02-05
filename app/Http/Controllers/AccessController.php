@@ -13,6 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
+use App\Util\CharSkillEffUtil;
 use Log;
 use DateTime;
 class AccessController extends Controller
@@ -49,7 +50,7 @@ class AccessController extends Controller
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']= time();
 					$loginlist=json_encode($logindata,TRUE);
-					$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+					$redis_login->HSET('login_data',$userData['u_id'],$loginlist);
 			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
 			$result['u_id']=$userfinal['u_id'];;
 			$result['access_token']=$token;
@@ -103,7 +104,7 @@ class AccessController extends Controller
 		if(isset($userData)){
 		
 			$u_id=$userData['u_id'];	
-			$loginToday=$redis_login->HGET('login_data',$dmy.$userData['u_id']);
+			$loginToday=$redis_login->HGET('login_data',$userData['u_id']);
 			$logoff=0;
 			$token='';
 			$firstLogin=$userData['u_get_reward'];
@@ -123,7 +124,6 @@ class AccessController extends Controller
 					$logindata['status']=0; ;//online 0, in backend 1, logoff 2 
 					$logindata['createdate']=$loginTodayArr->createdate; 
 					$loginlist=json_encode($logindata,TRUE);
-					// $redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
 					else {
 						throw new Exception("login error!");
@@ -141,7 +141,6 @@ class AccessController extends Controller
 					$logindata['createdate']=time(); 
 					$datetime=$now->format( 'Y-m-d h:m:s' );
 					$loginlist=json_encode($logindata,TRUE);
-					// $redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
 				}
 				$missionKey='mission_daily_'.$dmy.'_'.$u_id;
 			$missionRecord=$redis_login->HGET($missionKey,1);
@@ -169,7 +168,7 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
 			$result['haveChar']=$haveChar;
-			$redis_login->HSET('login_data',$dmy.$userData['u_id'],$loginlist);
+			$redis_login->HSET('login_data',$userData['u_id'],$loginlist);
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);
@@ -227,12 +226,11 @@ class AccessController extends Controller
 		$data=json_decode($json,TRUE);
 		$redis_login=Redis::connection('default');
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
 		$usermodel=new UserModel();
-		//dd($data);
-		if(isset($data['u_id'])&&$access_token==$data['access_token']){
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		if(isset($data['u_id'])&&$checkToken){
 			$u_id=$data['u_id'];
 			$result='';
 			$logindata['u_id']=$data['u_id'];
@@ -244,13 +242,10 @@ class AccessController extends Controller
 			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
 			$loginlist=json_encode($logindata,TRUE);
-			$redis_login->HSET('login_data',$dmy.$u_id,$loginlist);
+			$redis_login->HSET('login_data',$u_id,$loginlist);
 			$usermodel->where('u_id',$u_id)->update(['updated_at'=>$datetime]);
 			$response="success logout";
 			return  base64_encode($response);
-	}
-	else {
-			throw new Exception("there have some error of you access_token");
 		}
 	}
 }

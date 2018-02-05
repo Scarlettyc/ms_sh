@@ -19,7 +19,9 @@ use App\DefindMstModel;
 use App\Util\BaggageUtil;
 use Exception;
 use Illuminate\Support\Facades\Redis;
+use App\Util\CharSkillEffUtil;
 use DateTime;
+
 class LuckdrawController extends Controller
 {	
 	public function showLuck(Request $request){
@@ -30,13 +32,13 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$luckdraw=new Luck_draw_rewardsModel();
 		$defindMstModel=new DefindMstModel();
 		$result=[];
-		if($access_token==$data['access_token'])
+		if($checkToken)
 		{
 			$normalDrawJosn=$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
 			$gemDrawJson=$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
@@ -89,11 +91,11 @@ class LuckdrawController extends Controller
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
 
-		if(isset($data['u_id'])&&$access_token==$data['access_token'])
+		if(isset($data['u_id'])&&$checkToken)
 		{
 			$result=[];
 			$drawtype=$data['draw_type'];
@@ -136,9 +138,6 @@ class LuckdrawController extends Controller
 
  			}
     	}
-    	else{
-    	throw new Exception("there have some error of you access_token");
-   		 }
  }
 
 
@@ -159,10 +158,10 @@ class LuckdrawController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
 		$BaggageUtil=new BaggageUtil();
-		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token']){
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		if($checkToken){
 			$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   $gotToday=$redisLuck->HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
@@ -240,10 +239,6 @@ class LuckdrawController extends Controller
 
 		 
 		}
-		else{
-    	throw new Exception("there have some error of you access_token");
-   		 }
-
 
  	}
 
@@ -256,11 +251,10 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$loginToday=$redisLuck->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token']){
-
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		if($checkToken){
  				$drawtype=$data['draw_type'];
  				$luckdraw=new Luck_draw_rewardsModel();
  				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
@@ -314,11 +308,6 @@ class LuckdrawController extends Controller
 		   		$response=json_encode($result,TRUE);
  	    		return base64_encode($response);
  	    	}
- 	    	else{
- 	    		throw new Exception("there have some error of you access_token");
- 	    	}
- 	    	
-
  		}
 
  		private function chooseBaggage($drawresult,$data,$pay){

@@ -48,6 +48,19 @@ class CharSkillEffUtil
 
 	 }
 
+	 public function validateToken($access_token,$u_id){
+	 	    $redisLoad= Redis::connection('default');
+        	$loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
+       		$loginTodayArr=json_decode($loginToday,TRUE);
+       		$access_token2=$loginTodayArr->access_token;
+       		if($access_token==$access_token2){
+       			return true;
+       		}else{
+       			throw new Exception("there is something wrong with token");
+       		}
+
+	 }
+
 	 public function calculatCharEq($u_id){
 	 	$charModel=new CharacterModel();
 	 	$charAttr=new CharAttModel();

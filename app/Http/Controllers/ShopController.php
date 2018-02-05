@@ -21,6 +21,7 @@ use App\Util\BaggageUtil;
 use Carbon\Carbon;
 use DateTime;
 use App\Http\Controllers\MissionController;
+use App\Util\CharSkillEffUtil;
 
 class ShopController extends Controller
 {
@@ -32,9 +33,9 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redisShop= Redis::connection('default');
-		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$inAppModel=new InAppPurchaseModel();
 		if($access_token==$data['access_token']){
 		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
@@ -59,8 +60,6 @@ class ShopController extends Controller
 		$UserModel=new UserModel;
 		$inAppModel=new InAppPurchaseModel();
 		$BaggageUtil=new BaggageUtil();
-
-
 		$u_id=$data['u_id'];
 		$item_id=$data['item_id'];
 		$item_type=$data['item_type'];
@@ -108,10 +107,10 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 		$refresh=$defindMst->where('defind_id',25)->first();
 		$refreshDuration=$defindMst->where('defind_id',26)->first();
-		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		if($access_token==$data['access_token']&&$data){
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		if($checkToken&&$data){
 				$u_id=$data['u_id'];
 				$listCount=0;
 				$times=$redisShop->HGET('refresh_times',$dmy.$u_id);
@@ -168,9 +167,6 @@ class ShopController extends Controller
 				return base64_encode($data);
 				}
 			}
-		else {
- 			throw new Exception("there is something wrong with token");
- 		}
 	}
 
 		public function buyFromRefreshList(Request $request){
@@ -192,10 +188,10 @@ class ShopController extends Controller
 			$reward=json_decode($rewardData[0],True);
 			$gem_spend=$reward['gem_spend'];
 			$user_gem=$userModel->select('u_gem')->where('u_id',$u_id)->first();
-			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-			$loginTodayArr=json_decode($loginToday);
-			$access_token=$loginTodayArr->access_token;
-			if($access_token==$data['access_token']){
+			$CharSkillEffUtil=new CharSkillEffUtil();
+			$access_token=$data['access_token'];
+			$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+			if($checkToken){
 				if($user_gem['u_gem']<$gem_spend){
 				return base64_encode("no enough gems");
 				}else{
@@ -209,10 +205,6 @@ class ShopController extends Controller
 					return base64_encode('successfully');
 					}
 				}
-			else {
- 			throw new Exception("there is something wrong with token");
- 			}
-			
 		}
 
 		public function refreshResource(Request $request){
@@ -225,10 +217,10 @@ class ShopController extends Controller
 			$redisShop=Redis::connection('default');
 			$u_id=$data['u_id'];
 			$times=$redisShop->HGET('refresh_times',$dmy.$u_id);
-			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-			$loginTodayArr=json_decode($loginToday);
-			$access_token=$loginTodayArr->access_token;
-			if($access_token==$data['access_token']){
+			$CharSkillEffUtil=new CharSkillEffUtil();
+			$access_token=$data['access_token'];
+			$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+			if($checkToken){
 
 				if($times==5){
 					 throw new Exception("you only have five times chance!");
@@ -244,10 +236,6 @@ class ShopController extends Controller
 					return base64_encode($response);
 				}
 			}
-			else {
- 			throw new Exception("there is something wrong with token");
- 			}
-
 		}
 
 		public function getCoinList(Request $request){
@@ -284,23 +272,19 @@ class ShopController extends Controller
 			$datetime=$now->format( 'Y-m-d h:m:s' );
 			$dmy=$now->format( 'Ymd' );
 			$redisShop=Redis::connection('default');
-			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-			$loginTodayArr=json_decode($loginToday);
-			$access_token=$loginTodayArr->access_token;
+			$CharSkillEffUtil=new CharSkillEffUtil();
+			$access_token=$data['access_token'];
+			$checkToken=$CharSkillEffUtil->($access_token,$u_id);
 			$u_id=$data['u_id'];
 			$UserModel=new UserModel;
 			$GemPurchaseBundleMst=new GemPurchaseBundleMst;
-			if($access_token==$data['access_token']){
+			if($checkToken){
 				$userData=$UserModel->select('country','os')->where('u_id',$u_id)->first();
 				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->get();
 				$result['store_gem_list']=$gemList;
 				$response=json_encode($result,TRUE);
 				return base64_encode($response);
 			}
-			else {
-				throw new Exception("there is something wrong with token");
-			}
-
 		}
 
 	public function buyCoin(Request $request)
@@ -313,9 +297,9 @@ class ShopController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$redisShop=Redis::connection('default');
 		$BaggageUtil=new BaggageUtil();
-		$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
+		$CharSkillEffUtil=new CharSkillEffUtil();
+		$access_token=$data['access_token'];
+		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$u_id=$data['u_id'];
 		$coin=$data['coin'];
 		$UserModel=new UserModel;
@@ -325,7 +309,7 @@ class ShopController extends Controller
 		$spend_gem=$buyType['gem'];
 		$get_coin=$buyType['coin'];
 		$key="store_buy_coin_".$u_id;
-		if($access_token==$data['access_token']){
+		if($checkToken){
 			if($UserInfo['u_gem']-$spend_gem>0){
 				$updateGem=$UserInfo['u_gem']-$spend_gem;
 				$updateCoin=$UserInfo['u_coin']+$get_coin;
