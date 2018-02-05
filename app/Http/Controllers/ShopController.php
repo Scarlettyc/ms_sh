@@ -14,6 +14,7 @@ use App\InAppPurchaseModel;
 use App\DefindMstModel;
 use App\GemPurchaseBundleMst;
 use Exception;
+use App\ScrollMstModel;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
@@ -107,6 +108,7 @@ class ShopController extends Controller
 		$rate=$defindMst->where('defind_id',23)->first();
 		$refresh=$defindMst->where('defind_id',25)->first();
 		$refreshDuration=$defindMst->where('defind_id',26)->first();
+		$scrollModel=new ScrollMstModel();
 		// $CharSkillEffUtil=new CharSkillEffUtil();
 		// $access_token=$data['access_token'];
 		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
@@ -154,9 +156,13 @@ class ShopController extends Controller
 					$reward=array();
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
+					if($i==3){
+						$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
+						$reward['sc_img_path']=$scro_img['sc_img_path'];
+					}
 					$idList[]=$reward['store_reward_id'];
 					$reward['status']=0;
-					$result['reward'][]=$reward;	
+					$result['reward'][]=$reward;
 					$redisShop->LPUSH($key,$reward);
 				}
 				$result['times']=0;
@@ -243,7 +249,7 @@ class ShopController extends Controller
 			$json=base64_decode($req);
 			$data=json_decode($json,TRUE);
 			$now=new DateTime;
-			$datetime=$now->format( 'Y-m-d h:m:s' );
+			$datetime=$now->format('Y-m-d h:m:s');
 			$dmy=$now->format( 'Ymd' );
 			$redisShop=Redis::connection('default');
 			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);

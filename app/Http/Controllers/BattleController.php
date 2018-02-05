@@ -153,6 +153,7 @@ class BattleController extends Controller
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
+			$this->
 		}
 		else {
 			$result['end']=0;
