@@ -227,9 +227,9 @@ class AccessController extends Controller
 		$redis_login=Redis::connection('default');
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
-		// $CharSkillEffUtil=new CharSkillEffUtil();
-		// $access_token=$data['access_token'];
-		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+        $redis= Redis::connection('default');
+        $loginToday=$redis->HGET('login_data',$u_id);
+        $loginTodayArr=json_decode($loginToday);
 		if(isset($data['u_id'])){
 			$u_id=$data['u_id'];
 			$result='';
