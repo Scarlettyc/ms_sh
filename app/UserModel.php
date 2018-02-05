@@ -3,7 +3,7 @@
 namespace App;
 use DB;
 use Carbon\Carbon;
-
+use DateTime;
 use Illuminate\Database\Eloquent\Model;
 
 class UserModel extends Model
@@ -38,5 +38,14 @@ class UserModel extends Model
         $randomString .= $characters[rand(0, $charactersLength - 1)];
         }
         return $randomString;
+    }
+    public function updateUserValue($u_id,$key,$value){
+        $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
+        $datetime=$now->format( 'Y-m-d h:m:s' );
+        $user_value=$this->select($key)->where('u_id',$u_id)->first();
+        $update=$user_value[$key]+$value;
+        $this->where('u_id',$u_id)->update([$key=>$update,'updated_at'=>$datetime]);
+
     }
 }

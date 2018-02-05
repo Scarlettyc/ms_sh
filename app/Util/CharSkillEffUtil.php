@@ -174,9 +174,13 @@ class CharSkillEffUtil
 		$lv=$charData['ch_lv;'];
 		$u_exp=$charData['ch_exp']+$exp;
 
-  		$levels=$levelupMst->where('level','>',$lv)->where('exp','<=',$u_exp)->orderBy('level','DESC')->first();
+  		$levels=$levelupMst->where('level','>',$lv)->where('exp_total','<=',$u_exp)->orderBy('level','DESC')->first();
   		if(isset($levels)){
-  		 	$charData->where('u_id',$u_id)->update(['level'=>$levels['level'],'exp'=>$u_exp,'update_at'=>$datetime]);
+  		 	$charData->where('u_id',$u_id)->update(['ch_lv'=>$levels['level'],'ch_exp'=>$u_exp,'update_at'=>$datetime]);
+  		 	return ['levelup'=>1,'lv'=>$levels['level']];
+  		}
+  		else {
+  			return ['levelup'=>0,'lv'=>$levels['level']];
   		}
   }
 
