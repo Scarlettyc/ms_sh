@@ -238,7 +238,7 @@ class AccessController extends Controller
 			$logindata['uuid']=$loginTodayArr->uuid;
 			$logindata['os']=$loginTodayArr->os;
 			$logindata['lastlogin']=$loginTodayArr->lastlogin; 
-			$logindata['access_token']=$date['$access_token'];
+			$logindata['access_token']=$data['$access_token'];
 			$logindata['logoff']=time(); 
 			$logindata['status']=2; ;//online 0, in backend 1, logoff 2 
 			$logindata['createdate']=$loginTodayArr->createdate; 
