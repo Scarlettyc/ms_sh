@@ -158,10 +158,10 @@ class LuckdrawController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$usermodel=new UserModel();
 		$BaggageUtil=new BaggageUtil();
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if($checkToken){
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// if($checkToken){
 			$userData=$usermodel->where('u_id',$data['u_id'])->first();
 		   $chardata=$characterModel->where('u_id',$data['u_id'])->first();	
 		   $gotToday=$redisLuck->HGET('luckdrawfree'.$drawtype,$dmy.$data['u_id']);
@@ -229,10 +229,10 @@ class LuckdrawController extends Controller
 						$result['timeuntil']=$luckdata['free_draw_duration'];
 						$response=json_encode($result,TRUE);
  	    				return base64_encode($response);
- 						}
-					else{
-						throw new Exception("sorry, no avaliable prize");
-					}
+ 				// 		}
+					// else{
+					// 	throw new Exception("sorry, no avaliable prize");
+					// }
 
 
 		   	}
