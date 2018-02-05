@@ -6,6 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
+use Exception;
 
 class CheckUserToken
 {
