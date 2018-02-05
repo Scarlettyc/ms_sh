@@ -29,7 +29,7 @@ class CheckUserToken
         $datetime=$now->format( 'Y-m-d h:m:s' );
         $access_token=$data['access_token'];
         $redisLoad= Redis::connection('default');
-        $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
+        $loginToday=$redisLoad->HGET('login_data',$u_id);
         $loginTodayArr=json_decode($loginToday,TRUE);
         $access_token2=$loginTodayArr->access_token;
 
