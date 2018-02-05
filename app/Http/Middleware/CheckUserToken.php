@@ -23,6 +23,7 @@ class CheckUserToken
         $json=base64_decode($req);
         //dd($json);
         $data=json_decode($json,TRUE);
+        $u_id=$data['u_id'];
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
         $datetime=$now->format( 'Y-m-d h:m:s' );
