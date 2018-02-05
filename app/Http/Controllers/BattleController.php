@@ -32,12 +32,13 @@ use Log;
 class BattleController extends Controller
 {
 
-	public function test($data,$clientInfo){
+	public function realbattle($data,$clientInfo){
 		$now   = new DateTime;;
 		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
 		$y=$data['y'];
 		$u_id=$data['u_id'];
+		$move=$data['move'];//status of user run 2 or stand by 1
 		$characterModel=new CharacterModel();
 		$skillModel=new SkillMstModel();
 		$attackhitutil=new AttackHitUtil();
@@ -77,6 +78,7 @@ class BattleController extends Controller
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
 		$charData['direction']=1;
+		$charData['move']=$move;
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
 		}
@@ -107,6 +109,7 @@ class BattleController extends Controller
 					$enemy_charData['ch_atk']=$enmeyData['ch_atk'];
 					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
 					$enemy_charData['direction']=$enmeyData['direction'];
+					$enemy_charData['move']=$enmeyData['move'];
 				if(isset($enmeyData['skill_id'])){
 					$enemy_charData['skill_id']=$enmeyData['skill_id'];
 					$enemy_charData['skill_group']=$enmeyData['skill_group'];

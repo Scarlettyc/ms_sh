@@ -26,7 +26,7 @@ class MissionController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$uid=$data['u_id'];
-
+		$redis_mission=Redis::connection('default');
 		$key='mission_level'.$u_id;
 		$charModel=new CharacterModel();
 		$charData=$charModel->Where('u_id',$uid)->first();
@@ -41,7 +41,7 @@ class MissionController extends Controller
 			$history['time']=time();
 			$history['mission_id_list']=$missionList;
 			$response=json_encode($history,TRUE);
-			$MisstionResult=Redis::LPUSH($key,$resultJson);
+			$MisstionResult=$redis_mission->LPUSH($key,$resultJson);
 		}
 	}
 
@@ -52,6 +52,7 @@ class MissionController extends Controller
 		$u_id=$data['u_id'];
 		$mission_type=$data['mission_type'];
 		$missionModel=new MissionRewardsModel();
+		$redis_mission=Redis::connection('default');
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );

@@ -104,7 +104,7 @@ class SwooleCommand extends Command
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
                 // Log::info($data);
-             $result=$battle->test($arr,$clientInfo);
+             $result=$battle->realbattle($arr,$clientInfo);
              $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
