@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use DateTime;
 
 class CheckUserToken
 {
@@ -22,6 +23,9 @@ class CheckUserToken
         $json=base64_decode($req);
         //dd($json);
         $data=json_decode($json,TRUE);
+        $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
+        $datetime=$now->format( 'Y-m-d h:m:s' );
         $access_token=$data['access_token'];
         $redisLoad= Redis::connection('default');
         $loginToday=$redisLoad->HGET('login_data',$dmy.$u_id);
