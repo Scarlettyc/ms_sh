@@ -252,22 +252,22 @@ class ShopController extends Controller
 			$datetime=$now->format('Y-m-d h:m:s');
 			$dmy=$now->format( 'Ymd' );
 			$redisShop=Redis::connection('default');
-			$loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
-			$loginTodayArr=json_decode($loginToday);
-			$access_token=$loginTodayArr->access_token;
+			// $loginToday=$redisShop->HGET('login_data',$dmy.$data['u_id']);
+			// $loginTodayArr=json_decode($loginToday);
+			// $access_token=$loginTodayArr->access_token;
 			$u_id=$data['u_id'];
 			$UserModel=new UserModel;
 			
 			$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
-			if($access_token==$data['access_token']){
+			// if($access_token==$data['access_token']){
 				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 				$result['store_coin_list']=$coinList;
 				$response=json_encode($result,TRUE);
 				return base64_encode($response);
-			}
-			else {
-				throw new Exception("there is something wrong with token");
-			}
+			// }
+			// else {
+			// 	throw new Exception("there is something wrong with token");
+			// }
 		}
 
 		public function getGemList(Request $request){
