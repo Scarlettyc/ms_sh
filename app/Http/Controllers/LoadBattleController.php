@@ -16,7 +16,7 @@ use App\Util\MapTrapUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 class LoadBattleController extends Controller
 {
     public function loadingGame(Request $request)
@@ -29,10 +29,10 @@ class LoadBattleController extends Controller
 		$data=json_decode($json,TRUE);
         $u_id=$data['u_id'];
         $redis_battle=Redis::connection('battle');
-        $CharSkillEffUtil=new CharSkillEffUtil();
-        $access_token=$data['access_token'];
-        $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-    	if($checkToken){
+        // $CharSkillEffUtil=new CharSkillEffUtil();
+        // $access_token=$data['access_token'];
+        // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+    	// if($checkToken){
     		$match_id=$data['match_id'];
             $battleKey='battle_status'.$dmy;
  	    	$matchList=$redis_battle->HGET($battleKey,$u_id);
@@ -52,10 +52,10 @@ class LoadBattleController extends Controller
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
 			return  base64_encode($response);
-		}
-		else {
-			throw new Exception("wrong data");
-		}
+		// }
+		// else {
+		// 	throw new Exception("wrong data");
+		// }
     }
 
     private function getData($u_id){
@@ -97,13 +97,13 @@ class LoadBattleController extends Controller
         $data=json_decode($json,TRUE);
         $redisLoad= Redis::connection('default');
         $u_id=$data['u_id'];
-        $CharSkillEffUtil=new CharSkillEffUtil();
-        $access_token=$data['access_token'];
-        $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+        // $CharSkillEffUtil=new CharSkillEffUtil();
+        // $access_token=$data['access_token'];
+        // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
         $redis_battle=Redis::connection('battle');
         $match_id=$data['match_id'];
         $battleKey='battle_status'.$dmy;
-        if(isset($data)&&$checkToken){
+        if(isset($data)){
             $matchList=$redis_battle->HGET($battleKey,$u_id);
             $matchArr=json_decode($matchList,TRUE);
             if($match_id==$matchArr['match_id']){
@@ -113,9 +113,7 @@ class LoadBattleController extends Controller
                 $response=json_encode($result,TRUE);
              return  base64_encode($response);
             }
-            else{
-                throw new Exception("wrong match id", 1);
-            }
+            
         }
     }
 

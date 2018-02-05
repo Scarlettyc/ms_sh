@@ -15,7 +15,7 @@ use App\ScrollMstModel;
 use Exception;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 class LoginRewardController extends Controller
 {
 	public function getLoginReward(Request $request){
@@ -64,11 +64,11 @@ class LoginRewardController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$uid=$data['u_id'];
-        $CharSkillEffUtil=new CharSkillEffUtil();
-        $access_token=$data['access_token'];
-        $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if($checkToken)
-		{ 	
+        // $CharSkillEffUtil=new CharSkillEffUtil();
+        // $access_token=$data['access_token'];
+        // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// if($checkToken)
+		// { 	
 			$userModel=new UserModel();
 			$loginRewardsModel= new Login_rewardsModel();
 			$defindMstModel=new DefindMstModel();
@@ -89,10 +89,10 @@ class LoginRewardController extends Controller
 		$result=json_encode($todayreward,TRUE);
 		Redis::LPUSH('reward_history',$result);
 		return base64_encode($result);
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
+		// }
+		// else {
+		// 	throw new Exception("there have some error of you access_token");
+		// }
 
  	}
 

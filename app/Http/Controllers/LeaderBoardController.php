@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Redis;
 use App\EventMstModel;
 use DateTime;
 use App\MessageMstModel;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 
 class LeaderBoardController extends Controller
 {
@@ -17,10 +17,10 @@ class LeaderBoardController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
     	$event=new EventMstModel();
-      $CharSkillEffUtil=new CharSkillEffUtil();
-      $access_token=$data['access_token'];
-      $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-    	if($checkToken){
+      // $CharSkillEffUtil=new CharSkillEffUtil();
+      // $access_token=$data['access_token'];
+      // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+    	// if($checkToken){
     		$u_id=$data['u_id'];
     		$eventList=$event->select('banner_path','web_path')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
     		$reslut['event_list']=$eventList;
@@ -28,5 +28,5 @@ class LeaderBoardController extends Controller
     		return $response;
     	}
 
-  }
+  // }
 }

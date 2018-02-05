@@ -25,7 +25,7 @@ use DateTime;
 use DB;
 use Log;
 use Illuminate\Support\Facades\Redis;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 
 class BaggageController extends Controller
 {
@@ -39,11 +39,11 @@ class BaggageController extends Controller
 		$result=[];
 		$u_id=$data['u_id'];
 		$select=$data['eq_choose'];
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		
-		if($checkToken){ //there are five different types: All/R/S/W/C
+		// if($checkToken){ //there are five different types: All/R/S/W/C
 			if($select ==="All")//get all the item from baggage
 			{
 				$Resource=$BaggageUtil->getResource($u_id);
@@ -83,9 +83,9 @@ class BaggageController extends Controller
 				return base64_encode($json);
 			}
 			return base64_encode($response);
-		}else{
-			throw new Exception("there have some error of you access_token");
-		}
+		// }else{
+		// 	throw new Exception("there have some error of you access_token");
+		// }
 		
 	}
 
@@ -102,10 +102,10 @@ class BaggageController extends Controller
 		$u_id=$data['u_id'];
 
 
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if($checkToken){
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// if($checkToken){
 			if($ItemType == 1)
 			{
 				$result = $ItemInfoUtil->getResourceInfo($ItemId);
@@ -119,9 +119,9 @@ class BaggageController extends Controller
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
 		}
-		else{
-			throw new Exception("there have some error of you access_token");
-		}
+		// else{
+		// 	throw new Exception("there have some error of you access_token");
+		// }
 	}
 
 	//sell item in the baggage
@@ -143,10 +143,10 @@ class BaggageController extends Controller
 		$u_id=$data['u_id'];
 		$ItemType=$data['item_type'];//itemtype:2(Equipment)/itemtype:3(Scroll)
 		$ItemId=$data['item_id'];
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if($checkToken){
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// if($checkToken){
 			if($ItemType == 2)//sell Equipment
 			{	$EquipmentMstModel=new EquipmentMstModel();
 				$bag_id=$data['user_beq_id'];
@@ -178,7 +178,7 @@ class BaggageController extends Controller
 			];
 		}
 		return base64_encode($response);
-		}
+		// }
 	}
 
 

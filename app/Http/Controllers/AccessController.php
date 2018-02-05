@@ -13,7 +13,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 use Log;
 use DateTime;
 class AccessController extends Controller
@@ -227,10 +227,10 @@ class AccessController extends Controller
 		$redis_login=Redis::connection('default');
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$usermodel=new UserModel();
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if(isset($data['u_id'])&&$checkToken){
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		if(isset($data['u_id'])){
 			$u_id=$data['u_id'];
 			$result='';
 			$logindata['u_id']=$data['u_id'];

@@ -19,7 +19,7 @@ use App\DefindMstModel;
 use App\Util\BaggageUtil;
 use Exception;
 use Illuminate\Support\Facades\Redis;
-use App\Util\CharSkillEffUtil;
+// use App\Util\CharSkillEffUtil;
 use DateTime;
 
 class LuckdrawController extends Controller
@@ -32,14 +32,14 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$luckdraw=new Luck_draw_rewardsModel();
 		$defindMstModel=new DefindMstModel();
 		$result=[];
-		if($checkToken)
-		{
+		// if($checkToken)
+		// {
 			$normalDrawJosn=$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
 			$gemDrawJson=$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
 			$normalDrawData=json_decode($normalDrawJosn,TRUE);
@@ -80,7 +80,7 @@ class LuckdrawController extends Controller
 
 			$response=json_encode($result,TRUE);
  	    	return base64_encode($response);
-		}
+		// }
 	}
  	public function draw(Request $request){
 		$req=$request->getContent();
@@ -91,11 +91,11 @@ class LuckdrawController extends Controller
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 
-		if(isset($data['u_id'])&&$checkToken)
+		if(isset($data['u_id']))
 		{
 			$result=[];
 			$drawtype=$data['draw_type'];
@@ -251,10 +251,10 @@ class LuckdrawController extends Controller
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		if($checkToken){
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// if($checkToken){
  				$drawtype=$data['draw_type'];
  				$luckdraw=new Luck_draw_rewardsModel();
  				$luckdata=$luckdraw->where('draw_type',$drawtype)->first();
@@ -307,7 +307,7 @@ class LuckdrawController extends Controller
 
 		   		$response=json_encode($result,TRUE);
  	    		return base64_encode($response);
- 	    	}
+ 	    	// }
  		}
 
  		private function chooseBaggage($drawresult,$data,$pay){

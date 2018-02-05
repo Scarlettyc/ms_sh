@@ -55,12 +55,12 @@ class MissionController extends Controller
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		if($checkToken){
+		// if($checkToken){
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('user_lv_from','<=',$chaData['ch_lv'])->where('user_lv_to','>=',$chaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
@@ -85,7 +85,7 @@ class MissionController extends Controller
 			}
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
-		}
+		// }
 		
 	}
 	public function getLevelMission(Request $request){
@@ -99,19 +99,19 @@ class MissionController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		if($checkToken){
+		// if($checkToken){
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionReward=$missionModel->select('mission_id','user_lv_from as lv')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 
 			$reslut['daily_mission']=$missionReward;
 			$response=json_encode($reslut,TRUE);
 			return  base64_encode($response);
-		}
+		// }
 	}
 
 	public function getMissionDetails(Request $request){
@@ -125,13 +125,13 @@ class MissionController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$missionModel=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		if($checkToken){
+		// if($checkToken){
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionReward=$missionModel->select('mission_id','user_lv_from as lv','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 			$key='mission_daily_'.$dmy.'_'.$u_id;
@@ -152,7 +152,7 @@ class MissionController extends Controller
 			}
 			$response=json_encode($missionReward,TRUE);
 			return  base64_encode($response);
-		}
+		// }
 
 	}
 
@@ -197,12 +197,12 @@ class MissionController extends Controller
 		$CharacterModel=new CharacterModel();
 		$userModel=new UserModel();
 		$redis_mission=Redis::connection('default');
-		$CharSkillEffUtil=new CharSkillEffUtil();
-		$access_token=$data['access_token'];
-		$checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		// $CharSkillEffUtil=new CharSkillEffUtil();
+		// $access_token=$data['access_token'];
+		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		if($checkToken){
+		// if($checkToken){
 			$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
 			$missionReward=$missionModel->select('mission_id','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('user_lv_from','<=',$charaData['ch_lv'])->where('user_lv_to','>',$charaData['ch_lv'])->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 			if($missionReward['item_id']>0){
@@ -223,7 +223,7 @@ class MissionController extends Controller
 			$record=json_encode($userRecord,TRUE);
 			$redis_mission->HSET($key,$mission_id,$record);
 		return base64_encode('successfully');
-		}
+		// }
 
 	}
 
