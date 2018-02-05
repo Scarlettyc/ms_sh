@@ -42,7 +42,7 @@ class ShopController extends Controller
 		$result['shop_list']=$resourceShop;
 		$response=json_encode($result,TRUE);
  	    return base64_encode($response);
- 		}
+ 		// }
  		// else {
  		// 	throw new Exception("there is something wrong with token");
  		// }
