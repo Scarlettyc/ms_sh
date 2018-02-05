@@ -31,7 +31,7 @@ Route::controller('event','EventController');
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 
-Route::group(['middleware'=>'checktoken'],function()){
+Route::group(['middleware'=>'checktoken'],function(){
 Route::post('/updateUser','AccessController@update');
 Route::get('/test', 'AccessController@test');
 
@@ -106,7 +106,7 @@ Route::post('/refresh_setting', 'UpdateController@refreshSetting');
 
 
 Route::post('/get_event', 'EventController@getEventList');
-}
+});
 
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
