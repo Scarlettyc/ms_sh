@@ -156,10 +156,12 @@ class ShopController extends Controller
 					$reward=array();
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
+
 					if($reward['item_type']==3){
 						$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
 						$reward['sc_img_path']=$scro_img['sc_img_path'];	
 					}
+					var_dump($reward);
 					$idList[]=$reward['store_reward_id'];
 					$reward['status']=0;
 					$result['reward'][]=$reward;
@@ -170,7 +172,7 @@ class ShopController extends Controller
 				$result['next_gem']=$refresh['value2'];
 				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$data=json_encode($result,TRUE);
-				return base64_encode($data);
+				return $data;
 				}
 			}
 	}
