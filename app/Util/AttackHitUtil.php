@@ -91,7 +91,7 @@ class AttackHitUtil
  	// 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
 
  		 	// if($user['x']>=$effXfrom&&$user['x']<=$effXto&&$user['y']>=$effYfrom&&$user['y']<=$effYto){
- 			if(abs($user_direction*$user['x']-$enemy_direction*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ 			if(abs($user_direction*$user['x']-($enemy_direction+$atkEff['eff_skill_move_distance'])*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
  		 		return $atkEff;
  		 	}
  		 	else {
