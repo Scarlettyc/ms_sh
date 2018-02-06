@@ -161,7 +161,6 @@ class ShopController extends Controller
 						$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
 						$reward['sc_img_path']=$scro_img['sc_img_path'];	
 					}
-					var_dump($reward);
 					$idList[]=$reward['store_reward_id'];
 					$reward['status']=0;
 					$result['reward'][]=$reward;
@@ -172,7 +171,7 @@ class ShopController extends Controller
 				$result['next_gem']=$refresh['value2'];
 				$result['refresh_time']=strtotime(date("Y-m-d 5:0:0",strtotime("+1 day")))-time();
 				$data=json_encode($result,TRUE);
-				return $data;
+				return base64_encode($data);
 				}
 			}
 	}
