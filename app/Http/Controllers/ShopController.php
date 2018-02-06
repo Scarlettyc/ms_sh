@@ -159,6 +159,7 @@ class ShopController extends Controller
 					if($reward['item_type']==3){
 						$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
 						$reward['sc_img_path']=$scro_img['sc_img_path'];
+						
 					}
 					$idList[]=$reward['store_reward_id'];
 					$reward['status']=0;
