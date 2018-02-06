@@ -156,11 +156,10 @@ class ShopController extends Controller
 					$reward=array();
 					$number=rand($rate['value1'],$rate['value2']);
 					$reward=$storeReModel->select('store_reward_id','item_id','item_type','item_quantity','gem_spend')->where('rate_from','<=',$number)->where('rate_to','>=',$number)->wherenotIn('store_reward_id',$idList)->first();
-					if($reward['item_type']==3){
-						$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
-						$reward['sc_img_path']=$scro_img['sc_img_path'];
-						
-					}
+					// if($reward['item_type']==3){
+					// 	$scro_img=$scrollModel->select('sc_img_path')->where('sc_id',$reward['item_id'])->first();
+					// 	$reward['sc_img_path']=$scro_img['sc_img_path'];	
+					// }
 					$idList[]=$reward['store_reward_id'];
 					$reward['status']=0;
 					$result['reward'][]=$reward;
