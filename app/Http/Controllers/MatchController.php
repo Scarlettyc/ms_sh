@@ -169,7 +169,7 @@ class MatchController extends Controller
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$access_token=$data['access_token'];
-		$result=$this->closeMatch($u_id,$access_token);
+		$result=$this->match(2,$u_id,$access_token);
 		return $result;
 }
     private function chooseMap(){

@@ -97,8 +97,6 @@ class AttackHitUtil
  		 	else {
  		 		return null;
  		 	}
-
-
 	}
 
 // 
