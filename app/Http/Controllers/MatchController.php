@@ -26,11 +26,11 @@ class MatchController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		// $u_id=$data['u_id'];
 		$redisMatch= Redis::connection('default');
-		$loginToday=$redisMatch->HGET('login_data',$u_id);
-		$loginTodayArr=json_decode($loginToday,TRUE);
-		$access_token2=$loginTodayArr["access_token"];
+		// $loginToday=$redisMatch->HGET('login_data',$u_id);
+		// $loginTodayArr=json_decode($loginToday,TRUE);
+		// $access_token2=$loginTodayArr["access_token"];
 
-		if($access_token2==$access_token){
+		// if($access_token2==$access_token){
 			$redis_battle=Redis::connection('battle');
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
@@ -64,6 +64,7 @@ class MatchController extends Controller
 
 					$match_result=$redis_battle->HGET($matchKey,$match_uid[0]);
 					$waitUser=json_decode($match_result,TRUE);
+					
 					$redis_battle->HDEL($matchKey,$match_uid[0]);
 					// Log::info($match_result);
 					$resultList=json_decode($match_result,TRUE);
@@ -100,10 +101,10 @@ class MatchController extends Controller
 			}
 		}
  			return "error";
- 		}
- 		else{
- 			return null;
- 		}
+ 		// }
+ 		// else{
+ 		// 	return null;
+ 		// }
 	 }
 
 
