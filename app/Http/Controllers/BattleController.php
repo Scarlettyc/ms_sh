@@ -422,7 +422,7 @@ class BattleController extends Controller
 			}
 		}
 		else {
-			return false;
+			return true;
 		}
 
 
