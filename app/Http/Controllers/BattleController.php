@@ -237,147 +237,147 @@ class BattleController extends Controller
 	$redis_battle->HSET($key,$u_id,$reward);
   }
 
-	public function battle($u_id,$enmey_uid,$data)
-{	    //$req=$request->getContent();
-		//$json=base64_decode($request);
-		$data=json_decode($request,TRUE);
-		$redis_battle=Redis::connection('battle');
-		$characterModel=new CharacterModel();
-		$u_id=$data['u_id'];		
-		$now   = new DateTime;;
-		$dmy=$now->format( 'Ymd' );
-		$data=json_decode($json,TRUE);
-		$skillMstModel=new SkillMstModel();
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
- 	    $userExist=$redis_battle->LLEN($battlekey);
- 	    $attackhitutil=new AttackHitUtil();
- 	    $defindModel=new DefindMstModel();
- 	    $eqAttr=new EqAttrmstModel();
- 	    $eqModel=new EquipmentMstModel();
-     	$defValue=$defindModel->where('defind_id',8);
-     	list($t1, $t2) = explode(' ', microtime());
-		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
-		$effResult=[];
-		$userData=$characterModel->where('u_id',$$u_id)->first();
-		$enemy=$characterModel->where('u_id',$enmey_uid)->first();
-		$user_hp=$userData['ch_hp_max;'];
-		$enmey_hp=$enemy['ch_hp_max'];
-		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
-     	if($userExist>0){
-     		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-			$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
-			if($userBattleData&&$enemyJson){
-				$enemy=json_decode($enemyJson);
-				$userData=json_decode($userBattleData);
-				$user_hp=$userData['ch_hp'];
-				$enmey_hp=$enemy['ch_hp'];
-			}
-		}
-		$effects=[];
-		$enemy_effects=[];
-		if($data['skill']){
-			foreach ($userData['skill'] as $key => $skill) {
+// 	public function battle($u_id,$enmey_uid,$data)
+// {	    //$req=$request->getContent();
+// 		//$json=base64_decode($request);
+// 		$data=json_decode($request,TRUE);
+// 		$redis_battle=Redis::connection('battle');
+// 		$characterModel=new CharacterModel();
+// 		$u_id=$data['u_id'];		
+// 		$now   = new DateTime;;
+// 		$dmy=$now->format( 'Ymd' );
+// 		$data=json_decode($json,TRUE);
+// 		$skillMstModel=new SkillMstModel();
+// 		$battlekey='battle_data'.$match_id.'_'.$u_id;
+//  	    $userExist=$redis_battle->LLEN($battlekey);
+//  	    $attackhitutil=new AttackHitUtil();
+//  	    $defindModel=new DefindMstModel();
+//  	    $eqAttr=new EqAttrmstModel();
+//  	    $eqModel=new EquipmentMstModel();
+//      	$defValue=$defindModel->where('defind_id',8);
+//      	list($t1, $t2) = explode(' ', microtime());
+// 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
+// 		$effResult=[];
+// 		$userData=$characterModel->where('u_id',$$u_id)->first();
+// 		$enemy=$characterModel->where('u_id',$enmey_uid)->first();
+// 		$user_hp=$userData['ch_hp_max;'];
+// 		$enmey_hp=$enemy['ch_hp_max'];
+// 		$enemyKey='battle_data'.$match_id.'_'.$enmey_uid;
+//      	if($userExist>0){
+//      		$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+// 			$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+// 			if($userBattleData&&$enemyJson){
+// 				$enemy=json_decode($enemyJson);
+// 				$userData=json_decode($userBattleData);
+// 				$user_hp=$userData['ch_hp'];
+// 				$enmey_hp=$enemy['ch_hp'];
+// 			}
+// 		}
+// 		$effects=[];
+// 		$enemy_effects=[];
+// 		if($data['skill']){
+// 			foreach ($userData['skill'] as $key => $skill) {
 
-				$checkCD=$this->checkSkillCD($skill['skill_id'],$match_id,$u_id);
-				if($checkCD){
-					$effResult=$attackhitutil->getSelfEff($skill['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);	
+// 				$checkCD=$this->checkSkillCD($skill['skill_id'],$match_id,$u_id);
+// 				if($checkCD){
+// 					$effResult=$attackhitutil->getSelfEff($skill['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);	
 
-				$effects[]=$effResult;
-				}
-			}
+// 				$effects[]=$effResult;
+// 				}
+// 			}
 			
-		}
+// 		}
 
-		if($userData['skill']){
-				foreach ($userData['skill'] as $key => $skills) {
-					$effResult=$attackhitutil->getSelfEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
-					$effects[]=$effResult;
-				}
-		}
+// 		if($userData['skill']){
+// 				foreach ($userData['skill'] as $key => $skills) {
+// 					$effResult=$attackhitutil->getSelfEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
+// 					$effects[]=$effResult;
+// 				}
+// 		}
 
-		if($enemy['skill']){
-				foreach ($enemy['skill'] as $key => $skills) {
-					$enemyEffResult=$attackhitutil->getEnmeyEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
+// 		if($enemy['skill']){
+// 				foreach ($enemy['skill'] as $key => $skills) {
+// 					$enemyEffResult=$attackhitutil->getEnmeyEff($skills['skill_id'],$user,$enemy,$skills['direction'],$skills['occur_time']);
 
-					$enemy_effects[]=$enemyEffResult;
-				}
-		}
+// 					$enemy_effects[]=$enemyEffResult;
+// 				}
+// 		}
 			
- 			//$user_shield=$userData['ch_shield'];
-			$eqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$userData['m_id'],$userData['core_id']]);
-			$eqAtk= $eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$eqAtt);
-			$enemyEqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$enemy['m_id'],$enemy['core_id']]);
-			$enemyEqAtk=$eqAtt->sum('eff_ch_atk')->wherein('equ_att_id',$enemyEqAtt);
+//  			//$user_shield=$userData['ch_shield'];
+// 			$eqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$userData['m_id'],$userData['core_id']]);
+// 			$eqAtk= $eqAttr->sum('eff_ch_atk')->wherein('equ_att_id',$eqAtt);
+// 			$enemyEqAtt=$eqModel->select('equ_attribute_id')->wherein('equ_id',[$userData['w_id'],$enemy['m_id'],$enemy['core_id']]);
+// 			$enemyEqAtk=$eqAtt->sum('eff_ch_atk')->wherein('equ_att_id',$enemyEqAtt);
 
-  			$user_atk=$userData['ch_atk']+$eqAtk;
-  			$user_def=$userData['ch_def'];
-  			$user_crit=$userData['ch_crit '];
-  			$user_cd=$userData['ch_cd'];
-  			$user_spd=$userData['ch_spd'];
-  			$enemy_atk=$enemy['ch_atk']+$enemyEqAtk;
+//   			$user_atk=$userData['ch_atk']+$eqAtk;
+//   			$user_def=$userData['ch_def'];
+//   			$user_crit=$userData['ch_crit '];
+//   			$user_cd=$userData['ch_cd'];
+//   			$user_spd=$userData['ch_spd'];
+//   			$enemy_atk=$enemy['ch_atk']+$enemyEqAtk;
 
-  		foreach($effects as $effResult){
-	 		if(isset($effResult['selfbuff'])){
-	 			$selfBuff=$effResult['selfbuff'];
-       			$user_hp=($user_hp+$selfBuff['eff_ch_hp'])*(1+$selfBuff['eff_ch_hp_per']);
- 				$user_atk=$user_atk*(1+$selfBuff['eff_ch_hp_per']);
- 				$user_def=$user_def*(1+$selfBuff['eff_ch_def_per']);
- 				$user_crit=$user_crit*(1+$selfBuff['eff_ch_crit_per']);
- 				$user_cd=$user_cd*(1-$selfBuff['eff_ch_cd']);
- 				$user_spd=$user_spd*(1-$selfBuff['eff_ch_spd_per']);
- 				$user_stuck=$selfBuff['eff_ch_stuck'];
- 				$user_clear_buff=$selfBuff['eff_ch_clear_buff'];
-	 		}
-		}
-		foreach($enemy_effects as $enemyEffResult){
+//   		foreach($effects as $effResult){
+// 	 		if(isset($effResult['selfbuff'])){
+// 	 			$selfBuff=$effResult['selfbuff'];
+//        			$user_hp=($user_hp+$selfBuff['eff_ch_hp'])*(1+$selfBuff['eff_ch_hp_per']);
+//  				$user_atk=$user_atk*(1+$selfBuff['eff_ch_hp_per']);
+//  				$user_def=$user_def*(1+$selfBuff['eff_ch_def_per']);
+//  				$user_crit=$user_crit*(1+$selfBuff['eff_ch_crit_per']);
+//  				$user_cd=$user_cd*(1-$selfBuff['eff_ch_cd']);
+//  				$user_spd=$user_spd*(1-$selfBuff['eff_ch_spd_per']);
+//  				$user_stuck=$selfBuff['eff_ch_stuck'];
+//  				$user_clear_buff=$selfBuff['eff_ch_clear_buff'];
+// 	 		}
+// 		}
+// 		foreach($enemy_effects as $enemyEffResult){
 
-		if(isset($enemyEffResult['enemyBuff'])){
+// 		if(isset($enemyEffResult['enemyBuff'])){
 
-			$userBuff=$enemyEffResult['userBuff'];
-     		$user_hp=($user_hp+$userBuff['eff_ch_hp'])*(1-$userBuff['eff_ch_hp_per']);
- 			$user_atk=$user_atk*(1-$userBuff['eff_ch_hp_per']);
- 			$user_def=$user_def*(1-$userBuff['eff_ch_def_per']);
- 			$user_crit=$user_crit*(1-$userBuff['eff_ch_crit_per']);
- 			$user_cd=$user_cd*(1+$userBuff['eff_ch_cd']);
- 			$user_spd=$user_spd*(1+$userBuff['eff_ch_spd_per']);
- 			$user_stun=$userBuff['eff_ch_stun'];
- 			$user_stuck=$userBuff['eff_ch_stuck'];
-	 	}
+// 			$userBuff=$enemyEffResult['userBuff'];
+//      		$user_hp=($user_hp+$userBuff['eff_ch_hp'])*(1-$userBuff['eff_ch_hp_per']);
+//  			$user_atk=$user_atk*(1-$userBuff['eff_ch_hp_per']);
+//  			$user_def=$user_def*(1-$userBuff['eff_ch_def_per']);
+//  			$user_crit=$user_crit*(1-$userBuff['eff_ch_crit_per']);
+//  			$user_cd=$user_cd*(1+$userBuff['eff_ch_cd']);
+//  			$user_spd=$user_spd*(1+$userBuff['eff_ch_spd_per']);
+//  			$user_stun=$userBuff['eff_ch_stun'];
+//  			$user_stuck=$userBuff['eff_ch_stuck'];
+// 	 	}
 
- 	   		if(isset($enemyEffResult['atk_eff']['eff'])&&$enemyEffResult['atk_eff']['hit']==1){
- 	 				$atkeff=$enemyEffResult['atkeff']['eff'];
- 	 				if($enemyEffResult['skill_group']==0){
-					$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
+//  	   		if(isset($enemyEffResult['atk_eff']['eff'])&&$enemyEffResult['atk_eff']['hit']==1){
+//  	 				$atkeff=$enemyEffResult['atkeff']['eff'];
+//  	 				if($enemyEffResult['skill_group']==0){
+// 					$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point'];
  	 			
- 	 				}
+//  	 				}
 
- 	 				else if($enemyEffResult['skill_group']==1){
- 	 				$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
- 	 				}
- 	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
+//  	 				else if($enemyEffResult['skill_group']==1){
+//  	 				$enemy_atk=$enemy_atk*$atkeff['eff_skill_atk_point']*$atkeff['eff_skill_damage_point']+pow($enemy['ch_lv'],2)*2;
+//  	 				}
+//  	 				$enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk+$enemy['eff_skill_base'])*$enemyCritical*(1-(1-$user_def)/(1+$user_def));
 
- 					$user_hp=$user_hp-$enemyDMG;
- 					if($enemyEffResult['atkeff']['end']==0){
- 						$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
-						$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
- 			}
+//  					$user_hp=$user_hp-$enemyDMG;
+//  					if($enemyEffResult['atkeff']['end']==0){
+//  						$userBattleData=$redis_battle->LRANGE($battlekey,0,0);
+// 						$enemyJson=$redis_battle->LRANGE($enemyKey,0,0);
+//  			}
 
-		}
-	}
-			$battleCheck=$this->winCheck($user_hp,$enmey_hp,$u_id,$map_id);
-			$result['win']=$battleCheck['win'];
-			$result['battle_end']=$battleCheck['end'];
-			$result['level_uP']=$battleCheck['leveluP'];
-			$result['ch_hp']=$user_hp;
-			$result['ch_atk']=$user_atk;
-			$result['ch_def']=$user_def;
-			$result['ch_crit']=$ch_crit;
-			$result['ch_cd']=$ch_crit;
-  			$result['ch_spd']=$user_spd; 		
-  			$response=json_encode($result,TRUE);
-  			$redis_battle->LPUSH($battlekey,$response);
-  			return 	$response;
-	}
+// 		}
+// 	}
+// 			$battleCheck=$this->winCheck($user_hp,$enmey_hp,$u_id,$map_id);
+// 			$result['win']=$battleCheck['win'];
+// 			$result['battle_end']=$battleCheck['end'];
+// 			$result['level_uP']=$battleCheck['leveluP'];
+// 			$result['ch_hp']=$user_hp;
+// 			$result['ch_atk']=$user_atk;
+// 			$result['ch_def']=$user_def;
+// 			$result['ch_crit']=$ch_crit;
+// 			$result['ch_cd']=$ch_crit;
+//   			$result['ch_spd']=$user_spd; 		
+//   			$response=json_encode($result,TRUE);
+//   			$redis_battle->LPUSH($battlekey,$response);
+//   			return 	$response;
+// 	}
 
 
 	private function winCheck($userHp,$enemyHP,$u_id,$map_id){
@@ -403,21 +403,26 @@ class BattleController extends Controller
 		$redis_battle=Redis::connection('battle');
 		$skill_id=$skill['skill_id'];
 		$skill_cd=$skill['skill_cd'];
-		$skill_key='skill_'.$match_id.'_'.$u_id;
-		$skillTime=$redis_battle->HGET($skill_key,$$skill_id);
-		$current=$this->getMillisecond();
-		if($skillTime){
-			if($current-$skillTime>=$skill_cd){
-				$redis_battle->HSET($skill_key,$$skill_id,$current);
+		if($skill_cd>0){
+			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$current=$this->getMillisecond();
+			if($skillTime){
+				if($current-$skillTime>=$skill_cd){
+				$redis_battle->HSET($skill_key,$skill_id,$current);
 				return true;
-			}
+				}
 			else {
 				return false;
+				}
+			}
+			else {
+			$redis_battle->HSET($skill_key,$$skill_id,$current);
+			return true;
 			}
 		}
 		else {
-			$redis_battle->HSET($skill_key,$$skill_id,$current);
-			return true;
+			return false;
 		}
 
 
