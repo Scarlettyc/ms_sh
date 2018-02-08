@@ -84,11 +84,11 @@ class BattleController extends Controller
 			$charData['direction']=$data['direction'];
 		}
 		if(isset($data['skill_id'])){
-			$checkCD=$this->checkSkillCD($data['skill_id'],$match_id,$u_id);
+			$skill=$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
+			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 			if($checkCD){
 				$charData['skill_id']=$data['skill_id'];
-				$skill_group=$skillModel->select('skill_group')->where('skill_id',$charData['skill_id'])->first();
-				$charData['skill_group']=$skill_group['skill_group'];
+				$charData['skill_group']=$skill['skill_group'];
 			}
 		}
 		
@@ -424,8 +424,6 @@ class BattleController extends Controller
 		else {
 			return true;
 		}
-
-
 	}
 	private function getCritical(){
  			$defindModel=new DefindMstModel();
