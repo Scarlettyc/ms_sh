@@ -52,6 +52,7 @@ class BattleController extends Controller
 			$enemy_uid=$battleData['enemy_uid'];
 			$match_id=$battleData['match_id'];
 			$clientId=$battleData['client'];
+			$map_id=$battleData['map_id'];
 			$enemy_clientId=$battleData['enmey_client'];
 			$battlekey='battle_data'.$match_id.'_'.$u_id;
 			$userExist=$redis_battle->LLEN($battlekey);
