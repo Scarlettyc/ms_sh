@@ -236,7 +236,7 @@ class BaggageUtil
 			$result['item_image']=$reData['r_img_path'];
 		}
 		else if($mission['item_type']==2){
-			$$eqData=$eqModel->where('equ_id',$mission['item_org_id'])->first();
+			$eqData=$eqModel->where('equ_id',$mission['item_org_id'])->first();
 			$result['item_name']=$reData['equ_name'];
 			$result['item_description']=$reData['equ_description'];
 			$result['item_image']=$reData['icon_path'];

@@ -259,7 +259,7 @@ class BattleController extends Controller
 //      	list($t1, $t2) = explode(' ', microtime());
 // 		$mileTime=(float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
 // 		$effResult=[];
-// 		$userData=$characterModel->where('u_id',$$u_id)->first();
+// 		$userData=$characterModel->where('u_id',$u_id)->first();
 // 		$enemy=$characterModel->where('u_id',$enmey_uid)->first();
 // 		$user_hp=$userData['ch_hp_max;'];
 // 		$enmey_hp=$enemy['ch_hp_max'];
@@ -418,7 +418,7 @@ class BattleController extends Controller
 				}
 			}
 			else {
-			$redis_battle->HSET($skill_key,$$skill_id,$current);
+			$redis_battle->HSET($skill_key,$skill_id,$current);
 			return true;
 			}
 		}

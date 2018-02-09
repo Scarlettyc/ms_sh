@@ -61,7 +61,7 @@ class AttackHitUtil
 					$result['atk_eff']['eff']= $atkEff;
 					$result['atk_eff']['hit']=$hit['hit'];
 					$result['atk_eff']['end']=$hit['end'];
-					$result['skill_group']=$$skillData['skill_group'];
+					$result['skill_group']=$skillData['skill_group'];
 				// }
 			}
 		}

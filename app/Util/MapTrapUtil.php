@@ -101,7 +101,7 @@ class MapTrapUtil
 //     function intersects($circleR,$effAngle,$circleX,$circleY,$RectX,$RectY,$RecWidth,$RecHeight)
 // {
 //     $circleDistanceX = abs($circleX - $RectX);
-//     $circleDistanceY = abs($circleY - $$RectY);
+//     $circleDistanceY = abs($circleY - $RectY);
 
 //     $distance=sqrt(pow(($circleDistanceX),2)+pow($circleDistanceY,2));
 //     $agnle=asin($circleDistanceX/$distance);
