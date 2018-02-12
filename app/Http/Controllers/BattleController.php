@@ -195,8 +195,8 @@ class BattleController extends Controller
 		  	$datetime=$now->format('Y-m-d h:m:s');
 			$redis_battle=Redis::connection('battle');
 		  	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
-		  	$count=count($norReward);
-			shuffle($norReward);
+		 //  	$count=count($norReward);
+			// shuffle($norReward);
 			$baggageUtil=new BaggageUtil();
 			$baggageUtil->insertToBaggage($u_id,$norReward);
 			$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
@@ -483,7 +483,8 @@ class BattleController extends Controller
 		$charData=$characterModel->where('u_id',$u_id)->first();
 		$result=$this->BattleSpeRewards($u_id,1,1222,$charData['ch_lv']);
 		var_dump($result);
-		$result=$this->BattleNormalRewards($u_id,1,1222,$charData['ch_lv'],$charData['ch_ranking']);
+		$result2=$this->BattleNormalRewards($u_id,1,1222,$charData['ch_lv'],$charData['ch_ranking']);
+		var_dump($result2);
  	 }
 
 	 public function finalMatchResult ($data){
