@@ -69,6 +69,8 @@ class BattleController extends Controller
 					$charData['ch_stam']=$userData['ch_stam'];
 					$charData['ch_atk']=$userData['ch_atk'];
 					$charData['ch_crit']=$userData['ch_crit'];
+					$charData['ch_lv']=$userData['ch_lv'];
+					$charData['ch_ranking']=$userData['ch_ranking'];
 				}
 		
 			}
