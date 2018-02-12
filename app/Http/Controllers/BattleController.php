@@ -202,14 +202,17 @@ class BattleController extends Controller
 			$baggageUtil->insertToBaggage($u_id,$norReward);
 			$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
 			$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
+			if($battle_reward['exp']>0){
 			$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
-			$key="battle_result".$match_id;
-			$norReward['coin_reward']=$battle_reward['coin'];
 			$norReward['exp_reward']=$battle_reward['exp'];
-			$norReward['exp_from']=$charData['ch_exp'];
-			$norReward['lv_before']=$charData['ch_lv'];
+			//$norReward['exp_from']=$charData['ch_exp'];
+			$norReward['lv_before']=$ch_lv;
 			$norReward['levelUP']=$LevelUP['levelup'];
 			$norReward['lv']=$LevelUP['lv'];
+			}
+			$key="battle_result".$match_id;
+			$norReward['coin_reward']=$battle_reward['coin'];
+
 			$reward=json_encode($norReward,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
 
@@ -232,13 +235,14 @@ class BattleController extends Controller
 	$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 	if($battle_reward['exp']>0){
 	$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
+	$spReward['exp_reward']=$battle_reward['exp'];
+	//$spReward['exp_from']=$charData['ch_exp'];
+	$spReward['lv_before']=$ch_lv;
+	$spReward['levelUP']=$LevelUP['levelup'];
 	}
 	$key="battle_result".$match_id;
 	$spReward['coin_reward']=$battle_reward['coin'];
-	$spReward['exp_reward']=$battle_reward['exp'];
-	$spReward['exp_from']=$charData['ch_exp'];
-	$spReward['lv_before']=$charData['ch_lv'];
-	$spReward['levelUP']=$LevelUP['levelup'];
+
 	$spReward['lv']=$LevelUP['lv'];
 	$reward=json_encode($spReward,TRUE);
 	$redis_battle->HSET($key,$u_id,$reward);
