@@ -219,9 +219,9 @@ class BaggageUtil
 					$UserBaggageScrollModel->insert($result);
 				}
 			}
-			$missionlist[]=$reward['misson_id'];
+			// $missionlist[]=$reward['misson_id'];
 		 }
-		 return $missionlist;
+		 // return $missionlist;
 
 		// }catch(Exception $e){
 		// 	throw new Exception("there have some errors of insert to baggage");
