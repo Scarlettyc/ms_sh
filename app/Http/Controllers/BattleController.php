@@ -155,7 +155,6 @@ class BattleController extends Controller
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
 			$this->BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv);
-			$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
@@ -224,6 +223,7 @@ class BattleController extends Controller
   	$UserModel=new UserModel();
   	$datetime=$now->format('Y-m-d h:m:s');
   	$defindMstModel=new DefindMstModel();
+  	$redis_battle=Redis::connection('battle');
   	$defindData=$defindMstModel->where('defind_id',16)->first(); 
   	$random=rand($defindData['value1'],$defindData['value2']);
   	$spReward=$baSpReward->where('map_id',$map_id)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('rate_from','<=',$random)->where('rate_to','>',$random)->get();
