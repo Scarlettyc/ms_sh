@@ -175,6 +175,7 @@ class BaggageUtil
 		$eqModel=new EquipmentMstModel();
 		$scrModel=new ScrollMstModel();
 		$reModel=new ResourceMstModel();
+		$now   = new DateTime;
 		$datetime=$now->format('Y-m-d h:m:s');
 		try{
 		foreach($rewards as $reward){
