@@ -152,11 +152,11 @@ class BattleController extends Controller
 		$result['enemy_data']=$enemy_charData;
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
-			$this->BattleSpeRewards($u_id,$map_id);
+			$this->BattleSpeRewards($u_id,$map_id,$match_id);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
-			$this->BattleNormalRewards($u_id,$map_id);
+			$this->BattleNormalRewards($u_id,$map_id,$match_id);
 		}
 		else {
 			$result['end']=0;
@@ -214,7 +214,7 @@ class BattleController extends Controller
 
   }
 
-  private function BattleSpeRewards($u_id,$map_id){
+  private function BattleSpeRewards($u_id,$map_id,$match_id){
   	$baSpReward=new BattleSpecialRewardsMst();
   	$UserModel=new UserModel();
   	$datetime=$now->format('Y-m-d h:m:s');
