@@ -218,6 +218,7 @@ class BattleController extends Controller
   private function BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv){
   	$now   = new DateTime;;
   	$baSpReward=new BattleSpecialRewardsMst();
+  	$chaEffutil=new CharSkillEffUtil();
   	$UserModel=new UserModel();
   	$datetime=$now->format('Y-m-d h:m:s');
   	$defindMstModel=new DefindMstModel();
