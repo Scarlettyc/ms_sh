@@ -212,7 +212,6 @@ class BattleController extends Controller
 			}
 			$key="battle_result".$match_id;
 			$norReward['coin_reward']=$battle_reward['coin'];
-
 			$reward=json_encode($norReward,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
 
@@ -239,11 +238,10 @@ class BattleController extends Controller
 	//$spReward['exp_from']=$charData['ch_exp'];
 	$spReward['lv_before']=$ch_lv;
 	$spReward['levelUP']=$LevelUP['levelup'];
+	$spReward['lv']=$LevelUP['lv'];
 	}
 	$key="battle_result".$match_id;
 	$spReward['coin_reward']=$battle_reward['coin'];
-
-	$spReward['lv']=$LevelUP['lv'];
 	$reward=json_encode($spReward,TRUE);
 	$redis_battle->HSET($key,$u_id,$reward);
   }
