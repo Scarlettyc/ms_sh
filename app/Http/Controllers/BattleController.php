@@ -155,7 +155,7 @@ class BattleController extends Controller
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
 			$this->BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv);
-			$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking)
+			$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
