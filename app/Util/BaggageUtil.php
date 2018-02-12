@@ -10,6 +10,7 @@ use App\EquUpgradeMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\ItemMstModel;
+use App\EquipmentMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
