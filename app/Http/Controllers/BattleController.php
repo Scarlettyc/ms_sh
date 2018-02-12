@@ -189,6 +189,8 @@ class BattleController extends Controller
   	$chaEffutil=new CharSkillEffUtil();
   	$battleRewardExpModel=new BattleRewardExpModel();
   	$UserModel=new UserModel();
+  	$now   = new DateTime;;
+	$dmy=$now->format( 'Ymd' );
   	$datetime=$now->format('Y-m-d h:m:s');
 	$charData=$characterModel->where('u_id',$u_id)->first();
 	$cha_ranking=$charData['ch_ranking'];
@@ -215,6 +217,7 @@ class BattleController extends Controller
   }
 
   private function BattleSpeRewards($u_id,$map_id,$match_id){
+  	$now   = new DateTime;;
   	$baSpReward=new BattleSpecialRewardsMst();
   	$UserModel=new UserModel();
   	$datetime=$now->format('Y-m-d h:m:s');
@@ -381,23 +384,6 @@ class BattleController extends Controller
 // 	}
 
 
-	private function winCheck($userHp,$enemyHP,$u_id,$map_id){
-		$win=0;
-		$end=0;
-		if($userHp>0&&$enemyHP<=0){
-		 	$win=1;
-		 	$end=1;
-		 	$isLevelUP=$this->BattleNormalRewards($u_id,$map_id);
-		 	$this->BattleSpeRewards($u_id,$map_id);
-
-		}
-		else if($userHp<=0&&$enemyHP>0||$userHp<=0&&$enemyHP<=0){
-			$win=0;
-		 	$end=1;
-		 	$isLevelUP=$this->BattleNormalRewards($u_id,$map_id);
-		}
-		return ['win'=>$win,'end'=>$end,'leveluP'=>$isLevelUP];
-	}
 
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
@@ -487,8 +473,10 @@ class BattleController extends Controller
 		$data=json_decode($json,TRUE);
 		$charData['address']='1111';
 		$charData['port']=2;
-		$result=$this->realbattle($data,$charData);
+		$u_id=$data['u_id'];
+		$result=$this->BattleSpeRewards($u_id,1,1222);
 		var_dump($result);
+		$result=$this->BattleNormalRewards($u_id,1,1222);
  	 }
 
 	 public function finalMatchResult ($data){
