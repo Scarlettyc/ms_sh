@@ -59,7 +59,7 @@ class BattleController extends Controller
 		
 			$charData=[];
 			if($userExist<=1){
-				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
+				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			}
 			else{
 				$userJson=$redis_battle->LRANGE($battlekey,0,0);
@@ -81,6 +81,8 @@ class BattleController extends Controller
 		$charData['port']=$clientInfo['port'];
 		$charData['direction']=1;
 		$charData['move']=$move;
+		$ch_lv=$charData['ch_lv'];
+		$ch_ranking=$charData['ch_ranking'];
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
 		}
@@ -152,11 +154,12 @@ class BattleController extends Controller
 		$result['enemy_data']=$enemy_charData;
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
-			$this->BattleSpeRewards($u_id,$map_id,$match_id);
+			$this->BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv);
+			$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking)
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
-			$this->BattleNormalRewards($u_id,$map_id,$match_id);
+			$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking);
 		}
 		else {
 			$result['end']=0;
@@ -183,40 +186,36 @@ class BattleController extends Controller
 }
 
 
-  private function BattleNormalRewards($u_id,$map_id,$match_id){
-  	$characterModel=new CharacterModel();
-  	$baNorReward=new BattleNormalRewardsMst();
-  	$chaEffutil=new CharSkillEffUtil();
-  	$battleRewardExpModel=new BattleRewardExpModel();
-  	$UserModel=new UserModel();
-  	$now   = new DateTime;;
-	$dmy=$now->format( 'Ymd' );
-  	$datetime=$now->format('Y-m-d h:m:s');
-	$charData=$characterModel->where('u_id',$u_id)->first();
-	$cha_ranking=$charData['ch_ranking'];
-	$redis_battle=Redis::connection('battle');
-  	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$cha_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
-  	$count=count($norReward);
-	shuffle($norReward);
-	$baggageUtil=new BaggageUtil();
-	$baggageUtil->insertToBaggage($u_id,$norReward);
-	$ch_lv=$charData['charData'];
-	$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
-	$UserModel->updateUserValue('u_coin',$battle_reward['coin']);
-	$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
-	$key="battle_result".$match_id;
-	$norReward['coin_reward']=$battle_reward['coin'];
-	$norReward['exp_reward']=$battle_reward['exp'];
-	$norReward['exp_from']=$charData['ch_exp'];
-	$norReward['lv_before']=$charData['ch_lv'];
-	$norReward['levelUP']=$LevelUP['levelup'];
-	$norReward['lv']=$LevelUP['lv'];
-	$reward=json_encode($norReward,TRUE);
-	$redis_battle->HSET($key,$u_id,$reward);
+  private function BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking){
+		  	$baNorReward=new BattleNormalRewardsMst();
+		  	$chaEffutil=new CharSkillEffUtil();
+		  	$battleRewardExpModel=new BattleRewardExpModel();
+		  	$UserModel=new UserModel();
+		  	$now   = new DateTime;;
+			$dmy=$now->format( 'Ymd' );
+		  	$datetime=$now->format('Y-m-d h:m:s');
+			$redis_battle=Redis::connection('battle');
+		  	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
+		  	$count=count($norReward);
+			shuffle($norReward);
+			$baggageUtil=new BaggageUtil();
+			$baggageUtil->insertToBaggage($u_id,$norReward);
+			$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
+			$UserModel->updateUserValue('u_coin',$battle_reward['coin']);
+			$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
+			$key="battle_result".$match_id;
+			$norReward['coin_reward']=$battle_reward['coin'];
+			$norReward['exp_reward']=$battle_reward['exp'];
+			$norReward['exp_from']=$charData['ch_exp'];
+			$norReward['lv_before']=$charData['ch_lv'];
+			$norReward['levelUP']=$LevelUP['levelup'];
+			$norReward['lv']=$LevelUP['lv'];
+			$reward=json_encode($norReward,TRUE);
+			$redis_battle->HSET($key,$u_id,$reward);
 
   }
 
-  private function BattleSpeRewards($u_id,$map_id,$match_id){
+  private function BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv){
   	$now   = new DateTime;;
   	$baSpReward=new BattleSpecialRewardsMst();
   	$UserModel=new UserModel();
@@ -466,6 +465,7 @@ class BattleController extends Controller
  	 }
 
  	 public function testBattle(Request $request){
+ 	 	$characterModel=new CharacterModel();
  	 	$header=$request->header('Content-Type');
  		$req=$request->getContent();
 		$json=base64_decode($req);
@@ -475,9 +475,10 @@ class BattleController extends Controller
 		$charData['address']='1111';
 		$charData['port']=2;
 		$u_id=$data['u_id'];
-		$result=$this->BattleSpeRewards($u_id,1,1222);
+		$charData=$characterModel->where('u_id',$$u_id)->first();
+		$result=$this->BattleSpeRewards($u_id,1,1222,$charData['ch_lv']);
 		var_dump($result);
-		$result=$this->BattleNormalRewards($u_id,1,1222);
+		$result=$this->BattleNormalRewards($u_id,1,1222,$charData['ch_lv'],$charData['ch_ranking']);
  	 }
 
 	 public function finalMatchResult ($data){
