@@ -177,7 +177,7 @@ class BaggageUtil
 		$reModel=new ResourceMstModel();
 		$now   = new DateTime;
 		$datetime=$now->format('Y-m-d h:m:s');
-		try{
+		// try{
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
 				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
@@ -222,9 +222,9 @@ class BaggageUtil
 		 }
 		 return $missionlist;
 
-		}catch(Exception $e){
-			throw new Exception("there have some errors of insert to baggage");
-		}
+		// }catch(Exception $e){
+		// 	throw new Exception("there have some errors of insert to baggage");
+		// }
 
 	}
 	public function getReward($mission){
