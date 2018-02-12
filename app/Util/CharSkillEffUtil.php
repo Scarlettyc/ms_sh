@@ -171,7 +171,7 @@ class CharSkillEffUtil
 		$characterModel=new CharacterModel();
 		$chaEffutil=new CharSkillEffUtil();
 		$charData=$characterModel->select('ch_lv','ch_exp')->where('u_id',$u_id)->first();
-		$lv=$charData['ch_lv;'];
+		$lv=$charData['ch_lv'];
 		$u_exp=$charData['ch_exp']+$exp;
 
   		$levels=$levelupMst->where('level','>',$lv)->where('exp_total','<=',$u_exp)->orderBy('level','DESC')->first();
