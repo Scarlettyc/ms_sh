@@ -87,11 +87,8 @@ class AttackHitUtil
 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 		$effXfrom=$enemy['x'];
 		$effYfrom=$enemy['y'];
-		// $effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
- 	// 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
 
- 		 	// if($user['x']>=$effXfrom&&$user['x']<=$effXto&&$user['y']>=$effYfrom&&$user['y']<=$effYto){
- 			if(abs($user_direction*$user['x']-($enemy_direction+$atkEff['eff_skill_move_distance'])*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ 			if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
  		 		return $atkEff;
  		 	}
  		 	else {
@@ -99,7 +96,80 @@ class AttackHitUtil
  		 	}
 	}
 
-// 
+
+	public function getconstantEff($skill_id,$occurtime,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction,$constantEff){
+		$atkEffModel=new AtkEffectionMst();
+		$skillModel=new SkillMstModel();
+		$buffEffModel= new BuffEffectionMst();
+		if($clientID>$enemy_clientId){
+			$user['x']=-$user['x'];
+		}
+		if(isset($constantEff['enemy_buff_eff_id'])&&time()-$occurtime<$constantEff['enemy_buff_constant_time']){
+			$result=$this->checkBuff($constantEff['enemy_buff_eff_id']);
+
+
+		}
+		if(isset($constantEff['atk_eff_id'])&&time()-$occurtime<$constantEff['atk_constant_time']){
+
+		}
+
+	}
+
+	private checkBuff($buff_id){
+		$buffEff=$buffEffModel->where('eff_id',$buff_id)->first();
+		switch ($buffEff['eff_buff_type']) {
+			case 7:
+				$eff_ch_res_per=$buffEff['eff_value1'];
+				$result=$eff_ch_res_per
+				break;
+			
+			default:
+				# code...
+				break;
+		}
+		return $result;
+
+	}
+
+	public function checkEffConstant($skill_id){
+    	$skillModel=new SkillMstModel();
+    	$skill_data=$skillModel->where('skill_id',$skill_id)->first();
+    	if($skill_data['buff_constant_time']!=0){
+    		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
+    		$result['buff_constant_time']=$skill_data['buff_constant_time'];
+    		$result['buff_last_time']=$skill_data['buff_constant_time'];
+    	}
+    	if($skill_data['enemy_buff_constant_time']!=0){
+    		$result['enemy_buff_eff_id']=$skill_data['enemy_buff_eff_id'];
+    		$result['enemy_buff_constant_time']=$skill_data['enemy_buff_constant_time'];
+    		$result['enemy_buff_last_time']=$skill_data['enemy_buff_constant_time'];
+    	}
+    	if($skill_data['atk_constant_time']!=0){
+    		$result['atk_eff_id']=$skill_data['atk_eff_id'];
+    		$result['atk_constant_time']=$skill_data['atk_constant_time'];
+    		$result['atk_last_time']=$skill_data['atk_constant_time'];
+    	}
+    	return $result;
+    }
+    
+    public function haveEffConstant($constantEff,$skill_occur_time){
+    		if(isset($constantEff['buff_constant_time'])&&time()-$skill_occur_time<$constantEff['buff_constant_time']){
+    		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
+    		$result['buff_constant_time']=$skill_data['buff_constant_time'];
+    		$result['buff_last_time']=time()-$skill_occur_time-$skill_data['buff_constant_time'];
+    	}
+    	if(isset($constantEff['enemy_buff_constant_time'])&&time()-$skill_occur_time<$constantEff['enemy_buff_constant_time']){
+    		$result['enemy_buff_eff_id']=$skill_data['enemy_buff_eff_id'];
+    		$result['enemy_buff_constant_time']=$skill_data['enemy_buff_constant_time'];
+    		$result['enemy_buff_last_time']=time()-$skill_occur_time-$skill_data['enemy_buff_constant_time'];
+    	}
+    	if(isset($constantEff['atk_constant_time'])&&time()-$skill_occur_time<$constantEff['atk_constant_time']){
+    		$result['atk_eff_id']=$skill_data['atk_eff_id'];
+    		$result['atk_constant_time']=$skill_data['atk_constant_time'];
+    		$result['atk_last_time']=time()-$skill_occur_time-$skill_data['atk_constant_time'];
+    	}
+    	return $result;
+    }
 	private function checkHit($map_id,$atkEff,$direction,$user,$enemy)
 	{
 		$mapUtil=new MapTrapUtil();
@@ -199,6 +269,7 @@ class AttackHitUtil
     		}
     	return ['interrput'=>$interrput,'end'=>$end];
     } 
+
 
 
 }

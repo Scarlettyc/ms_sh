@@ -69,9 +69,21 @@ class BattleController extends Controller
 					$charData['ch_stam']=$userData['ch_stam'];
 					$charData['ch_atk']=$userData['ch_atk'];
 					$charData['ch_crit']=$userData['ch_crit'];
-				}
+					if(isset($each['skills'])){
+						foreach ($each['skills'] as $key => $skill) {
+							if(isset($skill['constant_eff'])){
+								$check=$attackhitutil->haveEffConstant($skill['constant_eff'],$skill['occur_time']);
+								if($check){
+									$charData['skills'][]=["skill_id"=>$skill['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>$skill['occur_time','constant_eff'=>$check]];
+
+								}
+							}
+							}
 		
-			}
+						}
+		
+					}
+				}
 		
 		$charData['x']=$x;		
 		$charData['y']=$y;
@@ -86,10 +98,16 @@ class BattleController extends Controller
 		}
 		if(isset($data['skill_id'])){
 			$skill=$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
+
 			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 			if($checkCD){
-				$charData['skill_id']=$data['skill_id'];
-				$charData['skill_group']=$skill['skill_group'];
+				$charData['skills'][]['skill_id']=$data['skill_id'];
+				$charData['skills'][]['skill_group']=$skill['skill_group'];
+				$charData['skills'][]['occur_time']=time();
+				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id']);
+				if($skillConstant){
+					$charData['skills'][]['constant_eff']=$skillConstant;
+				}
 			}
 		}
 		
@@ -112,10 +130,18 @@ class BattleController extends Controller
 					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
 					$enemy_charData['direction']=$enmeyData['direction'];
 					$enemy_charData['move']=$enmeyData['move'];
-				if(isset($enmeyData['skill_id'])){
-					$enemy_charData['skill_id']=$enmeyData['skill_id'];
-					$enemy_charData['skill_group']=$enmeyData['skill_group'];
-					$atkeff=$attackhitutil->getatkEff($enemy_charData['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
+				if(isset($enmeyData['skills'])){
+					foreach ($enmeyData['skills'] as $key => $enemySkill) {
+						$enemySkill['skill_id']=$enmeyData['skill_id'];
+						$enemySkill['skill_group']=$enmeyData['skill_group'];
+						if(isset($enemySkill['constant_eff'])){
+							$effs=$attackhitutil->getconstantEff($enemySkill['skill_id'],$enemySkill['occur_time']$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']，$enemySkill['constant_eff']);
+							
+						}else{
+							$atkeff=$attackhitutil->getatkEff($enemySkill['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
+
+						}
+
 					if($atkeff){ 
 						$enemy_atk=$enemy_charData['ch_atk'];
 						$randCrit=rand(1,100);
@@ -139,6 +165,7 @@ class BattleController extends Controller
 								$charData['ch_hp_max']=round($hpMax-$enemy_atk);
 
 							}
+					}
 				}	
 			}
 		}
@@ -183,6 +210,7 @@ class BattleController extends Controller
 }
 
 
+	
   private function BattleNormalRewards($u_id,$map_id,$match_id){
   	$characterModel=new CharacterModel();
   	$baNorReward=new BattleNormalRewardsMst();
