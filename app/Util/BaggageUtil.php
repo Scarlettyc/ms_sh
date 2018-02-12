@@ -189,7 +189,7 @@ class BaggageUtil
 				$result['status']=0;
 				$result['updated_at']=$datetime;
 				$result['created_at']=$datetime;
-				$UserBaggageEqModel->insert($result);
+				$UserBaggageResModel->insert($result);
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
