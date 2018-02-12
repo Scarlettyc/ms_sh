@@ -201,7 +201,7 @@ class BattleController extends Controller
 			$baggageUtil=new BaggageUtil();
 			$baggageUtil->insertToBaggage($u_id,$norReward);
 			$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
-			$UserModel->updateUserValue('u_coin',$battle_reward['coin']);
+			$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 			$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
 			$key="battle_result".$match_id;
 			$norReward['coin_reward']=$battle_reward['coin'];
@@ -228,7 +228,7 @@ class BattleController extends Controller
   	$battleRewardExpModel=new BattleRewardExpModel();
   	$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
 	$baggageUtil->insertToBaggage($u_id,$spReward);
-	$UserModel->updateUserValue('u_coin',$battle_reward['coin']);
+	$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 	$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
 	$key="battle_result".$match_id;
 	$spReward['coin_reward']=$battle_reward['coin'];
