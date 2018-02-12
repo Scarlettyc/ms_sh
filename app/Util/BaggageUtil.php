@@ -185,6 +185,7 @@ class BaggageUtil
 				$result['br_id']=$reData['r_id'];
 				$result['br_icon']=$reData['r_img_path'];
 				$result['br_rarity']=$reData['r_rarity'];
+				$result['br_type']=$reData['r_type'];
 				$result['br_quantity']=$reward['item_quantity'];
 				$result['status']=0;
 				$result['updated_at']=$datetime;
