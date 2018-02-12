@@ -475,7 +475,7 @@ class BattleController extends Controller
 		$charData['address']='1111';
 		$charData['port']=2;
 		$u_id=$data['u_id'];
-		$charData=$characterModel->where('u_id',$$u_id)->first();
+		$charData=$characterModel->where('u_id',$u_id)->first();
 		$result=$this->BattleSpeRewards($u_id,1,1222,$charData['ch_lv']);
 		var_dump($result);
 		$result=$this->BattleNormalRewards($u_id,1,1222,$charData['ch_lv'],$charData['ch_ranking']);
