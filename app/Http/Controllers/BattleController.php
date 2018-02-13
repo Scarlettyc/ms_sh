@@ -111,7 +111,7 @@ class BattleController extends Controller
 				$charData['skills'][]['occur_time']=time();
 				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
 				if($skillConstant){
-					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$data['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant]];
+					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$data['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant];
 				}
 			}
 		}
