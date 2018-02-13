@@ -80,15 +80,16 @@ class AttackHitUtil
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
-		// if($clientID>$enemy_clientId){
-		// 	$user['x']=-$user['x'];
-		// }
+		if($clientID>$enemy_clientId){
+			$user['x']=-$user['x'];
+			$user_direction=-$user_direction;
+		}
 
 		$skillData=$skillModel->select('atk_eff_id')->where('skill_id',$skill_id)->first();
 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 		$effXfrom=$enemy['x'];
 		$effYfrom=$enemy['y'];
-		Log::info(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x']));
+		Log::info(abs($user['x']-$enemy['x']));
  			if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_henght']){
  		 		return $atkEff;
  		 	}
