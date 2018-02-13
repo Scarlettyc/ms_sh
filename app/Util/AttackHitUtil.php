@@ -91,7 +91,7 @@ class AttackHitUtil
 		$effYfrom=$enemy['y'];
 		Log::info($enemy['x']+$enemy_direction*$atkEff['eff_skill_hit_width']-$user['x']);
 
-			if($enemy['x']+$enemy_direction*$atkEff['eff_skill_hit_width']-$user['x']>0){
+			if($user['x']-$enemy['x']>=$enemy_direction*$atkEff['eff_skill_hit_width']]){
 				return $atkEff;
 			}
  			// if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_henght']){
