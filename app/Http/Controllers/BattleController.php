@@ -445,7 +445,7 @@ class BattleController extends Controller
 		$u_id=$data['u_id'];
 		
 		$matchArr=json_decode($matchList,TRUE);
-		Log::info($matchArr);
+		// Log::info($matchArr);
 
 		if(isset($matchArr)){
 			if($matchArr['u_id']==$u_id){
