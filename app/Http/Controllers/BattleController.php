@@ -59,7 +59,7 @@ class BattleController extends Controller
 		
 			$charData=[];
 			if($userExist<=1){
-				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$u_id)->first();
+				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv')->where('u_id',$u_id)->first();
 			}
 			else{
 				$userJson=$redis_battle->LRANGE($battlekey,0,0);
@@ -69,15 +69,20 @@ class BattleController extends Controller
 					$charData['ch_stam']=$userData['ch_stam'];
 					$charData['ch_atk']=$userData['ch_atk'];
 					$charData['ch_crit']=$userData['ch_crit'];
+					$charData['ch_armor']=$userData['ch_armor'];
+					$charData['ch_lv']=$userData['ch_lv'];
 					if(isset($each['skills'])){
 						foreach ($each['skills'] as $key => $skill) {
 							if(isset($skill['constant_eff'])){
 								$check=$attackhitutil->haveEffConstant($skill['constant_eff'],$skill['occur_time']);
 								if($check){
+									if(isset($check['self_buff_eff_id'])){
+										$buffResult=$attackhitutil->buffStatus($check['self_buff_eff_id']);
+									}
 									$charData['skills'][]=["skill_id"=>$skill['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>$skill['occur_time','constant_eff'=>$check]];
 
+									}
 								}
-							}
 							}
 		
 						}
@@ -87,12 +92,12 @@ class BattleController extends Controller
 		
 		$charData['x']=$x;		
 		$charData['y']=$y;
-
 		$charData['time']=time();
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
 		$charData['direction']=1;
 		$charData['move']=$move;
+		$user_res=1;
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
 		}
@@ -104,9 +109,9 @@ class BattleController extends Controller
 				$charData['skills'][]['skill_id']=$data['skill_id'];
 				$charData['skills'][]['skill_group']=$skill['skill_group'];
 				$charData['skills'][]['occur_time']=time();
-				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id']);
+				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
 				if($skillConstant){
-					$charData['skills'][]['constant_eff']=$skillConstant;
+					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$data['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant]];
 				}
 			}
 		}
@@ -120,8 +125,9 @@ class BattleController extends Controller
 			$enemy_charData['y']=-290;
 		}
 		else {
-			foreach ($enemyJson as $key => $each) {
-			   $enmeyData=json_decode($each,TRUE);
+				foreach ($enemyJson as $key => $each) 
+				{
+			  		$enmeyData=json_decode($each,TRUE);
 			   		$enemy_charData['x']=$enmeyData['x'];
 					$enemy_charData['y']=$enmeyData['y'];
 					$enemy_charData['ch_hp_max']=$enmeyData['ch_hp_max'];
@@ -130,7 +136,8 @@ class BattleController extends Controller
 					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
 					$enemy_charData['direction']=$enmeyData['direction'];
 					$enemy_charData['move']=$enmeyData['move'];
-				if(isset($enmeyData['skills'])){
+				if(isset($enmeyData['skills']))
+				{
 					foreach ($enmeyData['skills'] as $key => $enemySkill) {
 						$enemySkill['skill_id']=$enmeyData['skill_id'];
 						$enemySkill['skill_group']=$enmeyData['skill_group'];
@@ -138,36 +145,50 @@ class BattleController extends Controller
 							$effs=$attackhitutil->getconstantEff($enemySkill['skill_id'],$enemySkill['occur_time']$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']，$enemySkill['constant_eff']);
 							
 						}else{
-							$atkeff=$attackhitutil->getatkEff($enemySkill['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
+							$effResult=$attackhitutil->getatkEff($enemySkill['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
 
 						}
 
-					if($atkeff){ 
-						$enemy_atk=$enemy_charData['ch_atk'];
-						$randCrit=rand(1,100);
+					if($effResult){ 
+						if(isset($effResult['enemy_buff'])){
+							if(!isset($buffResult['eff_ch_uncontrollable'])||!isset($buffResult['eff_ch_invincible'])){
+								$this->enemyBuffEff($charData['ch_hp_max'],$\$effResult['enemy_buff']);
+							}
+
+						}
+
+						if(isset($effResult['atkEff'])){
+							$enemy_atk=$enemy_charData['ch_atk'];
+							$randCrit=rand(1,100);
 							if($randCrit<=$enemy_charData['ch_crit']){
 								$critBool=2;
-							}else{
-								$critBool=1;
+								}else{
+									$critBool=1;
+							}
+							$user_def=($chardata['ch_armor']*1.1)/(15*$charData['ch_lv']+$chardata['ch_armor']+40);
+
+							if(isset($buffResult['eff_ch_res_per']){
+								$user_res=$buffResult['eff_ch_res_per'];
 							}
 							if($enemy_charData['skill_group']==1){
-								$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point'];
+								$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']*$user_res;
 								$enemyDMG=$enemy_atk*$critBool;
-								$hpMax=$charData['ch_hp_max'];
+								$hpMax=$charData['ch_hp_max']/(1-$user_def);
 								$charData['ch_hp_max']=round($hpMax-$enemyDMG);
  	 						}
 
  	 						else if($enemy_charData['skill_group']==2){
  	 							$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
- 	 							// $enemyDMG=($atkeff['eff_skill_atk_point']*$enemy_atk;
  	 							$enemyDMG=$enemy_atk*$critBool;
  	 							$hpMax=$charData['ch_hp_max'];
 								$charData['ch_hp_max']=round($hpMax-$enemy_atk);
 
 							}
+						}
 					}
 				}	
 			}
+		  }
 		}
 			$enemy_charData['time']=time();
 			// $enemyJson=json_decode($enemy_charData,TRUE);
@@ -197,19 +218,21 @@ class BattleController extends Controller
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
 		return  $response;
-			}
 		}
 		else {
 			return null;
 		}
 	}
 
+	private function enemyBuffEff($charData,$){
+
+	}
 	private function getMillisecond() {
 		list($t1, $t2) = explode(' ', microtime());     
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
-}
+	}
 
-
+	
 	
   private function BattleNormalRewards($u_id,$map_id,$match_id){
   	$characterModel=new CharacterModel();

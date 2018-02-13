@@ -31,51 +31,6 @@ class AttackHitUtil
 		return $result;
 	}
 
-	public function getEnmeyEff($skill_id,$user,$enemy,$occurtime){
-		$skillModel=new SkillMstModel();
- 		$buffEffModel= new BuffEffectionMst();
- 		$atkEffModel=new AtkEffectionMst();
-		$skillData=$skillModel->where('skill_id',$skill_id)->first();
-		$result=[];
-		$mileSecond=$this->getMillisecond();
-
-		if($skillData['atk_eff_id']!=0){
-			$eff_bullet_width=$skillData['eff_bullet_width'];
-			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
-			if($mileSecond-$occurtime<=$atkEff['eff_skill_dur']){
-				// if($eff_bullet_width!=0){
-				// 	$hit=$this->longDisEff($map_id,$atkEff,$effX,$effY,$occurtime,$direction,$enemyX,$enemyY);
-				// 	if($hit['hit']){
-				// 		$result['atk_eff']=$hit['atk_eff'];
-				// 		$result['hit']=1;
-				// 		$result['end']=0;
-				// 	}
-				// 	else if($hit['end']&&!$hit['hit']){
-				// 	$result['atk_eff']['eff']=$hit['atk_eff'];
-				// 	$result['atk_eff']['hit']=0;
-				// 	$result['atk_eff']['end']=1;
-				// 		}
-				// 	}
-				// else {
-				 	$hit=$this->checkHit($atkEff,$user['direction'],$user['x'],$user['y'],$enemy['x'],$enemy['y'],$enemy['char_hp']);
-					$result['atk_eff']['eff']= $atkEff;
-					$result['atk_eff']['hit']=$hit['hit'];
-					$result['atk_eff']['end']=$hit['end'];
-					$result['skill_group']=$skillData['skill_group'];
-				// }
-			}
-		}
-		else if(isset($skillData['enemy_buff_eff_id'])){
-			
-			$enemyBuffEff=$buffEffModel->where('buff_eff_id',$skillData['enemy_buff_eff_id'])->first();
-			if($mileSecond-$occurtime<=$enemyBuffEff['eff_skill_dur']){
-			$result['enemyBuff']=$enemyBuffEff;
-			}
-		}
-		return $result;
-
-	}
-
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
@@ -105,33 +60,50 @@ class AttackHitUtil
 			$user['x']=-$user['x'];
 		}
 		if(isset($constantEff['enemy_buff_eff_id'])&&time()-$occurtime<$constantEff['enemy_buff_constant_time']){
-			$result=$this->checkBuff($constantEff['enemy_buff_eff_id']);
-
-
-		}
-		if(isset($constantEff['atk_eff_id'])&&time()-$occurtime<$constantEff['atk_constant_time']){
+			$result['enemy_buff']=$this->buffStatus($constantEff['enemy_buff_eff_id']);
 
 		}
 
+		if(isset($constantEff['atk_eff_id'])){
+			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
+			if($atkEff['eff_skill_move_distance']>0){
+				if($constantEff['start_x']+$atkEff['eff_skill_move_distance']-$user['x']<=2){
+				 if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ 		 			$result['atkEff']=$atkEff;
+				}
+
+			}
+			else if(time()-$occurtime<$constantEff['atk_constant_time']) {
+				if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ 		 			$result['atkEff']=$atkEff;
+ 		 		}
+			}
+		} 
+		return $result;
 	}
 
-	private checkBuff($buff_id){
+	public function buffStatus($buff_id){
 		$buffEff=$buffEffModel->where('eff_id',$buff_id)->first();
 		switch ($buffEff['eff_buff_type']) {
 			case 7:
 				$eff_ch_res_per=$buffEff['eff_value1'];
-				$result=$eff_ch_res_per
+				$result['eff_ch_res_per']=$eff_ch_res_per
 				break;
-			
-			default:
-				# code...
+			case 9:
+				$eff_ch_uncontrollable=$buffEff['eff_value1'];
+				$result['eff_ch_uncontrollable']=$eff_ch_uncontrollable;
 				break;
-		}
-		return $result;
+			case 6;
+			   	$eff_ch_invincible=$buffEff['eff_value1'];
+				$result['eff_ch_invincible']=$eff_ch_invincible;
+				break;
 
-	}
+			}
+			return $result;
 
-	public function checkEffConstant($skill_id){
+	} 
+
+	public function checkEffConstant($skill_id,$x){
     	$skillModel=new SkillMstModel();
     	$skill_data=$skillModel->where('skill_id',$skill_id)->first();
     	if($skill_data['buff_constant_time']!=0){
@@ -145,14 +117,17 @@ class AttackHitUtil
     		$result['enemy_buff_last_time']=$skill_data['enemy_buff_constant_time'];
     	}
     	if($skill_data['atk_constant_time']!=0){
+    		$atkEffModel=new AtkEffectionMst();
+    		$atkEff=$atkEffModel->where('atk_eff_id',$skill_id)->first();
     		$result['atk_eff_id']=$skill_data['atk_eff_id'];
+    		$result['start_x']=$x;
     		$result['atk_constant_time']=$skill_data['atk_constant_time'];
     		$result['atk_last_time']=$skill_data['atk_constant_time'];
     	}
     	return $result;
     }
     
-    public function haveEffConstant($constantEff,$skill_occur_time){
+    public function haveEffConstant($constantEff,$skill_occur_time{
     		if(isset($constantEff['buff_constant_time'])&&time()-$skill_occur_time<$constantEff['buff_constant_time']){
     		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
     		$result['buff_constant_time']=$skill_data['buff_constant_time'];
@@ -164,6 +139,9 @@ class AttackHitUtil
     		$result['enemy_buff_last_time']=time()-$skill_occur_time-$skill_data['enemy_buff_constant_time'];
     	}
     	if(isset($constantEff['atk_constant_time'])&&time()-$skill_occur_time<$constantEff['atk_constant_time']){
+    		if(isset($constantEff['start_x'])){
+    			$result['start_x']=$constantEff['start_x'];
+    		}
     		$result['atk_eff_id']=$skill_data['atk_eff_id'];
     		$result['atk_constant_time']=$skill_data['atk_constant_time'];
     		$result['atk_last_time']=time()-$skill_occur_time-$skill_data['atk_constant_time'];
@@ -216,40 +194,7 @@ class AttackHitUtil
  		 		return ['hit'=>0,'end'=>0];
  		 	}
 			}
-}
-
-
-	public function longDisEff($map_id,$atkEff,$effX,$effY,$direction,$enemyX,$enemyY){
-				$effModel=new AtkEffModel();
-				$eff_id=$atkEff['atk_eff_id'];
-				$mileSecond=$this->getMillisecond();
-				$defindMst=new DefindMstModel();
-				$defindData=$defindMst->where('defind_id',17)->first();
-				$stone=false;
-				$hit=false;
-				$end=false;
-				if($eff_skill_interrupt==2||$eff_skill_interrupt==3){
-					if($direction>0){
-						$effLastX=$eff['eff_skill_spd']*$stayTime()+$effX;
-					if($atkEff['eff_skill_interrupt']>0)
-						$tapData=$mapTrap->isHitStone($map_id,$effX,$effLastX,$effY);
-					}else {
-						$effLastX=$effX-$eff['eff_skill_spd']*$stayTime;
-						$tapData=$mapTrap->isHitStone($map_id,$effLastX,$effX,$effY);
-					}
-					if(isset($tapData)){
-						$stone=true;
-					}
-				}
-				else{
-					$distance=sqrt(pow(($effLastX-$enemy['x']),2)+pow(($effY-$enemy['y']),2))-$eff['eff_skill_radius'];
-					if($distance<=$defindData['value1']){
-						$hit=true;
-					}
-				}
-
-			return ['hit'=>$hit,'stone'=>$stone,'end'=>$end];		
-	}
+		}
 
 
 	public function getMillisecond() {
