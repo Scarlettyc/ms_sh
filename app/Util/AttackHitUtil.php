@@ -80,8 +80,10 @@ class AttackHitUtil
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
+		$tmp=1;
 		if($clientID>$enemy_clientId){
 			$user['x']=-$user['x'];
+			$tmp=-1;
 			$user_direction=-$user_direction;
 		}
 
@@ -91,7 +93,7 @@ class AttackHitUtil
 		$effYfrom=$enemy['y'];
 		Log::info($user['x']-$enemy['x']);
 
-			if($user['x']-$enemy['x']>=$enemy_direction*$atkEff['eff_skill_hit_width']){
+			if(($user['x']-$enemy['x'])-($enemy_direction*$atkEff['eff_skill_hit_width'])*$tmp>0){
 				return $atkEff;
 			}
  			// if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_henght']){
