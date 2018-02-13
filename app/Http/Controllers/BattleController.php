@@ -79,7 +79,7 @@ class BattleController extends Controller
 									if(isset($check['self_buff_eff_id'])){
 										$buffResult=$attackhitutil->buffStatus($check['self_buff_eff_id']);
 									}
-									$charData['skills'][]=["skill_id"=>$skill['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>$skill['occur_time','constant_eff'=>$check]];
+									$charData['skills'][]=["skill_id"=>$skill['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>$skill['occur_time'],'constant_eff'=>$check];
 
 									}
 								}
