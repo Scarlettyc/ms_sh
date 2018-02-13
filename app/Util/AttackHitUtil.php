@@ -89,7 +89,7 @@ class AttackHitUtil
 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
 		$effXfrom=$enemy['x'];
 		$effYfrom=$enemy['y'];
-		Log::info($enemy['x']+$enemy_direction*$atkEff['eff_skill_hit_width']-$user['x']);
+		Log::info($user['x']-$enemy['x']);
 
 			if($user['x']-$enemy['x']>=$enemy_direction*$atkEff['eff_skill_hit_width']]){
 				return $atkEff;
