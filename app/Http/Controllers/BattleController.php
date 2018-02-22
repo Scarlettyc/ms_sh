@@ -157,7 +157,7 @@ class BattleController extends Controller
 					if($effResult){ 
 						if(isset($effResult['enemy_buff'])){
 							if(!isset($buffResult['eff_ch_uncontrollable'])||!isset($buffResult['eff_ch_invincible'])){
-								$this->enemyBuffEff($charData['ch_hp_max'],$\$effResult['enemy_buff']);
+								$this->enemyBuffEff($charData['ch_hp_max'],$effResult['enemy_buff']);
 							}
 
 						}
