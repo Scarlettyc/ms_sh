@@ -147,7 +147,7 @@ class BattleController extends Controller
 						$enemySkill['skill_id']=$enmeyData['skill_id'];
 						$enemySkill['skill_group']=$enmeyData['skill_group'];
 						if(isset($enemySkill['constant_eff'])){
-							$effs=$attackhitutil->getconstantEff($enemySkill['skill_id'],$enemySkill['occur_time'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']，$enemySkill['constant_eff']);
+							$effs=$attackhitutil->getconstantEff($enemySkill['skill_id'],$enemySkill['occur_time'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction'],$enemySkill['constant_eff']);
 							
 						}else{
 							$effResult=$attackhitutil->getatkEff($enemySkill['skill_id'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction']);
