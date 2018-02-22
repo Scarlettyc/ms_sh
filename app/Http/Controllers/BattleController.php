@@ -172,7 +172,7 @@ class BattleController extends Controller
 							}
 							$user_def=($chardata['ch_armor']*1.1)/(15*$charData['ch_lv']+$chardata['ch_armor']+40);
 
-							if(isset($buffResult['eff_ch_res_per']){
+							if(isset($buffResult['eff_ch_res_per'])){
 								$user_res=$buffResult['eff_ch_res_per'];
 							}
 							if($enemy_charData['skill_group']==1){
