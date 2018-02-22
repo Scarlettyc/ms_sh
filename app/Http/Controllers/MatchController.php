@@ -153,7 +153,7 @@ class MatchController extends Controller
 			$battleStatus=$redis_battle->HGET($battleKey,$key);
 			$battleList=json_decode($battleStatus,TRUE);
 			if($battleList&&$battleList['status']==1){
-				Log::info($key);
+				// Log::info($key);
 				$redis_battle->HDEL($waitmatch,$key);
 			}
 		}

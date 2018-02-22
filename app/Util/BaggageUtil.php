@@ -10,6 +10,7 @@ use App\EquUpgradeMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\ItemMstModel;
+use App\EquipmentMstModel;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
@@ -174,8 +175,9 @@ class BaggageUtil
 		$eqModel=new EquipmentMstModel();
 		$scrModel=new ScrollMstModel();
 		$reModel=new ResourceMstModel();
+		$now   = new DateTime;
 		$datetime=$now->format('Y-m-d h:m:s');
-		try{
+		// try{
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
 				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
@@ -183,11 +185,12 @@ class BaggageUtil
 				$result['br_id']=$reData['r_id'];
 				$result['br_icon']=$reData['r_img_path'];
 				$result['br_rarity']=$reData['r_rarity'];
+				$result['br_type']=$reData['r_type'];
 				$result['br_quantity']=$reward['item_quantity'];
 				$result['status']=0;
 				$result['updated_at']=$datetime;
 				$result['created_at']=$datetime;
-				$UserBaggageEqModel->insert($result);
+				$UserBaggageResModel->insert($result);
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
@@ -216,13 +219,13 @@ class BaggageUtil
 					$UserBaggageScrollModel->insert($result);
 				}
 			}
-			$missionlist[]=$reward['misson_id'];
+			// $missionlist[]=$reward['misson_id'];
 		 }
-		 return $missionlist;
+		 // return $missionlist;
 
-		}catch(Exception $e){
-			throw new Exception("there have some errors of insert to baggage");
-		}
+		// }catch(Exception $e){
+		// 	throw new Exception("there have some errors of insert to baggage");
+		// }
 
 	}
 	public function getReward($mission){

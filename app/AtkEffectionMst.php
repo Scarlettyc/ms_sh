@@ -13,7 +13,7 @@ class AtkEffectionMst extends Model
   'eff_skill_hit_width',
   'eff_skill_hit_radius',
   'eff_skill_hit_angle',
-  'eff_skill_damage_lenght',
+  'eff_skill_damage_henght',
   'eff_skill_damage_width',
   'eff_skill_damage_radius',
   'eff_skill_damage_angle',

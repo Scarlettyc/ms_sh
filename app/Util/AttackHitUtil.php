@@ -12,6 +12,7 @@ use Exception;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
+use Log;
 
 class AttackHitUtil
 {
@@ -34,8 +35,11 @@ class AttackHitUtil
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
+		$tmp=1;
 		if($clientID>$enemy_clientId){
 			$user['x']=-$user['x'];
+			$tmp=-1;
+			$user_direction=-$user_direction;
 		}
 
 		$skillData=$skillModel->select('atk_eff_id')->where('skill_id',$skill_id)->first();
@@ -43,9 +47,14 @@ class AttackHitUtil
 		$effXfrom=$enemy['x'];
 		$effYfrom=$enemy['y'];
 
- 			if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
- 		 		return $atkEff;
- 		 	}
+		Log::info(abs($user['x']-$enemy['x'])<$atkEff['eff_skill_hit_width']&&($user['x']-$enemy['x'])*$enemy_direction>0);
+
+			if(abs($user['x']-$enemy['x'])<$atkEff['eff_skill_hit_width']&&($user['x']-$enemy['x'])*$enemy_direction>0){
+				return $atkEff;
+			}
+ 			// if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_henght']){
+ 		 // 		return $atkEff;
+ 		 // 	}
  		 	else {
  		 		return null;
  		 	}
