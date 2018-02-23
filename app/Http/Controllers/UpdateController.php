@@ -25,19 +25,11 @@ class UpdateController extends Controller
 	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$redis_login=Redis::connection('default');
-		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 		$email=$data['email'];
 		$u_id=$data['u_id'];
 		$usermodel=new UserModel();
 		$usermodel->where('u_id',$u_id)->update(['email'=>$email,'updated_at'=>$datetime]);
 		return base64_encode('successfully');	
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
 	}
 
 	public function updatePassword(Request $request){
@@ -49,20 +41,12 @@ class UpdateController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redis_login=Redis::connection('default');
-		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
 		$usermodel=new UserModel();
-		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$newPw=$data['new_password'];
 			$u_id=$data['u_id'];
 			$password=$usermodel->select('password')->where('u_id',$u_id)->first();
 				$usermodel->where('u_id',$u_id)->update(['password'=>$newPw,'updated_at'=>$datetime]);
 				return base64_encode('successfully');
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
 	}
 	public function refreshSetting(Request $request){
 		$req=$request->getContent();
@@ -73,11 +57,7 @@ class UpdateController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$usermodel=new UserModel();
 		$redis_login=Redis::connection('default');
-		$loginToday=$redis_login->HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
 		$CharacterModel=new CharacterModel();
-		if(isset($data['u_id'])&&$access_token==$data['access_token']){
 			$u_id=$data['u_id'];
 			$userData=$usermodel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
 			$userDetails=$CharacterModel->select('ch_title')->where('u_id',$u_id)->first();
@@ -89,10 +69,5 @@ class UpdateController extends Controller
 			$result['ch_title']=$userDetails['ch_title'];
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
-
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
 	}
  }

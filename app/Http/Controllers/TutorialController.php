@@ -22,13 +22,6 @@ class TutorialController extends Controller
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
-		$loginTodayArr=json_decode($loginToday);
-		$access_token=$loginTodayArr->access_token;
-		
-
-		if($access_token==$data['access_token'])
-		{
 			$uid=$data['u_id'];
 			$characterModel=new CharacterModel();
 		//dd($characterModel->isExist('u_id',$uid));
@@ -50,10 +43,6 @@ class TutorialController extends Controller
 			else {
 				throw new Exception("char already exist");
 			}
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
 	   	
 	}
 	public function passTu(Request $request){
@@ -62,26 +51,17 @@ class TutorialController extends Controller
 		$data=json_decode($json,TRUE);
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		$loginToday=Redis::HGET('login_data',$dmy.$data['u_id']);
 		$charUtil=new CharSkillEffUtil();
 		$usermodel=new UserModel();
 		$characterModel=new CharacterModel();
-		$loginTodayArr=json_decode($loginToday);
 		$access_token=$loginTodayArr->access_token;
 		$eq_id=$data['eq_id'];
-
-		if(isset($data['u_id'])&&$access_token==$data['access_token'])
-		{
 			$uid=$data['u_id'];
 			$charUtil->sendEq($u_id);
 			$usermodel->where('u_id',$data['u_id'])->update(["pass_tutorial"=>1]);
 			$finalUser=$usermodel->where('u_id',$uid)->first();
 			$response['user_data']['user_info']=json_encode($finalUser,TRUE);
 		return base64_encode($response);
-		}
-		else {
-			throw new Exception("there have some error of you access_token");
-		}
 
 	}
  }
