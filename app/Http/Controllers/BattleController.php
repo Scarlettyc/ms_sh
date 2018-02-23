@@ -204,11 +204,13 @@ class BattleController extends Controller
 		$result['enemy_data']=$enemy_charData;
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
-			//$this->BattleSpeRewards($u_id,$map_id,$match_id,$ch_lv);
+			$win=1;
+			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
-			//$this->BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking);
+			$win=0;
+			$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
 		}
 		else {
 			$result['end']=0;
@@ -233,33 +235,48 @@ class BattleController extends Controller
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
-  private function BattleNormalRewards($u_id,$map_id,$match_id,$ch_lv,$ch_ranking){
+  private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
 		  	$baNorReward=new BattleNormalRewardsMst();
+		  	$baSpReward=new BattleSpecialRewardsMst();
 		  	$chaEffutil=new CharSkillEffUtil();
-		  	$battleRewardExpModel=new BattleRewardExpModel();
 		  	$UserModel=new UserModel();
-		  	$now   = new DateTime;;
+		  	$now   = new DateTime;
+		  	$defindModel=new DefindMstModel();
 			$dmy=$now->format( 'Ymd' );
+			$defindData=$defindModel->where('defind_id',27)->first();
 		  	$datetime=$now->format('Y-m-d h:m:s');
 			$redis_battle=Redis::connection('battle');
-		  	$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->get();
+			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$ch_lv)->where('win',$win)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
+			$loots_normal=$battle_reward['loots_normal'];
+			$loots_special=$battle_reward['loots_special'];
+			$rewards=[];
+			for($i=0;$i<$loots_normal;$i++){
+				$rate=rand($defindData['value1'], $defindData['value2']);
+		  		$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('ch_lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$rewards['normarl']=$norReward;
+			}
+			for($j=0;$j<$loots_special;$j++){
+				$rate=rand($defindData['value1'], $defindData['value2']);
+		  		$spReward=$baSpReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('ch_lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$rewards['special']=$spReward;
+			}
+
 		 //  	$count=count($norReward);
 			// shuffle($norReward);
 			$baggageUtil=new BaggageUtil();
-			$baggageUtil->insertToBaggage($u_id,$norReward);
-			$battle_reward=$battleRewardExpModel->select('exp','coin')->where('lv',$ch_lv)->first();
+			$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
+			$baggageUtil->insertToBaggage($u_id,$rewards['special']);
 			$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 			if($battle_reward['exp']>0){
-			$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
-			$norReward['exp_reward']=$battle_reward['exp'];
-			//$norReward['exp_from']=$charData['ch_exp'];
-			$norReward['lv_before']=$ch_lv;
-			$norReward['levelUP']=$LevelUP['levelup'];
-			$norReward['lv']=$LevelUP['lv'];
+				$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
+				$rewards['exp_reward']=$battle_reward['exp'];
+				$rewards['lv_before']=$ch_lv;
+				$rewards['levelUP']=$LevelUP['levelup'];
+				$rewards['lv']=$LevelUP['lv'];
 			}
 			$key="battle_result".$match_id;
-			$norReward['coin_reward']=$battle_reward['coin'];
-			$reward=json_encode($norReward,TRUE);
+			$rewards['coin_reward']=$battle_reward['coin'];
+			$reward=json_encode($rewards,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
 
   }
@@ -354,10 +371,9 @@ class BattleController extends Controller
 		$charData['port']=2;
 		$u_id=$data['u_id'];
 		$charData=$characterModel->where('u_id',$u_id)->first();
-		$result=$this->BattleSpeRewards($u_id,1,1222,$charData['ch_lv']);
+		$result=$this->BattleRewards($u_id,1,1222,$charData['ch_lv']);
 		var_dump($result);
-		$result2=$this->BattleNormalRewards($u_id,1,1222,$charData['ch_lv'],$charData['ch_ranking']);
-		var_dump($result2);
+
  	 }
 
 	 public function finalMatchResult ($data){
