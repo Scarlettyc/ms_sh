@@ -238,6 +238,7 @@ class BattleController extends Controller
   private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
 		  	$baNorReward=new BattleNormalRewardsMst();
 		  	$baSpReward=new BattleSpRewardsMst();
+		  	$battleRewardExpModel=new BattleRewardExpModel();
 		  	$chaEffutil=new CharSkillEffUtil();
 		  	$UserModel=new UserModel();
 		  	$now   = new DateTime;
