@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Redis;
 use App\EquipmentMstModel;
 use App\EqAttrmstModel;
 use App\BattleNormalRewardsMst;
-use App\BattleSpecialRewardsMst;
+use App\BattleSpRewardsMst;
 use App\BattleRewardExpModel;
 use App\LevelUPModel;
 use App\Util\BaggageUtil;
