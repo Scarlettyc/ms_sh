@@ -181,16 +181,23 @@ class BaggageUtil
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
 				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
-				$result['u_id']=$u_id;
-				$result['br_id']=$reData['r_id'];
-				$result['br_icon']=$reData['r_img_path'];
-				$result['br_rarity']=$reData['r_rarity'];
-				$result['br_type']=$reData['r_type'];
-				$result['br_quantity']=$reward['item_quantity'];
-				$result['status']=0;
-				$result['updated_at']=$datetime;
-				$result['created_at']=$datetime;
-				$UserBaggageResModel->insert($result);
+				$quantity=$UserBaggageResModel->select('br_quantity')->where('r_id',$reward['item_org_id'])->where('u_id',$u_id)->first();
+				if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
+					$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
+					$UserBaggageResModel->where('r_id',$reward['item_org_id'])->where('u_id',$u_id)->update(['br_rarity'=>$result['br_quantity'],'updated_at'=>$datetime]);
+				}
+				else{
+					$result['u_id']=$u_id;
+					$result['br_id']=$reData['r_id'];
+					$result['br_icon']=$reData['r_img_path'];
+					$result['br_rarity']=$reData['r_rarity'];
+					$result['br_type']=$reData['r_type'];
+					$result['br_quantity']=$reward['item_quantity'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageResModel->insert($result);
+				}
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
