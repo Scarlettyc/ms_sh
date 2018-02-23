@@ -184,7 +184,7 @@ class BaggageUtil
 				$quantity=$UserBaggageResModel->select('br_quantity')->where('r_id',$reward['item_org_id'])->where('u_id',$u_id)->first();
 				if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
 					$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
-					$UserBaggageResModel->where('r_id',$reward['item_org_id'])->where('u_id',$u_id)->update(['br_rarity'=>$result['br_quantity'],'updated_at'=>$datetime]);
+					$UserBaggageResModel->where('br_id',$reward['item_org_id'])->where('u_id',$u_id)->update(['br_rarity'=>$result['br_quantity'],'updated_at'=>$datetime]);
 				}
 				else{
 					$result['u_id']=$u_id;
