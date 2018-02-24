@@ -276,6 +276,8 @@ class BattleController extends Controller
 				$result['lv_before']=$ch_lv;
 				$result['levelUP']=$LevelUP['levelup'];
 				$result['lv']=$LevelUP['lv'];
+			}else{
+				$result['exp']=0;
 			}
 			$key="battle_result".$match_id;
 			$result['coin_reward']=$battle_reward['coin'];
