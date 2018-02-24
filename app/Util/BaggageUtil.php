@@ -202,7 +202,11 @@ class BaggageUtil
 					$result['created_at']=$datetime;
 					$UserBaggageResModel->insert($result);
 				}
+				if(array_key_exists($reward['item_org_id'],$resource)){
 				$resource[$reward['item_org_id']]=$resource[$reward['item_org_id']]+$reward['item_quantity'];
+				}else{
+					$resource[$reward['item_org_id']]=$reward['item_quantity'];
+				}
 				return $resource;
 			}
 			else if($reward['item_type']==2){
