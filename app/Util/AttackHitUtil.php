@@ -87,7 +87,8 @@ class AttackHitUtil
  		 			$result['atkEff']=$atkEff;
  		 		}
 			}
-		} 
+			} 
+		}
 		return $result;
 	}
 
