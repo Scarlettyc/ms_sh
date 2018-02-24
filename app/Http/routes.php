@@ -73,6 +73,7 @@ Route::post('/battlematch', 'MatchController@testWebsocket');
 Route::post('/load', 'LoadBattleController@loadingGame');
 Route::post('/loadmap', 'LoadBattleController@loadMap');
 Route::post('/testbattle', 'BattleController@testBattle');
+Route::post('/battleresult', 'BattleController@battleResult');
 
 Route::post('/addfriend', 'FriendController@addFriend');
 Route::post('/removefriend', 'FriendController@removeFriend');

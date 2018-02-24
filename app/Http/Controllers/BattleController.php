@@ -286,7 +286,7 @@ class BattleController extends Controller
 
   }
 
-  	public function battleCalcuate(Request $request){
+  	public function battleResult(Request $request){
   		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
@@ -296,6 +296,24 @@ class BattleController extends Controller
 		$key="battle_result".$match_id;
 		$battle_reward=$redis_battle->HGET($key,$u_id);
 		$rewards=json_decode($battle_reward,TRUE);
+		$normarl=[];
+		$special=[];
+		foreach ($reward['normarl'] as $key => $value) {
+			$normarl[]['item_org_id']=$key;
+			$normarl[]['item_quantity']=$value;	# code...
+		}
+		foreach ($reward['special'] as $key => $value) {
+			$special[]['item_org_id']=$key;
+			$special[]['item_quantity']=$value;	# code...
+		}
+		unset($rewards['normarl']);
+		unset($rewards['special']);
+		$result=$rewards;
+		$result['normarl']=$normarl;
+		$result['special']=$special;
+		$response=json_encode($result,TRUE);
+		return  json_encode($response,TRUE);
+
   	} 
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
