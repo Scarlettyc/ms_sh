@@ -27,6 +27,10 @@ class UserModel extends Model
         $udata['updated_at']=Carbon::now();
         $udata['friend_id']=$this->createTOKEN(11);
         $udata['password']=md5($this->createTOKEN(8));
+        if( array_key_exists('access_token',$udata)){
+            unset($udata['access_token']);
+        }
+       
         $this->insert($udata);
         return $udata;
      }
