@@ -306,10 +306,10 @@ class BattleController extends Controller
 			$special[]['item_org_id']=$key;
 			$special[]['item_quantity']=$value;	# code...
 		}
-		unset($rewards['normarl']);
+		unset($rewards['normal']);
 		unset($rewards['special']);
 		$result=$rewards;
-		$result['normarl']=$normarl;
+		$result['normal']=$normarl;
 		$result['special']=$special;
 		$response=json_encode($result,TRUE);
 		return  json_encode($response,TRUE);
