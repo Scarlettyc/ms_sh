@@ -400,11 +400,12 @@ class BattleController extends Controller
 	 	$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$data=json_decode($json,TRUE);
-		$charData['address']='1111';
-		$charData['port']=2;
+		$clientInfo['address']='1111';
+		$clientInfo['port']=2;
 		$u_id=$data['u_id'];
+
 		$charData=$characterModel->where('u_id',$u_id)->first();
-		$result=$this->BattleRewards($u_id,1,1222,1,$charData['ch_lv'],1);
+		$result=$this->realbattle($data,$clientInfo);
 		var_dump($result);
  	 }
 
