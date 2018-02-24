@@ -207,7 +207,7 @@ class BaggageUtil
 				}else{
 					$resource[$reward['item_org_id']]=$reward['item_quantity'];
 				}
-				return $resource;
+				
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
@@ -238,6 +238,7 @@ class BaggageUtil
 			}
 			// $missionlist[]=$reward['misson_id'];
 		 }
+		 return $resource;
 		 // return $missionlist;
 
 		// }catch(Exception $e){
