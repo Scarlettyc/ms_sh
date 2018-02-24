@@ -299,12 +299,10 @@ class BattleController extends Controller
 		$normarl=[];
 		$special=[];
 		foreach ($rewards['normal'] as $key => $value) {
-			$normarl[]['item_org_id']=$key;
-			$normarl[]['item_quantity']=$value;	# code...
+			$normarl[]=['item_org_id'=>$key,'item_quantity'=>$value];
 		}
 		foreach ($rewards['special'] as $key => $value) {
-			$special[]['item_org_id']=$key;
-			$special[]['item_quantity']=$value;	# code...
+			$special[]=['item_org_id'=>$key,'item_quantity'=>$value];
 		}
 		unset($rewards['normal']);
 		unset($rewards['special']);
