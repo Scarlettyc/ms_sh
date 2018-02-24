@@ -137,7 +137,7 @@ class AttackHitUtil
     	return $result;
     }
     
-    public function haveEffConstant($constantEff,$skill_occur_time{
+    public function haveEffConstant($constantEff,$skill_occur_time){
     		if(isset($constantEff['buff_constant_time'])&&time()-$skill_occur_time<$constantEff['buff_constant_time']){
     		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
     		$result['buff_constant_time']=$skill_data['buff_constant_time'];
