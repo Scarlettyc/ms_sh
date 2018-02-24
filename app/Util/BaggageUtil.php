@@ -239,7 +239,7 @@ class BaggageUtil
 			}
 			// $missionlist[]=$reward['misson_id'];
 		 }
-		 var_dump($resource);
+		 return $resource;
 		 // return $missionlist;
 
 		// }catch(Exception $e){

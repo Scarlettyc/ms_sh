@@ -265,8 +265,9 @@ class BattleController extends Controller
 		 //  	$count=count($norReward);
 			// shuffle($norReward);
 			$baggageUtil=new BaggageUtil();
-			$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
-			$baggageUtil->insertToBaggage($u_id,$rewards['special']);
+			$rewards['normarl']=$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
+			$rewards['special']=$baggageUtil->insertToBaggage($u_id,$rewards['special']);
+			
 			$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 			if($battle_reward['exp']>0){
 				$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
@@ -278,7 +279,7 @@ class BattleController extends Controller
 			$key="battle_result".$match_id;
 			$rewards['coin_reward']=$battle_reward['coin'];
 			$reward=json_encode($rewards,TRUE);
-			//$redis_battle->HSET($key,$u_id,$reward);
+			$redis_battle->HSET($key,$u_id,$reward);
 
   }
 
