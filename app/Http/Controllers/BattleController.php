@@ -254,12 +254,12 @@ class BattleController extends Controller
 			$result=[];
 			for($i=0;$i<$loots_normal;$i++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$norReward=$baNorReward->select('item_org_id','item_type','br_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$norReward=$baNorReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['normarl'][]=$norReward;
 			}
 			for($j=0;$j<$loots_special;$j++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$spReward=$baSpReward->select('item_org_id','item_type','br_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['special'][]=$spReward;
 			}
 
