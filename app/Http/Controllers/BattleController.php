@@ -298,7 +298,7 @@ class BattleController extends Controller
 		$rewards=json_decode($battle_reward,TRUE);
 		$normarl=[];
 		$special=[];
-		foreach ($rewards['normarl'] as $key => $value) {
+		foreach ($rewards['normal'] as $key => $value) {
 			$normarl[]['item_org_id']=$key;
 			$normarl[]['item_quantity']=$value;	# code...
 		}
