@@ -177,11 +177,15 @@ class BaggageUtil
 		$reModel=new ResourceMstModel();
 		$now   = new DateTime;
 		$datetime=$now->format('Y-m-d h:m:s');
+		$resource=[];
 		// try{
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
+
 				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
 				$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_org_id'])->where('u_id',$u_id)->first();
+
+
 				if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
 					$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
 					$UserBaggageResModel->where('br_id',$reward['item_org_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
@@ -198,6 +202,8 @@ class BaggageUtil
 					$result['created_at']=$datetime;
 					$UserBaggageResModel->insert($result);
 				}
+				$resource[$reward['item_org_id']]=$resource[$reward['item_org_id']]+$reward['item_quantity'];
+				return $resource;
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {

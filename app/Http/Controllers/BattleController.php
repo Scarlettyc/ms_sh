@@ -278,9 +278,21 @@ class BattleController extends Controller
 			$key="battle_result".$match_id;
 			$rewards['coin_reward']=$battle_reward['coin'];
 			$reward=json_encode($rewards,TRUE);
-			$redis_battle->HSET($key,$u_id,$reward);
+			//$redis_battle->HSET($key,$u_id,$reward);
 
   }
+
+  	public function battleCalcuate(Request $request){
+  		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$match_id=$data['match_id'];
+		$u_id=$data['u_id'];
+		$redis_battle=Redis::connection('battle');
+		$key="battle_result".$match_id;
+		$battle_reward=$redis_battle->HGET($key,$u_id);
+		$rewards=json_decode($battle_reward,TRUE);
+  	} 
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
 		$redis_battle=Redis::connection('battle');
@@ -374,7 +386,6 @@ class BattleController extends Controller
 		$charData=$characterModel->where('u_id',$u_id)->first();
 		$result=$this->BattleRewards($u_id,1,1222,1,$charData['ch_lv'],1);
 		var_dump($result);
-
  	 }
 
 	 public function finalMatchResult ($data){
