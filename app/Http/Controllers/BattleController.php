@@ -312,7 +312,7 @@ class BattleController extends Controller
 		$result['normal']=$normarl;
 		$result['special']=$special;
 		$response=json_encode($result,TRUE);
-		return  json_encode($response,TRUE);
+		return   base64_encode($response);
 
   	} 
 	private function checkSkillCD($skill,$match_id,$u_id){
