@@ -97,7 +97,7 @@ class AttackHitUtil
 		switch ($buffEff['eff_buff_type']) {
 			case 7:
 				$eff_ch_res_per=$buffEff['eff_value1'];
-				$result['eff_ch_res_per']=$eff_ch_res_per
+				$result['eff_ch_res_per']=$eff_ch_res_per;
 				break;
 			case 9:
 				$eff_ch_uncontrollable=$buffEff['eff_value1'];
