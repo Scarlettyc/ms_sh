@@ -59,7 +59,7 @@ class BattleController extends Controller
 		
 			$charData=[];
 			if($userExist<1){
-				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id);
+				$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			}
 			else{
 				$userJson=$redis_battle->LRANGE($battlekey,0,0);
