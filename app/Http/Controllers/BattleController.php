@@ -251,34 +251,35 @@ class BattleController extends Controller
 			$loots_normal=$battle_reward['loots_normal'];
 			$loots_special=$battle_reward['loots_special'];
 			$rewards=[];
+			$result=[];
 			for($i=0;$i<$loots_normal;$i++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$norReward=$baNorReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$norReward=$baNorReward->select('item_org_id','item_type','br_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['normarl'][]=$norReward;
 			}
 			for($j=0;$j<$loots_special;$j++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$spReward=$baSpReward->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$spReward=$baSpReward->select('item_org_id','item_type','br_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['special'][]=$spReward;
 			}
 
 		 //  	$count=count($norReward);
 			// shuffle($norReward);
 			$baggageUtil=new BaggageUtil();
-			$rewards['normarl']=$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
-			$rewards['special']=$baggageUtil->insertToBaggage($u_id,$rewards['special']);
+			$result['normal']=$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
+			$result['special']=$baggageUtil->insertToBaggage($u_id,$rewards['special']);
 			
 			$UserModel->updateUserValue($u_id,'u_coin',$battle_reward['coin']);
 			if($battle_reward['exp']>0){
 				$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
-				$rewards['exp_reward']=$battle_reward['exp'];
-				$rewards['lv_before']=$ch_lv;
-				$rewards['levelUP']=$LevelUP['levelup'];
-				$rewards['lv']=$LevelUP['lv'];
+				$result['exp_reward']=$battle_reward['exp'];
+				$result['lv_before']=$ch_lv;
+				$result['levelUP']=$LevelUP['levelup'];
+				$result['lv']=$LevelUP['lv'];
 			}
 			$key="battle_result".$match_id;
-			$rewards['coin_reward']=$battle_reward['coin'];
-			$reward=json_encode($rewards,TRUE);
+			$result['coin_reward']=$battle_reward['coin'];
+			$reward=json_encode($result,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
 
   }
