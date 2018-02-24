@@ -43,7 +43,7 @@ class SwooleCommand extends Command
     {  $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
         $serv->set(array(
             'worker_num'  => 8,
-            'daemonize'   => 1, //是否作为守护进程,此配置一般配合log_file使用
+            'daemonize'   => 0, //是否作为守护进程,此配置一般配合log_file使用
             'max_request' => 1000,
             'dispatch_mode' => 2,
             'debug_mode' => 1,
