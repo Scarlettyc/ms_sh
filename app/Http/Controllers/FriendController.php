@@ -153,6 +153,7 @@ class FriendController extends Controller
 			return base64_encode($response);
 		}
 		else {
+			$result['friend_list']=[];
 			$result['requestCount']=0;
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
