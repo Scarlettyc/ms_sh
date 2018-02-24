@@ -41,7 +41,7 @@ class CheckUserToken
             throw new Exception("there is something wrong with token");
             }
         }else{
-            throw new Exception("there is something login data");
+            throw new Exception("there is something wrong login data");
         }
 
     }

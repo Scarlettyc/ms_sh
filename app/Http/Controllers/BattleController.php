@@ -298,11 +298,11 @@ class BattleController extends Controller
 		$rewards=json_decode($battle_reward,TRUE);
 		$normarl=[];
 		$special=[];
-		foreach ($reward['normarl'] as $key => $value) {
+		foreach ($rewards['normarl'] as $key => $value) {
 			$normarl[]['item_org_id']=$key;
 			$normarl[]['item_quantity']=$value;	# code...
 		}
-		foreach ($reward['special'] as $key => $value) {
+		foreach ($rewards['special'] as $key => $value) {
 			$special[]['item_org_id']=$key;
 			$special[]['item_quantity']=$value;	# code...
 		}
