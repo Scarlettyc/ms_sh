@@ -116,6 +116,7 @@ class AttackHitUtil
 	public function checkEffConstant($skill_id,$x){
     	$skillModel=new SkillMstModel();
     	$skill_data=$skillModel->where('skill_id',$skill_id)->first();
+    	$result=[];
     	if($skill_data['buff_constant_time']!=0){
     		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
     		$result['buff_constant_time']=$skill_data['buff_constant_time'];
