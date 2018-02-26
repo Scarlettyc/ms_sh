@@ -111,9 +111,9 @@ class BattleController extends Controller
 
 			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 			if($checkCD){
-				$charData['skills'][]['skill_id']=$data['skill_id'];
-				$charData['skills'][]['skill_group']=$skill['skill_group'];
-				$charData['skills'][]['occur_time']=time();
+				// $charData['skills'][]['skill_id']=$data['skill_id'];
+				// $charData['skills'][]['skill_group']=$skill['skill_group'];
+				// $charData['skills'][]['occur_time']=time();
 				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
 				if($skillConstant){
 					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant];
