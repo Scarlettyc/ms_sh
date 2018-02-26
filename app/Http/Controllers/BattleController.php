@@ -65,7 +65,7 @@ class BattleController extends Controller
 				$userJson=$redis_battle->LRANGE($battlekey,0,0);
 				foreach ($userJson as $key => $each) {
 					$userData=json_decode($each,TRUE);
-					$charData['ch_ranking']=$userData['ch_ranking'];6
+					$charData['ch_ranking']=$userData['ch_ranking'];
 					$charData['ch_hp_max']=$userData['ch_hp_max'];
 					$charData['ch_stam']=$userData['ch_stam'];
 					$charData['ch_atk']=$userData['ch_atk'];
