@@ -65,7 +65,7 @@ class BattleController extends Controller
 				$userJson=$redis_battle->LRANGE($battlekey,0,0);
 				foreach ($userJson as $key => $each) {
 					$userData=json_decode($each,TRUE);
-					$charData['ch_ranking']=$userData['ch_ranking'];
+					$charData['ch_ranking']=$userData['ch_ranking'];6
 					$charData['ch_hp_max']=$userData['ch_hp_max'];
 					$charData['ch_stam']=$userData['ch_stam'];
 					$charData['ch_atk']=$userData['ch_atk'];
@@ -116,7 +116,7 @@ class BattleController extends Controller
 				$charData['skills'][]['occur_time']=time();
 				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
 				if($skillConstant){
-					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$data['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant];
+					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant];
 				}
 			}
 		}
