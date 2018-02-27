@@ -364,6 +364,7 @@ class LuckdrawController extends Controller
 		   				$baEqNew['u_id']=$data['u_id'];
 		   				$baEqNew['b_equ_id']=$equData['equ_id'];
 		   				$baEqNew['b_equ_rarity']=$equData['equ_rarity'];
+		   				$baEqNew['b_equ_type']=$equData['equ_type'];
 		   				$baEqNew['b_icon_path']=$equData['icon_path'];
 		   				$baEqNew['status']=0;
 		   				$baEqNew['updated_at']=$date;
