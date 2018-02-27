@@ -292,7 +292,7 @@ class LuckdrawController extends Controller
 		   			$result['luckdraw'][]=$draw;
 
 					} 
-				}
+			}
 				
 		   		if($drawtype==1){
 		   			$result['spent_coin']=$drawresult['draw_spend']*$draw_quantity['value1'];
@@ -360,15 +360,17 @@ class LuckdrawController extends Controller
 		   			$draw['item_name']=$equData['equ_name'];
 		   			$draw['item_img_path']=$equData['icon_path'];
 		   			$draw['description']=$equData['equ_description'];
-		   			for($i=0;$i<=$drawresult['item_quantity'];$i++){
+		   			$now2   = new DateTime;
+					$date2=$now2->format( 'Y-m-d h:m:s' );
+		   			for($i=0;$i<$drawresult['item_quantity'];$i++){
 		   				$baEqNew['u_id']=$data['u_id'];
 		   				$baEqNew['b_equ_id']=$equData['equ_id'];
 		   				$baEqNew['b_equ_rarity']=$equData['equ_rarity'];
 		   				$baEqNew['b_equ_type']=$equData['equ_type'];
 		   				$baEqNew['b_icon_path']=$equData['icon_path'];
 		   				$baEqNew['status']=0;
-		   				$baEqNew['updated_at']=$date;
-		   				$baEqNew['created_at']=$date;
+		   				$baEqNew['updated_at']=$date2;
+		   				$baEqNew['created_at']=$date2;
 		   				$baEqModel->insert($baEqNew);
 		   				}
 		   			}
@@ -377,7 +379,7 @@ class LuckdrawController extends Controller
 		   			$draw['item_name']=$scData['sc_name'];
 		   			$draw['item_img_path']=$scData['sc_img_path'];
 		   			$draw['description']=$scData['sc_description'];
-					for($i=0;$i<=$drawresult['item_quantity'];$i++){
+					for($i=0;$i<$drawresult['item_quantity'];$i++){
 		   				$baScNew['u_id']=$data['u_id'];
 		   				$baScNew['bsc_id']=$scData['sc_id'];
 		   				$baScNew['bsc_rarity']=$scData['sc_rarity'];
