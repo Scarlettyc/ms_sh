@@ -27,6 +27,7 @@ Route::controller('friend','FriendController');
 Route::controller('loginreward','LoginRewardController');
 Route::controller('updateinfo','UpdateController');
 Route::controller('event','EventController');
+Route::controller('leaderboard','LeaderBoardController');
 
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
@@ -107,6 +108,7 @@ Route::post('/refresh_setting', 'UpdateController@refreshSetting');
 
 
 Route::post('/get_event', 'EventController@getEventList');
+Route::post('/get_leaderboard','LeaderBoardController@getLeaderBoardList');
 });
 
 

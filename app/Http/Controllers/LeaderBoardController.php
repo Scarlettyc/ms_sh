@@ -5,27 +5,24 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
-use App\EventMstModel;
+use App\CharacterModel;
 use DateTime;
-use App\MessageMstModel;
 // use App\Util\CharSkillEffUtil;
 
 class LeaderBoardController extends Controller
 {
   public function getLeaderBoardList(Request $request){
   		$now   = new DateTime;
-		$dmy=$now->format( 'Ymd' );
-		$datetime=$now->format( 'Y-m-d h:m:s' );
-    	$event=new EventMstModel();
-      // $CharSkillEffUtil=new CharSkillEffUtil();
-      // $access_token=$data['access_token'];
-      // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-    	// if($checkToken){
-    		$u_id=$data['u_id'];
-    		$eventList=$event->select('banner_path','web_path')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
-    		$reslut['event_list']=$eventList;
-    		$response=json_encode($reslut,TRUE);
-    		return $response;
+		  $dmy=$now->format( 'Ymd' );
+		  $datetime=$now->format( 'Y-m-d h:m:s' );
+    	$char=new CharacterModel();
+      $u_id=$data['u_id'];
+      $leaderRanking=$char->select('u_id','ch_title','w_id','m_id','core_id','ch_ranking')->orderBy('ch_ranking', 'desc')->limit(10);
+      $myRanking=$char->select('ch_ranking','ch_title')->where('u_id',$u_id)->first();
+      $result['leader_board']=$leaderRanking;
+      $result['user_ranking']=$myRanking;
+    	$response=json_encode($result,TRUE);
+        return base64_encode($response);
     	}
 
   // }
