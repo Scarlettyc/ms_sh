@@ -20,7 +20,7 @@ class LeaderBoardController extends Controller
 		  $datetime=$now->format( 'Y-m-d h:m:s' );
     	$char=new CharacterModel();
       $u_id=$data['u_id'];
-      $leaderRanking=$char->select('u_id','ch_title','w_id','m_id','core_id','ch_ranking')->orderBy('ch_ranking', 'desc')->limit(10);
+      $leaderRanking=$char->select('u_id','ch_title','w_id','m_id','core_id','ch_ranking')->orderBy('ch_ranking', 'desc')->limit(10)->get();
       $myRanking=$char->select('ch_ranking','ch_title')->where('u_id',$u_id)->first();
       $result['leader_board']=$leaderRanking;
       $result['user_ranking']=$myRanking;
