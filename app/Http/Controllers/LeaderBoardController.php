@@ -13,7 +13,7 @@ class LeaderBoardController extends Controller
 {
   public function getLeaderBoardList(Request $request){
       $req=$request->getContent();
-     $json=base64_decode($req);
+      $json=base64_decode($req);
       $data=json_decode($json,TRUE);
   		$now   = new DateTime;
 		  $dmy=$now->format( 'Ymd' );
