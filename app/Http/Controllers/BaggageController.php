@@ -195,6 +195,7 @@ class BaggageController extends Controller
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$EquUpgradeMstModel=new EquUpgradeMstModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
@@ -205,11 +206,13 @@ class BaggageController extends Controller
 		$bag_id=$data['user_bsc_id'];
 
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$bag_id)->update(array('status'=>2,'updated_at'=>$datetime));
-			$scrollInfo=$ScrollMstModel->where('sc_id',$scrollId)->first();
-			$equipmentId=$scrollInfo['equ_id'];
+			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id')->where('sc_id',$scrollId)->first();
+			$eqUpgradInfo=$EquUpgradeMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
+			$equipmentId=$eqUpgradInfo['equ_id'];
+			$eqUpgradInfo['sc_coin']=$scrollInfo['sc_coin'];
 			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
 
-			$ItemInfoUtil->validateResource($u_id,$scrollInfo,3);
+			$ItemInfoUtil->validateResource($u_id,$eqUpgradInfo,3);
 
 			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
@@ -286,14 +289,5 @@ class BaggageController extends Controller
 
 		return base64_encode($response);;
 	}
-	// private funciton resourceEnough($u_id,$resouse_id,$resource_quantity){
-	// 	$userBag=new UserBaggageResModel();
-	// 	$userRe=$userBag->where('u_id',$u_id)->where('br_id',$resouse_id)->first();
-	// 	if($userRe['br_quantity']>=$resource_quantity){
-	// 		return true;
-	// 	}
-	// 	else {
-	// 		return false;
-	// 	}
-	// }
+
 }

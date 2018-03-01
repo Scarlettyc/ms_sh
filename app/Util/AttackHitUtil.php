@@ -95,6 +95,15 @@ class AttackHitUtil
 	public function buffStatus($buff_id){
 		$buffEff=$buffEffModel->where('eff_id',$buff_id)->first();
 		switch ($buffEff['eff_buff_type']) {
+			case 1:
+				$eff_ch_stun=$buffEff['eff_value1'];
+				$result['eff_ch_stun']=$eff_ch_stun;
+			case 3:
+				$eff_ch_stun=$buffEff['eff_value1'];
+				$result['eff_ch_stun']=$eff_ch_stun;			
+			case 2:
+				$eff_ch_stun=$buffEff['eff_value1'];;
+				$result['eff_ch_stun']=$eff_ch_stun;
 			case 7:
 				$eff_ch_res_per=$buffEff['eff_value1'];
 				$result['eff_ch_res_per']=$eff_ch_res_per;
