@@ -271,7 +271,7 @@ class ShopController extends Controller
 			$GemPurchaseBundleMst=new GemPurchaseBundleMst;
 			// if($checkToken){
 				$userData=$UserModel->select('country','os')->where('u_id',$u_id)->first();
-				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->get();
+				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->orderby('gem_quantity')->get();
 				$result['store_gem_list']=$gemList;
 				$response=json_encode($result,TRUE);
 				return base64_encode($response);
