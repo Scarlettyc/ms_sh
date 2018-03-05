@@ -91,7 +91,7 @@ class BaggageUtil
 			$eqUpgrade=new EquUpgradeMstModel();
 			$result=[];
 
-			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->orderBy('b_equ_rarity','DESC')->get();
+			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->orderBy('b_equ_rarity','DESC')->->orderBy('b_equ_id')->get();
 			
 
 			foreach ($baggageWeapon as $obj) 
