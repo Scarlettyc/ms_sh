@@ -93,7 +93,6 @@ class BaggageUtil
 
 			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
 			
-
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['user_beq_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
