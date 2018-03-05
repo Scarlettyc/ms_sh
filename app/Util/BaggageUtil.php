@@ -101,7 +101,7 @@ class BaggageUtil
 				$arry['item_quantity']=1;
 				$eqData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$obj['b_equ_id'])->first();
 
-				$arry['upgrade']=$eqUpgrade->where('equ_code',$eqData['equ_code'])->where('lv',$eqData['equ_lv'])->count();
+				$arry['upgrade']=$eqUpgrade->where('equ_code',$eqData['equ_code'])->where('lv',$eqData['equ_lv']+1)->count();
 				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
