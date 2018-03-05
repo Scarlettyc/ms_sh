@@ -45,7 +45,7 @@ Route::post('/uservalue','AccessController@showStatus');
 Route::post('/baggage','BaggageController@baggage');
 Route::post('/getItemInfo','BaggageController@getItemInfo');
 Route::post('/sellItem','BaggageController@sellItem');
-Route::post('/scrollMerage','BaggageController@scrollMerage');
+Route::post('/scrollMerge','BaggageController@scrollMerge');
 Route::post('/equipmentUpgrade','BaggageController@equipmentUpgrade');
 
 Route::post('/workshop','WorkshopController@workshop');

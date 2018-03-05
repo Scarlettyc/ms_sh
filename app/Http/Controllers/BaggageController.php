@@ -182,7 +182,7 @@ class BaggageController extends Controller
 	}
 
 
-	public function scrollMerage (Request $request)
+	public function scrollMerge (Request $request)
 	{
 		$req=$request->getContent();
 		$json=base64_decode($req);
