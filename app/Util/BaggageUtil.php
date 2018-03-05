@@ -86,18 +86,22 @@ class BaggageUtil
 	{
 		// if(isset($baggage_u_id))
 		// {
+			$EquipmentMstModel=new EquipmentMstModel();
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$eqUpgrade=new EquUpgradeMstModel();
 			$result=[];
 
 			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',0)->where('b_equ_type','=',1)->orderBy('b_equ_rarity','DESC')->get();
+			
 
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['user_beq_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				// $arry['item_icon']=$obj['b_icon_path'];
 				$arry['item_quantity']=1;
-				$arry['upgrade']=$eqUpgrade->where('equ_id',$obj['b_equ_id'])->count();
+				$eqData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$baggageWeapon['b_equ_id'])->first();
+
+				$arry['upgrade']=$eqUpgrade->where('equ_code',$eqData['equ_code'])->where('lv',$eqData['equ_lv'])->count();
 				// $arry['item_type']=2;
 				$result[]=$arry;
 			}
