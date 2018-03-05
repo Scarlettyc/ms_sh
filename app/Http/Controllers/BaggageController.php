@@ -274,6 +274,7 @@ class BaggageController extends Controller
 			
 
 			if($eqDetail['status']==1){
+				$w_bag_id=$UserBaggageEqModel->insertGetId(['u_id'=>$u_id,'b_equ_id'=>$upgradeEquId,'b_equ_rarity'=>$upgradeEquInfo['equ_rarity'],'b_equ_type'=>$upgradeEquInfo['equ_type'],'b_icon_path'=>$upgradeEquInfo['icon_path'],'status'=>1,'updated_at'=>$datetime,'created_at'=>$datetime]);
 				if($eqDetail['b_equ_type']==1){
 					$charmodel->where('u_id',$u_id)->update(['w_id'=>$upgradeEquId,'w_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
@@ -281,6 +282,9 @@ class BaggageController extends Controller
 					$charmodel->where('u_id',$u_id)->update(['core_id'=>$upgradeEquId,'core_bag_id'=>$w_bag_id,'updated_at'=>$datetime]);
 				}
 
+			}
+			else{
+				$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$upgradeEquId,'b_equ_rarity'=>$upgradeEquInfo['equ_rarity'],'b_equ_type'=>$upgradeEquInfo['equ_type'],'b_icon_path'=>$upgradeEquInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
 			}
 
 			$nextUpgarde=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+2)->count();
