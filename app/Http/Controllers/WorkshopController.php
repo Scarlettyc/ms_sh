@@ -143,8 +143,8 @@ class WorkshopController extends Controller
 			// $bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
 			$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
-			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
-			$comEqData=$EquipmentMstModel->where('equ_id',$eqUpData['equ_upgrade_id'])->first();
+			$eqUpData=$EquUpgradeMstModel->where('equ_code',$equ_code)->where('lv',$equData['equ_lv']+1)->first();
+			$comEqData=$EquipmentMstModel->where('equ_id',$eqUpData['equ_id'])->first();
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$result['equ_name']=$equData['equ_name'];
 			$result['coin']=$eqUpData['equ_coin'];
@@ -153,7 +153,7 @@ class WorkshopController extends Controller
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
 			$result['equ_atr']['eff_ch_armor']=$equAtr['eff_ch_armor'];
 			$result['equ_atr']['eff_ch_crit_per']=$equAtr['eff_ch_crit_per'];
-			$result['up_equ']['equ_id']=$eqUpData['equ_upgrade_id'];
+			$result['up_equ']['equ_id']=$eqUpData['equ_id'];
 			$result['up_equ']['eff_ch_stam']=$comEquAtr['eff_ch_stam'];
 			$result['up_equ']['eff_ch_atk']=$comEquAtr['eff_ch_atk'];
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];

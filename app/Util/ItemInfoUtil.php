@@ -162,7 +162,7 @@ class ItemInfoUtil
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
-			$equipment['upgrade']=$eqUpgrade->where('equ_id',$Item_Id)->count();
+			$equipment['upgrade']=$eqUpgrade->where('equ_code',$EquipmentInfo['equ_code'])->where('lv',$EquipmentInfo['equ_lv']+1)->count();
 			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_attribute_id'])->first();
 
 			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
