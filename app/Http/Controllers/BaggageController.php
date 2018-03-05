@@ -245,11 +245,12 @@ class BaggageController extends Controller
 		$u_id=$data['u_id'];
 		$equipmentId=$data['equ_id'];
 		$user_beq_id=$data['user_beq_id'];
+		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv')->where('equ_id',$equipmentId)->first();
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
-			$upgradeInfo=$EquUpgradeMstModel->where('equ_id',$equipmentId)->first();
+		$upgradeInfo=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 
 			if($upgradeInfo){
-			$upgradeEquId=$upgradeInfo['equ_upgrade_id'];
+			$upgradeEquId=$upgradeInfo['equ_id'];
 			$upgradeEquInfo=$EquipmentMstModel->where('equ_id',$upgradeEquId)->first();
 			}
 			else{
@@ -280,7 +281,7 @@ class BaggageController extends Controller
 
 			}
 
-			$nextUpgarde=$EquUpgradeMstModel->where('equ_id',$upgradeEquId)->count();
+			$nextUpgarde=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+2)->count();
 			$result['equ_id']=$upgradeEquId;
 			$result['user_beq_id']=$w_bag_id;
 			$result['upgrade']=$nextUpgarde;
