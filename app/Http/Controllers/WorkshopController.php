@@ -144,7 +144,7 @@ class WorkshopController extends Controller
 			$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
 			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
-			$eqNextData=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv'])->first();
+			$eqNextData=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 			$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['equ_id'])->first();
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$result['equ_name']=$equData['equ_name'];
