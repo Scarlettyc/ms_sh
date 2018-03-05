@@ -56,7 +56,7 @@ class ItemInfoUtil
 	}
 
 	//get Scroll detail information: name and every resource that this Scorll needed. also display the detail information of the equipment and skills.
-	function getScrollInfo ($Item_Id,$u_id)
+	function getScrollInfo ($Item_Id,$u_id,$user_bsc_id)
 	{
 		$ScrollId=$Item_Id;
 		$u_id=$u_id;
@@ -141,7 +141,7 @@ class ItemInfoUtil
 
 
 	// get the information of a Equipment: name, type, icon, effection
-	function getEquipmentInfo ($Item_Id,$u_id)
+	function getEquipmentInfo ($Item_Id,$u_id,$user_beq_id)
 	{
 			$EquipmentMstModel=new EquipmentMstModel();
 			$skillMstModel=new SkillMstModel();
@@ -150,15 +150,14 @@ class ItemInfoUtil
 			$eqUpgrade=new EquUpgradeMstModel();
 			$equipment=[];
 			$result=[];
-			$baggeData=$userBaggage->where('u_id',$u_id)->where('b_equ_id',$Item_Id)->first();
+			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
 
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
-			$equipment['user_beq_id']=$baggeData['user_beq_id'];
+			$equipment['user_beq_id']=$user_beq_id;
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
 			//$equipment['item_img']=$EquipmentInfo['icon_path'];
-			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 

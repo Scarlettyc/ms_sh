@@ -101,27 +101,18 @@ class BaggageController extends Controller
 		$ItemId=$data['item_id'];
 		$u_id=$data['u_id'];
 
-
-		// $CharSkillEffUtil=new CharSkillEffUtil();
-		// $access_token=$data['access_token'];
-		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		// if($checkToken){
 			if($ItemType == 1)
 			{
 				$result = $ItemInfoUtil->getResourceInfo($ItemId);
 			}else if($ItemType == 2)
-			{
-				$result = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id);
+			{	$user_beq_id=$data['user_beq_id'];
+				$result = $ItemInfoUtil->getEquipmentInfo($ItemId,$u_id,$user_beq_id);
 			}else if($ItemType == 3)
-			{
-				$result = $ItemInfoUtil->getScrollInfo($ItemId,$u_id);
+			{	$user_bsc_id=$data['user_bsc_id'];
+				$result = $ItemInfoUtil->getScrollInfo($ItemId,$u_id,$user_bsc_id);
 			}
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
-		// }
-		// else{
-		// 	throw new Exception("there have some error of you access_token");
-		// }
 	}
 
 	//sell item in the baggage
