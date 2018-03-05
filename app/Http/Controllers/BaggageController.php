@@ -247,10 +247,12 @@ class BaggageController extends Controller
 		$user_beq_id=$data['user_beq_id'];
 		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv')->where('equ_id',$equipmentId)->first();
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
-		$upgradeInfo=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
+		$upgradeInfo=$EquUpgradeMstModel->where('equ_id',$equipmentId)->first();
+		$ItemInfoUtil->validateResource($u_id,$upgradeInfo,2);
+		$upgradeNext=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 
 			if($upgradeInfo){
-			$upgradeEquId=$upgradeInfo['equ_id'];
+			$upgradeEquId=$upgradeNext['equ_id'];
 			$upgradeEquInfo=$EquipmentMstModel->where('equ_id',$upgradeEquId)->first();
 			}
 			else{
@@ -261,7 +263,7 @@ class BaggageController extends Controller
 					];
 			}
 
-			$ItemInfoUtil->validateResource($u_id,$upgradeInfo,2);
+			
 
 			// $charmodel->where('u_id',$u_id)->update(['w_id'=>$w_bag_id])
 

@@ -163,6 +163,7 @@ class ItemInfoUtil
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
 			$equipment['upgrade']=$eqUpgrade->where('equ_code',$EquipmentInfo['equ_code'])->where('lv',$EquipmentInfo['equ_lv']+1)->count();
+
 			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_attribute_id'])->first();
 
 			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
@@ -209,9 +210,6 @@ class ItemInfoUtil
 			$EquEffclickId=$EquClickInfo['eff_id'];
 			$EquEffclickInfo=$EffectionMstModel->where('eff_id',$EquEffclickId)->pluck('eff_description');
 			$result['item_data_1']['item_info']['effection']=$EquEffclickInfo;
-
-			
-
 			$EquClickType=$EquClickInfo['equ_part'];
 
 			if($EquClickType == 1)
