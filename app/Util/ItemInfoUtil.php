@@ -65,7 +65,7 @@ class ItemInfoUtil
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
-			$EffectionMstModel=new EffectionMstModel();
+	
 			$UserBaggageResModel=new UserBaggageResModel();
 			$userData=$UserModel->where('u_id',$u_id)->first();
 			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
@@ -187,6 +187,7 @@ class ItemInfoUtil
 		$EquipmentId=$Item_Id;
 
 			$EquipmentMstModel=new EquipmentMstModel();
+	
 			$CharacterModel=new CharacterModel();
 			$SkillMstModel=new SkillMstModel();
 			$Equ_now=[];
@@ -236,7 +237,7 @@ class ItemInfoUtil
 		$Skill_Id=$skill_id;
 
 			$SkillMstModel=new SkillMstModel();
-			$EffectionMstModel=new EffectionMstModel();
+	
 			$skill=[];
 			$result=[];
 
@@ -271,7 +272,7 @@ class ItemInfoUtil
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
-			$EffectionMstModel=new EffectionMstModel();
+	
 			$UserBaggageResModel=new UserBaggageResModel();	
 			$result=[];
 			$equipmentLV=[];
