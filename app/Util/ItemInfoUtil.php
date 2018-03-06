@@ -76,12 +76,12 @@ class ItemInfoUtil
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
-			$upgradeRES=$EquUpgradeReMstModel->where('upgrade_id',$scrollData['upgrade_id'])->get();
+			$upgradeRES=$EquUpgradeReMstModel->select('equ_code','upgrade_id','lv','r_id','r_quantity')->where('upgrade_id',$scrollData['upgrade_id'])->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $each) {
 				$tmp=$each['r_id'];
-				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each['r_id'])->first();
-				$tmp['r_qu_need']=$each['r_quantity'];
+				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each->r_id)->first();
+				$tmp['r_qu_need']=$each->r_quantity;
 				if($rQu['br_quantity']){
 				$tmp['r_qu_have']=$rQu['br_quantity'];
 				}
@@ -395,12 +395,12 @@ class ItemInfoUtil
 				$coin=$userValue['u_coin']-$coin;
 				}
 				foreach ($data as $key => $resources) {
-					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->first();
-					if($rQu['br_quantity']<$resources['r_quantity']){
-					throw new Exception("no enough resouce id".$resources['r_id']);
+					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->first();
+					if($rQu['br_quantity']<$resources->r_quantity){
+					throw new Exception("no enough resouce id".$resources->r_id);
 					}
 					else{
-						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->update(['br_quantity'=>$rQu['br_quantity']-$resources['r_quantity'],'updated_at'=>$datetime]);
+						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->update(['br_quantity'=>$rQu['br_quantity']-$resources->r_quantity,'updated_at'=>$datetime]);
 					}
 				# code...
 			}
