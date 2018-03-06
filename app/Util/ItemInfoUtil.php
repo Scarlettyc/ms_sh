@@ -4,7 +4,6 @@ use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\UserModel;
 use App\EquipmentMstModel;
-use App\EffectionMstModel;
 use App\SkillMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;

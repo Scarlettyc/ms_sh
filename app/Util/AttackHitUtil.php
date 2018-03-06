@@ -1,7 +1,6 @@
 <?php
 namespace App\Util;
 use App\Http\Requests;
-use App\EffectionMstModel;
 use App\SkillMstModel;
 use App\MapStoneRelationMst;
 use App\AtkEffectionMst;

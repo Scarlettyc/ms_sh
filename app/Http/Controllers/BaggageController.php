@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use App\UserModel;
 use App\CharacterModel;
 use App\EquipmentMstModel;
-use App\EffectionMstModel;
 use App\SkillMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;

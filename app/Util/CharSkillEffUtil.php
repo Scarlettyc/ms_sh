@@ -3,7 +3,6 @@ namespace App\Util;
 use App\Http\Requests;
 use App\CharacterModel;
 use App\SkillMstModel;
-use App\EffectionMstModel;
 use App\AtkEffectionMst;
 use App\AtkRecEffModel;
 use App\BuffEffModel;

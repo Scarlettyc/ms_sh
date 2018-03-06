@@ -12,7 +12,6 @@ use App\UserBaggageResModel;
 use App\EqAttrmstModel;
 use App\EquUpgradeMstModel;
 use App\SkillMstModel;
-use App\EffectionMstModel;
 use App\ImgMstModel;
 use App\Util\ItemInfoUtil;
 use Exception;

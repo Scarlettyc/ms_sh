@@ -10,7 +10,6 @@ use App\UserModel;
 use App\MatchRangeModel;
 use App\CharacterModel;
 use App\SkillMstModel;
-use App\EffectionMstModel;
 use App\DefindMstModel;
 use App\BuffEffMstModel;
 use App\NormalEffectionMstModel;

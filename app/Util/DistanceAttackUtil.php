@@ -4,7 +4,6 @@ use App\Http\Requests;
 use App\MapTrapRelationMst;
 use App\MapModel;
 use App\TrapMstModel;
-use App\EffectionMstModel;
 use App\SkillMstModel;
 use App\EffectionMstModel;
 use App\MapStoneRelationMst;
