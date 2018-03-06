@@ -13,7 +13,7 @@ use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
-use App\EquUpgradeMstModel;
+use App\EquUpgradeReMstModel;
 use App\Util\BaggageUtil;
 use App\Util\ItemInfoUtil;
 use Exception;
@@ -185,7 +185,7 @@ class BaggageController extends Controller
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
-		$EquUpgradeMstModel=new EquUpgradeMstModel();
+		$EquUpgradeReMstModel=new EquUpgradeReMstModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$ItemInfoUtil=new ItemInfoUtil();
@@ -197,14 +197,12 @@ class BaggageController extends Controller
 
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$bag_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id')->where('sc_id',$scrollId)->first();
-			$eqUpgradInfo=$EquUpgradeMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
-			$equipmentId=$eqUpgradInfo['equ_id'];
-			$eqUpgradInfo['sc_coin']=$scrollInfo['sc_coin'];
-			$equipmentInfo=$EquipmentMstModel->where('equ_id',$equipmentId)->first();
+			$eqUpgradInfo=$EquUpgradeReMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->get();
+			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 
-			$ItemInfoUtil->validateResource($u_id,$eqUpgradInfo,3);
+			$ItemInfoUtil->validateResource($u_id,$eqUpgradInfo,$scrollInfo['sc_coin']);
 
-			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentId,'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
+			$UserBaggageEqModel->insert(['u_id'=>$u_id,'b_equ_id'=>$equipmentInfo['equ_id'],'b_equ_rarity'=>$equipmentInfo['equ_rarity'],'b_equ_type'=>$equipmentInfo['equ_type'],'b_icon_path'=>$equipmentInfo['icon_path'],'status'=>0,'updated_at'=>$datetime,'created_at'=>$datetime]);
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
 
 			$response='Successfully Meraged';
@@ -228,7 +226,7 @@ class BaggageController extends Controller
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
-		$EquUpgradeMstModel=new EquUpgradeMstModel();
+		$EquUpgradeReMstModel=new EquUpgradeReMstModel();
 		$result=[];
 		$charmodel=new CharacterModel();
 		$ItemInfoUtil=new ItemInfoUtil();
@@ -237,13 +235,14 @@ class BaggageController extends Controller
 		$user_beq_id=$data['user_beq_id'];
 		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv')->where('equ_id',$equipmentId)->first();
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
-		$upgradeInfo=$EquUpgradeMstModel->where('equ_id',$equipmentId)->first();
-		$ItemInfoUtil->validateResource($u_id,$upgradeInfo,2);
-		$upgradeNext=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
+		$upgradeInfo=$EquUpgradeReMstModel->where('equ_id',$equipmentId)->get();
+		$upgradeInfo
+		$ItemInfoUtil->validateResource($u_id,$upgradeInfo,$equData['upgrade_coin']);
+		$upgradeNext=$EquUpgradeReMstModel->where('equ_code','like',$equData['equ_code'].'%')->where('lv',$equData['equ_lv']+1)->first();
 
 			if($upgradeInfo){
-			$upgradeEquId=$upgradeNext['equ_id'];
-			$upgradeEquInfo=$EquipmentMstModel->where('equ_id',$upgradeEquId)->first();
+			$upgradeEquId=$upgradeNext['upgrade_id'];
+			$upgradeEquInfo=$EquipmentMstModel->where('upgrade_id',$upgradeEquId)->first();
 			}
 			else{
 				throw new Exception("upgradeInfo is null");

@@ -8,7 +8,7 @@ use App\SkillMstModel;
 use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\UserBaggageResModel;
-use App\EquUpgradeMstModel;
+use App\EquUpgradeReMstModel;
 use App\CharacterModel;
 use App\EqAttrmstModel;
 use App\UserBaggageEqModel;
@@ -65,7 +65,8 @@ class ItemInfoUtil
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
-			$EquUpgradeMstModel=new EquUpgradeMstModel();
+			$EquUpgradeReMstModel=new EquUpgradeReMstModel();
+
 			$UserBaggageResModel=new UserBaggageResModel();
 			$userData=$UserModel->where('u_id',$u_id)->first();
 			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
@@ -75,65 +76,22 @@ class ItemInfoUtil
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
-			$upgradeRES=$EquUpgradeMstModel->where('upgrade_id',$upgrade_id)->first();
+			$upgradeRES=$EquUpgradeReMstModel->where('upgrade_id',$upgrade_id)->get();
 			$resource=[];
-			if($scrollData['rd1_quantity']>0){
-				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_1'])->first();
-				$tmp['r_id']=$scrollData['r_id_1'];
-				$tmp['r_qu_need']=$scrollData['rd1_quantity'];
-				if($r1Qu['br_quantity']){
-				$tmp['r_qu_have']=$r1Qu['br_quantity'];
+			foreach ($upgradeRES as $key => $resources) {
+				$tmp=$resources['r_id'];
+				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->first();
+				$tmp['r_qu_need']=$resources['r_quantity'];
+				if($rQu['br_quantity']){
+				$tmp['r_qu_have']=$rQu['br_quantity'];
 				}
 				else{
 				$tmp['r_qu_have']=0;
 				}
 				$resource[]=$tmp; 
-			}
-			if($scrollData['rd2_quantity']>0){
-				$r2Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_2'])->first();
-				$tmp['r_id']=$scrollData['r_id_2'];
-				$tmp['r_qu_need']=$scrollData['rd2_quantity'];
-				if($r2Qu['br_quantity']){
-				$tmp['r_qu_have']=$r2Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;	
-				}
-				$resource[]=$tmp;	
-			}
-			if($scrollData['rd3_quantity']>0){
-				$r3Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_3'])->first();
-				$tmp['r_id']=$scrollData['r_id_3'];
-				$tmp['r_qu_need']=$scrollData['rd3_quantity'];
-				if($r3Qu['br_quantity']){
-				$tmp['r_qu_have']=$r3Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}
-				$resource[]=$tmp;	
-			}
-			if($scrollData['rd4_quantity']>0){
-				$r4Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_4'])->first();
-				$tmp['r_id']=$scrollData['r_id_4'];
-				$tmp['r_qu_need']=$scrollData['rd4_quantity'];
-				if($r4Qu['br_quantity']){
-				$tmp['r_qu_have']=$r4Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}
-				$resource[]=$tmp;
-			}
-			if($scrollData['rd5_quantity']>0){
-				$r5Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_5'])->first();
-				$tmp['r_id']=$scrollData['r_id_5'];
-				$tmp['r_qu_need']=$scrollData['rd5_quantity'];
-				if($r5Qu['br_quantity']){
-				$tmp['r_qu_have']=$r5Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}$resource[]=$tmp;
-			}
 
-
+				# code...
+			}
 			$result['resource']=$resource;
 
 		return $result;
@@ -147,7 +105,7 @@ class ItemInfoUtil
 			$skillMstModel=new SkillMstModel();
 			$eqAttrmstModel=new EqAttrmstModel();
 			$userBaggage=new UserBaggageEqModel();
-			$eqUpgrade=new EquUpgradeMstModel();
+			$eqUpgrade=new EquUpgradeReMstModel();
 			$equipment=[];
 			$result=[];
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
@@ -161,8 +119,13 @@ class ItemInfoUtil
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
-			$equipment['upgrade']=$eqUpgrade->where('equ_code',$EquipmentInfo['equ_code'])->where('lv',$EquipmentInfo['equ_lv']+1)->count();
-
+			$countUp=$equipment['upgrade']=$eqUpgrade->where('equ_code','like',$EquipmentInfo['equ_code'].'%')->where('lv',$EquipmentInfo['equ_lv']+1)->count();
+			if($countUp>0){
+				$equipment['upgrade']=1;
+			}
+			else {
+				$equipment['upgrade']=0;
+			}
 			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_attribute_id'])->first();
 
 			$equipment['eff_ch_stam']=$eqAtr['eff_ch_stam'];
@@ -414,102 +377,33 @@ class ItemInfoUtil
 		}
 		return $response;
 	}
-	public function validateResource($u_id,$data,$type){
+	public function validateResource($u_id,$data,$type,$coin){
 		$UserModel=new UserModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$now=new DateTime;
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
-			$userRe1=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_1'])->first();
-
-				if($type==2){
-					if($userValue['u_coin']<$data['equ_coin']){
-					throw new Exception("no enough coin");
-					$response=[
+			if($userValue['u_coin']<$coin){
+				throw new Exception("no enough coin");
+				$response=[
 						'status' => 'Wrong',
 						'error' => "no enough resources",
-					];
+				];
+				}
+			else{
+				$coin=$userValue['u_coin']-$coin];
+				}
+				foreach ($data as $key => $resources) {
+					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->first();
+					if($rQu['br_quantity']<$resources['r_quantity']){
+					throw new Exception("no enough resouce id".$resources['r_id']);
 					}
 					else{
-					$coin=$userValue['u_coin']-$data['equ_coin'];
+						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->update(['br_quantity'=>$rQu['br_quantity']-$resources['r_quantity'],'updated_at'=>$datetime]);
 					}
-				}
-				else if($type==3){
-					if($userValue['u_coin']<$data['sc_coin']){
-					throw new Exception("no enough coin");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-					}
-					else{
-					$coin=$userValue['u_coin']-$data['sc_coin'];
-					}
-
-				}
-				if($userRe1['br_quantity']<$data['rd1_quantity']){
-					throw new Exception("no enough resouce1");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-				}
-				else{
-					$resouce1Qu=$userRe1['br_quantity']-$data['rd1_quantity'];
-				}
-			$userRe2=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_2'])->first();
-				if($userRe2['br_quantity']<$data['rd2_quantity']){
-					throw new Exception("no enough resouce2");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-				}
-				else{
-					$resouce2Qu=$userRe2['br_quantity']-$data['rd2_quantity'];
-				}
-
-			$userRe3=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_3'])->first();
-				if($userRe2['br_quantity']<$data['rd3_quantity']){
-					throw new Exception("no enough resouce3");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-				}
-				else{
-					$resouce3Qu=$userRe3['br_quantity']-$data['rd3_quantity'];
+				# code...
 			}
-			$userRe4=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->first();
-				if($userRe4['br_quantity']<$data['rd4_quantity']){
-					throw new Exception("no enough resouce1");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-				}
-				else{
-					$resouce4Qu=$userRe4['br_quantity']-$data['rd4_quantity'];
-			}
-
-			$userRe5=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->first();
-				if($userRe5['br_quantity']<$data['rd5_quantity']){
-					throw new Exception("no enough resouce1");
-					$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-					];
-				}
-				else{
-					$resouce5Qu=$userRe5['br_quantity']-$data['rd5_quantity'];
-			}
-
-			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_1'])->update(['br_quantity'=>$resouce1Qu,'updated_at'=>$datetime]);
-			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_2'])->update(['br_quantity'=>$resouce2Qu,'updated_at'=>$datetime]);
-			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_3'])->update(['br_quantity'=>$resouce3Qu,'updated_at'=>$datetime]);
-			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_4'])->update(['br_quantity'=>$resouce4Qu,'updated_at'=>$datetime]);
-			$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$data['r_id_5'])->update(['br_quantity'=>$resouce5Qu,'updated_at'=>$datetime]);
-			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
-	}
+				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+		}
 }
