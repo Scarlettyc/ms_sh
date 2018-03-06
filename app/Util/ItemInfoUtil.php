@@ -78,10 +78,10 @@ class ItemInfoUtil
 			$result['sc_img_path']=$scrollData['sc_img_path'];
 			$upgradeRES=$EquUpgradeReMstModel->where('upgrade_id',$scrollData['upgrade_id'])->get();
 			$resource=[];
-			foreach ($upgradeRES as $key => $resources) {
-				$tmp=$resources['r_id'];
-				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->first();
-				$tmp['r_qu_need']=$resources['r_quantity'];
+			foreach ($upgradeRES as $key => $each) {
+				$tmp=$each['r_id'];
+				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each['r_id'])->first();
+				$tmp['r_qu_need']=$each['r_quantity'];
 				if($rQu['br_quantity']){
 				$tmp['r_qu_have']=$rQu['br_quantity'];
 				}
