@@ -187,7 +187,6 @@ class ItemInfoUtil
 		$EquipmentId=$Item_Id;
 
 			$EquipmentMstModel=new EquipmentMstModel();
-			$EffectionMstModel=new EffectionMstModel();
 			$CharacterModel=new CharacterModel();
 			$SkillMstModel=new SkillMstModel();
 			$Equ_now=[];
