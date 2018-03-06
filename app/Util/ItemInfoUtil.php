@@ -378,7 +378,7 @@ class ItemInfoUtil
 		}
 		return $response;
 	}
-	public function validateResource($u_id,$data,$type,$coin){
+	public function validateResource($u_id,$data,$coin){
 		$UserModel=new UserModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$now=new DateTime;
