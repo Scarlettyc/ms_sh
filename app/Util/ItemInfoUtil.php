@@ -76,7 +76,7 @@ class ItemInfoUtil
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
-			$upgradeRES=$EquUpgradeReMstModel->where('upgrade_id',$upgrade_id)->get();
+			$upgradeRES=$EquUpgradeReMstModel->where('upgrade_id',$scrollData['upgrade_id'])->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $resources) {
 				$tmp=$resources['r_id'];
