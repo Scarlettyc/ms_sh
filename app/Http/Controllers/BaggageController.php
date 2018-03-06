@@ -257,9 +257,6 @@ class BaggageController extends Controller
 			
 
 			$UserBaggageEqModel->where('user_beq_id',$data['user_beq_id'])->where('u_id',$u_id)->update(['status'=>2,'updated_at'=>$datetime]);	
-				
-					
-		Log::info($eqDetail);
 
 			if($eqDetail['status']==1){
 				$w_bag_id=$UserBaggageEqModel->insertGetId(['u_id'=>$u_id,'b_equ_id'=>$upgradeEquId,'b_equ_rarity'=>$upgradeEquInfo['equ_rarity'],'b_equ_type'=>$upgradeEquInfo['equ_type'],'b_icon_path'=>$upgradeEquInfo['icon_path'],'status'=>1,'updated_at'=>$datetime,'created_at'=>$datetime]);
@@ -278,10 +275,15 @@ class BaggageController extends Controller
 				$result['user_beq_id']=$w_bag_id;
 			}
 
-			$nextUpgarde=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+2)->count();
+			$nextUpgarde=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+2)->count();
+			if($nextUpgarde>0){
+				$result['upgrade']=1;
+			}else{
+				$result['upgrade']=0;
+			}
 			$result['equ_id']=$upgradeEquId;
 			
-			$result['upgrade']=$nextUpgarde;
+			
 
 			$response=json_encode($result,TRUE);
 
