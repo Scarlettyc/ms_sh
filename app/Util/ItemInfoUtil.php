@@ -65,7 +65,7 @@ class ItemInfoUtil
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
-	
+			$EquUpgradeMstModel=new EquUpgradeMstModel();
 			$UserBaggageResModel=new UserBaggageResModel();
 			$userData=$UserModel->where('u_id',$u_id)->first();
 			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
@@ -75,6 +75,7 @@ class ItemInfoUtil
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
+			$upgradeRES=$EquUpgradeMstModel->where('upgrade_id',$upgrade_id)->first();
 			$resource=[];
 			if($scrollData['rd1_quantity']>0){
 				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$scrollData['r_id_1'])->first();
