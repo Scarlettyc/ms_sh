@@ -79,7 +79,7 @@ class ItemInfoUtil
 			$upgradeRES=$EquUpgradeReMstModel->select('equ_code','upgrade_id','lv','r_id','r_quantity')->where('upgrade_id',$scrollData['upgrade_id'])->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $each) {
-				$tmp=$each['r_id'];
+				$tmp['r_id']=$each['r_id'];
 				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each->r_id)->first();
 				$tmp['r_qu_need']=$each->r_quantity;
 				if($rQu['br_quantity']){
@@ -233,6 +233,7 @@ class ItemInfoUtil
 		{
 			$UserModel=new UserModel();
 			$EquUpgradeMstModel=new EquUpgradeMstModel();
+
 			$EquipmentMstModel=new EquipmentMstModel();
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
