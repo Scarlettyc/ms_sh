@@ -392,7 +392,7 @@ class ItemInfoUtil
 				];
 				}
 			else{
-				$coin=$userValue['u_coin']-$coin];
+				$coin=$userValue['u_coin']-$coin;
 				}
 				foreach ($data as $key => $resources) {
 					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources['r_id'])->first();

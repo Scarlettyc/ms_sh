@@ -285,7 +285,7 @@ class BaggageController extends Controller
 
 			$response=json_encode($result,TRUE);
 
-		return base64_encode($response);;
+		return base64_encode($response);
 	}
 
 }
