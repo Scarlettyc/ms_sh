@@ -67,7 +67,7 @@ class BaggageUtil
 	function getEquipment($u_id,$equ_type,$status){
 			$EquipmentMstModel=new EquipmentMstModel();
 			$UserBaggageEqModel=new UserBaggageEqModel();
-			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$baggage_u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
+			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
