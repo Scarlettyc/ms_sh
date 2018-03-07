@@ -74,8 +74,7 @@ class BaggageUtil
 				$arry['item_type']=2;
 				$arry['equ_type']=$equ_type;
 				$arry['item_quantity']=1;
-				$eqData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$obj['b_equ_id'])->first();
-				$result['']=$arry;
+				$result[]=$arry;
 			}
 		return $result;
 	}
