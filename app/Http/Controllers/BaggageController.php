@@ -237,7 +237,12 @@ class BaggageController extends Controller
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('b_equ_id',$equipmentId)->first();
 		$upgradeInfo=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->get();
 		$ItemInfoUtil->validateResource($u_id,$upgradeInfo,$equData['upgrade_coin']);
-		$upgradeNext=$EquUpgradeReMstModel->where('equ_code','like',$equData['equ_code'].'%')->where('lv',$equData['equ_lv']+1)->first();
+		if($equData['equ_part']==3){
+			$upgradeNext=$EquUpgradeReMstModel->where('equ_code',substr($equData['equ_code'], 0,4))->where('lv',$equData['equ_lv']+1)->first();
+		}
+		else{
+		$upgradeNext=$EquUpgradeReMstModel->where('equ_code','like',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
+		}
 
 			if($upgradeInfo){
 			$upgradeEquId=$upgradeNext['upgrade_id'];

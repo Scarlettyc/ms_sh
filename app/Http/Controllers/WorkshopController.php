@@ -70,7 +70,8 @@ class WorkshopController extends Controller
 			$result['core_id']=$characterDetail['core_id'];
 			$result['core_bag_id']=$characterDetail['core_bag_id'];
 			$cData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$result['core_id'])->first();
-			$cUP=$eqUpgrade->where('equ_code','like',$cData['equ_code'].'%')->where('lv',$cData['equ_lv']+1)->count();
+
+			$cUP=$eqUpgrade->where('equ_code','like',substr($cData['equ_code'], 0,4))->where('lv',$cData['equ_lv']+1)->count();
 			if($cUP>0){
 				$result['upgrade_c']=1;
 			}
