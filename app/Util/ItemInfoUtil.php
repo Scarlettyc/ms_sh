@@ -115,11 +115,10 @@ class ItemInfoUtil
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
-			//$equipment['item_img']=$EquipmentInfo['icon_path'];
 			$equipment['item_description']=$EquipmentInfo['equ_description'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 
-			$countUp=$equipment['upgrade']=$eqUpgrade->where('equ_code','like',$EquipmentInfo['equ_code'].'%')->where('lv',$EquipmentInfo['equ_lv']+1)->count();
+			$countUp=$eqUpgrade->where('equ_code','like',$EquipmentInfo['equ_code'].'%')->where('lv',$EquipmentInfo['equ_lv']+1)->count();
 			if($countUp>0){
 				$equipment['upgrade']=1;
 			}
