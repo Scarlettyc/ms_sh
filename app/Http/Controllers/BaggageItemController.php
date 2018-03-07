@@ -77,7 +77,6 @@ class BaggageItemController extends Controller
 			$response=json_encode($result,TRUE);
 				return base64_encode($response);
 		}
-	}
 
 	//show the detail information when user click the item in the baggage
 	public function getItemInfo (Request $request)
