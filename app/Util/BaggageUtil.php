@@ -11,6 +11,7 @@ use App\ScrollMstModel;
 use App\ResourceMstModel;
 use App\ItemMstModel;
 use App\EquipmentMstModel;
+use App\EquUpgradeReMstModel;
 use Exception;
 use App\EqAttrmstModel;
 use App\SkillMstModel;
