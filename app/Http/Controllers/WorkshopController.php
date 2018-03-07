@@ -10,6 +10,7 @@ use App\EquipmentMstModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageResModel;
 use App\EqAttrmstModel;
+use App\EquUpgradeReMstModel;
 use App\EquUpgradeMstModel;
 use App\SkillMstModel;
 use App\ImgMstModel;
@@ -33,7 +34,7 @@ class WorkshopController extends Controller
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$SkillMstModel=new SkillMstModel();
-		$eqUpgrade=new EquUpgradeMstModel();
+		$eqUpgrade=new EquUpgradeReMstModel();
 		$result=[];
 		$weaponData=[];
 		$movementData=[];
@@ -46,14 +47,36 @@ class WorkshopController extends Controller
 			$characterInfo=$CharacterModel->where('u_id',$u_id)->first();
 
 			$result['w_id']=$characterDetail['w_id'];
+			$wData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$result['w_id'])->first();
 			$result['w_bag_id']=$characterDetail['w_bag_id'];
-			$result['upgrade_w']=$eqUpgrade->where('equ_id',$result['w_id'])->count();
+
+			$wUP=$eqUpgrade->where('equ_code',$wData['equ_code'])->where('lv',$wData['equ_lv']+1)->count();
+			if($wUP>0){
+				$result['upgrade_w']=1;
+			}
+			else{
+				$result['upgrade_w']=0;
+			}
 			$result['m_id']=$characterDetail['m_id'];
 			$result['m_bag_id']=$characterDetail['m_bag_id'];
-			$result['upgrade_m']=$eqUpgrade->where('equ_id',$result['m_id'])->count();
+			$mData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$result['m_id'])->first();
+			$mUP=$eqUpgrade->where('equ_code',$mData['equ_code'])->where('lv',$mData['equ_lv']+1)->count();
+			if($mUP>0){
+				$result['upgrade_m']=1;
+			}
+			else{
+				$result['upgrade_m']=0;
+			}
 			$result['core_id']=$characterDetail['core_id'];
 			$result['core_bag_id']=$characterDetail['core_bag_id'];
-			$result['upgrade_c']=$eqUpgrade->where('equ_id',$result['core_id'])->count();
+			$cData=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$result['core_id'])->first();
+			$cUP=$eqUpgrade->where('equ_code',$cData['equ_code'])->where('lv',$cData['equ_lv']+1)->count();
+			if($cUP>0){
+				$result['upgrade_c']=1;
+			}
+			else{
+				$result['upgrade_c']=0;
+			}
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
 			$result['ch_armor']=$characterDetail['ch_armor'];
@@ -131,7 +154,7 @@ class WorkshopController extends Controller
 		$ItemInfoUtil=new ItemInfoUtil();
 		$EqAttrmstModel=new EqAttrmstModel();
 		$UserBaggageEqModel=new UserBaggageEqModel();
-		$EquUpgradeMstModel=new EquUpgradeMstModel();
+		$EquUpgradeReMstModel=new EquUpgradeReMstModel();
 		$UserBaggageResModel =new UserBaggageResModel();
 		$result=[];
 
@@ -142,12 +165,14 @@ class WorkshopController extends Controller
 			// $bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
 			$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
-			$eqUpData=$EquUpgradeMstModel->where('equ_id',$equ_id)->first();
-			$eqNextData=$EquUpgradeMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
-			$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['equ_id'])->first();
+			$eqUpData=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->first();
+
+			$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
+
+			$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['upgrade_id'])->first();
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$result['equ_name']=$equData['equ_name'];
-			$result['coin']=$eqUpData['equ_coin'];
+			$result['coin']=$equData['upgrade_coin'];
 			$result['equ_atr']['equ_id']=$equ_id;
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
@@ -159,63 +184,19 @@ class WorkshopController extends Controller
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
 			$result['up_equ']['eff_ch_crit_per']=$comEquAtr['eff_ch_crit_per'];
 			$resource=[];
-			if($eqUpData['rd1_quantity']>0){
-				$r1Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_1'])->first();
-				$tmp['r_id']=$eqUpData['r_id_1'];
-				$tmp['r_qu_need']=$eqUpData['rd1_quantity'];
-				if($r1Qu['br_quantity']){
-				$tmp['r_qu_have']=$r1Qu['br_quantity'];
-				}
-				else{
-				$tmp['r_qu_have']=0;
-				}
-				$resource[]=$tmp; 
-			}
-			if($eqUpData['rd2_quantity']>0){
-				$r2Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_2'])->first();
-				$tmp['r_id']=$eqUpData['r_id_2'];
-				$tmp['r_qu_need']=$eqUpData['rd2_quantity'];
-				if($r2Qu['br_quantity']){
-				$tmp['r_qu_have']=$r2Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;	
-				}
-				$resource[]=$tmp;	
-			}
-			if($eqUpData['rd3_quantity']>0){
-				$r3Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_3'])->first();
-				$tmp['r_id']=$eqUpData['r_id_3'];
-				$tmp['r_qu_need']=$eqUpData['rd3_quantity'];
-				if($r3Qu['br_quantity']){
-				$tmp['r_qu_have']=$r3Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}
-				$resource[]=$tmp;	
-			}
-			if($eqUpData['rd4_quantity']>0){
-				$r4Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_4'])->first();
-				$tmp['r_id']=$eqUpData['r_id_4'];
-				$tmp['r_qu_need']=$eqUpData['rd4_quantity'];
-				if($r4Qu['br_quantity']){
-				$tmp['r_qu_have']=$r4Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}
-				$resource[]=$tmp;
-			}
-			if($eqUpData['rd5_quantity']>0){
-				$r5Qu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$eqUpData['r_id_5'])->first();
-				$tmp['r_id']=$eqUpData['r_id_5'];
-				$tmp['r_qu_need']=$eqUpData['rd5_quantity'];
-				if($r5Qu['br_quantity']){
-				$tmp['r_qu_have']=$r5Qu['br_quantity'];
-				}else{
-				$tmp['r_qu_have']=0;
-				}$resource[]=$tmp;
+				foreach ($upgradeRES as $key => $each) {
+					$tmp['r_id']=$each['r_id'];
+					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each->r_id)->first();
+					$tmp['r_qu_need']=$each->r_quantity;
+					if($rQu['br_quantity']){
+					$tmp['r_qu_have']=$rQu['br_quantity'];
+					}
+					else{
+					$tmp['r_qu_have']=0;
+					}
+					$resource[]=$tmp;
 			}
 			$result['resource']=$resource;
-
 			$response=json_encode($result,TRUE);			
 		return base64_encode($response);
 	}
