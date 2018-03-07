@@ -222,10 +222,10 @@ class BaggageUtil
 					if($rQu['br_quantity']){
 						$tmp['r_qu_have']=$rQu['br_quantity'];
 						if($upgarde==1&&$rQu['br_quantity']<$each->r_quantity&&$coinLeft){
-						throw new Exception("no enough resouce id".$resources->r_id);
+						throw new Exception("no enough resouce id".$each->r_id);
 							}
 						else{
-						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->update(['br_quantity'=>$rQu['br_quantity']-$resources->r_quantity,'updated_at'=>$datetime]);
+						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each->r_id)->update(['br_quantity'=>$rQu['br_quantity']-$each->r_quantity,'updated_at'=>$datetime]);
 						}
 					}
 					else{
