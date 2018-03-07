@@ -86,7 +86,7 @@ class BaggageItemController extends Controller
 		$data=json_decode($json,TRUE);
 		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
-		$itemType=$data['item_type']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
+		$item_id=$data['item_id']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
 		$u_id=$data['u_id'];
 		$item_type=$data['item_type'];
 		$equ_type=$data['equ_type'];
@@ -95,13 +95,13 @@ class BaggageItemController extends Controller
 		$BaggageUtil=new BaggageUtil();
 
 			if($item_type == 1)
-			{	$result = $BaggageUtil->getResourceInfo($ItemId);
+			{	$result = $BaggageUtil->getResourceInfo($item_id);
 			}
 			else if($item_type == 2)
-			{	$result = $BaggageUtil->getEquipmentInfo($ItemId,$u_id,$baggage_id,$equ_type);
+			{	$result = $BaggageUtil->getEquipmentInfo($item_id,$u_id,$baggage_id,$equ_type);
 			}else if($item_type == 3)
 			{	
-				$result = $BaggageUtil->getScrollInfo($ItemId,$u_id,$user_bsc_id);
+				$result = $BaggageUtil->getScrollInfo($item_id,$u_id,$user_bsc_id);
 			}
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
@@ -128,7 +128,7 @@ class BaggageItemController extends Controller
 		$itemId=$data['item_id'];
 		$equ_type=$data['equ_type'];
 		$baggage_id=$data['baggage_id'];
-			if($ItemType == 2)//sell Equipment
+			if($itemType == 2)//sell Equipment
 			{	$EquipmentMstModel=new EquipmentMstModel();
 				$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('user_beq_id',$baggage_id)->update(array('status'=>9,'updated_at'=>$datetime));
 				$eqData=$EquipmentMstModel->where('equ_id',$itemId)->first();
@@ -137,23 +137,23 @@ class BaggageItemController extends Controller
 				$updateCoin=$UserData['u_coin']+$ItemPrice;
 				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 				$response="sold Equipment";
-			}else if($ItemType == 3)//sell Scroll
+			}else if($itemType == 3)//sell Scroll
 			{	
 				$ScrollMstModel=new ScrollMstModel();
 
 				$bag_id=$data['user_bsc_id'];
 				$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
-				$scData=$ScrollMstModel->where('sc_id',$ItemId)->first();
+				$scData=$ScrollMstModel->where('sc_id',$itemId)->first();
 				$ItemPrice=$scData['sc_coin'];
 				$UserData=$UserModel->where('u_id',$u_id)->first();
 				$updateCoin=$UserData['u_coin']+$ItemPrice;
 				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$updateCoin,'updated_at'=>$datetime]);
 				$response="sold Scroll";
 		}else{
-			throw new Exception("No ItemType");
+			throw new Exception("No itemType");
 			$response=[
 			'status' => 'Wrong',
-			'error' => "please check ItemType",
+			'error' => "please check itemType",
 			];
 		}
 		return base64_encode($response);
