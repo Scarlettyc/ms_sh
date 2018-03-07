@@ -12,6 +12,7 @@ use App\ResourceMstModel;
 use App\ItemMstModel;
 use App\EquipmentMstModel;
 use Exception;
+use App\EqAttrmstModel;
 use App\SkillMstModel;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
