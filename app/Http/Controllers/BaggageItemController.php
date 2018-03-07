@@ -65,7 +65,7 @@ class BaggageItemController extends Controller
 		$coreData=[];
 
 		$u_id=$data['u_id'];
-
+			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
 			$equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id')->where('status',1)->get();
 			$result['ch_equ']=$equ_data;
