@@ -24,10 +24,6 @@ class ItemInfoUtil
 	//get Resource detail information: name, type, icon, description
 	function getResourceInfo ($Item_Id)
 	{
-		$ResId=$Item_Id;
-
-		if(isset($ResId))
-		{
 			$ResourceMstModel=new ResourceMstModel();
 			$resource=[];
 			$result=[];
@@ -44,13 +40,6 @@ class ItemInfoUtil
 
 			$result['item_data']=$resource;
 			$response=json_encode($result,TRUE);
-		}else{
-			throw new Exception("Wrong Resource ID");
-			$response=[
-			'status' => 'Wrong',
-			'error' => "please check Resource ID",
-			];
-		}
 		return $response;
 	}
 

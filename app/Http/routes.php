@@ -17,8 +17,7 @@ Route::get('now', function () {
 Route::auth();
 Route::controller('access','AccessController');
 Route::controller('tutorial','TutorialController');
-Route::controller('baggage','BaggageController');
-Route::controller('workshop','WorkshopController');
+Route::controller('baggage','BaggageItemController');
 Route::controller('shop','ShopController');
 Route::controller('match','MatchController');
 Route::controller('load','LoadBattleController');
@@ -42,17 +41,15 @@ Route::post('/logout', 'AccessController@logout');
 Route::post('/uservalue','AccessController@showStatus');
 
 
-Route::post('/baggage','BaggageController@baggage');
-Route::post('/getItemInfo','BaggageController@getItemInfo');
-Route::post('/sellItem','BaggageController@sellItem');
-Route::post('/scrollMerge','BaggageController@scrollMerge');
-Route::post('/equipmentUpgrade','BaggageController@equipmentUpgrade');
+Route::post('/baggage','BaggageItemController@baggage');
+Route::post('/workshop','BaggageItemController@workshop');
+Route::post('/getItemInfo','BaggageItemController@getItemInfo');
+Route::post('/sellItem','BaggageItemController@sellItem');
+Route::post('/compareEquipment','BaggageItemController@compareEquipment');
+Route::post('/scrollMerge','BaggageItemController@scrollMerge');
+Route::post('/equipmentUpgrade','BaggageItemController@equipmentUpgrade');
+Route::post('/equipEquipment','BaggageItemController@equipEquipment');
 
-Route::post('/workshop','WorkshopController@workshop');
-Route::post('/showEquipmentInfo','WorkshopController@showEquipmentInfo');
-Route::post('/showSkillInfo','WorkshopController@showSkillInfo');
-Route::post('/compareEquipment','WorkshopController@compareEquipment');
-Route::post('/equipEquipment','WorkshopController@equipEquipment');
 Route::post('/shoplist','ShopController@shopCoin');
 Route::post('/shop','ShopController@shop');
 Route::post('/buyResource','ShopController@buyResouceBYCoin');
