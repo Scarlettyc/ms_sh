@@ -165,7 +165,7 @@ class WorkshopController extends Controller
 			// $bagData=$UserBaggageEqModel->where('user_beq_id',$user_beq_id)->where('u_id')->first();
 			$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
-			$eqUpData=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->first();
+			$eqUpData=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->get();
 
 			$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 
@@ -184,8 +184,8 @@ class WorkshopController extends Controller
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
 			$result['up_equ']['eff_ch_crit_per']=$comEquAtr['eff_ch_crit_per'];
 			$resource=[];
-				foreach ($upgradeRES as $key => $each) {
-					$tmp['r_id']=$each['r_id'];
+				foreach ($eqUpData as $key => $each) {
+					$tmp['r_id']=$each->r_id;
 					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$each->r_id)->first();
 					$tmp['r_qu_need']=$each->r_quantity;
 					if($rQu['br_quantity']){
