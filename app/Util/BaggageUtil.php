@@ -19,6 +19,7 @@ use App\Exceptions\Handler;
 use Illuminate\Http\Response;
 use Carbon\Carbon;
 use DateTime;
+use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
 
