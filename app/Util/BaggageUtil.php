@@ -273,35 +273,35 @@ class BaggageUtil
 
 	}
 
-	public function validateResource($u_id,$data,$coin){
-		$UserModel=new UserModel();
-		$UserBaggageResModel=new UserBaggageResModel();
-		$now=new DateTime;
-		$datetime=$now->format( 'Y-m-d h:m:s' );
-		$dmy=$now->format( 'Ymd' );
-		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
-			if($userValue['u_coin']<$coin){
-				throw new Exception("no enough coin");
-				$response=[
-						'status' => 'Wrong',
-						'error' => "no enough resources",
-				];
-				}
-			else{
-				$coin=$userValue['u_coin']-$coin;
-				}
-				foreach ($data as $key => $resources) {
-					$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->first();
-					if($rQu['br_quantity']<$resources->r_quantity){
-					throw new Exception("no enough resouce id".$resources->r_id);
-					}
-					else{
-						$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->update(['br_quantity'=>$rQu['br_quantity']-$resources->r_quantity,'updated_at'=>$datetime]);
-					}
-				# code...
-			}
-				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
-		}
+	// public function validateResource($u_id,$data,$coin){
+	// 	$UserModel=new UserModel();
+	// 	$UserBaggageResModel=new UserBaggageResModel();
+	// 	$now=new DateTime;
+	// 	$datetime=$now->format( 'Y-m-d h:m:s' );
+	// 	$dmy=$now->format( 'Ymd' );
+	// 	$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
+	// 		if($userValue['u_coin']<$coin){
+	// 			throw new Exception("no enough coin");
+	// 			$response=[
+	// 					'status' => 'Wrong',
+	// 					'error' => "no enough resources",
+	// 			];
+	// 			}
+	// 		else{
+	// 			$coin=$userValue['u_coin']-$coin;
+	// 			}
+	// 			foreach ($data as $key => $resources) {
+	// 				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->first();
+	// 				if($rQu['br_quantity']<$resources->r_quantity){
+	// 				throw new Exception("no enough resouce id".$resources->r_id);
+	// 				}
+	// 				else{
+	// 					$UserBaggageResModel->where('u_id',$u_id)->where('br_id',$resources->r_id)->update(['br_quantity'=>$rQu['br_quantity']-$resources->r_quantity,'updated_at'=>$datetime]);
+	// 				}
+	// 			# code...
+	// 		}
+	// 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+	// 	}
 
 	function insertToBaggage($u_id,$rewards){
 
