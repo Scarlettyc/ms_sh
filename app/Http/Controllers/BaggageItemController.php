@@ -188,7 +188,7 @@ class BaggageItemController extends Controller
 		$EquipmentMstModel=new EquipmentMstModel();
 
 		$u_id=$data['u_id'];
-		$equ_id=$data['item_id'];
+		$scrollId=$data['item_id'];
 		$equ_type=$data['equ_type'];
 		$item_type=$data['item_type'];
 		$baggage_id=$data['baggage_id'];
