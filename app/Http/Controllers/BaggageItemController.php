@@ -241,7 +241,7 @@ class BaggageItemController extends Controller
 			}else{
 				$result['upgrade']=0;
 			}
-			$result['equ_id']=$upgarde['equ_id'];
+			$result['item_id']=$upgarde['equ_id'];
 			$result['baggage_id']=$upgarde['baggage_id'];
 			$response=json_encode($result,TRUE);
 
