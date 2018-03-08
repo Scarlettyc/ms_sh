@@ -139,7 +139,8 @@ class BaggageUtil
 
 			foreach ($baggageScroll as $obj) 
 			{	$arry['baggage_id']=$obj['user_bsc_id'];
-				$arry['item_id']=$obj['bsc_id'];;
+				$arry['item_id']=$obj['bsc_id'];
+				$arry['item_type']=3;
 				$arry['item_quantity']=1;
 				$arry['equ_type']=0;
 				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['bsc_id'])->first();
