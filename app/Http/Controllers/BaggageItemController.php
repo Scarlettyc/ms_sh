@@ -140,9 +140,7 @@ class BaggageItemController extends Controller
 			}else if($itemType == 3)//sell Scroll
 			{	
 				$ScrollMstModel=new ScrollMstModel();
-
-				$bag_id=$data['user_bsc_id'];
-				$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
+				$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 				$scData=$ScrollMstModel->where('sc_id',$itemId)->first();
 				$ItemPrice=$scData['sc_coin'];
 				$UserData=$UserModel->where('u_id',$u_id)->first();
@@ -194,12 +192,12 @@ class BaggageItemController extends Controller
 		$baggage_id=$data['baggage_id'];
 
 		
-			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$bag_id)->update(array('status'=>2,'updated_at'=>$datetime));
+			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id')->where('sc_id',$scrollId)->first();
 			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
-				$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$bag_id)->update(['status'=>9,'updated_at'=>$datetime]);
+				$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 
 				$response='Successfully Meraged';
 				return base64_encode($response);
@@ -282,16 +280,16 @@ class BaggageItemController extends Controller
 			$Equ_part=$EquNew['equ_part'];
 
 			if($equ_type==1){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_bag_id'],$user_beq_id);
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_baggage_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_baggage_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			else if($equ_type==3){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_bag_id'],$user_beq_id);
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_baggage_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_baggage_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}
 			else if($equ_type==2){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_bag_id'],$user_beq_id);
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_bag_id'=>$user_beq_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_baggage_id'],$user_beq_id);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_baggage_id'=>$user_beq_id,'updated_at'=>$datetime]);
 			}else{
 					throw new Exception("there have some error of you access_token");
 			}
