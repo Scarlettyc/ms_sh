@@ -16,6 +16,7 @@ use App\UserBaggageScrollModel;
 use App\EquUpgradeReMstModel;
 use App\Util\BaggageUtil;
 use App\Util\ItemInfoUtil;
+use App\Util\CharSkillEffUtil;
 use Exception;
 use App\Exceptions\Handler;
 use Illuminate\Http\Response;
