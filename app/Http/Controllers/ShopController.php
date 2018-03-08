@@ -39,7 +39,7 @@ class ShopController extends Controller
 		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$inAppModel=new InAppPurchaseModel();
 		// if($access_token==$data['access_token']){
-		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend','pay_type')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$result['shop_list']=$resourceShop;
 		$response=json_encode($result,TRUE);
  	    return base64_encode($response);
@@ -49,7 +49,7 @@ class ShopController extends Controller
  		// }
 	}
 
-	public function buyResouceBYCoin(Request $request){
+	public function buyResouce(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
@@ -65,26 +65,41 @@ class ShopController extends Controller
 		$item_id=$data['item_id'];
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
-		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$pay_type=$data['pay_type'];
+		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('pay_type',$pay_type)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
 		$totalSpend=$times*$shopData['item_spend'];
-		$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
-			if($userData['u_coin']<$totalSpend){
-			return base64_encode("no enough coin");
+		if($pay_type==1){
+			$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
+				if($userData['u_coin']<$totalSpend){
+				return base64_encode("no enough coin");
+				}
+				else{	
+					$coin=$userData['u_coin']-$totalSpend;
+					$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+					
+				}
 			}
-			else{	
-				$coin=$userData['u_coin']-$totalSpend;
-				$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+			else if($pay_type==2){
+				$userData=$UserModel->select('u_gem')->where('u_id',$u_id)->first();
+				if($userData['u_gem']<$totalSpend){
+				return base64_encode("no enough coin");
+				}
+				else{
+					$gem=$userData['u_gem']-$totalSpend;
+					$UserModel->where('u_gem',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+				}
+			}
 				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$shopData['item_min_quantity']*$times);
-				$boughtData['u_id']=$u_id;
-				$boughtData['item_type']=$item_type;
-				$boughtData['item_id']=$item_id;
-				$boughtData['item_quantity']=($shopData['item_min_quantity']*$times);
-				$boughtData['spent']=$totalSpend;
-				$boughtJson=json_encode($boughtData,TRUE);
-				$redisShop->LPUSH('buy_resource',$boughtJson);
-				$BaggageUtil->RecordSpend($u_id,$totalSpend,0);
-				return base64_encode($boughtJson);
-			}
+					$boughtData['u_id']=$u_id;
+					$boughtData['item_type']=$item_type;
+					$boughtData['item_id']=$item_id;
+					$boughtData['item_quantity']=($shopData['item_min_quantity']*$times);
+					$boughtData['spent']=$totalSpend;
+					$boughtData['pay_type']=$pay_type;
+					$boughtJson=json_encode($boughtData,TRUE);
+					$redisShop->LPUSH('buy_resource',$boughtJson);
+					$BaggageUtil->RecordSpend($u_id,$totalSpend,0);
+					return base64_encode($boughtJson);
 	}
 
 	public function rareResourceList (Request $request){
