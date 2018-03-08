@@ -86,7 +86,7 @@ class ShopController extends Controller
 				}
 				else{
 					$gem=$userData['u_gem']-$totalSpend;
-					$UserModel->where('u_gem',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+					$UserModel->where('u_gem',$u_id)->update(['u_gem'=>$gem,'updated_at'=>$datetime]);
 				}
 			}
 				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$shopData['item_min_quantity']*$times);
