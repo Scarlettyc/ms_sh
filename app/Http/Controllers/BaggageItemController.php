@@ -15,7 +15,6 @@ use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeReMstModel;
 use App\Util\BaggageUtil;
-use App\Util\ItemInfoUtil;
 use App\Util\CharSkillEffUtil;
 use Exception;
 use App\Exceptions\Handler;
@@ -85,7 +84,6 @@ class BaggageItemController extends Controller
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$ItemInfoUtil=new ItemInfoUtil();
 		$result=[];
 		$item_id=$data['item_id']; //there are three different types: itemtype_1(Resource)/itemtype_2(Equipment)/itemtype_3(Scroll)
 		$u_id=$data['u_id'];
