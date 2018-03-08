@@ -76,6 +76,7 @@ class ShopController extends Controller
 				else{	
 					$coin=$userData['u_coin']-$totalSpend;
 					$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+					$BaggageUtil->RecordSpend($u_id,$totalSpend,0);
 					
 				}
 			}
@@ -87,6 +88,7 @@ class ShopController extends Controller
 				else{
 					$gem=$userData['u_gem']-$totalSpend;
 					$UserModel->where('u_gem',$u_id)->update(['u_gem'=>$gem,'updated_at'=>$datetime]);
+					$BaggageUtil->RecordSpend($u_id,0,$totalSpend);
 				}
 			}
 				$BaggageUtil->updateBaggageResource($u_id,$item_id,$item_type,$shopData['item_min_quantity']*$times);
@@ -96,9 +98,9 @@ class ShopController extends Controller
 					$boughtData['item_quantity']=($shopData['item_min_quantity']*$times);
 					$boughtData['spent']=$totalSpend;
 					$boughtData['pay_type']=$pay_type;
+					$boughtData['datetime']=time(); 
 					$boughtJson=json_encode($boughtData,TRUE);
-					$redisShop->LPUSH('buy_resource',$boughtJson);
-					$BaggageUtil->RecordSpend($u_id,$totalSpend,0);
+					$redisShop->LPUSH('buy_resource'.$u_id,$boughtJson);
 					return base64_encode($boughtJson);
 	}
 
