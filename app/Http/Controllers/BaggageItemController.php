@@ -281,16 +281,16 @@ class BaggageItemController extends Controller
 			$Equ_part=$EquNew['equ_part'];
 
 			if($equ_type==1){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_baggage_id'],$baggage_id);
-				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_baggage_id'=>$baggage_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_bag_id'],$baggage_id);
+				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_bag_id'=>$baggage_id,'updated_at'=>$datetime]);
 			}
 			else if($equ_type==3){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_baggage_id'],$baggage_id);
-				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_baggage_id'=>$baggage_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['m_bag_id'],$baggage_id);
+				$CharacterModel->where('u_id',$u_id)->update(['m_id'=>$equ_id,'m_bag_id'=>$baggage_id,'updated_at'=>$datetime]);
 			}
 			else if($equ_type==2){
-				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_baggage_id'],$baggage_id);
-				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_baggage_id'=>$baggage_id,'updated_at'=>$datetime]);
+				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['core_bag_id'],$baggage_id);
+				$CharacterModel->where('u_id',$u_id)->update(['core_id'=>$equ_id,'core_bag_id'=>$baggage_id,'updated_at'=>$datetime]);
 			}else{
 					throw new Exception("there have some error of you access_token");
 			}
