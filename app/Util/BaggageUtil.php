@@ -202,6 +202,7 @@ class BaggageUtil
 		$resource=[];
 		$userValue=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 
+
 		$equData=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 		$equAtr=$EqAttrmstModel->where('equ_att_id',$equData['equ_attribute_id'])->first();
 		if($userValue['u_coin']-$coin<0&&$upgarde==1){
@@ -249,7 +250,7 @@ class BaggageUtil
 				return ['equ_id'=>$comEqData['equ_id'],'baggage_id'=>$w_bag_id];
 				}
 
-			if($upgarde=0){
+			if($upgarde==0){
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['upgrade_id'])->first();
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
