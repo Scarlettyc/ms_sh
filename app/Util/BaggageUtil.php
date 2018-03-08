@@ -53,7 +53,7 @@ class BaggageUtil
 			$ResourceMstModel=new ResourceMstModel();
 			$resource=[];
 			$result=[];
-			$ResourceInfo = $ResourceMstModel->select('r_id','r_name','r_rarity','r_type','r_img_path','r_description')->where('r_id','=',$Item_Id)->first();
+			$ResourceInfo = $ResourceMstModel->select('r_id','r_name','r_rarity','r_type','r_img_path','r_description')->where('r_id','=',$Item_Id)->where('br_quantity','>',0)->first();
 
 			$resource['item_id']=$ResourceInfo['r_id'];
 			$resource['item_name']=$ResourceInfo['r_name'];
@@ -247,7 +247,7 @@ class BaggageUtil
 
 					}
 					$w_bag_id=$UserBaggageEqModel->insertGetId(['u_id'=>$u_id,'b_equ_id'=>$comEqData['equ_id'],'b_equ_rarity'=>$comEqData['equ_rarity'],'b_equ_type'=>$comEqData['equ_type'],'b_icon_path'=>$comEqData['icon_path'],'status'=>$status,'updated_at'=>$datetime,'created_at'=>$datetime]);
-					$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
+					$UserModel->where('u_id',$u_id)->update(['u_coin'=>$userValue['u_coin']-$coin,'updated_at'=>$datetime]);
 				return ['equ_id'=>$comEqData['equ_id'],'baggage_id'=>$w_bag_id];
 				}
 

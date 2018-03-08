@@ -61,7 +61,7 @@ Route::post('/coinList','ShopController@getCoinList');
 Route::post('/gemList','ShopController@getGemList');
 
 Route::controller('luckdraw','LuckdrawController');
-Route::post('/showluck', 'LuckdrawController@showLuck');
+Route::post('/showluck', 'LuckdrawController@luckdrawList');
 Route::post('/onedraw', 'LuckdrawController@oneDraw');
 Route::post('/multidraw', 'LuckdrawController@multiDraw');
 

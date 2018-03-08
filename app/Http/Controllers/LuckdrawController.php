@@ -24,64 +24,85 @@ use DateTime;
 
 class LuckdrawController extends Controller
 {	
-	public function showLuck(Request $request){
-		$req=$request->getContent();
+
+	  public function luckdrawList(Request $request){
+  	 	$req=$request->getContent();
 		$json=base64_decode($req);
+	 	//dd($json);
 		$data=json_decode($json,TRUE);
 		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
 		$date=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
-		// $CharSkillEffUtil=new CharSkillEffUtil();
-		// $access_token=$data['access_token'];
-		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+		$drawtype=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
-		$defindMstModel=new DefindMstModel();
-		$result=[];
-		// if($checkToken)
-		// {
-			$normalDrawJosn=$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
-			$gemDrawJson=$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
-			$normalDrawData=json_decode($normalDrawJosn,TRUE);
-			$gemDrawData=json_decode($gemDrawJson,TRUE);
-			$coinLuck=$luckdraw->where('draw_type',1)->first();
-			$gemLuck=$luckdraw->where('draw_type',2)->first();
-			if($normalDrawData){
-				$coinDraw=0;
-				$coinTimeUtil=($coinLuck['free_draw_duration']+$normalDrawData['createtime'])-time();
-				}
-			else {
-				$coinDraw=1;
-				$coinTimeUtil=$coinLuck['free_draw_duration'];
+		$freeDrawJson=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
+		$freeDraw=json_decode($freeDrawJson,TRUE);
+		$luckData=$luckdraw->select('draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 
-			}
+		$response=json_encode($luckData,TRUE);
+		return base64_encode($response);
+  }
 
-			if($gemDrawData){
-				$gemDraw=0;
-				$gemTimeUtil=($gemLuck['free_draw_duration']+$gemDrawData['createtime'])-time();
-			}
-			else {
-				$gemDraw=1;
-				$gemTimeUtil=$gemLuck['free_draw_duration'];
-			}
-			$discount=$defindMstModel->where('defind_id',22)->first();
-			$result['coinDraw']=$coinDraw;
-			$result['coinSpend']=$coinLuck['draw_spend'];
-			$result['MucoinSpend']=$coinLuck['draw_spend']*10*$discount['value1'];
-			$result['coinTimeUtil']=$coinTimeUtil;
-			$result['coinMaxTime']=$coinLuck['free_draw_duration'];
 
-			$result['gemDraw']=$gemDraw;
-			$result['gemSpend']=$gemLuck['draw_spend'];
-			$result['MugemSpend']=$gemLuck['draw_spend']*10*$discount['value2'];;
+	// public function showLuck(Request $request){
+	// 	$req=$request->getContent();
+	// 	$json=base64_decode($req);
+	// 	$data=json_decode($json,TRUE);
+	// 	$redisLuck= Redis::connection('default');
+	// 	$now   = new DateTime;
+	// 	$date=$now->format( 'Y-m-d h:m:s' );
+	// 	$dmy=$now->format( 'Ymd' );
+	// 	// $CharSkillEffUtil=new CharSkillEffUtil();
+	// 	// $access_token=$data['access_token'];
+	// 	// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
+	// 	$luckdraw=new Luck_draw_rewardsModel();
+	// 	$defindMstModel=new DefindMstModel();
+	// 	$result=[];
+	// 	// if($checkToken)
+	// 	// {
+	// 		$normalDrawJosn=$redisLuck->HGET('luckdrawfree1',$dmy.$data['u_id']);
+	// 		$gemDrawJson=$redisLuck->HGET('luckdrawfree2',$dmy.$data['u_id']);
+	// 		$normalDrawData=json_decode($normalDrawJosn,TRUE);
+	// 		$gemDrawData=json_decode($gemDrawJson,TRUE);
+	// 		$coinLuck=$luckdraw->where('draw_type',1)->first();
+	// 		$gemLuck=$luckdraw->where('draw_type',2)->first();
+	// 		if($normalDrawData){
+	// 			$coinDraw=0;
+	// 			$coinTimeUtil=($coinLuck['free_draw_duration']+$normalDrawData['createtime'])-time();
+	// 			}
+	// 		else {
+	// 			$coinDraw=1;
+	// 			$coinTimeUtil=$coinLuck['free_draw_duration'];
 
-			$result['gemTimeUtil']=$gemTimeUtil;
-			$result['gemMaxTime']=$gemLuck['free_draw_duration'];
+	// 		}
 
-			$response=json_encode($result,TRUE);
- 	    	return base64_encode($response);
-		// }
-	}
+	// 		if($gemDrawData){
+	// 			$gemDraw=0;
+	// 			$gemTimeUtil=($gemLuck['free_draw_duration']+$gemDrawData['createtime'])-time();
+	// 		}
+	// 		else {
+	// 			$gemDraw=1;
+	// 			$gemTimeUtil=$gemLuck['free_draw_duration'];
+	// 		}
+	// 		$discount=$defindMstModel->where('defind_id',22)->first();
+	// 		$result['coinDraw']=$coinDraw;
+	// 		$result['coinSpend']=$coinLuck['draw_spend'];
+	// 		$result['MucoinSpend']=$coinLuck['draw_spend']*10*$discount['value1'];
+	// 		$result['coinTimeUtil']=$coinTimeUtil;
+	// 		$result['coinMaxTime']=$coinLuck['free_draw_duration'];
+
+	// 		$result['gemDraw']=$gemDraw;
+	// 		$result['gemSpend']=$gemLuck['draw_spend'];
+	// 		$result['MugemSpend']=$gemLuck['draw_spend']*10*$discount['value2'];;
+
+	// 		$result['gemTimeUtil']=$gemTimeUtil;
+	// 		$result['gemMaxTime']=$gemLuck['free_draw_duration'];
+
+	// 		$response=json_encode($result,TRUE);
+ // 	    	return base64_encode($response);
+	// 	// }
+	// }
  	public function draw(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
@@ -139,6 +160,10 @@ class LuckdrawController extends Controller
  			}
     	}
  }
+
+
+
+
 
 
  	public function oneDraw(Request $request){

@@ -230,7 +230,7 @@ class BaggageItemController extends Controller
 		$item_type=$data['item_type'];
 		$baggage_id=$data['baggage_id'];
 
-		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv')->where('equ_id',$equ_id)->first();
+		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv','upgrade_coin')->where('equ_id',$equ_id)->first();
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$baggage_id)->where('b_equ_id',$equ_id)->first();
 		$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equ_id,$equ_type,$equData['upgrade_coin'],1,$eqDetail['status']);
 		if($upgarde){
