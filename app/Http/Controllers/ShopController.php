@@ -100,7 +100,7 @@ class ShopController extends Controller
 					$boughtData['pay_type']=$pay_type;
 					$boughtData['datetime']=time(); 
 					$boughtJson=json_encode($boughtData,TRUE);
-					$redisShop->LPUSH('buy_resource'.$u_id,$boughtJson);
+					$redisShop->LPUSH('buy_resource_'.$u_id,$boughtJson);
 					return base64_encode($boughtJson);
 	}
 
