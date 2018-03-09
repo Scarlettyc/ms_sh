@@ -253,8 +253,6 @@ class BaggageUtil
 
 			if($upgarde==0){
 			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
-			$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['upgrade_id'])->first();
-			$comEquAtr=$EqAttrmstModel->where('equ_att_id',$comEqData['equ_attribute_id'])->first();
 			$result['equ_name']=$equData['equ_name'];
 			$result['coin']=$equData['upgrade_coin'];
 			$result['equ_atr']['equ_id']=$equ_id;
