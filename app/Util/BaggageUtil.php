@@ -173,6 +173,7 @@ class BaggageUtil
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
+			$result['baggage_id']=$user_bsc_id;
 			$upgradeRES=$EquUpgradeReMstModel->select('equ_code','upgrade_id','lv','r_id','r_quantity')->where('upgrade_id',$scrollData['upgrade_id'])->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $each) {
