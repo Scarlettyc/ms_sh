@@ -100,7 +100,7 @@ class BaggageItemController extends Controller
 			{	$result = $BaggageUtil->getEquipmentInfo($item_id,$u_id,$baggage_id,$equ_type);
 			}else if($item_type == 3)
 			{	
-				$result = $BaggageUtil->getScrollInfo($item_id,$u_id,$user_bsc_id);
+				$result = $BaggageUtil->getScrollInfo($item_id,$u_id,$baggage_id);
 			}
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
