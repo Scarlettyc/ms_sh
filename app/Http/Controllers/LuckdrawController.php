@@ -36,11 +36,19 @@ class LuckdrawController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$drawtype=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
-		$freeDrawJson=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
-		$freeDraw=json_decode($freeDrawJson,TRUE);
+	
 		$luckData=$luckdraw->select('draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
-
-		$response=json_encode($luckData,TRUE);
+		if($draw_type==2){
+			$freeDrawJson=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
+			$freeDraw=json_decode($freeDrawJson,TRUE);
+			if(is_array($freeDraw)){
+				$result['gemTimeUtil']=($luckData['free_draw_duration']+$freeDraw['createtime'])-time();
+			}else{
+				$result['gemTimeUtil']=$luckData['free_draw_duration'];
+			}
+		}
+		$result['reward_list']=$luckData
+		$response=json_encode($result,TRUE);
 		return base64_encode($response);
   }
 
