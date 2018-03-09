@@ -129,7 +129,7 @@ class LuckdrawController extends Controller
 		}
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
-			$drawresult=$luckdraw->select('item_org_id','item_quantity','item_type','item_rarity')->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+			$drawresult=$luckdraw->select('item_org_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		if($free==1&&$draw_type==2){
 			$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
 		}
@@ -141,7 +141,7 @@ class LuckdrawController extends Controller
 			}
 			$BaggageUtil->insertToBaggage($drawresult,$data,0);
 			$drawresult['time']=time();
-			$redisLuck->LPUSH('luck_draw_'.$u_id.$drawtype,json_encode($draw,TRUE));
+			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($draw,TRUE));
 			$result[]=$drawresult;
 		}
 	}
