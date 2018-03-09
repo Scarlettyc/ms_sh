@@ -20,6 +20,7 @@ use App\Util\BaggageUtil;
 use Exception;
 use Illuminate\Support\Facades\Redis;
 // use App\Util\CharSkillEffUtil;
+use DB;
 use DateTime;
 
 class LuckdrawController extends Controller
@@ -141,9 +142,8 @@ class LuckdrawController extends Controller
 		}
 		if($drawresult){
 			if($drawresult['item_type']==3){
-				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->get();
-				shuffle($scroll_list);
-				$drawresult['item_org_id']=$scroll_list[0]['sc_id'];
+				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
+				$drawresult['item_org_id']=$scroll_list['sc_id'];
 			}
 			$BaggageUtil->insertToBaggage($u_id,$drawresult);
 			$drawresult['time']=time();
