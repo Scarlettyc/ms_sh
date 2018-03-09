@@ -148,7 +148,7 @@ class LuckdrawController extends Controller
 			$BaggageUtil->insertToBaggage($u_id,$drawresult);
 			$drawresult['time']=time();
 			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
-			unset($drawresult['time'])
+			unset($drawresult['time']);
 			$result[]=$drawresult;
 		}
 	}
