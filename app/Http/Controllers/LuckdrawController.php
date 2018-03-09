@@ -151,7 +151,7 @@ class LuckdrawController extends Controller
 			$result[]=$drawresult;
 		}
 	}
-		return $drawresult;
+		return $result;
   }
 }
 
