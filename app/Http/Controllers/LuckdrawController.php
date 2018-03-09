@@ -139,7 +139,7 @@ class LuckdrawController extends Controller
 				shuffle($scroll_list);
 				$drawresult['item_org_id']=$scroll_list[0]['sc_id'];
 			}
-			$BaggageUtil->insertToBaggage($drawresult,$data,0);
+			$BaggageUtil->insertToBaggage($u_id,$drawresult);
 			$drawresult['time']=time();
 			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($draw,TRUE));
 			$result[]=$drawresult;
