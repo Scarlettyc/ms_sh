@@ -47,7 +47,7 @@ class LuckdrawController extends Controller
 				$result['gemTimeUtil']=$luckData['free_draw_duration'];
 			}
 		}
-		$result['reward_list']=$luckData
+		$result['reward_list']=$luckData;
 		$response=json_encode($result,TRUE);
 		return base64_encode($response);
   }
