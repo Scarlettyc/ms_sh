@@ -124,7 +124,7 @@ class LuckdrawController extends Controller
 				$defindData=$defindMstModel->where('defind_id',4)->first(); 
 				
 					if($user_data['u_gem']<$totalSpand){
-				throw new Exception("no enough coin!");
+				throw new Exception("no enough gems!");
 				}
 				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpand,'updated_at'=>$date]);
 		}
