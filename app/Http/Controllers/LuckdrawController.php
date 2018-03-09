@@ -146,6 +146,7 @@ class LuckdrawController extends Controller
 	}
 		return $drawresult;
   }
+}
 
 	// public function showLuck(Request $request){
 	// 	$req=$request->getContent();
@@ -518,5 +519,5 @@ class LuckdrawController extends Controller
 // 		 			}
 // 		 		return $draw;
 
-//  		}
+// //  		}
 // }
