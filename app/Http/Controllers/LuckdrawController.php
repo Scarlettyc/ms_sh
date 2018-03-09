@@ -39,10 +39,9 @@ class LuckdrawController extends Controller
 	
 		$luckData=$luckdraw->select('draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==2){
-			$freeDrawJson=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
-			$freeDraw=json_decode($freeDrawJson,TRUE);
-			if(is_array($freeDraw)){
-				$result['gemTimeUtil']=($luckData['free_draw_duration']+$freeDraw['createtime'])-time();
+			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
+			if($freeDraw){
+				$result['gemTimeUtil']=$luckData['free_draw_duration']+$freeDraw-time();
 			}else{
 				$result['gemTimeUtil']=$luckData['free_draw_duration'];
 			}
@@ -52,6 +51,101 @@ class LuckdrawController extends Controller
 		return base64_encode($response);
   }
 
+  public function one(Request $request){
+  		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	$usermodel=new UserModel();
+		$redisLuck= Redis::connection('default');
+		$now   = new DateTime;
+		$date=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$defindMstModel=new DefindMstModel();
+		$BaggageUtil=new BaggageUtil();
+		$draw_type=$data['draw_type'];
+		$free=$data['free_draw'];
+		$result=$this->luckdraw($u_id,$free,$draw_type,1);
+		$response=json_encode($result,TRUE);
+		return base64_encode($response);
+
+  }
+    public function many(Request $request){
+  		$req=$request->getContent();
+		$json=base64_decode($req);
+	 	$usermodel=new UserModel();
+		$redisLuck= Redis::connection('default');
+		$now   = new DateTime;
+		$date=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$defindMstModel=new DefindMstModel();
+		$BaggageUtil=new BaggageUtil();
+		$draw_type=$data['draw_type'];
+		$free=$data['free_draw'];
+		$result=$this->luckdraw($u_id,$free,$draw_type,10);
+		$response=json_encode($result,TRUE);
+		return base64_encode($response);
+  }
+
+
+
+ private function luckdraw($u_id,$free,$draw_type,$quantity){
+	 	$usermodel=new UserModel();
+		$redisLuck= Redis::connection('default');
+		$now   = new DateTime;
+		$date=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$defindMstModel=new DefindMstModel();
+		$BaggageUtil=new BaggageUtil();
+		$ScrollMstModel=new ScrollMstModel();
+		$user_data=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id);
+		$result=[];
+		$defindSpend=$defindMstModel->where('defind_id',28)->first();
+		$defindDiscount=$defindMstModel->where('defind_id',28)->first();  
+		if($quantity==10){
+			$totalSpand=$defindSpend['value1']*$defindDiscount['value1']*$quantity;
+		}
+		else{
+			$totalSpand=$defindSpend['value1']*$quantity;
+		}
+		if($draw_type==1){
+				$defindData=$defindMstModel->where('defind_id',3)->first(); 
+				$defindSpend=$defindMstModel->where('defind_id',28)->first(); 
+				if($user_data['u_coin']<$totalSpand){
+				throw new Exception("no enough coin!");
+				}
+				$user_data->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpand,'updated_at'=>$date]);
+			}
+		else if($draw_type==2){
+				$defindData=$defindMstModel->where('defind_id',4)->first(); 
+				
+					if($user_data['u_gem']<$totalSpand){
+				throw new Exception("no enough coin!");
+				}
+				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpand,'updated_at'=>$date]);
+		}
+		for($i=0;$i<$quantity;$i++){
+			$rate=rand($defindData['value1'], $defindData['value2']);
+			$drawresult=$luckdraw->select('item_org_id','item_quantity','item_type','item_rarity')->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+		if($free==1&&$draw_type==2){
+			$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
+		}
+		if($drawresult){
+			if($drawresult['item_type']==3){
+				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->get();
+				shuffle($scroll_list);
+				$drawresult['item_org_id']=$scroll_list[0]['sc_id'];
+			}
+			$BaggageUtil->insertToBaggage($drawresult,$data,0);
+			$drawresult['time']=time();
+			$redisLuck->LPUSH('luck_draw_'.$u_id.$drawtype,json_encode($draw,TRUE));
+			$result[]=$drawresult;
+		}
+	}
+		return $drawresult;
+  }
 
 	// public function showLuck(Request $request){
 	// 	$req=$request->getContent();
@@ -154,7 +248,6 @@ class LuckdrawController extends Controller
 
 		   		$drawresult=$luckdraw->where('draw_type',$drawtype)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('user_lv_from','<=',$chardata['ch_lv'])->where('user_lv_to','>=',$chardata['ch_lv'])->where('star_from','<=',$chardata['ch_star'])->where('star_to','>=',$chardata['ch_star'])->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		   	 if($drawresult){
-
 		  	 		$draw=$this->chooseBaggage($drawresult,$data,0);
 		 			$redisLuck->HSET('luckdrawfree'.$drawtype,$dmy.$data['u_id'],json_encode($draw,TRUE));
 		   			$result['luckdraw']=$draw;

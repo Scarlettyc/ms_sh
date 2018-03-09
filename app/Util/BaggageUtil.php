@@ -308,6 +308,7 @@ class BaggageUtil
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$UserBaggageResModel=new UserBaggageResModel();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
+		$UserModel=new UserModel();
 		$eqModel=new EquipmentMstModel();
 		$scrModel=new ScrollMstModel();
 		$reModel=new ResourceMstModel();
@@ -315,6 +316,7 @@ class BaggageUtil
 		$datetime=$now->format('Y-m-d h:m:s');
 		$resource=[];
 		// try{
+		$userData=$UserModel->select('u_coin','u_gem')->where('u_id',$u_id)->first();
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
 
@@ -373,9 +375,14 @@ class BaggageUtil
 					$UserBaggageScrollModel->insert($result);
 				}
 			}
+			else if($reward['item_type']==6){
+				 $UserModel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$reward['item_quantity'],'updated_at'=>$datetime])
+			}else if($reward['item_type']==7){
+				$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime])
+			}
 			// $missionlist[]=$reward['misson_id'];
 		 }
-		 return $resource;
+		 return TRUE;
 		 // return $missionlist;
 
 		// }catch(Exception $e){
