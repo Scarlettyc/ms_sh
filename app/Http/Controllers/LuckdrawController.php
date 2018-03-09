@@ -139,7 +139,7 @@ class LuckdrawController extends Controller
 			else{
 			$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
 			}
-		}
+			}
 		if($drawresult){
 			if($drawresult['item_type']==3){
 				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
@@ -152,6 +152,7 @@ class LuckdrawController extends Controller
 			$result[]=$drawresult;
 		}
 	}
+	
 		$final['draw_result']=$result;
 		return $final;
   }

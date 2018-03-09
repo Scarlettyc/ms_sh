@@ -215,7 +215,7 @@ class BaggageUtil
 		}else{
 			$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 		}
-		$comEqData=$EquipmentMstModel->where('equ_id',$eqNextData['upgrade_id'])->first();
+		$comEqData=$EquipmentMstModel->where('upgrade_id',$eqNextData['upgrade_id'])->where('equ_code',$equData['equ_code'])->first();
 
 				foreach ($eqUpData as $key => $each) {
 					$tmp['r_id']=$each->r_id;
@@ -379,7 +379,7 @@ class BaggageUtil
 				 $UserModel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$reward['item_quantity'],'updated_at'=>$datetime]);
 			}
 			else if($reward['item_type']==7){
-				$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime]);
+				$UserModel->where('u_idinsertToBaggageu_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime]);
 			}
 			// $missionlist[]=$reward['misson_id'];
 		 }
