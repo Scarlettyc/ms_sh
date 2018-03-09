@@ -104,7 +104,7 @@ class LuckdrawController extends Controller
 		$user_data=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$result=[];
 		$defindSpend=$defindMstModel->where('defind_id',28)->first();
-		$defindDiscount=$defindMstModel->where('defind_id',28)->first();  
+		$defindDiscount=$defindMstModel->where('defind_id',22)->first();  
 		if($quantity==10){
 			$totalSpand=$defindSpend['value1']*$defindDiscount['value1']*$quantity;
 		}
