@@ -100,7 +100,7 @@ class LuckdrawController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$BaggageUtil=new BaggageUtil();
 		$ScrollMstModel=new ScrollMstModel();
-		$user_data=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id);
+		$user_data=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$result=[];
 		$defindSpend=$defindMstModel->where('defind_id',28)->first();
 		$defindDiscount=$defindMstModel->where('defind_id',28)->first();  
