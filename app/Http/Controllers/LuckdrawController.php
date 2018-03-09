@@ -149,7 +149,7 @@ class LuckdrawController extends Controller
 			$drawresult['time']=time();
 			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
 			unset($drawresult['time']);
-			$result[]=$drawresult;
+			$result['draw_result'][]=$drawresult;
 		}
 	}
 		return $result;
