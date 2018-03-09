@@ -378,7 +378,7 @@ class BaggageUtil
 			else if($reward['item_type']==6){
 				 $UserModel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$reward['item_quantity'],'updated_at'=>$datetime])
 			}else if($reward['item_type']==7){
-				$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime])
+				$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime]);
 			}
 			// $missionlist[]=$reward['misson_id'];
 		 }
