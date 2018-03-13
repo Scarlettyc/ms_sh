@@ -94,9 +94,8 @@ Route::post('/gettoday', 'LoginRewardController@getToday');
 
 
 Route::post('/mission_list', 'MissionController@getMission');
-Route::post('/collect_mission', 'MissionController@collectMissionReward');
+Route::post('/collect_mission', 'MissionController@collectMission');
 Route::post('/getMissionDetails', 'MissionController@getMissionDetails');
-Route::post('/getLevelMission', 'MissionController@getLevelMission');
 
 
 Route::post('/udpate_email', 'UpdateController@updateEmail');
