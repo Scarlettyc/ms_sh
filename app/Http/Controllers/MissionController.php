@@ -54,7 +54,6 @@ class MissionController extends Controller
 				$tmp['status']=$record;
 				$result[]=$tmp;
 			}
-		}
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 	}
