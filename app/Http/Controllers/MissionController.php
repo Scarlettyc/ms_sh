@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 use App\MissionRewardsModel;
+use App\MissionListMstModel;
 use App\UserModel;
 use App\CharacterModel;
 use Exception;
@@ -43,6 +44,43 @@ class MissionController extends Controller
 			$response=json_encode($history,TRUE);
 			$MisstionResult=$redis_mission->LPUSH($key,$resultJson);
 		}
+	}
+	public function getmisson(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$mission_type=$data['mission_type'];
+		$missionModel=new MissionListMstModel();
+		$missionReward=new MissionRewardsModel();
+		$redis_mission=Redis::connection('default');
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
+		$chaData=$charModel->where('u_id',$u_id)->first();
+		if($mission_type==2){
+		$missionList=$missionModel->select('mission_id','description')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
+		}
+		else{ 
+			$missionList=$missionModel->select('mission_id','description')->where('mission_type',$mission_type)->where('user_lv_from')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$mission_key='mission_level_'.'_'.$u_id;
+		}
+		$result=[];
+		foreach ($missionList as $key => $mission) {
+			$record=$redis_mission->HGET($key,$value['mission_id']);
+			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
+			if(!$record){
+				$tmp['mission_id']=$mission['mission_id'];
+				$tmp['description']=$mission['description'];
+				$tmp['rewards']=$rewards;
+				$result[]=$tmp;
+			}
+		}
+		$response=json_encode($result,TRUE);
+			return  base64_encode($response);
 	}
 
 	public function missionList(Request $request){
@@ -89,6 +127,20 @@ class MissionController extends Controller
 		// }
 		
 	}
+	public function collectMission(Request $request){
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$u_id=$data['u_id'];
+		$mission_type=$data['mission_type'];
+		$missionModel=new MissionRewardsModel();
+		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$redis_mission=Redis::connection('default');
+
+	}
+
 	public function getLevelMission(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
@@ -158,7 +210,7 @@ class MissionController extends Controller
 	}
 
 
-	public function archiveMission($mission_id,$u_id,$times){
+	public function archiveMission($mission_id,$mission_type,$u_id,$times){
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );

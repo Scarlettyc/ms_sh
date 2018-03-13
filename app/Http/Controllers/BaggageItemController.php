@@ -129,6 +129,9 @@ class BaggageItemController extends Controller
 		$baggage_id=$data['baggage_id'];
 			if($itemType == 2)//sell Equipment
 			{	$EquipmentMstModel=new EquipmentMstModel();
+				if($equ_type==2||$equ_type==3){
+					throw new Exception("you cannot sell core or movement");
+				}
 				$UserBaggageEqModel->where('u_id',$u_id)->where('status','=',0)->where('user_beq_id',$baggage_id)->update(array('status'=>9,'updated_at'=>$datetime));
 				$eqData=$EquipmentMstModel->where('equ_id',$itemId)->first();
 				$UserData=$UserModel->where('u_id',$u_id)->first();
