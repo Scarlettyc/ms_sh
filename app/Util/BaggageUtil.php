@@ -473,12 +473,12 @@ class BaggageUtil
 				$spendData['coin']=$dailySpendData['coin']+$coin;
 				$spendData['gem']=$dailySpendData['gem']+$gem;
 				$spendJson=json_encode($spendData,TRUE);
-				if($spendData['coin']>0){
-				$mission->archiveMission(5,$u_id,$spendData['coin']);
-				}
-				if($spendData['gem']>0){
-				$mission->archiveMission(6,$u_id,$spendData['gem']);
-				}
+				// if($spendData['coin']>0){
+				// $mission->archiveMission(5,$u_id,$spendData['coin']);
+				// }
+				// if($spendData['gem']>0){
+				// $mission->archiveMission(6,$u_id,$spendData['gem']);
+				// }
 				$redisShop->HSET($spentKey,$u_id,$spendJson);
  		}
 }

@@ -42,11 +42,12 @@ class MissionController extends Controller
 		}
 		else{ 
 			$missionList=$missionModel->select('mission_id','description')->where('mission_type',$mission_type)->where('user_lv_from')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
-			$mission_key='mission_level_'.'_'.$u_id;
+			$mission_key='mission'.'_'.$u_id;
 		}
 		$result=[];
 		foreach ($missionList as $key => $mission) {
 			$record=$redis_mission->HGET($key,$value['mission_id']);
+
 			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
@@ -118,22 +119,29 @@ class MissionController extends Controller
 		$u_id=$data['u_id'];
 		$mission_type=$data['mission_type'];
 		$mission_id=$data['mission_id'];
+
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
-		// $CharSkillEffUtil=new CharSkillEffUtil();
-		// $access_token=$data['access_token'];
-		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
-		$missionModel=new MissionRewardsModel();
+
+		$missionModel=new MissionListMstModel();
+		$missionReward=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
 		// if($checkToken){
 			$chaData=$charModel->where('u_id',$u_id)->first();
-			$missionReward=$missionModel->select('mission_id','user_lv_from as lv','item_org_id','item_type','item_quantity','coin','gem','exp','times','description')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-			$key='mission_daily_'.$dmy.'_'.$u_id;
-			$missionJson=$redis_mission->HGET($key,$mission_id);
-			if($missionJson){
+			$missionData=$missionModel->select('description','mission_id')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->first();
+			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+			if($mission_type==2){
+				$key='mission_daily_'.$dmy.'_'.$u_id;
+			}
+			else{
+				$key='mission_'.$u_id;
+			}
+			
+			$status=$redis_mission->HGET($key,$mission_id);
+			if($status){
 				$missionStatus=json_decode($missionJson,TRUE);
 				if($missionStatus['times']<$missionReward['times']){
 					$missionReward['times']=$recordData['times'];
@@ -149,8 +157,6 @@ class MissionController extends Controller
 			}
 			$response=json_encode($missionReward,TRUE);
 			return  base64_encode($response);
-		// }
-
 	}
 
 
