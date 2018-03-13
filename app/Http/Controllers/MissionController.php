@@ -45,7 +45,7 @@ class MissionController extends Controller
 			$MisstionResult=$redis_mission->LPUSH($key,$resultJson);
 		}
 	}
-	public function getmisson(Request $request){
+	public function getMission(Request $request){
 		$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);

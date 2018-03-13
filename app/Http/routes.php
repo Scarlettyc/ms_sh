@@ -27,6 +27,7 @@ Route::controller('loginreward','LoginRewardController');
 Route::controller('updateinfo','UpdateController');
 Route::controller('event','EventController');
 Route::controller('leaderboard','LeaderBoardController');
+Route::controller('mission','MissionController');
 
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
@@ -67,7 +68,6 @@ Route::post('/multidraw', 'LuckdrawController@many');
 
 Route::post('/battlematch', 'MatchController@testWebsocket');
 
-
 Route::post('/load', 'LoadBattleController@loadingGame');
 Route::post('/loadmap', 'LoadBattleController@loadMap');
 Route::post('/testbattle', 'BattleController@testBattle');
@@ -92,8 +92,8 @@ Route::post('/receiveMessage','FriendController@receiveMessage');
 Route::post('/loginrewardslist', 'LoginRewardController@getLoginReward');
 Route::post('/gettoday', 'LoginRewardController@getToday');
 
-Route::controller('mission','MissionController');
-Route::post('/mission_list', 'MissionController@getmisson');
+
+Route::post('/mission_list', 'MissionController@getMission');
 Route::post('/collect_mission', 'MissionController@collectMissionReward');
 Route::post('/getMissionDetails', 'MissionController@getMissionDetails');
 Route::post('/getLevelMission', 'MissionController@getLevelMission');
