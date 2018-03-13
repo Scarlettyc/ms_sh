@@ -36,6 +36,7 @@ class MissionController extends Controller
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
+		$missionLv=0;
 		if($mission_type==2){
 			$missionList=$missionModel->select('mission_id','description')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
@@ -43,6 +44,7 @@ class MissionController extends Controller
 		else{ 
 			$missionList=$missionModel->select('mission_id','description','user_lv_from')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$mission_key='mission'.'_'.$u_id;
+			$missionLv=$missionList['user_lv_from'];
 		}
 		$result=[];
 		foreach ($missionList as $key => $mission) {
@@ -60,6 +62,7 @@ class MissionController extends Controller
 					$tmp['status']=0;
 					$tmp['times']=0;
 				}
+				$tmp['mission_lv']=$missionLv;
 				$result[]=$tmp;
 			}
 			$response=json_encode($result,TRUE);
