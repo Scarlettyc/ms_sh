@@ -46,13 +46,14 @@ class MissionController extends Controller
 		}
 		$result=[];
 		foreach ($missionList as $key => $mission) {
-			$record=$redis_mission->HGET($key,$value['mission_id']);
-
+			$recordJson=$redis_mission->HGET($key,$value['mission_id']);
+			$record=json_decode($recordJson,TRUE);
 			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
-				$tmp['status']=$record;
+				$tmp['status']=$record['status'];
+				$tmp['times']=$record['times'];
 				$result[]=$tmp;
 			}
 			$response=json_encode($result,TRUE);

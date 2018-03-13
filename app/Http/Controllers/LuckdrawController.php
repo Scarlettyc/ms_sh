@@ -38,7 +38,7 @@ class LuckdrawController extends Controller
 		$draw_type=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
 	
-		$luckData=$luckdraw->select('draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		$luckData=$luckdraw->select('lk_id','draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==2){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
