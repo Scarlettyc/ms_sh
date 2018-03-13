@@ -52,8 +52,14 @@ class MissionController extends Controller
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
+				if(is_array($record)){
 				$tmp['status']=$record['status'];
 				$tmp['times']=$record['times'];
+				}
+				else{
+					$tmp['status']=0;
+					$tmp['times']=0;
+				}
 				$result[]=$tmp;
 			}
 			$response=json_encode($result,TRUE);
@@ -80,6 +86,8 @@ class MissionController extends Controller
 		$userData=$usermodel->where('u_id',$u_id)->first();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
+		$recordJson=$redis_mission->HGET($key,$mission_id);
+		$record=json_decode($recordJson,TRUE);
 		foreach ($missionReward as $key => $rewards) {
 			if($rewards['item_type']==6){
 
@@ -108,6 +116,7 @@ class MissionController extends Controller
 			$mission_key='mission_'.$u_id;
 		}
 		$status=2;
+		$times=$record['times']+1;
 		$redis_mission->HSET($key,$mission_id,$status);
 		return base64_encode('successfully');
 	}
@@ -130,7 +139,6 @@ class MissionController extends Controller
 		$missionReward=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
-		// if($checkToken){
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionData=$missionModel->select('description','mission_id')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->first();
 			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
@@ -141,22 +149,17 @@ class MissionController extends Controller
 				$key='mission_'.$u_id;
 			}
 			
-			$status=$redis_mission->HGET($key,$mission_id);
-			if($status){
-				$missionStatus=json_decode($missionJson,TRUE);
-				if($missionStatus['times']<$missionReward['times']){
-					$missionReward['times']=$recordData['times'];
-				}
-
-				$result['archive']=$missionStatus['times'];
-				$result['status']=$missionStatus['status'];
+			$recordJson=$redis_mission->HGET($key,$mission_id);
+			$record=json_decode($recordJson,TRUE);
+			if($record){
+				$rewards['status']=$record['times'];
+				$rewards['times']=$record['status'];
 			}
 				else{
-
-				$missionReward['status']=0;
-				$missionReward['archive']=0;
+				$rewards['status']=0;
+				$rewards['times']=0;
 			}
-			$response=json_encode($missionReward,TRUE);
+			$response=json_encode($rewards,TRUE);
 			return  base64_encode($response);
 	}
 
@@ -169,7 +172,8 @@ class MissionController extends Controller
 		$redis_mission=Redis::connection('default');
 		$charModel=new CharacterModel();
 		$userModel=new UserModel();
-		
+		$missionModel=new MissionListMstModel();
+		$missionData=$missionModel->select('times')->where('mission_id',$mission_id);
 		$chaData=$charModel->where('u_id',$u_id)->first();
 		if($mission_type==2){
 			$key='mission_daily_'.$dmy.'_'.$u_id;
@@ -177,8 +181,20 @@ class MissionController extends Controller
 		else{
 			$key='mission_'.$u_id;
 		}
-		$status=1;
-		$redis_mission->HSET($key,$mission_id,$status);
+		$recordJson=$redis_mission->HGET($key,$mission_id);
+		$record=json_decode($recordJson,TRUE);
+		if(is_array($record)&&$record['times']<$missionData['times']){
+				$result['status']=1;
+				$result['times']=1;
+		}
+		else if(is_array($record)&&$record['times']>=$missionData['times']){
+				$result['status']=3;
+				$result['times']=$missionData['times'];
+		}else{
+			$result['status']=1;
+			$result['times']=1;
+		}
+		$redis_mission->HSET($key,$mission_id,$result);
 	}
 
 
