@@ -174,7 +174,7 @@ class MissionController extends Controller
 		else{
 			$mission_key='mission_'.$u_id;
 		}
-		$redis_mission->HSET($key,$mission_id]);
+		$redis_mission->HSET($key,$mission_id);
 		return base64_encode('successfully');
 	}
 
