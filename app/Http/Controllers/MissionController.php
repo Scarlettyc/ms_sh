@@ -133,12 +133,49 @@ class MissionController extends Controller
 		$data=json_decode($json,TRUE);
 		$u_id=$data['u_id'];
 		$mission_type=$data['mission_type'];
+		$mission_id=$data['mission_id'];
 		$missionModel=new MissionRewardsModel();
+		$usermodel=new UserModel();
+		$charModel=new CharacterModel();
+		$CharSkillEffUtil=new CharSkillEffUtil();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
+		$charaData=$CharacterModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
+		$missionReward=$missionModel->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+		$userData=$usermodel->where('u_id',$u_id)->first();
+		$BaggageUtil=new BaggageUtil();
+		$result=[];
+		foreach ($missionReward as $key => $rewards) {
+			if($rewards['item_type']==6){
 
+				$usermodel->->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$rewards['item_quantity'],'updated_at'=>$datetime]);
+			}
+			else if($rewards['item_type']==7){
+				$usermodel->->where('u_id',$u_id)->update(['u_coin'=>$userData['u_gem']+$rewards['item_quantity'],'updated_at'=>$datetime]);
+			}
+			else if($rewards['item_type']==99){
+				$CharSkillEffUtil->levelUP($u_id,$rewards['item_quantity']);
+			}
+			else if($rewards['item_type']==3){
+				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$rewards['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
+				$rewards['item_org_id']=$scroll_list['sc_id'];
+				$result[]=$rewards;
+			}
+			else if($rewards['item_type']==1 &&$rewards['item_type']==2){
+				$result[]=$rewards;
+			}
+		}
+		$BaggageUtil->insertToBaggage('u_id',$result);
+		if($mission_type==2){
+			$mission_key='mission_daily_'.$dmy.'_'.$u_id;
+		}
+		else{
+			$mission_key='mission_'.$u_id;
+		}
+		$redis_mission->HSET($key,$mission_id]);
+		return base64_encode('successfully');
 	}
 
 	public function getLevelMission(Request $request){

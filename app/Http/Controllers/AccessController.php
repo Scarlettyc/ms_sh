@@ -141,11 +141,11 @@ class AccessController extends Controller
 					$datetime=$now->format( 'Y-m-d h:m:s' );
 					$loginlist=json_encode($logindata,TRUE);
 				}
-				$missionKey='mission_daily_'.$dmy.'_'.$u_id;
-			$missionRecord=$redis_login->HGET($missionKey,1);
-			if(!$missionRecord){
-				$mission->archiveMission(1,$u_id,1);
-			}
+			// 	$missionKey='mission_daily_'.$dmy.'_'.$u_id;
+			// $missionRecord=$redis_login->HGET($missionKey,1);
+			// if(!$missionRecord){
+			// 	$mission->archiveMission(1,$u_id,1);
+			// }
 			$spentKey='daily_spend_'.$dmy;
 			$spendRecord=$redis_login->HGET($spentKey,$u_id);
 			if(!$spendRecord){
