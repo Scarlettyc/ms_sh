@@ -41,7 +41,7 @@ class MissionController extends Controller
 		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
 		}
 		else{ 
-			$missionList=$missionModel->select('mission_id','description')->where('mission_type',$mission_type)->where('user_lv_from')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$missionList=$missionModel->select('mission_id','description','user_lv_from')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$mission_key='mission'.'_'.$u_id;
 		}
 		$result=[];
