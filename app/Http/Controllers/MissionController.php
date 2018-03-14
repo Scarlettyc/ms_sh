@@ -88,7 +88,13 @@ class MissionController extends Controller
 		$userData=$usermodel->where('u_id',$u_id)->first();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
-		$recordJson=$redis_mission->HGET($key,$mission_id);
+		if($mission_type==2){
+			$mission_key='mission_daily_'.$dmy.'_'.$u_id;
+		}
+		else{
+			$mission_key='mission_'.$u_id;
+		}
+		$recordJson=$redis_mission->HGET($mission_key,$mission_id);
 		$record=json_decode($recordJson,TRUE);
 		foreach ($missionReward as $key => $rewards) {
 			if($rewards['item_type']==6){
@@ -111,12 +117,7 @@ class MissionController extends Controller
 			}
 		}
 		$BaggageUtil->insertToBaggage('u_id',$result);
-		if($mission_type==2){
-			$mission_key='mission_daily_'.$dmy.'_'.$u_id;
-		}
-		else{
-			$mission_key='mission_'.$u_id;
-		}
+		
 		$status=2;
 		$times=$record['times']+1;
 		$redis_mission->HSET($key,$mission_id,$status);
