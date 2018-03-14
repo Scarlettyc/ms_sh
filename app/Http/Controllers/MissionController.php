@@ -209,5 +209,5 @@ class MissionController extends Controller
 			}
 				$redis_mission->HSET($key,$mission_id,$result);
 		}
-
+	}
  }
