@@ -158,8 +158,8 @@ class MissionController extends Controller
 				$result['times']=$record['status'];
 			}
 				else{
-				$rewards['status']=0;
-				$rewards['times']=0;
+				$result['status']=0;
+				$result['times']=0;
 			}
 			$result['rewards']=$rewards;
 			$response=json_encode($result,TRUE);
