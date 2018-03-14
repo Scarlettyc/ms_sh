@@ -227,6 +227,7 @@ class BaggageItemController extends Controller
 		$UserBaggageEqModel=new UserBaggageEqModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$EquUpgradeReMstModel=new EquUpgradeReMstModel();
+		$MissionController=new MissionController();
 		$result=[];
 		$charmodel=new CharacterModel();
 

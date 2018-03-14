@@ -172,6 +172,7 @@ class FriendController extends Controller
 		$u_id=$data['u_id'];
 		$friend_id=$data['friend_id'];
 		$usefriend=new UserFriendModel();
+		$MissionController=new MissionController();
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$friendModel=new UserFriendModel();
