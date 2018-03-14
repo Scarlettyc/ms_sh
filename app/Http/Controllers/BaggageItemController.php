@@ -212,8 +212,6 @@ class BaggageItemController extends Controller
 			else{
 				throw new Exception("upgradeInfo is null");
 			}
-
-		
 	}
 
 	public function equipmentUpgrade (Request $request)
