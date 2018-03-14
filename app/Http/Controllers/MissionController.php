@@ -166,7 +166,7 @@ class MissionController extends Controller
 	}
 
 
-	public function archiveMission($mission_id,$mission_type,$u_id,$times){
+	public function achieveMission($mission_id,$mission_type,$u_id,$times){
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -175,29 +175,39 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		$userModel=new UserModel();
 		$missionModel=new MissionListMstModel();
-		$missionData=$missionModel->select('times')->where('mission_id',$mission_id);
-		$chaData=$charModel->where('u_id',$u_id)->first();
+		$missionData=$missionModel->select('user_lv_from','times')->where('mission_id',$mission_id);
+		$chaData=$charModel->select('ch_lv')->where('u_id',$u_id)->first();
+		$mission_update=0;
 		if($mission_type==2){
 			$key='mission_daily_'.$dmy.'_'.$u_id;
+			$mission_update=1;
 		}
 		else{
 			$key='mission_'.$u_id;
+			if($chaData['ch_lv']==$missionData['user_lv_from']){
+				$mission_update=1;
+			}
+
 		}
-		$recordJson=$redis_mission->HGET($key,$mission_id);
-		$record=json_decode($recordJson,TRUE);
-		if(is_array($record)&&$record['times']<$missionData['times']){
+		if($mission_update==1){
+			$recordJson=$redis_mission->HGET($key,$mission_id);
+			$record=json_decode($recordJson,TRUE);
+			if(is_array($record)&&$record['times']==$missionData['times']){
 				$result['status']=1;
-				$result['times']=1;
-		}
-		else if(is_array($record)&&$record['times']>=$missionData['times']){
+				$result['times']=$times;
+			}
+			else if(is_array($record)&&$record['times']>$missionData['times']){
 				$result['status']=3;
 				$result['times']=$missionData['times'];
-		}else{
-			$result['status']=1;
-			$result['times']=1;
+			}else if(is_array($record)&&$record['times']<$missionData['times']){
+				$result['status']=1;
+				$result['times']=$times;
+			}
+			else{
+				$result['status']=1;
+				$result['times']=0;
+			}
+				$redis_mission->HSET($key,$mission_id,$result);
 		}
-		$redis_mission->HSET($key,$mission_id,$result);
-	}
-
 
  }

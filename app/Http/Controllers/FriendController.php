@@ -15,6 +15,7 @@ use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
 use DB;
+use App\Http\Controllers\MissionController;
 
 class FriendController extends Controller
 {
@@ -175,6 +176,9 @@ class FriendController extends Controller
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$friendModel=new UserFriendModel();
 		$existFriend=$friendModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+		$countFriend=$friendmodel->where('u_id',$u_id)->count();
+		$MissionController->achieveMission(13,2,$u_id,$countFriend+1);
+
 		if(!$existFriend){
 			$friendData['u_id']=$u_id;
 			$friendData['friend_u_id']=$friend['u_id'];

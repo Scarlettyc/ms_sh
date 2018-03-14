@@ -24,7 +24,7 @@ use DateTime;
 use DB;
 use Log;
 use Illuminate\Support\Facades\Redis;
-// use App\Util\CharSkillEffUtil;
+use App\Http\Controllers\MissionController;
 
 class BaggageItemController extends Controller
 {
@@ -186,16 +186,21 @@ class BaggageItemController extends Controller
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
+		$MissionController=new MissionController();
 
 		$u_id=$data['u_id'];
 		$scrollId=$data['item_id'];
 		$equ_type=$data['equ_type'];
 		$item_type=$data['item_type'];
 		$baggage_id=$data['baggage_id'];
-
 		
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
-			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id')->where('sc_id',$scrollId)->first();
+			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
+			if($scrollInfo['sc_rarity']==2){
+				$MissionController->achieveMission(15,2,$u_id,1);
+			}else if($scrollInfo['sc_rarity']==3){
+				$MissionController->achieveMission(25,2,$u_id,1);
+			}
 			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
@@ -234,6 +239,9 @@ class BaggageItemController extends Controller
 		$baggage_id=$data['baggage_id'];
 
 		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv','upgrade_coin')->where('equ_id',$equ_id)->first();
+		if($equData['equ_rarity']==2&&$equData['equ_lv']==2){
+			$MissionController->achieveMission(19,2,$u_id,1);
+		}
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$baggage_id)->where('b_equ_id',$equ_id)->first();
 		$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equ_id,$equ_type,$equData['upgrade_coin'],1,$eqDetail['status']);
 		if($upgarde){
