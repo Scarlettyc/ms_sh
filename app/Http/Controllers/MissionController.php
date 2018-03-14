@@ -154,14 +154,15 @@ class MissionController extends Controller
 			$recordJson=$redis_mission->HGET($key,$mission_id);
 			$record=json_decode($recordJson,TRUE);
 			if($record){
-				$rewards['status']=$record['times'];
-				$rewards['times']=$record['status'];
+				$result['status']=$record['times'];
+				$result['times']=$record['status'];
 			}
 				else{
 				$rewards['status']=0;
 				$rewards['times']=0;
 			}
-			$response=json_encode($rewards,TRUE);
+			$result['rewards']=$rewards;
+			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 	}
 
