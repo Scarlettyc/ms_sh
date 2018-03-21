@@ -38,7 +38,7 @@ class LuckdrawController extends Controller
 		$draw_type=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
 	
-		$luckData=$luckdraw->select('lk_id','draw_type','item_org_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		$luckData=$luckdraw->select('lk_id','draw_type','item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==2){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
@@ -130,7 +130,7 @@ class LuckdrawController extends Controller
 		}
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
-			$drawresult=$luckdraw->select('item_org_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+			$drawresult=$luckdraw->select('item_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 		if($free==1&&$draw_type==2){
 			$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
 			if($freeData){
@@ -143,7 +143,7 @@ class LuckdrawController extends Controller
 		if($drawresult){
 			if($drawresult['item_type']==3){
 				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
-				$drawresult['item_org_id']=$scroll_list['sc_id'];
+				$drawresult['item_id']=$scroll_list['sc_id'];
 			}
 			$BaggageUtil->insertToBaggage($u_id,$drawresult);
 			$drawresult['time']=time();

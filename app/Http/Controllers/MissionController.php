@@ -53,6 +53,9 @@ class MissionController extends Controller
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
+				if($mission['item_type']==3){
+					$tmp['sc_img_path']='Scroll_Random_'.$mission['item_rarilty'];
+				}
 				if(is_array($record)){
 				$tmp['status']=$record['status'];
 				$tmp['times']=$record['times'];
