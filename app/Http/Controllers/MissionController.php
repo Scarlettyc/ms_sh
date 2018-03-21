@@ -51,18 +51,17 @@ class MissionController extends Controller
 			$record=json_decode($recordJson,TRUE);
 			$rewards=$missionReward->select('item_id', 'equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
-				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
 				if($mission['item_type']==3){
 					$tmp['sc_img_path']='Scroll_Random_'.$mission['item_rarilty'];
 				}
 				if(is_array($record)){
 				$tmp['status']=$record['status'];
-				$tmp['times']=$record['times'];
+				$tmp['description']=$tmp['description'].' (finished '.$record['times'].' times)';
 				}
 				else{
 					$tmp['status']=0;
-					$tmp['times']=0;
+					$tmp['description']=$tmp['description'].' (finished 0 times)';
 				}
 				$tmp['mission_lv']=$mission['user_lv_from'];
 				$result[]=$tmp;
