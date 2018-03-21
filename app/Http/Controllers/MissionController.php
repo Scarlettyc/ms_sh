@@ -55,7 +55,7 @@ class MissionController extends Controller
 				if($mission['item_type']==3){
 					$tmp['sc_img_path']='Scroll_Random_'.$mission['item_rarilty'];
 				}
-				if($mission['times']!==1){
+				if($mission['times']!=1){
 					if(is_array($record)){
 					$tmp['status']=$record['status'];
 					$tmp['description']=$mission['description'].' (finished '.$record['times'].' times)';
