@@ -58,7 +58,7 @@ class MissionController extends Controller
 				if($mission['times']!=1){
 					if(is_array($record)){
 					$tmp['status']=$record['status'];
-					$tmp['description']=$mission['description'].' ('.$record['times'].'|'.$mission['times'].')';
+					$tmp['description']=$mission['description'].' ('.$record['times'].'\|'.$mission['times'].')';
 					}
 					else{
 						$tmp['status']=0;
@@ -78,7 +78,7 @@ class MissionController extends Controller
 				$result[]=$tmp;
 			}
 			$final['mission_list']=$result;
-			$response=json_encode($final,TRUE);
+			$response=json_encode(JSON_UNESCAPED_SLASHES($final),TRUE);
 			return  base64_encode($response);
 	}
 
