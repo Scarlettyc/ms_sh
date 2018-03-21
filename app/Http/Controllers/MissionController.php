@@ -57,11 +57,11 @@ class MissionController extends Controller
 				}
 				if(is_array($record)){
 				$tmp['status']=$record['status'];
-				$tmp['description']=$tmp['description'].' (finished '.$record['times'].' times)';
+				$tmp['description']=$mission['description'].' (finished '.$record['times'].' times)';
 				}
 				else{
 					$tmp['status']=0;
-					$tmp['description']=$tmp['description'].' (finished 0 times)';
+					$tmp['description']=$mission['description'].' (finished 0 times)';
 				}
 				$tmp['mission_lv']=$mission['user_lv_from'];
 				$result[]=$tmp;
