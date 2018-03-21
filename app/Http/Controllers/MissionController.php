@@ -49,7 +49,7 @@ class MissionController extends Controller
 		foreach ($missionList as $key => $mission) {
 			$recordJson=$redis_mission->HGET($key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
-			$rewards=$missionReward->select('item_id', 'item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
+			$rewards=$missionReward->select('item_id', 'equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
@@ -85,7 +85,7 @@ class MissionController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
 		$charaData=$charModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('item_id','item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+		$missionReward=$missionModel->select('item_id','equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 		$userData=$usermodel->where('u_id',$u_id)->first();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
@@ -145,7 +145,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionData=$missionModel->select('description','mission_id')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->first();
-			$rewards=$missionReward->select('item_id', 'item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+			$rewards=$missionReward->select('item_id', 'equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 			if($mission_type==2){
 				$key='mission_daily_'.$dmy.'_'.$u_id;
 			}
