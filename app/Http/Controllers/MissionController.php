@@ -64,7 +64,7 @@ class MissionController extends Controller
 				$tmp['mission_lv']=$mission['user_lv_from'];
 				$result[]=$tmp;
 			}
-			$final['mission_list']=$result
+			$final['mission_list']=$result;
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 	}
