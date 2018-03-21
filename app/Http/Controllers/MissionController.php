@@ -62,7 +62,7 @@ class MissionController extends Controller
 					}
 					else{
 						$tmp['status']=0;
-						$tmp['description']=$mission['description'].' (0\\'.$mission['times'].')';
+						$tmp['description']=$mission['description'].' (0'.'\\'.$mission['times'].')';
 					}
 				}
 				else{
