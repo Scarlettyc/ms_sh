@@ -78,7 +78,7 @@ class MissionController extends Controller
 				$result[]=$tmp;
 			}
 			$final['mission_list']=$result;
-			$response=json_encode(JSON_UNESCAPED_SLASHES($final),TRUE);
+			$response=json_encode($final,TRUE);
 			return  base64_encode($response);
 	}
 
