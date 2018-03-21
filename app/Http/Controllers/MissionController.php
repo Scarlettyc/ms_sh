@@ -58,11 +58,11 @@ class MissionController extends Controller
 				if($mission['times']!=1){
 					if(is_array($record)){
 					$tmp['status']=$record['status'];
-					$tmp['description']=$mission['description']." (".$record['times']."\/".$mission['times'].")";
+					$tmp['description']=$mission['description']." (".$record['times']."\\".$mission['times'].")";
 					}
 					else{
 						$tmp['status']=0;
-						$tmp['description']=$mission['description']." (0\/".$mission['times'].")";
+						$tmp['description']=$mission['description']." (0\\".$mission['times'].")";
 					}
 				}
 				else{
