@@ -49,7 +49,7 @@ class MissionController extends Controller
 		foreach ($missionList as $key => $mission) {
 			$recordJson=$redis_mission->HGET($key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
-			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
+			$rewards=$missionReward->select('item_id', 'item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['description']=$mission['description'];
 				$tmp['rewards']=$rewards;
@@ -64,6 +64,7 @@ class MissionController extends Controller
 				$tmp['mission_lv']=$mission['user_lv_from'];
 				$result[]=$tmp;
 			}
+			$final['mission_list']=$result
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
 	}
@@ -84,7 +85,7 @@ class MissionController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
 		$charaData=$charModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+		$missionReward=$missionModel->select('item_id','item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 		$userData=$usermodel->where('u_id',$u_id)->first();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
@@ -109,7 +110,7 @@ class MissionController extends Controller
 			}
 			else if($rewards['item_type']==3){
 				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$rewards['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
-				$rewards['item_org_id']=$scroll_list['sc_id'];
+				$rewards['item_id']=$scroll_list['sc_id'];
 				$result[]=$rewards;
 			}
 			else if($rewards['item_type']==1 &&$rewards['item_type']==2){
@@ -144,7 +145,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionData=$missionModel->select('description','mission_id')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->first();
-			$rewards=$missionReward->select('item_org_id', 'item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+			$rewards=$missionReward->select('item_id', 'item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 			if($mission_type==2){
 				$key='mission_daily_'.$dmy.'_'.$u_id;
 			}

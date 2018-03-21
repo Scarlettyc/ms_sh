@@ -71,25 +71,23 @@ class BattleController extends Controller
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
-					if(isset($each['skills'])){
-						foreach ($each['skills'] as $key => $skill) {
-							if(isset($skill['constant_eff'])){
-								$check=$attackhitutil->haveEffConstant($skill['constant_eff'],$skill['occur_time']);
+					$skill=$each['skill'];
+
+					if(isset($each['constant_eff'])){
+						foreach ($each['constant_eff'] as $key => $eff) {
+					
+								$check=$attackhitutil->haveEffConstant($eff,$skill['occur_time']);
 								if($check){
 									if(isset($check['self_buff_eff_id'])){
 										$buffResult=$attackhitutil->buffStatus($check['self_buff_eff_id']);
 									}
-									$charData['skills'][]=["skill_id"=>$skill['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>$skill['occur_time'],'constant_eff'=>$check];
-
-									}
-								}
-							}
+									$charData['constant_eff'][]=$check;
+									}							}
 					$charData['ch_lv']=$userData['ch_lv'];
 					$charData['ch_ranking']=$userData['ch_ranking'];
 				}
 		
 			}
-		
 		}
 		
 		$charData['x']=$x;		
@@ -110,12 +108,12 @@ class BattleController extends Controller
 
 			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 			if($checkCD){
-				// $charData['skills'][]['skill_id']=$data['skill_id'];
-				// $charData['skills'][]['skill_group']=$skill['skill_group'];
-				// $charData['skills'][]['occur_time']=time();
+				$charData['skill']['skill_id']=$data['skill_id'];
+				$charData['skill']['skill_group']=$skill['skill_group'];
+				$charData['skill']['occur_time']=time();
 				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
 				if($skillConstant){
-					$charData['skills'][]=["skill_id"=>$data['skill_id'],"skill_group"=>$skill['skill_group'],"occur_time"=>time(),'constant_eff'=>$skillConstant];
+					$charData['constant_eff'][]=$skillConstant;
 				}
 			}
 		}
@@ -140,10 +138,8 @@ class BattleController extends Controller
 					$enemy_charData['ch_crit']=$enmeyData['ch_crit'];
 					$enemy_charData['direction']=$enmeyData['direction'];
 					$enemy_charData['move']=$enmeyData['move'];
-				if(isset($enmeyData['skills']))
-				{
-					foreach ($enmeyData['skills'] as $key => $enemySkill) {
-						$enemySkill['skill_id']=$enmeyData['skill_id'];
+				if(isset($enmeyData['skill']))
+				{		$enemySkill['skill_id']=$enmeyData['skill_id'];
 						$enemySkill['skill_group']=$enmeyData['skill_group'];
 						if(isset($enemySkill['constant_eff'])){
 							$effResult=$attackhitutil->getconstantEff($enemySkill['skill_id'],$enemySkill['occur_time'],$charData,$enemy_charData,$clientId,$enemy_clientId,$charData['direction'],$enemy_charData['direction'],$enemySkill['constant_eff']);
@@ -190,7 +186,6 @@ class BattleController extends Controller
 							}
 						}
 					}
-				}	
 			}
 		  }
 		}
