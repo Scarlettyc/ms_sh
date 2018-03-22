@@ -22,7 +22,7 @@ use DateTime;
 use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
-use  App\defindMstModel;
+use App\DefindMstModel;
 
 class BaggageUtil
 {
@@ -70,12 +70,17 @@ class BaggageUtil
 			$EquipmentMstModel=new EquipmentMstModel();
 			$UserBaggageEqModel=new UserBaggageEqModel();
 				$result=[];
+			$defindMstModel=new DefindMstModel();
 			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path')->where('u_id','=',$u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				$arry['item_type']=2;
 				$arry['equ_type']=$equ_type;
+				if($arry['equ_type']==1){
+				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$obj['b_equ_rarity'])->first();
+				$arry['need_lv']=$standardData['value2'];
+				}
 				$arry['item_quantity']=1;
 				$result[]=$arry;
 			}
@@ -88,6 +93,7 @@ class BaggageUtil
 			$eqAttrmstModel=new EqAttrmstModel();
 			$userBaggage=new UserBaggageEqModel();
 			$eqUpgrade=new EquUpgradeReMstModel();
+			$defindMstModel=new DefindMstModel();
 			$equipment=[];
 			$result=[];
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
