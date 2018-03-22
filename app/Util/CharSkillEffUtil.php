@@ -189,7 +189,7 @@ class CharSkillEffUtil
   				return TRUE;
   				break;
   			}else{
-  				throw new Exception("You cannot equip this Equipment", 1);
+  				throw new Exception("You cannot equip this Equipment".$ch_lv.' '.$equ_rarity, 1);
   				
   			}
   		}
