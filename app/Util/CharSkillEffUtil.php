@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Redis;
 use App\RaEffModel;
 use App\LevelUPModel;
 use DB;
-
+use Log;
 class CharSkillEffUtil
 {
 
@@ -183,8 +183,9 @@ class CharSkillEffUtil
   }
   	public function validateEq($ch_lv,$equ_rarity){
   		$defindMstModel=new DefindMstModel();
-  		$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31])->get();
+  		$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->get();
   		foreach ($standardData as $key => $rule) {
+  			Log::info($rule);
   			if($ch_lv>=$rule['value2']&&$equ_rarity==$rule['value1']){
   				return TRUE;
   			}else{
