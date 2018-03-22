@@ -26,6 +26,7 @@ use Log;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
 
+
 class BaggageItemController extends Controller
 {
 	//according to the select, display items in the baggage
@@ -287,8 +288,11 @@ class BaggageItemController extends Controller
 			$core_id=$characterDetail['core_id'];
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
 			$Equ_part=$EquNew['equ_part'];
-
+			$CharSkillEffUtil=new CharSkillEffUtil;
 			if($equ_type==1){
+				$ch_lv=$characterDetail['ch_lv'];
+				$CharSkillEffUtil->validateEq($ch_lv,$EquNew['equ_rarity']);
+
 				$UserBaggageEqModel->equipNewEq($u_id,$equ_id,$characterDetail['w_bag_id'],$baggage_id);
 				$CharacterModel->where('u_id',$u_id)->update(['w_id'=>$equ_id,'w_bag_id'=>$baggage_id,'updated_at'=>$datetime]);
 			}

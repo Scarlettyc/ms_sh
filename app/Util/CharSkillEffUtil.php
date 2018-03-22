@@ -19,7 +19,6 @@ use App\RaEffModel;
 use App\LevelUPModel;
 use DB;
 
-
 class CharSkillEffUtil
 {
 
@@ -182,6 +181,19 @@ class CharSkillEffUtil
   			return ['levelup'=>0,'lv'=>$levels['level']];
   		}
   }
+  	public function validateEq($ch_lv,$equ_rarity){
+  		$defindMstModel=new DefindMstModel();
+  		$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31]);
+  		foreach ($standardData as $key => $rule) {
+  			if($ch_lv>=$rule['value2']&&$equ_rarity==$rule['value1']){
+  				return TRUE;
+  				break;
+  			}else{
+  				throw new Exception("You cannot equip this Equipment", 1);
+  				
+  			}
+  		}
+  	}
 
 
 
