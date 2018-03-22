@@ -22,6 +22,7 @@ use DateTime;
 use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
+use  App\defindMstModel;
 
 class BaggageUtil
 {
@@ -90,7 +91,6 @@ class BaggageUtil
 			$equipment=[];
 			$result=[];
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
-
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
 			$equipment['baggage_id']=$user_beq_id;
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
@@ -98,6 +98,8 @@ class BaggageUtil
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 			if($equ_type==2){
+				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$EquipmentInfo['equ_rarity'])->first();
+				$equipment['need_lv']=$standardData['value2'];
 				$countUp=$eqUpgrade->where('equ_code',substr($EquipmentInfo['equ_code'], 0,4))->where('lv',$EquipmentInfo['equ_lv']+1)->count();
 			}
 			else{	
