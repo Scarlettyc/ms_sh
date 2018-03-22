@@ -187,7 +187,6 @@ class CharSkillEffUtil
   		foreach ($standardData as $key => $rule) {
   			if($ch_lv>=$rule['value2']&&$equ_rarity==$rule['value1']){
   				return TRUE;
-  				break;
   			}else{
   				throw new Exception("You cannot equip this Equipment".$ch_lv.' '.$equ_rarity, 1);
   				
