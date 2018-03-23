@@ -156,7 +156,6 @@ class LuckdrawController extends Controller
 		$final['draw_result']=$result;
 		return $final;
   }
-}
 
 
 public function createLuckDraw(Request $request){
