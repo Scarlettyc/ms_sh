@@ -182,7 +182,7 @@ public function createLuckDraw(Request $request){
 				$rate_to=round(($luck['weight']/(4049+pow(1.0124,($i-1))))*10000);
 			}
 			else if($luck['lk_id']==14||$luck['lk_id']==28){
-				$redis_key_before=$luck['rate_key'].$i-1;
+				$redis_key_before=$luck['rate_key'].($i-1);
 				$redis_data=$redisTables->HGET('lucky_draw_rate_table',$redis_key_before);
 				$arrb4=json_decode($redis_data,TRUE);
 				$rate_from=$arrb4['rate_to'];
