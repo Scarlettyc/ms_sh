@@ -185,7 +185,7 @@ public function createLuckDraw(Request $request){
 			$arr['rate_from']=$rate_from;
 			$arr['rate_to']=$rate_to;
 			$json=json_encode($arr,TRUE);
-			$redisTables->HSET('lucky_draw_rate_table',$redis_key,$arr);
+			$redisTables->HSET('lucky_draw_rate_table',$redis_key,$json);
 
 			}
 		}
