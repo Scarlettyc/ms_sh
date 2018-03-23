@@ -169,13 +169,15 @@ public function createLuckDraw(Request $request){
 		$luckData=$luckDraw->select('lk_id','weight','rate_key')->where('draw_type',$draw_type)->get();
 		$rate_to_List=[];
 		foreach ($luckData as $key => $luck) {
-			$redis_key=$luck['rate_key'].$i;
+			$rate_key='draw'.$draw_type.'_lk'.$luck['lk_id'].'_';
+			$redis_key=$rate_key.$i;
 			if($luck['lk_id']==1||$luck['lk_id']==15){
 				$rate_from=0;
 				$rate_to=round(($luck['weight']/(4049+pow(1.0124,($i-1))))*10000);
 				$rate_to_List[1]=$rate_to;
 			}else if(!$luck['lk_id']==14||!$luck['lk_id']==28){
-				$redis_key_before=$luck['rate_key'].$i-1;
+				$rate_key='draw'.$draw_type.'_lk'.($luck['lk_id']-1).'_';
+				$redis_key_before=$rate_key.$i;
 				$redis_data=$redisTables->HGET('lucky_draw_rate_table',$redis_key_before);
 				if(!is_null($redis_data))
 				{ $arrb4=json_decode($redis_data,TRUE);
@@ -184,6 +186,7 @@ public function createLuckDraw(Request $request){
 				}
 			}
 			else if($luck['lk_id']==14||$luck['lk_id']==28){
+
 				$redis_key_before=$luck['rate_key'].($i-1);
 				$redis_data=$redisTables->HGET('lucky_draw_rate_table',$redis_key_before);
 				if(!is_null($redis_data)){
