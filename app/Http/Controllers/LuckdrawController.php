@@ -172,10 +172,11 @@ public function createLuckDraw(Request $request){
 			$redis_key=$luck['rate_key'].$i;
 			if($luck['lk_id']==1||$luck['lk_id']==15){
 				$rate_from=0;
-				$rate_to=($luck['weight']/(4049+pow(1.0124,($i-1))));
+				$rate_to=($luck['weight']/(4049+pow(1.0124,($i-1))))*10000;
+				$rate_to_List[1]=$rate_to;
 			}else if(!$luck['lk_id']==14||!$luck['lk_id']==28){
 				$rate_from=$rate_to_List[$i-1];
-				$rate_to=($luck['weight']/(4049+pow(1.0124,($i-1))));
+				$rate_to=($luck['weight']/(4049+pow(1.0124,($i-1))))**10000;
 			}
 			else if($luck['lk_id']==14||$luck['lk_id']==28){
 				$rate_from=$rate_to_List[$i-1];
