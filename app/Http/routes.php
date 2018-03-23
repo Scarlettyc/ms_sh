@@ -65,7 +65,7 @@ Route::post('/gemList','ShopController@getGemList');
 Route::post('/showluck', 'LuckdrawController@luckdrawList');
 Route::post('/onedraw', 'LuckdrawController@one');
 Route::post('/multidraw', 'LuckdrawController@many');
-Route::post('/addrate', 'LuckdrawController@add_rate');
+Route::post('/addrate', 'LuckdrawController@createLuckDraw');
 Route::post('/battlematch', 'MatchController@testWebsocket');
 
 Route::post('/load', 'LoadBattleController@loadingGame');
