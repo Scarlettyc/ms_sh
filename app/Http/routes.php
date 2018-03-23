@@ -28,7 +28,7 @@ Route::controller('updateinfo','UpdateController');
 Route::controller('event','EventController');
 Route::controller('leaderboard','LeaderBoardController');
 Route::controller('mission','MissionController');
-
+Route::controller('luckdraw','LuckdrawController');
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 
@@ -61,11 +61,11 @@ Route::post('/buyCoin','ShopController@buyCoin');
 Route::post('/coinList','ShopController@getCoinList');
 Route::post('/gemList','ShopController@getGemList');
 
-Route::controller('luckdraw','LuckdrawController');
+
 Route::post('/showluck', 'LuckdrawController@luckdrawList');
 Route::post('/onedraw', 'LuckdrawController@one');
 Route::post('/multidraw', 'LuckdrawController@many');
-
+Route::post('/addrate', 'LuckdrawController@add_rate');
 Route::post('/battlematch', 'MatchController@testWebsocket');
 
 Route::post('/load', 'LoadBattleController@loadingGame');
