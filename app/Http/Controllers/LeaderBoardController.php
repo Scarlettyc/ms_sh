@@ -28,12 +28,12 @@ class LeaderBoardController extends Controller
         $friend=$usermodel->select('friend_id')->where('u_id',$leader['u_id'])->first();
         $leader['friend_id']=$friend['friend_id'];
         $leader['winRounds']=0;
-        $leader['loseRound']=0;
+        $leader['loseRounds']=0;
         $leaders[]=$leader;
       }
       $myRanking=$char->select('ch_ranking','ch_title','u_id','ch_title','ch_ranking','ch_star','ch_lv')->where('u_id',$u_id)->first();
       $myRanking['winRounds']=0;
-      $myRanking['loseRound']=0;
+      $myRanking['loseRounds']=0;
       $myfriend=$usermodel->select('friend_id')->where('u_id',$u_id)->first();
       $myRanking['friend_id']=$myfriend['friend_id'];
       $result['leader_board']=$leaders;
