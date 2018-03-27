@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redis;
 use App\CharacterModel;
 use DateTime;
+use App\UserModel;
 // use App\Util\CharSkillEffUtil;
 
 class LeaderBoardController extends Controller
@@ -19,9 +20,22 @@ class LeaderBoardController extends Controller
 		  $dmy=$now->format( 'Ymd' );
 		  $datetime=$now->format( 'Y-m-d h:m:s' );
     	$char=new CharacterModel();
+      $usermodel=new UserModel();
       $u_id=$data['u_id'];
-      $leaderRanking=$char->select('u_id','ch_title','w_id','m_id','core_id','ch_ranking')->orderBy('ch_ranking', 'desc')->limit(10)->get();
-      $myRanking=$char->select('ch_ranking','ch_title')->where('u_id',$u_id)->first();
+      $leaderRanking=$char->select('u_id','ch_title','ch_ranking','ch_star','ch_lv')->orderBy('ch_ranking', 'desc')->limit(10)->get();
+      $result=[];
+      foreach ($leaderRanking as $key => $leader) {
+        $friend=$usermodel->select('friend_id')->where('u_id',$leader['u_id'])->first();
+        $leader['friend_id']=$friend['friend_id'];
+        $leader['winRounds']=0;
+        $leader['loseRound']=0;
+        $result[]=$leader;
+      }
+      $myRanking=$char->select('ch_ranking','ch_title','u_id','ch_title','ch_ranking','ch_star','ch_lv')->where('u_id',$u_id)->first();
+      $myRanking['winRounds']=0;
+      $myRanking['loseRound']=0;
+      $myfriend=$usermodel->select('friend_id')->where('u_id',$u_id)->first();
+      $myRanking['friend_id']=$myfriend['friend_id'];
       $result['leader_board']=$leaderRanking;
       $result['user_ranking']=$myRanking;
     	$response=json_encode($result,TRUE);
