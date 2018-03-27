@@ -29,7 +29,7 @@ class LuckdrawController extends Controller
 	  public function luckdrawList(Request $request){
   	 	$req=$request->getContent();
 		$json=base64_decode($req);
-	 	//dd($json);
+	 	
 		$data=json_decode($json,TRUE);
 		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
@@ -37,16 +37,22 @@ class LuckdrawController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$draw_type=$data['draw_type'];
 		$luckdraw=new Luck_draw_rewardsModel();
-	
-		$luckData=$luckdraw->select('lk_id','draw_type','item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		$defindMst=new DefindMstModel();
+		$definData=$defindMst->where('defind_id',28)->first();
+		$defindDiscount=$defindMst->where('defind_id',22)->first();
+		$luckData=$luckdraw->select('lk_id','draw_type','item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==2){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
 				$result['gemTimeUtil']=$luckData['free_draw_duration']+$freeDraw-time();
+				$result['free_draw_duration']=$luckData['free_draw_duration'];
 			}else{
 				$result['gemTimeUtil']=$luckData['free_draw_duration'];
+				$result['free_draw_duration']=$luckData['free_draw_duration'];
 			}
 		}
+		$result['draw_spend']=$definData['value1'];
+		$result['multi_spend']=$definData['value1']*$defindDiscount['value1']*$defindDiscount['value2'];
 		$result['reward_list']=$luckData;
 		$response=json_encode($result,TRUE);
 		return base64_encode($response);
