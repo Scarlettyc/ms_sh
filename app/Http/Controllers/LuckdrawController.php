@@ -48,7 +48,6 @@ class LuckdrawController extends Controller
 				$result['gemTimeUtil']=$defindFree['value2']+$freeDraw-time();
 				$result['free_draw_duration']=$luckData['value2'];
 			}else{
-				$result['gemTimeUtil']=$defindFree['value2'];
 				$result['free_draw_duration']=$luckData['value2'];
 			}
 		}
