@@ -11,6 +11,6 @@ class Luck_draw_rewardsModel extends Model
      protected $fillable = ['lk_id', 'draw_type', 'item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' , 'weight', 'rate_key' , 'start_date' , 'end_date' , 'updatedate' , 'createdate'];
 
      protected $connection='mysql';
-     protected $table = "Lucky_draw_rate_list"; 
+     protected $table = "Luck_draw_rewards_mst"; 
 
 }

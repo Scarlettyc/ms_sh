@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Lucky_draw_rateModel extends Model
 {
-     protected $fillable = ['lk_id', 'draw_type', 'item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration', 'draw_spend' , 'weight', 'rate_key' , 'start_date' , 'end_date' , 'updatedate' , 'createdate'];
+     protected $fillable = ['lk_rate_id','lk_id' ,'draw_count','draw_type' ,'rate_from' ,'rate_to' ,'updated_at','created_at' ];
 
      protected $connection='mysql';
      protected $table = "Lucky_draw_rate_list"; 
