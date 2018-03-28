@@ -145,7 +145,7 @@ class LuckdrawController extends Controller
 
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
-			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',)->first();
+			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 			$drawresult=$luckdraw->select('item_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 		if($free==1&&$draw_type==2){
 			$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
