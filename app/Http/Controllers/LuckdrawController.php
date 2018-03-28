@@ -116,10 +116,10 @@ class LuckdrawController extends Controller
 		$defindSpend=$defindMstModel->where('defind_id',28)->first();
 		$defindDiscount=$defindMstModel->where('defind_id',22)->first();  
 		if($quantity==$defindDiscount['value2']){
-			$totalSpand=$defindSpend['value1']*$defindDiscount['value1']*$quantity;
+			$totalSpend=$defindSpend['value1']*$defindDiscount['value1']*$quantity;
 		}
 		else{
-			$totalSpand=$defindSpend['value1']*$quantity;
+			$totalSpend=$defindSpend['value1']*$quantity;
 		}
 		$luck_total=$redisLuck->HGET('luck_total_'.$draw_type,$u_id);
 		if(is_null($luck_total)){
@@ -129,23 +129,24 @@ class LuckdrawController extends Controller
 		if($draw_type==1){
 				$defindData=$defindMstModel->where('defind_id',3)->first(); 
 				$defindSpend=$defindMstModel->where('defind_id',28)->first(); 
-				if($user_data['u_coin']<$totalSpand){
+				if($user_data['u_coin']<$totalSpend){
 				throw new Exception("no enough coin!");
 				}
-				$user_data->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpand,'updated_at'=>$date]);
+				$user_data->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpend,'updated_at'=>$date]);
 			}
 		else if($draw_type==2){
 				$defindData=$defindMstModel->where('defind_id',4)->first(); 
 				
-					if($user_data['u_gem']<$totalSpand){
-				throw new Exception("no enough gems!");
+				if($user_data['u_gem']<$totalSpend){
+					throw new Exception("no enough gems!");
 				}
-				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpand,'updated_at'=>$date]);
+				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
 		}
 
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
-			$drawresult=$luckdraw->select('lk_id','item_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',)->first();
+			$drawresult=$luckdraw->select('item_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 		if($free==1&&$draw_type==2){
 			$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
 			if($freeData){
@@ -189,6 +190,8 @@ class LuckdrawController extends Controller
 			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
 			unset($drawresult['time']);
 			$result[]=$drawresult;
+			$luck_total=$luck_total+1
+			$redisLuck->HGET('luck_total_'.$draw_type,$u_id,$luck_total);
 		}
 	}
 	
@@ -243,6 +246,7 @@ public function createLuckDraw(Request $request){
 		}
 
 	}
+
 }
 
 	// public function showLuck(Request $request){
