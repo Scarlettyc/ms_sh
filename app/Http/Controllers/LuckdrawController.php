@@ -40,15 +40,16 @@ class LuckdrawController extends Controller
 		$defindMst=new DefindMstModel();
 		$definData=$defindMst->where('defind_id',28)->first();
 		$defindDiscount=$defindMst->where('defind_id',22)->first();
-		$luckData=$luckdraw->select('lk_id','draw_type','item_id', 'item_quantity', 'item_type', 'item_rarity', 'free_draw_duration' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
-		if($draw_type==2){
+		$defindFree=$defindMst->where('defind_id',33)->first();
+		$luckData=$luckdraw->select('lk_id','draw_type','item_id', 'item_quantity', 'item_type', 'item_rarity' )->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		if($draw_type==$defindFree['value1']){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
-				$result['gemTimeUtil']=$luckData['free_draw_duration']+$freeDraw-time();
-				$result['free_draw_duration']=$luckData['free_draw_duration'];
+				$result['gemTimeUtil']=$defindFree['value2']+$freeDraw-time();
+				$result['free_draw_duration']=$luckData['value2'];
 			}else{
-				$result['gemTimeUtil']=$luckData['free_draw_duration'];
-				$result['free_draw_duration']=$luckData['free_draw_duration'];
+				$result['gemTimeUtil']=$defindFree['value2'];
+				$result['free_draw_duration']=$luckData['value2'];
 			}
 		}
 		$result['draw_spend']=$definData['value1'];
