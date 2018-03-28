@@ -42,7 +42,8 @@ class LuckdrawController extends Controller
 		$defindDiscount=$defindMst->where('defind_id',22)->first();
 		$defindFree=$defindMst->where('defind_id',33)->first();
 
-		$luckData=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		$luckData=$luckdraw->join('Item_mst','Item_mst.id','=','order_products.order_id')  
+		select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==$defindFree['value1']){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
@@ -200,53 +201,6 @@ class LuckdrawController extends Controller
 		return $final;
   }
 
-
-public function createLuckDraw(Request $request){
-	$req=$request->getContent();
-	$json=base64_decode($req);
-	$data=json_decode($json,TRUE);
-	$draw_type=$data['draw_type'];
-	for($i=2;$i<2000;$i++){
-		$luckDraw=new Luck_draw_rewardsModel();
-		$redisTables= Redis::connection('master_tables');
-		$luckData=$luckDraw->select('lk_id','weight','rate_key')->where('draw_type',$draw_type)->get();
-		$rate_to_List=[];
-		foreach ($luckData as $key => $luck) {
-			$rate_key='draw'.$draw_type.'_lk'.$luck['lk_id'].'_';
-			$redis_key=$rate_key.$i;
-			if($luck['lk_id']==1||$luck['lk_id']==15){
-				$rate_from=0;
-				$rate_to=round(($luck['weight']/(4049+pow(1.0124,($i-1))))*10000);
-				$rate_to_List[1]=$rate_to;
-			}else if(!$luck['lk_id']==14||!$luck['lk_id']==28){
-				$rate_key='draw'.$draw_type.'_lk'.($luck['lk_id']-1).'_';
-				$redis_key_before=$rate_key.$i;
-				$redis_data=$redisTables->HGET('lucky_draw_rate_table',$redis_key_before);
-				if(!is_null($redis_data))
-				{ $arrb4=json_decode($redis_data,TRUE);
-				$rate_from=$arrb4['rate_to'];
-				$rate_to=round(($luck['weight']/(4049+pow(1.0124,($i-1))))*10000);
-				}
-			}
-			else if($luck['lk_id']==14||$luck['lk_id']==28){
-
-				$redis_key_before=$luck['rate_key'].($i-1);
-				$redis_data=$redisTables->HGET('lucky_draw_rate_table',$redis_key_before);
-				if(!is_null($redis_data)){
-				$arrb4=json_decode($redis_data,TRUE);
-				$rate_from=$arrb4['rate_to'];
-				$rate_to=10000-$rate_from;
-				}
-			}
-			$arr['rate_from']=$rate_from;
-			$arr['rate_to']=$rate_to;
-			$json=json_encode($arr,TRUE);
-			$redisTables->HSET('lucky_draw_rate_table',$redis_key,$json);
-
-			}
-		}
-
-	}
 
 }
 
