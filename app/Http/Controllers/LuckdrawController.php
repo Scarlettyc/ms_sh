@@ -42,7 +42,7 @@ class LuckdrawController extends Controller
 		$defindDiscount=$defindMst->where('defind_id',22)->first();
 		$defindFree=$defindMst->where('defind_id',33)->first();
 
-		$luckData=$luckdraw->join('Item_mst','Item_mst.id','=','order_products.order_id')  
+		$luckData=$luckdraw-> 
 		select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==$defindFree['value1']){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
