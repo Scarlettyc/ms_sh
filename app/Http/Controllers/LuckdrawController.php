@@ -46,9 +46,9 @@ class LuckdrawController extends Controller
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
 				$result['gemTimeUtil']=$defindFree['value2']+$freeDraw-time();
-				$result['free_draw_duration']=$luckData['value2'];
+				$result['free_draw_duration']=$defindFree['value2'];
 			}else{
-				$result['free_draw_duration']=$luckData['value2'];
+				$result['free_draw_duration']=$defindFree['value2'];
 			}
 		}
 		$result['draw_spend']=$definData['value1'];
