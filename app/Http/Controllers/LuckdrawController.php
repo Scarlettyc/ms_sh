@@ -122,19 +122,17 @@ class LuckdrawController extends Controller
 		else{
 			$totalSpend=$defindSpend['value1']*$quantity;
 		}
-		$luck_total=$redisLuck->HGET('luck_total_'.$draw_type,$u_id);
-		if(is_null($luck_total)){
-			$luck_total=0;
-		}
+
 		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
-		if(!$freeData){
+		if(!$freeData)
+		{
 
 				if($draw_type==2&&$quantity==1){
 				$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
 				$totalSpend=0;
-		}
+				}
 
-		if($draw_type==1){
+			if($draw_type==1){
 				$defindData=$defindMstModel->where('defind_id',3)->first(); 
 				$defindSpend=$defindMstModel->where('defind_id',28)->first(); 
 				if($user_data['u_coin']<$totalSpend){
@@ -142,74 +140,65 @@ class LuckdrawController extends Controller
 				}
 				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpend,'updated_at'=>$date]);
 			}
-		else if($draw_type==2){
+			else if($draw_type==2){
 				$defindData=$defindMstModel->where('defind_id',4)->first(); 
 				
 				if($user_data['u_gem']<$totalSpend){
 					throw new Exception("no enough gems!");
 				}
 				$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
-		}
+			}
 
-
-		$user_data_after=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
-		for($i=0;$i<$quantity;$i++){
-			$rate=rand($defindData['value1'], $defindData['value2']);
-			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1+$i)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+			$defindSp=$defindMstModel->where('defind_id',34)->first();  
+			$user_data_after=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
+			for($i=0;$i<$quantity;$i++){
+				$rate=rand($defindData['value1'], $defindData['value2']);
+				$luck_total=$redisLuck->HGET('luck_total_'.$draw_type,$u_id);
+				if(is_null($luck_total)){
+					$luck_total=0;
+				}
+			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 			$drawresult=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 
 			$history_key="luck_draw_history";
-			if($drawresult){
-				$luck_history=$redisLuck->HGET($history_key,$u_id);
-				if(!is_null($luck_history)){
-					$luckData=json_decode($luck_history,TRUE);
-					$newHistory=[];
-					foreach ($luckData as $key => $eachData) {
-					if($eachData==$drawresult['lk_id']){
-						$tmp['times']=0;
-						$tmp['lk_id']=$drawresult['lk_id'];
-					}
-					else{
-						$tmp['times']=$eachData['times']+1;
-						$tmp['lk_id']=$drawresult['lk_id'];
-					}
+				if($getLk==$defindSp['value1']||$getLk==$defindSp['value2']){
+				
+					$redisLuck->HSET('luck_total_'.'_'.$u_id,0);
 				}
-				$newHistory[]=$tmp;
-				}else{
-					$tmp['times']=1;
-					$tmp['lk_id']=$drawresult['lk_id'];
-					$newHistory[]=$tmp;
+				else{
+					$redisLuck->HSET('luck_total_'.'_'.$u_id,$luck_total+1);
 				}
-				$historyJson=json_encode($newHistory,TRUE);
-				$redisLuck->HSET($history_key,$u_id,$historyJson);
+				if($drawresult){
+					$historyJson=json_encode($newHistory,TRUE);
+					$redisLuck->HSET($history_key,$u_id,$historyJson);
 
-				if($drawresult['item_type']==3){
-					$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
-					$drawresult['item_id']=$scroll_list['sc_id'];
-				}
-				if($drawresult['item_type']==6){
-				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data_after['u_coin']+$drawresult['item_quantity'],'updated_at'=>$date]);
-				}
-				else if($drawresult['item_type']==7){
-					$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data_after['u_gem']+$drawresult['item_quantity'],'updated_at'=>$date]);
-				}
-				else {
-					$BaggageUtil->insertToBaggage($u_id,$drawresult);
+					if($drawresult['item_type']==3){
+						$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
+						$drawresult['item_id']=$scroll_list['sc_id'];
+					}
+					if($drawresult['item_type']==6){
+						$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data_after['u_coin']+$drawresult['item_quantity'],'updated_at'=>$date]);
+					}
+					else if($drawresult['item_type']==7){
+						$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data_after['u_gem']+$drawresult['item_quantity'],'updated_at'=>$date]);
+					}
+					else {
+						$BaggageUtil->insertToBaggage($u_id,$drawresult);
 
-				} 
-			$drawresult['time']=time();
-			$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
-			unset($drawresult['time']);
-			$result[]=$drawresult;
-			$luck_total=$luck_total+1;
-			$redisLuck->HSET('luck_total_'.$draw_type,$u_id,$luck_total);
-		}
-	}
+					} 
+				$drawresult['time']=time();
+				$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
+				unset($drawresult['time']);
+				$result[]=$drawresult;
+				$luck_total=$luck_total+1;
+				$redisLuck->HSET('luck_total_'.$draw_type,$u_id,$luck_total);
+				}
+			}
 	
 		$final['draw_result']=$result;
 		return $final;
-  	}
- }
+  		}
+ 	}
 }
 	// public function showLuck(Request $request){
 	// 	$req=$request->getContent();
