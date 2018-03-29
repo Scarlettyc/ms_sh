@@ -203,7 +203,7 @@ class LuckdrawController extends Controller
 
 
 }
-
+}
 	// public function showLuck(Request $request){
 	// 	$req=$request->getContent();
 	// 	$json=base64_decode($req);
