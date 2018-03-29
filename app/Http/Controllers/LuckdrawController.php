@@ -169,9 +169,6 @@ class LuckdrawController extends Controller
 					$redisLuck->HSET('luck_total_'.$draw_type,$u_id,$luck_total+1);
 				}
 				if($drawresult){
-					$historyJson=json_encode($newHistory,TRUE);
-					$redisLuck->HSET($history_key,$u_id,$historyJson);
-
 					if($drawresult['item_type']==3){
 						$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
 						$drawresult['item_id']=$scroll_list['sc_id'];
