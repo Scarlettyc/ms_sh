@@ -73,9 +73,9 @@ class LuckdrawController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$BaggageUtil=new BaggageUtil();
 		$draw_type=$data['draw_type'];
-		$free=$data['free_draw'];
 
-		$result=$this->luckdraw($u_id,$free,$draw_type,1);
+
+		$result=$this->luckdraw($u_id,$draw_type,1);
 		$response=json_encode($result,TRUE);
 		return base64_encode($response);
 
@@ -93,16 +93,15 @@ class LuckdrawController extends Controller
 		$defindMstModel=new DefindMstModel();
 		$BaggageUtil=new BaggageUtil();
 		$draw_type=$data['draw_type'];
-		$free=$data['free_draw'];
 
-		$result=$this->luckdraw($u_id,$free,$draw_type,10);
+		$result=$this->luckdraw($u_id,$draw_type,10);
 		$response=json_encode($result,TRUE);
 		return base64_encode($response);
   }
 
 
 
- private function luckdraw($u_id,$free,$draw_type,$quantity){
+ private function luckdraw($u_id,$draw_type,$quantity){
 	 	$usermodel=new UserModel();
 		$redisLuck= Redis::connection('default');
 		$now   = new DateTime;
@@ -128,6 +127,15 @@ class LuckdrawController extends Controller
 			$luck_total=0;
 		}
 
+		if($freeData){
+				throw new Exception("you already used free draw");
+			}else{
+				if($draw_type==2&&$quantity==1){
+				$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
+				$totalSpend=0;
+			}
+		}
+
 		if($draw_type==1){
 				$defindData=$defindMstModel->where('defind_id',3)->first(); 
 				$defindSpend=$defindMstModel->where('defind_id',28)->first(); 
@@ -144,20 +152,14 @@ class LuckdrawController extends Controller
 				}
 				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
 		}
+		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
+
 
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
 			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 			$drawresult=$luckdraw->select('item_id','item_quantity','item_type','item_rarity')->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
-		if($free==1&&$draw_type==2){
-			$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
-			if($freeData){
-				throw new Exception("you already used free draw");
-			}
-			else{
-			$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
-			}
-			}
+
 
 		$history_key="luck_draw_history";
 		if($drawresult){
