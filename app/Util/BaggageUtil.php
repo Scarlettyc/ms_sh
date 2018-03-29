@@ -329,13 +329,13 @@ class BaggageUtil
 		foreach($rewards as $reward){
 			if($reward['item_type']==1){
 
-				$reData=$reModel->where('r_id',$reward['item_org_id'])->first();
-				$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_org_id'])->where('u_id',$u_id)->first();
+				$reData=$reModel->where('r_id',$reward['item_id'])->first();
+				$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_id'])->where('u_id',$u_id)->first();
 
 
 				if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
 					$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
-					$UserBaggageResModel->where('br_id',$reward['item_org_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
+					$UserBaggageResModel->where('br_id',$reward['item_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
 				}
 				else{
 					$result['u_id']=$u_id;
@@ -349,17 +349,17 @@ class BaggageUtil
 					$result['created_at']=$datetime;
 					$UserBaggageResModel->insert($result);
 				}
-				if(array_key_exists($reward['item_org_id'],$resource)){
-						$resource[$reward['item_org_id']]=$resource[$reward['item_org_id']]+$reward['item_quantity'];
+				if(array_key_exists($reward['item_id'],$resource)){
+						$resource[$reward['item_id']]=$resource[$reward['item_id']]+$reward['item_quantity'];
 
 					}else{
-						$resource[$reward['item_org_id']]=$reward['item_quantity'];
+						$resource[$reward['item_id']]=$reward['item_quantity'];
 				}
 				
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
-					$eqData=$eqModel->where('equ_id',$reward['item_org_id'])->first();
+					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
 					$result['b_equ_id']=$eqData['equ_id'];
 					$result['b_icon_path']=$eqData['icon_path'];
@@ -373,7 +373,7 @@ class BaggageUtil
 			}
 			else if($reward['item_type']==3){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
-					$scrData=$scrModel->where('sc_id',$reward['item_org_id'])->first();
+					$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
 					$result['bsc_id']=$scrData['sc_id'];
 					$result['bsc_icon']=$scrData['sc_img_path'];
@@ -405,24 +405,24 @@ class BaggageUtil
 		$scrModel=new ScrollMstModel();
 		$reModel=new ResourceMstModel();
 		if($mission['item_type']==1){
-			$reData=$reModel->where('r_id',$mission['item_org_id'])->first();
+			$reData=$reModel->where('r_id',$mission['item_id'])->first();
 			$result['item_name']=$reData['r_name'];
 			$result['item_description']=$reData['r_description'];
 			$result['item_image']=$reData['r_img_path'];
 		}
 		else if($mission['item_type']==2){
-			$eqData=$eqModel->where('equ_id',$mission['item_org_id'])->first();
+			$eqData=$eqModel->where('equ_id',$mission['item_id'])->first();
 			$result['item_name']=$reData['equ_name'];
 			$result['item_description']=$reData['equ_description'];
 			$result['item_image']=$reData['icon_path'];
 		}
 		else if($mission['item_type']==3){
-			$scrData=$scrModel->where('sc_id',$mission['item_org_id'])->first();
+			$scrData=$scrModel->where('sc_id',$mission['item_id'])->first();
 			$result['item_name']=$reData['sc_name'];
 			$result['item_description']=$reData['sc_description'];
 			$result['item_image']=$reData['sc_img_path'];
 		}
-			$result['item_org_id']=$mission['item_org_id'];
+			$result['item_id']=$mission['item_id'];
 			$result['item_quantity']=$mission['item_quantity'];
 			$result['item_type']=$mission['item_type'];
 			
