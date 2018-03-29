@@ -181,7 +181,8 @@ class LuckdrawController extends Controller
 				$tmp['lk_id']=$drawresult['lk_id'];
 				$newHistory[]=$tmp;
 			}
-			$redisLuck->HSET($history_key,$u_id,$newHistory);
+			$historyJson=json_encode($newHistory,TRUE);
+			$redisLuck->HSET($history_key,$u_id,$historyJson);
 
 			if($drawresult['item_type']==3){
 				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
