@@ -127,13 +127,11 @@ class LuckdrawController extends Controller
 			$luck_total=0;
 		}
 		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
-		if($freeData){
-				throw new Exception("you already used free draw");
-			}else{
+		if(!$freeData){
+
 				if($draw_type==2&&$quantity==1){
 				$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
 				$totalSpend=0;
-			}
 		}
 
 		if($draw_type==1){
