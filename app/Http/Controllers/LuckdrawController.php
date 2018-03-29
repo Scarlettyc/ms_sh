@@ -163,10 +163,10 @@ class LuckdrawController extends Controller
 			$history_key="luck_draw_history";
 				if($getLk==$defindSp['value1']||$getLk==$defindSp['value2']){
 				
-					$redisLuck->HSET('luck_total_'.'_'.$u_id,0);
+					$redisLuck->HSET('luck_total_'.$draw_type,$u_id,0);
 				}
 				else{
-					$redisLuck->HSET('luck_total_'.'_'.$u_id,$luck_total+1);
+					$redisLuck->HSET('luck_total_'.$draw_type,$u_id,$luck_total+1);
 				}
 				if($drawresult){
 					$historyJson=json_encode($newHistory,TRUE);
