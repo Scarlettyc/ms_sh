@@ -194,7 +194,7 @@ class LuckdrawController extends Controller
 			unset($drawresult['time']);
 			$result[]=$drawresult;
 			$luck_total=$luck_total+1;
-			$redisLuck->HGET('luck_total_'.$draw_type,$u_id,$luck_total);
+			$redisLuck->HSET('luck_total_'.$draw_type,$u_id,$luck_total);
 		}
 	}
 	
