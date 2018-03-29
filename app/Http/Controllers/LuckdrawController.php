@@ -155,7 +155,7 @@ class LuckdrawController extends Controller
 		$user_data_after=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		for($i=0;$i<$quantity;$i++){
 			$rate=rand($defindData['value1'], $defindData['value2']);
-			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
+			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1+$i)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->first();
 			$drawresult=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 
 			$history_key="luck_draw_history";
@@ -512,7 +512,7 @@ class LuckdrawController extends Controller
 // 			$date=$now->format( 'Y-m-d h:m:s' );
 
 // 		   		$draw['u_id']=$data['u_id'];
-// 		   		$draw['item_org_id']=$drawresult['item_org_id'];
+// 		   		$draw['item_id']=$drawresult['item_id'];
 // 		   		$draw['item_quantity']=$drawresult['item_quantity'];
 // 		   		$draw['item_type']=$drawresult['item_type'];
 // 		   		$draw['createtime']=time();
@@ -522,18 +522,18 @@ class LuckdrawController extends Controller
 // 		   		$draw['draw_type']=$data['draw_type'];
 
 //  			if($drawresult['item_type']==1){
-// 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_org_id'])->first();
+// 		   			$rescourceData=$rescourceModel->where('r_id',$drawresult['item_id'])->first();
 // 		   			$draw['item_name']=$rescourceData['r_name'];
 // 		   			$draw['item_img_path']=$rescourceData['r_img_path'];
 // 		   			$draw['description']=$rescourceData['r_description'];
-// 		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->first();
+// 		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_id'])->first();
 // 		   			if(isset($baRedata)){
 // 		   				$br_quanitty=$baRedata['br_quantity']+$drawresult['item_quantity'];
-// 		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_org_id'])->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
+// 		   				$baReModel->where('u_id',$data['u_id'])->where('br_id',$drawresult['item_id'])->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
 // 		   			}
 // 		   			else{
 // 		   				$baReNew['u_id']=$data['u_id'];
-// 		   				$baReNew['br_id']=$drawresult['item_org_id'];
+// 		   				$baReNew['br_id']=$drawresult['item_id'];
 // 		   				$baReNew['br_icon']=$rescourceData['r_img_path'];
 // 		   				$baReNew['br_rarity']=$rescourceData['r_rarity'];
 // 		   				$baReNew['br_type']=$rescourceData['r_type'];
@@ -546,7 +546,7 @@ class LuckdrawController extends Controller
 // 		   		}
 
 // 		   		else if ($drawresult['item_type']==2){
-// 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_org_id'])->first();
+// 		   			$equData=$equipmentModel->where('equ_id',$drawresult['item_id'])->first();
 // 		   			$draw['item_name']=$equData['equ_name'];
 // 		   			$draw['item_img_path']=$equData['icon_path'];
 // 		   			$draw['description']=$equData['equ_description'];
@@ -565,7 +565,7 @@ class LuckdrawController extends Controller
 // 		   				}
 // 		   			}
 // 		   		else if ($drawresult['item_type']==3){
-// 		   			$scData=$scrollModel->where('sc_id',$drawresult['item_org_id'])->first();
+// 		   			$scData=$scrollModel->where('sc_id',$drawresult['item_id'])->first();
 // 		   			$draw['item_name']=$scData['sc_name'];
 // 		   			$draw['item_img_path']=$scData['sc_img_path'];
 // 		   			$draw['description']=$scData['sc_description'];
