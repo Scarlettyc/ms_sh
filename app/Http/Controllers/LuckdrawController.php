@@ -126,7 +126,7 @@ class LuckdrawController extends Controller
 		if(is_null($luck_total)){
 			$luck_total=0;
 		}
-
+		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
 		if($freeData){
 				throw new Exception("you already used free draw");
 			}else{
@@ -152,7 +152,7 @@ class LuckdrawController extends Controller
 				}
 				$user_data->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
 		}
-		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
+
 
 
 		for($i=0;$i<$quantity;$i++){
