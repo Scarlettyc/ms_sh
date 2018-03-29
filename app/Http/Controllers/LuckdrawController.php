@@ -161,7 +161,7 @@ class LuckdrawController extends Controller
 			$drawresult=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 
 			$history_key="luck_draw_history";
-				if($getLk==$defindSp['value1']||$getLk==$defindSp['value2']){
+				if($getLk['lk_id']==$defindSp['value1']||$getLk['lk_id']==$defindSp['value2']){
 				
 					$redisLuck->HSET('luck_total_'.$draw_type,$u_id,0);
 				}
