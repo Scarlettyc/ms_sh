@@ -123,11 +123,6 @@ class LuckdrawController extends Controller
 			$totalSpend=$defindSpend['value1']*$quantity;
 		}
 
-		$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
-		if(!$freeData)
-		{
-
-			
 			if($draw_type==1){
 				$defindData=$defindMstModel->where('defind_id',3)->first(); 
 				$defindSpend=$defindMstModel->where('defind_id',28)->first(); 
@@ -138,8 +133,20 @@ class LuckdrawController extends Controller
 			}
 			else if($draw_type==2){
 					if($quantity==1){
-					$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
-					$totalSpend=0;
+						$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
+						if(!$freeData){
+						$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
+						$totalSpend=0;
+						}
+						else{
+							$defindData=$defindMstModel->where('defind_id',4)->first(); 
+				
+							if($user_data['u_gem']<$totalSpend){
+							throw new Exception("no enough gems!");
+							}
+							$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
+
+						}
 					}
 					else{
 						$defindData=$defindMstModel->where('defind_id',4)->first(); 
@@ -147,8 +154,8 @@ class LuckdrawController extends Controller
 						if($user_data['u_gem']<$totalSpend){
 						throw new Exception("no enough gems!");
 						}
-					$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
-						}
+						$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
+					}
 			}
 
 			$defindSp=$defindMstModel->where('defind_id',34)->first();  
