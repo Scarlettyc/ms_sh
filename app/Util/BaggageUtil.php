@@ -327,7 +327,7 @@ class BaggageUtil
 		// try{
 		$userData=$UserModel->select('u_coin','u_gem')->where('u_id',$u_id)->first();
 		foreach($rewards as $reward){
-			if($rewards['item_type']==1){
+			if($reward['item_type']==1){
 
 				$reData=$reModel->where('r_id',$reward['item_id'])->first();
 				$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_id'])->where('u_id',$u_id)->first();
