@@ -180,7 +180,8 @@ class LuckdrawController extends Controller
 					// 	$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data_after['u_gem']+$drawresult['item_quantity'],'updated_at'=>$date]);
 					// }
 					// else {
-						$BaggageUtil->insertToBaggage($u_id,$drawresult);
+						$tmp[]=$drawresult;
+						$BaggageUtil->insertToBaggage($u_id,$tmp);
 
 					// } 
 				$drawresult['time']=time();

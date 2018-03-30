@@ -326,73 +326,72 @@ class BaggageUtil
 		$resource=[];
 		// try{
 		$userData=$UserModel->select('u_coin','u_gem')->where('u_id',$u_id)->first();
-		var_dump($rewards['item_type']);
-		// foreach($rewards as $reward){
-		// 	if($rewards['item_type']==1){
+		foreach($rewards as $reward){
+			if($rewards['item_type']==1){
 
-		// 		$reData=$reModel->where('r_id',$reward['item_id'])->first();
-		// 		$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_id'])->where('u_id',$u_id)->first();
+				$reData=$reModel->where('r_id',$reward['item_id'])->first();
+				$quantity=$UserBaggageResModel->select('br_quantity')->where('br_id',$reward['item_id'])->where('u_id',$u_id)->first();
 
 
-		// 		if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
-		// 			$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
-		// 			$UserBaggageResModel->where('br_id',$reward['item_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
-		// 		}
-		// 		else{
-		// 			$result['u_id']=$u_id;
-		// 			$result['br_id']=$reData['r_id'];
-		// 			$result['br_icon']=$reData['r_img_path'];
-		// 			$result['br_rarity']=$reData['r_rarity'];
-		// 			$result['br_type']=$reData['r_type'];
-		// 			$result['br_quantity']=$reward['item_quantity'];
-		// 			$result['status']=0;
-		// 			$result['updated_at']=$datetime;
-		// 			$result['created_at']=$datetime;
-		// 			$UserBaggageResModel->insert($result);
-		// 		}
-		// 		if(array_key_exists($reward['item_id'],$resource)){
-		// 				$resource[$reward['item_id']]=$resource[$reward['item_id']]+$reward['item_quantity'];
+				if(isset($quantity['br_quantity'])&&$quantity['br_quantity']>0){
+					$result['br_quantity']=$reward['item_quantity']+$quantity['br_quantity'];
+					$UserBaggageResModel->where('br_id',$reward['item_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
+				}
+				else{
+					$result['u_id']=$u_id;
+					$result['br_id']=$reData['r_id'];
+					$result['br_icon']=$reData['r_img_path'];
+					$result['br_rarity']=$reData['r_rarity'];
+					$result['br_type']=$reData['r_type'];
+					$result['br_quantity']=$reward['item_quantity'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageResModel->insert($result);
+				}
+				if(array_key_exists($reward['item_id'],$resource)){
+						$resource[$reward['item_id']]=$resource[$reward['item_id']]+$reward['item_quantity'];
 
-		// 			}else{
-		// 				$resource[$reward['item_id']]=$reward['item_quantity'];
-		// 		}
+					}else{
+						$resource[$reward['item_id']]=$reward['item_quantity'];
+				}
 				
-		// 	}
-		// 	else if($reward['item_type']==2){
-		// 		for ($i=0;$i<$reward['item_quantity'];$i++) {
-		// 			$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
-		// 			$result['u_id']=$u_id;
-		// 			$result['b_equ_id']=$eqData['equ_id'];
-		// 			$result['b_icon_path']=$eqData['icon_path'];
-		// 			$result['b_equ_rarity']=$eqData['equ_rarity'];
-		// 			$result['b_equ_type']=$eqData['equ_type'];
-		// 			$result['status']=0;
-		// 			$result['updated_at']=$datetime;
-		// 			$result['created_at']=$datetime;
-		// 			$UserBaggageEqModel->insert($result);
-		// 		}
-		// 	}
-		// 	else if($reward['item_type']==3){
-		// 		for ($i=0;$i<$reward['item_quantity'];$i++) {
-		// 			$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();
-		// 			$result['u_id']=$u_id;
-		// 			$result['bsc_id']=$scrData['sc_id'];
-		// 			$result['bsc_icon']=$scrData['sc_img_path'];
-		// 			$result['bsc_rarity']=$scrData['sc_rarity'];
-		// 			$result['status']=0;
-		// 			$result['updated_at']=$datetime;
-		// 			$result['created_at']=$datetime;
-		// 			$UserBaggageScrollModel->insert($result);
-		// 		}
-		// 	}
-		// 	else if($reward['item_type']==6){
-		// 		 $UserModel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$reward['item_quantity'],'updated_at'=>$datetime]);
-		// 	}
-		// 	else if($reward['item_type']==7){
-		// 		$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime]);
-		// 	}
-		// 	// $missionlist[]=$reward['misson_id'];
-		//  }
+			}
+			else if($reward['item_type']==2){
+				for ($i=0;$i<$reward['item_quantity'];$i++) {
+					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
+					$result['u_id']=$u_id;
+					$result['b_equ_id']=$eqData['equ_id'];
+					$result['b_icon_path']=$eqData['icon_path'];
+					$result['b_equ_rarity']=$eqData['equ_rarity'];
+					$result['b_equ_type']=$eqData['equ_type'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageEqModel->insert($result);
+				}
+			}
+			else if($reward['item_type']==3){
+				for ($i=0;$i<$reward['item_quantity'];$i++) {
+					$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();
+					$result['u_id']=$u_id;
+					$result['bsc_id']=$scrData['sc_id'];
+					$result['bsc_icon']=$scrData['sc_img_path'];
+					$result['bsc_rarity']=$scrData['sc_rarity'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageScrollModel->insert($result);
+				}
+			}
+			else if($reward['item_type']==6){
+				 $UserModel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$reward['item_quantity'],'updated_at'=>$datetime]);
+			}
+			else if($reward['item_type']==7){
+				$UserModel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$reward['item_quantity'],'updated_at'=>$datetime]);
+			}
+			// $missionlist[]=$reward['misson_id'];
+		 }
 		 return TRUE;
 		 // return $missionlist;
 
