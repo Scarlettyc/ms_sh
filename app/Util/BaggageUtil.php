@@ -378,7 +378,7 @@ class BaggageUtil
 					$result=[];
 					$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
-					$result['bsc_id']=$scrData['sc_id'];
+					$result['bsc_id']=$reward['item_id'];
 					$result['bsc_icon']=$scrData['sc_img_path'];
 					$result['bsc_rarity']=$scrData['sc_rarity'];
 					$result['status']=0;
