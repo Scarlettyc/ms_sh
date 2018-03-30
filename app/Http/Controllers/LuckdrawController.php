@@ -182,27 +182,16 @@ class LuckdrawController extends Controller
 						$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
 						$drawresult['item_id']=$scroll_list['sc_id'];
 					}
-					// if($drawresult['item_type']==6){
-					// 	$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data_after['u_coin']+$drawresult['item_quantity'],'updated_at'=>$date]);
-					// }
-					// else if($drawresult['item_type']==7){
-					// 	$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data_after['u_gem']+$drawresult['item_quantity'],'updated_at'=>$date]);
-					// }
-					// else {
-
-
-					// } 
-				$drawresult['time']=time();
-				$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
-				unset($drawresult['time']);
-				$result[]=$drawresult;
+					$drawresult['time']=time();
+					$redisLuck->LPUSH('luck_draw_'.$u_id.$draw_type,json_encode($drawresult,TRUE));
+					unset($drawresult['time']);
+					$result[]=$drawresult;
 				}
 			}
 		$BaggageUtil->insertToBaggage($u_id,$result);
 		$final['draw_result']=$result;
 		return $final;
   		}
- 	}
 }
 	// public function showLuck(Request $request){
 	// 	$req=$request->getContent();
