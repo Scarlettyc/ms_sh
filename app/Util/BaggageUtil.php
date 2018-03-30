@@ -338,6 +338,7 @@ class BaggageUtil
 					$UserBaggageResModel->where('br_id',$reward['item_id'])->where('u_id',$u_id)->update(['br_quantity'=>$result['br_quantity'],'updated_at'=>$datetime]);
 				}
 				else{
+					$result=[];
 					$result['u_id']=$u_id;
 					$result['br_id']=$reData['r_id'];
 					$result['br_icon']=$reData['r_img_path'];
@@ -359,6 +360,7 @@ class BaggageUtil
 			}
 			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
+					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
 					$result['b_equ_id']=$eqData['equ_id'];
@@ -373,6 +375,7 @@ class BaggageUtil
 			}
 			else if($reward['item_type']==3){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
+					$result=[];
 					$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
 					$result['bsc_id']=$scrData['sc_id'];
