@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
 use App\BattleRewardExpModel;
+use Log;
 use DateTime;
-use Lang;
 class AccessController extends Controller
 {
 
@@ -203,8 +203,7 @@ class AccessController extends Controller
 
 	public function test (Request $request){
  	//phpinfo();
-		echo Lang::get('messages.welcome');
-		echo trans('messages.welcome');
+		return view('testview');
  	}
  	private function getEquip($userChar){
  		$equipMstModel=new EquipmentMstModel();

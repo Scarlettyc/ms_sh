@@ -10,8 +10,11 @@ ws.onclose = function(evt){console.log('WebSocketClosed!');};
 ws.onerror = function(evt){console.log('WebSocketError!');}; 
 
 </script>
-　<?php
-phpinfo();
-?>
+<div class="form-group">  
+           <label class="col-lg-4 control-label">{{trans('message.welcome')}}</label>  
+            <div class="col-lg-6">  
+                <input type="text" class="form-control" name="name" value="{{old('name')}}" autofocus/>  
+            </div>  
+       </div> 
 </div>
 @endsection
