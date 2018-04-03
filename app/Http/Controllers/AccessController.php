@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
 use App\BattleRewardExpModel;
-use Log;
 use DateTime;
 use Lang;
 class AccessController extends Controller
