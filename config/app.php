@@ -64,9 +64,9 @@ return [
     | to any of the locales which will be supported by the application.
     |
     */
-    App::setLocale('zh');
 
-    'locale' => 'ar',
+
+    'locale' => 'en',
 
     /*
     |--------------------------------------------------------------------------
