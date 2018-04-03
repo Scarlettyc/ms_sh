@@ -31,10 +31,11 @@ Route::controller('mission','MissionController');
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
+Route::get('/test', 'AccessController@test');
 
 Route::group(['middleware'=>'checktoken'],function(){
 Route::post('/updateUser','AccessController@update');
-Route::get('/test', 'AccessController@test');
+
 
 Route::post('/upchar', 'TutorialController@createChar');
 Route::post('/passtu', 'TutorialController@passTu');
