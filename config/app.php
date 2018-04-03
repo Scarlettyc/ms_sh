@@ -145,7 +145,17 @@ return [
         Illuminate\Redis\RedisServiceProvider::class,
         Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
         Illuminate\Session\SessionServiceProvider::class,
-        Illuminate\Translation\TranslationServiceProvider::class,
+        Overtrue\LaravelLang\TranslationServiceProvider::/**
+        * 
+        */
+        class ClassName extends AnotherClass
+        {
+            
+            function __construct(argument)
+            {
+                # code...
+            }
+        },
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 //	Way\Generators\GeneratorsServiceProvider,
