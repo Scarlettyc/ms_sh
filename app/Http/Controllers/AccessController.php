@@ -203,7 +203,8 @@ class AccessController extends Controller
 
 	public function test (Request $request){
  	//phpinfo();
-		return view('testview');
+		echo Lang::get('messages.welcome');
+		echo trans('messages.welcome');
  	}
  	private function getEquip($userChar){
  		$equipMstModel=new EquipmentMstModel();
