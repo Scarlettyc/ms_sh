@@ -110,6 +110,7 @@ Route::post('/get_event', 'EventController@getEventList');
 Route::post('/get_leaderboard','LeaderBoardController@getLeaderBoardList');
 });
 
+Route::post('/update_profile', 'EventController@updateProfile');
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
