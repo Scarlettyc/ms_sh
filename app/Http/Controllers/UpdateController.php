@@ -82,7 +82,7 @@ class UpdateController extends Controller
 		$usermodel=new UserModel();
 		$profile_img=$data['profile_img'];
 		try{
-			$userData=$usermodel->where('u_id',$u_id)->update['profile_img'=>$profile_img,'updated_at'=>$datetime];
+			$userData=$usermodel->where('u_id',$u_id)->update['profile_img'=>$profile_img,'updated_at'=>$datetime]);
 			return base64_encode("udpate image successfully");
 		}
 		catch(Exception $e){
