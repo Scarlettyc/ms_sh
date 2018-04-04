@@ -11,6 +11,7 @@ use App\CharacterModel;
 use App\UserFriendModel;
 use App\UserModel;
 use Illuminate\Support\Facades\Redis;
+use App\DefindMstModel;
 
 
 class UpdateController extends Controller
@@ -69,5 +70,24 @@ class UpdateController extends Controller
 			$result['ch_title']=$userDetails['ch_title'];
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);
+	}
+	public function updateProfile(Request $request){
+
+		$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$now   = new DateTime;
+		$datetime=$now->format( 'Y-m-d h:m:s' );
+		$dmy=$now->format( 'Ymd' );
+		$usermodel=new UserModel();
+		$profile_img=$data['profile_img'];
+		try{
+			$userData=$usermodel->where('u_id',$u_id)->update['profile_img'=>$profile_img,'updated_at'=>$datetime];
+			return base64_encode("udpate image successfully");
+		}
+		catch(Exception $e){
+				throw new Exception("there have some error occured");
+		}
+
 	}
  }
