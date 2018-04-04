@@ -104,13 +104,13 @@ Route::post('/getMissionDetails', 'MissionController@getMissionDetails');
 Route::post('/udpate_email', 'UpdateController@updateEmail');
 Route::post('/udpate_pw', 'UpdateController@updatePassword');
 Route::post('/refresh_setting', 'UpdateController@refreshSetting');
-
+Route::post('/update_profile', 'UpdateController@updateProfile');
 
 Route::post('/get_event', 'EventController@getEventList');
 Route::post('/get_leaderboard','LeaderBoardController@getLeaderBoardList');
 });
 
-Route::post('/update_profile', 'updateinfo@updateProfile');
+
 
 // Route::group(['middleware' => 'auth', 'namespace' => 'Admin', 'prefix' => 'admin'], function() {
   
