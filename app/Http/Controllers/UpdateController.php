@@ -81,13 +81,13 @@ class UpdateController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$usermodel=new UserModel();
 		$profile_img=$data['profile_img'];
-		try{
+		// try{
 			$userData=$usermodel->where('u_id',$u_id)->update(['profile_img'=>$profile_img,'updated_at'=>$datetime]);
 			return base64_encode("udpate image successfully");
-		}
-		catch(Exception $e){
-				throw new Exception("there have some error occured");
-		}
+		// }
+		// catch(Exception $e){
+		// 		throw new Exception("there have some error occured");
+		// }
 
 	}
  }
