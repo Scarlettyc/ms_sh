@@ -32,7 +32,7 @@ Route::controller('luckdraw','LuckdrawController');
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
 Route::get('test/{locale}', function ($locale) {
-    App::setLocale($locale);
+    App::setLocale('en');
     });
 
 Route::group(['middleware'=>'checktoken'],function(){
