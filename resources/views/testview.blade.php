@@ -10,6 +10,9 @@ ws.onerror = function(evt){console.log('WebSocketError!');};
 
 </script>
 <div class="form-group">  
+           <label class="col-lg-4 control-label">test test</label>  
+       </div> 
+<div class="form-group">  
            <label class="col-lg-4 control-label">{{trans('message.welcome')}}</label>  
        </div> 
 </div>
