@@ -80,6 +80,7 @@ class UpdateController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$usermodel=new UserModel();
+		$u_id=$data['u_id'];
 		$profile_img=$data['profile_img'];
 		try{
 			$userData=$usermodel->where('u_id',$u_id)->update(['profile_img'=>$profile_img,'updated_at'=>$datetime]);
