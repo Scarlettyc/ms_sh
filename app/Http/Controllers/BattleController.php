@@ -316,6 +316,7 @@ class BattleController extends Controller
 	}
 
 	private function mapingData($match_id,$u_id,$identity){
+			$redis_battle=Redis::connection('battle');
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
 		$userExist=$redis_battle->LLEN($battlekey);
 		$charData=[];
