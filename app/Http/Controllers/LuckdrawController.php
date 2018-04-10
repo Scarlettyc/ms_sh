@@ -137,6 +137,7 @@ class LuckdrawController extends Controller
 						if(!$freeData){
 						$redisLuck->HSET('luckdrawfree',$dmy.$u_id,time());
 						$totalSpend=0;
+						$defindData=$defindMstModel->where('defind_id',4)->first(); 
 						}
 						else{
 							$defindData=$defindMstModel->where('defind_id',4)->first(); 
