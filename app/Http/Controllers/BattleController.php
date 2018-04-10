@@ -287,10 +287,10 @@ class BattleController extends Controller
 	}
 	$result['user_data']=$charData;
 		if($clientId>$enemy_clientId){
-			$enemy_charData['x']=-($enemy_charData['x']);
-			$enemy_charData['direction']=-($enemy_charData['direction']);
+			$enemyData['x']=-($enemyData['x']);
+			$enemyData['direction']=-($enemyData['direction']);
 		}
-		$result['enemy_data']=$enemy_charData;
+		$result['enemy_data']=$enemyData;
 		 if($enemy_charData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
