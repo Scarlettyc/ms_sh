@@ -224,6 +224,129 @@ class BattleController extends Controller
 			return null;
 		}
 	}
+	/* 2018.04.09 edition*/
+	public function battleTest($data,$clientInfo){
+		$now   = new DateTime;;
+		$dmy=$now->format( 'Ymd' );
+		$x=$data['x'];
+		$y=$data['y'];
+		$u_id=$data['u_id'];
+		$move=$data['move'];//status of user run 2 or stand by 1
+		$characterModel=new CharacterModel();
+		$skillModel=new SkillMstModel();
+		$attackhitutil=new AttackHitUtil();
+		$redis_battle=Redis::connection('battle');
+		$matchKey='battle_status'.$dmy;
+		$battle_status=$redis_battle->HGET($matchKey,$u_id);
+		$battleData=json_decode($battle_status,TRUE);
+		$enemy_uid=$battleData['enemy_uid'];
+		$match_id=$battleData['match_id'];
+		$clientId=$battleData['client'];
+		$map_id=$battleData['map_id'];
+		$enemy_clientId=$battleData['enmey_client'];
+		$charData=$this->mapingData($match_id,$u_id,1);
+		$charData['x']=$x;		
+		$charData['y']=$y;
+		$charData['time']=time();
+		$charData['address']=$clientInfo['address'];
+		$charData['port']=$clientInfo['port'];
+		$charData['direction']=1;
+		$charData['move']=$move;
+		$user_res=1;
+		$ch_lv=$charData['ch_lv'];
+		$ch_ranking=$charData['ch_ranking'];
+		if(isset($data['direction'])){
+			$charData['direction']=$data['direction'];
+		}
+		if(isset($data['skill_id'])){
+			$skill=$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
+
+		$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
+		if($checkCD){
+				$charData['skill']['skill_id']=$data['skill_id'];
+				$charData['skill']['skill_group']=$skill['skill_group'];
+				$charData['skill']['occur_time']=time();
+				$charData['skill']['start_x']=$x;
+				$skillConstant=$attackhitutil->checkEffConstant($data['skill_id'],$data['x']);
+				if($skillConstant){
+					$charData['eff_list'][]=$skillConstant;
+				}
+		}
+
+		$enemyData=$this->mapingData($match_id,$enemy_uid,2);
+		if($clientId>$enemy_clientId){
+			$enemyData['x']=-($enemyData['x']);
+			$enemyData['direction']=-($enemyData['direction']);
+		}
+		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
+		if($hit){
+			$skillatkEff=$attackhitutil->getEffValue($hit,1);
+			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
+		}
+		$result['user_data']=$charData;
+		if($clientId>$enemy_clientId){
+			$enemy_charData['x']=-($enemy_charData['x']);
+			$enemy_charData['direction']=-($enemy_charData['direction']);
+		}
+		$result['enemy_data']=$enemy_charData;
+		 if($enemy_charData['ch_hp_max']<0){
+			$result['end']=2;
+			$win=1;
+			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
+		}
+		else if($charData['ch_hp_max']<=0){
+			$result['end']=1;
+			$win=0;
+			$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
+		}
+		else {
+			$result['end']=0;
+		}
+		if($clientId>$enemy_clientId){
+			$charData['x']=-$charData['x'];
+			$charData['direction']=-$charData['direction'];
+		}
+		$charData['end']=$result['end'];
+		$charJson=json_encode($charData);
+		$redis_battle->LPUSH($battlekey,$charJson);
+		$response=json_encode($result,TRUE);
+		return  $response;
+	}
+	private function mapingData($match_id,$u_id,$identity){
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		$userExist=$redis_battle->LLEN($battlekey);
+		$charData=[];
+		if($userExist<1){
+			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
+			if($identity==2){
+				$charData['x']=-1000;
+				$charData['y']=-2;
+			}
+		}
+		else{
+			$userJson=$redis_battle->LRANGE($battlekey,0,0);
+				foreach ($userJson as $key => $each) {
+					$userData=json_decode($each,TRUE);
+					$charData['ch_ranking']=$userData['ch_ranking'];
+					$charData['ch_hp_max']=$userData['ch_hp_max'];
+					$charData['ch_stam']=$userData['ch_stam'];
+					$charData['ch_atk']=$userData['ch_atk'];
+					$charData['ch_crit']=$userData['ch_crit'];
+					$charData['ch_armor']=$userData['ch_armor'];
+					$charData['ch_lv']=$userData['ch_lv'];
+					if(array_key_exist('eff_list',$userData)){
+						$charData['eff_list']=$userData['eff_list'];
+					}
+					if(array_key_exist('move',$userData)){
+						$charData['move']=$userData['move'];
+					}
+					if(array_key_exist('direction',$userData)){
+						$charData['direction']=$userData['direction'];
+					}				
+				}
+		}
+		return $charData;
+	}
 
 	private function getMillisecond() {
 		list($t1, $t2) = explode(' ', microtime());     

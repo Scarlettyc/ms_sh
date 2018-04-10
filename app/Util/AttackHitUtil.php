@@ -63,6 +63,7 @@ class AttackHitUtil
 	}
 
 
+
 	public function getconstantEff($skill_id,$occurtime,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction,$constantEff){
 		$atkEffModel=new AtkEffectionMst();
 		$skillModel=new SkillMstModel();
@@ -131,12 +132,10 @@ class AttackHitUtil
     	if($skill_data['buff_constant_time']!=0){
     		$result['self_buff_eff_id']=$skill_data['self_buff_eff_id'];
     		$result['buff_constant_time']=$skill_data['buff_constant_time'];
-    		$result['buff_last_time']=$skill_data['buff_constant_time'];
     	}
     	if($skill_data['enemy_buff_constant_time']!=0){
     		$result['enemy_buff_eff_id']=$skill_data['enemy_buff_eff_id'];
     		$result['enemy_buff_constant_time']=$skill_data['enemy_buff_constant_time'];
-    		$result['enemy_buff_last_time']=$skill_data['enemy_buff_constant_time'];
     	}
     	if($skill_data['atk_constant_time']!=0){
     		$atkEffModel=new AtkEffectionMst();
@@ -144,7 +143,7 @@ class AttackHitUtil
     		$result['atk_eff_id']=$skill_data['atk_eff_id'];
     		$result['start_x']=$x;
     		$result['atk_constant_time']=$skill_data['atk_constant_time'];
-    		$result['atk_last_time']=$skill_data['atk_constant_time'];
+ 
     	}
     	return $result;
     }
@@ -170,6 +169,7 @@ class AttackHitUtil
     	}
     	return $result;
     }
+
 	private function checkHit($map_id,$atkEff,$direction,$user,$enemy)
 	{
 		$mapUtil=new MapTrapUtil();
@@ -245,6 +245,127 @@ class AttackHitUtil
 	$skillData=$skillModel->select('skill_id','self_buff_eff_id','buff_constant_time','enemy_buff_eff_id','enemy_buff_constant_time','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
 	$effData=$skillEffModel->select('eff_id','eff_element_id','eff_value','eff_type')->wherein('eff_id',[$skillData['atk_eff_id'],$skillData['self_buff_eff_id'],$skillData['enemy_buff_eff_id']])->get();
 	return $effData;
+
+  }
+/*
+  code edition from 2018.04.09
+*/
+  	public function getEffList($eff_list,$u_id){
+  		foreach ($eff_list as $key => $eff) {
+
+  			# code...
+  		}
+	}
+
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY){
+		$skillModel=new SkillMstModel();
+		$skill_id=$enemySkill['skill_id'];
+		$skill_group=$enemySkill['skill_group'];
+		$occur_time=$enemySkill['occur_time'];
+		$start_x=$enemySkill['start_x'];
+		$skillData=$skillModel->select('skill_id','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
+		$effData=$this->getEffValue($skillData['atk_eff_id'],1);
+		if($effData['eff_ch_direction']==1){
+			$x_from=$enemyX;
+			$x_to=$x+$effData['eff_skill_hit_length'];
+			$y_to=$enemyY+$effData['eff_y_adjust_top'];
+			$y_from=$enemyY+$effData['eff_y_adjust_bottom'];
+		}
+		else if($effData['eff_ch_direction']==2){
+			$x_from=$enemyX-$effData['eff_skill_hit_length']/2;
+			$x_to=$x+$effData['eff_skill_hit_length']/2;
+			$y_from=$enemyY+$effData['eff_y_adjust_top'];
+			$y_to=$enemyY+$effData['eff_y_adjust_bottom'];
+		}
+		else if($effData['eff_ch_direction']==3){
+			$x_from=$enemyX;
+			$x_to=$x+$effData['eff_skill_hit_length'];
+			$y_to=$enemyY+$effData['eff_y_adjust_top'];
+			$y_from=$enemyY+$effData['eff_y_adjust_bottom'];
+		}
+
+		if($x>=$x_from&&$x<=$x_to&&$y>=$y_from&&$y>=$y_to){
+			return $skillData['atk_eff_id'];
+		}else{
+			return false;
+		}
+	}
+	public function getEffValue($eff_id,$type){
+  		$skillModel=new SkillMstModel();
+  		$skillEffModel=new SkillEffModel();
+		$effElementModel=new EffElementModel();
+		$buffEffectionMst=new BuffEffectionMst();
+		if($type==1){
+			$skill_eff=$skillEffModel->where('eff_id',$eff_id)->get();
+			$result=$this->findEffFunciton($skill_eff);
+		}
+		else if($type==2){
+			$buffEffectionMst->where('eff_id',$eff_id)->get();
+			$result=$this->findEffFunciton($skill_eff);
+		}
+		return $result;
+  }
+  private function findEffFunciton($skill_eff){
+  	foreach ($skill_eff as $key => $each_eff) {
+  		switch ($each_eff['eff_element_id']) {
+  			case 3:
+  				$result['eff_skill_hit_length']=$each_eff['eff_value'];
+  				break;
+  			case 4:
+  				$result['eff_skill_hit_width']=$each_eff['eff_value'];
+  				break;
+  			case 5:
+  				$result['eff_skill_damage_length']=$each_eff['eff_value'];
+  				break;
+  			case 6:
+  				$result['eff_skill_damage_width']=$each_eff['eff_value'];
+  				break;
+  			case 7:
+  				$result['eff_skill_atk_point']=$each_eff['eff_value'];
+  				break;
+			case 8:
+  			$result['eff_skill_damage_point']=$each_eff['eff_value'];
+  				break;
+  			case 9:
+  			$result['eff_skill_turn']=$each_eff['eff_value'];
+  			case 11:
+  			$result['eff_skill_move_distance']=$each_eff['eff_value'];
+  				break;
+  			case 42:
+  			$result['eff_skill_facing']=$each_eff['eff_value'];
+  				break;
+  			case 43:
+  			$result['eff_y_adjust_top']=$each_eff['eff_value'];
+  				break;
+  			case 44:
+  			$result['eff_y_adjust_bottom']=$each_eff['eff_value'];
+  				break;
+  			default:
+  				# code...
+  				break;
+  		}
+  		# code...
+  	}
+
+  }
+
+ /*
+  code edition from 2018.04.10
+*/
+  public function calculateCharValue($charData,$enemyData,$skillatkEff){
+  	if($enemyData['skill']['skill_group']==1){
+		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$user_res;
+		$enemyDMG=$enemy_atk*$critBool;
+		$hpMax=$charData['ch_hp_max']/(1-$user_def);
+		$charData['ch_hp_max']=round($hpMax-$enemyDMG);
+  	}
+  	else if ($enemyData['skill']['skill_group']==2){
+  		$enemy_atk=$enemyData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
+ 	 	$enemyDMG=$enemy_atk*$critBool;
+ 	 	$hpMax=$charData['ch_hp_max'];
+		$charData['ch_hp_max']=round($hpMax-$enemy_atk);
+  	}
+  	return $charData;
 
   }
 
