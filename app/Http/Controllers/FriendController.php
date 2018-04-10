@@ -192,8 +192,8 @@ class FriendController extends Controller
 			$insertData['updated_at']=$datetime;
 			$insertData['createdate']=$datetime;
 
-			$friendModel->insert($friendData);
-			$friendModel->insert($insertData);
+			$usefriend->insert($friendData);
+			$usefriend->insert($insertData);
 			$key='friend_request_'.$u_id;
 			Redis::HDEL($key,$friend['u_id']);
 			$result['add_friend']=$insertData;
