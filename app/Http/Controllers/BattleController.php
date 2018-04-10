@@ -232,6 +232,7 @@ class BattleController extends Controller
 		$y=$data['y'];
 		$u_id=$data['u_id'];
 		$move=$data['move'];//status of user run 2 or stand by 1
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
 		$characterModel=new CharacterModel();
 		$skillModel=new SkillMstModel();
 		$attackhitutil=new AttackHitUtil();
