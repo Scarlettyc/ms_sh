@@ -292,7 +292,7 @@ class BattleController extends Controller
 			$enemyData['direction']=-($enemyData['direction']);
 		}
 		$result['enemy_data']=$enemyData;
-		 if($enemy_charData['ch_hp_max']<0){
+		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
 			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
