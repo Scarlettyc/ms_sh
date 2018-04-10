@@ -226,7 +226,7 @@ class BattleController extends Controller
 	}
 	/* 2018.04.09 edition*/
 	public function battleTest($data,$clientInfo){
-		$now   = new DateTime;;
+		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
 		$y=$data['y'];
@@ -261,8 +261,8 @@ class BattleController extends Controller
 		if(isset($data['skill_id'])){
 			$skill=$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
 
-		$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
-		if($checkCD){
+			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
+			if($checkCD){
 				$charData['skill']['skill_id']=$data['skill_id'];
 				$charData['skill']['skill_group']=$skill['skill_group'];
 				$charData['skill']['occur_time']=time();
@@ -271,9 +271,9 @@ class BattleController extends Controller
 				if($skillConstant){
 					$charData['eff_list'][]=$skillConstant;
 				}
-		}
+			}
 
-		$enemyData=$this->mapingData($match_id,$enemy_uid,2);
+			$enemyData=$this->mapingData($match_id,$enemy_uid,2);
 		if($clientId>$enemy_clientId){
 			$enemyData['x']=-($enemyData['x']);
 			$enemyData['direction']=-($enemyData['direction']);
@@ -283,7 +283,9 @@ class BattleController extends Controller
 			$skillatkEff=$attackhitutil->getEffValue($hit,1);
 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
 		}
-		$result['user_data']=$charData;
+		
+	}
+	$result['user_data']=$charData;
 		if($clientId>$enemy_clientId){
 			$enemy_charData['x']=-($enemy_charData['x']);
 			$enemy_charData['direction']=-($enemy_charData['direction']);
@@ -312,6 +314,7 @@ class BattleController extends Controller
 		$response=json_encode($result,TRUE);
 		return  $response;
 	}
+
 	private function mapingData($match_id,$u_id,$identity){
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
 		$userExist=$redis_battle->LLEN($battlekey);
