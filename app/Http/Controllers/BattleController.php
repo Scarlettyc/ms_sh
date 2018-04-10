@@ -523,7 +523,7 @@ class BattleController extends Controller
 		$u_id=$data['u_id'];
 
 		$charData=$characterModel->where('u_id',$u_id)->first();
-		$result=$this->realbattle($data,$clientInfo);
+		$result=$this->battleTest($data,$clientInfo);
 		var_dump($result);
  	 }
 
