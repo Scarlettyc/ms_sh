@@ -56,6 +56,7 @@ class FriendController extends Controller
 		$characterModel=new CharacterModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
 		$urData=$usermodel->where('u_id',$u_id)->first();
+
 		if(isset($friend)){
 			if($friend['u_id']!=$u_id){
 				$key='friend_request_'.$friend['u_id'];
@@ -175,9 +176,8 @@ class FriendController extends Controller
 		$MissionController=new MissionController();
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$data['friend_id'])->first();
-		$friendModel=new UserFriendModel();
-		$existFriend=$friendModel->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
-		$countFriend=$friendmodel->where('u_id',$u_id)->count();
+		$existFriend=$usefriend->where('u_id',$u_id)->where('friend_u_id',$friend['u_id'])->first();
+		$countFriend=$usefriend->where('u_id',$u_id)->count();
 		$MissionController->achieveMission(13,2,$u_id,$countFriend+1);
 
 		if(!$existFriend){
