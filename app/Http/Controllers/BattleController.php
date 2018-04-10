@@ -232,7 +232,7 @@ class BattleController extends Controller
 		$y=$data['y'];
 		$u_id=$data['u_id'];
 		$move=$data['move'];//status of user run 2 or stand by 1
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
+
 		$characterModel=new CharacterModel();
 		$skillModel=new SkillMstModel();
 		$attackhitutil=new AttackHitUtil();
@@ -244,6 +244,7 @@ class BattleController extends Controller
 		$match_id=$battleData['match_id'];
 		$clientId=$battleData['client'];
 		$map_id=$battleData['map_id'];
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
 		$enemy_clientId=$battleData['enmey_client'];
 		$charData=$this->mapingData($match_id,$u_id,1);
 		$charData['x']=$x;		
