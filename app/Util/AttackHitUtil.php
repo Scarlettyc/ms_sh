@@ -228,7 +228,7 @@ class AttackHitUtil
     	$mapUtil=new MapTrapUtil();
     	$interrput=0;
     	$end=1;
-    		if($interrput==3s||$interrput==2){
+    		if($interrput==3||$interrput==2){
     			$interrput=$mapUtil->checkEffstone($map_id,$effX,$effY,$effR,$effAngle);
     		}
     		else if($interrput==0){
