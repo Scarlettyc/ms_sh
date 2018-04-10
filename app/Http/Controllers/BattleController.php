@@ -272,8 +272,9 @@ class BattleController extends Controller
 					$charData['eff_list'][]=$skillConstant;
 				}
 			}
+		}
 
-			$enemyData=$this->mapingData($match_id,$enemy_uid,2);
+		$enemyData=$this->mapingData($match_id,$enemy_uid,2);
 		if($clientId>$enemy_clientId){
 			$enemyData['x']=-($enemyData['x']);
 			$enemyData['direction']=-($enemyData['direction']);
@@ -283,8 +284,6 @@ class BattleController extends Controller
 			$skillatkEff=$attackhitutil->getEffValue($hit,1);
 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
 		}
-		
-	}
 	$result['user_data']=$charData;
 		if($clientId>$enemy_clientId){
 			$enemyData['x']=-($enemyData['x']);
