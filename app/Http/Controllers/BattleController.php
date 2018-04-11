@@ -343,6 +343,10 @@ class BattleController extends Controller
 					$charData['x']=$x;
 					$charData['y']=$y;
 					}
+					if($identity==2&&!isset($charData['x'])){
+						$charData['x']=-1000;
+						$charData['y']=-290;
+					}
 					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
 					}
