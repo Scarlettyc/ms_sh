@@ -278,10 +278,17 @@ class BattleController extends Controller
 
 		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
 
-		if($clientId>$enemy_clientId){
+		if($clientId<$enemy_clientId){
 			$enemyData['x']=-($enemyData['x']);
 			$enemyData['direction']=-($enemyData['direction']);
+		}else{
+			$enemyData['x']=-($enemyData['x']);
+			$enemyData['direction']=-($enemyData['direction']);
+			$charData['direction']=-($charData['x']);
+			$charData['direction']=-($charData['direction']);
 		}
+
+
 		if(isset($enemyData['skill'])){
 		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
 		if($hit){
@@ -289,7 +296,7 @@ class BattleController extends Controller
 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
 			}
 		}
-	$result['user_data']=$charData;
+		$result['user_data']=$charData;
 		$result['enemy_data']=$enemyData;
 		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
@@ -305,6 +312,10 @@ class BattleController extends Controller
 			$result['end']=0;
 		}
 		$charData['end']=$result['end'];
+		if($clientId>$enemy_clientId){
+			$charData['direction']=-($charData['x']);
+			$charData['direction']=-($charData['direction']);
+		}
 		$charJson=json_encode($charData);
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
@@ -320,7 +331,7 @@ class BattleController extends Controller
 		if($userExist<1){
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
-				$charData['x']=-1000;
+				$charData['x']=1000;
 				$charData['y']=-290;
 			}
 		}
