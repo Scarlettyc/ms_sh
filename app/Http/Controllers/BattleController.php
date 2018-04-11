@@ -246,7 +246,7 @@ class BattleController extends Controller
 		$map_id=$battleData['map_id'];
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
 		$enemy_clientId=$battleData['enmey_client'];
-		$charData=$this->mapingData($match_id,$u_id,1);
+		$charData=$this->mapingData($match_id,$u_id,1,$x,$y);
 		$charData['x']=$x;		
 		$charData['y']=$y;
 		$charData['time']=time();
@@ -276,7 +276,8 @@ class BattleController extends Controller
 			}
 		}
 
-		$enemyData=$this->mapingData($match_id,$enemy_uid,2);
+		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
+
 		if($clientId>$enemy_clientId){
 			$enemyData['x']=-($enemyData['x']);
 			$enemyData['direction']=-($enemyData['direction']);
@@ -289,10 +290,6 @@ class BattleController extends Controller
 			}
 		}
 	$result['user_data']=$charData;
-		if($clientId>$enemy_clientId){
-			$enemyData['x']=-($enemyData['x']);
-			$enemyData['direction']=-($enemyData['direction']);
-		}
 		$result['enemy_data']=$enemyData;
 		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
@@ -318,7 +315,7 @@ class BattleController extends Controller
 		return  $response;
 	}
 
-	private function mapingData($match_id,$u_id,$identity){
+	private function mapingData($match_id,$u_id,$identity,$x,$y){
 		$characterModel=new CharacterModel();
 		$redis_battle=Redis::connection('battle');
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
@@ -328,7 +325,7 @@ class BattleController extends Controller
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
 				$charData['x']=-1000;
-				$charData['y']=-2;
+				$charData['y']=-290;
 			}
 		}
 		else{
@@ -342,6 +339,10 @@ class BattleController extends Controller
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
+					if($identity==1){
+					$charData['x']=$x;
+					$charData['y']=$y;
+					}
 					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
 					}
