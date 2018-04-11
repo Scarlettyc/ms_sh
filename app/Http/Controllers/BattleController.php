@@ -284,7 +284,7 @@ class BattleController extends Controller
 		}else{
 			$enemyData['x']=-($enemyData['x']);
 			$enemyData['direction']=-($enemyData['direction']);
-			$charData['direction']=-($charData['x']);
+			$charData['x']=-($charData['x']);
 			$charData['direction']=-($charData['direction']);
 		}
 
@@ -331,7 +331,7 @@ class BattleController extends Controller
 		if($userExist<1){
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
-				$charData['x']=-1000;
+				$charData['x']=1000;
 				$charData['y']=-290;
 			}
 		}
