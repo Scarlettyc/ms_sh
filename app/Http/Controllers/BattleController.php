@@ -342,13 +342,13 @@ class BattleController extends Controller
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
-					if(array_key_exist('eff_list',$userData)){
+					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
 					}
-					if(array_key_exist('move',$userData)){
+					if(isset($userData['move'])){
 						$charData['move']=$userData['move'];
 					}
-					if(array_key_exist('direction',$userData)){
+					if(isset($userData['direction'])){
 						$charData['direction']=$userData['direction'];
 					}				
 				}
