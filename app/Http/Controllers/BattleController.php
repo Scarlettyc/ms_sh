@@ -304,10 +304,6 @@ class BattleController extends Controller
 		else {
 			$result['end']=0;
 		}
-		if($clientId>$enemy_clientId){
-			$charData['x']=-$charData['x'];
-			$charData['direction']=-$charData['direction'];
-		}
 		$charData['end']=$result['end'];
 		$charJson=json_encode($charData);
 		$redis_battle->LPUSH($battlekey,$charJson);
