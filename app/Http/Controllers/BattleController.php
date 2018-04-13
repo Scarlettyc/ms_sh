@@ -255,7 +255,7 @@ class BattleController extends Controller
 		$charData['direction']=1;
 		$charData['move']=$move;
 		$user_res=1;
-		$ch_lv=$charData['ch_lv'];
+
 		$ch_ranking=$charData['ch_ranking'];
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
@@ -298,6 +298,7 @@ class BattleController extends Controller
 		}
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemyData;
+		$ch_lv=$charData['ch_lv'];
 		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
@@ -333,7 +334,7 @@ class BattleController extends Controller
 			if($identity==2){
 				$charData['x']=-1000;
 				$charData['y']=-290;
-				$charData['direction']=-1;
+				$charData['direction']=1;
 			}
 		}
 		else{
