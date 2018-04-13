@@ -350,8 +350,8 @@ class BattleController extends Controller
 					$charData['x']=$x;
 					$charData['y']=$y;
 					}else{
-						$charData['x']=$userData['x'];
-						$charData['y']=$userData['y'];
+						$charData['x']=1000;
+						$charData['y']=-290;
 					}
 					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
