@@ -333,6 +333,7 @@ class BattleController extends Controller
 			if($identity==2){
 				$charData['x']=-1000;
 				$charData['y']=-290;
+				$charData['direction']=-1;
 			}
 		}
 		else{
