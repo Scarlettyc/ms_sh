@@ -353,17 +353,24 @@ class AttackHitUtil
   code edition from 2018.04.10
 */
   public function calculateCharValue($charData,$enemyData,$skillatkEff){
-  	if($enemyData['skill']['skill_group']==1){
-		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$user_res;
-		$enemyDMG=$enemy_atk*$critBool;
-		$hpMax=$charData['ch_hp_max']/(1-$user_def);
-		$charData['ch_hp_max']=round($hpMax-$enemyDMG);
-  	}
-  	else if ($enemyData['skill']['skill_group']==2){
-  		$enemy_atk=$enemyData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
- 	 	$enemyDMG=$enemy_atk*$critBool;
- 	 	$hpMax=$charData['ch_hp_max'];
-		$charData['ch_hp_max']=round($hpMax-$enemy_atk);
+  		$randCrit=rand(1,100);
+  		$critBool=1;
+		if($randCrit<=$enemyData['ch_crit']){
+		$critBool=2;
+		}
+		$user_def=($chardata['ch_armor']*1.1)/(15*$charData['ch_lv']+$chardata['ch_armor']+40);
+		$user_res=$chardata['ch_res'];
+  		if($enemyData['skill']['skill_group']==1){
+			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$user_res;
+			$enemyDMG=$enemy_atk*$critBool;
+			$hpMax=$charData['ch_hp_max']/(1-$user_def);
+			$charData['ch_hp_max']=round($hpMax-$enemyDMG);
+  		}
+  		else if ($enemyData['skill']['skill_group']==2){
+  			$enemy_atk=$enemyData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
+ 	 		$enemyDMG=$enemy_atk*$critBool;
+ 	 		$hpMax=$charData['ch_hp_max'];
+			$charData['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
   	return $charData;
 
