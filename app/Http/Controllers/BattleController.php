@@ -355,6 +355,11 @@ public function battleNew($data,$clientInfo){
 		$charData['move']=$move;
 		$user_res=1;
 }
+	private function checkNormalSkill($skill_id){
+		$characterModel=new CharacterModel();
+		$skillModel=new SkillMstModel();
+		$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
+	}
 
 	private function mapingData($match_id,$u_id,$identity,$x,$y){
 		$characterModel=new CharacterModel();
