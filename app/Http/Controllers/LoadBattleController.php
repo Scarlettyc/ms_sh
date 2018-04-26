@@ -16,6 +16,7 @@ use App\Util\MapTrapUtil;
 use Illuminate\Support\Facades\Redis;
 use DateTime;
 use Exception;
+use DB;
 // use App\Util\CharSkillEffUtil;
 class LoadBattleController extends Controller
 {
