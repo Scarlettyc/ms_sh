@@ -12,6 +12,7 @@ use Carbon\Carbon;
 use DateTime;
 use Illuminate\Support\Facades\Redis;
 use Log;
+use App\SkillEffDeatilModel;
 use App\SkillEffModel;
 use App\EffElementModel;
 
@@ -256,89 +257,108 @@ class AttackHitUtil
   			# code...
   		}
 	}
-
+/*2018.04.27 edition*/
 	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY){
 		$skillModel=new SkillMstModel();
+		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skill_id=$enemySkill['skill_id'];
 		$skill_group=$enemySkill['skill_group'];
 		$occur_time=$enemySkill['occur_time'];
-		$start_x=$enemySkill['start_x'];
-		$skillData=$skillModel->select('skill_id','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
-		$effData=$this->getEffValue($skillData['atk_eff_id'],1);
-		if($effData['eff_ch_direction']==1){
-			$x_from=$enemyX;
-			$x_to=$x+$effData['eff_skill_hit_length'];
-			$y_to=$enemyY+$effData['eff_y_adjust_top'];
-			$y_from=$enemyY+$effData['eff_y_adjust_bottom'];
+		$start_x=$enemySkill['x'];
+		$skill_damage=$enemySkill['skill_damage'];
+		$skill_prepare_time=$enemySkill['skill_prepare_time'];
+		$skill_atk_time=$enemySkill['skill_atk_time'];
+		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
+		$effs=$this->findEffFunciton($skillEffs);
+		if(isset($effs['TL_x'])){
+			$enemyX_from=$enemyX+$effs['TL_x'];
+			$enemyY_from=$enemyY+$effs['BR_y'];
+			$enemyX_to=$enemyX+$effs['BR_x'];
+			$enemyY_to=$enemyY+$effs['TL_y'];
 		}
-		else if($effData['eff_ch_direction']==2){
-			$x_from=$enemyX-$effData['eff_skill_hit_length']/2;
-			$x_to=$x+$effData['eff_skill_hit_length']/2;
-			$y_from=$enemyY+$effData['eff_y_adjust_top'];
-			$y_to=$enemyY+$effData['eff_y_adjust_bottom'];
-		}
-		else if($effData['eff_ch_direction']==3){
-			$x_from=$enemyX;
-			$x_to=$x+$effData['eff_skill_hit_length'];
-			$y_to=$enemyY+$effData['eff_y_adjust_top'];
-			$y_from=$enemyY+$effData['eff_y_adjust_bottom'];
+		if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
+			return true;
 		}
 
-		if($x>=$x_from&&$x<=$x_to&&$y>=$y_from&&$y>=$y_to){
-			return $skillData['atk_eff_id'];
-		}else{
-			return false;
-		}
 	}
-	public function getEffValue($eff_id,$type){
+	public function getEffValue($skill_id,$type){
   		$skillModel=new SkillMstModel();
   		$skillEffModel=new SkillEffModel();
-		$effElementModel=new EffElementModel();
-		$buffEffectionMst=new BuffEffectionMst();
-		if($type==1){
-			$skill_eff=$skillEffModel->where('eff_id',$eff_id)->get();
-			$result=$this->findEffFunciton($skill_eff);
-		}
-		else if($type==2){
-			$buffEffectionMst->where('eff_id',$eff_id)->get();
-			$result=$this->findEffFunciton($skill_eff);
-		}
+  		$SkillEffDeatilModel=new SkillEffDeatilModel();
+		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
+		$result=$this->findEffFunciton($skillEffs);
 		return $result;
   }
   private function findEffFunciton($skill_eff){
   	foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff['eff_element_id']) {
+  			case 1:
+  				$result['TL_x']=$each_eff['TL_x'];
+  				break;
+  			case 2:
+  				$result['TL_y']=$each_eff['TL_y'];
+  				break;
   			case 3:
-  				$result['eff_skill_hit_length']=$each_eff['eff_value'];
+  				$result['BR_x']=$each_eff['BR_x'];
   				break;
   			case 4:
-  				$result['eff_skill_hit_width']=$each_eff['eff_value'];
+  				$result['BR_y']=$each_eff['BR_y'];
   				break;
   			case 5:
-  				$result['eff_skill_damage_length']=$each_eff['eff_value'];
+  				$result['hit recover']=$each_eff['hit recover'];
   				break;
-  			case 6:
-  				$result['eff_skill_damage_width']=$each_eff['eff_value'];
+			case 6:
+  			$result['knockdown']=$each_eff['knockdown'];
   				break;
   			case 7:
-  				$result['eff_skill_atk_point']=$each_eff['eff_value'];
-  				break;
-			case 8:
-  			$result['eff_skill_damage_point']=$each_eff['eff_value'];
+  			$result['stun']=$each_eff['stun'];
+  			case 8:
+  			$result['execute']=$each_eff['execute'];
   				break;
   			case 9:
-  			$result['eff_skill_turn']=$each_eff['eff_value'];
+  			$result['snipe']=$each_eff['snipe'];
+  				break;
   			case 11:
-  			$result['eff_skill_move_distance']=$each_eff['eff_value'];
+  			$result['dash']=$each_eff['dash'];
   				break;
-  			case 42:
-  			$result['eff_skill_facing']=$each_eff['eff_value'];
+  			case 12:
+  			$result['immune control']=$each_eff['immune control'];
   				break;
-  			case 43:
-  			$result['eff_y_adjust_top']=$each_eff['eff_value'];
+  			case 13:
+  			$result['displacement']=$each_eff['displacement'];
   				break;
-  			case 44:
-  			$result['eff_y_adjust_bottom']=$each_eff['eff_value'];
+  			case 14:
+  			$result['spread']=$each_eff['spread'];
+  				break;
+  			case 15:
+  			$result['block']=$each_eff['block'];
+  				break;
+   			case 16:
+  			$result['damage reduction']=$each_eff['damage reduction'];
+  				break;
+  			case 17:
+  			$result['strike back']=$each_eff['strike back'];
+  				break;
+  			case 18:
+  			$result['crash']=$each_eff['crash'];
+  				break;
+  	  		case 18:
+  			$result['crash']=$each_eff['crash'];
+  				break;
+  			case 19:
+  			$result['shadowstep']=$each_eff['shadowstep'];
+  				break;
+  			case 20:
+  			$result['crit']=$each_eff['crit'];
+  				break;
+  			case 21:
+  			$result['omnislash']=$each_eff['omnislash'];
+  				break;
+  			case 22:
+  			$result['avatar']=$each_eff['avatar'];
+  				break;
+  			case 23:
+  			$result['eff_skill_atk_point']=$each_eff['eff_skill_atk_point'];
   				break;
   			default:
   				# code...

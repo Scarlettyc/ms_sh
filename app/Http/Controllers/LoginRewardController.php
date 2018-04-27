@@ -54,7 +54,6 @@ class LoginRewardController extends Controller
 			throw new Exception("there have some error of you access_token");
 		}
 
-
  	}
  	public function getToday(Request $request){
  		$req=$request->getContent();

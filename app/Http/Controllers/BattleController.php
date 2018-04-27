@@ -274,6 +274,7 @@ class BattleController extends Controller
 				}
 			}
 		}
+		$
 
 		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
 
@@ -330,8 +331,7 @@ public function battleNew($data,$clientInfo){
 		$x=$data['x'];
 		$y=$data['y'];
 		$u_id=$data['u_id'];
-		$move=$data['move'];//status of user run 2 or stand by 1
-
+		$status=$data['status'];//status of user in battle
 		$characterModel=new CharacterModel();
 		$skillModel=new SkillMstModel();
 		$attackhitutil=new AttackHitUtil();
@@ -352,13 +352,67 @@ public function battleNew($data,$clientInfo){
 		$charData['address']=$clientInfo['address'];
 		$charData['port']=$clientInfo['port'];
 		$charData['direction']=1;
-		$charData['move']=$move;
+		$charData['status']=$status;
 		$user_res=1;
+		if(isset($data['direction'])){
+			$charData['direction']=$data['direction'];
+		}
+		if(isset($data['skill_id'])){
+			$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
+			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
+			if($checkCD>0){
+				$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
+				if($possbileSkill){
+					$charData['skill']['skill_id']=$data['skill_id'];
+					$charData['skill']['skill_group']=$skill['skill_group'];
+					$charData['skill']['occur_time']=time();
+					$charData['skill']['start_x']=$x;
+					$charData['skill']['skill_damage']=$skill['skill_damage'];
+					$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
+					$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
+				}
+			}
+		}
+		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
+
+		if(isset($enemyData['skill'])){
+		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
+		if($hit){
+			$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
+			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
+			}
+		}
+
+
 }
-	private function checkNormalSkill($skill_id){
-		$characterModel=new CharacterModel();
-		$skillModel=new SkillMstModel();
-		$skillModel->select('skill_id','skill_group','skill_cd')->where('skill_id',$data['skill_id'])->first();
+	private function checkNormalSkill($skill_group,$skill_name,$skill_prepare_time,$skill_atk_time){
+		if($skill_group==1&&strpos($string,'b')){
+			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-a%')->first();
+			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$current=$this->getMillisecond();
+			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
+				return TRUE;
+			}
+			else{
+				return false;
+			}
+		}
+		else if($skill_group==1&&strpos($string,'c')){
+			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-b%')->first();
+			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$current=$this->getMillisecond();
+			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
+				return TRUE;
+			}
+			else{
+				return false;
+			}
+		}
+		else {
+			return TRUE;
+		}
 	}
 
 	private function mapingData($match_id,$u_id,$identity,$x,$y){
@@ -396,8 +450,8 @@ public function battleNew($data,$clientInfo){
 					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
 					}
-					if(isset($userData['move'])){
-						$charData['move']=$userData['move'];
+					if(isset($userData['status'])){
+						$charData['status']=$userData['status'];
 					}
 					if(isset($userData['direction'])){
 						$charData['direction']=$userData['direction'];
@@ -461,6 +515,7 @@ public function battleNew($data,$clientInfo){
 			$reward=json_encode($result,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
 
+
   }
 
   	public function battleResult(Request $request){
@@ -502,19 +557,19 @@ public function battleNew($data,$clientInfo){
 			if($skillTime){
 				if($current-$skillTime>=$skill_cd){
 				$redis_battle->HSET($skill_key,$skill_id,$current);
-				return true;
+				return $skillTime;
 				}
 			else {
-				return false;
+				return 0;
 				}
 			}
 			else {
 			$redis_battle->HSET($skill_key,$skill_id,$current);
-			return true;
+			return 1;
 			}
 		}
 		else {
-			return true;
+			return 1;
 		}
 	}
 	private function getCritical(){
