@@ -420,7 +420,7 @@ public function battleNew($data,$clientInfo){
 
 }
 	private function checkNormalSkill($skill_group,$skill_name,$skill_prepare_time,$skill_atk_time){
-		if($skill_group==1&&strpos($string,'b')){
+		if($skill_group==1&&strpos($skill_name,'b')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-a%')->first();
 			$skill_key='skill_'.$match_id.'_'.$u_id;
 			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
@@ -432,7 +432,7 @@ public function battleNew($data,$clientInfo){
 				return false;
 			}
 		}
-		else if($skill_group==1&&strpos($string,'c')){
+		else if($skill_group==1&&strpos($skill_name,'c')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-b%')->first();
 			$skill_key='skill_'.$match_id.'_'.$u_id;
 			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
