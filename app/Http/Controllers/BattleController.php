@@ -382,6 +382,32 @@ public function battleNew($data,$clientInfo){
 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
 			}
 		}
+		$result['user_data']=$charData;
+		$result['enemy_data']=$enemyData;
+		$ch_lv=$charData['ch_lv'];
+		$ch_ranking=$charData['ch_ranking'];
+		 if($enemyData['ch_hp_max']<0){
+			$result['end']=2;
+			$win=1;
+			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
+		}
+		else if($charData['ch_hp_max']<=0){
+			$result['end']=1;
+			$win=0;
+			$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
+		}
+		else {
+			$result['end']=0;
+		}
+		$charData['end']=$result['end'];
+		if($clientId>$enemy_clientId){
+			$charData['x']=-($charData['x']);
+			$charData['direction']=-($charData['direction']);
+		}
+		$charJson=json_encode($charData);
+		$redis_battle->LPUSH($battlekey,$charJson);
+		$response=json_encode($result,TRUE);
+		return  $response;
 
 
 }
