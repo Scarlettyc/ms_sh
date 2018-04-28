@@ -469,7 +469,7 @@ public function battleNew($data,$clientInfo){
 					$charData['ch_atk']=$userData['ch_atk'];
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
-					$charData['charData['ch_lv']']=$userData['charData['ch_lv']'];
+					$charData['ch_lv']=$userData['ch_lv'];
 					if($identity==1){
 					$charData['x']=$x;
 					$charData['y']=$y;
