@@ -126,7 +126,6 @@ class LoadBattleController extends Controller
 
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
-        $SkillEffDeatilModel=new SkillEffDeatilModel();
         $result=[];
         foreach ($skill as $key => $each) {
            $effs= $attackHitUtil->getEffValue($each['skill_id']);
