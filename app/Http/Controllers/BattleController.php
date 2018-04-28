@@ -58,7 +58,7 @@ class BattleController extends Controller
 		
 	// 		$charData=[];
 	// 		if($userExist<1){
-	// 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
+	// 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','charData['ch_lv']','ch_ranking')->where('u_id',$u_id)->first();
 	// 		}
 	// 		else{
 	// 			$userJson=$redis_battle->LRANGE($battlekey,0,0);
@@ -70,7 +70,7 @@ class BattleController extends Controller
 	// 				$charData['ch_atk']=$userData['ch_atk'];
 	// 				$charData['ch_crit']=$userData['ch_crit'];
 	// 				$charData['ch_armor']=$userData['ch_armor'];
-	// 				$charData['ch_lv']=$userData['ch_lv'];
+	// 				$charData['charData['ch_lv']']=$userData['charData['ch_lv']'];
 	// 				$skill=$each['skill'];
 
 	// 				if(isset($each['constant_eff'])){
@@ -83,7 +83,7 @@ class BattleController extends Controller
 	// 								}
 	// 								$charData['constant_eff'][]=$check;
 	// 								}							}
-	// 				$charData['ch_lv']=$userData['ch_lv'];
+	// 				$charData['charData['ch_lv']']=$userData['charData['ch_lv']'];
 	// 				$charData['ch_ranking']=$userData['ch_ranking'];
 	// 			}
 		
@@ -98,8 +98,8 @@ class BattleController extends Controller
 	// 	$charData['direction']=1;
 	// 	$charData['move']=$move;
 	// 	$user_res=1;
-	// 	$ch_lv=$charData['ch_lv'];
-	// 	$ch_ranking=$charData['ch_ranking'];
+	// 	$charData['ch_lv']=$charData['charData['ch_lv']'];
+	// 	$charData['ch_ranking']=$charData['ch_ranking'];
 	// 	if(isset($data['direction'])){
 	// 		$charData['direction']=$data['direction'];
 	// 	}
@@ -165,7 +165,7 @@ class BattleController extends Controller
 	// 							}else{
 	// 								$critBool=1;
 	// 						}
-	// 						$user_def=($chardata['ch_armor']*1.1)/(15*$charData['ch_lv']+$chardata['ch_armor']+40);
+	// 						$user_def=($chardata['ch_armor']*1.1)/(15*$charData['charData['ch_lv']']+$chardata['ch_armor']+40);
 
 	// 						if(isset($buffResult['eff_ch_res_per'])){
 	// 							$user_res=$buffResult['eff_ch_res_per'];
@@ -178,7 +178,7 @@ class BattleController extends Controller
  // 	 						}
 
  // 	 						else if($enemy_charData['skill_group']==2){
- // 	 							$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
+ // 	 							$enemy_atk=$enemy_charData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['charData['ch_lv']'],2)*2;
  // 	 							$enemyDMG=$enemy_atk*$critBool;
  // 	 							$hpMax=$charData['ch_hp_max'];
 	// 							$charData['ch_hp_max']=round($hpMax-$enemy_atk);
@@ -200,12 +200,12 @@ class BattleController extends Controller
 	// 	 if($enemy_charData['ch_hp_max']<0){
 	// 		$result['end']=2;
 	// 		$win=1;
-	// 		$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
+	// 		$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 	// 	}
 	// 	else if($charData['ch_hp_max']<=0){
 	// 		$result['end']=1;
 	// 		$win=0;
-	// 		$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
+	// 		$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 	// 	}
 	// 	else {
 	// 		$result['end']=0;
@@ -296,17 +296,17 @@ class BattleController extends Controller
 		}
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemyData;
-		$ch_lv=$charData['ch_lv'];
-		$ch_ranking=$charData['ch_ranking'];
+		$charData['ch_lv']=$charData['charData['ch_lv']'];
+		$charData['ch_ranking']=$charData['ch_ranking'];
 		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
-			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
+			$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
 			$win=0;
-			$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
+			$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 		}
 		else {
 			$result['end']=0;
@@ -392,17 +392,15 @@ public function battleNew($data,$clientInfo){
 		}
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemyData;
-		$ch_lv=$charData['ch_lv'];
-		$ch_ranking=$charData['ch_ranking'];
 		 if($enemyData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
-			$this->BattleRewards($u_id,$map_id,$win,$match_id,$ch_lv);
+			$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 		}
 		else if($charData['ch_hp_max']<=0){
 			$result['end']=1;
 			$win=0;
-			$this->BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking);
+			$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 		}
 		else {
 			$result['end']=0;
@@ -456,7 +454,7 @@ public function battleNew($data,$clientInfo){
 		$userExist=$redis_battle->LLEN($battlekey);
 		$charData=[];
 		if($userExist<1){
-			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
+			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','charData['ch_lv']','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
 				$charData['x']=-1000;
 				$charData['y']=-290;
@@ -473,7 +471,7 @@ public function battleNew($data,$clientInfo){
 					$charData['ch_atk']=$userData['ch_atk'];
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
-					$charData['ch_lv']=$userData['ch_lv'];
+					$charData['charData['ch_lv']']=$userData['charData['ch_lv']'];
 					if($identity==1){
 					$charData['x']=$x;
 					$charData['y']=$y;
@@ -500,7 +498,7 @@ public function battleNew($data,$clientInfo){
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
-  private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
+  private function BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']){
 		  	$baNorReward=new BattleNormalRewardsMst();
 		  	$baSpReward=new BattleSpRewardsMst();
 		  	$battleRewardExpModel=new BattleRewardExpModel();
@@ -512,19 +510,19 @@ public function battleNew($data,$clientInfo){
 			$defindData=$defindModel->where('defind_id',27)->first();
 		  	$datetime=$now->format('Y-m-d h:m:s');
 			$redis_battle=Redis::connection('battle');
-			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$ch_lv)->where('win',$win)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
+			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$charData['ch_lv'])->where('win',$win)->where('ranking',$charData['ch_ranking'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
 			$loots_normal=$battle_reward['loots_normal'];
 			$loots_special=$battle_reward['loots_special'];
 			$rewards=[];
 			$result=[];
 			for($i=0;$i<$loots_normal;$i++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$norReward=$baNorReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$norReward=$baNorReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$charData['ch_ranking'])->where('lv',$charData['ch_lv'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['normarl'][]=$norReward;
 			}
 			for($j=0;$j<$loots_special;$j++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$charData['ch_ranking'])->where('lv',$charData['ch_lv'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['special'][]=$spReward;
 			}
 
@@ -538,7 +536,7 @@ public function battleNew($data,$clientInfo){
 			if($battle_reward['exp']>0){
 				$LevelUP=$chaEffutil->levelUP($u_id,$battle_reward['exp']);
 				$result['exp_reward']=$battle_reward['exp'];
-				$result['lv_before']=$ch_lv;
+				$result['lv_before']=$charData['ch_lv'];
 				$result['levelUP']=$LevelUP['levelup'];
 				$result['lv']=$LevelUP['lv'];
 			}else{
