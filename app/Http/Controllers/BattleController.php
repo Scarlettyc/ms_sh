@@ -496,7 +496,7 @@ public function battleNew($data,$clientInfo){
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
-  private function BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']){
+  private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
 		  	$baNorReward=new BattleNormalRewardsMst();
 		  	$baSpReward=new BattleSpRewardsMst();
 		  	$battleRewardExpModel=new BattleRewardExpModel();
@@ -508,19 +508,19 @@ public function battleNew($data,$clientInfo){
 			$defindData=$defindModel->where('defind_id',27)->first();
 		  	$datetime=$now->format('Y-m-d h:m:s');
 			$redis_battle=Redis::connection('battle');
-			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$charData['ch_lv'])->where('win',$win)->where('ranking',$charData['ch_ranking'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
+			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$ch_lv)->where('win',$win)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
 			$loots_normal=$battle_reward['loots_normal'];
 			$loots_special=$battle_reward['loots_special'];
 			$rewards=[];
 			$result=[];
 			for($i=0;$i<$loots_normal;$i++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$norReward=$baNorReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$charData['ch_ranking'])->where('lv',$charData['ch_lv'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$norReward=$baNorReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['normarl'][]=$norReward;
 			}
 			for($j=0;$j<$loots_special;$j++){
 				$rate=rand($defindData['value1'], $defindData['value2']);
-		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$charData['ch_ranking'])->where('lv',$charData['ch_lv'])->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
+		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['special'][]=$spReward;
 			}
 
