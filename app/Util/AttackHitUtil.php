@@ -281,7 +281,7 @@ class AttackHitUtil
 		}
 
 	}
-	public function getEffValue($skill_id,$type){
+	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
   		$skillEffModel=new SkillEffModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();

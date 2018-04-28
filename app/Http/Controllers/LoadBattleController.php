@@ -14,6 +14,8 @@ use App\SkillMstModel;
 use App\UserBaggageEqModel;
 use App\Util\MapTrapUtil;
 use Illuminate\Support\Facades\Redis;
+use App\SkillEffDeatilModel;
+use App\Util\AttackHitUtil;
 use DateTime;
 use Exception;
 use DB;
@@ -83,7 +85,10 @@ class LoadBattleController extends Controller
         $result['special_skill']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
         $result['core_skill']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
          $result['movement_skill']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
- 	    
+ 	    $result['normal_skill_effs']=$this->getEffs($result['normal_skills']);
+        $result['special_skill_effs']=$this->getEffs($result['special_skill']);
+        $result['core_skill_effs']=$this->getEffs($result['core_skill']);
+        $result['movement_skill_effs']=$this->getEffs($result['movement_skill']);
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
@@ -117,6 +122,17 @@ class LoadBattleController extends Controller
             }
             
         }
+    }
+
+    private function getEffs($skill){
+        $attackHitUtil=new AttackHitUtil();
+        $SkillEffDeatilModel=new SkillEffDeatilModel();
+        $result=[];
+        foreach ($skill as $key => $each) {
+           $effs= $attackHitUtil->getEffValue($each['skill_id']);
+           $result[]=$effs;
+        }
+        return $result;
     }
 
 }

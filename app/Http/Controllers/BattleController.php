@@ -290,7 +290,7 @@ class BattleController extends Controller
 		if(isset($enemyData['skill'])){
 		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
 		if($hit){
-			$skillatkEff=$attackhitutil->getEffValue($hit,1);
+			$skillatkEff=$attackhitutil->getEffValue($hit);
 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
 			}
 		}
