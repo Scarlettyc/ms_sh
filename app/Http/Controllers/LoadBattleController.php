@@ -80,7 +80,7 @@ class LoadBattleController extends Controller
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
         $result['normal_skills']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
-        $result['special_skills']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
+        $result['special_skill']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
         $result['core_skill']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
          $result['movement_skill']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
  	    
