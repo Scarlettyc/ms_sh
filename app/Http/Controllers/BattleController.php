@@ -373,6 +373,16 @@ public function battleNew($data,$clientInfo){
 		}
 		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
 
+		if($clientId<$enemy_clientId){
+			$enemyData['x']=-($enemyData['x']);
+			$enemyData['direction']=-($enemyData['direction']);
+		}else{
+			$enemyData['x']=-($enemyData['x']);
+			$enemyData['direction']=-($enemyData['direction']);
+			$charData['x']=-($charData['x']);
+			$charData['direction']=-($charData['direction']);
+		}
+
 		if(isset($enemyData['skill'])){
 		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
 		if($hit){
