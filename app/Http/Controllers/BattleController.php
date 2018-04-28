@@ -637,7 +637,7 @@ public function battleNew($data,$clientInfo){
 		$u_id=$data['u_id'];
 
 		$charData=$characterModel->where('u_id',$u_id)->first();
-		$result=$this->battleTest($data,$clientInfo);
+		$result=$this->battleNew($data,$clientInfo);
 		var_dump($result);
  	 }
 
