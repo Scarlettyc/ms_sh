@@ -13,7 +13,6 @@ use DateTime;
 use Illuminate\Support\Facades\Redis;
 use Log;
 use App\SkillEffDeatilModel;
-use App\SkillEffModel;
 use App\EffElementModel;
 
 
@@ -238,16 +237,16 @@ class AttackHitUtil
     	return ['interrput'=>$interrput,'end'=>$end];
     } 
 
-  private function getEffElement($skill_id){
-  	$skillModel=new SkillMstModel();
-  	$skillEffModel=new SkillEffModel();
-	$effElementModel=new EffElementModel();
-	$buffEffectionMst=new BuffEffectionMst();
-	$skillData=$skillModel->select('skill_id','self_buff_eff_id','buff_constant_time','enemy_buff_eff_id','enemy_buff_constant_time','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
-	$effData=$skillEffModel->select('eff_id','eff_element_id','eff_value','eff_type')->wherein('eff_id',[$skillData['atk_eff_id'],$skillData['self_buff_eff_id'],$skillData['enemy_buff_eff_id']])->get();
-	return $effData;
+ //  private function getEffElement($skill_id){
+ //  	$skillModel=new SkillMstModel();
+ //  	$skillEffModel=new SkillEffModel();
+	// $effElementModel=new EffElementModel();
+	// $buffEffectionMst=new BuffEffectionMst();
+	// $skillData=$skillModel->select('skill_id','self_buff_eff_id','buff_constant_time','enemy_buff_eff_id','enemy_buff_constant_time','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
+	// $effData=$skillEffModel->select('eff_id','eff_element_id','eff_value','eff_type')->wherein('eff_id',[$skillData['atk_eff_id'],$skillData['self_buff_eff_id'],$skillData['enemy_buff_eff_id']])->get();
+	// return $effData;
 
-  }
+ //  }
 /*
   code edition from 2018.04.09
 */
@@ -283,7 +282,6 @@ class AttackHitUtil
 	}
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
-  		$skillEffModel=new SkillEffModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$result=$this->findEffFunciton($skillEffs);
