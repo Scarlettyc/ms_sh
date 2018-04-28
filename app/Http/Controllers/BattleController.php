@@ -274,8 +274,6 @@ class BattleController extends Controller
 				}
 			}
 		}
-		$
-
 		$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);
 
 		if($clientId<$enemy_clientId){
