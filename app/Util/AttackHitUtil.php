@@ -295,7 +295,7 @@ class AttackHitUtil
   				$result['TL_x']=$each_eff->eff_value;
   				break;
   			case 2:
-  				$result['TL_y']=$each_eff[->eff_value;
+  				$result['TL_y']=$each_eff->eff_value;
   				break;
   			case 3:
   				$result['BR_x']=$each_eff->eff_value;
