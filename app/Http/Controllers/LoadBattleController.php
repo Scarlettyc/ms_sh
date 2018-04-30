@@ -123,8 +123,7 @@ class LoadBattleController extends Controller
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);
              return  base64_encode($response);
-            }
-            
+            } 
         }
     }
 
