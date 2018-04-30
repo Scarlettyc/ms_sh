@@ -284,80 +284,77 @@ class AttackHitUtil
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
-		var_dump($skillEffs);
 		$result=$this->findEffFunciton($skillEffs);
+		var_dump($result);
 		return $result;
   }
   private function findEffFunciton($skill_eff){
   	foreach ($skill_eff as $key => $each_eff) {
-  		switch ($each_eff['eff_element_id']) {
+  		switch ($each_eff->eff_element_id) {
   			case 1:
-  				$result['TL_x']=$each_eff['TL_x'];
+  				$result['TL_x']=$each_eff->eff_value;
   				break;
   			case 2:
-  				$result['TL_y']=$each_eff['TL_y'];
+  				$result['TL_y']=$each_eff[->eff_value;
   				break;
   			case 3:
-  				$result['BR_x']=$each_eff['BR_x'];
+  				$result['BR_x']=$each_eff->eff_value;
   				break;
   			case 4:
-  				$result['BR_y']=$each_eff['BR_y'];
+  				$result['BR_y']=$each_eff->eff_value;
   				break;
   			case 5:
-  				$result['hit recover']=$each_eff['hit recover'];
+  				$result['hit recover']=$each_eff->eff_values;
   				break;
 			case 6:
-  			$result['knockdown']=$each_eff['knockdown'];
+  			$result['knockdown']=$each_eff->eff_value;
   				break;
   			case 7:
-  			$result['stun']=$each_eff['stun'];
+  			$result['stun']=$each_eff->eff_value;
   			case 8:
-  			$result['execute']=$each_eff['execute'];
+  			$result['execute']=$each_eff->eff_value;
   				break;
   			case 9:
-  			$result['snipe']=$each_eff['snipe'];
+  			$result['snipe']=$each_eff->eff_value;
   				break;
   			case 11:
-  			$result['dash']=$each_eff['dash'];
+  			$result['dash']=$each_eff->eff_value;
   				break;
   			case 12:
-  			$result['immune control']=$each_eff['immune control'];
+  			$result['immune control']=$each_eff->eff_value;
   				break;
   			case 13:
-  			$result['displacement']=$each_eff['displacement'];
+  			$result['displacement']=$each_eff->eff_value;
   				break;
   			case 14:
-  			$result['spread']=$each_eff['spread'];
+  			$result['spread']=$each_eff->eff_value;
   				break;
   			case 15:
-  			$result['block']=$each_eff['block'];
+  			$result['block']=$each_eff->eff_value;
   				break;
    			case 16:
-  			$result['damage reduction']=$each_eff['damage reduction'];
+  			$result['damage reduction']=$each_eff->eff_value;
   				break;
   			case 17:
-  			$result['strike back']=$each_eff['strike back'];
+  			$result['strike back']=$each_eff->eff_value;
   				break;
   			case 18:
-  			$result['crash']=$each_eff['crash'];
-  				break;
-  	  		case 18:
-  			$result['crash']=$each_eff['crash'];
+  			$result['crash']=$each_eff->eff_value;
   				break;
   			case 19:
-  			$result['shadowstep']=$each_eff['shadowstep'];
+  			$result['shadowstep']=$each_eff->eff_value;
   				break;
   			case 20:
-  			$result['crit']=$each_eff['crit'];
+  			$result['crit']=$each_eff->eff_value;
   				break;
   			case 21:
-  			$result['omnislash']=$each_eff['omnislash'];
+  			$result['omnislash']=$each_eff->eff_value;
   				break;
   			case 22:
-  			$result['avatar']=$each_eff['avatar'];
+  			$result['avatar']=$each_eff->eff_value;
   				break;
   			case 23:
-  			$result['eff_skill_atk_point']=$each_eff['eff_skill_atk_point'];
+  			$result['eff_skill_atk_point']=$each_eff->eff_value;
   				break;
   			default:
   				# code...
