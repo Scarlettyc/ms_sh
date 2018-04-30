@@ -285,11 +285,12 @@ class AttackHitUtil
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$result=$this->findEffFunciton($skillEffs);
-		var_dump($result);
 		return $result;
   }
   private function findEffFunciton($skill_eff){
   	foreach ($skill_eff as $key => $each_eff) {
+  		echo $each_eff->eff_element_id;
+		echo "  ";
   		switch ($each_eff->eff_element_id) {
   			case 1:
   				$result['TL_x']=$each_eff->eff_value;
