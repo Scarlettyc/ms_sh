@@ -284,6 +284,7 @@ class AttackHitUtil
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
+		var_dump($skillEffs);
 		$result=$this->findEffFunciton($skillEffs);
 		return $result;
   }
