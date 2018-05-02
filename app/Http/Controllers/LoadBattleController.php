@@ -86,8 +86,8 @@ class LoadBattleController extends Controller
         $core_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
         $movement_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
          foreach ($normal_skills as $key =>$eachSkill){
-            $tmp=$eachSkill;
-            $tmp=$this->getEffs($eachSkill);
+            $tmp[]=$this->getEffs($eachSkill);
+            $eachSkill['skill_effs']=$tmp;
             $result['normal_skills'][]=$tmp;
          }
         $special_effs=$this->getEffs($special_skill);
@@ -136,7 +136,7 @@ class LoadBattleController extends Controller
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-        $effs['skill_effs']= $attackHitUtil->getEffValue($skill->skill_id);
+        $effs= $attackHitUtil->getEffValue($skill->skill_id);
         return $effs;
     }
 }
