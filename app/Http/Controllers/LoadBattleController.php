@@ -89,7 +89,7 @@ class LoadBattleController extends Controller
          foreach ($normal_skills as $key =>$eachSkill){
             $tmp[]=$eachSkill;
             $tmp['skill_effs']=$this->getEffs($eachSkill);
-            $normal[]=$array;
+            $normal[]=$tmp;
          }
         $result['normal_skills']=$normal;
         $special_effs=$this->getEffs($special_skill);
