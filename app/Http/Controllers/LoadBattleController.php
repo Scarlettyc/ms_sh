@@ -97,7 +97,7 @@ class LoadBattleController extends Controller
         $move_effs=$this->getEffs($movement_skill);
         $special_skill['skill_effs']=$move_effs;
         $result['special_skill']=$special_skill;
-        $core_skill['skill_effs']=$move_effs
+        $core_skill['skill_effs']=$move_effs;
         $result['core_skill']=$core_skill;
         $movement_skill['skill_effs']=$move_effs; 
         $result['movement_skill'=$movement_skill;
