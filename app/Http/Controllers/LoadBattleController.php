@@ -81,18 +81,23 @@ class LoadBattleController extends Controller
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
-        $result['normal_skills']['skill_info']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
-        $result['special_skill']['skill_info']=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
-        $result['core_skill']['skill_info']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
-         $result['movement_skill']['skill_info']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
-
-         foreach ($result['normal_skills']['skill_info'] as $key =>$each) {
-            $result['normal_skills']['normal_skill_effs'][]=$this->getEffs($each);
+        $normal_skills=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
+        $special_skill=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
+        $core_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
+        $movement_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
+        $normal=[];
+         foreach ($normal_skills as $key =>$eachSkill){
+            $tmp['skill_effs']=$this->getEffs($each);
+            $array=array_merge($each,$tmp);
+            $normal[]=$array;
          }
- 
-        $result['special_skill']['special_skill_effs']=$this->getEffs($result['special_skill']['skill_info']);
-        $result['core_skill']['core_skill_effs']=$this->getEffs($result['core_skill']['skill_info']);
-        $result['movement_skill']['movement_skill_effs']=$this->getEffs($result['movement_skill']['skill_info']);
+        $result['normal_skills']=$normal;
+        $special['skill_effs']=$this->getEffs($special_skill);
+        $core['skill_effs']=$this->getEffs($core_skill);
+        $move['skill_effs']=$this->getEffs($movement_skill);
+        $result['special_skill']=array_merge($special_skill,$special['skill_effs']);
+        $result['core_skill']=array_merge($core_skill,$core['skill_effs']);
+        $result['movement_skill']=array_merge($movement_skill,$move['skill_effs']);
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
