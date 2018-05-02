@@ -86,13 +86,13 @@ class LoadBattleController extends Controller
         $result['core_skill']['skill_info']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
          $result['movement_skill']['skill_info']=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
 
-         foreach ($result['normal_skills'] as $key =>$each) {
+         foreach ($result['normal_skills']['skill_info'] as $key =>$each) {
             $$result['normal_skills']['normal_skill_effs'][]=$this->getEffs($each);
          }
  
-        $result['special_skill']['special_skill_effs']=$this->getEffs($result['special_skill']);
-        $result['core_skill']['core_skill_effs']=$this->getEffs($result['core_skill']);
-        $result['movement_skill']['movement_skill_effs']=$this->getEffs($result['movement_skill']);
+        $result['special_skill']['special_skill_effs']=$this->getEffs($result['special_skill']['skill_info']);
+        $result['core_skill']['core_skill_effs']=$this->getEffs($result['core_skill']['skill_info']);
+        $result['movement_skill']['movement_skill_effs']=$this->getEffs($result['movement_skill']['skill_info']);
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
@@ -130,7 +130,7 @@ class LoadBattleController extends Controller
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-        $effs= $attackHitUtil->getEffValue($skill['skill_id']);
+        $effs= $attackHitUtil->getEffValue($skill->skill_id);
         return $effs;
     }
 }
