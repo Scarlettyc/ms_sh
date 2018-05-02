@@ -96,7 +96,7 @@ class LoadBattleController extends Controller
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
- 	     }
+ 	  }
 
     public function loadMap(Request $request){
         $req=$request->getContent();
@@ -130,8 +130,7 @@ class LoadBattleController extends Controller
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-           $effs= $attackHitUtil->getEffValue($skill->skill_id);
+        $effs= $attackHitUtil->getEffValue($skill->skill_id);
         return $effs;
     }
-
 }
