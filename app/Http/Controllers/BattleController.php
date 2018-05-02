@@ -413,7 +413,6 @@ public function battleNew($data,$clientInfo){
 		$response=json_encode($result,TRUE);
 		return  $response;
 
-
 }
 	private function checkNormalSkill($skill_group,$skill_name,$skill_prepare_time,$skill_atk_time){
 		if($skill_group==1&&strpos($skill_name,'b')){
