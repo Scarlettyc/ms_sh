@@ -283,7 +283,7 @@ class AttackHitUtil
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
-		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
+		$skillEffs=$SkillEffDeatilModel->select('eff_element_id','eff_value','eff_type')->where('skill_id',$skill_id)->get();
 		// $result=$this->findEffFunciton($skillEffs);
 		return $skillEffs;
   }
