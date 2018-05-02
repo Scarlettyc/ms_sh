@@ -86,9 +86,9 @@ class LoadBattleController extends Controller
         $core_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
         $movement_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
          foreach ($normal_skills as $key =>$eachSkill){
-            //$tmp=$eachSkill;
-            $eachSkill['skill_effs']=$this->getEffs($eachSkill);
-            $result['normal_skills'][]=$eachSkill;
+            $tmp['skills']=$eachSkill;
+            $tmp['skill_effs']=$this->getEffs($eachSkill);
+            $result['normal_skills'][]=$tmp;
          }
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
