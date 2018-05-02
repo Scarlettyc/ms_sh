@@ -100,7 +100,7 @@ class LoadBattleController extends Controller
         $core_skill['skill_effs']=$move_effs;
         $result['core_skill']=$core_skill;
         $movement_skill['skill_effs']=$move_effs; 
-        $result['movement_skill'=$movement_skill;
+        $result['movement_skill']=$movement_skill;
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
  	    return $final;
