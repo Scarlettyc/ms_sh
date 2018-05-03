@@ -414,6 +414,7 @@ public function battleNew($data,$clientInfo){
 			$charData['x']=-($charData['x']);
 			$charData['direction']=-($charData['direction']);
 		}
+
 		$charJson=json_encode($charData);
 		$redis_battle->LPUSH($battlekey,$charJson);
 		$response=json_encode($result,TRUE);
@@ -482,6 +483,8 @@ public function battleNew($data,$clientInfo){
 					}else{
 						$charData['x']=$userData['x'];
 						$charData['y']=$userData['y'];
+						$charData['x2']=$userData['x'];
+						$charData['y2']=$userData['y2'];
 					}
 					if(isset($userData['eff_list'])){
 						$charData['eff_list']=$userData['eff_list'];
