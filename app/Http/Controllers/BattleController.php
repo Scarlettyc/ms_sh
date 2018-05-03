@@ -451,7 +451,7 @@ public function battleNew($data,$clientInfo){
 		$userExist=$redis_battle->LLEN($battlekey);
 		$charData=[];
 		if($userExist<1){
-			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit',$charData['ch_lv'],$charData['ch_ranking'])->where('u_id',$u_id)->first();
+			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
 				$charData['x']=-1000;
 				$charData['y']=-290;
