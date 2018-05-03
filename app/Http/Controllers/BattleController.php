@@ -401,7 +401,7 @@ public function battleNew($data,$clientInfo){
 			$win=1;
 			$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 		}
-		else if($charData['ch_hp_max']<=0){
+		else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
 			$result['end']=1;
 			$win=0;
 			$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
