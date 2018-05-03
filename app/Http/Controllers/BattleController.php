@@ -230,6 +230,8 @@ class BattleController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
 		$y=$data['y'];
+		$x2=$data['x2'];
+		$y2=$data['y2'];
 		$u_id=$data['u_id'];
 		$move=$data['move'];//status of user run 2 or stand by 1
 
@@ -326,6 +328,8 @@ public function battleNew($data,$clientInfo){
 		$dmy=$now->format( 'Ymd' );
 		$x=$data['x'];
 		$y=$data['y'];
+		$x2=$data['x2'];
+		$y2=$data['y2'];
 		$u_id=$data['u_id'];
 		$status=$data['status'];//status of user in battle
 		$characterModel=new CharacterModel();
@@ -349,6 +353,8 @@ public function battleNew($data,$clientInfo){
 		$charData['port']=$clientInfo['port'];
 		$charData['direction']=1;
 		$charData['status']=$status;
+		$charData['x2']=$data['x2'];
+		$charData['y2']=$data['y2'];
 		$user_res=1;
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
@@ -390,7 +396,7 @@ public function battleNew($data,$clientInfo){
 		}
 		$result['user_data']=$charData;
 		$result['enemy_data']=$enemyData;
-		 if($enemyData['ch_hp_max']<0){
+		 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<0){
 			$result['end']=2;
 			$win=1;
 			$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
@@ -415,6 +421,7 @@ public function battleNew($data,$clientInfo){
 
 }
 	private function checkNormalSkill($skill_group,$skill_name,$skill_prepare_time,$skill_atk_time){
+		$skillModel=new SkillMstModel();
 		if($skill_group==1&&strpos($skill_name,'b')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-a%')->first();
 			$skill_key='skill_'.$match_id.'_'.$u_id;
