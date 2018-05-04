@@ -174,9 +174,9 @@ public function battleNew($data,$clientInfo){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
-				// if($checkCD>0){
+				if($checkCD>0){
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
-					// if($possbileSkill){
+					if($possbileSkill){
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['occur_time']=time();
@@ -184,8 +184,8 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
-					// }
-				// }
+					}
+				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
 
