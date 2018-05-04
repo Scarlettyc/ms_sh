@@ -279,9 +279,9 @@ public function battleNew($data,$clientInfo){
 		if($userExist<1){
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
-				$charData['x']=1000;
+				$charData['x']=-1000;
 				$charData['y']=-290;
-				$charData['x2']=1000;
+				$charData['x2']=-1000;
 				$charData['y2']=-290;
 				$charData['direction']=1;
 			}
