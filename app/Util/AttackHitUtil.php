@@ -269,12 +269,13 @@ class AttackHitUtil
 		$skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
-		Log::info($effs);
+
 		if(isset($effs['TL_x'])){
 			$enemyX_from=$enemyX+$effs['TL_x'];
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			$enemyX_to=$enemyX+$effs['BR_x'];
 			$enemyY_to=$enemyY+$effs['TL_y'];
+			Log::info($enemyX_from.' '.$enemyY_from.' '.$enemyX_to.' '.$enemyY_to);
 		}
 
 		if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
