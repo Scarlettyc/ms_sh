@@ -356,11 +356,12 @@ public function battleNew($data,$clientInfo){
 		$charData['x2']=$data['x2'];
 		$charData['y2']=$data['y2'];
 		$user_res=1;
-		Log::info($data);
+
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
 		}
 		if(isset($data['skill_id'])){
+			Log::info($data['skill_id']);
 			$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 			$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 			if($checkCD>0){
