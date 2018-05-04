@@ -356,6 +356,7 @@ public function battleNew($data,$clientInfo){
 		$charData['x2']=$data['x2'];
 		$charData['y2']=$data['y2'];
 		$user_res=1;
+		Log::info($data);
 		if(isset($data['direction'])){
 			$charData['direction']=$data['direction'];
 		}
@@ -389,7 +390,7 @@ public function battleNew($data,$clientInfo){
 			$charData['x2']=-($charData['x2']);
 			$charData['direction']=-($charData['direction']);
 		}
-		Log::info($enemyData);
+		
 		if(isset($enemyData['skill'])){
 		$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
 		if($hit){
