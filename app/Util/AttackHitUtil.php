@@ -257,7 +257,7 @@ class AttackHitUtil
   		}
 	}
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skill_id=$enemySkill['skill_id'];
@@ -269,13 +269,15 @@ class AttackHitUtil
 		$skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
+		Log::info($effs);
 		if(isset($effs['TL_x'])){
 			$enemyX_from=$enemyX+$effs['TL_x'];
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			$enemyX_to=$enemyX+$effs['BR_x'];
 			$enemyY_to=$enemyY+$effs['TL_y'];
 		}
-		if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
+
+		if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
 			return true;
 		}
 

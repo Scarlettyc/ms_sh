@@ -206,7 +206,7 @@ public function battleNew($data,$clientInfo){
 		    }
 
 			if(isset($enemyData['skill'])){
-			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
+			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction']);
 			if($hit){
 				$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
@@ -236,7 +236,6 @@ public function battleNew($data,$clientInfo){
 
 			$charJson=json_encode($charData);
 			$redis_battle->LPUSH($battlekey,$charJson);
-			 Log::info($result);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
