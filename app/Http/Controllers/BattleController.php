@@ -176,7 +176,7 @@ public function battleNew($data,$clientInfo){
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 				if($checkCD>0){
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
-					if($possbileSkill){
+					// if($possbileSkill){
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['occur_time']=time();
@@ -184,12 +184,12 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
-					}
+					// }
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
 
-    		if($clientId<$enemy_clientId){
+    		if($clientId>$enemy_clientId){
 		    	$enemyData['x']=-($enemyData['x']);
 		    	$enemyData['x2']=-($enemyData['x2']);
 		    	$enemyData['y2']=($enemyData['y2']);
@@ -198,7 +198,7 @@ public function battleNew($data,$clientInfo){
 		    	$enemyData['x']=($enemyData['x']);
 		    	$enemyData['x2']=($enemyData['x2']);
 		    	$enemyData['y2']=($enemyData['y2']);
-		    	$enemyData['direction']=-($enemyData['direction']);
+		    	$enemyData['direction']=($enemyData['direction']);
 		    	$charData['x']=-($charData['x']);
 		    	$charData['direction']=-($charData['direction']);
 		    }
