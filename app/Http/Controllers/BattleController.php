@@ -315,7 +315,6 @@ public function battleNew($data,$clientInfo){
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
-					$charData['skill']=$userData['skill'];
 					if($identity==1){
 					$charData['x']=$x;
 					$charData['y']=$y;
@@ -325,8 +324,8 @@ public function battleNew($data,$clientInfo){
 						$charData['x2']=$userData['x2'];
 						$charData['y2']=$userData['y2'];
 					}
-					if(isset($userData['eff_list'])){
-						$charData['eff_list']=$userData['eff_list'];
+					if(isset($userData['skill'])){
+						$charData['skill']=$userData['skill'];
 					}
 					if(isset($userData['status'])){
 						$charData['status']=$userData['status'];
