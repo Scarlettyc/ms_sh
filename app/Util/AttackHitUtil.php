@@ -263,7 +263,7 @@ class AttackHitUtil
 		$skill_id=$enemySkill['skill_id'];
 		$skill_group=$enemySkill['skill_group'];
 		$occur_time=$enemySkill['occur_time'];
-		$start_x=$enemySkill['x'];
+		$start_x=$enemySkill['start_x'];
 		$skill_damage=$enemySkill['skill_damage'];
 		$skill_prepare_time=$enemySkill['skill_prepare_time'];
 		$skill_atk_time=$enemySkill['skill_atk_time'];
