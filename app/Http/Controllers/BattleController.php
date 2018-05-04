@@ -193,7 +193,7 @@ public function battleNew($data,$clientInfo){
 		    	$enemyData['x']=-($enemyData['x']);
 		    	$enemyData['x2']=-($enemyData['x2']);
 		    	$enemyData['y2']=($enemyData['y2']);
-		    	$enemyData['direction']=-($enemyData['direction']);
+		    	$enemyData['direction']=($enemyData['direction']);
 		    }else{
 		    	$enemyData['x']=($enemyData['x']);
 		    	$enemyData['x2']=($enemyData['x2']);
