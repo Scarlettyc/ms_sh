@@ -220,13 +220,13 @@ public function battleNew($data,$clientInfo){
 		    // 	$charData['direction']=($charData['direction']);
 		    // }
 			
-			if(isset($enemyData['skill'])){
-			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
-			if($hit){
-				$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
-				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
-				}
-			}
+			// if(isset($enemyData['skill'])){
+			// $hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
+			// if($hit){
+			// 	$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
+			// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
+			// 	}
+			// }
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<0){
