@@ -324,7 +324,7 @@ public function battleNew($data,$clientInfo){
 						$charData['x2']=$userData['x2'];
 						$charData['y2']=$userData['y2'];
 					}
-					if(isset($userData['skill'])){
+					if(isset($userData['skill'])&&$identity!=1){
 						$charData['skill']=$userData['skill'];
 					}
 					if(isset($userData['status'])){
