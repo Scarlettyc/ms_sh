@@ -175,8 +175,8 @@ public function battleNew($data,$clientInfo){
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 				if($checkCD>0){
-					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
-					if($possbileSkill){
+					// $possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
+					// if($possbileSkill){
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['occur_time']=time();
@@ -189,20 +189,19 @@ public function battleNew($data,$clientInfo){
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
 
-			if($clientId<$enemy_clientId){
-				$enemyData['x']=-($enemyData['x']);
-				$enemyData['x2']=-($enemyData['x2']);
-				$enemyData['y2']=($enemyData['y2']);
-				$enemyData['direction']=-($enemyData['direction']);
-			}else{
-				$enemyData['x2']=-($enemyData['x2']);
-				$enemyData['x']=-($enemyData['x']);
-				$enemyData['direction']=-($enemyData['direction']);
-				$enemyData['y2']=($enemyData['y2']);
-				$charData['x']=-($charData['x']);
-				$charData['x2']=-($charData['x2']);
-				$charData['direction']=-($charData['direction']);
-			}
+    		if($clientId<$enemy_clientId){
+		    	$enemyData['x']=-($enemyData['x']);
+		    	$enemyData['x2']=-($enemyData['x2']);
+		    	$enemyData['y2']=($enemyData['y2']);
+		    	$enemyData['direction']=-($enemyData['direction']);
+		    }else{
+		    	$enemyData['x']=-($enemyData['x']);
+		    	$enemyData['x2']=-($enemyData['x2']);
+		    	$enemyData['y2']=($enemyData['y2']);
+		    	$enemyData['direction']=-($enemyData['direction']);
+		    	$charData['x']=-($charData['x']);
+		    	$charData['direction']=-($charData['direction']);
+		    }
 			
 			if(isset($enemyData['skill'])){
 			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y']);
@@ -229,6 +228,7 @@ public function battleNew($data,$clientInfo){
 			$charData['end']=$result['end'];
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
+				$charData['x2']=-($charData['x2']);
 				$charData['direction']=-($charData['direction']);
 			}	
 
@@ -279,9 +279,9 @@ public function battleNew($data,$clientInfo){
 		if($userExist<1){
 			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking')->where('u_id',$u_id)->first();
 			if($identity==2){
-				$charData['x']=-1000;
+				$charData['x']=1000;
 				$charData['y']=-290;
-				$charData['x2']=-1000;
+				$charData['x2']=1000;
 				$charData['y2']=-290;
 				$charData['direction']=1;
 			}
