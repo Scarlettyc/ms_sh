@@ -231,11 +231,11 @@ public function battleNew($data,$clientInfo){
 				$result['end']=0;
 			}
 			$charData['end']=$result['end'];
-			if($clientId>$enemy_clientId){
-				$charData['x']=-($charData['x']);
-				$charData['x2']=-($charData['x2']);
-				$charData['direction']=-($charData['direction']);
-			}	
+			// if($clientId>$enemy_clientId){
+			// 	$charData['x']=-($charData['x']);
+			// 	$charData['x2']=-($charData['x2']);
+			// 	$charData['direction']=-($charData['direction']);
+			// }	
 
 			$charJson=json_encode($charData);
 			$redis_battle->LPUSH($battlekey,$charJson);
