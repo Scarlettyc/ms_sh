@@ -276,6 +276,7 @@ class AttackHitUtil
 			$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyY_to=$enemyY+$effs['TL_y'];
 			return true;
+		}
 	
 			// if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
 		// 	if($x>=$enemyX_from&&$x<=$enemyX_to){
