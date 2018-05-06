@@ -276,12 +276,10 @@ class AttackHitUtil
 			$enemyX_to=$enemyX+$effs['BR_x'];
 			$enemyY_to=$enemyY+$effs['TL_y'];
 			Log::info('enemyskillXfrom'.$enemyX_from.'enemyskillXto'.$enemyX_to.'enemyskillYfrom'.$enemyY_from.'enemyskillYto'.$enemyY_to.'userskillx'.$x.'userskilly'.$y.'userDirection'.$direction);
-		}
-
-		if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
+			if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
 			return true;
 		}
-
+		}
 	}
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
