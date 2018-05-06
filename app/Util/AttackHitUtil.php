@@ -377,7 +377,7 @@ class AttackHitUtil
  /*
   code edition from 2018.04.10
 */
-  public function calculateCharValue($charData,$enemyData,$skillatkEff){
+  public function calculateCharValue($chardata,$enemyData,$skillatkEff){
   		$randCrit=rand(1,100);
   		$critBool=1;
 		if($randCrit<=$enemyData['ch_crit']){
