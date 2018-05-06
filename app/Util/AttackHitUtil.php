@@ -257,7 +257,7 @@ class AttackHitUtil
   		}
 	}
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skill_id=$enemySkill['skill_id'];
@@ -275,8 +275,8 @@ class AttackHitUtil
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			$enemyX_to=$enemyX+$effs['BR_x'];
 			$enemyY_to=$enemyY+$effs['TL_y'];
-			Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
-			if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
+			Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
+			if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
 			return true;
 		}
 		}
