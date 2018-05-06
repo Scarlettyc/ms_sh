@@ -275,7 +275,7 @@ class AttackHitUtil
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			$enemyX_to=$enemyX+$effs['BR_x'];
 			$enemyY_to=$enemyY+$effs['TL_y'];
-			Log::info($enemyX_from.' '.$enemyY_from.' '.$enemyX_to.' '.$enemyY_to);
+			Log::info('enemyskillXfrom'.$enemyX_from.'enemyskillXto'.$enemyX_to.'enemyskillYfrom'.$enemyY_from.'enemyskillYto'.$enemyY_to.'userskillx'.$x.'userskilly'.$y.'userDirection'.$direction);
 		}
 
 		if($x*$direction>=$enemyX_from&&$y>=$enemyY_from&&$x*$direction<=$enemyX_to&&$y<=$enemyY_to){
