@@ -387,7 +387,6 @@ class AttackHitUtil
 			if($chardata['ch_hp_max']<0){
 				$chardata['ch_hp_max']=0;
 			}
-			
   		}
   		else if ($enemyData['skill']['skill_group']==2){
   			$enemy_atk=$enemyData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
