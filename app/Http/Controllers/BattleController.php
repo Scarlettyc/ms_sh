@@ -231,7 +231,7 @@ public function battleNew($data,$clientInfo){
 			// else {
 			// 	$result['end']=0;
 			// }
-			$charData['end']=$result['end'];
+			// $charData['end']=$result['end'];
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
 				$charData['x2']=-($charData['x2']);
