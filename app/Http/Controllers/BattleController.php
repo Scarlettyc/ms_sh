@@ -303,6 +303,7 @@ public function battleNew($data,$clientInfo){
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
+					$charData['ch_res']=$userData['ch_lv'];
 					if($identity==1){
 					$charData['x']=$x;
 					$charData['y']=$y;
