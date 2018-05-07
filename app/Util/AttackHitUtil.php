@@ -295,7 +295,7 @@ class AttackHitUtil
 		// $result=$this->findEffFunciton($skillEffs);
 		return $skillEffs;
   }
-  private function findEffFunciton($skill_eff){
+  public function findEffFunciton($skill_eff){
   	$result=[];
   	foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff->eff_element_id) {
