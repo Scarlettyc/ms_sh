@@ -212,8 +212,8 @@ public function battleNew($data,$clientInfo){
 			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction']);
 			if($hit){
 				$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
-					Log::info($skillatkEff);
-				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$skillatkEff);
+				$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
 				}
 			}
 			$result['user_data']=$charData;
