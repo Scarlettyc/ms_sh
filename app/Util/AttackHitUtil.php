@@ -384,7 +384,7 @@ class AttackHitUtil
 		$critBool=2;
 		}
 		$user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
-		$user_res=$chardata['ch_res'];
+		$user_res=1;
   		if($enemyData['skill']['skill_group']==1){
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$user_res;
 			$enemyDMG=$enemy_atk*$critBool;
