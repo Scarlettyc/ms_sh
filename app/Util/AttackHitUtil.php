@@ -382,7 +382,8 @@ class AttackHitUtil
 		$critBool=2;
 		}
 		$user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
-		$user_res=1;
+		$user_res=$chardata['ch_res'];
+		$hpMax=$chardata['ch_hp_max'];
   		if($enemyData['skill']['skill_group']==1){
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$user_res;
 			$enemyDMG=$enemy_atk*$critBool;
@@ -395,7 +396,7 @@ class AttackHitUtil
  	 		$hpMax=$chardata['ch_hp_max']/(1-$user_def);
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
-  	Log::info($user_def);
+  	Log::info($hpMax);
 
   	return $chardata;
 
