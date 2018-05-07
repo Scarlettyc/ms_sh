@@ -385,7 +385,7 @@ class AttackHitUtil
 		$enemy_res=$enemyData['ch_res'];
 		$hpMax=$chardata['ch_hp_max'];
   		if($enemyData['skill']['skill_group']==1){
-			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*1;
+			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
 			$hpMax=$chardata['ch_hp_max'];
 			Log::info('eff_skill_atk_point '.$eff_skill_atk_point);

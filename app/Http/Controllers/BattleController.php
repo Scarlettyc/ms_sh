@@ -218,7 +218,7 @@ public function battleNew($data,$clientInfo){
 			}
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
-			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<0){
+			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
 				$result['end']=2;
 				$win=1;
 				//$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
@@ -303,7 +303,7 @@ public function battleNew($data,$clientInfo){
 					$charData['ch_crit']=$userData['ch_crit'];
 					$charData['ch_armor']=$userData['ch_armor'];
 					$charData['ch_lv']=$userData['ch_lv'];
-					$charData['ch_res']=$userData['ch_lv'];
+					$charData['ch_res']=$userData['ch_res'];
 					if($identity==1){
 					$charData['x']=$x;
 					$charData['y']=$y;
