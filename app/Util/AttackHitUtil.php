@@ -273,18 +273,13 @@ class AttackHitUtil
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyY_to=$enemyY+$effs['TL_y'];
-			return true;
-		}
-	
-			// if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
-		// 	if($x>=$enemyX_from&&$x<=$enemyX_to){
-		// 	Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
-
-		// 	return true;
-		// }
-		// }else{
-		// 	return false;
-		// }
+			if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
+			// Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
+				return true;
+			}
+			}else{
+				return false;
+			}
 	}
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
@@ -388,7 +383,6 @@ class AttackHitUtil
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
 			$hpMax=$chardata['ch_hp_max'];
-			Log::info('eff_skill_atk_point '.$eff_skill_atk_point);
 			$chardata['ch_hp_max']=round($hpMax-$enemyDMG);
 			if($chardata['ch_hp_max']<0){
 				$chardata['ch_hp_max']=0;
