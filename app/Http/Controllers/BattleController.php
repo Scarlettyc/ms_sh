@@ -218,19 +218,19 @@ public function battleNew($data,$clientInfo){
 			}
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
-			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<0){
-				$result['end']=2;
-				$win=1;
-				$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
-			}
-			else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
-				$result['end']=1;
-				$win=0;
-				$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
-			}
-			else {
-				$result['end']=0;
-			}
+			//  if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<0){
+			// 	$result['end']=2;
+			// 	$win=1;
+			// 	$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
+			// }
+			// else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
+			// 	$result['end']=1;
+			// 	$win=0;
+			// 	$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
+			// }
+			// else {
+			// 	$result['end']=0;
+			// }
 			$charData['end']=$result['end'];
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
