@@ -49,8 +49,6 @@ class AttackHitUtil
 		$effXfrom=$enemy['x'];
 		$effYfrom=$enemy['y'];
 
-		Log::info(abs($user['x']-$enemy['x'])<$atkEff['eff_skill_hit_width']&&($user['x']-$enemy['x'])*$enemy_direction>0);
-
 			if(abs($user['x']-$enemy['x'])<$atkEff['eff_skill_hit_width']&&($user['x']-$enemy['x'])*$enemy_direction>0){
 				return $atkEff;
 			}
@@ -397,6 +395,8 @@ class AttackHitUtil
  	 		$hpMax=$chardata['ch_hp_max'];
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
+  	Log::info($chardata);
+
   	return $chardata;
 
   }
