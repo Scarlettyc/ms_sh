@@ -359,9 +359,6 @@ public function battleNew($data,$clientInfo){
 		  		$spReward=$baSpReward->select('item_org_id','item_type','item_quantity')->where('map_id',$map_id)->where('ranking',$ch_ranking)->where('lv',$ch_lv)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->where('item_rate_from','<=',$rate)->where('item_rate_to','>=',$rate)->first();
 		  		$rewards['special'][]=$spReward;
 			}
-
-		 //  	$count=count($norReward);
-			// shuffle($norReward);
 			$baggageUtil=new BaggageUtil();
 			$result['normal']=$baggageUtil->insertToBaggage($u_id,$rewards['normarl']);
 			$result['special']=$baggageUtil->insertToBaggage($u_id,$rewards['special']);
@@ -380,8 +377,6 @@ public function battleNew($data,$clientInfo){
 			$result['coin_reward']=$battle_reward['coin'];
 			$reward=json_encode($result,TRUE);
 			$redis_battle->HSET($key,$u_id,$reward);
-
-
   }
 
   	public function battleResult(Request $request){
@@ -409,8 +404,8 @@ public function battleNew($data,$clientInfo){
 		$result['special']=$special;
 		$response=json_encode($result,TRUE);
 		return   base64_encode($response);
-
   	} 
+  	
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
 		$redis_battle=Redis::connection('battle');

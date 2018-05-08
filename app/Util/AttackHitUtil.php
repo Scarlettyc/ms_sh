@@ -269,8 +269,10 @@ class AttackHitUtil
 		$effs=$this->findEffFunciton($skillEffs);
 
 		if(isset($effs['TL_x'])){
-			$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
+			//$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
+			$enemyX_from=$enemyX+$effs['TL_x'];
 			$enemyY_from=$enemyY+$effs['BR_y'];
+			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyY_to=$enemyY+$effs['TL_y'];
 			Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
