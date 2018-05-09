@@ -168,55 +168,6 @@ class AttackHitUtil
     	return $result;
     }
 
-	private function checkHit($map_id,$atkEff,$direction,$user,$enemy)
-	{
-		$mapUtil=new MapTrapUtil();
-		$defindMst=new DefindMstModel();
-		$defindData=$defindMst->where('defind_id',17)->first();
-
- 				
-			$distance=0;
-			$effXfrom=$user['x'];
-			$effYfrom=$user['x'];
-			// if($atkEff['eff_skill_circle_center']==0){
-			// 	if($direction>=0)
-			// 		{
-			// 			$effX=$user['x']+$defindData['value1'];
-						
-			// 		}
-			// 		else {
-			// 			$effX=$user['x']-$defindData['value1'];
-			// 		}
-			// 		$effY=$user['y'];				
-			// }
- 		// 	else if($atkEff['eff_skill_circle_center']==1){
- 		// 		$effX=$user['x'];
- 		// 		$effY=$user['y'];			
- 		// 	}
-
- 		// 	else if($atkEff['eff_skill_circle_center']==2){
- 		// 		$effY=$user['y']+$defindData['value2'];
- 		// 		$effX=$user['x'];	
- 		// 	}
- 			// $radius=$atkEff['eff_skill_radius'];
-
- 			$interrput=$this->checkSkillInterrput($map_id,$effX,$effY,$radius,$atkEff['eff_skill_interrupt']);
- 			$end=$interrput['end'];
- 			if($interrput['interrput']){
- 				return ['hit'=>0,'end'=>1];
- 			}
- 			else {
- 		 	$effXto=$effXfrom+$atkEff['eff_skill_hit_width'];
- 		 	$effYto=$effYfrom+$atkEff['eff_skill_hit_lenght'];
- 		 	if($enemy['x']>=$effXfrom&&$enemy['x']<=$effXto&&$enemy['y']>=$effYfrom&&$enemy['y']<=$effYto){
- 		 		return ['hit'=>1,'end'=>1];
- 		 	}else{
- 		 		return ['hit'=>0,'end'=>0];
- 		 	}
-			}
-		}
-
-
 	public function getMillisecond() {
 		list($t1, $t2) = explode(' ', microtime());
 		return (float)sprintf('%.0f',(floatval($t1)+floatval($t2))*1000);
@@ -246,16 +197,9 @@ class AttackHitUtil
 
  //  }
 /*
-  code edition from 2018.04.09
-*/
-  	public function getEffList($eff_list,$u_id){
-  		foreach ($eff_list as $key => $eff) {
-
-  			# code...
-  		}
-	}
 /*2018.04.27 edition*/
 	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction){
+
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skill_id=$enemySkill['skill_id'];
@@ -267,23 +211,41 @@ class AttackHitUtil
 		$skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
+		$defindMst=new DefindMstModel();
+		
+		$defindFront=$defindMst->select('value1','value2')->where('defind_id',9)->first();
+		$defindBack=$defindMst->select('value1','value2')->where('defind_id',11)->first();
 
+		$x_front=$x+$defindFront['value1']*$enemy_direction;
+		$x_back=$x+$defindBack['value1']*$enemy_direction;
+		$y_font=$y+$defindFront['value2'];
+		$y_back=$y+$defindBack['value2'];
 		if(isset($effs['TL_x'])){
-			//$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
-			$enemyX_from=$enemyX+$effs['TL_x'];
+			$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
+			// $enemyX_from=$enemyX+$effs['TL_x'];
 			$enemyY_from=$enemyY+$effs['BR_y'];
 			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 			$enemyY_to=$enemyY+$effs['TL_y'];
-			Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
-			if($enemyX_from<$enemyX_to){
-				if($x>=$enemyX_from&&$y>=$enemyY_from&&$x<=$enemyX_to&&$y<=$enemyY_to){
-				return true;
+			// Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userskillx'.$x.' userskilly'.$y.' userDirection'.$direction);
+			if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+					return true;
 				}
 			}
-			else if($enemyX_from>$enemyX_to){
-				if($x<=$enemyX_from&&$y>=$enemyY_from&&$x>=$enemyX_to&&$y<=$enemyY_to){
-				return true;
+			else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
+				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+					return true;
+				}
+			}
+			else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
+			if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+					return true;
+				}
+			}
+			else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+				if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+					return true;
 				}
 			}
 			}else{
