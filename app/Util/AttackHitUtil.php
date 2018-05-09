@@ -220,15 +220,16 @@ class AttackHitUtil
 		$x_back=$x+$defindBack['value1']*$enemy_direction;
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
-		if(isset($effs['TL_x'])){
-			$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
+		if($skill_damage==1){
+			if(isset($effs['TL_x'])){
+				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
 			// $enemyX_from=$enemyX+$effs['TL_x'];
-			$enemyY_from=$enemyY+$effs['BR_y'];
+				$enemyY_from=$enemyY+$effs['BR_y'];
 			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
-			$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
-			$enemyY_to=$enemyY+$effs['TL_y'];
-			Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'$x_back.' user_yBack'$y_back.' userDirection'.$direction);
-			if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+				$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
+				$enemyY_to=$enemyY+$effs['TL_y'];
+				Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'$x_back.' user_yBack'$y_back.' userDirection'.$direction);
+				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
 					return true;
 				}
@@ -236,21 +237,25 @@ class AttackHitUtil
 			else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
 				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
 					return true;
+					}
 				}
-			}
 			else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
-			if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+				if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
 					return true;
 				}
 			}
 			else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 				if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
 					return true;
+					}
 				}
-			}
-			}else{
+				}else{
 				return false;
 			}
+		}
+		else if($skill_damage==2){
+			return true;
+		}
 	}
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
