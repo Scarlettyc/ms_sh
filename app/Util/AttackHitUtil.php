@@ -228,7 +228,7 @@ class AttackHitUtil
 			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y'];
-				Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'$y_back.' userDirection'.$direction);
+				Log::info('enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
 				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
 					return true;
