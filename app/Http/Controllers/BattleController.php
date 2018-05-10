@@ -181,6 +181,7 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['occur_time']=time();
 						$charData['skill']['start_x']=$x;
+						$charData['skill']['start_y']=$y;
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
@@ -214,7 +215,6 @@ public function battleNew($data,$clientInfo){
 				$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 				$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
-					// Log::info($charData);
 				}
 			}
 			$result['user_data']=$charData;
@@ -222,7 +222,7 @@ public function battleNew($data,$clientInfo){
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
 				$result['end']=2;
 				$win=1;
-				//$this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
+				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
 			else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
 				$result['end']=1;
