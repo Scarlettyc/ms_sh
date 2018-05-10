@@ -253,8 +253,8 @@ class AttackHitUtil
 					return true;
 					}
 				}
-				}else{
 					Log::info('not hit :skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
+				}else{
 				return false;
 			}
 		}
@@ -376,8 +376,6 @@ class AttackHitUtil
  	 		$hpMax=$chardata['ch_hp_max'];
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
-  
-
   	return $chardata;
 
   }
