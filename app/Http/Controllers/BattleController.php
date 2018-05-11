@@ -186,7 +186,7 @@ public function battleNew($data,$clientInfo){
 						$flytools['occur_time']=time();
 						$flytools['start_x']=$x;
 						$flytools['start_y']=$y;
-						$charData['skill']['start_direction']=$data['direction'];
+						$flytools['start_direction']=$data['direction'];
 						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytools);
 						}
 					}
