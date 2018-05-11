@@ -242,7 +242,7 @@ class AttackHitUtil
          
         if(isset($effs['TL_x'])&&$current-$occurtime<$effs['eff_duration']){
           if($current-$occurtime>0){
-            $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$effs['start_direction']);
+            $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$effs['start_direction'];
             }
             $enemyX_from=$start_x+$effs['TL_x']*$effs['start_direction'];
             $enemyY_from=$start_y+$effs['BR_y'];
