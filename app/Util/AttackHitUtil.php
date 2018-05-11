@@ -223,7 +223,7 @@ class AttackHitUtil
     $hit=false;
 
 		// if($skill_damage==1){
-			// if(isset($effs['TL_x'])){
+			if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
 			// $enemyX_from=$enemyX+$effs['TL_x'];
 				$enemyY_from=$enemyY+$effs['BR_y'];
@@ -281,6 +281,7 @@ class AttackHitUtil
          else {
           return $hit;
 		}
+  }
 	}
 
 	public function getEffValue($skill_id){
