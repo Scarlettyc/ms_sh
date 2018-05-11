@@ -182,11 +182,11 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
-						$charData['skill']['start_direction']=$direction;
 					if($skill['skill_damage']==2){
 						$flytools['occur_time']=time();
 						$flytools['start_x']=$x;
 						$flytools['start_y']=$y;
+						$charData['skill']['start_direction']=$data['direction'];
 						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytools);
 						}
 					}

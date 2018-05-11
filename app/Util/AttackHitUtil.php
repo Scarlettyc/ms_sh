@@ -239,14 +239,14 @@ class AttackHitUtil
           $occur_time=$fly_toolsData['occur_time'];
           $start_x=$fly_toolsData['start_x'];
           $start_y=$fly_toolsData['start_y'];
-         
+          $start_direction=$fly_toolsData['start_direction'];
         if(isset($effs['TL_x'])&&$current-$occurtime<$effs['eff_duration']){
           if($current-$occurtime>0){
-            $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$effs['start_direction'];
+            $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$start_direction;
             }
-            $enemyX_from=$start_x+$effs['TL_x']*$effs['start_direction'];
+            $enemyX_from=$start_x+$effs['TL_x']*$start_direction;
             $enemyY_from=$start_y+$effs['BR_y'];
-            $enemyX_to=$start_x+$effs['BR_x']*$effs['start_direction'];
+            $enemyX_to=$start_x+$effs['BR_x']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y'];
       }
     }
