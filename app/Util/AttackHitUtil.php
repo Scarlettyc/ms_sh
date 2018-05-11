@@ -222,17 +222,17 @@ class AttackHitUtil
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
 
-		if($skill_damage==1){
-			if(isset($effs['TL_x'])){
+		// if($skill_damage==1){
+			// if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
 			// $enemyX_from=$enemyX+$effs['TL_x'];
 				$enemyY_from=$enemyY+$effs['BR_y'];
 			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y'];
-        }
-      }
-      else if($skill_damage==2){
+      //   }
+      // }
+       if($skill_damage==2){
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           $fly_toolsData=json_decode($fly_toolsJson,TRUE);
