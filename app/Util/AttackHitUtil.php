@@ -198,20 +198,20 @@ class AttackHitUtil
  //  }
 /*
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid){
 
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
+    $redis_battle=Redis::connection('battle');
 		$skill_id=$enemySkill['skill_id'];
 		$skill_group=$enemySkill['skill_group'];
-		$occur_time=$enemySkill['occur_time'];
-		$start_x=$enemySkill['start_x'];
 		$skill_damage=$enemySkill['skill_damage'];
 		$skill_prepare_time=$enemySkill['skill_prepare_time'];
 		$skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
 		$defindMst=new DefindMstModel();
+		$current=$this->getMillisecond()
 		
 		$defindFront=$defindMst->select('value1','value2')->where('defind_id',9)->first();
 		$defindBack=$defindMst->select('value1','value2')->where('defind_id',11)->first();
@@ -220,6 +220,8 @@ class AttackHitUtil
 		$x_back=$x+$defindBack['value1']*$enemy_direction;
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
+    $hit=false;
+
 		if($skill_damage==1){
 			if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
@@ -228,35 +230,59 @@ class AttackHitUtil
 			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y'];
+        }
+      }
+      else if($skill_damage==2){
+          $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+          $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
+          $fly_toolsData=json_decode($fly_toolsJson,TRUE);
+          $occur_time=$fly_toolsData['occur_time'];
+          $start_x=$fly_toolsData['start_x'];
+          $start_y=$fly_toolsData['start_y'];
+         
+        if(isset($effs['TL_x'])&&$current-$occurtime<$effs['eff_duration']){
+          if($current-$occurtime>0){
+            $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$effs['start_direction']);
+            }
+            $enemyX_from=$start_x+$effs['TL_x']*$effs['start_direction'];
+            $enemyY_from=$start_y+$effs['BR_y'];
+            $enemyX_to=$start_x+$effs['BR_x']*$effs['start_direction'];
+            $enemyY_to=$start_y+$effs['TL_y'];
+      }
+    }
+				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+            $hit=true;
+					}
+				}
+				else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
+					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+              $hit=true;
+						}
+					}
+				else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
+					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+              $hit=true;
+					}
+				}
+				else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+						$hit=true;
+						}
+					}
 
-			if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
-					Log::info('condition 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
-					return true;
-				}
-			}
-			else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
-				if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
-					Log::info('condtion 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
-					return true;
-					}
-				}
-			else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
-				if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
-					Log::info('condition 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
-					return true;
-				}
-			}
-			else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-				if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
-					Log::info('condition 4 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
-					return true;
-					}
-				}
-			Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
-			}
+          if($hit&&$skill_damage==2){
+            $redis_battle->HDEL($fly_tools_key,$skill_id);
+            // Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
+			   }
+         else if(!$hit&&$skill_damage==2&&$current-$occurtime>$effs['eff_duration']){
+           $redis_battle->HDEL($fly_tools_key,$skill_id);
+         }
+         else {
+          return $hit;
 		}
 	}
+
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
@@ -264,9 +290,9 @@ class AttackHitUtil
 		// $result=$this->findEffFunciton($skillEffs);
 		return $skillEffs;
   }
-  public function findEffFunciton($skill_eff){
-  	$result=[];
-  	foreach ($skill_eff as $key => $each_eff) {
+  	public function findEffFunciton($skill_eff){
+  		$result=[];
+  		foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff->eff_element_id) {
   			case 1:
   				$result['TL_x']=$each_eff->eff_value;
@@ -333,9 +359,77 @@ class AttackHitUtil
   			case 23:
   			$result['eff_skill_atk_point']=$each_eff->eff_value;
   				break;
+  			case 24:
+  			$result['crash_hitpeole']=$each_eff->eff_value;
+  				break;
+  			case 25:
+  			$result['movable']=$each_eff->eff_value;
+  				break;
+  			case 26:
+  			$result['quick_time']=$each_eff->eff_value;
+  				break;
+  			case 27:          
+  			$result['dash_time']=$each_eff->eff_value;
+               				break;
+            case 28:
+             $result['dash_direction']=$each_eff->eff_value;
+              				break;
+            case 29:
+             $result['displacement_direction']=$each_eff->eff_value;
+              				break;
+            case 30:
+             $result['displacement_distance']=$each_eff->eff_value;
+              				break;
+            case 31:
+             $result['spread_distance']=$each_eff->eff_value;
+              				break;
+            case 32:
+             $result['spread_frequency']=$each_eff->eff_value;
+              				break;
+            case 33:
+             $result['block_percentage']=$each_eff->eff_value;
+              				break;
+            case 34:
+             $result['damage_reduction_percentage']=$each_eff->eff_value;
+              				break;
+            case 35:
+             $result['slow_percentage']=$each_eff->eff_value;
+              				break;
+            case 36:
+             $result['strike back_percentage']=$each_eff->eff_value;
+              				break;
+            case 37:
+             $result['quick_percentage']=$each_eff->eff_value;
+              				break;
+            case 38:
+             $result['crit_percentage']=$each_eff->eff_value;
+              				break;
+            case 39:
+             $result['execute_damage']=$each_eff->eff_value;
+              				break;
+            case 40:
+             $result['avatar_damage_precent']=$each_eff->eff_value;
+              				break;
+            case 41:
+             $result['avatar_defince_precent']=$each_eff->eff_value;
+              				break;
+            case 42:
+             $result['avatar_atk_range_precent']=$each_eff->eff_value;
+              				break;
+            case 43:
+             $result['eff_duration']=$each_eff->eff_value;
+              				break;
+            case 44:
+             $result['eff_spead']=$each_eff->eff_value;
+              				break;
+            case 45:
+             $result['eff_interval']=$each_eff->eff_value;
+              				break;
+
   			default:
   				# code...
   				break;
+
   		}
   		# code...
   	}
@@ -374,6 +468,12 @@ class AttackHitUtil
   	return $chardata;
 
   }
+
+
+  	private function getMillisecond() {
+		list($t1, $t2) = explode(' ', microtime());     
+		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
+	}
 
 
 }

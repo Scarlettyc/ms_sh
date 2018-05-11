@@ -166,7 +166,7 @@ public function battleNew($data,$clientInfo){
  			$charData['x2']=$data['x2'];
  			$charData['y2']=$data['y2'];
  			$user_res=1;	
-
+ 			$fly_tools_key='battle_flytools'.$match_id.$u_id;
 			if(isset($data['direction'])){
 				$charData['direction']=$data['direction'];
 			}
@@ -179,12 +179,16 @@ public function battleNew($data,$clientInfo){
 					if($possbileSkill){
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
-						$charData['skill']['occur_time']=time();
-						$charData['skill']['start_x']=$x;
-						$charData['skill']['start_y']=$y;
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
+						$charData['skill']['start_direction']=$direction;
+					if($skill['skill_damage']==2){
+						$flytools['occur_time']=time();
+						$flytools['start_x']=$x;
+						$flytools['start_y']=$y;
+						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytools);
+						}
 					}
 				}
 			}
@@ -210,12 +214,12 @@ public function battleNew($data,$clientInfo){
 		    }
 
 			if(isset($enemyData['skill'])){
-			$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction']);
-			if($hit&&$hit!=null&&$hit!=''){
-				$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
-				$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-				$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
-				Log::info($charData);
+				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
+				if($hit&&$hit!=null&&$hit!=''){
+					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
+					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+					Log::info($charData);
 				}
 			}
 			$result['user_data']=$charData;
