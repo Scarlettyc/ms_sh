@@ -211,7 +211,7 @@ class AttackHitUtil
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
 		$defindMst=new DefindMstModel();
-		$current=$this->getMillisecond()
+		$current=$this->getMillisecond();
 		
 		$defindFront=$defindMst->select('value1','value2')->where('defind_id',9)->first();
 		$defindBack=$defindMst->select('value1','value2')->where('defind_id',11)->first();
