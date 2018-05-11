@@ -187,7 +187,8 @@ public function battleNew($data,$clientInfo){
 						$flytools['start_x']=$x;
 						$flytools['start_y']=$y;
 						$flytools['start_direction']=$data['direction'];
-						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytools);
+						$flytoolsJson=json_encode($flytools,TRUE);
+						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytoolsJson);
 						}
 					}
 				}
