@@ -291,8 +291,9 @@ class AttackHitUtil
       }
       $result2=[];
       foreach ($result as $key => $value) {
-        $result2['eff_type']=$key;
-        $result2['eff_value']=$value;
+        $tmp['eff_type']=$key;
+        $tmp['eff_value']=$value;
+        $result2[]=$tmp;
       }
       return $result2;
 
