@@ -31,7 +31,8 @@ class AttackHitUtil
 				$result['selfbuff']=$buffEff;
 			}
 		}
-		return $result;
+		return 
+                  $result;
 	}
 
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
@@ -90,7 +91,8 @@ class AttackHitUtil
 			}
 			} 
 		}
-		return $result;
+		return 
+                  $result;
 	}
 
 	public function buffStatus($buff_id){
@@ -108,18 +110,19 @@ class AttackHitUtil
 			case 7:
 				$eff_ch_res_per=$buffEff['eff_value1'];
 				$result['eff_ch_res_per']=$eff_ch_res_per;
-				break;
+				             break;
 			case 9:
 				$eff_ch_uncontrollable=$buffEff['eff_value1'];
 				$result['eff_ch_uncontrollable']=$eff_ch_uncontrollable;
-				break;
+				             break;
 			case 6;
 			   	$eff_ch_invincible=$buffEff['eff_value1'];
 				$result['eff_ch_invincible']=$eff_ch_invincible;
-				break;
+				             break;
 
 			}
-			return $result;
+			return 
+                  $result;
 
 	} 
 
@@ -143,7 +146,8 @@ class AttackHitUtil
     		$result['atk_constant_time']=$skill_data['atk_constant_time'];
  
     	}
-    	return $result;
+    	return 
+                  $result;
     }
     
     public function haveEffConstant($constantEff,$skill_occur_time){
@@ -165,7 +169,8 @@ class AttackHitUtil
     		$result['atk_constant_time']=$skill_data['atk_constant_time'];
     		$result['atk_last_time']=time()-$skill_occur_time-$skill_data['atk_constant_time'];
     	}
-    	return $result;
+    	return 
+                  $result;
     }
 
 	public function getMillisecond() {
@@ -279,153 +284,159 @@ class AttackHitUtil
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
 		$skillEffs=$SkillEffDeatilModel->select('eff_element_id','eff_value','eff_type')->where('skill_id',$skill_id)->get();
-		// $result=$this->findEffFunciton($skillEffs);
+		// 
+                  $result=$this->findEffFunciton($skillEffs);
 		return $skillEffs;
   }
   	public function findEffFunciton($skill_eff){
   		$result=[];
   		foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff->eff_element_id) {
-  			case 1:
-  				$result['TL_x']=$each_eff->eff_value;
-  				break;
-  			case 2:
-  				$result['TL_y']=$each_eff->eff_value;
-  				break;
-  			case 3:
-  				$result['BR_x']=$each_eff->eff_value;
-  				break;
-  			case 4:
-  				$result['BR_y']=$each_eff->eff_value;
-  				break;
-  			case 5:
-  				$result['hit recover']=$each_eff->eff_values;
-  				break;
-			case 6:
-  			$result['knockdown']=$each_eff->eff_value;
-  				break;
-  			case 7:
-  			$result['stun']=$each_eff->eff_value;
-  			case 8:
-  			$result['execute']=$each_eff->eff_value;
-  				break;
-  			case 9:
-  			$result['snipe']=$each_eff->eff_value;
-  				break;
-  			case 11:
-  			$result['dash']=$each_eff->eff_value;
-  				break;
-  			case 12:
-  			$result['immune control']=$each_eff->eff_value;
-  				break;
-  			case 13:
-  			$result['displacement']=$each_eff->eff_value;
-  				break;
-  			case 14:
-  			$result['spread']=$each_eff->eff_value;
-  				break;
-  			case 15:
-  			$result['block']=$each_eff->eff_value;
-  				break;
-   			case 16:
-  			$result['damage reduction']=$each_eff->eff_value;
-  				break;
-  			case 17:
-  			$result['strike back']=$each_eff->eff_value;
-  				break;
-  			case 18:
-  			$result['crash']=$each_eff->eff_value;
-  				break;
-  			case 19:
-  			$result['shadowstep']=$each_eff->eff_value;
-  				break;
-  			case 20:
-  			$result['crit']=$each_eff->eff_value;
-  				break;
-  			case 21:
-  			$result['omnislash']=$each_eff->eff_value;
-  				break;
-  			case 22:
-  			$result['avatar']=$each_eff->eff_value;
-  				break;
-  			case 23:
-  			$result['eff_skill_atk_point']=$each_eff->eff_value;
-  				break;
-  			case 24:
-  			$result['crash_hitpeole']=$each_eff->eff_value;
-  				break;
-  			case 25:
-  			$result['movable']=$each_eff->eff_value;
-  				break;
-  			case 26:
-  			$result['quick_time']=$each_eff->eff_value;
-  				break;
-  			case 27:          
-  			$result['dash_time']=$each_eff->eff_value;
-               				break;
-            case 28:
-             $result['dash_direction']=$each_eff->eff_value;
-              				break;
-            case 29:
-             $result['displacement_direction']=$each_eff->eff_value;
-              				break;
-            case 30:
-             $result['displacement_distance']=$each_eff->eff_value;
-              				break;
-            case 31:
-             $result['spread_distance']=$each_eff->eff_value;
-              				break;
-            case 32:
-             $result['spread_frequency']=$each_eff->eff_value;
-              				break;
-            case 33:
-             $result['block_percentage']=$each_eff->eff_value;
-              				break;
-            case 34:
-             $result['damage_reduction_percentage']=$each_eff->eff_value;
-              				break;
-            case 35:
-             $result['slow_percentage']=$each_eff->eff_value;
-              				break;
-            case 36:
-             $result['strike back_percentage']=$each_eff->eff_value;
-              				break;
-            case 37:
-             $result['quick_percentage']=$each_eff->eff_value;
-              				break;
-            case 38:
-             $result['crit_percentage']=$each_eff->eff_value;
-              				break;
-            case 39:
-             $result['execute_damage']=$each_eff->eff_value;
-              				break;
-            case 40:
-             $result['avatar_damage_precent']=$each_eff->eff_value;
-              				break;
-            case 41:
-             $result['avatar_defince_precent']=$each_eff->eff_value;
-              				break;
-            case 42:
-             $result['avatar_atk_range_precent']=$each_eff->eff_value;
-              				break;
-            case 43:
-             $result['eff_duration']=$each_eff->eff_value;
-              				break;
-            case 44:
-             $result['eff_spead']=$each_eff->eff_value;
-              				break;
-            case 45:
-             $result['eff_interval']=$each_eff->eff_value;
-              				break;
-
+          case 1: 
+                  
+                  $result['TL_x'] =$each_eff->eff_value; 
+                       break;
+          case 2: 
+                  $result['TL_y'] =$each_eff->eff_value;
+                       break;
+          case 3: 
+                  $result['BR_x'] =$each_eff->eff_value;
+                       break;
+          case 4: 
+                  $result['BR_y'] =$each_eff->eff_value;
+                       break;
+          case 5: 
+                  $result['hit_recover_time'] =$each_eff->eff_value;
+                       break;
+          case 6: 
+                  $result['knockdown_time'] =$each_eff->eff_value;
+                       break;
+          case 7: 
+                  $result['stun_time'] =$each_eff->eff_value;
+                       break;
+          case 8: 
+                  $result['execute_hp_precentage'] =$each_eff->eff_value;
+                       break;
+          case 9: 
+                  $result['slow_time'] =$each_eff->eff_value;
+                       break;
+          case 10: 
+                  $result['snipe_time'] =$each_eff->eff_value;
+                       break;
+          case 11: 
+                  $result['dash_distance'] =$each_eff->eff_value;
+                       break;
+          case 12: 
+                  $result['immune_control'] =$each_eff->eff_value;
+                       break;
+          case 13: 
+                  $result['displacement_time'] =$each_eff->eff_value;
+                       break;
+          case 14: 
+                  $result['spread_interval'] =$each_eff->eff_value;
+                       break;
+          case 15: 
+                  $result['block_time'] =$each_eff->eff_value;
+                       break;
+          case 16: 
+                  $result['damage_reduction_time'] =$each_eff->eff_value;
+                       break;
+          case 17: 
+                  $result['strike_back_time'] =$each_eff->eff_value;
+                       break;
+          case 18: 
+                  $result['crash_hititem'] =$each_eff->eff_value;
+                       break;
+          case 19: 
+                  $result['shadowstep_time'] =$each_eff->eff_value;
+                       break;
+          case 20: 
+                  $result['crit_time'] =$each_eff->eff_value;
+                       break;
+          case 21: 
+                  $result['omnislash'] =$each_eff->eff_value;
+                       break;
+          case 22: 
+                  $result['avatar_time'] =$each_eff->eff_value;
+                       break;
+          case 23: 
+                  $result['eff_skill_atk_point'] =$each_eff->eff_value;
+                       break;
+          case 24: 
+                  $result['crash_hitpeole'] =$each_eff->eff_value;
+                       break;
+          case 25: 
+                  $result['movable'] =$each_eff->eff_value;
+                       break;
+          case 26: 
+                  $result['quick_time'] =$each_eff->eff_value;
+                       break;
+          case 27: 
+                  $result['dash_time'] =$each_eff->eff_value;
+                       break;
+          case 28: 
+                  $result['dash_direction'] =$each_eff->eff_value;
+                       break;
+          case 29: 
+                  $result['displacement_direction'] =$each_eff->eff_value;
+                       break;
+          case 30: 
+                  $result['displacement_distance'] =$each_eff->eff_value;
+                       break;
+          case 31: 
+                  $result['spread_distance'] =$each_eff->eff_value;
+                       break;
+          case 32: 
+                  $result['spread_frequency'] =$each_eff->eff_value;
+                       break;
+          case 33: 
+                  $result['block_percentage'] =$each_eff->eff_value;
+                       break;
+          case 34: 
+                  $result['damage_reduction_percentage'] =$each_eff->eff_value;
+                       break;
+          case 35: 
+                  $result['slow_percentage'] =$each_eff->eff_value;
+                       break;
+          case 36: 
+                  $result['strike_back_percentage'] =$each_eff->eff_value;
+                       break;
+          case 37: 
+                  $result['quick_percentage'] =$each_eff->eff_value;
+                       break;
+          case 38: 
+                  $result['crit_percentage'] =$each_eff->eff_value;
+                       break;
+          case 39: 
+                  $result['execute_damage'] =$each_eff->eff_value;
+                       break;
+          case 40: 
+                  $result['avatar_damage_precent'] =$each_eff->eff_value;
+                       break;
+          case 41: 
+                  $result['avatar_defince_precent'] =$each_eff->eff_value;
+                       break;
+          case 42: 
+                  $result['avatar_atk_range_precent'] =$each_eff->eff_value;
+                       break;
+          case 43: 
+                  $result['eff_duration'] =$each_eff->eff_value;
+                       break;
+          case 44: 
+                  $result['eff_spead'] =$each_eff->eff_value;
+                       break;
+          case 45: 
+                  $result['eff_interval'] =$each_eff->eff_value;
+                       break;
   			default:
   				# code...
-  				break;
+  				             break;
 
   		}
   		# code...
   	}
-  	return $result;
+  	return 
+                  $result;
 
   }
 
