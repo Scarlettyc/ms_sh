@@ -287,10 +287,14 @@ class AttackHitUtil
       $skillEffs=$SkillEffDeatilModel->select('eff_element_id','eff_value','eff_type')->where('skill_id',$skill_id)->get();
       $result=[];
       foreach ($skillEffs as $key => $each_eff) {
-        $result[$each_eff['eff_type']]['effs'][]=['eff_element_id'=>$each_eff['eff_element_id'],'eff_value'=>$each_eff['eff_value']];
-
+        $result[$each_eff['eff_type']][]=['eff_element_id'=>$each_eff['eff_element_id'],'eff_value'=>$each_eff['eff_value']];
       }
-      return $result;
+      $result2=[];
+      foreach ($result as $key => $value) {
+        $result2['eff_type']=$key;
+        $result2['eff_value']=$value;
+      }
+      return $result2;
 
   }
 	public function getEffValue($skill_id){
