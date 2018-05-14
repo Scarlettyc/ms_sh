@@ -186,17 +186,6 @@ class AttackHitUtil
     	return ['interrput'=>$interrput,'end'=>$end];
     } 
 
- //  private function getEffElement($skill_id){
- //  	$skillModel=new SkillMstModel();
- //  	$skillEffModel=new SkillEffModel();
-	// $effElementModel=new EffElementModel();
-	// $buffEffectionMst=new BuffEffectionMst();
-	// $skillData=$skillModel->select('skill_id','self_buff_eff_id','buff_constant_time','enemy_buff_eff_id','enemy_buff_constant_time','atk_eff_id','atk_constant_time')->Where('skill_id',$skill_id)->first();
-	// $effData=$skillEffModel->select('eff_id','eff_element_id','eff_value','eff_type')->wherein('eff_id',[$skillData['atk_eff_id'],$skillData['self_buff_eff_id'],$skillData['enemy_buff_eff_id']])->get();
-	// return $effData;
-
- //  }
-/*
 /*2018.04.27 edition*/
 	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid){
 
@@ -248,7 +237,9 @@ class AttackHitUtil
             $enemyY_from=$start_y+$effs['BR_y'];
             $enemyX_to=$start_x+$effs['BR_x']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y'];
+            Log::info(' hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction)
       }
+
     }
 				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
@@ -453,7 +444,6 @@ class AttackHitUtil
   		if($enemyData['skill']['skill_group']==1||$enemyData['skill']['skill_group']==5||$enemyData['skill']['skill_group']==6){
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
-			Log::info('enemyDMG'.$enemyDMG);
 			$hpMax=$chardata['ch_hp_max'];
 			$chardata['ch_hp_max']=round($hpMax-$enemyDMG);
 			if($chardata['ch_hp_max']<0){
