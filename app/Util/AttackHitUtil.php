@@ -242,7 +242,7 @@ class AttackHitUtil
             $enemyY_from=$start_y+$effs['BR_y'];
             $enemyX_to=$start_x+$effs['BR_x']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y'];
-            Log::info(' hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction)
+            Log::info(' hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
       }
 
     }
@@ -293,7 +293,7 @@ class AttackHitUtil
   		foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff->eff_element_id) {
           case 1: 
-                  
+
                   $result['TL_x'] =$each_eff->eff_value; 
                        break;
           case 2: 
@@ -423,7 +423,7 @@ class AttackHitUtil
                   $result['eff_duration'] =$each_eff->eff_value;
                        break;
           case 44: 
-                  $result['eff_spead'] =$each_eff->eff_value;
+                  $result['eff_speed'] =$each_eff->eff_value;
                        break;
           case 45: 
                   $result['eff_interval'] =$each_eff->eff_value;
