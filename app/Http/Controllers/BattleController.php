@@ -493,19 +493,9 @@ public function battleNew($data,$clientInfo){
  	 }
 
  	 public function testBattle(Request $request){
- 	 	$characterModel=new CharacterModel();
- 	 	$header=$request->header('Content-Type');
- 		$req=$request->getContent();
-		$json=base64_decode($req);
-	 	$now   = new DateTime;
-		$dmy=$now->format( 'Ymd' );
-		$data=json_decode($json,TRUE);
-		$clientInfo['address']='1111';
-		$clientInfo['port']=2;
-		$u_id=$data['u_id'];
-
-		$charData=$characterModel->where('u_id',$u_id)->first();
-		$result=$this->battleNew($data,$clientInfo);
+ 	 	$attackhitutil=new AttackHitUtil();
+ 	 	$result->$attackhitutil->getEffValueBytype(1);
+		//$result=$this->battleNew($data,$clientInfo);
 		var_dump($result);
  	 }
 
