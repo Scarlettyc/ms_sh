@@ -136,7 +136,7 @@ class LoadBattleController extends Controller
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-        $effs= $attackHitUtil->getEffValue($skill->skill_id);
+        $effs= $attackHitUtil->getEffValueBytype($skill->skill_id);
         return $effs;
     }
 }
