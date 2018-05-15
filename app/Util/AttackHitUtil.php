@@ -215,7 +215,7 @@ class AttackHitUtil
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
-
+    Log::info("find attack".$skill_id);
 		// if($skill_damage==1){
 			if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
@@ -227,9 +227,9 @@ class AttackHitUtil
       //   }
       // }
        if($skill_damage==2){
+        Log::info('test damge'.$skill_damage);
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
-            Log::info('fly_toolsJson'.$fly_toolsJson);
           $fly_toolsData=json_decode($fly_toolsJson,TRUE);
           $occur_time=$fly_toolsData['occur_time'];
           $start_x=$fly_toolsData['start_x'];
@@ -244,8 +244,6 @@ class AttackHitUtil
             $enemyX_to=$start_x+$effs['BR_x']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y'];
       }
-
-    
 
     }
 				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
