@@ -226,6 +226,7 @@ class AttackHitUtil
       //   }
       // }
             Log::info('damage skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
+            $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
        if($skill_damage==2){
           Log::info('test damge'.$skill_damage);
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
