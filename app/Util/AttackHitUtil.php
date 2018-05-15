@@ -63,37 +63,37 @@ class AttackHitUtil
 
 
 
-	public function getconstantEff($skill_id,$occurtime,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction,$constantEff){
-		$atkEffModel=new AtkEffectionMst();
-		$skillModel=new SkillMstModel();
-		$buffEffModel= new BuffEffectionMst();
-		if($clientID>$enemy_clientId){
-			$user['x']=-$user['x'];
-		}
-		if(isset($constantEff['enemy_buff_eff_id'])&&time()-$occurtime<$constantEff['enemy_buff_constant_time']){
-			$result['enemy_buff']=$this->buffStatus($constantEff['enemy_buff_eff_id']);
+	// public function getconstantEff($skill_id,$occurtime,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction,$constantEff){
+	// 	$atkEffModel=new AtkEffectionMst();
+	// 	$skillModel=new SkillMstModel();
+	// 	$buffEffModel= new BuffEffectionMst();
+	// 	if($clientID>$enemy_clientId){
+	// 		$user['x']=-$user['x'];
+	// 	}
+	// 	if(isset($constantEff['enemy_buff_eff_id'])&&time()-$occurtime<$constantEff['enemy_buff_constant_time']){
+	// 		$result['enemy_buff']=$this->buffStatus($constantEff['enemy_buff_eff_id']);
 
-		}
+	// 	}
 
-		if(isset($constantEff['atk_eff_id'])){
-			$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
-			if($atkEff['eff_skill_move_distance']>0){
-				if($constantEff['start_x']+$atkEff['eff_skill_move_distance']-$user['x']<=2){
-				 if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
- 		 			$result['atkEff']=$atkEff;
-				}
+	// 	if(isset($constantEff['atk_eff_id'])){
+	// 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
+	// 		if($atkEff['eff_skill_move_distance']>0){
+	// 			if($constantEff['start_x']+$atkEff['eff_skill_move_distance']-$user['x']<=2){
+	// 			 if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ // 		 			$result['atkEff']=$atkEff;
+	// 			}
 
-			}
-			else if(time()-$occurtime<$constantEff['atk_constant_time']) {
-				if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
- 		 			$result['atkEff']=$atkEff;
- 		 		}
-			}
-			} 
-		}
-		return 
-                  $result;
-	}
+	// 		}
+	// 		else if(time()-$occurtime<$constantEff['atk_constant_time']) {
+	// 			if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
+ // 		 			$result['atkEff']=$atkEff;
+ // 		 		}
+	// 		}
+	// 		} 
+	// 	}
+	// 	return 
+ //                  $result;
+	// }
 
 	public function buffStatus($buff_id){
 		$buffEff=$buffEffModel->where('eff_id',$buff_id)->first();
@@ -272,7 +272,7 @@ class AttackHitUtil
             $redis_battle->HDEL($fly_tools_key,$skill_id);
             Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
 			   }
-         else if(!$hit&&$skill_damage==2&&$current-$occurtime>$effs['eff_duration']){
+         else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
            $redis_battle->HDEL($fly_tools_key,$skill_id);
          }
          else {
