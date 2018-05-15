@@ -215,7 +215,6 @@ class AttackHitUtil
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
-    Log::info("find attack".$skill_id."skill_damage".$skill_damage);
 		// if($skill_damage==1){
 			if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
@@ -227,10 +226,11 @@ class AttackHitUtil
       //   }
       // }
        if($skill_damage==2){
-        Log::info('test damge'.$skill_damage);
+          Log::info('test damge'.$skill_damage);
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           $fly_toolsData=json_decode($fly_toolsJson,TRUE);
+          Log::info('fly tools'.$fly_toolsJson);
           $occur_time=$fly_toolsData['occur_time'];
           $start_x=$fly_toolsData['start_x'];
           $start_y=$fly_toolsData['start_y'];
@@ -269,12 +269,14 @@ class AttackHitUtil
 
           if($hit&&$skill_damage==2){
             $redis_battle->HDEL($fly_tools_key,$skill_id);
-            // Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
+            Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
 			   }
          else if(!$hit&&$skill_damage==2&&$current-$occurtime>$effs['eff_duration']){
            $redis_battle->HDEL($fly_tools_key,$skill_id);
          }
          else {
+            $redis_battle->HDEL($fly_tools_key,$skill_id);
+            Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
           return $hit;
 		}
   }

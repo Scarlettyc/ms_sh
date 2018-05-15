@@ -216,7 +216,6 @@ public function battleNew($data,$clientInfo){
 		    }
 
 			if(isset($enemyData['skill'])){
-				 Log::info('have enemy skill');
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
