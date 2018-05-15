@@ -225,7 +225,6 @@ class AttackHitUtil
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
       //   }
       // }
-     $redis_battle->HDEL($fly_tools_key,$skill_id);
             Log::info('damage skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
        if($skill_damage==2){
           Log::info('test damge'.$skill_damage);
