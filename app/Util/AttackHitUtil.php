@@ -216,15 +216,17 @@ class AttackHitUtil
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
 		// if($skill_damage==1){
-			if(isset($effs['TL_x'])){
-				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
-			// $enemyX_from=$enemyX+$effs['TL_x'];
-				$enemyY_from=$enemyY+$effs['BR_y'];
-			//$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
-				$enemyX_to=$enemyX+$effs['BR_x']*$enemy_direction;
-				$enemyY_to=$enemyY+$effs['TL_y'];
+			if(isset($effs['TL_x_a'])){
+				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
+			// $enemyX_from=$enemyX+$effs['TL_x_a'];
+				$enemyY_from=$enemyY+$effs['BR_y_a'];
+			//$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
+				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
+				$enemyY_to=$enemyY+$effs['TL_y_a'];
       //   }
       // }
+     $redis_battle->HDEL($fly_tools_key,$skill_id);
+            Log::info('damage skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
        if($skill_damage==2){
           Log::info('test damge'.$skill_damage);
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
@@ -235,14 +237,14 @@ class AttackHitUtil
           $start_x=$fly_toolsData['start_x'];
           $start_y=$fly_toolsData['start_y'];
           $start_direction=$fly_toolsData['start_direction'];
-        if(isset($effs['TL_x'])&&$current-$occurtime<$effs['eff_duration']){
+        if(isset($effs['TL_x_a'])&&$current-$occurtime<$effs['eff_duration']){
           if($current-$occurtime>0){
             $start_x=$start_x+$effs['eff_spead']*($current-$occurtime)*$start_direction;
             }
-            $enemyX_from=$start_x+$effs['TL_x']*$start_direction;
-            $enemyY_from=$start_y+$effs['BR_y'];
-            $enemyX_to=$start_x+$effs['BR_x']*$start_direction;
-            $enemyY_to=$start_y+$effs['TL_y'];
+            $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
+            $enemyY_from=$start_y+$effs['BR_y_a'];
+            $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
+            $enemyY_to=$start_y+$effs['TL_y_a'];
       }
 
     }
