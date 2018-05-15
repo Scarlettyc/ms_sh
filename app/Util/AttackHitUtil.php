@@ -215,7 +215,7 @@ class AttackHitUtil
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
-    Log::info("find attack".$skill_id);
+    Log::info("find attack".$skill_id." "&$skill_damage);
 		// if($skill_damage==1){
 			if(isset($effs['TL_x'])){
 				$enemyX_from=$enemyX+$effs['TL_x']*$enemy_direction;
