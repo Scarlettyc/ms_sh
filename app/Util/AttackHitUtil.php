@@ -475,8 +475,8 @@ class AttackHitUtil
   }
 
   public function checkFlyTools($match_id,$u_id){
-     $redis_battle=Redis::connection('battle');
-     $current=$this->getMillisecond();
+      $redis_battle=Redis::connection('battle');
+      $current=$this->getMillisecond();
       $fly_tools_key='battle_flytools'.$match_id.$u_id;
       $keys=$redis_battle->HKEYS($fly_tools_key);
       $SkillEffDeatilModel=new SkillEffDeatilModel();
