@@ -170,6 +170,8 @@ public function battleNew($data,$clientInfo){
 			if(isset($data['direction'])){
 				$charData['direction']=$data['direction'];
 			}
+			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+
 			if(isset($data['skill_id'])){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
@@ -214,8 +216,10 @@ public function battleNew($data,$clientInfo){
 		    	$charData['x2']=-($charData['x2']);
 		    	$charData['direction']=-($charData['direction']);
 		    }
-
-			if(isset($enemyData['skill'])){
+		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);
+		    $flytoolsJson=json_encode($flytools,TRUE);
+		    Log::info("fly tools".$flytoolsJson);
+			if(isset($enemyData['skill'])||isset($flytools)){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
