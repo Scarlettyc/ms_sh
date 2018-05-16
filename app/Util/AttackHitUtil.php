@@ -488,6 +488,7 @@ class AttackHitUtil
             $occur_time=$flySkill['occur_time'];
             $skillEffs_duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
             if($current-$occur_time<=$skillEffs_duration['eff_value']){
+              $flySkill['skill_id']=$skill_id;
               $flySkills[]=$flySkill;
             }
         }
