@@ -478,6 +478,7 @@ class AttackHitUtil
      $redis_battle=Redis::connection('battle');
       $fly_tools_key='battle_flytools'.$match_id.$u_id;
       $keys=$redis_battle->HKEYS($fly_tools_key);
+      $SkillEffDeatilModel=new SkillEffDeatilModel();
       $flySkills=[];
       if($keys){
         foreach ($keys as $key => $skill_id) {
