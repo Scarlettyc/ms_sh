@@ -228,7 +228,7 @@ public function battleNew($data,$clientInfo){
 					Log::info($charData);
 				}
 			}
-			else if(isset($flytools){
+			else if(isset($flytools)){
 				$skillatkEff->getEffValue($enemyData['skill']['skill_id']);
 			}
 			$result['user_data']=$charData;
