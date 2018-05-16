@@ -482,7 +482,7 @@ class AttackHitUtil
       if($keys){
         foreach ($keys as $key => $skill_id) {
             $flySkill=$redis_battle->HGET($fly_tools_key,$skill_id);
-            $occur_time=$fly_toolsData['occur_time'];
+            $occur_time=$flySkill['occur_time'];
             $skillEffs_duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
             if($current-$occur_time<=$skillEffs_duration['eff_value']){
               $flySkills[]=$flySkill;
