@@ -250,24 +250,28 @@ class AttackHitUtil
     }
 
 				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
             $hit=true;
 					}
+          Log::info("first type");
 				}
 				else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
-					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
               $hit=true;
 						}
+            Log::info("second type");
 					}
 				else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back>=$enemyY_from&&$y_back<=$enemyY_to)){
+					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
               $hit=true;
 					}
+          Log::info("third type");
 				}
 				else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_back<=$enemyY_from&&$y_back>=$enemyY_to)){
+					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
 						$hit=true;
 						}
+            Log::info("fourth type");
 					}
 
           if($hit&&$skill_damage==2){
