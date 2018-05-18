@@ -142,7 +142,7 @@ public function battleNew($data,$clientInfo){
  			$y2=$data['y2'];
  			$u_id=$data['u_id'];
  			$status=$data['status'];//status of user in battle
- 			$current=$attackhitutil->getMillisecond();
+ 			$current=$this->getMillisecond();
  			$characterModel=new CharacterModel();
  			$skillModel=new SkillMstModel();
  			$attackhitutil=new AttackHitUtil();
