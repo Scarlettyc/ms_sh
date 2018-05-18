@@ -234,7 +234,7 @@ class AttackHitUtil
           Log::info('fly tools'.$fly_toolsJson);
           $occur_time=$fly_toolsData['occur_time'];
           $start_x=-($fly_toolsData['start_x']);
-          $start_y=-($fly_toolsData['start_y']);
+          $start_y=($fly_toolsData['start_y']);
           $start_direction=-$fly_toolsData['start_direction'];
         if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
           if($current-$occur_time>0){
@@ -246,6 +246,9 @@ class AttackHitUtil
             $enemyY_to=$start_y+$effs['TL_y_a'];
       }
         Log::info('skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
+        if($enemyX_from<=$x_back&&$enemyX_from>=$x_front||$enemyX_from>=$x_back&&$enemyX_from<=$x_front){
+           $hit=true;
+        }
 
     }
 
