@@ -238,7 +238,7 @@ class AttackHitUtil
           $start_direction=-$fly_toolsData['start_direction'];
         if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
           if($current-$occur_time>0){
-            $start_x=$start_x+$effs['eff_spead']*($current-$occur_time)*$start_direction;
+            $start_x=$start_x+$effs['eff_speed']*($current-$occur_time)*$start_direction;
             }
             $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
             $enemyY_from=$start_y+$effs['BR_y_a'];
