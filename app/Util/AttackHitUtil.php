@@ -205,7 +205,7 @@ class AttackHitUtil
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
 		$effs=$this->findEffFunciton($skillEffs);
 		$defindMst=new DefindMstModel();
-		$current=time();
+		$current=$this->getMillisecond();
 		
 		$defindFront=$defindMst->select('value1','value2')->where('defind_id',9)->first();
 		$defindBack=$defindMst->select('value1','value2')->where('defind_id',11)->first();
@@ -233,9 +233,9 @@ class AttackHitUtil
           $fly_toolsData=json_decode($fly_toolsJson,TRUE);
           Log::info('fly tools'.$fly_toolsJson);
           $occur_time=$fly_toolsData['occur_time'];
-          $start_x=$fly_toolsData['start_x'];
-          $start_y=$fly_toolsData['start_y'];
-          $start_direction=$fly_toolsData['start_direction'];
+          $start_x=-($fly_toolsData['start_x']);
+          $start_y=-($fly_toolsData['start_y']);
+          $start_direction=-$fly_toolsData['start_direction'];
         if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
           if($current-$occur_time>0){
             $start_x=$start_x+$effs['eff_spead']*($current-$occur_time)*$start_direction;
