@@ -221,7 +221,7 @@ public function battleNew($data,$clientInfo){
 		    $flytoolsJson=json_encode($flytools,TRUE);
 		   
 			if(isset($enemyData['skill'])){
-				Log::info($$enemyData['skill']['skill_id']);
+				Log::info($enemyData['skill']['skill_id']);
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
