@@ -199,7 +199,7 @@ class AttackHitUtil
     $redis_battle=Redis::connection('battle');
 	//	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
-   
+    Log::info($enemySkill);
     $skill_id=$enemySkill['skill_id'];
     $skill_damage=$enemySkill['skill_damage'];
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
