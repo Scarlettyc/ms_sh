@@ -514,8 +514,10 @@ public function battleNew($data,$clientInfo){
 
  	 public function testBattle(Request $request){
  	 	$attackhitutil=new AttackHitUtil();
- 	 	$result=$attackhitutil->getEffValueBytype(1);
-		//$result=$this->battleNew($data,$clientInfo);
+ 	 	// $result=$attackhitutil->getEffValueBytype(1);
+ 	 	$clientInfo['address']='11111';
+ 		$clientInfo['port']='1222';
+		$result=$this->battleNew($data,$clientInfo);
 		var_dump($result);
  	 }
 
