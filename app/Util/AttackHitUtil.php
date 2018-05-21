@@ -231,14 +231,14 @@ class AttackHitUtil
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
        if($skill_damage==2){
          
-          $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-          $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
-          $fly_toolsData=json_decode($fly_toolsJson,TRUE);
-          Log::info('fly tools'.$fly_toolsJson);
-          $occur_time=$fly_toolsData['occur_time'];
-          $start_x=-($fly_toolsData['start_x']);
-          $start_y=($fly_toolsData['start_y']);
-          $start_direction=-$fly_toolsData['start_direction'];
+          // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+          // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
+          // $fly_toolsData=json_decode($fly_toolsJson,TRUE);
+          // Log::info('fly tools'.$fly_toolsJson);
+          $occur_time=$enemySkill['occur_time'];
+          $start_x=-($enemySkill['start_x']);
+          $start_y=($enemySkill['start_y']);
+          $start_direction=-$enemySkill['start_direction'];
         if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
           if($current-$occur_time>0){
             $start_x=$start_x+$effs['eff_speed']*($current-$occur_time)*$start_direction;
