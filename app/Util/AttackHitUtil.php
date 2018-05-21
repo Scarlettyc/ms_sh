@@ -499,11 +499,11 @@ class AttackHitUtil
       $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
       $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->pluck('skill_id');
       $special_skills=$skillModel->select('skill_id')->wherein('equ_id',[$userEq['w_id'],$userEq['m_id'],$userEq['core_id']])->pluck('skill_id');
-      var_dump($normal_skills);
-      $skills=array_merge($normal_skills, $special_skills);
+      // var_dump($normal_skills);
+      // $skills=array_merge($normal_skills, $special_skills);
       $fly_tools_key='battle_flytools'.$match_id.$u_id;
       $result=[];
-      foreach ($skills as $key => $skill) {
+      foreach ($normal_skills as $key => $skill) {
         $fly_tools_key=$fly_tools_key.'_'.$skill;
         $haveSkill=$redis_battle->LLEN($fly_tools_key);
         if($haveSkill>0){
@@ -511,6 +511,15 @@ class AttackHitUtil
           $result[]= $skillList;
         }     # code...
       }
+      foreach ($special_skills as $key => $skill) {
+        $fly_tools_key=$fly_tools_key.'_'.$skill;
+        $haveSkill=$redis_battle->LLEN($fly_tools_key);
+        if($haveSkill>0){
+          $skillList=$redis_battle->LRANGE($fly_tools_key,0,$haveSkill);
+          $result[]= $skillList;
+        }     # code...
+      }
+
       return $result;
   }
 
