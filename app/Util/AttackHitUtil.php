@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Redis;
 use Log;
 use App\SkillEffDeatilModel;
 use App\EffElementModel;
+use App\CharacterModel;
+use App\EquipmentMstModel;
 
 
 class AttackHitUtil
@@ -192,7 +194,7 @@ class AttackHitUtil
     } 
 
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$listKey=0){
 
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
@@ -490,21 +492,24 @@ class AttackHitUtil
   public function checkFlyTools($match_id,$u_id){
       $redis_battle=Redis::connection('battle');
       $current=$this->getMillisecond();
+      $CharacterModel=new $CharacterModel();
+      $EquipmentMstModel= new EquipmentMstModel();
+      $userEq=$CharacterModel->select('w_id','m_id','core_id')->where('u_id',$u_id)->first();
+      $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
+      $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->pluck('skill_id');
+      $special_skills=$skillModel->select('skill_id')->wherein('equ_id',[$userEq['w_id'],$userEq['m_id'],$userEq['core_id']])->pluck('skill_id');;
+      $skills=array_merge($normal_skills, $special_skills);
       $fly_tools_key='battle_flytools'.$match_id.$u_id;
-      $keys=$redis_battle->HKEYS($fly_tools_key);
-      $SkillEffDeatilModel=new SkillEffDeatilModel();
-      $flySkills=[];
-      if($keys){
-        foreach ($keys as $key => $skill_id) {
-            $flySkillJson=$redis_battle->HGET($fly_tools_key,$skill_id);
-            Log::info('check fly tools '.$flySkillJson);
-            $flySkill=json_decode($flySkillJson,TRUE);
-              $flySkill['skill_id']=$skill_id;
-              $flySkills[]=$flySkill;
-            // }
-        }
-        return  $flySkills;
+      $result=[];
+      foreach ($skills as $key => $skill) {
+        $fly_tools_key=$fly_tools_key.'_'.$skill;
+        $haveSkill=$redis_battle->LLEN($fly_tools_key);
+        if($haveSkill>0){
+          $skillList=$redis_battle->LRANGE($fly_tools_key,0,$haveSkill);
+          $result[]= $skillList;
+        }     # code...
       }
+      return $result;
   }
 
 }
