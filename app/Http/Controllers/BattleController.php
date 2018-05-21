@@ -243,9 +243,9 @@ public function battleNew($data,$clientInfo){
 			}
 			if(isset($flytools)){
 				 Log::info("fly tools".$flytoolsJson);
-				 foreach ($flytools as $key => $flytool) {
+				 foreach ($flytools as $skill => $flytool) {
 				 	foreach ($flytool as $key => $eachskill) 
-				 	{
+				 	{	$eachskill['skill_id']=$skill;
 				 		$hit=$attackhitutil->checkSkillHit($eachskill,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				 	if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($flytool['skill_id']);
