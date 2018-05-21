@@ -492,7 +492,7 @@ class AttackHitUtil
   public function checkFlyTools($match_id,$u_id){
       $redis_battle=Redis::connection('battle');
       $current=$this->getMillisecond();
-      $CharacterModel=new $CharacterModel();
+      $CharacterModel=new CharacterModel();
       $EquipmentMstModel= new EquipmentMstModel();
       $userEq=$CharacterModel->select('w_id','m_id','core_id')->where('u_id',$u_id)->first();
       $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
