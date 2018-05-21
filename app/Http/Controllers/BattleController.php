@@ -195,7 +195,6 @@ public function battleNew($data,$clientInfo){
 							$flytools['start_direction']=$data['direction'];
 							$flySkillJson=json_encode($flytools);
 							$redis_battle->LPUSH($fly_tools_key.'_'.$data['skill_id'],$flySkillJson);
-						  	Log::info('fly tools');
 							}
 					}
 				}

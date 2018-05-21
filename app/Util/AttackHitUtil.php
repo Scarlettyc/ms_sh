@@ -231,15 +231,15 @@ class AttackHitUtil
       // }
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-       if($skill_damage==2){
+       if($skill_damage==2&&$enemySkill){
          
           // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           // $fly_toolsData=json_decode($fly_toolsJson,TRUE);
         $battleData=json_encode($enemySkill,TRUE);
            Log::info('enemy_skill'.$battleData);
-         // $occur_time=$enemySkill['occur_time'];
-          $occur_time=$current;
+         $occur_time=$enemySkill['occur_time'];
+          //$occur_time=$current;
           $start_x=-($enemySkill['start_x']);
           $start_y=($enemySkill['start_y']);
           $start_direction=-$enemySkill['start_direction'];
