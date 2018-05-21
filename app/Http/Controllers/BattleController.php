@@ -195,16 +195,16 @@ public function battleNew($data,$clientInfo){
 							$flytools['start_direction']=$data['direction'];
 							$hasSkillB4=$redis_battle->HGET($fly_tools_key,$data['skill_id']);
 							$flySkillB4=json_decode($hasSkillB4,TRUE);
-							// if(!isset($flySkillB4)){
-							$flySkillB4[]=$flytools;
-							$flySkillJson=json_encode($flySkillB4,TRUE);	
-							$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
-							// }
-							// else{
-							// 	$flySkillB4[]=$flytools;
-							// 	$flySkillJson=json_encode($flySkillB4,TRUE);	
-							// 	$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
-							// }
+							if(!isset($flySkillB4)){
+								$flySkillB4[]=$flytools;
+								$flySkillJson=json_encode($flySkillB4,TRUE);	
+								$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
+							}
+							else{
+								$result[]=$flytools;
+								$flySkillJson=json_encode($result,TRUE);	
+								$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
+							}
 						  	Log::info('fly tools');
 							}
 					}
