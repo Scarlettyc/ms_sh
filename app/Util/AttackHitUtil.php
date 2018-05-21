@@ -192,20 +192,16 @@ class AttackHitUtil
     } 
 
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$enemy_skill_id=null){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid){
 
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
 	//	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
-    if($skill_damage!=2){
-      $skill_id=$enemySkill['skill_id'];
-     }
-     else{
-       $skill_id=$enemy_skill_id;
-     }
-		$skill_damage=$enemySkill['skill_damage'];
+    $skill_damage=$enemySkill['skill_damage'];
+    $skill_id=$enemySkill['skill_id'];
+
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
 		// $skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();

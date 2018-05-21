@@ -187,6 +187,7 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
 						if($skill['skill_damage']==2){
+							$flytools['skill_id']=$skill['skill_id'];
 							$flytools['skill_damage']=$skill['skill_damage'];
 							$flytools['occur_time']=$current;
 							$flytools['start_x']=$x;
@@ -245,7 +246,7 @@ public function battleNew($data,$clientInfo){
 				 Log::info("fly tools".$flytoolsJson);
 				 foreach ($flytools as $skill => $flytool) {
 				 	foreach ($flytool as $key => $eachskill) 
-				 	{	$hit=$attackhitutil->checkSkillHit($eachskill,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$skill);
+				 	{	$hit=$attackhitutil->checkSkillHit($eachskill,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				 	if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($flytool['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
