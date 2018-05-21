@@ -514,6 +514,9 @@ public function battleNew($data,$clientInfo){
 
  	 public function testBattle(Request $request){
  	 	$attackhitutil=new AttackHitUtil();
+ 	 	$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
  	 	// $result=$attackhitutil->getEffValueBytype(1);
  	 	$clientInfo['address']='11111';
  		$clientInfo['port']='1222';
