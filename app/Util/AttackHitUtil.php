@@ -199,9 +199,9 @@ class AttackHitUtil
     $redis_battle=Redis::connection('battle');
 	//	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
-    $skill_damage=$enemySkill['skill_damage'];
+   
     $skill_id=$enemySkill['skill_id'];
-
+    $skill_damage=$enemySkill['skill_damage'];
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
 		// $skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
