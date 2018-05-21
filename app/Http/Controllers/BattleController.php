@@ -187,15 +187,24 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
 						if($skill['skill_damage']==2){
-						$flytools['skill_damage']=$skill['skill_damage'];
-						$flytools['occur_time']=$current;
-						$flytools['start_x']=$x;
-						$flytools['start_y']=$y;
-						$flytools['start_direction']=$data['direction'];
-						$flytoolsJson=json_encode($flytools,TRUE);
-						$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flytoolsJson);
-						  Log::info('fly tools');
-						}
+							$flytools['skill_damage']=$skill['skill_damage'];
+							$flytools['occur_time']=$current;
+							$flytools['start_x']=$x;
+							$flytools['start_y']=$y;
+							$flytools['start_direction']=$data['direction'];
+							$hasSkillB4=$redis_battle->HGET($fly_tools_key,$data['skill_id']);
+							$flySkillB4=json_decode($hasSkillB4,TRUE);
+							if(!isset($flySkillB4)){
+								$flySkillB4[]=$flytools;
+								$flySkillJson=json_encode($flySkillB4,TRUE);	
+								$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
+							}
+							else{
+								$flySkillJson=json_encode($flytools,TRUE);
+								$redis_battle->HSET($fly_tools_key,$data['skill_id'],$flySkillJson);
+							}
+						  	Log::info('fly tools');
+							}
 					}
 				}
 			}
@@ -235,12 +244,14 @@ public function battleNew($data,$clientInfo){
 			if(isset($flytools)){
 				 Log::info("fly tools".$flytoolsJson);
 				 foreach ($flytools as $key => $flytool) {
-				 	$hit=$attackhitutil->checkSkillHit($flytool,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
+				 	for($i=0;$i<count($flytool);$i++){
+				 	$hit=$attackhitutil->checkSkillHit($flytool[$i],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				 	if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($flytool['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
 					Log::info($charData);
+					}
 				 	}
 				 }	
 			}
