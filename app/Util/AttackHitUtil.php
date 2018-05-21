@@ -237,7 +237,8 @@ class AttackHitUtil
           // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           // $fly_toolsData=json_decode($fly_toolsJson,TRUE);
            //Log::info('fly tools'.$fly_toolsJson);
-          $occur_time=$enemySkill['occur_time'];
+         // $occur_time=$enemySkill['occur_time'];
+          $occur_time=$current;
           $start_x=-($enemySkill['start_x']);
           $start_y=($enemySkill['start_y']);
           $start_direction=-$enemySkill['start_direction'];
