@@ -197,7 +197,7 @@ class AttackHitUtil
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
-		$skill_id=$enemySkill['skill_id'];
+	//	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
 		$skill_damage=$enemySkill['skill_damage'];
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
