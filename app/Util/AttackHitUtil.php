@@ -231,7 +231,7 @@ class AttackHitUtil
       // }
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-       if($skill_damage==2&&$enemySkill){
+       if($skill_damage==2&&isset($enemySkill['occur_time']){
          
           // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
