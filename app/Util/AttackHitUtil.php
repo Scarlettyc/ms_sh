@@ -199,6 +199,12 @@ class AttackHitUtil
     $redis_battle=Redis::connection('battle');
 	//	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
+    if($skill_damage!=2){
+      $skill_id=$enemySkill['skill_id'];
+     }
+     else{
+       $skill_id=$enemy_skill_id;
+     }
 		$skill_damage=$enemySkill['skill_damage'];
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
 		// $skill_atk_time=$enemySkill['skill_atk_time'];
@@ -215,9 +221,7 @@ class AttackHitUtil
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
-		 if($skill_damage!=2){
-      $skill_id=$enemySkill['skill_id'];
-     }
+
 			if(isset($effs['TL_x_a'])){
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 			// $enemyX_from=$enemyX+$effs['TL_x_a'];
@@ -230,7 +234,7 @@ class AttackHitUtil
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
        if($skill_damage==2){
-          $skill_id=$enemy_skill_id;
+         
           $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           $fly_toolsData=json_decode($fly_toolsJson,TRUE);
