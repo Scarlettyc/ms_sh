@@ -494,6 +494,7 @@ class AttackHitUtil
       $current=$this->getMillisecond();
       $CharacterModel=new CharacterModel();
       $EquipmentMstModel= new EquipmentMstModel();
+      $skillModel=new SkillMstModel();
       $userEq=$CharacterModel->select('w_id','m_id','core_id')->where('u_id',$u_id)->first();
       $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
       $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->pluck('skill_id');
