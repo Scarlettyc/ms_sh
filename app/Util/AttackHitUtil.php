@@ -222,7 +222,8 @@ class AttackHitUtil
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
 
-			if(isset($effs['TL_x_a'])){
+			if(isset($effs['TL_x_a']))
+      {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 			// $enemyX_from=$enemyX+$effs['TL_x_a'];
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
@@ -233,14 +234,15 @@ class AttackHitUtil
       // }
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-       if($skill_damage==2&&isset($enemySkill['occur_time'])){
+          if($skill_damage==2&&isset($enemySkill['occur_time']))
+          {
         //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
          
           // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
           // $fly_toolsData=json_decode($fly_toolsJson,TRUE);
-        $battleData=json_encode($enemySkill,TRUE);
-        $occur_time=$enemySkill['occur_time'];
+          $battleData=json_encode($enemySkill,TRUE);
+          $occur_time=$enemySkill['occur_time'];
           //$occur_time=$current;
           $start_x=-($enemySkill['start_x']);
           $start_y=($enemySkill['start_y']);
@@ -253,25 +255,26 @@ class AttackHitUtil
             $enemyY_from=$start_y+$effs['BR_y_a'];
             $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y_a'];
-      }
-        if($y_font<$y_back){
-          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-           $hit=true;
-        }
-        else if($y_font>$y_back){
-          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
-           $hit=true;
-        }
+            }
+          if($y_font<$y_back){
+            if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+            $hit=true;
+           }
+          else if($y_font>$y_back){
+             if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+                    $hit=true;
+                }
 
-     }
-    }
-    else{
+                }
+              }
+             }
+        else{
 
-				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+				  if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
             $hit=true;
-					}
-				}
+					 }
+			   	}
 				else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
 					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
               $hit=true;
