@@ -254,11 +254,17 @@ class AttackHitUtil
             $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y_a'];
       }
-        if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font=$enemyY_from||$enemyX_from>=$x_back&&$enemyX_from<=$x_front){
+        if($y_font<$y_back){
+          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to&&||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+           $hit=true;
+        }
+        else if($y_font>$y_back){
+          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to&&||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
            $hit=true;
         }
 
     }
+    else{
 
 				if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
@@ -280,23 +286,24 @@ class AttackHitUtil
 						$hit=true;
 						}
 					}
+        }
 
-      //     if($hit&&$skill_damage==2){
-      //      // $redis_battle->HDEL($fly_tools_key,$skill_id);
-      //       Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
-			   // }
-      //    else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
-      //      //$redis_battle->HDEL($fly_tools_key,$skill_id);
-      //       Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
-      //    }
-      //    else if(!$hit&&$skill_damage==2&&$current-$occur_time<=$effs['eff_duration']){
-      //       Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
-      //    }
-      //    else {
-      //       Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
+          if($hit&&$skill_damage==2){
+            $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+            // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
+			   }
+         else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
+           $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+            // Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
+         }
+         // else if(!$hit&&$skill_damage==2&&$current-$occur_time<=$effs['eff_duration']){
+         //    Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
+         // }
+         // else {
+         //    Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
         
-	     //   	}
-      //      Log::info('all skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
+	       	// }
+         //   Log::info('all skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
       return $hit;
   }
 	}
