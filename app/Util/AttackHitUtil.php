@@ -528,6 +528,6 @@ class AttackHitUtil
           # code...
         }
       return $result;
+    }
   }
-
 }
