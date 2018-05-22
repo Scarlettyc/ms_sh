@@ -531,7 +531,7 @@ class AttackHitUtil
       //   $result[]= $normal_skills;
        
       // }
-        $fly_tools_key_sp=$fly_tools_key.'_'.224;
+        $fly_tools_key_sp=$fly_tools_key.'_224';
         $this->clearOutOftime($match_id,$u_id,224);
         $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
         $result[]= $speical_skills;
