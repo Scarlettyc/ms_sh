@@ -263,6 +263,7 @@ class AttackHitUtil
            $hit=true;
         }
 
+     }
     }
     else{
 
@@ -305,7 +306,7 @@ class AttackHitUtil
 	       	// }
          //   Log::info('all skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
       return $hit;
-  }
+    }
 	}
 
   public function getEffValueBytype($skill_id){
