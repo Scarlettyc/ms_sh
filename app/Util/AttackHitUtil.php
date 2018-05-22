@@ -255,7 +255,7 @@ class AttackHitUtil
             $enemyY_to=$start_y+$effs['TL_y_a'];
       }
         if($y_font<$y_back){
-          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to&&||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
            $hit=true;
         }
         else if($y_font>$y_back){
