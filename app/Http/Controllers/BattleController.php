@@ -186,10 +186,10 @@ public function battleNew($data,$clientInfo){
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
 						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
 						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
-						$charData['skill']['occur_time']=$current;
-						$charData['skill']['start_x']=$x;
-						$charData['skill']['start_y']=$y;
-						$charData['skill']['start_direction']=$data['direction'];
+						// $charData['skill']['occur_time']=$current;
+						// $charData['skill']['start_x']=$x;
+						// $charData['skill']['start_y']=$y;
+						// $charData['skill']['start_direction']=$data['direction'];
 						if($skill['skill_damage']==2){
 							// Log::info('damage 2');
 							$flytools['skill_id']=$skill['skill_id'];
