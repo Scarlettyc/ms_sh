@@ -522,7 +522,7 @@ class AttackHitUtil
 
       // var_dump($normal_skills);
       // $skills=array_merge($normal_skills, $special_skills);
-      // $fly_tools_key='battle_flytools'.$match_id.$u_id;
+      $fly_tools_key='battle_flytools'.$match_id.$u_id;
       // $result=[];
       // foreach ($normal_skills as $key => $skill) {
       //   $fly_tools_key=$fly_tools_key.'_'.$skill['skill_id'];
