@@ -515,26 +515,18 @@ class AttackHitUtil
       $CharacterModel=new CharacterModel();
       $EquipmentMstModel= new EquipmentMstModel();
       $skillModel=new SkillMstModel();
-      // $userEq=$CharacterModel->select('w_id')->where('u_id',$u_id)->first();
-      // $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
-      // $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
-      // $special_skills=$skillModel->select('skill_id')->where('equ_id',$userEq['w_id'])->first('skill_id');
-
-      // var_dump($normal_skills);
-      // $skills=array_merge($normal_skills, $special_skills);
-      $fly_tools_key='battle_flytools'.$match_id.$u_id;
-      // $result=[];
-      // foreach ($normal_skills as $key => $skill) {
-      //   $fly_tools_key=$fly_tools_key.'_'.$skill['skill_id'];
-      //    $this->clearOutOftime($match_id,$u_id,$skill['skill_id']);
-      //   $normal_skills=$redis_battle->HVALS($fly_tools_key);
-      //   $result[]= $normal_skills;
-       
-      // }
-        $fly_tools_key_sp=$fly_tools_key.'_224';
-        $this->clearOutOftime($match_id,$u_id,224);
-        $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
-        $result[]= $speical_skills;
+      $skill_keys='battle_user_skills_'.$u_id;
+      $all_skills=$redis_battle->LRANGE($skill_key,0,-1);
+      $result=[];
+      if(isset($all_skills)){
+        foreach ($all_skills as $key => $skill) {
+          $fly_tools_key='battle_flytools'.$match_id.$u_id;
+          $fly_tools_key_sp=$fly_tools_key.'_'.$skill;
+          $this->clearOutOftime($match_id,$u_id,$skill);
+          $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
+          $result[]= $speical_skills;
+          # code...
+        }
       return $result;
   }
 

@@ -68,6 +68,7 @@ class LoadBattleController extends Controller
  	    $skillModel=new SkillMstModel();
         $UserBaggageEqModel=new UserBaggageEqModel();
     	$charData=$charaM->where('u_id',$u_id)->first();
+        $redis_battle=Redis::connection('battle');
         $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
         $charRe['ch_title']=$charData['ch_title'];
@@ -86,10 +87,13 @@ class LoadBattleController extends Controller
         $special_skill=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
         $core_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
         $movement_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
+        $skill_keys='battle_user_skills_'.$u_id;
          foreach ($normal_skills as $key =>$eachSkill){
             $eachSkill['skill_effs']=$this->getEffs($eachSkill);
             $result['normal_skills'][]=$eachSkill;
+            $redis_battle->LPUSH($skill_keys,$eachSkill['skill_id']);
          }
+        $redis_battle->LPUSH($skill_keys,$special_skill['skill_id']);
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
         $move_effs=$this->getEffs($movement_skill);
