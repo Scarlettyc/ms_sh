@@ -516,7 +516,7 @@ class AttackHitUtil
       $EquipmentMstModel= new EquipmentMstModel();
       $skillModel=new SkillMstModel();
       $skill_keys='battle_user_skills_'.$u_id;
-      $all_skills=$redis_battle->LRANGE($skill_keys,0,-1);
+      $all_skills=$redis_battle->HKEYS($skill_keys);
       $result=[];
       if(isset($all_skills)){
         foreach ($all_skills as $key => $skill) {
