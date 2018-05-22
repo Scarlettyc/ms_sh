@@ -516,13 +516,14 @@ class AttackHitUtil
       $EquipmentMstModel= new EquipmentMstModel();
       $skillModel=new SkillMstModel();
       $skill_keys='battle_user_skills_'.$u_id;
-      $all_skills=$redis_battle->HKEYS($skill_keys);
+      //$all_skills=$redis_battle->HKEYS($skill_keys);
+      $all_skills=[224,225,226,227];
       $result=[];
       if(isset($all_skills)){
         foreach ($all_skills as $key => $skill) {
           $fly_tools_key='battle_flytools'.$match_id.$u_id;
           $fly_tools_key_sp=$fly_tools_key.'_'.$skill;
-          $this->clearOutOftime($match_id,$u_id,$skill);
+          // $this->clearOutOftime($match_id,$u_id,$skill);
           $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
           $result[]= $speical_skills;
           # code...
