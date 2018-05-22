@@ -526,11 +526,14 @@ class AttackHitUtil
       $result=[];
       foreach ($normal_skills as $key => $skill) {
         $fly_tools_key=$fly_tools_key.'_'.$skill['skill_id'];
-        $normal_skills=$redis_battle->HGETALL($fly_tools_key);
+         $this->clearOutOftime($match_id,$u_id,$skill['skill_id']);
+        $normal_skills=$redis_battle->HVALS($fly_tools_key);
         $result[]= $normal_skills;
+       
       }
         $fly_tools_key_sp=$fly_tools_key.'_'.$special_skills['skill_id'];
-        $speical_skills=$redis_battle->HGETALL($fly_tools_key_sp);
+        $this->clearOutOftime($match_id,$u_id,$speical_skills['skill_id']);
+        $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
         $result[]= $speical_skills;
       return $result;
   }

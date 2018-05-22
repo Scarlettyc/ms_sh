@@ -175,7 +175,6 @@ public function battleNew($data,$clientInfo){
 			//$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
 
 			if(isset($data['skill_id'])){
-				$attackhitutil->clearOutOftime($match_id,$u_id,$data['skill_id']);
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
