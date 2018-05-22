@@ -204,7 +204,7 @@ class AttackHitUtil
 
     $skill_id=$enemySkill['skill_id'];
     $skill_damage=$enemySkill['skill_damage'];
-    $this->clearOutOftime($match_id,$enemy_uid,$skill_id);
+    //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
 		// $skill_atk_time=$enemySkill['skill_atk_time'];
 		$skillEffs=$SkillEffDeatilModel->where('skill_id',$skill_id)->get();
@@ -234,6 +234,7 @@ class AttackHitUtil
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
        if($skill_damage==2&&isset($enemySkill['occur_time'])){
+        //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
          
           // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
           // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
