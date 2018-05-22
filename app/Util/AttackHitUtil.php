@@ -491,6 +491,24 @@ class AttackHitUtil
 
   }
 
+  public function clearOutOftime($match_id,$u_id,$skill_id){
+     $redis_battle=Redis::connection('battle');
+     $EquipmentMstModel= new EquipmentMstModel();
+     $SkillEffDeatilModel=new SkillEffDeatilModel();
+     $current=$this->getMillisecond();
+     $skillEffs=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
+     $eff_duration=$skillEffs['eff_value'];
+ 
+     $fly_tools_key='battle_flytools'.$match_id.$u_id;
+     $ocurrTimeList=$redis_battle->HKEYS($fly_tools_key.$skill_id);
+     if(isset($ocurrTimeList)){
+     foreach ( $ocurrTimeList as $occurtime){
+        if($current-$occurtime>$eff_duration){
+           $redis_battle->HDEL($fly_tools_key.$skill_id,$occurtime);
+        }
+     }
+   }
+  }
   public function checkFlyTools($match_id,$u_id){
       $redis_battle=Redis::connection('battle');
       $current=$this->getMillisecond();
@@ -499,29 +517,21 @@ class AttackHitUtil
       $skillModel=new SkillMstModel();
       $userEq=$CharacterModel->select('w_id')->where('u_id',$u_id)->first();
       $eqData=$EquipmentMstModel->select('equ_group')->where('equ_id',$userEq['w_id'])->first();
-      $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->pluck('skill_id');
-      $special_skills=$skillModel->select('skill_id')->where('equ_id',$userEq['w_id'])->pluck('skill_id');
+      $normal_skills=$skillModel->select('skill_id')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
+      $special_skills=$skillModel->select('skill_id')->where('equ_id',$userEq['w_id'])->first('skill_id');
+
       // var_dump($normal_skills);
       // $skills=array_merge($normal_skills, $special_skills);
       $fly_tools_key='battle_flytools'.$match_id.$u_id;
       $result=[];
       foreach ($normal_skills as $key => $skill) {
-        $fly_tools_key=$fly_tools_key.'_'.$skill;
-        $haveSkill=$redis_battle->LLEN($fly_tools_key);
-        if($haveSkill>0){
-          $skillList=$redis_battle->LRANGE($fly_tools_key,0,$haveSkill);
-          $result[]= $skillList;
-        }     # code...
+        $fly_tools_key=$fly_tools_key.'_'.$skill['skill_id'];
+        $normal_skills=$redis_battle->HGETALL($fly_tools_key);
+        $result[]= $normal_skills;
       }
-      foreach ($special_skills as $key => $skill) {
-        $fly_tools_key=$fly_tools_key.'_'.$skill;
-        $haveSkill=$redis_battle->LLEN($fly_tools_key);
-        if($haveSkill>0){
-          $skillList=$redis_battle->LRANGE($fly_tools_key,0,$haveSkill);
-          $result[]= $skillList;
-        }     # code...
-      }
-
+        $fly_tools_key_sp=$fly_tools_key.'_'.$special_skills['skill_id'];
+        $speical_skills=$redis_battle->HGETALL($fly_tools_key_sp);
+        $result[]= $speical_skills;
       return $result;
   }
 
