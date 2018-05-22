@@ -205,7 +205,6 @@ public function battleNew($data,$clientInfo){
 					}
 				}
 			}
-			if(isset($charData['skill']['skill_id']))
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
 
 		
