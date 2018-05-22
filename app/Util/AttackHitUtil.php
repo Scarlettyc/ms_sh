@@ -259,7 +259,7 @@ class AttackHitUtil
            $hit=true;
         }
         else if($y_font>$y_back){
-          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to&&||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+          if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
            $hit=true;
         }
 
