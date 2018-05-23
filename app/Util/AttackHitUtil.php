@@ -494,7 +494,7 @@ class AttackHitUtil
 			}
   		}
   		else if ($enemyData['skill']['skill_group']=2){
-  			$enemy_atk=$enemyData['ch_atk']*$atkeff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
+  			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
  	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
  	 		$hpMax=$chardata['ch_hp_max'];
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
