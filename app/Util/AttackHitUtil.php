@@ -199,7 +199,7 @@ class AttackHitUtil
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
-	//	$skill_id=$enemySkill['skill_id'];
+	   //	$skill_id=$enemySkill['skill_id'];
 		//$skill_group=$enemySkill['skill_group'];
 
     $skill_id=$enemySkill['skill_id'];
@@ -234,7 +234,7 @@ class AttackHitUtil
       // }
       
             $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-          if($skill_damage==2&&isset($enemySkill['occur_time']))
+        if($skill_damage==2&&isset($enemySkill['occur_time']))
           {
         //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
          
@@ -256,6 +256,9 @@ class AttackHitUtil
             $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
             $enemyY_to=$start_y+$effs['TL_y_a'];
             }
+
+             Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
+
           if($y_font<$y_back){
             if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
             $hit=true;
@@ -267,8 +270,7 @@ class AttackHitUtil
 
                 }
               }
-             }
-        else{
+            }
 
 				  if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
 					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
@@ -290,7 +292,6 @@ class AttackHitUtil
 						$hit=true;
 						}
 					}
-        }
 
           if($hit&&$skill_damage==2){
             $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);

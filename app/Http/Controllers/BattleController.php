@@ -172,7 +172,7 @@ public function battleNew($data,$clientInfo){
 			if(isset($data['direction'])){
 				$charData['direction']=$data['direction'];
 			}
-			//$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
 
 			if(isset($data['skill_id'])){
 			
