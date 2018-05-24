@@ -154,7 +154,7 @@ public function battleNew($data,$clientInfo){
  			$match_id=$battleData['match_id'];
  			$clientId=$battleData['client'];
  			$map_id=$battleData['map_id'];
- 			$battlekey='battle_data'.$match_id.'_'.$u_id;
+ 			$battlekey=$match_id.'_'.$u_id;
  			$enemy_clientId=$battleData['enmey_client'];
  			$charData=$this->mapingData($match_id,$u_id,1,$x,$y);
  			$charData['x']=$x;		
@@ -271,7 +271,7 @@ public function battleNew($data,$clientInfo){
 			}	
 
 			$charJson=json_encode($charData);
-			$redis_battle->LPUSH($battlekey,$charJson);
+			$redis_battle->HSET($battlekey,$current,$charJson);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
