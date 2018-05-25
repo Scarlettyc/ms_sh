@@ -188,7 +188,7 @@ class AttackHitUtil
 		$y_font=$y+$defindFront['value2'];
 		$y_back=$y+$defindBack['value2'];
     $hit=false;
-    $displacement_key='displacement'.$match_id.$u_id;
+    
 
 			if(isset($effs['TL_x_a']))
       {
@@ -198,6 +198,7 @@ class AttackHitUtil
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
 
         $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+        $displacement_key='displacement'.$match_id.$enemy_uid;
         if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
           $occur_time=$enemySkill['occur_time'];
@@ -278,7 +279,7 @@ class AttackHitUtil
           if($hit&&$skill_damage==6){
           $redis_battle->HDEL($displacement_key,$skill_id);
           }
-          
+
           if($hit&&$skill_damage==2){
             $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
             // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
