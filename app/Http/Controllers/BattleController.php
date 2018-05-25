@@ -259,7 +259,7 @@ public function battleNew($data,$clientInfo){
 				 }	
 			}
 			if(isset($displacement)){
-				foreach ($displacement as $key => $skill) {
+				foreach ($displacement as $key => $eachskillData) {
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
