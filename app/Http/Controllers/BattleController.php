@@ -207,6 +207,7 @@ public function battleNew($data,$clientInfo){
 							$displacement['start_x']=$x;
 							$displacement['start_y']=$y;
 							$displacement['start_direction']=$data['direction'];
+							$displacement['skill_damage']=$data['skill_damage'];
 							$displacementJson=json_encode($displacement);
 							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
