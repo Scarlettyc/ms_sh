@@ -64,39 +64,6 @@ class AttackHitUtil
 	}
 
 
-
-	// public function getconstantEff($skill_id,$occurtime,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction,$constantEff){
-	// 	$atkEffModel=new AtkEffectionMst();
-	// 	$skillModel=new SkillMstModel();
-	// 	$buffEffModel= new BuffEffectionMst();
-	// 	if($clientID>$enemy_clientId){
-	// 		$user['x']=-$user['x'];
-	// 	}
-	// 	if(isset($constantEff['enemy_buff_eff_id'])&&time()-$occurtime<$constantEff['enemy_buff_constant_time']){
-	// 		$result['enemy_buff']=$this->buffStatus($constantEff['enemy_buff_eff_id']);
-
-	// 	}
-
-	// 	if(isset($constantEff['atk_eff_id'])){
-	// 		$atkEff=$atkEffModel->where('atk_eff_id',$skillData['atk_eff_id'])->first();
-	// 		if($atkEff['eff_skill_move_distance']>0){
-	// 			if($constantEff['start_x']+$atkEff['eff_skill_move_distance']-$user['x']<=2){
-	// 			 if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
- // 		 			$result['atkEff']=$atkEff;
-	// 			}
-
-	// 		}
-	// 		else if(time()-$occurtime<$constantEff['atk_constant_time']) {
-	// 			if(abs($user_direction*$user['x']-($enemy_direction)*$enemy['x'])<=$atkEff['eff_skill_hit_width']&&abs($user['y']-$enemy['y'])<=$atkEff['eff_skill_hit_width']){
- // 		 			$result['atkEff']=$atkEff;
- // 		 		}
-	// 		}
-	// 		} 
-	// 	}
-	// 	return 
- //                  $result;
-	// }
-
 	public function buffStatus($buff_id){
 		$buffEff=$buffEffModel->where('eff_id',$buff_id)->first();
 		switch ($buffEff['eff_buff_type']) {
@@ -225,22 +192,33 @@ class AttackHitUtil
 			if(isset($effs['TL_x_a']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
-			// $enemyX_from=$enemyX+$effs['TL_x_a'];
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
-			//$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
-      //   }
-      // }
-      
-            $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+
+        $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+        if($skill_damage==6||isset($enemySkill['displacement_distance'])){
+          $battleData=json_encode($enemySkill,TRUE);
+          $occur_time=$enemySkill['occur_time'];
+          //$occur_time=$current;
+          $start_x=-($enemySkill['start_x']);
+          $start_y=($enemySkill['start_y']);
+          $start_direction=-$enemySkill['start_direction'];
+          if(!isset($effs['eff_duration'])){
+            $effs['eff_duration']=0;
+          }
+          if(isset($effs['TL_x_a'])&&$current-$occur_time==$effs['eff_duration']){
+            $battleData=json_encode($enemySkill,TRUE);
+            $occur_time=$enemySkill['occur_time'];
+          //$occur_time=$current;
+            $start_x=-($enemySkill['start_x']);
+            $start_y=($enemySkill['start_y']);
+            $start_direction=-$enemySkill['start_direction'];
+            $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
+          }
+        }
         if($skill_damage==2&&isset($enemySkill['occur_time']))
-          {
-        //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
-         
-          // $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-          // $fly_toolsJson=$redis_battle->HGET($fly_tools_key,$skill_id);
-          // $fly_toolsData=json_decode($fly_toolsJson,TRUE);
+        {
           $battleData=json_encode($enemySkill,TRUE);
           $occur_time=$enemySkill['occur_time'];
           //$occur_time=$current;
@@ -545,5 +523,12 @@ class AttackHitUtil
         }
       return $result;
     }
+  }
+
+  public function checkDisplament($match_id,$u_id){
+       $redis_battle=Redis::connection('battle');
+       $displacement_key='displacement'.$match_id.$u_id;
+       $displacement_skills=$redis_battle->HVALS($displacement_key);
+       return $displacement_skills;
   }
 }

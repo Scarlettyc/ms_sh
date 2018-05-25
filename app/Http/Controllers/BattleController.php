@@ -173,7 +173,7 @@ public function battleNew($data,$clientInfo){
 				$charData['direction']=$data['direction'];
 			}
 			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
-
+			$displacement_key='displacement'.$match_id.$u_id;
 			if(isset($data['skill_id'])){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
@@ -200,7 +200,16 @@ public function battleNew($data,$clientInfo){
 							$flytools['start_direction']=$data['direction'];
 							$flySkillJson=json_encode($flytools);
 							$redis_battle->HSET($fly_tools_key.'_'.$data['skill_id'],$current,$flySkillJson);
-							}
+						}
+						if($skill['skill_damage']==6){
+							$displacement['skill_id']=$skill['skill_id'];
+							$displacement['occur_time']=$current;
+							$displacement['start_x']=$x;
+							$displacement['start_y']=$y;
+							$displacement['start_direction']=$data['direction'];
+							$displacementJson=json_encode($displacement);
+							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
+						}
 					}
 				}
 			}
@@ -225,6 +234,7 @@ public function battleNew($data,$clientInfo){
 		    	$charData['direction']=-($charData['direction']);
 		    }
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
+		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 			if(isset($enemyData['skill'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
@@ -245,9 +255,22 @@ public function battleNew($data,$clientInfo){
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
 					Log::info($charData);
 				 	}
-				 	}
+				  }
 				 }	
 			}
+			if(isset($displacement)){
+				foreach ($displacement as $key => $skill) {
+					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
+					if($hit&&$hit!=null&&$hit!=''){
+				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+					Log::info($charData);
+				 	}
+				}
+
+			}
+
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
