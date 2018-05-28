@@ -174,6 +174,7 @@ public function battleNew($data,$clientInfo){
 			}
 			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
 			$displacement_key='displacement'.$match_id.$u_id;
+			$multi_key='multi'.$match_id.$u_id;
 			if(isset($data['skill_id'])){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
@@ -201,7 +202,7 @@ public function battleNew($data,$clientInfo){
 							$flySkillJson=json_encode($flytools);
 							$redis_battle->HSET($fly_tools_key.'_'.$data['skill_id'],$current,$flySkillJson);
 						}
-						if($skill['skill_damage']==6){
+						if($skill['skill_damage']==6||$skill['skill_damage']==3){
 							$displacement['skill_id']=$skill['skill_id'];
 							$displacement['occur_time']=$current;
 							$displacement['start_x']=$x;
@@ -211,6 +212,16 @@ public function battleNew($data,$clientInfo){
 							$displacementJson=json_encode($displacement);
 							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
+						// if($skill['skill_damage']==6){
+						// 	$multi['skill_id']=$skill['skill_id'];
+						// 	$multi['occur_time']=$current;
+						// 	$multi['start_x']=$x;
+						// 	$multi['start_y']=$y;
+						// 	$multi['start_direction']=$data['direction'];
+						// 	$multi['skill_damage']=$skill['skill_damage'];
+						// 	$multi=json_encode($multi);
+						// 	$redis_battle->HSET($multi_key,$data['skill_id'],$multi);
+						// }
 					}
 				}
 			}
