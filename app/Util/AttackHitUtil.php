@@ -593,6 +593,7 @@ class AttackHitUtil
           $result[]= $speical_skills;
       }
       return $result;
+   }
   }
 
   public function checkDisplament($match_id,$u_id){
