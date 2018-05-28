@@ -241,7 +241,7 @@ class AttackHitUtil
             if(!isset($effs['eff_interval'])){
               $effs['eff_interval']=0;
             }
-            if($current-$lastInterval==$effs['eff_interval']){
+            if($current-$lastInterval[0]==$effs['eff_interval']){
             $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
             $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
             $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
