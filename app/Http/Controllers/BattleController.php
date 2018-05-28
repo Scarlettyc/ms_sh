@@ -212,6 +212,16 @@ public function battleNew($data,$clientInfo){
 							$displacementJson=json_encode($displacement);
 							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
+					    if($skill['skill_damage']==3){
+							$multi['skill_id']=$skill['skill_id'];
+							$multi['occur_time']=$current;
+							$multi['start_x']=$x;
+							$multi['start_y']=$y;
+							$multi['start_direction']=$data['direction'];
+							$multi['skill_damage']=$skill['skill_damage'];
+							$multiJson=json_encode($multi);
+							$redis_battle->HSET($multi_key.'_'.$data['skill_id'],$current,$multiJson);
+						}
 						// if($skill['skill_damage']==6){
 						// 	$multi['skill_id']=$skill['skill_id'];
 						// 	$multi['occur_time']=$current;
@@ -247,6 +257,7 @@ public function battleNew($data,$clientInfo){
 		    }
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
+		    $mutli=$attackhitutil->checkMulti($match_id,$enemy_uid);
 			if(isset($enemyData['skill'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
@@ -281,7 +292,18 @@ public function battleNew($data,$clientInfo){
 					Log::info($charData);
 				 	}
 				}
-
+			}
+			if(isset($mutli)){			
+				foreach ($mutli as $key => $eachskill) {
+					$eachskillData=json_decode($eachskill,TRUE);
+					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
+					if($hit&&$hit!=null&&$hit!=''){
+				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+					Log::info($charData);
+				 	}
+				}
 			}
 
 			$result['user_data']=$charData;

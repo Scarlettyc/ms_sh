@@ -202,9 +202,11 @@ class AttackHitUtil
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
 				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
-
+        $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
         $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
         $displacement_key='displacement'.$match_id.$enemy_uid;
+        $multi_key='multi'.$match_id.$enemy_uid;
+
         if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
           $occur_time=$enemySkill['occur_time'];
@@ -234,10 +236,15 @@ class AttackHitUtil
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
+            if(!isset($effs['eff_interval'])){
+              $effs['eff_interval']=0;
+            }
+            if($current-$occur_time==$effs['eff_interval']){
             $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
             $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
             $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
             $enemyY_to=$enemyY_to+$effs['TL_y_a'];
+            $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
             if($y_font<$y_back){
               if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
               $hit=true;
@@ -248,6 +255,10 @@ class AttackHitUtil
                 }
               }
               }
+            }
+            else {
+              $hit=false;
+            }
         }
         if($skill_damage==2&&isset($enemySkill['occur_time']))
         {
@@ -269,9 +280,7 @@ class AttackHitUtil
              $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
              $enemyY_to=$start_y+$effs['TL_y_a'];
             }
-
-             Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);
-
+            $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
           if($y_font<$y_back){
             if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
             $hit=true;
@@ -281,30 +290,9 @@ class AttackHitUtil
                     $hit=true;
                 }
 
-                }
               }
             }
-
-				  if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
-            $hit=true;
-					 }
-			   	}
-				else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
-					if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
-              $hit=true;
-						}
-					}
-				else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
-              $hit=true;
-					}
-				}
-				else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
-					if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
-						$hit=true;
-						}
-					}
+          }
 
           if($hit&&$skill_damage==6){
           $redis_battle->HDEL($displacement_key,$skill_id);
@@ -332,6 +320,31 @@ class AttackHitUtil
       return $hit;
     }
 	}
+
+  private function hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back){
+        $hit=false;
+        if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+          if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
+            $hit=true;
+           }
+          }
+        else if($enemyX_from<$enemyX_to&&$enemyY_from>$enemyY_to){
+          if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_font<=$enemyY_from&&$y_font>=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
+              $hit=true;
+            }
+          }
+        else if($enemyX_from>$enemyX_to&&$enemyY_from<$enemyY_to){
+          if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font>=$enemyY_from&&$y_back<=$enemyY_to)){
+              $hit=true;
+          }
+        }
+        else if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
+          if(($x_front<=$enemyX_from&&$x_front>=$enemyY_from&&$y_font>=$enemyY_from&&$y_font<=$enemyY_to)||($x_back<=$enemyX_from&&$x_back>=$enemyX_to&&$y_font<=$enemyY_from&&$y_back>=$enemyY_to)){
+            $hit=true;
+            }
+          }
+          return $hit;
+  }
 
   public function getEffValueBytype($skill_id){
       $skillModel=new SkillMstModel();
@@ -562,6 +575,24 @@ class AttackHitUtil
         }
       return $result;
     }
+  }
+  public function checkMulti($match_id,$u_id){
+      $redis_battle=Redis::connection('battle');
+      $current=$this->getMillisecond();
+      $CharacterModel=new CharacterModel();
+      $EquipmentMstModel= new EquipmentMstModel();
+      $skillModel=new SkillMstModel();
+      $skill_keys='battle_user_skills_'.$u_id;
+      $all_skills=$redis_battle->HKEYS($skill_keys);
+      $result=[];
+      if(isset($all_skills)){
+          foreach ($all_skills as $key => $skill) {
+          $multi_key='multi'.$match_id.$u_id;
+          $key_sp=$multi_key.'_'.$skill;
+          $speical_skills=$redis_battle->HVALS($key_sp);
+          $result[]= $speical_skills;
+      }
+      return $result;
   }
 
   public function checkDisplament($match_id,$u_id){
