@@ -582,6 +582,7 @@ public function battleNew($data,$clientInfo){
  	 	$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
+		$redis_battle=Redis::connection('battle');
  	 	// $result=$attackhitutil->getEffValueBytype(1);
  	 	$clientInfo['address']='11111';
  		$clientInfo['port']='1222';
