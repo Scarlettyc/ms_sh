@@ -589,7 +589,7 @@ public function battleNew($data,$clientInfo){
  		 
  		 $multi_interval_key='multi_intervalm_1527501791ui100000018';
 		$lastInterval=$redis_battle->LRANGE($multi_interval_key,0,-1);
-		var_dump($lastInterval);
+		var_dump($lastInterval[0]);
  	 }
 
 	 public function finalMatchResult ($data){
