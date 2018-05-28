@@ -175,6 +175,7 @@ public function battleNew($data,$clientInfo){
 			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
 			$displacement_key='displacement'.$match_id.$u_id;
 			$multi_key='multi'.$match_id.$u_id;
+			$multi_interval_key='multi_interval'.$match_id.$u_id;
 			if(isset($data['skill_id'])){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
@@ -220,7 +221,8 @@ public function battleNew($data,$clientInfo){
 							$multi['start_direction']=$data['direction'];
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
-							$redis_battle->HSET($multi_key.'_'.$data['skill_id'],$current,$multiJson);
+							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
+							$redis_battle->LPUSH($multi_interval_key,$current);
 						}
 						// if($skill['skill_damage']==6){
 						// 	$multi['skill_id']=$skill['skill_id'];
@@ -294,8 +296,7 @@ public function battleNew($data,$clientInfo){
 				}
 			}
 			if(isset($mutli)){			
-				foreach ($mutli as $key => $skill) {
-					foreach ($skill as $key => $eachskill){
+					foreach ($mutli as $key => $eachskill) {
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
 					if($hit&&$hit!=null&&$hit!=''){
@@ -304,7 +305,6 @@ public function battleNew($data,$clientInfo){
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
 					Log::info($charData);
 				 	}
-				  }
 				}
 			}
 

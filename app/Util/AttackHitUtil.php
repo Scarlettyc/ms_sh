@@ -233,13 +233,15 @@ class AttackHitUtil
             $start_x=-($enemySkill['start_x']);
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
+            $multi_interval_key='multi_interval'.$match_id.$u_id;
+            $lastInterval=$redis_battle->LRANGE($multi_interval_key,0,-1);
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
             if(!isset($effs['eff_interval'])){
               $effs['eff_interval']=0;
             }
-            if($current-$occur_time==$effs['eff_interval']){
+            if($current-$lastInterval==$effs['eff_interval']){
             $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
             $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
             $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
@@ -255,6 +257,7 @@ class AttackHitUtil
                 }
               }
               }
+              $redis_battle->LPUSH($multi_interval_key,$current);
             }
             else {
               $hit=false;
@@ -308,15 +311,6 @@ class AttackHitUtil
             $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
             // Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
          }
-
-         // else if(!$hit&&$skill_damage==2&&$current-$occur_time<=$effs['eff_duration']){
-         //    Log::info('not hit skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
-         // }
-         // else {
-         //    Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
-        
-	       	// }
-         //   Log::info('all skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
       return $hit;
     }
 	}
@@ -576,30 +570,18 @@ class AttackHitUtil
       return $result;
     }
   }
-  public function checkMulti($match_id,$u_id){
-      $redis_battle=Redis::connection('battle');
-      $current=$this->getMillisecond();
-      $CharacterModel=new CharacterModel();
-      $EquipmentMstModel= new EquipmentMstModel();
-      $skillModel=new SkillMstModel();
-      $skill_keys='battle_user_skills_'.$u_id;
-      $all_skills=$redis_battle->HKEYS($skill_keys);
-      $result=[];
-      if(isset($all_skills)){
-          foreach ($all_skills as $key => $skill) {
-          $multi_key='multi'.$match_id.$u_id;
-          $key_sp=$multi_key.'_'.$skill;
-          $speical_skills=$redis_battle->HVALS($key_sp);
-          $result[]= $speical_skills;
-      }
-      return $result;
-   }
-  }
-
   public function checkDisplament($match_id,$u_id){
        $redis_battle=Redis::connection('battle');
        $displacement_key='displacement'.$match_id.$u_id;
        $displacement_skills=$redis_battle->HVALS($displacement_key);
        return $displacement_skills;
+
+  }
+
+  public function checkMulti($match_id,$u_id){
+       $redis_battle=Redis::connection('battle');
+       $multi_key='multi'.$match_id.$u_id;
+       $skills=$redis_battle->HVALS($multi_key);
+       return $skills;
   }
 }
