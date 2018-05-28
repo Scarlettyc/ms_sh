@@ -294,7 +294,8 @@ public function battleNew($data,$clientInfo){
 				}
 			}
 			if(isset($mutli)){			
-				foreach ($mutli as $key => $eachskill) {
+				foreach ($mutli as $key => $skill) {
+					foreach ($skill as $key => $eachskill){
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
 					if($hit&&$hit!=null&&$hit!=''){
@@ -303,6 +304,7 @@ public function battleNew($data,$clientInfo){
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
 					Log::info($charData);
 				 	}
+				  }
 				}
 			}
 
