@@ -222,7 +222,7 @@ public function battleNew($data,$clientInfo){
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
 							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
-							$redis_battle->LPUSH($multi_interval_key,$current);
+							$redis_battle->HSET($multi_interval_key,$current,$multi['skill_id']);
 						}
 						// if($skill['skill_damage']==6){
 						// 	$multi['skill_id']=$skill['skill_id'];
@@ -588,7 +588,8 @@ public function battleNew($data,$clientInfo){
  		$clientInfo['port']='1222';
  		 
  		 $multi_interval_key='multi_intervalm_1527501791ui100000018';
-		$lastInterval=$redis_battle->LRANGE($multi_interval_key,0,-1);
+		 $redis_battle->SET($multi_interval_key,$current);
+		  $redis_battle->GET($multi_interval_key);
 		var_dump($lastInterval[0]);
  	 }
 
