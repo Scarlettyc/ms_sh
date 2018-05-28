@@ -234,7 +234,8 @@ class AttackHitUtil
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid;
-            $lastInterval=$redis_battle->HGET($multi_interval_key,$current+$effs['eff_interval']);
+            $lastInterval=$redis_battle->HGET($multi_interval_key,$current-$effs['eff_interval']);
+            Log::info($current);
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
@@ -258,7 +259,7 @@ class AttackHitUtil
               }
              $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
               }
-              Log::info('damage 3 skill_id'.$skill_id.'interval'.$multi_interval_key.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction); 
+              Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
               $redis_battle->SET($multi_interval_key,$current);
             }
             else {
