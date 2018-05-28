@@ -585,8 +585,10 @@ public function battleNew($data,$clientInfo){
  	 	// $result=$attackhitutil->getEffValueBytype(1);
  	 	$clientInfo['address']='11111';
  		$clientInfo['port']='1222';
-		$result=$this->battleNew($data,$clientInfo);
-		var_dump($result);
+ 		 
+ 		 $multi_interval_key='multi_intervalm_1527501791ui100000018';
+		$lastInterval=$redis_battle->LRANGE($multi_interval_key,0,-1);
+		var_dump($lastInterval);
  	 }
 
 	 public function finalMatchResult ($data){
