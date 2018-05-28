@@ -225,7 +225,7 @@ class AttackHitUtil
             $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
           }
         }
-        if($skill_damage==3)){
+        if($skill_damage==3){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
             $start_x=-($enemySkill['start_x']);
