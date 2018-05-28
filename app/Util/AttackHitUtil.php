@@ -602,3 +602,4 @@ class AttackHitUtil
        $displacement_skills=$redis_battle->HVALS($displacement_key);
        return $displacement_skills;
   }
+}
