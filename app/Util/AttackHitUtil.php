@@ -234,25 +234,27 @@ class AttackHitUtil
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid;
-            $countInterval=$redis_battle->HLEN($multi_interval_key);
+            Log::info($current-$effs['eff_interval']);
+            
+            $lastInterval=$redis_battle->HGET($multi_interval_key,$current-$effs['eff_interval']);
+
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
             if(!isset($effs['eff_interval'])){
               $effs['eff_interval']=0;
             }
-            if($countInterval<round($effs['eff_duration']/$effs['eff_interval'])){
-                Log::info("damge 3");
-               $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
-               $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
-               $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
-               $enemyY_to=$enemyY_to+$effs['TL_y_a'];
+            if($lastInterval){
+            $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
+            $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
+            $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
+            $enemyY_to=$enemyY_to+$effs['TL_y_a'];
            
-              if($y_font<$y_back){
-                if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-               $hit=true;
-             }
-             else if($y_font>$y_back){
+            if($y_font<$y_back){
+              if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+              $hit=true;
+            }
+            else if($y_font>$y_back){
                if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
                     $hit=true;
                 }
