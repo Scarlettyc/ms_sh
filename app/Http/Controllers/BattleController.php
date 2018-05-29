@@ -222,7 +222,7 @@ public function battleNew($data,$clientInfo){
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
 							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
-							$redis_battle->HSET($multi_interval_key,$current,$multi['skill_id']);
+							$redis_battle->HSET($multi_interval_key.'_'.$data['skill_id',1,$current);
 						}
 						// if($skill['skill_damage']==6){
 						// 	$multi['skill_id']=$skill['skill_id'];

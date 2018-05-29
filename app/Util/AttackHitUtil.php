@@ -233,37 +233,45 @@ class AttackHitUtil
             $start_x=-($enemySkill['start_x']);
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
-            $multi_interval_key='multi_interval'.$match_id.$enemy_uid;
-           // $lastInterval=$redis_battle->HGET($multi_interval_key,$occur_time);
-            $redis_battle->HSET($multi_interval_key,($current+$effs['eff_interval']),$skill_id);
+            $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
             if(!isset($effs['eff_interval'])){
-              $effs['eff_interval']=0;
+              $effs['eff_interval']=1;
             }
-            if($lastInterval){
-            $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
-            $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
-            $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
-            $enemyY_to=$enemyY_to+$effs['TL_y_a'];
+            $count=$redis_battle->HLEN($multi_interval_key);
+            if($count>round($effs['eff_duration']/$effs['eff_interval']))
+            { $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
+              $value=$current-$lastInterval;
+              Log::info($value);
+              if(round($value/$effs['eff_interval'])==1)
+             {  $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
+                $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
+                $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
+                $enemyY_to=$enemyY_to+$effs['TL_y_a'];
            
-            if($y_font<$y_back){
-              if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-              $hit=true;
-            }
-            else if($y_font>$y_back){
-               if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+                  if($y_font<$y_back){
+                    if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
                     $hit=true;
-                }
+                  }
+                  else if($y_font>$y_back){
+                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+                          $hit=true;
+                      }
+                    }
+                   $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
+                    }
+                    Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+                    $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
-             $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
+              else {
+                $hit=false;
               }
-              Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-              $redis_battle->SET($multi_interval_key,$current);
             }
             else {
-              $hit=false;
+                    $hit=false;
             }
         }
         if($skill_damage==2&&isset($enemySkill['occur_time']))
