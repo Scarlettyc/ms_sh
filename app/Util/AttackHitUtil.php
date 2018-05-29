@@ -237,7 +237,7 @@ class AttackHitUtil
            
 
             $lastInterval=$redis_battle->HGET($multi_interval_key,$current);
-            $redis_battle->SET($multi_interval_key,$current+$effs['eff_interval'],$skill_id);
+            $redis_battle->SET($multi_interval_key,($current+$effs['eff_interval']),$skill_id);
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
