@@ -247,7 +247,7 @@ class AttackHitUtil
               $value=$current-$lastInterval;
               Log::info(round($value/$effs['eff_interval']));
               if(round($value/$effs['eff_interval'])==1)
-             {  Log::info('have value')
+             {  Log::info('have value');
                 $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
