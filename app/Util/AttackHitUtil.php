@@ -234,9 +234,7 @@ class AttackHitUtil
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid;
-           
-
-            $lastInterval=$redis_battle->HGET($multi_interval_key,$current);
+           // $lastInterval=$redis_battle->HGET($multi_interval_key,$current);
             $redis_battle->HSET($multi_interval_key,($current+$effs['eff_interval']),$skill_id);
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
