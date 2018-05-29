@@ -247,9 +247,8 @@ class AttackHitUtil
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
-              Log::info(round($value/$effs['eff_interval']));
               if(round($value/$effs['eff_interval'])==1)
-             {  Log::info('have value');
+             { 
                 $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
@@ -275,6 +274,9 @@ class AttackHitUtil
             }
             else {
                     $hit=false;
+            }
+            if($count==round($effs['eff_duration']/$effs['eff_interval'])){
+            $redis_battle->DEL($multi_interval_key);
             }
         }
         if($skill_damage==2&&isset($enemySkill['occur_time']))
@@ -523,7 +525,6 @@ class AttackHitUtil
 		$hpMax=$chardata['ch_hp_max'];
   		if($enemyData['skill']['skill_group']=1||$enemyData['skill']['skill_group']=5||$enemyData['skill']['skill_group']=6){
       if(!isset($skillatkEff['eff_skill_atk_point'])){
-        Log::info($skillatkEff);
         $skillatkEff['eff_skill_atk_point']=3;
       }
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
