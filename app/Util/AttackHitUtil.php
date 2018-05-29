@@ -245,9 +245,10 @@ class AttackHitUtil
             if($count>round($effs['eff_duration']/$effs['eff_interval']))
             { $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
-              Log::info($value);
+              Log::info(round($value/$effs['eff_interval']));
               if(round($value/$effs['eff_interval'])==1)
-             {  $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
+             {  Log::info('have value')
+                $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
                 $enemyY_to=$enemyY_to+$effs['TL_y_a'];
