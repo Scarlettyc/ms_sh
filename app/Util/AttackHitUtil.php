@@ -286,7 +286,7 @@ class AttackHitUtil
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
-            
+
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
@@ -369,7 +369,7 @@ class AttackHitUtil
           if($hit&&$skill_damage==6){
           $redis_battle->HDEL($displacement_key,$skill_id);
           }
-          if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']){
+          if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']||$skill_damage==4&&$current-$occur_time>$effs['eff_duration']){
              $redis_battle->HDEL($displacement_key,$skill_id);
           }
           if($hit&&$skill_damage==2){
