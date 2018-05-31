@@ -171,7 +171,7 @@ class BattleController extends Controller
 				 	if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group']);
 					Log::info($charData);
 				 	}
 				  }
@@ -184,19 +184,19 @@ class BattleController extends Controller
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group']);
 					Log::info($charData);
 				 	}
 				}
 			}
-			if(isset($mutli)){			
+			if(isset($mutli)){	
 					foreach ($mutli as $key => $eachskill) {
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$key);
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group']);
 					Log::info($charData);
 				 	}
 				}
