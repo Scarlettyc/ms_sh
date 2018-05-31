@@ -580,7 +580,7 @@ class AttackHitUtil
  /*
   code edition from 2018.04.10
 */
-  public function calculateCharValue($chardata,$enemyData,$skillatkEff){
+  public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group){
   		$randCrit=rand(1,100);
   		$critBool=1;
 		if($randCrit<=$enemyData['ch_crit']){
@@ -591,7 +591,7 @@ class AttackHitUtil
 		$hpMax=$chardata['ch_hp_max'];
     $enemyJson=json_encode($enemyData);
     Log::info('skill group '.$enemyJson);
-  		if($enemyData['skill']['skill_group']=1||$enemyData['skill']['skill_group']=5||$enemyData['skill']['skill_group']=6){
+  		if($skill_group=1||$skill_group=5||$skill_group=6){
       if(!isset($skillatkEff['eff_skill_atk_point'])){
         $skillatkEff['eff_skill_atk_point']=3;
       }
@@ -604,7 +604,7 @@ class AttackHitUtil
 				$chardata['ch_hp_max']=0;
 			}
   		}
-  		else if ($enemyData['skill']['skill_group']=2){
+  		else if ($skill_group=2){
   			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemy_charData['ch_lv'],2)*2;
  	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
  	 		$hpMax=$chardata['ch_hp_max'];
@@ -612,7 +612,6 @@ class AttackHitUtil
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
   	return $chardata;
-
   }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){

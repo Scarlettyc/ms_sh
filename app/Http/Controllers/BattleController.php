@@ -96,6 +96,7 @@ class BattleController extends Controller
 							Log::info('damage 2');
 							$flytools['skill_id']=$skill['skill_id'];
 							$flytools['skill_damage']=$skill['skill_damage'];
+							$flytools['skill_group']=$skill['skill_group'];
 							$flytools['occur_time']=$current;
 							$flytools['start_x']=$x;
 							$flytools['start_y']=$y;
@@ -109,6 +110,7 @@ class BattleController extends Controller
 							$displacement['start_x']=$x;
 							$displacement['start_y']=$y;
 							$displacement['start_direction']=$data['direction'];
+							$displacement['skill_group']=$skill['skill_group'];
 							$displacement['skill_damage']=$skill['skill_damage'];
 							$displacementJson=json_encode($displacement);
 							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
@@ -118,7 +120,7 @@ class BattleController extends Controller
 							$multi['occur_time']=$current;
 							$multi['start_x']=$x;
 							$multi['start_y']=$y;
-							//$multi['skill_prepare_time']=$skill['skill_prepare_time'];
+							$multi['skill_group']=$skill['skill_group'];
 							$multi['start_direction']=$data['direction'];
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
@@ -157,7 +159,7 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group']);
 					// Log::info($charData);
 				}
 			}
@@ -169,7 +171,7 @@ class BattleController extends Controller
 				 	if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
 					Log::info($charData);
 				 	}
 				  }
@@ -182,7 +184,7 @@ class BattleController extends Controller
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
 					Log::info($charData);
 				 	}
 				}
@@ -194,7 +196,7 @@ class BattleController extends Controller
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskill['skill_group']);
 					Log::info($charData);
 				 	}
 				}
