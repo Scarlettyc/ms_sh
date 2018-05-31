@@ -118,6 +118,7 @@ class BattleController extends Controller
 							$multi['occur_time']=$current;
 							$multi['start_x']=$x;
 							$multi['start_y']=$y;
+							$multi['skill_prepare_time']=$skill['skill_prepare_time'];
 							$multi['start_direction']=$data['direction'];
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);

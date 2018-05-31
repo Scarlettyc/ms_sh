@@ -202,12 +202,11 @@ class AttackHitUtil
          else if($enemySkill['skill_prepare_time']==0){
             $startDamage=1;
         }
-        else if (!isset($enemySkill['skill_prepare_time'])){
-            $startDamage=1;
-        }
-
       }
-      LOG::info( " $startDamage ".$startDamage);
+      else if (!isset($enemySkill['skill_prepare_time'])){
+            $startDamage=1;
+      }
+      LOG::info( "startDamage ".$startDamage);
 
 			if(isset($effs['TL_x_a'])&&$startDamage==1)
       {
