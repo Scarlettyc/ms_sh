@@ -195,20 +195,20 @@ class AttackHitUtil
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
     $startDamage=0;
-    if(isset($enemySkill['skill_prepare_time'])){
-        if($enemySkill['skill_prepare_time']!=0&&$enemySkill['occur_time']+$enemySkill['skill_prepare_time']<=$current){
-            $startDamage=1;
-        }
-         else if($enemySkill['skill_prepare_time']==0){
-            $startDamage=1;
-        }
-      }
-      else if (!isset($enemySkill['skill_prepare_time'])){
-            $startDamage=1;
-      }
+    // if(isset($enemySkill['skill_prepare_time'])){
+    //     if($enemySkill['skill_prepare_time']!=0&&$enemySkill['occur_time']+$enemySkill['skill_prepare_time']<=$current){
+    //         $startDamage=1;
+    //     }
+    //      else if($enemySkill['skill_prepare_time']==0){
+    //         $startDamage=1;
+    //     }
+    //   }
+    //   else if (!isset($enemySkill['skill_prepare_time'])){
+    //         $startDamage=1;
+    //   }
       // LOG::info( "startDamage ".$startDamage);
 
-			if(isset($effs['TL_x_a'])&&$startDamage==1)
+			if(isset($effs['TL_x_a']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
@@ -311,7 +311,7 @@ class AttackHitUtil
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
-              if(round($value/$effs['eff_interval'],0)>=0.9)
+              if(round($value/$effs['eff_interval'],1)>=0.9&&round($value/$effs['eff_interval'],1)<=1.1)
              { 
                 $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$start_y+$effs['BR_y_a'];
