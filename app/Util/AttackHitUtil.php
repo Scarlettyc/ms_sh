@@ -311,6 +311,7 @@ class AttackHitUtil
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
+              Log::info('lastInterval: '.$lastInterval.'value/effs['eff_interval']:'.round($value/$effs['eff_interval'],1).' value: '.$value.' effs['eff_interval']:'.$effs['eff_interval']);
               if(round($value/$effs['eff_interval'],1)>=0.9&&round($value/$effs['eff_interval'],1)<=1.1)
              { 
                 $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
@@ -340,7 +341,7 @@ class AttackHitUtil
                     $hit=false;
             }
             if($count==round($effs['eff_duration']/$effs['eff_interval'])){
-            $redis_battle->DEL($multi_interval_key);
+           // $redis_battle->DEL($multi_interval_key);
             }
         }
 
@@ -381,9 +382,9 @@ class AttackHitUtil
           if($hit&&$skill_damage==6){
           $redis_battle->HDEL($displacement_key,$skill_id);
           }
-          if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']||$skill_damage==4&&$current-$occur_time>$effs['eff_duration']){
-             $redis_battle->HDEL($displacement_key,$skill_id);
-          }
+          // if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']){
+          //    $redis_battle->HDEL($displacement_key,$skill_id);
+          // }
           if($hit&&$skill_damage==2){
             $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
             // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
