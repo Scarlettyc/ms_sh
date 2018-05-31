@@ -194,9 +194,18 @@ class AttackHitUtil
     $enmeyY_font=$enemyY+$defindFront['value2'];
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
-    
+    $startDamage=false;
+      if(isset($enemySkill['skill_prepare_time'])){
+        if($enemySkill['skill_prepare_time']!=0&&$enemySkill['occurtime']+$enemySkill['skill_prepare_time']<=$current){
+            $startDamage==TRUE;
+        }
+         else if($enemySkill['skill_prepare_time']==0){
+            $startDamage==TRUE;
+        }
 
-			if(isset($effs['TL_x_a']))
+      }
+
+			if(isset($effs['TL_x_a'])&&$startDamage)
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
@@ -300,7 +309,7 @@ class AttackHitUtil
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
                Log::info('lastInterva '.$value);
-              if(round($value/$effs['eff_interval'],0)>=0.9)
+              if(round($value/$effs['eff_interval'],0)>=0.9&&round($value/$effs['eff_interval'],0)<=1.1)
              { 
                 $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$start_y+$effs['BR_y_a'];
