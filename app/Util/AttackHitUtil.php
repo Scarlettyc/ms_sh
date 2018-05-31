@@ -589,7 +589,7 @@ class AttackHitUtil
 		$user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
 		$enemy_res=$enemyData['ch_res'];
 		$hpMax=$chardata['ch_hp_max'];
-    Log::info('skill group'.$enemyData['skill']['skill_group']);
+    Log::info('skill group '.$enemyData['skill']['skill_group']);
   		if($enemyData['skill']['skill_group']=1||$enemyData['skill']['skill_group']=5||$enemyData['skill']['skill_group']=6){
       if(!isset($skillatkEff['eff_skill_atk_point'])){
         $skillatkEff['eff_skill_atk_point']=3;
