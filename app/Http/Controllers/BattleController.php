@@ -172,7 +172,6 @@ class BattleController extends Controller
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group']);
-					Log::info($charData);
 				 	}
 				  }
 				 }	
@@ -185,7 +184,7 @@ class BattleController extends Controller
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group']);
-					Log::info($charData);
+					// Log::info($charData);
 				 	}
 				}
 			}
