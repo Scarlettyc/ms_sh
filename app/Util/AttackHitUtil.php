@@ -311,7 +311,7 @@ class AttackHitUtil
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
-              if(round($value/$effs['eff_interval'],0)>=0.9&&round($value/$effs['eff_interval'],0)<=1.1)
+              if(round($value/$effs['eff_interval'],0)>=0.9)
              { 
                 $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$start_y+$effs['BR_y_a'];
