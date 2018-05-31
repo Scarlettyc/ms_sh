@@ -76,6 +76,7 @@ class BattleController extends Controller
 			$displacement_key='displacement'.$match_id.$u_id;
 			$multi_key='multi'.$match_id.$u_id;
 			$multi_interval_key='multi_interval'.$match_id.$u_id;
+			
 			if(isset($data['skill_id'])){
 			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
@@ -113,7 +114,7 @@ class BattleController extends Controller
 							$displacementJson=json_encode($displacement);
 							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
-					    if($skill['skill_damage']==3){
+					    if($skill['skill_damage']==3||$skill_damage==4){
 							$multi['skill_id']=$skill['skill_id'];
 							$multi['occur_time']=$current;
 							$multi['start_x']=$x;
@@ -124,16 +125,6 @@ class BattleController extends Controller
 							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
 							$redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
 						}
-						// if($skill['skill_damage']==6){
-						// 	$multi['skill_id']=$skill['skill_id'];
-						// 	$multi['occur_time']=$current;
-						// 	$multi['start_x']=$x;
-						// 	$multi['start_y']=$y;
-						// 	$multi['start_direction']=$data['direction'];
-						// 	$multi['skill_damage']=$skill['skill_damage'];
-						// 	$multi=json_encode($multi);
-						// 	$redis_battle->HSET($multi_key,$data['skill_id'],$multi);
-						// }
 					}
 				}
 			}
@@ -160,6 +151,7 @@ class BattleController extends Controller
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $mutli=$attackhitutil->checkMulti($match_id,$enemy_uid);
+
 			if(isset($enemyData['skill'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid);
 				if($hit&&$hit!=null&&$hit!=''){
