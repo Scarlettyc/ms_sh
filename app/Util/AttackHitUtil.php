@@ -202,6 +202,9 @@ class AttackHitUtil
          else if($enemySkill['skill_prepare_time']==0){
             $startDamage==TRUE;
         }
+        else if (!isset($enemySkill['skill_prepare_time'])){
+            $startDamage==TRUE;
+        }
 
       }
 
