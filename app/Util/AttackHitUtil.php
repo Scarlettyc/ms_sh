@@ -613,13 +613,13 @@ class AttackHitUtil
   	return $chardata;
   }
 
-  // private function checkEnemyBuff($skillatkEff){
-  //   $result=[];
-  //   if(isset($skillatkEff['stun_time'])&&$skillatkEff['stun_time']>0){
+  private function checkEnemyBuff($skillatkEff){
+    $result=[];
+    if(isset($skillatkEff['stun_time'])&&$skillatkEff['stun_time']>0){
         
-  //   }
+    }
 
-  // }
+  }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){
      $redis_battle=Redis::connection('battle');

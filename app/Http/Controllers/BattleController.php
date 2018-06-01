@@ -483,7 +483,7 @@ class BattleController extends Controller
  		//  $multi_interval_key='multi_intervalm_1527501791ui100000018';
 		 // $redis_battle->SET($multi_interval_key,$current);
 		 //  $redis_battle->GET($multi_interval_key);
-		var_dump($result);
+		echo $result;
  	 }
 
 	 public function finalMatchResult ($data){
