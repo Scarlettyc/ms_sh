@@ -476,14 +476,14 @@ class BattleController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
- 	 	// $result=$attackhitutil->getEffValueBytype(1);
- 	 	$clientInfo['address']='11111';
- 		$clientInfo['port']='1222';
+		$result=$attackhitutil->getEffValue(117);
+ 	 // 	$clientInfo['address']='11111';
+ 		// $clientInfo['port']='1222';
  		 
- 		 $multi_interval_key='multi_intervalm_1527501791ui100000018';
-		 $redis_battle->SET($multi_interval_key,$current);
-		  $redis_battle->GET($multi_interval_key);
-		var_dump($lastInterval[0]);
+ 		//  $multi_interval_key='multi_intervalm_1527501791ui100000018';
+		 // $redis_battle->SET($multi_interval_key,$current);
+		 //  $redis_battle->GET($multi_interval_key);
+		var_dump($result);
  	 }
 
 	 public function finalMatchResult ($data){
