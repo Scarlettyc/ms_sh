@@ -159,9 +159,11 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+							   $attackhitutil->addBuff($effValues,$enemyData['skill']['skill_id'],$u_id,$match_id);
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group']);
 					// Log::info($charData);
 				}
+				if($enemyData['skill']['skill_damage'])
 			}
 			if(isset($flytools)){
 				 foreach ($flytools as $skill => $flytool) {

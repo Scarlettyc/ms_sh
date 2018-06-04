@@ -442,7 +442,7 @@ class AttackHitUtil
 	public function getEffValue($skill_id){
   		$skillModel=new SkillMstModel();
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
-		$skillEffs=$SkillEffDeatilModel->select('eff_element_id','eff_value','eff_type')->where('skill_id',$skill_id)->get();
+		  $skillEffs=$SkillEffDeatilModel->select('eff_element_id','eff_value','eff_type')->where('skill_id',$skill_id)->get();
 
 		// result=$this->findEffFunciton($skillEffs);
 		return $skillEffs;
@@ -613,10 +613,44 @@ class AttackHitUtil
   	return $chardata;
   }
 
-  private function checkEnemyBuff($skillatkEff){
+  public function addBuff($skillatkEff,$skill_id,$u_id,$match_id){
+    $redis_battle=Redis::connection('battle');
+    $current=$this->getMillisecond();
     $result=[];
+    $key='buffEff'.$match_id.$u_id;
+    /* skill_id with eff element_type*/
     if(isset($skillatkEff['stun_time'])&&$skillatkEff['stun_time']>0){
-        
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['stun_time'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_5',$tmpJson);
+
+    }
+    if(isset($skillatkEff['snipe_time'])&&$skillatkEff['snipe_time']>0){
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['snipe_time'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_21',$current);
+    }
+    if(isset($skillatkEff['slow_time'])&&$skillatkEff['slow_time']>0){
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['slow_time'];
+      $tmp['much']=$skillatkEff['slow_percentage'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_12',$current);
+    }
+    if(isset($skillatkEff['knockdown_time'])&&$skillatkEff['knockdown_time']>0){
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['knockdown_time'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_3',$current);
+    }
+    if(isset($skillatkEff['execute_time'])&&$skillatkEff['execute_time']>0){
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['execute_time'];
+      $tmp['much']=$skillatkEff['execute_hp_precentage'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_3',$current);
     }
 
   }
