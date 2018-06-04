@@ -609,9 +609,9 @@ class AttackHitUtil
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $myBuffKey='mybuff'.$match_id.$u_id;
     $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->get();
-    foreach ($effData as $key => $debuff) {
+    foreach ($effData as $key => $buff) {
       if($debuff['eff_type']<=7){
-        $redis_battle->HSET($debuffkey,$skill_id.'_'.$debuff['eff_type'],$current);  
+        $redis_battle->HSET($debuffkey,$skill_id.'_'.$buff['eff_type'],$current);  
       }
       else{
         $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
