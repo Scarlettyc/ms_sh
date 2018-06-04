@@ -162,7 +162,6 @@ class AttackHitUtil
 
 /*2018.04.27 edition*/
 	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$listKey=0){
-
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
@@ -195,18 +194,6 @@ class AttackHitUtil
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
     $startDamage=0;
-    // if(isset($enemySkill['skill_prepare_time'])){
-    //     if($enemySkill['skill_prepare_time']!=0&&$enemySkill['occur_time']+$enemySkill['skill_prepare_time']<=$current){
-    //         $startDamage=1;
-    //     }
-    //      else if($enemySkill['skill_prepare_time']==0){
-    //         $startDamage=1;
-    //     }
-    //   }
-    //   else if (!isset($enemySkill['skill_prepare_time'])){
-    //         $startDamage=1;
-    //   }
-      // LOG::info( "startDamage ".$startDamage);
 
 			if(isset($effs['TL_x_a']))
       {
@@ -345,57 +332,61 @@ class AttackHitUtil
             }
         }
 
-        if($skill_damage==2&&isset($enemySkill['occur_time']))
-        {
-          $battleData=json_encode($enemySkill,TRUE);
-          $occur_time=$enemySkill['occur_time'];
-          //$occur_time=$current;
-          $start_x=-($enemySkill['start_x']);
-          $start_y=($enemySkill['start_y']);
-          $start_direction=-$enemySkill['start_direction'];
-          if(!isset($effs['eff_duration'])){
-            $effs['eff_duration']=0;
-          }
-         if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
-           if($current-$occur_time>0){
-             $start_x=$start_x+$effs['eff_speed']*($current-$occur_time)*$start_direction;
-            }
-             $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
-             $enemyY_from=$start_y+$effs['BR_y_a'];
-             $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
-             $enemyY_to=$start_y+$effs['TL_y_a'];
-            }
-            $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
-          if($y_font<$y_back){
-            if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-            $hit=true;
-           }
-          else if($y_font>$y_back){
-             if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
-                    $hit=true;
-                }
-
+           if($skill_damage==2&&isset($enemySkill['occur_time']))
+           {
+             $battleData=json_encode($enemySkill,TRUE);
+             $occur_time=$enemySkill['occur_time'];
+             //$occur_time=$current;
+             $start_x=-($enemySkill['start_x']);
+             $start_y=($enemySkill['start_y']);
+             $start_direction=-$enemySkill['start_direction'];
+             if(!isset($effs['eff_duration'])){
+               $effs['eff_duration']=0;
+             }
+            if(isset($effs['TL_x_a'])&&$current-$occur_time<=$effs['eff_duration']){
+              if($current-$occur_time>0){
+                $start_x=$start_x+$effs['eff_speed']*($current-$occur_time)*$start_direction;
+               }
+                $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
+                $enemyY_from=$start_y+$effs['BR_y_a'];
+                $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
+                $enemyY_to=$start_y+$effs['TL_y_a'];
+               }
+               $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
+             if($y_font<$y_back){
+               if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+               $hit=true;
               }
-            }
-          }
+             else if($y_font>$y_back){
+                if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+                       $hit=true;
+                   }   
 
-          if($hit&&$skill_damage==6){
-          $redis_battle->HDEL($displacement_key,$skill_id);
-          }
-          // if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']){
-          //    $redis_battle->HDEL($displacement_key,$skill_id);
-          // }
-          if($hit&&$skill_damage==2){
-            $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
-            // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
-			   }
-         else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
-            $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
-            // Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
-         }
-      return $hit;
-    }
-	}
+                }
+               }
+             }   
+
+            if($hit&&$skill_damage==6){
+             $redis_battle->HDEL($displacement_key,$skill_id);
+             }
+             // if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']){
+             //    $redis_battle->HDEL($displacement_key,$skill_id);
+             // }
+             if($hit&&$skill_damage==2){
+               $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+               // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
+    			   
+            else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
+               $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+               // Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
+            }
+          return $hit;
+        }
+        else if($skill_damage==0){
+            $redis_battle->g
+        }
+
+}
 
   private function hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back){
         $hit=false;
@@ -613,52 +604,20 @@ class AttackHitUtil
   	return $chardata;
   }
 
-  public function addBuff($skillatkEff,$skill_id,$u_id,$match_id){
+  public function addBuff($skill_id,$u_id,$match_id,$enemy_uid){
     $redis_battle=Redis::connection('battle');
     $current=$this->getMillisecond();
     $result=[];
-    $key='buffEff'.$match_id.$u_id;
-    /* skill_id with eff element_type*/
-    if(isset($skillatkEff['stun_time'])&&$skillatkEff['stun_time']>0){
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['stun_time'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_5',$tmpJson);
-
+    $debuffkey='debuff'.$match_id.$enemy_uid;
+    $skillModel=new SkillMstModel();
+    $effData=$skillModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','like','attack enmey status')->get();
+    foreach ($effData as $key => $debuff) {
+      $redis_battle->HSET($debuffkey,$skill_id.'_'.$debuff['eff_type'],$current);
     }
-    if(isset($skillatkEff['snipe_time'])&&$skillatkEff['snipe_time']>0){
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['snipe_time'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_21',$current);
-    }
-    if(isset($skillatkEff['slow_time'])&&$skillatkEff['slow_time']>0){
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['slow_time'];
-      $tmp['much']=$skillatkEff['slow_percentage'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_12',$current);
-    }
-    if(isset($skillatkEff['knockdown_time'])&&$skillatkEff['knockdown_time']>0){
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['knockdown_time'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_3',$current);
-    }
-    if(isset($skillatkEff['execute_time'])&&$skillatkEff['execute_time']>0){
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['execute_time'];
-      $tmp['much']=$skillatkEff['execute_hp_precentage'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_3',$current);
-    }
-    if(isset($skillatkEff['damage_reduction_time'])&&$skillatkEff['damage_reduction_time']>0)
-    {
-      $tmp['start_time']=$current;
-      $tmp['duration']=$skillatkEff['damage_reduction_time'];
-      $tmp['much']=$skillatkEff['damage_reduction_percentage'];
-      $tmpJson=json_encode($tmp,TRUE);
-      $redis_battle->HSET($key,$skill_id.'_16',$current);
+    $mybuffData=$skillModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','not like','attack enmey status')->get();
+    $myBuffKey='mybuff'.$match_id.$u_id;
+    foreach ($effData as $key => $buff) {
+      $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
     }
 
   }

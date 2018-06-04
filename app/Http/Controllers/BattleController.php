@@ -94,8 +94,7 @@ class BattleController extends Controller
 						$charData['skill']['start_direction']=$data['direction'];
 						if($skill['skill_damage']==0){
 							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
-							$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-							$attackhitutil->addBuff($effValues,$data['skill_id'],$u_id,$match_id);
+							$attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
 						}
 						if($skill['skill_damage']==2){
 							Log::info('damage 2');
