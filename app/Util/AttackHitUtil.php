@@ -606,8 +606,9 @@ class AttackHitUtil
     $current=$this->getMillisecond();
     $result=[];
     $debuffkey='debuff'.$match_id.$enemy_uid;
-    $skillModel=new SkillMstModel();
-    $effData=$skillModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','like','attack enmey status')->get();
+    $SkillEffDeatilModel=new SkillEffDeatilModel();
+    $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','like','attack enmey status')->get();
+     Log::info('test add buff'.$effData);
     foreach ($effData as $key => $debuff) {
       $redis_battle->HSET($debuffkey,$skill_id.'_'.$debuff['eff_type'],$current);
     }
