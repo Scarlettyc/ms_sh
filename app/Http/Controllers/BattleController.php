@@ -92,6 +92,11 @@ class BattleController extends Controller
 						$charData['skill']['start_x']=$x;
 						$charData['skill']['start_y']=$y;
 						$charData['skill']['start_direction']=$data['direction'];
+						if($skill['skill_damage']==0){
+							$skillatkEff=$attackhitutil->getEffValue($data['skill_id'];);
+							$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+							$attackhitutil->addBuff($effValues,$data['skill_id'],$u_id,$match_id);
+						}
 						if($skill['skill_damage']==2){
 							Log::info('damage 2');
 							$flytools['skill_id']=$skill['skill_id'];
@@ -159,7 +164,6 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					$attackhitutil->addBuff($effValues,$enemyData['skill']['skill_id'],$u_id,$match_id);
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group']);
 					// Log::info($charData);
 				}
