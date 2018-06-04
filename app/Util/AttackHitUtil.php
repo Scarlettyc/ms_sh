@@ -616,7 +616,7 @@ class AttackHitUtil
       else{
         $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
       }
-
+    }
   }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){
