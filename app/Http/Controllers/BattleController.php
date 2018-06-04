@@ -163,7 +163,6 @@ class BattleController extends Controller
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group']);
 					// Log::info($charData);
 				}
-				if($enemyData['skill']['skill_damage'])
 			}
 			if(isset($flytools)){
 				 foreach ($flytools as $skill => $flytool) {
