@@ -652,6 +652,13 @@ class AttackHitUtil
       $tmpJson=json_encode($tmp,TRUE);
       $redis_battle->HSET($key,$skill_id.'_3',$current);
     }
+    if(isset($skillatkEff['damage_reduction_time']&&$skillatkEff['damage_reduction_time']>0){
+      $tmp['start_time']=$current;
+      $tmp['duration']=$skillatkEff['execute_time'];
+      $tmp['much']=$skillatkEff['execute_hp_precentage'];
+      $tmpJson=json_encode($tmp,TRUE);
+      $redis_battle->HSET($key,$skill_id.'_16',$current);
+    }
 
   }
 
