@@ -374,6 +374,7 @@ class AttackHitUtil
              // }
              if($hit&&$skill_damage==2){
                $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+             }
                // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
     			   
             else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
