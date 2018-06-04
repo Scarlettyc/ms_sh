@@ -383,10 +383,6 @@ class AttackHitUtil
             }
           return $hit;
         }
-        else if($skill_damage==0){
-            $redis_battle->g
-        }
-
 }
 
   private function hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back){
