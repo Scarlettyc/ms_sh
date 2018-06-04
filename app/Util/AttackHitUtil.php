@@ -607,16 +607,15 @@ class AttackHitUtil
     $result=[];
     $debuffkey='debuff'.$match_id.$enemy_uid;
     $SkillEffDeatilModel=new SkillEffDeatilModel();
-    $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','like','attack enmey status')->get();
-     Log::info('test add buff'.$effData);
-    foreach ($effData as $key => $debuff) {
-      $redis_battle->HSET($debuffkey,$skill_id.'_'.$debuff['eff_type'],$current);
-    }
-    $mybuffData=$skillModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->where('eff_description','not like','attack enmey status')->get();
     $myBuffKey='mybuff'.$match_id.$u_id;
-    foreach ($effData as $key => $buff) {
-      $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
-    }
+    $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->get();
+    foreach ($effData as $key => $debuff) {
+      if($debuff['eff_type']<=7)
+        $redis_battle->HSET($debuffkey,$skill_id.'_'.$debuff['eff_type'],$current);  
+      }
+      else{
+        $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
+      }
 
   }
 
