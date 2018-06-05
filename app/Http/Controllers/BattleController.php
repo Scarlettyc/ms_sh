@@ -135,24 +135,25 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
-		
-			if($clientId<$enemy_clientId){
-		    	$enemyData['x']=-($enemyData['x']);
-		    	$enemyData['x2']=-($enemyData['x2']);
-		    	//$enemyData['y2']=-($enemyData['y2']);
-		    	$enemyData['direction']=-($enemyData['direction']);
-		    	// $charData['x']=-($charData['x']);
-		    	// $charData['x2']=-($charData['x2']);
-		    	// $charData['direction']=-($charData['direction']);
-		    }else{
-		    	$enemyData['x']=-($enemyData['x']);
-		    	$enemyData['x2']=-($enemyData['x2']);
-		    	//$enemyData['y2']=($enemyData['y2']);
-		    	$enemyData['direction']=-($enemyData['direction']);
-		    	$charData['x']=-($charData['x']);
-		    	$charData['x2']=-($charData['x2']);
-		    	$charData['direction']=-($charData['direction']);
-		    }
+			if(isset($enemyData['x'])){
+					if($clientId<$enemy_clientId){
+				    	$enemyData['x']=-($enemyData['x']);
+				    	$enemyData['x2']=-($enemyData['x2']);
+				    	//$enemyData['y2']=-($enemyData['y2']);
+				    	$enemyData['direction']=-($enemyData['direction']);
+				    	// $charData['x']=-($charData['x']);
+				    	// $charData['x2']=-($charData['x2']);
+				    	// $charData['direction']=-($charData['direction']);
+				    }else{
+				    	$enemyData['x']=-($enemyData['x']);
+				    	$enemyData['x2']=-($enemyData['x2']);
+				    	//$enemyData['y2']=($enemyData['y2']);
+				    	$enemyData['direction']=-($enemyData['direction']);
+				    	$charData['x']=-($charData['x']);
+				    	$charData['x2']=-($charData['x2']);
+				    	$charData['direction']=-($charData['direction']);
+				    }
+			}
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $mutli=$attackhitutil->checkMulti($match_id,$enemy_uid);
