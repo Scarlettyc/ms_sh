@@ -581,7 +581,7 @@ class AttackHitUtil
 		  $hpMax=$chardata['ch_hp_max'];
       $debuffkey='debuff'.$match_id.$enemy_uid;
       $myBuffKey='mybuff'.$match_id.'_'.$u_id;
-      $redis_battle->HGETALL($debuffkey)
+      //$redis_battle->HGETALL($debuffkey);
   		if($skill_group==1||$skill_group==5||$skill_group==6){
         if(!isset($skillatkEff['eff_skill_atk_point'])){
            $skillatkEff['eff_skill_atk_point']=3;
