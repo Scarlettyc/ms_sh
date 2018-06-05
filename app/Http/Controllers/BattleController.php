@@ -286,7 +286,6 @@ class BattleController extends Controller
 		}
 		else{
 			$userData=$redis_battle->HGET($battlekey,$userExist);
-			Log::info($lastFlame);
 			//$userData=$redis_battle->HGETALL($lastFlame.'_'.$u_id);
 				foreach ($userData as $key => $each) {
 					//$charData['ch_ranking']=$userData['ch_ranking'];
