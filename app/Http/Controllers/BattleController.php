@@ -486,7 +486,7 @@ class BattleController extends Controller
 		$battlekey='battle_datam_1528168190_ui100000074';
 		$count=$redis_battle->HLEN($battlekey);
 		$redis_battle->HSET($battlekey,$count+1,'test');
-
+		echo $count;
  	 // 	$clientInfo['address']='11111';
  	// 	// $clientInfo['port']='1222';
  		 
