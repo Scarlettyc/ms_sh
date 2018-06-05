@@ -519,8 +519,9 @@ class BattleController extends Controller
 
 	 }
 	 private function addHash($data,$current,$u_id){
+	 	Log::info('test add to hash');
 	 	foreach ($data as $key => $value) {
-	 		Log::info('key:'.$key.' value:'.$value);
+
 	 		$redis_battle->HSET($current.'_'.$u_id,$key,$value);
 	 	}	
 	 }
