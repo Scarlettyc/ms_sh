@@ -579,9 +579,16 @@ class AttackHitUtil
 		  $user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
 		  $enemy_res=$enemyData['ch_res'];
 		  $hpMax=$chardata['ch_hp_max'];
-      $debuffkey='debuff'.$match_id.$enemy_uid;
+      $debuffkey='debuff'.$match_id.$u_id;
       $myBuffKey='mybuff'.$match_id.'_'.$u_id;
-      //$redis_battle->HGETALL($debuffkey);
+      $debuffData=$redis_battle->HGETALL($debuffkey);
+      $buffData=$redis_battle->HGETALL($myBuffKey);
+      // if(isset($debuffkey)){
+      //   foreach ($debuffData as $deffKey=> $time) {
+          
+      //     # code...
+      //   }
+      // }
   		if($skill_group==1||$skill_group==5||$skill_group==6){
         if(!isset($skillatkEff['eff_skill_atk_point'])){
            $skillatkEff['eff_skill_atk_point']=3;
