@@ -277,8 +277,8 @@ class AttackHitUtil
           if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
              $redis_battle->DEL($multi_interval_key);
             }
-        }
-        if($skill_damage==4){
+          }
+          if($skill_damage==4){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
             $start_x=-($enemySkill['start_x']);
@@ -330,7 +330,7 @@ class AttackHitUtil
             if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
              $redis_battle->DEL($multi_interval_key);
             }
-        }
+          }
 
            if($skill_damage==2&&isset($enemySkill['occur_time']))
            {
@@ -383,7 +383,7 @@ class AttackHitUtil
             }
           return $hit;
         }
-}
+      }
 
   private function hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back){
         $hit=false;
@@ -568,20 +568,24 @@ class AttackHitUtil
  /*
   code edition from 2018.04.10
 */
-  public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group){
-  		$randCrit=rand(1,100);
+  public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group,$u_id,$enemy_uid){
+  		
+      $randCrit=rand(1,100);
   		$critBool=1;
-		if($randCrit<=$enemyData['ch_crit']){
-		$critBool=2;
-		}
-		$user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
-		$enemy_res=$enemyData['ch_res'];
-		$hpMax=$chardata['ch_hp_max'];
-
+	   	if($randCrit<=$enemyData['ch_crit']){
+		    $critBool=2;
+		  }
+      $redis_battle=Redis::connection('battle');
+		  $user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
+		  $enemy_res=$enemyData['ch_res'];
+		  $hpMax=$chardata['ch_hp_max'];
+      $debuffkey='debuff'.$match_id.$enemy_uid;
+      $myBuffKey='mybuff'.$match_id.'_'.$u_id;
+      $redis_battle->HGETALL($debuffkey)
   		if($skill_group==1||$skill_group==5||$skill_group==6){
-      if(!isset($skillatkEff['eff_skill_atk_point'])){
-        $skillatkEff['eff_skill_atk_point']=3;
-      }
+        if(!isset($skillatkEff['eff_skill_atk_point'])){
+           $skillatkEff['eff_skill_atk_point']=3;
+        }
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
       Log::info('enmey damage'.$enemyDMG);
@@ -607,7 +611,7 @@ class AttackHitUtil
     $result=[];
     $debuffkey='debuff'.$match_id.$enemy_uid;
     $SkillEffDeatilModel=new SkillEffDeatilModel();
-    $myBuffKey='mybuff'.$match_id.$u_id;
+    $myBuffKey='mybuff'.$match_id.'_'.$u_id;
     $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->get();
     foreach ($effData as $key => $buff) {
       if($buff['eff_type']<=7){
