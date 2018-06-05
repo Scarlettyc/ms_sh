@@ -524,9 +524,9 @@ class BattleController extends Controller
 	 	$redis_battle=Redis::connection('battle');
 	 	$keys=array_keys((array)$data);
 		var_dump($keys);
-		foreach ($keys as $key => $value) {
-		echo $key.' '.$value;
-		}
+		// foreach ($keys as $key => $value) {
+		// echo $key.' '.$value;
+		// }
 	 	//$redis_battle->HSET($current.'_'.$u_id,'ch_hp_max',$value);
 	 		
 	 }
