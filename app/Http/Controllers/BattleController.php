@@ -482,14 +482,18 @@ class BattleController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
-		$result=$attackhitutil->getEffValue(117);
+
+		$battlekey='battle_datam_1528168190_ui100000074';
+		$count=$redis_battle->HLEN($battlekey);
+		$redis_battle->HSET($battlekey,$count+1,'test');
+
  	 // 	$clientInfo['address']='11111';
- 		// $clientInfo['port']='1222';
+ 	// 	// $clientInfo['port']='1222';
  		 
- 		//  $multi_interval_key='multi_intervalm_1527501791ui100000018';
-		 // $redis_battle->SET($multi_interval_key,$current);
-		 //  $redis_battle->GET($multi_interval_key);
-		echo $result;
+ 	// 	//  $multi_interval_key='multi_intervalm_1527501791ui100000018';
+		//  // $redis_battle->SET($multi_interval_key,$current);
+		//  //  $redis_battle->GET($multi_interval_key);
+		// echo $result;
  	 }
 
 	 public function finalMatchResult ($data){
