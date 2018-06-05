@@ -524,7 +524,7 @@ class BattleController extends Controller
 	 private function addHash($charData,$current,$u_id){
 	 	$redis_battle=Redis::connection('battle');
 	 	//$response=json_decode($charData,TRUE);
-	 	foreach ($response as $key => $value) {
+	 	foreach ($charData as $key => $value) {
 	 		$redis_battle->HSET($current.'_'.$u_id,$key,$value);
 	 	}
 	 	//var_dump($response);
