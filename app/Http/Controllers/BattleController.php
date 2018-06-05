@@ -135,7 +135,6 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
-			Log::info();
 		
 			if($clientId<$enemy_clientId){
 		    	$enemyData['x']=-($enemyData['x']);
