@@ -486,10 +486,12 @@ class BattleController extends Controller
 		$redis_battle=Redis::connection('battle');
 		$current=$this->getMillisecond();
 		$characterModel=new CharacterModel();
-		$battlekey='battle_datam_1528168190_ui100000074';
-		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id','ui100000074')->first();
+		$match_id=$data['match_id'];
+		$u_id=$data['u_id'];
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id',$u_id)->first();
 		//echo($charData);
-		$this->addHash($charData,$current,'ui100000074');
+		$this->addHash($charData,$current,$u_id);
 		//echo $count;
  	 // 	$clientInfo['address']='11111';
  	// 	// $clientInfo['port']='1222';
