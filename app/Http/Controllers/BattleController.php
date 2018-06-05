@@ -287,7 +287,7 @@ class BattleController extends Controller
 		else{
 			$userData=$redis_battle->HGET($battlekey,$userExist);
 			//$userData=$redis_battle->HGETALL($lastFlame.'_'.$u_id);
-				foreach ($userData as $key => $each) {
+				// foreach ($userData as $key => $each) {
 					//$charData['ch_ranking']=$userData['ch_ranking'];
 					$charData['ch_hp_max']=$userData['ch_hp_max'];
 					$charData['ch_stam']=$userData['ch_stam'];
@@ -314,7 +314,7 @@ class BattleController extends Controller
 					if(isset($userData['direction'])){
 						$charData['direction']=$userData['direction'];
 					}				
-				}
+				// }
 		}
 		return $charData;
 	}
