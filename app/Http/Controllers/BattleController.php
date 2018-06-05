@@ -523,7 +523,8 @@ class BattleController extends Controller
 	 private function addHash($data,$current,$u_id){
 	 	$redis_battle=Redis::connection('battle');
 	 	$keys=array_keys((array)$data);
-	 	$redis_battle->HSET($current.'_'.$u_id,'ch_hp_max',$value);
+		echo $keys;
+	 	//$redis_battle->HSET($current.'_'.$u_id,'ch_hp_max',$value);
 	 		
 	 }
 
