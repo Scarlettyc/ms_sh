@@ -230,7 +230,7 @@ class BattleController extends Controller
 			$charJson=json_encode($charData);
 			$count=$redis_battle->HLEN($battlekey);
 			$redis_battle->HSET($battlekey,$count+1,$current);
-			$this->addHash($chardata,$current);
+			$this->addHash($charData,$current);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
