@@ -285,8 +285,8 @@ class BattleController extends Controller
 		}
 		else{
 			$userJson=$redis_battle->HGET($battlekey,$userExist);
-				foreach ($userJson as $key => $each) {
-					$userData=json_decode($each,TRUE);
+			$userData=json_decode($userJson,TRUE);
+				foreach ($userData as $key => $each) {
 					//$charData['ch_ranking']=$userData['ch_ranking'];
 					$charData['ch_hp_max']=$userData['ch_hp_max'];
 					$charData['ch_stam']=$userData['ch_stam'];
