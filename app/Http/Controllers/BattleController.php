@@ -135,7 +135,7 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
-
+			Log::info();
 		
 			if($clientId<$enemy_clientId){
 		    	$enemyData['x']=-($enemyData['x']);
@@ -286,6 +286,7 @@ class BattleController extends Controller
 		}
 		else{
 			$lastFlame=$redis_battle->HGET($battlekey,$userExist);
+			Log::info($lastFlame);
 			$userData=$redis_battle->HGETALL($lastFlame.'_'.$u_id);
 				foreach ($userData as $key => $each) {
 					//$charData['ch_ranking']=$userData['ch_ranking'];
