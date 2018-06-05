@@ -484,6 +484,7 @@ class BattleController extends Controller
 		$data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
 		$current=$this->getMillisecond();
+		$characterModel=new CharacterModel();
 		$battlekey='battle_datam_1528168190_ui100000074';
 		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id','ui100000074')->first();
 		$this->addHash($charData,$current);
