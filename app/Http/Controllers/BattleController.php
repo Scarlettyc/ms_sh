@@ -524,7 +524,7 @@ class BattleController extends Controller
 	 	$redis_battle=Redis::connection('battle');
 
 	 	echo $charData;
-	 	$response=json_encode($charData,TRUE);
+	 	$response=json_decode($charData,TRUE);
 	 	var_dump($response);
 		// foreach ($keys as $key => $value) {
 		// echo $key.' '.$value;
