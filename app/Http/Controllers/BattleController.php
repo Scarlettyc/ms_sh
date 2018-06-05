@@ -483,10 +483,10 @@ class BattleController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$redis_battle=Redis::connection('battle');
-
+		$current=$this->getMillisecond();
 		$battlekey='battle_datam_1528168190_ui100000074';
-		$count=$redis_battle->HLEN($battlekey);
-		$redis_battle->HSET($battlekey,$count+1,'test');
+		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id','ui100000074')->first();
+		$this->addHash($charData,$current);
 		echo $count;
  	 // 	$clientInfo['address']='11111';
  	// 	// $clientInfo['port']='1222';
@@ -519,9 +519,9 @@ class BattleController extends Controller
 
 	 }
 	 private function addHash($data,$current,$u_id){
-	 	Log::info('test add to hash');
+	 			
 	 	foreach ($data as $key => $value) {
-
+	 		echo $key.'   '.$value;
 	 		$redis_battle->HSET($current.'_'.$u_id,$key,$value);
 	 	}	
 	 }
