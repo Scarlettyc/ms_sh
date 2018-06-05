@@ -229,7 +229,8 @@ class BattleController extends Controller
 
 			$charJson=json_encode($charData);
 			$count=$redis_battle->HLEN($battlekey);
-			$redis_battle->HSET($battlekey,$count+1,$charJson);
+			$redis_battle->HSET($battlekey,$current);
+			$this->addHash($chardata,$current);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
@@ -284,8 +285,8 @@ class BattleController extends Controller
 			}
 		}
 		else{
-			$userJson=$redis_battle->HGET($battlekey,$userExist);
-			$userData=json_decode($userJson,TRUE);
+			$lastFlame=$redis_battle->HGET($battlekey,$userExist);
+			$userData=$redis_battle->HGETALL($lastFlame.'_'.$u_id);
 				foreach ($userData as $key => $each) {
 					//$charData['ch_ranking']=$userData['ch_ranking'];
 					$charData['ch_hp_max']=$userData['ch_hp_max'];
@@ -516,6 +517,11 @@ class BattleController extends Controller
 		$response=json_encode($result,TRUE);
 		return $response;
 
+	 }
+	 private function addHash($data,$current,$u_id){
+	 	foreach ($data as $key => $value) {
+	 		$redis_battle->HSET($current.'_'.$u_id,$key,$value);
+	 	}	
 	 }
 
 }
