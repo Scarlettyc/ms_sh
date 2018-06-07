@@ -420,20 +420,24 @@ class AttackHitUtil
       }
       $redis_battle=Redis::connection('battle');
       $buffData=$redis_battle->HGETALL($myBuffKey);
-      var_dump($buffData);
       $result=[];
       $current=$this->getMillisecond();
       foreach ($buffData as $myBuffKey => $time) {
-           var_dump($myBuffKey);
           $keys=explode('_',$myBuffKey);
           $pre_skill=$keys[0];
           $element_type=$keys[1];
-
+          $elementPercent=0;
           $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
+          if($element_type==5){
+            $elementPercent=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',5)->where('eff_name','like','%percent%')->first();
+          }
           $exist_time=($time+$elementTime['eff_value'])-$current;
-          // if($exist_time>0){
+          if($exist_time>0){
           $result[]=['element_type'=>$element_type,'time'=>$exist_time];
-        // }
+            if($elementPercent!=0){
+              $result[]=['element_type'=>$element_type,'time'=>$exist_time,'precent'=>$elementPercent];
+            }
+        }
       }
       return $result;
     }
