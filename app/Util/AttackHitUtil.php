@@ -655,7 +655,7 @@ class AttackHitUtil
           if(isset($checkEnmeyBuffs['crit'])){
             $crit=0;
           }
-          if(isset($checkEnmeyBuffs['atk_increase']){
+          if(isset($checkEnmeyBuffs['atk_increase'])){
             $atk_increase=0;
           }
       }
