@@ -652,7 +652,7 @@ class AttackHitUtil
       $crit=0;
       $atk_increase=0;
       foreach ($checkEnmeyBuffs as $key => $value) {
-          if(isset($checkEnmeyBuffs['crit']){
+          if(isset($checkEnmeyBuffs['crit'])){
             $crit=0;
           }
           if(isset($checkEnmeyBuffs['atk_increase']){
