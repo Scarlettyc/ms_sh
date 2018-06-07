@@ -446,7 +446,7 @@ class AttackHitUtil
                        break;
                     case 42:
                       $result['atk_range']=$value['eff_value'];
-                    break:
+                        break;
                     case 41:
                       $result['defence']=$value['eff_value'];
                       break;
