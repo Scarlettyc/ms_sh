@@ -20,7 +20,7 @@ use App\EquipmentMstModel;
 
 class AttackHitUtil
 {
-  global $SkillEffDeatilModel=new SkillEffDeatilModel();
+
 	public function getSelfEff($skill_id,$user,$enemy,$occurtime){
 		$skillModel=new SkillMstModel();
  		$buffEffModel= new BuffEffectionMst();
@@ -413,6 +413,7 @@ class AttackHitUtil
   }
 
     public function mapingBuffs($u_id,$match_id,$buff){
+      $SkillEffDeatilModel=new SkillEffDeatilModel();
       $myBuffKey='mybuff'.$match_id.'_'.$u_id;
       if($buff==2){
         $myBuffKey='debuff'.$match_id.'_'.$u_id;
