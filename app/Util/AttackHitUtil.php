@@ -33,8 +33,7 @@ class AttackHitUtil
 				$result['selfbuff']=$buffEff;
 			}
 		}
-		return 
-                  $result;
+		return $result;
 	}
 
 	public function getatkEff($skill_id,$user,$enemy,$clientID,$enemy_clientId,$user_direction,$enemy_direction){
@@ -161,7 +160,7 @@ class AttackHitUtil
     } 
 
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$listKey=0){
+	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$u_id,$listKey=0){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
@@ -194,8 +193,9 @@ class AttackHitUtil
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
     $startDamage=0;
-
-			if(isset($effs['TL_x_a']))
+      $checkMyBuffs=$this->checkBuffs($match_id,$u_id);
+     // $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid);
+			if(isset($effs['TL_x_a'])&&isset($checkMyBuffs['invincible']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
@@ -410,6 +410,79 @@ class AttackHitUtil
           return $hit;
   }
 
+    public function checkBuffs($u_id,$match_id){
+      $myBuffKey='mybuff'.$match_id.'_'.$u_id;
+      $buffData=$redis_battle->HGETALL($myBuffKey);
+      $damage_reduction_percentage=0;
+      $elementPrence=[];
+      $elementTime=[];
+      if(isset($buffData)){
+        foreach ($buffData as $myBuffKey=> $time) {
+          $keys=strpos($myBuffKey,'_');
+          $pre_skill=$keys[0];
+          $element_type=$keys[1];
+            $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
+            if($time+$elementTime['eff_value']<$current){
+              if($element_type==24){
+               $result['invincible']=1;
+              }
+              else {
+                $elementPrence=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','not like','%precent%')->get();
+                foreach ($elementPrence as $key => $value) {
+                  switch ($value['eff_element_id']) {
+                    case 33:
+                    case 34:
+                      $result['damage_reduction']=$value['eff_value'];
+                      break;
+                    case 40:
+                    case 70:
+                      $result['damage_enemy']=$value['eff_value'];
+                       break;
+                    case 38:
+                      $result['crit']=$value['eff_value'];
+                       break;
+                    case 61:
+                      $result['atk_increase']=$value['eff_value'];
+                       break;
+                    case 42:
+                      $result['atk_range']=$value['eff_value'];
+                    break:
+                    case 41:
+                      $result['defence']=$value['eff_value'];
+                      break;
+                    case 62:
+                      $result['damge_absorb']=$value['eff_value'];
+                      break;
+                    case 67:
+                      $result['enhance_defence']=$value['eff_value'];
+                      break;
+                    case 37:
+                      $result['quick']=$value['eff_value'];
+                      break;
+                    case 68:
+                      $result['recover_hp']=$value['eff_value'];
+                      break;
+                    case 70:
+                      $result['reflect_dame']=$value['eff_value'];
+                      break;
+                    case 35:
+                      $result['slow']=$value['eff_value'];
+                      break;
+                    default:
+                      # code...
+                      break;
+                  }
+                }
+                return $result;
+              }
+          }
+          else {
+            $redis_battle->HDEL($debuffkey,$deffKey);
+          }
+        }
+      }
+  }
+
   public function getEffValueBytype($skill_id){
       $skillModel=new SkillMstModel();
       $SkillEffDeatilModel=new SkillEffDeatilModel();
@@ -568,45 +641,52 @@ class AttackHitUtil
  /*
   code edition from 2018.04.10
 */
-  public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group,$u_id,$enemy_uid){
-  		
+  public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group,$u_id,$enemy_uid,$match_id){
+  		$SkillEffDeatilModel=new SkillEffDeatilModel();
       $randCrit=rand(1,100);
-  		$critBool=1;
-	   	if($randCrit<=$enemyData['ch_crit']){
-		    $critBool=2;
-		  }
+      $current=$this->getMillisecond();
+
       $redis_battle=Redis::connection('battle');
+      $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid);
+      $damage_reduction=0;
+      $crit=0;
+      $atk_increase=0;
+      foreach ($checkEnmeyBuffs as $key => $value) {
+          if(isset($checkEnmeyBuffs['crit']){
+            $crit=0;
+          }
+          if(isset($checkEnmeyBuffs['atk_increase']){
+            $atk_increase=0;
+          }
+      }
+      $critBool=1;
+      if($randCrit<=$enemyData['ch_crit']||!$crit=0){
+        $critBool=2;
+      }
 		  $user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
 		  $enemy_res=$enemyData['ch_res'];
 		  $hpMax=$chardata['ch_hp_max'];
-      $debuffkey='debuff'.$match_id.$u_id;
-      $myBuffKey='mybuff'.$match_id.'_'.$u_id;
-      $debuffData=$redis_battle->HGETALL($debuffkey);
-      $buffData=$redis_battle->HGETALL($myBuffKey);
-      // if(isset($debuffkey)){
-      //   foreach ($debuffData as $deffKey=> $time) {
-          
-      //     # code...
-      //   }
-      // }
   		if($skill_group==1||$skill_group==5||$skill_group==6){
         if(!isset($skillatkEff['eff_skill_atk_point'])){
            $skillatkEff['eff_skill_atk_point']=3;
         }
-			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res;
+      if(isset($elementPrence['eff_value'])){
+        $execute_hp_precentage=$elementPrence['eff_value'];
+      }
+			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res*(1+$atk_increase);
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
       Log::info('enmey damage'.$enemyDMG);
 			$hpMax=$chardata['ch_hp_max'];
-			$chardata['ch_hp_max']=round($hpMax-$enemyDMG);
+			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
 			if($chardata['ch_hp_max']<0){
 				$chardata['ch_hp_max']=0;
 			}
   		}
   		else if ($skill_group==2){
-  			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemyData['ch_lv'],2)*2;
+  		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemyData['ch_lv'],2)*2;
  	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
  	 		$hpMax=$chardata['ch_hp_max'];
-       Log::info('enmey  speical damage'.$enemyDMG);
+      Log::info('enmey  speical damage'.$enemyDMG);
 			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
   	return $chardata;
@@ -616,13 +696,13 @@ class AttackHitUtil
     $redis_battle=Redis::connection('battle');
     $current=$this->getMillisecond();
     $result=[];
-    $debuffkey='debuff'.$match_id.$enemy_uid;
+    $debuffkey='debuff'.$match_id.'_'.$enemy_uid;
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $myBuffKey='mybuff'.$match_id.'_'.$u_id;
-    $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type')->where('skill_id',$skill_id)->where('eff_type','!=',1)->get();
+    $effData=$SkillEffDeatilModel->select('eff_element_id','eff_type','eff_value')->where('skill_id',$skill_id)->where('eff_type','!=',1)->get();
     foreach ($effData as $key => $buff) {
-      if($buff['eff_type']<=7){
-        $redis_battle->HSET($debuffkey,$skill_id.'_'.$buff['eff_type'],$current);  
+      if($buff['eff_type']<=7||$buff['eff_type']==26||$buff['eff_type']==27){
+        $redis_battle->HSET($debuffkey,$skill_id.'_'.$buff['eff_type'],$current.'_'.$);  
       }
       else{
         $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
