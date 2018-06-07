@@ -488,7 +488,7 @@ class BattleController extends Controller
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
 
 		$result=$attackhitutil->mapingBuffs($u_id,$match_id,1);
-		echo($result);
+		var_dump($result);
 		//$this->addHash($charData,$current,$u_id);
 		//echo $count;
  	 // 	$clientInfo['address']='11111';
