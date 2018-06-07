@@ -139,15 +139,10 @@ class BattleController extends Controller
 					if($clientId<$enemy_clientId){
 				    	$enemyData['x']=-($enemyData['x']);
 				    	$enemyData['x2']=-($enemyData['x2']);
-				    	//$enemyData['y2']=-($enemyData['y2']);
 				    	$enemyData['direction']=-($enemyData['direction']);
-				    	// $charData['x']=-($charData['x']);
-				    	// $charData['x2']=-($charData['x2']);
-				    	// $charData['direction']=-($charData['direction']);
 				    }else{
 				    	$enemyData['x']=-($enemyData['x']);
 				    	$enemyData['x2']=-($enemyData['x2']);
-				    	//$enemyData['y2']=($enemyData['y2']);
 				    	$enemyData['direction']=-($enemyData['direction']);
 				    	$charData['x']=-($charData['x']);
 				    	$charData['x2']=-($charData['x2']);
@@ -204,7 +199,10 @@ class BattleController extends Controller
 				 	}
 				}
 			}
-
+			$charData['buffs']=$this->mapingBuffs($u_id,$match_id,1);
+			$charData['debuffs']=$this->mapingBuffs($u_id,$match_id,2);
+			$enemyData['buffs']=$this->mapingBuffs($enemy_uid,$match_id,1);
+			$enemyData['debuffs']=$this->mapingBuffs($enemy_uid,$match_id,2);
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
@@ -230,7 +228,6 @@ class BattleController extends Controller
 			$charJson=json_encode($charData);
 			$count=$redis_battle->HLEN($battlekey);
 			$redis_battle->HSET($battlekey,$count+1,$charJson);
-			//$this->addHash($charData,$current,$u_id);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}

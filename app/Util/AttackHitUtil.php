@@ -193,8 +193,9 @@ class AttackHitUtil
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
     $startDamage=0;
-      $checkMyBuffs=$this->checkBuffs($match_id,$u_id);
-     // $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid);
+      $checkMyBuffs=$this->checkBuffs($match_id,$u_id,1);
+      $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
+      $stun=0;
 			if(isset($effs['TL_x_a'])&&isset($checkMyBuffs['invincible']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
@@ -410,13 +411,36 @@ class AttackHitUtil
           return $hit;
   }
 
-    public function checkBuffs($u_id,$match_id){
+    public function mapingBuffs($u_id,$match_id,$buff){
       $myBuffKey='mybuff'.$match_id.'_'.$u_id;
+      if($buff==2){
+        $myBuffKey='debuff'.$match_id.'_'.$u_id;
+      }
+      $redis_battle=Redis::connection('battle');
+      $buffData=$redis_battle->HGETALL($myBuffKey);
+      $result=[];
+      $current=$this->getMillisecond();
+      foreach ($buffData as $myBuffKey => $time) {
+          $keys=strpos($myBuffKey,'_');
+          $pre_skill=$keys[0];
+          $element_type=$keys[1];
+          $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
+          $exist_time=$time+$elementTime['eff_value']-$current
+          $result[]=['element_id'=>$element_type,'time'=>$exist_time];
+      }
+      return $result;
+    }
+    public function checkBuffs($u_id,$match_id,$buff){
+      $myBuffKey='mybuff'.$match_id.'_'.$u_id;
+      if($buff==2){
+        $myBuffKey='debuff'.$match_id.'_'.$u_id;
+      }
       $redis_battle=Redis::connection('battle');
       $buffData=$redis_battle->HGETALL($myBuffKey);
       $damage_reduction_percentage=0;
       $elementPrence=[];
       $elementTime=[];
+      $current=$this->getMillisecond();
       if(isset($buffData)){
         foreach ($buffData as $myBuffKey=> $time) {
           $keys=strpos($myBuffKey,'_');
