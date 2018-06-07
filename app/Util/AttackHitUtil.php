@@ -196,7 +196,7 @@ class AttackHitUtil
       $checkMyBuffs=$this->checkBuffs($match_id,$u_id,1);
       $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
       $stun=0;
-			if(isset($effs['TL_x_a'])&&isset($checkMyBuffs['invincible']))
+			if(isset($effs['TL_x_a'])&&!isset($checkMyBuffs['invincible']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
