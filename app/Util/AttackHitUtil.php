@@ -412,6 +412,7 @@ class AttackHitUtil
 
     public function checkBuffs($u_id,$match_id){
       $myBuffKey='mybuff'.$match_id.'_'.$u_id;
+      $redis_battle=Redis::connection('battle');
       $buffData=$redis_battle->HGETALL($myBuffKey);
       $damage_reduction_percentage=0;
       $elementPrence=[];
