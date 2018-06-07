@@ -424,9 +424,11 @@ class AttackHitUtil
       $result=[];
       $current=$this->getMillisecond();
       foreach ($buffData as $myBuffKey => $time) {
+           var_dump($myBuffKey);
           $keys=strpos($myBuffKey,'_');
           $pre_skill=$keys[0];
           $element_type=$keys[1];
+
           $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
           $exist_time=($time+$elementTime['eff_value'])-$current;
           // if($exist_time>0){
