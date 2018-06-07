@@ -432,7 +432,7 @@ class AttackHitUtil
           $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
           $exist_time=($time+$elementTime['eff_value'])-$current;
           // if($exist_time>0){
-          $result[]=['element_id'=>$elementTime['eff_element_id'],'time'=>$exist_time];
+          $result[]=['element_type'=>$element_type,'time'=>$exist_time];
         // }
       }
       return $result;
