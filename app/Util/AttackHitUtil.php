@@ -425,7 +425,7 @@ class AttackHitUtil
       $current=$this->getMillisecond();
       foreach ($buffData as $myBuffKey => $time) {
            var_dump($myBuffKey);
-          $keys=strpos($myBuffKey,'_');
+          $keys=explode('_',$myBuffKey);
           $pre_skill=$keys[0];
           $element_type=$keys[1];
 
