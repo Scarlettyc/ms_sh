@@ -20,6 +20,7 @@ use App\EquipmentMstModel;
 
 class AttackHitUtil
 {
+  global $SkillEffDeatilModel=new SkillEffDeatilModel();
 	public function getSelfEff($skill_id,$user,$enemy,$occurtime){
 		$skillModel=new SkillMstModel();
  		$buffEffModel= new BuffEffectionMst();
