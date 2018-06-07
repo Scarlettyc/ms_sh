@@ -486,8 +486,9 @@ class BattleController extends Controller
 		$match_id=$data['match_id'];
 		$u_id=$data['u_id'];
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
-		$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id',$u_id)->first();
-		//echo($charData);
+
+		$result=$attackhitutil->mapingBuffs($u_id,$match_id,1);
+		echo($result);
 		//$this->addHash($charData,$current,$u_id);
 		//echo $count;
  	 // 	$clientInfo['address']='11111';
