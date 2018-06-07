@@ -420,6 +420,7 @@ class AttackHitUtil
       }
       $redis_battle=Redis::connection('battle');
       $buffData=$redis_battle->HGETALL($myBuffKey);
+      var_dump($buffData);
       $result=[];
       $current=$this->getMillisecond();
       foreach ($buffData as $myBuffKey => $time) {
