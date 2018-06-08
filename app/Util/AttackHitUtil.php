@@ -683,7 +683,7 @@ class AttackHitUtil
       $current=$this->getMillisecond();
 
       $redis_battle=Redis::connection('battle');
-      $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid);
+      $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid,1);
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
