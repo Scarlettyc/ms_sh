@@ -687,7 +687,8 @@ class AttackHitUtil
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
-      foreach ($checkEnmeyBuffs as $key => $value) {
+      if(isset($checkEnmeyBuffs)&&$checkEnmeyBuffs){
+        foreach ($checkEnmeyBuffs as $key => $value) {
           if(isset($checkEnmeyBuffs['crit'])){
             $crit=0;
           }
@@ -695,6 +696,7 @@ class AttackHitUtil
             $atk_increase=0;
           }
       }
+    }
       $critBool=1;
       if($randCrit<=$enemyData['ch_crit']||!$crit=0){
         $critBool=2;
