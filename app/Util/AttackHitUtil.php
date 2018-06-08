@@ -728,8 +728,8 @@ class AttackHitUtil
   		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemyData['ch_lv'],2)*2;
  	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
  	 		$hpMax=$chardata['ch_hp_max'];
+			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
       Log::info('enmey  speical damage'.$enemyDMG);
-			$chardata['ch_hp_max']=round($hpMax-$enemy_atk);
   	}
   	return $chardata;
   }
