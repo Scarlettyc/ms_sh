@@ -151,7 +151,7 @@ class BattleController extends Controller
 			}
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
-		    $mutli=$attackhitutil->checkMulti($match_id,$enemy_uid);
+		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
 			if(isset($enemyData['skill'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
@@ -187,7 +187,7 @@ class BattleController extends Controller
 				 	}
 				}
 			}
-			if(isset($mutli)){	
+			if(isset($multi)){	
 					foreach ($mutli as $key => $eachskill) {
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
