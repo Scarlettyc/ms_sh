@@ -203,12 +203,14 @@ class AttackHitUtil
 				$enemyY_from=$enemyY+$effs['BR_y_a'];
 				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
-        $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
+
         $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
         $displacement_key='displacement'.$match_id.$enemy_uid;
         $multi_key='multi'.$match_id.$enemy_uid;
-
-        if($skill_damage==6||isset($enemySkill['displacement_distance'])){
+        if($skill_damage==1){
+        $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
+        }
+        else if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
           $occur_time=$enemySkill['occur_time'];
           //$occur_time=$current;
@@ -227,8 +229,9 @@ class AttackHitUtil
             $start_direction=-$enemySkill['start_direction'];
             $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
           }
+           $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
         }
-        if($skill_damage==3){
+        else if($skill_damage==3){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
             $start_x=-($enemySkill['start_x']);
@@ -277,10 +280,10 @@ class AttackHitUtil
                     $hit=false;
             }
           if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-             $redis_battle->DEL($multi_interval_key);
+             //$redis_battle->DEL($multi_interval_key);
             }
           }
-          if($skill_damage==4){
+          else if($skill_damage==4){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
             $start_x=-($enemySkill['start_x']);
@@ -320,7 +323,7 @@ class AttackHitUtil
                    $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back);
                     }
                     Log::info('damage 4 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-                   // $redis_battle->HSET($multi_interval_key,$count+1,$current);
+                   $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
               else {
                 $hit=false;
@@ -334,7 +337,7 @@ class AttackHitUtil
             }
           }
 
-           if($skill_damage==2&&isset($enemySkill['occur_time']))
+          else if($skill_damage==2&&isset($enemySkill['occur_time']))
            {
              $battleData=json_encode($enemySkill,TRUE);
              $occur_time=$enemySkill['occur_time'];
