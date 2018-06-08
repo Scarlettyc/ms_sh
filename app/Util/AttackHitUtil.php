@@ -246,7 +246,6 @@ class AttackHitUtil
               $effs['eff_interval']=1;
             }
             $count=$redis_battle->HLEN($multi_interval_key);
-            Log::info('damage count'.$count);
             if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
@@ -298,7 +297,6 @@ class AttackHitUtil
               $effs['eff_interval']=1;
             }
             $count=$redis_battle->HLEN($multi_interval_key);
-            Log::info('damage 4'.$count);
             if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
