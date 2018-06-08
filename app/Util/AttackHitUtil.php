@@ -280,7 +280,7 @@ class AttackHitUtil
                     $hit=false;
             }
           if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-             //$redis_battle->DEL($multi_interval_key);
+             $redis_battle->DEL($multi_interval_key);
             }
           }
           else if($skill_damage==4){
