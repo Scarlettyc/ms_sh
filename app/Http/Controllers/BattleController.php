@@ -94,7 +94,7 @@ class BattleController extends Controller
 						$charData['skill']['start_direction']=$data['direction'];
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
 							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
-							$attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
+							// $attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
 						}
 						if($skill['skill_damage']==2){
 							Log::info('damage 2');
@@ -202,10 +202,10 @@ class BattleController extends Controller
 				 	}
 				}
 			}
-			$charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
-			$charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
-			$enemyData['buffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,1);
-			$enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
+			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
+			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
+			// $enemyData['buffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,1);
+			// $enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){

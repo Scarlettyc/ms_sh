@@ -194,8 +194,8 @@ class AttackHitUtil
     $enmeyY_back=$enemyY+$defindBack['value2'];
     $hit=false;
     $startDamage=0;
-      $checkMyBuffs=$this->checkBuffs($match_id,$u_id,1);
-      $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
+      // $checkMyBuffs=$this->checkBuffs($match_id,$u_id,1);
+      // $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
       $stun=0;
 			if(isset($effs['TL_x_a'])&&!isset($checkMyBuffs['invincible']))
       {
@@ -690,7 +690,7 @@ class AttackHitUtil
       $current=$this->getMillisecond();
 
       $redis_battle=Redis::connection('battle');
-      $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid,1);
+     // $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid,1);
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
