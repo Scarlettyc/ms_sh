@@ -338,6 +338,7 @@ class AttackHitUtil
 
           else if($skill_damage==2&&isset($enemySkill['occur_time']))
            {
+             Log::info("test skill damage 2");
              $battleData=json_encode($enemySkill,TRUE);
              $occur_time=$enemySkill['occur_time'];
              //$occur_time=$current;
