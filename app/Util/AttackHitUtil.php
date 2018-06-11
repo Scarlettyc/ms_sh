@@ -247,7 +247,8 @@ class AttackHitUtil
               $effs['eff_interval']=1;
             }
             $count=$redis_battle->HLEN($multi_interval_key);
-            if($count<round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
+            Log::info("check occurtime".($current-$occur_time)." check count, roud".round($effs['eff_duration']/$effs['eff_interval']));
+            if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
