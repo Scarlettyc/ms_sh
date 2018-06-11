@@ -314,7 +314,7 @@ class AttackHitUtil
                 $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
                 $enemyY_to=$enemyY_to+$effs['TL_y_a'];
-                $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back,$hit);
+                //$hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back,$hit);
                   if($y_font<$y_back){
                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
                     $hit=true;
@@ -337,7 +337,7 @@ class AttackHitUtil
                     $hit=false;
             }
             if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-             $redis_battle->DEL($multi_interval_key);
+            //$redis_battle->DEL($multi_interval_key);
             }
           }
 
