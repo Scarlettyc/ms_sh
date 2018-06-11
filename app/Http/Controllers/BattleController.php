@@ -189,6 +189,7 @@ class BattleController extends Controller
 				}
 			}
 			if(isset($multi)){	
+				Log::info("have multi");
 					foreach ($multi as $key => $eachskill) {
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
