@@ -251,6 +251,7 @@ class AttackHitUtil
             { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
+              Log::info("check multi with".$value.'round'.round($value/$effs['eff_interval'],1));
               if(round($value/$effs['eff_interval'],1)>=0.9)
              { 
                 $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
@@ -258,7 +259,7 @@ class AttackHitUtil
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
                 $enemyY_to=$enemyY_to+$effs['TL_y_a'];
                 $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back,$hit);
-                    }
+                //     }
                   if($y_font<$y_back){
                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
                     $hit=true;
