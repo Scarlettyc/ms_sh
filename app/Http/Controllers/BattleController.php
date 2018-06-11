@@ -82,9 +82,7 @@ class BattleController extends Controller
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 				if($checkCD>0){
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
-					Log::info("possbile skill out");
 					if($possbileSkill){
-						Log::info("possbile skill yes");
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
@@ -493,15 +491,6 @@ class BattleController extends Controller
 
 		$result=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 		var_dump($result);
-		//$this->addHash($charData,$current,$u_id);
-		//echo $count;
- 	 // 	$clientInfo['address']='11111';
- 	// 	// $clientInfo['port']='1222';
- 		 
- 	// 	//  $multi_interval_key='multi_intervalm_1527501791ui100000018';
-		//  // $redis_battle->SET($multi_interval_key,$current);
-		//  //  $redis_battle->GET($multi_interval_key);
-		// echo $result;
  	 }
 
 	 public function finalMatchResult ($data){
@@ -525,20 +514,5 @@ class BattleController extends Controller
 		return $response;
 
 	 }
-	 // private function addHash($charData,$current,$u_id){
-	 // 	$redis_battle=Redis::connection('battle');
-	 // 	if(!is_array($charData)){
-		// 	$charData=json_decode($charData,TRUE);
-	 // 	}
-	 // 	foreach ($charData as $key => $value) {
-	 // 		$redis_battle->HSET($current.'_'.$u_id,$key,$value);
-	 // 	}
-	 // 	//var_dump($response);
-		// // foreach ($keys as $key => $value) {
-		// // echo $key.' '.$value;
-		// // }
-	 // 	//$redis_battle->HSET($current.'_'.$u_id,'ch_hp_max',$value);
-	 		
-	 // }
 
 }
