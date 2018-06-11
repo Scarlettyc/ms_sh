@@ -232,14 +232,70 @@ class AttackHitUtil
           }
            $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back,$hit);
         }
-         if($skill_damage==3){
+         // if($skill_damage==3){
+         //    $battleData=json_encode($enemySkill,TRUE);
+         //    $occur_time=$enemySkill['occur_time'];
+         //    $start_x=-($enemySkill['start_x']);
+         //    $start_y=($enemySkill['start_y']);
+         //    $start_direction=-$enemySkill['start_direction'];
+         //    $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+         //    Log::info("check damge 3");
+         //    if(!isset($effs['eff_duration'])){
+         //    $effs['eff_duration']=0;
+         //    }
+         //    if(!isset($effs['eff_interval'])){
+         //      $effs['eff_interval']=1;
+         //    }
+         //    $count=$redis_battle->HLEN($multi_interval_key);
+         //    Log::info("check occurtime".($current-$occur_time)." check count, roud".round($effs['eff_duration']/$effs['eff_interval']).'count '.$count);
+         //    // if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
+         //    // { 
+         //    if($count<=round($effs['eff_duration']/$effs['eff_interval'])){
+         //      $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
+         //      $value=$current-$lastInterval;
+         //      Log::info("check multi with".$value.'round'.round($value/$effs['eff_interval'],1));
+         //      if(round($value/$effs['eff_interval'],1)>=0.9)
+         //     { 
+         //      Log::info("test multi skill interval");
+         //        $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
+         //        $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
+         //        $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
+         //        $enemyY_to=$enemyY_to+$effs['TL_y_a'];
+         //        $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_font,$y_back,$hit);
+         //          if($y_font<$y_back){
+         //            if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+         //            $hit=true;
+         //          }
+         //          else if($y_font>$y_back){
+         //             if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_font>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_font>=$enemyY_to){
+         //                  $hit=true;
+         //              }
+         //            }
+               
+         //            Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+         //            $redis_battle->HSET($multi_interval_key,$count+1,$current);
+         //      }
+         //      else {
+         //        $hit=false;
+         //      }
+         //    }
+         //    else {
+         //            $hit=false;
+         //    }
+         //  }
+         //  if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
+         //    // $redis_battle->DEL($multi_interval_key);
+         //      }
+         //  }
+
+           if($skill_damage==3){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
             $start_x=-($enemySkill['start_x']);
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
-            Log::info("check damge 3");
+
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
             }
@@ -247,16 +303,13 @@ class AttackHitUtil
               $effs['eff_interval']=1;
             }
             $count=$redis_battle->HLEN($multi_interval_key);
-            Log::info("check occurtime".($current-$occur_time)." check count, roud".round($effs['eff_duration']/$effs['eff_interval']).'count '.$count);
-            // if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
-            // { 
-            if($count<=round($effs['eff_duration']/$effs['eff_interval'])){
+            if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
+            { 
               $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
               $value=$current-$lastInterval;
-              Log::info("check multi with".$value.'round'.round($value/$effs['eff_interval'],1));
+              Log::info('lastInterval: '.$lastInterval.'value/eff_interval:'.round($value/$effs['eff_interval'],1).' value: '.$value.' eff_interval:'.$effs['eff_interval']);
               if(round($value/$effs['eff_interval'],1)>=0.9)
              { 
-              Log::info("test multi skill interval");
                 $enemyX_from=$enmeyX_front+$effs['TL_x_a']*$start_direction;
                 $enemyY_from=$enmeyY_font+$effs['BR_y_a'];
                 $enemyX_to=$enemyX_to+$effs['BR_x_a']*$start_direction;
@@ -271,9 +324,10 @@ class AttackHitUtil
                           $hit=true;
                       }
                     }
-               
+                  
+                    }
                     Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_font.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-                    $redis_battle->HSET($multi_interval_key,$count+1,$current);
+                   $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
               else {
                 $hit=false;
@@ -282,11 +336,12 @@ class AttackHitUtil
             else {
                     $hit=false;
             }
+            if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
+             $redis_battle->DEL($multi_interval_key);
+            }
           }
-          if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-            // $redis_battle->DEL($multi_interval_key);
-              }
-          }
+
+
            if($skill_damage==4){
             $battleData=json_encode($enemySkill,TRUE);
             $occur_time=$enemySkill['occur_time'];
