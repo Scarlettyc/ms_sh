@@ -216,6 +216,7 @@ class AttackHitUtil
           }
           else if($count==3){
             $code='B04_c'; 
+
           }
             $interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
             $TL_x_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',1)->first();
@@ -224,17 +225,21 @@ class AttackHitUtil
             $BR_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',4)->first();
 
             $value=$current-$lastInterval;
-              if(round($value/$interval['value2'],1)>=0.9){
+              if(round($value/$interval['value2'],1)>=0.9&&$count<=3){
                 $enemyX_from=$enmeyX_front+$TL_x_a['value2']*$start_direction;
                 $enemyY_from=$enmeyY_front+$BR_y_a['value2'];
                 $enemyX_to=$enmeyX_back+$BR_x_a['value2']*$start_direction;
                 $enemyY_to=$enmeyY_back+$TL_y_a['value2'];
                 $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
+                 Log::info('lastInterval: '.$lastInterval.'value/eff_interval:'.round($value/$$interval['value2'],1).' value: '.$value.' eff_interval:'.$effs['eff_interval']);
                  $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
               else {
                       $hit=false;
                   }
+            if($count>=3){
+                $redis_battle->DEL($multi_interval_key);
+            }
       }
 			else if(isset($effs['TL_x_a'])&&!isset($checkMyBuffs['invincible']))
       {
