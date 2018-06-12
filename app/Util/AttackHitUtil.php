@@ -234,9 +234,6 @@ class AttackHitUtil
              Log::info('test B04 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
                  $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
-              else {
-                      $hit=false;
-                  }
             if($count>3){
                 $redis_battle->DEL($multi_interval_key);
             }
