@@ -237,7 +237,7 @@ class AttackHitUtil
               else {
                       $hit=false;
                   }
-            if($count>=3){
+            if($count>3){
                 $redis_battle->DEL($multi_interval_key);
             }
       }

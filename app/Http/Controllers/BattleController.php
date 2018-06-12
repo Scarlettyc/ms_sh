@@ -192,6 +192,8 @@ class BattleController extends Controller
 					foreach ($multi as $key => $eachskill) {
 					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+					Log::info("test hit b04");
+
 					if($hit&&$hit!=null&&$hit!=''){
 						Log::info("test hit damge 3,4");
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
