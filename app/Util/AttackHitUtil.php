@@ -231,6 +231,15 @@ class AttackHitUtil
                 $enemyX_to=$enmeyX_back+$BR_x_a['value2']*$start_direction;
                 $enemyY_to=$enmeyY_back+$TL_y_a['value2'];
                 $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
+                if($y_front<$y_back){
+                    if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+                    $hit=true;
+                  }
+                  else if($y_front>$y_back){
+                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
+                          $hit=true;
+                      }
+                    }
              // Log::info('test B04 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
                  $redis_battle->HSET($multi_interval_key,$count+1,$current);
               }
