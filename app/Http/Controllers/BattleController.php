@@ -489,6 +489,7 @@ class BattleController extends Controller
 		$match_id=$data['match_id'];
 		$u_id=$data['u_id'];
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		 $code='B04_a';
 		$interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
 		var_dump($interval['value2']);
  	 }
