@@ -478,7 +478,7 @@ class BattleController extends Controller
  	 }
 
  	 public function testBattle(Request $request){
- 	 	$defindModel=new DefindMstModel();
+ 	 	$defindMst=new DefindMstModel();
  	 	$attackhitutil=new AttackHitUtil();
  	 	$req=$request->getContent();
 		$json=base64_decode($req);
