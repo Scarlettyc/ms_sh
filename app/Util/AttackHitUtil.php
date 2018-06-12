@@ -218,7 +218,7 @@ class AttackHitUtil
             $BR_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',4)->first();
 
             $value=$current-$lastInterval;
-              if(round($value/$interval,1)>=0.9){
+              if(round($value/$interval['value2'],1)>=0.9){
                 $enemyX_from=$enmeyX_front+$TL_x_a['value2']*$start_direction;
                 $enemyY_from=$enmeyY_font+$BR_y_a['value2'];
                 $enemyX_to=$enemyX_to+$BR_x_a['value2']*$start_direction;
