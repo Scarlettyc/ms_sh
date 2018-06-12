@@ -207,7 +207,7 @@ class AttackHitUtil
           $count=$redis_battle->HLEN($multi_interval_key);
           $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
           $interval=500;
-
+          $code='B04_a';
           if($count==1){
             $code='B04_a';
           }
