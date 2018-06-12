@@ -204,9 +204,10 @@ class AttackHitUtil
             $start_y=($enemySkill['start_y']);
             $start_direction=-$enemySkill['start_direction'];
             $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
-
+          $count=$redis_battle->HLEN($multi_interval_key);
           $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
           $interval=500;
+
           if($count==1){
             $code='B04_a';
           }
