@@ -198,6 +198,7 @@ class AttackHitUtil
       // $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
       $stun=0;
       if($skill_id>=67&&$skill_id<=72){
+         $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
           $count=$redis_battle->HLEN($multi_interval_key);
           $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
           $interval=500;
