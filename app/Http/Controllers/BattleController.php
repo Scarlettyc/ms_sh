@@ -478,6 +478,7 @@ class BattleController extends Controller
  	 }
 
  	 public function testBattle(Request $request){
+ 	 	$defindModel=new DefindMstModel();
  	 	$attackhitutil=new AttackHitUtil();
  	 	$req=$request->getContent();
 		$json=base64_decode($req);
@@ -488,9 +489,8 @@ class BattleController extends Controller
 		$match_id=$data['match_id'];
 		$u_id=$data['u_id'];
 		$battlekey='battle_data'.$match_id.'_'.$u_id;
-
-		$result=$attackhitutil->mapingBuffs($u_id,$match_id,1);
-		var_dump($result);
+		$interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
+		var_dump($interval['value2']);
  	 }
 
 	 public function finalMatchResult ($data){
