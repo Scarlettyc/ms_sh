@@ -198,8 +198,13 @@ class AttackHitUtil
       // $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
       $stun=0;
       if($skill_id>=67&&$skill_id<=72){
-         $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
-          $count=$redis_battle->HLEN($multi_interval_key);
+            $battleData=json_encode($enemySkill,TRUE);
+            $occur_time=$enemySkill['occur_time'];
+            $start_x=-($enemySkill['start_x']);
+            $start_y=($enemySkill['start_y']);
+            $start_direction=-$enemySkill['start_direction'];
+            $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+
           $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
           $interval=500;
           if($count==1){
