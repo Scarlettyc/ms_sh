@@ -235,6 +235,7 @@ class AttackHitUtil
                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
                     $hit=true;
                   }
+                }
                   else if($y_front>$y_back){
                      if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
                           $hit=true;
@@ -404,14 +405,14 @@ class AttackHitUtil
              if($y_front<$y_back){
                if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
                $hit=true;
-              }
-             else if($y_front>$y_back){
+                }
+              }  
+              else if($y_front>$y_back){
                 if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
                        $hit=true;
                    }   
 
                 }
-               }
                $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
              }   
 
