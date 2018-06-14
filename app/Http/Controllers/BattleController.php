@@ -220,13 +220,14 @@ class BattleController extends Controller
 			else {
 				$result['end']=0;
 			}
+			$charData['request_time']=$data['request_time'];
 			$charData['end']=$result['end'];
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
 				$charData['x2']=-($charData['x2']);
 				$charData['direction']=-($charData['direction']);
 			}	
-			$charData['request_time']=$data['sendtime'];
+
 			$charJson=json_encode($charData);
 			$count=$redis_battle->HLEN($battlekey);
 			$redis_battle->HSET($battlekey,$count+1,$charJson);
