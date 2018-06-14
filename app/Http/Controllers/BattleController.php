@@ -201,6 +201,7 @@ class BattleController extends Controller
 				 	}
 				}
 			}
+			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
 			// $enemyData['buffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,1);
@@ -220,7 +221,7 @@ class BattleController extends Controller
 			else {
 				$result['end']=0;
 			}
-			$charData['request_time']=$data['request_time'];
+
 			$charData['end']=$result['end'];
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
@@ -301,6 +302,7 @@ class BattleController extends Controller
 					$charData['x']=$x;
 					$charData['y']=$y;
 					}else{
+						$charData['request_time']=$userData['request_time'];
 						$charData['time']=$userData['time'];
 						$charData['x']=$userData['x'];
 						$charData['y']=$userData['y'];
