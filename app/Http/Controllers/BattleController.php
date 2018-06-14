@@ -300,7 +300,7 @@ class BattleController extends Controller
 					$charData['x']=$x;
 					$charData['y']=$y;
 					}else{
-						$charData['time']=$userData['x'];
+						$charData['time']=$userData['time'];
 						$charData['x']=$userData['x'];
 						$charData['y']=$userData['y'];
 						$charData['x2']=$userData['x2'];
