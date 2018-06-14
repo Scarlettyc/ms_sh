@@ -42,7 +42,7 @@ class SwooleCommand extends Command
 
     public function handle()
     {  //$serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
-        $serv = new swoole_websocket_server("0.0.0.0",6385,SWOOLE_BASE);
+        $serv = new swoole_websocket_server("0.0.0.0",6380,SWOOLE_BASE);
         $serv->set(array(
             'worker_num'  => 8,
             'daemonize'   => 0, //是否作为守护进程,此配置一般配合log_file使用
