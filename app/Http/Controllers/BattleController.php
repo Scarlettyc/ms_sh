@@ -482,21 +482,20 @@ class BattleController extends Controller
  	 }
 
  	 public function testBattle(Request $request){
- 	//  	$defindMst=new DefindMstModel();
- 	//  	$attackhitutil=new AttackHitUtil();
- 	//  	$req=$request->getContent();
-		// $json=base64_decode($req);
-		// $data=json_decode($json,TRUE);
-		// $redis_battle=Redis::connection('battle');
-		// $current=$this->getMillisecond();
-		// $characterModel=new CharacterModel();
-		// $match_id=$data['match_id'];
-		// $u_id=$data['u_id'];
-		// $battlekey='battle_data'.$match_id.'_'.$u_id;
-		//  $code='B04_a';
-		// $interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
-		// var_dump($interval['value2']);
-		phpinfo();
+ 	 	$defindMst=new DefindMstModel();
+ 	 	$attackhitutil=new AttackHitUtil();
+ 	 	$req=$request->getContent();
+		$json=base64_decode($req);
+		$data=json_decode($json,TRUE);
+		$redis_battle=Redis::connection('battle');
+		$current=$this->getMillisecond();
+		$characterModel=new CharacterModel();
+		$match_id=$data['match_id'];
+		$u_id=$data['u_id'];
+		$battlekey='battle_data'.$match_id.'_'.$u_id;
+		 $code='B04_a';
+		$interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
+		var_dump($interval['value2']);
  	 }
 
 	 public function finalMatchResult ($data){

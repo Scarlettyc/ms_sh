@@ -31,9 +31,10 @@ Route::controller('mission','MissionController');
 Route::controller('luckdraw','LuckdrawController');
 Route::post('/quicklogin', 'AccessController@quickLogin');
 Route::post('/access', 'AccessController@login');
-Route::get('test/{locale}', function ($locale) {
-    App::setLocale('en');
-    });
+// Route::get('/test/{locale}', function ($locale) {
+//     App::setLocale('en');
+//     });
+Route::get('/test','AccessController@test');
 
 Route::group(['middleware'=>'checktoken'],function(){
 Route::post('/updateUser','AccessController@update');
