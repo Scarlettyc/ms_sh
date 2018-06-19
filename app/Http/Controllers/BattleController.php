@@ -229,13 +229,13 @@ class BattleController extends Controller
 			$charJson=json_encode($charData);
 			//$count=$redis_battle_history->HLEN($battlekey);
 			//$redis_battle_history->LPUSH($battlekey,$charJson);
-			$$redis_user->HSET($battle_status_key,'x',$charData['x']);
-			$$redis_user->HSET($battle_status_key,'x2',$charData['x2']);
-			$$redis_user->HSET($battle_status_key,'y',$charData['y']);
-			$$redis_user->HSET($battle_status_key,'y2',$charData['y2']);
-			$$redis_user->HSET($battle_status_key,'status',$charData['status']);
-			$$redis_user->HSET($battle_status_key,'end',$charData['end']);
-			$$redis_user->HSET($battle_status_key,'direction',$charData['direction']);
+			$redis_user->HSET($battle_status_key,'x',$charData['x']);
+			$redis_user->HSET($battle_status_key,'x2',$charData['x2']);
+			$redis_user->HSET($battle_status_key,'y',$charData['y']);
+			$redis_user->HSET($battle_status_key,'y2',$charData['y2']);
+			$redis_user->HSET($battle_status_key,'status',$charData['status']);
+			$redis_user->HSET($battle_status_key,'end',$charData['end']);
+			$redis_user->HSET($battle_status_key,'direction',$charData['direction']);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
