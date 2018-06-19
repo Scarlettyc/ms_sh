@@ -86,7 +86,7 @@ class LoadBattleController extends Controller
         var_dump($user_def);
         // $redis_battle_status->HSET($battle_status_key,'ch_def',"0.89");
         // $redis_battle_status->HSET($battle_status_key,'ch_def',$charData['ch_hp_max']);
-        $redis_battle_status->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
+        $redis_battle_status->HSET($battle_status_key,"ch_hp_max",$charData['ch_hp_max']);
         $redis_battle_status->HSET($battle_status_key,'ch_crit',$charData['x2']);
         $redis_battle_status->HSET($battle_status_key,'ch_res',$charData['ch_res']);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
