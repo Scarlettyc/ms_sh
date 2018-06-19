@@ -83,6 +83,7 @@ class LoadBattleController extends Controller
  	    $core_id=$charData['core_id'];
         $user_def=($charData['ch_armor']*1.1)/(15*$charData['ch_lv']+$charData['ch_armor']+40);
         $user_def=round($user_def,2);
+        var_dump($user_def);
         $redis_user->HSET($battle_status_key,'ch_def',"$user_def");
         $redis_user->HSET($battle_status_key,'ch_def',$charData['ch_hp_max']);
         $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
