@@ -77,7 +77,6 @@ class BattleController extends Controller
 			$multi_key='multi'.$match_id.$u_id;
 			$multi_interval_key='multi_interval'.$match_id.$u_id;
 			if(isset($data['skill_id'])){
-			
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
 				if($checkCD>0){
@@ -129,7 +128,7 @@ class BattleController extends Controller
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
 							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
-							$redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
+							//$redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
 						}
 					}
 				}

@@ -311,8 +311,8 @@ class AttackHitUtil
                       $enemyX_to=$enmeyX_back+$effs['BR_x_a']*$start_direction;
                       $enemyY_to=$enmeyY_back+$effs['TL_y_a'];
                       $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-                          Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-                         $redis_battle->HSET($multi_interval_key,$count+1,$current);
+                          // Log::info('damage 3 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+                         //$redis_battle->HSET($multi_interval_key,$count+1,$current);
                     }
                     else {
                       $hit=false;
@@ -321,9 +321,9 @@ class AttackHitUtil
                   else {
                           $hit=false;
                   }
-                  if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-                  $redis_battle->DEL($multi_interval_key);
-                  }
+                  // if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
+                  // $redis_battle->DEL($multi_interval_key);
+                  // }
           }
 
 
@@ -796,8 +796,8 @@ class AttackHitUtil
       }
       else{
         $redis_battle->HSET($myBuffKey,$skill_id.'_'.$buff['eff_type'],$current);
+        }
       }
-    }
     }
   }
 
