@@ -103,9 +103,7 @@ return [
     | such as APC or Memcached. Laravel makes it easy to dig right in.
     |
     */
-    'options' => [
-                'parameters' => ['password' => env('REDIS_PASSWORD', null)],
-            ],
+
 
     'redis' => [
 
@@ -129,6 +127,9 @@ return [
             'port' => env('REDIS_PORT', 6379),
             'database' => 3,
         ],
+        'options' => [
+                'parameters' => ['password' => env('REDIS_PASSWORD', null)],
+            ],
 
     ],
 
