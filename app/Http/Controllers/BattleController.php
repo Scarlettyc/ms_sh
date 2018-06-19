@@ -56,7 +56,7 @@ class BattleController extends Controller
  			$clientId=$battleData['client'];
  			$map_id=$battleData['map_id'];
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
- 			$battle_status_key='battle'.$match_id.'_'.$u_id;
+ 			$battle_status_key='battle'.$u_id;
  			$enemy_clientId=$battleData['enmey_client'];
  			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
  			$charData['time']=$current;
@@ -142,20 +142,20 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$u_id,2);	
-			// if(isset($enemyData['x'])){
-			// 		if($clientId<$enemy_clientId){
-			// 	    	$enemyData['x']=-($enemyData['x']);
-			// 	    	$enemyData['x2']=-($enemyData['x2']);
-			// 	    	$enemyData['direction']=-($enemyData['direction']);
-			// 	    }else{
-			// 	    	$enemyData['x']=-($enemyData['x']);
-			// 	    	$enemyData['x2']=-($enemyData['x2']);
-			// 	    	$enemyData['direction']=-($enemyData['direction']);
-			// 	    	$charData['x']=-($charData['x']);
-			// 	    	$charData['x2']=-($charData['x2']);
-			// 	    	$charData['direction']=-($charData['direction']);
-			// 	    }
-			// }
+			if(isset($enemyData['x'])){
+					if($clientId<$enemy_clientId){
+				    	$enemyData['x']=-($enemyData['x']);
+				    	$enemyData['x2']=-($enemyData['x2']);
+				    	$enemyData['direction']=-($enemyData['direction']);
+				    }else{
+				    	$enemyData['x']=-($enemyData['x']);
+				    	$enemyData['x2']=-($enemyData['x2']);
+				    	$enemyData['direction']=-($enemyData['direction']);
+				    	$charData['x']=-($charData['x']);
+				    	$charData['x2']=-($charData['x2']);
+				    	$charData['direction']=-($charData['direction']);
+				    }
+			}
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
