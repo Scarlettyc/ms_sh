@@ -46,27 +46,25 @@ class BattleController extends Controller
  			$characterModel=new CharacterModel();
  			$skillModel=new SkillMstModel();
  			$attackhitutil=new AttackHitUtil();
- 			$redis_battle=Redis::connection('battle');
+ 			$redis_battle_history=Redis::connection('battle');
+ 			$redis_user=Redis::connection('battle_user');
  			$matchKey='battle_status'.$dmy;
- 			$battle_status=$redis_battle->HGET($matchKey,$u_id);
+ 			$battle_status=$redis_battle_history->HGET($matchKey,$u_id);
  			$battleData=json_decode($battle_status,TRUE);
  			$enemy_uid=$battleData['enemy_uid'];
  			$match_id=$battleData['match_id'];
  			$clientId=$battleData['client'];
  			$map_id=$battleData['map_id'];
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
+ 			$battle_status_key='battle'.$match_id.'_'.$u_id;
  			$enemy_clientId=$battleData['enmey_client'];
- 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y);
- 			$charData['x']=$x;		
- 			$charData['y']=$y;
+ 			$charData=$this->mapingData($match_id,$u_id,$identity,$x,$y,$x2,$y2,$status,1);
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
  			$charData['port']=$clientInfo['port'];
- 			$charData['direction']=1;
- 			$charData['status']=$status;
- 			$charData['x2']=$data['x2'];
- 			$charData['y2']=$data['y2'];
- 			$user_res=1;
+ 			// $charData['direction']=1;
+ 			// $charData['status']=$status;
+ 			//$user_res=1;
  			
  			$fly_tools_key='battle_flytools'.$match_id.$u_id;
 			if(isset($data['direction'])){
@@ -105,7 +103,7 @@ class BattleController extends Controller
 							$flytools['start_y']=$y;
 							$flytools['start_direction']=$data['direction'];
 							$flySkillJson=json_encode($flytools);
-							$redis_battle->HSET($fly_tools_key.'_'.$data['skill_id'],$current,$flySkillJson);
+							$redis_battle_history->HSET($fly_tools_key.'_'.$data['skill_id'],$current,$flySkillJson);
 						}
 						if($skill['skill_damage']==6){
 							$displacement['skill_id']=$skill['skill_id'];
@@ -116,7 +114,7 @@ class BattleController extends Controller
 							$displacement['skill_group']=$skill['skill_group'];
 							$displacement['skill_damage']=$skill['skill_damage'];
 							$displacementJson=json_encode($displacement);
-							$redis_battle->HSET($displacement_key,$data['skill_id'],$displacementJson);
+							$redis_battle_history->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
 							$multi['skill_id']=$skill['skill_id'];
@@ -127,13 +125,13 @@ class BattleController extends Controller
 							$multi['start_direction']=$data['direction'];
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
-							//$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
-							//op[n $redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
+							$redis_battle_history->HSET($multi_key,$data['skill_id'],$multiJson);
+							//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
 						}
 					}
 				}
 			}
-			$enemyData=$this->mapingData($match_id,$enemy_uid,2,$x,$y);	
+			$enemyData=$this->mapingData($match_id,$u_id,$identity);	
 			if(isset($enemyData['x'])){
 					if($clientId<$enemy_clientId){
 				    	$enemyData['x']=-($enemyData['x']);
@@ -229,8 +227,15 @@ class BattleController extends Controller
 			}	
 
 			$charJson=json_encode($charData);
-			$count=$redis_battle->HLEN($battlekey);
-			$redis_battle->HSET($battlekey,$count+1,$charJson);
+			//$count=$redis_battle_history->HLEN($battlekey);
+			//$redis_battle_history->LPUSH($battlekey,$charJson);
+			$redis_battle_status->HSET($battle_status_key,'x',$charData['x']);
+			$redis_battle_status->HSET($battle_status_key,'x2',$charData['x2']);
+			$redis_battle_status->HSET($battle_status_key,'y',$charData['y']);
+			$redis_battle_status->HSET($battle_status_key,'y2',$charData['y2']);
+			$redis_battle_status->HSET($battle_status_key,'status',$charData['status']);
+			$redis_battle_status->HSET($battle_status_key,'end',$charData['end']);
+			$redis_battle_status->HSET($battle_status_key,'direction',$charData['direction']);
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
@@ -241,7 +246,7 @@ class BattleController extends Controller
 		if($skill_group==1&&strpos($skill_name,'b')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-a%')->first();
 			$skill_key='skill_'.$match_id.'_'.$u_id;
-			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
 				return TRUE;
@@ -253,7 +258,7 @@ class BattleController extends Controller
 		else if($skill_group==1&&strpos($skill_name,'c')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-b%')->first();
 			$skill_key='skill_'.$match_id.'_'.$u_id;
-			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
 				return TRUE;
@@ -267,59 +272,69 @@ class BattleController extends Controller
 		}
 	}
 
-	private function mapingData($match_id,$u_id,$identity,$x,$y){
+	private function mapingData($match_id,$u_id,$identity,$x=null,$y=null,$x2=null,$y2=null,$status=null,$direction=null){
+		$redis_user=Redis::connection('battle_user');
 		$characterModel=new CharacterModel();
-		$redis_battle=Redis::connection('battle');
-
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
-		$userExist=$redis_battle->HLEN($battlekey);
+		//$redis_battle_history=Redis::connection('battle');
+		$user_key='battle'.$u_id;
+		$user_data=$redis_user->HGETALL($user_key);
+		$existX=$redis_user->HEXISTS($user_key,'x');
+		// $battlekey='battle_data'.$match_id.'_'.$u_id;
+		// $userExist=$redis_battle_history->HLEN($battlekey);
 		$charData=[];
-		if($userExist<1){
-			$charData=$characterModel->select('ch_hp_max','ch_stam','ch_atk','ch_armor','ch_crit','ch_lv','ch_ranking','ch_res')->where('u_id',$u_id)->first();
+		if($existX<1){
 			if($identity==2){
-				$charData['x']=-1000;
-				$charData['y']=-290;
-				$charData['x2']=-1000;
-				$charData['y2']=-290;
-				$charData['direction']=1;
+				$user_data['x']=-1000;
+				$user_data['y']=-290;
+				$user_data['x2']=-1000;
+				$user_data['y2']=-290;
+				$user_data['direction']=1;
+				$user_data['status']=0;
 			}
 		}
-		else{
-			$userJson=$redis_battle->HGET($battlekey,$userExist);
-			$userData=json_decode($userJson,TRUE);
-			//$userData=$redis_battle->HGETALL($lastFlame.'_'.$u_id);
-				// foreach ($userData as $key => $each) {
-					//$charData['ch_ranking']=$userData['ch_ranking'];
-					$charData['ch_hp_max']=$userData['ch_hp_max'];
-					$charData['ch_stam']=$userData['ch_stam'];
-					$charData['ch_atk']=$userData['ch_atk'];
-					$charData['ch_crit']=$userData['ch_crit'];
-					$charData['ch_armor']=$userData['ch_armor'];
-					$charData['ch_lv']=$userData['ch_lv'];
-					$charData['ch_res']=$userData['ch_res'];
-					if($identity==1){
-					$charData['x']=$x;
-					$charData['y']=$y;
-					}else{
-						$charData['request_time']=$userData['request_time'];
-						$charData['time']=$userData['time'];
-						$charData['x']=$userData['x'];
-						$charData['y']=$userData['y'];
-						$charData['x2']=$userData['x2'];
-						$charData['y2']=$userData['y2'];
-					}
-					if(isset($userData['skill'])&&$identity!=1){
-						$charData['skill']=$userData['skill'];
-					}
-					if(isset($userData['status'])){
-						$charData['status']=$userData['status'];
-					}
-					if(isset($userData['direction'])){
-						$charData['direction']=$userData['direction'];
-					}				
+		else{ 	
+			if($identity==1){			
+				$user_data['x']=$x;
+				$user_data['y']=$y;
+				$user_data['x2']=$x2;
+				$user_data['y2']=$y2;
+				$user_data['direction']=$direction;
+				$user_data['status']=$status;
+			}
+			// $userData=json_decode($userJson,TRUE);
+			// //$userData=$redis_battle_history->HGETALL($lastFlame.'_'.$u_id);
+			// 	// foreach ($userData as $key => $each) {
+			// 		//$charData['ch_ranking']=$userData['ch_ranking'];
+			// 		$charData['ch_hp_max']=$userData['ch_hp_max'];
+			// 		$charData['ch_stam']=$userData['ch_stam'];
+			// 		$charData['ch_atk']=$userData['ch_atk'];
+			// 		$charData['ch_crit']=$userData['ch_crit'];
+			// 		$charData['ch_armor']=$userData['ch_armor'];
+			// 		$charData['ch_lv']=$userData['ch_lv'];
+			// 		$charData['ch_res']=$userData['ch_res'];
+			// 		if($identity==1){
+			// 		$charData['x']=$x;
+			// 		$charData['y']=$y;
+			// 		}else{
+			// 			$charData['request_time']=$userData['request_time'];
+			// 			$charData['time']=$userData['time'];
+			// 			$charData['x']=$userData['x'];
+			// 			$charData['y']=$userData['y'];
+			// 			$charData['x2']=$userData['x2'];
+			// 			$charData['y2']=$userData['y2'];
+			// 		}
+			// 		if(isset($userData['skill'])&&$identity!=1){
+			// 			$charData['skill']=$userData['skill'];
+			// 		}
+			// 		if(isset($userData['status'])){
+			// 			$charData['status']=$userData['status'];
+			// 		}
+			// 		if(isset($userData['direction'])){
+			// 			$charData['direction']=$userData['direction'];
+			// 		}				
 				// }
 		}
-		return $charData;
+		return $user_data;
 	}
 
 	private function getMillisecond() {
@@ -338,7 +353,7 @@ class BattleController extends Controller
 			$dmy=$now->format( 'Ymd' );
 			$defindData=$defindModel->where('defind_id',27)->first();
 		  	$datetime=$now->format('Y-m-d h:m:s');
-			$redis_battle=Redis::connection('battle');
+			$redis_battle_history=Redis::connection('battle');
 			$battle_reward=$battleRewardExpModel->select('exp','coin','loots_normal','loots_special')->where('lv',$ch_lv)->where('win',$win)->where('ranking',$ch_ranking)->where('start_date','<',$datetime)->where('end_date','>',$datetime)->first();
 			$loots_normal=$battle_reward['loots_normal'];
 			$loots_special=$battle_reward['loots_special'];
@@ -371,7 +386,7 @@ class BattleController extends Controller
 			$key="battle_result".$match_id;
 			$result['coin_reward']=$battle_reward['coin'];
 			$reward=json_encode($result,TRUE);
-			$redis_battle->HSET($key,$u_id,$reward);
+			$redis_battle_history->HSET($key,$u_id,$reward);
   }
 
   	public function battleResult(Request $request){
@@ -380,9 +395,9 @@ class BattleController extends Controller
 		$data=json_decode($json,TRUE);
 		$match_id=$data['match_id'];
 		$u_id=$data['u_id'];
-		$redis_battle=Redis::connection('battle');
+		$redis_battle_history=Redis::connection('battle');
 		$key="battle_result".$match_id;
-		$battle_reward=$redis_battle->HGET($key,$u_id);
+		$battle_reward=$redis_battle_history->HGET($key,$u_id);
 		$rewards=json_decode($battle_reward,TRUE);
 		$normarl=[];
 		$special=[];
@@ -403,16 +418,16 @@ class BattleController extends Controller
   	
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
-		$redis_battle=Redis::connection('battle');
+		$redis_battle_history=Redis::connection('battle');
 		$skill_id=$skill['skill_id'];
 		$skill_cd=$skill['skill_cd'];
 		if($skill_cd>0){
 			$skill_key='skill_'.$match_id.'_'.$u_id;
-			$skillTime=$redis_battle->HGET($skill_key,$skill_id);
+			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime){
 				if($current-$skillTime>=$skill_cd){
-				$redis_battle->HSET($skill_key,$skill_id,$current);
+				$redis_battle_history->HSET($skill_key,$skill_id,$current);
 				return $skillTime;
 				}
 			else {
@@ -420,7 +435,7 @@ class BattleController extends Controller
 				}
 			}
 			else {
-			$redis_battle->HSET($skill_key,$skill_id,$current);
+			$redis_battle_history->HSET($skill_key,$skill_id,$current);
 			return 1;
 			}
 		}
@@ -448,9 +463,9 @@ class BattleController extends Controller
  	 	$now   = new DateTime;
  	 	$dmy=$now->format( 'Ymd' );
  	 	$match_id=$data['match_id'];
- 	 	$redis_battle=Redis::connection('battle');
+ 	 	$redis_battle_history=Redis::connection('battle');
 		$match_id=$data['match_id'];
-		$matchList=$redis_battle->HGET('match_list',$match_id);
+		$matchList=$redis_battle_history->HGET('match_list',$match_id);
 		$u_id=$data['u_id'];
 		
 		$matchArr=json_decode($matchList,TRUE);
@@ -465,15 +480,15 @@ class BattleController extends Controller
 			}
 			$map_id=$matchArr['map_id'];
 			$key='match_history'.$match_id.'_'.$u_id;
-			$count=$redis_battle->LLEN($key);
+			$count=$redis_battle_history->LLEN($key);
 			$data['time']=$this->getMillisecond();
 			$dataJson=json_encode($data,TRUE);
 			if($count==0){
-			$redis_battle->LPUSH($key,$dataJson);
+			$redis_battle_history->LPUSH($key,$dataJson);
 			return $enmey_uid;
 			}
 			else{
-				$redis_battle->LPUSH($key,$dataJson);
+				$redis_battle_history->LPUSH($key,$dataJson);
 				return null;
 			}
 
@@ -486,7 +501,7 @@ class BattleController extends Controller
  	 	$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$redis_battle=Redis::connection('battle');
+		$redis_battle_history=Redis::connection('battle');
 		$current=$this->getMillisecond();
 		$characterModel=new CharacterModel();
 		$match_id=$data['match_id'];

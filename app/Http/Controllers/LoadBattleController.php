@@ -69,6 +69,8 @@ class LoadBattleController extends Controller
         $UserBaggageEqModel=new UserBaggageEqModel();
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
+        $redis_battle_status=Redis::connection('battle_status');
+        $battle_status_key='battle'.$u_id;
         $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
         $charRe['ch_title']=$charData['ch_title'];
@@ -79,6 +81,11 @@ class LoadBattleController extends Controller
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
  	    $core_id=$charData['core_id'];
+        $user_def=($charData['ch_armor']*1.1)/(15*$charData['ch_lv']+$charData['ch_armor']+40);
+        $redis_battle_status->HSET($battle_status_key,'ch_def',$user_def);
+        $redis_battle_status->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
+        $redis_battle_status->HSET($battle_status_key,'ch_crit',$charData['x2']);
+        $redis_battle_status->HSET($battle_status_key,'ch_res',$charData['ch_res']);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
