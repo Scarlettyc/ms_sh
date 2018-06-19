@@ -57,6 +57,7 @@ class BattleController extends Controller
  			$map_id=$battleData['map_id'];
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
+ 			$end=0;
  			$enemy_clientId=$battleData['enmey_client'];
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
@@ -69,7 +70,7 @@ class BattleController extends Controller
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
  			$charData['port']=$clientInfo['port'];
- 			$end=0;
+ 			
  			$direction=$data['direction'];
 
 
