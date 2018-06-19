@@ -58,7 +58,7 @@ class BattleController extends Controller
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$match_id.'_'.$u_id;
  			$enemy_clientId=$battleData['enmey_client'];
- 			$charData=$this->mapingData($match_id,$u_id,$identity,$x,$y,$x2,$y2,$status,1);
+ 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
  			$charData['port']=$clientInfo['port'];
@@ -131,7 +131,7 @@ class BattleController extends Controller
 					}
 				}
 			}
-			$enemyData=$this->mapingData($match_id,$u_id,$identity);	
+			$enemyData=$this->mapingData($match_id,$u_id,2);	
 			if(isset($enemyData['x'])){
 					if($clientId<$enemy_clientId){
 				    	$enemyData['x']=-($enemyData['x']);
