@@ -127,8 +127,8 @@ class BattleController extends Controller
 							$multi['start_direction']=$data['direction'];
 							$multi['skill_damage']=$skill['skill_damage'];
 							$multiJson=json_encode($multi);
-							$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
-							//$redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
+							//$redis_battle->HSET($multi_key,$data['skill_id'],$multiJson);
+							//op[n $redis_battle->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
 						}
 					}
 				}
