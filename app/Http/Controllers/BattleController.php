@@ -64,6 +64,14 @@ class BattleController extends Controller
  			$charData['port']=$clientInfo['port'];
  			$end=0;
  			$direction=$data['direction'];
+
+ 			$redis_user->HSET($battle_status_key,'x',$x);
+			$redis_user->HSET($battle_status_key,'x2',$x2);
+			$redis_user->HSET($battle_status_key,'y',$y);
+			$redis_user->HSET($battle_status_key,'y2',$y2);
+			$redis_user->HSET($battle_status_key,'status',$status);
+			$redis_user->HSET($battle_status_key,'end',$end);
+			$redis_user->HSET($battle_status_key,'direction',$direction);
  			// $charData['direction']=1;
  			// $charData['status']=$status;
  			//$user_res=1;
@@ -134,20 +142,20 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$u_id,2);	
-			if(isset($enemyData['x'])){
-					if($clientId<$enemy_clientId){
-				    	$enemyData['x']=-($enemyData['x']);
-				    	$enemyData['x2']=-($enemyData['x2']);
-				    	$enemyData['direction']=-($enemyData['direction']);
-				    }else{
-				    	$enemyData['x']=-($enemyData['x']);
-				    	$enemyData['x2']=-($enemyData['x2']);
-				    	$enemyData['direction']=-($enemyData['direction']);
-				    	$charData['x']=-($charData['x']);
-				    	$charData['x2']=-($charData['x2']);
-				    	$charData['direction']=-($charData['direction']);
-				    }
-			}
+			// if(isset($enemyData['x'])){
+			// 		if($clientId<$enemy_clientId){
+			// 	    	$enemyData['x']=-($enemyData['x']);
+			// 	    	$enemyData['x2']=-($enemyData['x2']);
+			// 	    	$enemyData['direction']=-($enemyData['direction']);
+			// 	    }else{
+			// 	    	$enemyData['x']=-($enemyData['x']);
+			// 	    	$enemyData['x2']=-($enemyData['x2']);
+			// 	    	$enemyData['direction']=-($enemyData['direction']);
+			// 	    	$charData['x']=-($charData['x']);
+			// 	    	$charData['x2']=-($charData['x2']);
+			// 	    	$charData['direction']=-($charData['direction']);
+			// 	    }
+			// }
 		    $flytools=$attackhitutil->checkFlyTools($match_id,$enemy_uid);   
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
@@ -232,13 +240,7 @@ class BattleController extends Controller
 			$charJson=json_encode($charData);
 			//$count=$redis_battle_history->HLEN($battlekey);
 			//$redis_battle_history->LPUSH($battlekey,$charJson);
-			$redis_user->HSET($battle_status_key,'x',$x);
-			$redis_user->HSET($battle_status_key,'x2',$x2);
-			$redis_user->HSET($battle_status_key,'y',$y);
-			$redis_user->HSET($battle_status_key,'y2',$y2);
-			$redis_user->HSET($battle_status_key,'status',$status);
-			$redis_user->HSET($battle_status_key,'end',$end);
-			$redis_user->HSET($battle_status_key,'direction',$direction);
+
 			$response=json_encode($result,TRUE);
 			return  $response;
 		}
