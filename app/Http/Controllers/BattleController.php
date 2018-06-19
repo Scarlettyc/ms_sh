@@ -41,6 +41,7 @@ class BattleController extends Controller
  			$x2=$data['x2'];
  			$y2=$data['y2'];
  			$u_id=$data['u_id'];
+ 			$direction=$data['direction'];
  			$status=$data['status'];//status of user in battle
  			$current=$this->getMillisecond();
  			$characterModel=new CharacterModel();
@@ -71,7 +72,6 @@ class BattleController extends Controller
  			$charData['address']=$clientInfo['address'];
  			$charData['port']=$clientInfo['port'];
  			
- 			$direction=$data['direction'];
 
 
  			// $charData['direction']=1;
