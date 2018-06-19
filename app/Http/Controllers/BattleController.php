@@ -58,13 +58,6 @@ class BattleController extends Controller
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
  			$enemy_clientId=$battleData['enmey_client'];
- 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
- 			$charData['time']=$current;
- 			$charData['address']=$clientInfo['address'];
- 			$charData['port']=$clientInfo['port'];
- 			$end=0;
- 			$direction=$data['direction'];
-
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
 			$redis_user->HSET($battle_status_key,'y',$y);
@@ -72,6 +65,14 @@ class BattleController extends Controller
 			$redis_user->HSET($battle_status_key,'status',$status);
 			$redis_user->HSET($battle_status_key,'end',$end);
 			$redis_user->HSET($battle_status_key,'direction',$direction);
+ 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
+ 			$charData['time']=$current;
+ 			$charData['address']=$clientInfo['address'];
+ 			$charData['port']=$clientInfo['port'];
+ 			$end=0;
+ 			$direction=$data['direction'];
+
+
  			// $charData['direction']=1;
  			// $charData['status']=$status;
  			//$user_res=1;
