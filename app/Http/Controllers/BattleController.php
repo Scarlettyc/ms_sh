@@ -60,7 +60,7 @@ class BattleController extends Controller
  			$battle_status_key='battle'.$u_id;
  			$end=0;
  			$enemy_clientId=$battleData['enmey_client'];
- 			
+ 			$this->removeUsedSkill($u_id);
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
 			$redis_user->HSET($battle_status_key,'y',$y);
@@ -251,7 +251,7 @@ class BattleController extends Controller
 			}	
 
 			$charJson=json_encode($charData);
-			$this->removeUsedSkill($enemy_uid);
+			// $this->removeUsedSkill($enemy_uid);
 			// $this->removeUsedSkill($u_id);
 			
 			//$count=$redis_battle_history->HLEN($battlekey);
