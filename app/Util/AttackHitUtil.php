@@ -397,7 +397,7 @@ class AttackHitUtil
              //$occur_time=$current;
              $start_x=-($enemyX);
              $start_y=($enemyY);
-             $start_direction=-$enemySkill['start_direction'];
+             $start_direction=-$enemySkill['direction'];
              if(!isset($effs['eff_duration'])){
                $effs['eff_duration']=0;
              }
