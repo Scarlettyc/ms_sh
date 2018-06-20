@@ -737,7 +737,8 @@ class AttackHitUtil
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
       $randCrit=rand(1,100);
       $current=$this->getMillisecond();
-
+      $battle_status_key='battle'.$u_id;
+      $redis_user=Redis::connection('battle_user');
       $redis_battle=Redis::connection('battle');
      // $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid,1);
       $damage_reduction=0;
@@ -785,6 +786,8 @@ class AttackHitUtil
 			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
       Log::info('enmey  speical damage'.$enemyDMG);
   	}
+
+    $redis_user->HSET($battle_status_key,'ch_hp_max',$chardata['ch_hp_max']);
   	return $chardata;
   }
 
