@@ -179,7 +179,7 @@ class BattleController extends Controller
 				// 	$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
 				// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 				// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					$this->removeUsedSkill($enmey_uid);
+					$this->removeUsedSkill($enemy_uid);
 					// Log::info($charData);
 				// }
 			}
@@ -477,10 +477,10 @@ class BattleController extends Controller
 
 		if(isset($matchArr)){
 			if($matchArr['u_id']==$u_id){
-				$enmey_uid=$matchArr['enemy_uid'];
+				$enemy_uid=$matchArr['enemy_uid'];
 			}
 			else{
-				$enmey_uid=$matchArr['u_id'];
+				$enemy_uid=$matchArr['u_id'];
 			}
 			$map_id=$matchArr['map_id'];
 			$key='match_history'.$match_id.'_'.$u_id;
@@ -489,7 +489,7 @@ class BattleController extends Controller
 			$dataJson=json_encode($data,TRUE);
 			if($count==0){
 			$redis_battle_history->LPUSH($key,$dataJson);
-			return $enmey_uid;
+			return $enemy_uid;
 			}
 			else{
 				$redis_battle_history->LPUSH($key,$dataJson);
