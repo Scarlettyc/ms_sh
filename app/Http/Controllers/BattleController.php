@@ -93,6 +93,7 @@ class BattleController extends Controller
 				if($checkCD>0){
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
 					if($possbileSkill){
+						$this->removeUsedSkill($u_id);
 						$charData['skill']['skill_id']=$data['skill_id'];
 						$charData['skill']['skill_group']=$skill['skill_group'];
 						$charData['skill']['skill_damage']=$skill['skill_damage'];
@@ -251,7 +252,7 @@ class BattleController extends Controller
 			}	
 
 			$charJson=json_encode($charData);
-			$this->removeUsedSkill($enemy_uid);
+			
 			// $this->removeUsedSkill($u_id);
 			
 			//$count=$redis_battle_history->HLEN($battlekey);
