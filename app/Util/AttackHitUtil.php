@@ -161,6 +161,7 @@ class AttackHitUtil
     } 
 
 /*2018.04.27 edition*/
+
 	public function checkSkillHit($enemySkill,$x,$y,$direction,$match_id,$enemy_uid,$u_id,$listKey=0){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
@@ -200,58 +201,58 @@ class AttackHitUtil
       // $checkMyBuffs=$this->checkBuffs($match_id,$u_id,1);
       // $checkDebuffs=$this->checkBuffs($match_id,$u_id,2);
       $stun=0;
-      if($skill_id>=67&&$skill_id<=72){
-            $battleData=json_encode($enemySkill,TRUE);
-            $occur_time=$enemySkill['occur_time'];
-            $start_x=-($enemySkill['start_x']);
-            $start_y=($enemySkill['start_y']);
-            $start_direction=-$enemySkill['start_direction'];
-            $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
-          $count=$redis_battle->HLEN($multi_interval_key);
-          $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
-          $interval=500;
-          $code='B04_a';
-          if($count==1){
-            $code='B04_a';
-          }
-          else if($count==2){
-            $code='B04_b';
-          }
-          else if($count==3){
-            $code='B04_c'; 
+      // if($skill_id>=67&&$skill_id<=72){
+      //       $battleData=json_encode($enemySkill,TRUE);
+      //       $occur_time=$enemySkill['occur_time'];
+      //       $start_x=-($enemySkill['start_x']);
+      //       $start_y=($enemySkill['start_y']);
+      //       $start_direction=-$enemySkill['start_direction'];
+      //       $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+      //     $count=$redis_battle->HLEN($multi_interval_key);
+      //     $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
+      //     $interval=500;
+      //     $code='B04_a';
+      //     if($count==1){
+      //       $code='B04_a';
+      //     }
+      //     else if($count==2){
+      //       $code='B04_b';
+      //     }
+      //     else if($count==3){
+      //       $code='B04_c'; 
 
-          }
-            $interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
-            $TL_x_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',1)->first();
-            $TL_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',2)->first();
-            $BR_x_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',3)->first();
-            $BR_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',4)->first();
+      //     }
+      //       $interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
+      //       $TL_x_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',1)->first();
+      //       $TL_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',2)->first();
+      //       $BR_x_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',3)->first();
+      //       $BR_y_a=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',4)->first();
 
-            $value=$current-$lastInterval;
-              if(round($value/$interval['value2'],1)>=0.9&&$count<=3&&round($value/$interval['value2']<=1.5,1)){
-                $enemyX_from=$enmeyX_front+$TL_x_a['value2']*$start_direction;
-                $enemyY_from=$enmeyY_front+$BR_y_a['value2'];
-                $enemyX_to=$enmeyX_back+$BR_x_a['value2']*$start_direction;
-                $enemyY_to=$enmeyY_back+$TL_y_a['value2'];
-                $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-                if($y_front<$y_back){
-                    if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-                    $hit=true;
-                  }
-                }
-                  else if($y_front>$y_back){
-                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
-                          $hit=true;
-                      }
-                    }
-             // Log::info('test B04 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-                 $redis_battle->HSET($multi_interval_key,$count+1,$current);
-              }
-            if($count>3){
-                $redis_battle->DEL($multi_interval_key);
-            }
-      }
-			else if(isset($effs['TL_x_a']))
+      //       $value=$current-$lastInterval;
+      //         if(round($value/$interval['value2'],1)>=0.9&&$count<=3&&round($value/$interval['value2']<=1.5,1)){
+      //           $enemyX_from=$enmeyX_front+$TL_x_a['value2']*$start_direction;
+      //           $enemyY_from=$enmeyY_front+$BR_y_a['value2'];
+      //           $enemyX_to=$enmeyX_back+$BR_x_a['value2']*$start_direction;
+      //           $enemyY_to=$enmeyY_back+$TL_y_a['value2'];
+      //           $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
+      //           if($y_front<$y_back){
+      //               if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+      //               $hit=true;
+      //             }
+      //           }
+      //             else if($y_front>$y_back){
+      //                if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
+      //                     $hit=true;
+      //                 }
+      //               }
+      //        // Log::info('test B04 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+      //            $redis_battle->HSET($multi_interval_key,$count+1,$current);
+      //         }
+      //       if($count>3){
+      //           $redis_battle->DEL($multi_interval_key);
+      //       }
+      // }
+			 if(isset($effs['TL_x_a']))
       {
 				$enemyX_from=$enemyX+$effs['TL_x_a']*$enemy_direction;
 				$enemyY_from=$enemyY+$effs['BR_y_a'];

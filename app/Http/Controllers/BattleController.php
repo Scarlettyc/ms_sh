@@ -183,44 +183,44 @@ class BattleController extends Controller
 					// Log::info($charData);
 				}
 			}
-			if(isset($flytools)){
-				 foreach ($flytools as $skill => $flytool) {
-				 	foreach ($flytool as $key => $eachskill) 
-				 	{	$eachskillData=json_decode($eachskill,TRUE);
-				 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
-				 	if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-				 	}
-				  }
-				 }	
-			}
-			if(isset($displacement)){
-				foreach ($displacement as $key => $eachskill) {
-					$eachskillData=json_decode($eachskill,TRUE);
-					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
-					if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-					// Log::info($charData);
-				 	}
-				}
-			}
-			if(isset($multi)){	
-					foreach ($multi as $key => $eachskill) {
-					$eachskillData=json_decode($eachskill,TRUE);
-					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
-					if($hit&&$hit!=null&&$hit!=''){
-						Log::info("test hit damge 3,4");
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
-				 	}
-				}
-			}
+			// if(isset($flytools)){
+			// 	 foreach ($flytools as $skill => $flytool) {
+			// 	 	foreach ($flytool as $key => $eachskill) 
+			// 	 	{	$eachskillData=json_decode($eachskill,TRUE);
+			// 	 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+			// 	 	if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 	 	}
+			// 	  }
+			// 	 }	
+			// }
+			// if(isset($displacement)){
+			// 	foreach ($displacement as $key => $eachskill) {
+			// 		$eachskillData=json_decode($eachskill,TRUE);
+			// 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		// Log::info($charData);
+			// 	 	}
+			// 	}
+			// }
+			// if(isset($multi)){	
+			// 		foreach ($multi as $key => $eachskill) {
+			// 		$eachskillData=json_decode($eachskill,TRUE);
+			// 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 			Log::info("test hit damge 3,4");
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		Log::info($charData);
+			// 	 	}
+			// 	}
+			// }
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
