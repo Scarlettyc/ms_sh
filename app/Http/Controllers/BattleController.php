@@ -304,7 +304,7 @@ class BattleController extends Controller
 				$user_data['y']=-290;
 				$user_data['x2']=-1000;
 				$user_data['y2']=-290;
-				$user_data['direction']=1;
+				$user_data['direction']=-1;
 				$user_data['status']=0;
 			}
 		}
@@ -318,6 +318,7 @@ class BattleController extends Controller
 				$user_data['status']=$status;
 			}
 			else {
+				$user_data['direction']=-$user_data['direction'];
 				if(isset($user_data['skill_id'])){
 						$user_data['skill']['skill_id']=$user_data['skill_id'];
 						$user_data['skill']['skill_group']=$user_data['skill_group'];
