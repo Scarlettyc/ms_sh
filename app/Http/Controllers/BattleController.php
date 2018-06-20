@@ -60,7 +60,7 @@ class BattleController extends Controller
  			$battle_status_key='battle'.$u_id;
  			$end=0;
  			$enemy_clientId=$battleData['enmey_client'];
- 			$this->removeUsedSkill($u_id);
+ 			// $this->removeUsedSkill($u_id);
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
 			$redis_user->HSET($battle_status_key,'y',$y);
@@ -181,6 +181,7 @@ class BattleController extends Controller
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
 					Log::info($charData);
 				}
+				$this->removeUsedSkill($enemy_uid);
 			}
 			if(isset($flytools)){
 				 foreach ($flytools as $skill => $flytool) {
