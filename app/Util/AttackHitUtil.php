@@ -395,8 +395,8 @@ class AttackHitUtil
              $battleData=json_encode($enemySkill,TRUE);
              $occur_time=$enemySkill['occur_time'];
              //$occur_time=$current;
-             $start_x=-($enemySkill['start_x']);
-             $start_y=($enemySkill['start_y']);
+             $start_x=-($enemyX);
+             $start_y=($enemyY);
              $start_direction=-$enemySkill['start_direction'];
              if(!isset($effs['eff_duration'])){
                $effs['eff_duration']=0;
