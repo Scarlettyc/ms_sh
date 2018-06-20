@@ -125,7 +125,7 @@ class BattleController extends Controller
 							$flytools['start_y']=$y;
 							$flytools['start_direction']=$data['direction'];
 							$flySkillJson=json_encode($flytools);
-							$redis_battle_history->HSET($fly_tools_key,$skill_id,$flySkillJson);
+							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
 						}
 						if($skill['skill_damage']==6){
 							$displacement['skill_id']=$skill['skill_id'];
