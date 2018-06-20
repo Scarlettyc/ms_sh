@@ -250,6 +250,8 @@ class BattleController extends Controller
 			}	
 
 			$charJson=json_encode($charData);
+			$this->removeUsedSkill($u_id);
+			$this->removeUsedSkill($enemy_uid);
 			//$count=$redis_battle_history->HLEN($battlekey);
 			//$redis_battle_history->LPUSH($battlekey,$charJson);
 
@@ -314,35 +316,41 @@ class BattleController extends Controller
 		$charData=[];
 		if($existX<1){
 			if($identity==2){
-				$user_data['x']=-1000;
-				$user_data['y']=-290;
-				$user_data['x2']=-1000;
-				$user_data['y2']=-290;
-				$user_data['direction']=-1;
-				$user_data['status']=0;
+				$result['x']=-1000;
+				$result['y']=-290;
+				$result['x2']=-1000;
+				$result['y2']=-290;
+				$result['direction']=-1;
+				$result['status']=0;
 			}
 		}
 		else{ 	
 			if($identity==1){			
-				$user_data['x']=$x;
-				$user_data['y']=$y;
-				$user_data['x2']=$x2;
-				$user_data['y2']=$y2;
-				$user_data['direction']=$direction;
-				$user_data['status']=$status;
+				$result['x']=$x;
+				$result['y']=$y;
+				$result['x2']=$x2;
+				$result['y2']=$y2;
+				$result['direction']=$direction;
+				$result['status']=$status;
 			}
 			else {
-				$user_data['direction']=-$user_data['direction'];
-				if(isset($user_data['skill_id'])){
-						$user_data['skill']['skill_id']=$user_data['skill_id'];
-						$user_data['skill']['skill_group']=$user_data['skill_group'];
-						$user_data['skill']['skill_damage']=$user_data['skill_damage'];
-						$user_data['skill']['skill_prepare_time']=$user_data['skill_prepare_time'];
-						$user_data['skill']['skill_atk_time']=$user_data['skill_atk_time'];
-						$user_data['skill']['occur_time']=$user_data['occur_time'];
-						$user_data['skill']['start_x']=$user_data['start_x'];
-						$user_data['skill']['start_y']=$user_data['start_y'];
-						$user_data['skill']['start_direction']=$user_data['start_direction'];
+				$result['x']=$user_data['x'];
+				$result['y']=$user_data['y'];
+				$result['x2']=$user_data['x2'];
+				$result['y2']=$user_data['y2'];
+				$result['direction']=$direction;
+				$result['status']=$status;
+				$result['direction']=-$user_data['direction'];
+				if(isset($result['skill_id'])){
+						$result['skill']['skill_id']=$user_data['skill_id'];
+						$result['skill']['skill_group']=$user_data['skill_group'];
+						$result['skill']['skill_damage']=$user_data['skill_damage'];
+						$result['skill']['skill_prepare_time']=$user_data['skill_prepare_time'];
+						$result['skill']['skill_atk_time']=$user_data['skill_atk_time'];
+						$result['skill']['occur_time']=$user_data['occur_time'];
+						$result['skill']['start_x']=$user_data['start_x'];
+						$result['skill']['start_y']=$user_data['start_y'];
+						$result['skill']['start_direction']=$user_data['start_direction'];
 				}
 			}
 			// $userData=json_decode($userJson,TRUE);
