@@ -171,7 +171,7 @@ class BattleController extends Controller
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
-			if(isset($enemyData['skill_id'])){
+			if(isset($enemyData['skill'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
 				Log::info("check skill enmeyData".$enemyData['skill']['skill_id']);
 				if($hit&&$hit!=null&&$hit!=''){
@@ -386,7 +386,7 @@ class BattleController extends Controller
 			// 		}				
 				// }
 		}
-		return $user_data;
+		return $result;
 	}
 
 	private function getMillisecond() {
