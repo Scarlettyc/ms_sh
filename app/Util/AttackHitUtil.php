@@ -337,58 +337,58 @@ class AttackHitUtil
           }
 
 
-           if($skill_damage==4){
-            $battleData=json_encode($enemySkill,TRUE);
-            $occur_time=$enemySkill['occur_time'];
-            $start_x=-($enemySkill['start_x']);
-            $start_y=($enemySkill['start_y']);
-            $start_direction=-$enemySkill['start_direction'];
-            $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+          //  if($skill_damage==4){
+          //   $battleData=json_encode($enemySkill,TRUE);
+          //   $occur_time=$enemySkill['occur_time'];
+          //   $start_x=-($enemySkill['start_x']);
+          //   $start_y=($enemySkill['start_y']);
+          //   $start_direction=-$enemySkill['start_direction'];
+          //   $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
 
-            if(!isset($effs['eff_duration'])){
-            $effs['eff_duration']=0;
-            }
-            if(!isset($effs['eff_interval'])){
-              $effs['eff_interval']=1;
-            }
-            $count=$redis_battle->HLEN($multi_interval_key);
-            if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
-            { 
-              $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
-              $value=$current-$lastInterval;
-              Log::info('lastInterval: '.$lastInterval.'value/eff_interval:'.round($value/$effs['eff_interval'],1).' value: '.$value.' eff_interval:'.$effs['eff_interval']);
-              if(round($value/$effs['eff_interval'],1)>=0.9)
-             { 
-                $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
-                $enemyY_from=$start_y+$effs['BR_y_a'];
-                $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
-                $enemyY_to=$start_y+$effs['TL_y_a'];
-                $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-                  if($y_front<$y_back){
-                    if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
-                    $hit=true;
-                  }
-                  else if($y_front>$y_back){
-                     if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
-                          $hit=true;
-                      }
-                    }
+          //   if(!isset($effs['eff_duration'])){
+          //   $effs['eff_duration']=0;
+          //   }
+          //   if(!isset($effs['eff_interval'])){
+          //     $effs['eff_interval']=1;
+          //   }
+          //   $count=$redis_battle->HLEN($multi_interval_key);
+          //   if($count<=round($effs['eff_duration']/$effs['eff_interval'])&&$current-$occur_time<=$effs['eff_duration'])
+          //   { 
+          //     $lastInterval=$redis_battle->HGET($multi_interval_key,$count);
+          //     $value=$current-$lastInterval;
+          //     Log::info('lastInterval: '.$lastInterval.'value/eff_interval:'.round($value/$effs['eff_interval'],1).' value: '.$value.' eff_interval:'.$effs['eff_interval']);
+          //     if(round($value/$effs['eff_interval'],1)>=0.9)
+          //    { 
+          //       $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
+          //       $enemyY_from=$start_y+$effs['BR_y_a'];
+          //       $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
+          //       $enemyY_to=$start_y+$effs['TL_y_a'];
+          //       $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
+          //         if($y_front<$y_back){
+          //           if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_back>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_back>=$enemyY_to){
+          //           $hit=true;
+          //         }
+          //         else if($y_front>$y_back){
+          //            if($enemyX_from<=$x_back&&$enemyX_from>=$x_front&&$y_front>=$enemyY_to||$enemyX_from>=$x_back&&$enemyX_from<=$x_front&&$y_front>=$enemyY_to){
+          //                 $hit=true;
+          //             }
+          //           }
                   
-                    }
-                    Log::info('damage 4 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
-                   $redis_battle->HSET($multi_interval_key,$count+1,$current);
-              }
-              else {
-                $hit=false;
-              }
-            }
-            else {
-                    $hit=false;
-            }
-            if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
-             $redis_battle->DEL($multi_interval_key);
-            }
-          }
+          //           }
+          //           Log::info('damage 4 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+          //          $redis_battle->HSET($multi_interval_key,$count+1,$current);
+          //     }
+          //     else {
+          //       $hit=false;
+          //     }
+          //   }
+          //   else {
+          //           $hit=false;
+          //   }
+          //   if($count==round($effs['eff_duration']/$effs['eff_interval'])||$current-$occur_time>$effs['eff_duration']){
+          //    $redis_battle->DEL($multi_interval_key);
+          //   }
+          // }
 
            if($skill_damage==2&&isset($enemySkill['occur_time']))
            {
@@ -432,12 +432,12 @@ class AttackHitUtil
              //    $redis_battle->HDEL($displacement_key,$skill_id);
              // }
              if($hit&&$skill_damage==2){
-               $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+               $redis_battle->HDEL($fly_tools_key,$skill_id);
              }
                // Log::info('damage 2 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);	
     			   
             else if(!$hit&&$skill_damage==2&&$current-$occur_time>$effs['eff_duration']){
-               $redis_battle->HDEL($fly_tools_key.'_'.$skill_id,$occur_time);
+               $redis_battle->HDEL($fly_tools_key,$skill_id);
                // Log::info('out of time hdel skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction.'$current-$occur_time'.($current-$occur_time).'eff duration'.$effs['eff_duration']); 
             }
           return $hit;
@@ -829,39 +829,24 @@ class AttackHitUtil
      }
    }
   }
-  public function checkFlyTools($match_id,$u_id){
+  public function checkSkillRecord($match_id,$u_id,$key){
       $redis_battle=Redis::connection('battle');
-      $current=$this->getMillisecond();
-      $CharacterModel=new CharacterModel();
-      $EquipmentMstModel= new EquipmentMstModel();
-      $skillModel=new SkillMstModel();
-      $skill_keys='battle_user_skills_'.$u_id;
-      $all_skills=$redis_battle->HKEYS($skill_keys);
-      // $all_skills=[224,225,226,227];
-      $result=[];
-      if(isset($all_skills)){
-        foreach ($all_skills as $key => $skill) {
-          $fly_tools_key='battle_flytools'.$match_id.$u_id;
-          $fly_tools_key_sp=$fly_tools_key.'_'.$skill;
-          $speical_skills=$redis_battle->HVALS($fly_tools_key_sp);
-          $result[]= $speical_skills;
-          # code...
-        }
-      return $result;
-    }
+      $fly_tools_key=$key.$match_id.$u_id;
+      $fly_skills=$redis_battle->HVALS($fly_tools_key);
+      return $fly_skills;
   }
-  public function checkDisplament($match_id,$u_id){
-       $redis_battle=Redis::connection('battle');
-       $displacement_key='displacement'.$match_id.$u_id;
-       $displacement_skills=$redis_battle->HVALS($displacement_key);
-       return $displacement_skills;
+  // public function checkDisplament($match_id,$u_id){
+  //      $redis_battle=Redis::connection('battle');
+  //      $displacement_key='displacement'.$match_id.$u_id;
+  //      $displacement_skills=$redis_battle->HVALS($displacement_key);
+  //      return $displacement_skills;
 
-  }
+  // }
 
-  public function checkMulti($match_id,$u_id){
-       $redis_battle=Redis::connection('battle');
-       $multi_key='multi'.$match_id.$u_id;
-       $skills=$redis_battle->HVALS($multi_key);
-       return $skills;
-  }
+  // public function checkMulti($match_id,$u_id){
+  //      $redis_battle=Redis::connection('battle');
+  //      $multi_key='multi'.$match_id.$u_id;
+  //      $skills=$redis_battle->HVALS($multi_key);
+  //      return $skills;
+  // }
 }
