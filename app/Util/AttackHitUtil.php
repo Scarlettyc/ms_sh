@@ -756,8 +756,9 @@ class AttackHitUtil
       if($randCrit<=$enemyData['ch_crit']||!$crit=0){
         $critBool=2;
       }
-		  //$user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
-		  $enemy_res=$enemyData['ch_res'];
+		 // $user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
+		  $user_def=$chardata['ch_def'];
+      $enemy_res=$enemyData['ch_res'];
 		  $hpMax=$chardata['ch_hp_max'];
       $execute_hp_precentage=0;
   		if($skill_group==1||$skill_group==5||$skill_group==6){
