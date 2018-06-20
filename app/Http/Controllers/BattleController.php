@@ -93,7 +93,6 @@ class BattleController extends Controller
 				if($checkCD>0){
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
 					if($possbileSkill){
-						$this->removeUsedSkill($u_id);
 						$charData['skill_id']=$data['skill_id'];
 						$charData['skill_group']=$skill['skill_group'];
 						$charData['skill_damage']=$skill['skill_damage'];
@@ -180,6 +179,7 @@ class BattleController extends Controller
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
+					$this->removeUsedSkill($enmey_uid);
 					Log::info($charData);
 				}
 			}
