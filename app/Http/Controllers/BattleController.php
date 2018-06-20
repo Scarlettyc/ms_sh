@@ -94,15 +94,15 @@ class BattleController extends Controller
 					$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
 					if($possbileSkill){
 						$this->removeUsedSkill($u_id);
-						$charData['skill']['skill_id']=$data['skill_id'];
-						$charData['skill']['skill_group']=$skill['skill_group'];
-						$charData['skill']['skill_damage']=$skill['skill_damage'];
-						$charData['skill']['skill_prepare_time']=$skill['skill_prepare_time'];
-						$charData['skill']['skill_atk_time']=$skill['skill_atk_time'];
-						$charData['skill']['occur_time']=$current;
-						$charData['skill']['start_x']=$x;
-						$charData['skill']['start_y']=$y;
-						$charData['skill']['start_direction']=$data['direction'];
+						$charData['skill_id']=$data['skill_id'];
+						$charData['skill_group']=$skill['skill_group'];
+						$charData['skill_damage']=$skill['skill_damage'];
+						$charData['skill_prepare_time']=$skill['skill_prepare_time'];
+						$charData['skill_atk_time']=$skill['skill_atk_time'];
+						$charData['occur_time']=$current;
+						$charData['start_x']=$x;
+						$charData['start_y']=$y;
+						$charData['start_direction']=$data['direction'];
 						$redis_user->HSET($battle_status_key,'skill_id',$data['skill_id']);
 						$redis_user->HSET($battle_status_key,'skill_group',$skill['skill_group']);
 						$redis_user->HSET($battle_status_key,'skill_damage',$skill['skill_damage']);
@@ -337,57 +337,6 @@ class BattleController extends Controller
 				$user_data['direction']=$direction;
 				$user_data['status']=$status;
 			}
-			else {
-				// $result['x']=$user_data['x'];
-				// $result['y']=$user_data['y'];
-				// $result['x2']=$user_data['x2'];
-				// $result['y2']=$user_data['y2'];
-				// $result['status']=$user_data['status'];
-				// $result['direction']=-$user_data['direction'];
-				if(isset($user_data['skill_id'])){
-						$user_data['skill']['skill_id']=$user_data['skill_id'];
-						$user_data['skill']['skill_group']=$user_data['skill_group'];
-						$user_data['skill']['skill_damage']=$user_data['skill_damage'];
-						$user_data['skill']['skill_prepare_time']=$user_data['skill_prepare_time'];
-						$user_data['skill']['skill_atk_time']=$user_data['skill_atk_time'];
-						$user_data['skill']['occur_time']=$user_data['occur_time'];
-						$user_data['skill']['start_x']=$user_data['start_x'];
-						$user_data['skill']['start_y']=$user_data['start_y'];
-						$user_data['skill']['start_direction']=$user_data['start_direction'];
-				}
-			}
-			// $userData=json_decode($userJson,TRUE);
-			// //$userData=$redis_battle_history->HGETALL($lastFlame.'_'.$u_id);
-			// 	// foreach ($userData as $key => $each) {
-			// 		//$charData['ch_ranking']=$userData['ch_ranking'];
-			// 		$charData['ch_hp_max']=$userData['ch_hp_max'];
-			// 		$charData['ch_stam']=$userData['ch_stam'];
-			// 		$charData['ch_atk']=$userData['ch_atk'];
-			// 		$charData['ch_crit']=$userData['ch_crit'];
-			// 		$charData['ch_armor']=$userData['ch_armor'];
-			// 		$charData['ch_lv']=$userData['ch_lv'];
-			// 		$charData['ch_res']=$userData['ch_res'];
-			// 		if($identity==1){
-			// 		$charData['x']=$x;
-			// 		$charData['y']=$y;
-			// 		}else{
-			// 			$charData['request_time']=$userData['request_time'];
-			// 			$charData['time']=$userData['time'];
-			// 			$charData['x']=$userData['x'];
-			// 			$charData['y']=$userData['y'];
-			// 			$charData['x2']=$userData['x2'];
-			// 			$charData['y2']=$userData['y2'];
-			// 		}
-			// 		if(isset($userData['skill'])&&$identity!=1){
-			// 			$charData['skill']=$userData['skill'];
-			// 		}
-			// 		if(isset($userData['status'])){
-			// 			$charData['status']=$userData['status'];
-			// 		}
-			// 		if(isset($userData['direction'])){
-			// 			$charData['direction']=$userData['direction'];
-			// 		}				
-				// }
 		}
 		return $user_data;
 	}
