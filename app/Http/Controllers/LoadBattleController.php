@@ -87,6 +87,7 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
         $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
         $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
+         $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
