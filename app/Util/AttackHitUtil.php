@@ -443,10 +443,7 @@ class AttackHitUtil
           return $hit;
         }
       }
-  private function damage3values($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back){
 
-
-  }
   private function hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit){
         if($enemyX_from<$enemyX_to&&$enemyY_from<$enemyY_to){
           if(($x_front>=$enemyX_from&&$x_front<=$enemyX_to&&$y_front>=$enemyY_from&&$y_front<=$enemyY_to)||($x_back>=$enemyX_from&&$x_back<=$enemyX_to&&$y_front>=$enemyY_from&&$y_back<=$enemyY_to)){
