@@ -102,14 +102,14 @@ class BattleController extends Controller
 						$charData['skill']['start_y']=$y;
 						$charData['skill']['start_direction']=$data['direction'];
 						$redis_user->HSET($battle_status_key,'skill_id',$data['skill_id']);
-						$redis_user->HSET($battle_status_key,'skill_group',$data['skill_group']);
-						$redis_user->HSET($battle_status_key,'skill_damage',$data['skill_damage']);
-						$redis_user->HSET($battle_status_key,'skill_prepare_time',$data['skill_prepare_time']);
-						$redis_user->HSET($battle_status_key,'skill_atk_time',$data['skill_atk_time']);
-						$redis_user->HSET($battle_status_key,'occur_time',$data['occur_time']);
-						$redis_user->HSET($battle_status_key,'start_x',$data['start_x']);
-						$redis_user->HSET($battle_status_key,'start_y',$data['start_y']);
-						$redis_user->HSET($battle_status_key,'start_direction',$data['start_direction']);
+						$redis_user->HSET($battle_status_key,'skill_group',$skill['skill_group']);
+						$redis_user->HSET($battle_status_key,'skill_damage',$skill['skill_damage']);
+						$redis_user->HSET($battle_status_key,'skill_prepare_time',$skill['skill_prepare_time']);
+						$redis_user->HSET($battle_status_key,'skill_atk_time',$skill['skill_atk_time']);
+						$redis_user->HSET($battle_status_key,'occur_time',$current);
+						$redis_user->HSET($battle_status_key,'start_x',$x);
+						$redis_user->HSET($battle_status_key,'start_y',$y);
+						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
 							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
 							// $attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
@@ -171,7 +171,7 @@ class BattleController extends Controller
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
-			if(isset($enemyData['skill'])){
+			if(isset($enemyData['skill_id'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
 				Log::info("check skill enmeyData".$enemyData['skill']['skill_id']);
 				if($hit&&$hit!=null&&$hit!=''){
@@ -316,6 +316,19 @@ class BattleController extends Controller
 				$user_data['y2']=$y2;
 				$user_data['direction']=$direction;
 				$user_data['status']=$status;
+			}
+			else {
+				if(isset($user_data['skill_id'])){
+						$user_data['skill']['skill_id']=$user_data['skill_id'];
+						$user_data['skill']['skill_group']=$user_data['skill_group'];
+						$user_data['skill']['skill_damage']=$user_data['skill_damage'];
+						$user_data['skill']['skill_prepare_time']=$user_data['skill_prepare_time'];
+						$user_data['skill']['skill_atk_time']=$user_data['skill_atk_time'];
+						$user_data['skill']['occur_time']=$user_data['occur_time'];
+						$user_data['skill']['start_x']=$user_data['start_x'];
+						$user_data['skill']['start_y']=$user_data['start_y'];
+						$user_data['skill']['start_direction']=$user_data['start_direction'];
+				}
 			}
 			// $userData=json_decode($userJson,TRUE);
 			// //$userData=$redis_battle_history->HGETALL($lastFlame.'_'.$u_id);
