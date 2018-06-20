@@ -172,15 +172,15 @@ class BattleController extends Controller
 		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
-			if(isset($enemyData['skill'])){
-				$hit=$attackhitutil->checkSkillHit($enemyData['skill'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
-				Log::info("check skill enmeyData".$enemyData['skill']['skill_id']);
-				if($hit&&$hit!=null&&$hit!=''){
-					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill']['skill_id']);
-					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill']['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
+			if(isset($enemyData['skill_id'])){
+				// $hit=$attackhitutil->checkSkillHit($enemyData['skill_id'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
+				// Log::info("check skill enmeyData".$enemyData['skill_id']);
+				// if($hit&&$hit!=null&&$hit!=''){
+				// 	$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
+				// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+				// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
 					$this->removeUsedSkill($enmey_uid);
-					Log::info($charData);
+					// Log::info($charData);
 				}
 			}
 			if(isset($flytools)){
