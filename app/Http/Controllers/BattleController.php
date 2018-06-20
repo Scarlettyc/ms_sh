@@ -258,6 +258,7 @@ class BattleController extends Controller
 			//$redis_battle_history->LPUSH($battlekey,$charJson);
 
 			$response=json_encode($result,TRUE);
+			Log::info('test remove skill'.$result);
 			return  $response;
 		}
 
