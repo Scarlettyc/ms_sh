@@ -139,15 +139,15 @@ class BattleController extends Controller
 							$redis_battle_history->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
-							$multi['skill_id']=$skill['skill_id'];
-							$multi['occur_time']=$current;
-							$multi['start_x']=$x;
-							$multi['start_y']=$y;
-							$multi['skill_group']=$skill['skill_group'];
-							$multi['start_direction']=$data['direction'];
-							$multi['skill_damage']=$skill['skill_damage'];
-							$multiJson=json_encode($multi);
-							$redis_battle_history->HSET($multi_key,$data['skill_id'],$multiJson);
+							// $multi['skill_id']=$skill['skill_id'];
+							// $multi['occur_time']=$current;
+							// $multi['start_x']=$x;
+							// $multi['start_y']=$y;
+							// $multi['skill_group']=$skill['skill_group'];
+							// $multi['start_direction']=$data['direction'];
+							// $multi['skill_damage']=$skill['skill_damage'];
+							// $multiJson=json_encode($multi);
+							// $redis_battle_history->HSET($multi_key,$data['skill_id'],$multiJson);
 							//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
 						}
 					}
