@@ -173,12 +173,12 @@ class BattleController extends Controller
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
 			if(isset($enemyData['skill_id'])){
-				// $hit=$attackhitutil->checkSkillHit($enemyData['skill_id'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
-				// Log::info("check skill enmeyData".$enemyData['skill_id']);
-				// if($hit&&$hit!=null&&$hit!=''){
-				// 	$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
-				// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-				// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
+				$hit=$attackhitutil->checkSkillHit($enemyData['skill_id'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
+				Log::info("check skill enmeyData".$enemyData['skill_id']);
+				if($hit&&$hit!=null&&$hit!=''){
+					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
+					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
 					$this->removeUsedSkill($enemy_uid);
 					// Log::info($charData);
 				// }
