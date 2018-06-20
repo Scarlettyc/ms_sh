@@ -344,7 +344,7 @@ class BattleController extends Controller
 				// $result['y2']=$user_data['y2'];
 				// $result['status']=$user_data['status'];
 				// $result['direction']=-$user_data['direction'];
-				if(isset($result['skill_id'])){
+				if(isset($user_data['skill_id'])){
 						$user_data['skill']['skill_id']=$user_data['skill_id'];
 						$user_data['skill']['skill_group']=$user_data['skill_group'];
 						$user_data['skill']['skill_damage']=$user_data['skill_damage'];
