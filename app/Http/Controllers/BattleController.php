@@ -101,6 +101,15 @@ class BattleController extends Controller
 						$charData['skill']['start_x']=$x;
 						$charData['skill']['start_y']=$y;
 						$charData['skill']['start_direction']=$data['direction'];
+						$redis_user->HSET($battle_status_key,'skill_id',$data['skill_id']);
+						$redis_user->HSET($battle_status_key,'skill_group',$data['skill_group']);
+						$redis_user->HSET($battle_status_key,'skill_damage',$data['skill_damage']);
+						$redis_user->HSET($battle_status_key,'skill_prepare_time',$data['skill_prepare_time']);
+						$redis_user->HSET($battle_status_key,'skill_atk_time',$data['skill_atk_time']);
+						$redis_user->HSET($battle_status_key,'occur_time',$data['occur_time']);
+						$redis_user->HSET($battle_status_key,'start_x',$data['start_x']);
+						$redis_user->HSET($battle_status_key,'start_y',$data['start_y']);
+						$redis_user->HSET($battle_status_key,'start_direction',$data['start_direction']);
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
 							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
 							// $attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
