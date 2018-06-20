@@ -226,6 +226,7 @@ class BattleController extends Controller
 			// $enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
+
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
 				$result['end']=2;
 				$win=1;
@@ -257,6 +258,19 @@ class BattleController extends Controller
 		}
 
 }
+	private function removeUsedSkill($u_id){
+		$redis_user=Redis::connection('battle_user');
+		$battle_status_key='battle'.$u_id;
+		$redis_user->HDEL($battle_status_key,'skill_id');
+		$redis_user->HDEL($battle_status_key,'skill_group');
+		$redis_user->HDEL($battle_status_key,'skill_damage');
+		$redis_user->HDEL($battle_status_key,'skill_prepare_time');
+		$redis_user->HDEL($battle_status_key,'skill_atk_time');
+		$redis_user->HDEL($battle_status_key,'occur_time');
+		$redis_user->HDEL($battle_status_key,'start_x');
+		$redis_user->HDEL($battle_status_key,'start_y');
+		$redis_user->HDEL($battle_status_key,'start_direction');
+	}
 	private function checkNormalSkill($skill_group,$skill_name,$skill_prepare_time,$skill_atk_time){
 		$skillModel=new SkillMstModel();
 		if($skill_group==1&&strpos($skill_name,'b')){
