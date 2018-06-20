@@ -184,6 +184,7 @@ class BattleController extends Controller
 				}
 			}
 			if(isset($flytools)){
+					Log::info($flytools);
 				 	foreach ($flytools as $key => $eachskill) 
 				 	{	$eachskillData=json_decode($eachskill,TRUE);
 				 		$hit=$attackhitutil->checkSkillHit($eachskill,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
