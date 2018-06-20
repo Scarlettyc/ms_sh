@@ -161,7 +161,7 @@ class AttackHitUtil
     } 
 
 /*2018.04.27 edition*/
-	public function checkSkillHit($enemySkill,$x,$y,$enemyX,$enemyY,$direction,$enemy_direction,$match_id,$enemy_uid,$u_id,$listKey=0){
+	public function checkSkillHit($enemySkill,$x,$y,$direction,$match_id,$enemy_uid,$u_id,$listKey=0){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
@@ -170,6 +170,9 @@ class AttackHitUtil
 
     $skill_id=$enemySkill['skill_id'];
     $skill_damage=$enemySkill['skill_damage'];
+    $enemyX=$enemySkill['x'];
+    $enemyY=$enemySkill['y'];
+    $enemy_direction=$enemySkill['direction'];
     //$this->clearOutOftime($match_id,$enemy_uid,$skill_id);
 		// $skill_prepare_time=$enemySkill['skill_prepare_time'];
 		// $skill_atk_time=$enemySkill['skill_atk_time'];

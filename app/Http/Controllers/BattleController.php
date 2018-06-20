@@ -173,7 +173,7 @@ class BattleController extends Controller
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
 
 			if(isset($enemyData['skill_id'])){
-				$hit=$attackhitutil->checkSkillHit($enemyData['skill_id'],$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
+				$hit=$attackhitutil->checkSkillHit($enemyData,$x,$y,$charData['direction'],$match_id,$enemy_uid,$u_id);
 				Log::info("check skill enmeyData".$enemyData['skill_id']);
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
