@@ -362,7 +362,7 @@ class AttackHitUtil
           return $hit;
         }
       }
-  public function checkInterval($skill_id，$x,$y,$direction,$time,$skill_group,$skill_damage){
+  public function checkInterval($skill_id,$x,$y,$direction,$time,$skill_group,$skill_damage){
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle_history=Redis::connection('battle');
     $multi_key='multi'.$match_id.$u_id;
