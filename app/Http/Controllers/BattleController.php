@@ -209,7 +209,7 @@ class BattleController extends Controller
 			// 		// Log::info($charData);
 			// 	 	}
 			// }
-			Log::info($multi);
+			// Log::info($multi);
 			// if(isset($multi)){	
 			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
 			// 		if($hit&&$hit!=null&&$hit!=''){
