@@ -214,16 +214,16 @@ class BattleController extends Controller
 				 	}
 				}
 			}
-			if(isset($multi)){	
-					$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
-					if($hit&&$hit!=null&&$hit!=''){
-						Log::info("test hit damge 3,4");
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
-				}
-			}
+			// if(isset($multi)){	
+			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 			Log::info("test hit damge 3,4");
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		Log::info($charData);
+			// 	}
+			// }
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
