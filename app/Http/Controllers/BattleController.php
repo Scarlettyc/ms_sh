@@ -258,21 +258,6 @@ class BattleController extends Controller
 
 }
 
-	private function simulateMulti($skill_id,$u_id,$match_id,$time){
-		$interval_key=$match_id.$u_id.$skill_id;
-		$SkillMstModel=new
-		$redis_battle_history=Redis::connection('battle');
-		$redis_battle_history->HSET($interval_key,0,$time);
-		$redis_battle_history->HSET($interval_key,1,$time+(200*1));
-		$redis_battle_history->HSET($interval_key,2,$time+(200*2));
-		$redis_battle_history->HSET($interval_key,3,$time+(200*3));
-		$redis_battle_history->HSET($interval_key,4,$time+(200*4));
-		$redis_battle_history->HSET($interval_key,5,$time+(200*5));
-		$redis_battle_history->HSET($interval_key,6,$time+(200*6));
-		$redis_battle_history->HSET($interval_key,7,$time+(200*7));
-		$redis_battle_history->HSET($interval_key,9,$time+(200*8));
-		$redis_battle_history->HSET($interval_key,10,$time+(200*9));
-	}
 	private function removeUsedSkill($u_id){
 		$redis_user=Redis::connection('battle_user');
 		$battle_status_key='battle'.$u_id;
