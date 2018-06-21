@@ -156,7 +156,7 @@ class BattleController extends Controller
 							$redis_battle_history->HSET($multi_key,'skill_damage',$skill['skill_damage']);
 							$redis_battle_history->HSET($multi_key,'direction',$data['direction']);
 						// 	//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
-						// }
+						}
 					}
 				}
 			}
