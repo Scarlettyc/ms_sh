@@ -343,9 +343,9 @@ class AttackHitUtil
                $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
              }   
 
-            if($hit&&$skill_damage==6){
-             $redis_battle->HDEL($displacement_key,$skill_id);
-             }
+            // if($hit&&$skill_damage==6){
+            //  $redis_battle->HDEL($displacement_key,$skill_id);
+            //  }
              // if($skill_damage==3&&$current-$occur_time>$effs['eff_duration']){
              //    $redis_battle->HDEL($displacement_key,$skill_id);
              // }
