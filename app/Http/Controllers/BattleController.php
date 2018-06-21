@@ -200,15 +200,15 @@ class BattleController extends Controller
 				 	}
 				  }
 			}
-			if(isset($displacement)){
-					$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
-					if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$displacement['skill_group'],$u_id,$enemy_uid,$match_id);
-					// Log::info($charData);
-				 	}
-			}
+			// if(isset($displacement)){
+			// 		$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$displacement['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		// Log::info($charData);
+			// 	 	}
+			// }
 			Log::info($multi);
 			// if(isset($multi)){	
 			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
