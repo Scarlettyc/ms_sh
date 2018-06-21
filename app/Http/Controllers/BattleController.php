@@ -137,15 +137,7 @@ class BattleController extends Controller
 							$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
 						}
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
-					    	$multi_key='multi'.$match_id.$u_id;
-							// $multi['skill_id']=$skill['skill_id'];
-							// $multi['occur_time']=$current;
-							// $multi['x']=$x;
-							// $multi['y']=$y;
-							// $multi['skill_group']=$skill['skill_group'];
-							// $multi['direction']=$data['direction'];
-							// $multi['skill_damage']=$skill['skill_damage'];
-							// $multiJson=json_encode($multi);
+					    	$multi_key='multi'.$match_id.$u_id;	
 							$redis_battle_history->HSET($multi_key,'skill_id',$skill['skill_id']);
 							$redis_battle_history->HSET($multi_key,'occur_time',$current);
 							$redis_battle_history->HSET($multi_key,'x',$x);
@@ -210,16 +202,16 @@ class BattleController extends Controller
 				 	}
 			}
 			// Log::info($multi);
-			if(isset($multi['skill_id'])){	
-					$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
-					if($hit&&$hit!=null&&$hit!=''){
-						Log::info("test hit damge 3,4");
-				 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
-				}
-			}
+			// if(isset($multi['skill_id'])){	
+			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 			Log::info("test hit damge 3,4");
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		Log::info($charData);
+			// 	}
+			// }
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
