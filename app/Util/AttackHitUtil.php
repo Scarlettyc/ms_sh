@@ -761,10 +761,10 @@ class AttackHitUtil
 
   // }
 
-  // public function checkMulti($match_id,$u_id){
-  //      $redis_battle=Redis::connection('battle');
-  //      $multi_key='multi'.$match_id.$u_id;
-  //      $skills=$redis_battle->HVALS($multi_key);
-  //      return $skills;
-  // }
+  public function checkMulti($match_id,$u_id){
+       $redis_battle=Redis::connection('battle');
+       $multi_key='multi'.$match_id.$u_id;
+       $skills=$redis_battle->HGETALL($multi_key);
+       return $skills;
+  }
 }
