@@ -162,7 +162,7 @@ class AttackHitUtil
 
 /*2018.04.27 edition*/
 
-	public function checkSkillHit($enemySkill,$x,$y,$direction,$match_id,$enemy_uid,$u_id,$listKey=0){
+	public function checkSkillHit($enemySkill,$x,$y,$direction,$match_id,$enemy_uid,$u_id){
 		$skillModel=new SkillMstModel();
 		$SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle=Redis::connection('battle');
@@ -290,7 +290,7 @@ class AttackHitUtil
             $start_x=-($enemyX);
             $start_y=($enemyY);
             $start_direction=-$enemySkill['direction'];
-            $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
+           // $multi_interval_key='multi_interval'.$match_id.$enemy_uid.'_'.$skill_id;
 
             if(!isset($effs['eff_duration'])){
             $effs['eff_duration']=0;
