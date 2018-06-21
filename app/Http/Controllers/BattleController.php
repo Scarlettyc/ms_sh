@@ -504,14 +504,13 @@ class BattleController extends Controller
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
 		$redis_battle_history=Redis::connection('battle');
-		$current=$this->getMillisecond();
-		$characterModel=new CharacterModel();
-		$match_id=$data['match_id'];
-		$u_id=$data['u_id'];
-		$battlekey='battle_data'.$match_id.'_'.$u_id;
-		 $code='B04_a';
-		$interval=$defindMst->select('value2')->where('comment', 'like',$code)->where('value1',45)->first();
-		var_dump($interval['value2']);
+		// $current=$this->getMillisecond();
+		// $characterModel=new CharacterModel();
+		// $match_id=$data['match_id'];
+		// $u_id=$data['u_id'];
+		$battlekey='multim_1529567326ui100000018';
+		$skills=$redis_battle->HGETALL($battlekey);
+		var_dump($skills);
  	 }
 
 	 public function finalMatchResult ($data){
