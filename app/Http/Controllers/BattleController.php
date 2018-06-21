@@ -138,18 +138,18 @@ class BattleController extends Controller
 							$displacementJson=json_encode($displacement);
 							$redis_battle_history->HSET($displacement_key,$data['skill_id'],$displacementJson);
 						}
-					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
-							$multi['skill_id']=$skill['skill_id'];
-							$multi['occur_time']=$current;
-							$multi['x']=$x;
-							$multi['y']=$y;
-							$multi['skill_group']=$skill['skill_group'];
-							$multi['direction']=$data['direction'];
-							$multi['skill_damage']=$skill['skill_damage'];
-							$multiJson=json_encode($multi);
-							$redis_battle_history->HSET($multi_key,$data['skill_id'],$multiJson);
-							//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
-						}
+					 //    if($skill['skill_damage']==3||$skill['skill_damage']==4){
+						// 	$multi['skill_id']=$skill['skill_id'];
+						// 	$multi['occur_time']=$current;
+						// 	$multi['x']=$x;
+						// 	$multi['y']=$y;
+						// 	$multi['skill_group']=$skill['skill_group'];
+						// 	$multi['direction']=$data['direction'];
+						// 	$multi['skill_damage']=$skill['skill_damage'];
+						// 	$multiJson=json_encode($multi);
+						// 	$redis_battle_history->HSET($multi_key,$data['skill_id'],$multiJson);
+						// 	//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
+						// }
 					}
 				}
 			}
@@ -207,19 +207,19 @@ class BattleController extends Controller
 				 	}
 				}
 			}
-			if(isset($multi)){	
-					foreach ($multi as $key => $eachskill) {
-					$eachskillData=json_decode($eachskill,TRUE);
-					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
-					if($hit&&$hit!=null&&$hit!=''){
-						Log::info("test hit damge 3,4");
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
-				 	}
-				}
-			}
+			// if(isset($multi)){	
+			// 		foreach ($multi as $key => $eachskill) {
+			// 		$eachskillData=json_decode($eachskill,TRUE);
+			// 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 			Log::info("test hit damge 3,4");
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		Log::info($charData);
+			// 	 	}
+			// 	}
+			// }
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
