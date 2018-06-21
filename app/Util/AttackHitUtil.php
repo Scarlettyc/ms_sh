@@ -766,7 +766,6 @@ class AttackHitUtil
        $multi_key=$key.$match_id.$u_id;
        $skills=$redis_battle->HGETALL($multi_key);
        $battleData=json_encode($skills,TRUE);
-       Log::info($skills);
        return $skills;
   }
 }
