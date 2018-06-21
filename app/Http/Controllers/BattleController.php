@@ -201,11 +201,11 @@ class BattleController extends Controller
 				  }
 			}
 			if(isset($displacement)){
-					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+					$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
 					if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+				 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$displacement['skill_group'],$u_id,$enemy_uid,$match_id);
 					// Log::info($charData);
 				 	}
 			}
@@ -214,9 +214,9 @@ class BattleController extends Controller
 			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
 			// 		if($hit&&$hit!=null&&$hit!=''){
 			// 			Log::info("test hit damge 3,4");
-			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
 			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
 			// 		Log::info($charData);
 			// 	}
 			// }
