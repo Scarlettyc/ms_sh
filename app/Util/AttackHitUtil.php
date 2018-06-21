@@ -761,9 +761,9 @@ class AttackHitUtil
 
   // }
 
-  public function checkMulti($match_id,$u_id){
+  public function checkMulti($match_id,$u_id,$key){
        $redis_battle=Redis::connection('battle');
-       $multi_key='multi'.$match_id.$u_id;
+       $multi_key=$key.$match_id.$u_id;
        $skills=$redis_battle->HGETALL($multi_key);
        return $skills;
   }

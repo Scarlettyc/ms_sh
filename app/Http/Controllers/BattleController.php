@@ -128,15 +128,13 @@ class BattleController extends Controller
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
 						}
 						if($skill['skill_damage']==6){
-							$displacement['skill_id']=$skill['skill_id'];
-							$displacement['occur_time']=$current;
-							$displacement['x']=$x;
-							$displacement['y']=$y;
-							$displacement['direction']=$data['direction'];
-							$displacement['skill_group']=$skill['skill_group'];
-							$displacement['skill_damage']=$skill['skill_damage'];
-							$displacementJson=json_encode($displacement);
-							$redis_battle_history->HSET($displacement_key,$data['skill_id'],$displacementJson);
+							$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
+							$redis_battle_history->HSET($displacement_key,'occur_time',$current);
+							$redis_battle_history->HSET($displacement_key,'x',$x);
+							$redis_battle_history->HSET($displacement_key,'y',$y);
+							$redis_battle_history->HSET($displacement_key,'skill_group',$skill['skill_group']);
+							$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
+							$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
 						}
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
 					    	$multi_key='multi'.$match_id.$u_id;
@@ -176,8 +174,8 @@ class BattleController extends Controller
 				    }
 			}
 		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');	   
-		    $displacement=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'displacement');
-		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid);
+		    $displacement=$attackhitutil->checkMulti($match_id,$enemy_uid,'displacement');
+		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi');
 
 			if(isset($enemyData['skill_id'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData,$x,$y,$charData['direction'],$match_id,$enemy_uid,$u_id);
@@ -203,8 +201,6 @@ class BattleController extends Controller
 				  }
 			}
 			if(isset($displacement)){
-				foreach ($displacement as $key => $eachskill) {
-					$eachskillData=json_decode($eachskill,TRUE);
 					$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
@@ -212,8 +208,8 @@ class BattleController extends Controller
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
 					// Log::info($charData);
 				 	}
-				}
 			}
+			Log::info($multi);
 			// if(isset($multi)){	
 			// 		$hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
 			// 		if($hit&&$hit!=null&&$hit!=''){
