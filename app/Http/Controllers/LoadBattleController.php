@@ -101,7 +101,7 @@ class LoadBattleController extends Controller
          //    $eachSkill['skill_effs']=$this->getEffs($eachSkill);
          //    $result['normal_skills'][]=$eachSkill;
          //    $redis_battle->HSET($skill_keys,$eachSkill['skill_id'],time());
-         }
+         // }
         // $redis_battle->HSET($skill_keys,$special_skill['skill_id'],time());
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
