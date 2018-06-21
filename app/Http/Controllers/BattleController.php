@@ -179,9 +179,9 @@ class BattleController extends Controller
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					$this->removeUsedSkill($enemy_uid);
 					Log::info($charData);
 				}
+				$this->removeUsedSkill($enemy_uid);
 			}
 			if(isset($flytools)){
 					//Log::info($flytools);
