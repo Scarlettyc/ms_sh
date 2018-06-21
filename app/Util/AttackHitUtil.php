@@ -264,7 +264,7 @@ class AttackHitUtil
         $multi_key='multi'.$match_id.$enemy_uid;
         if($skill_damage==1){
         $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-        Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
+        // Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
         }
          if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
@@ -690,7 +690,7 @@ class AttackHitUtil
       }
 			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res*(1+$atk_increase);
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
-      Log::info('enmey damage'.$enemyDMG);
+      // Log::info('enmey damage'.$enemyDMG);
 			$hpMax=$chardata['ch_hp_max'];
 			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
 			if($chardata['ch_hp_max']<0){
@@ -765,6 +765,8 @@ class AttackHitUtil
        $redis_battle=Redis::connection('battle');
        $multi_key=$key.$match_id.$u_id;
        $skills=$redis_battle->HGETALL($multi_key);
+       $battleData=json_encode($skills,TRUE);
+       Log::info($skills);
        return $skills;
   }
 }
