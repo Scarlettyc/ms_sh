@@ -201,7 +201,7 @@ class BattleController extends Controller
 				  }
 			}
 			if(isset($displacement)){
-					$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id,$key);
+					$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
 					if($hit&&$hit!=null&&$hit!=''){
 				 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
