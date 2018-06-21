@@ -508,7 +508,7 @@ class BattleController extends Controller
 		// $characterModel=new CharacterModel();
 		// $match_id=$data['match_id'];
 		// $u_id=$data['u_id'];
-		$battlekey='multim_1529567326ui100000018';
+		$battlekey='displacementm_1529568843ui100000074';
 		$skills=$redis_battle_history->HGETALL($battlekey);
 		var_dump($skills);
  	 }
