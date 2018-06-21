@@ -137,15 +137,17 @@ class BattleController extends Controller
 							$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
 						}
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
-					    	$multi_key='multi'.$match_id.$u_id;	
-							$redis_battle_history->HSET($multi_key,'skill_id',$skill['skill_id']);
-							$redis_battle_history->HSET($multi_key,'occur_time',$current);
-							$redis_battle_history->HSET($multi_key,'x',$x);
-							$redis_battle_history->HSET($multi_key,'y',$y);
-							$redis_battle_history->HSET($multi_key,'skill_group',$skill['skill_group']);
-							$redis_battle_history->HSET($multi_key,'skill_damage',$skill['skill_damage']);
-							$redis_battle_history->HSET($multi_key,'direction',$data['direction']);
-						// 	//op[n $redis_battle_history->HSET($multi_interval_key.'_'.$data['skill_id'],1,$current);
+					  //   	$multi_key='multi'.$match_id.$u_id;	
+							// $redis_battle_history->HSET($multi_key,'skill_id',$skill['skill_id']);
+							// $redis_battle_history->HSET($multi_key,'occur_time',$current);
+							// $redis_battle_history->HSET($multi_key,'x',$x);
+							// $redis_battle_history->HSET($multi_key,'y',$y);
+							// $redis_battle_history->HSET($multi_key,'skill_group',$skill['skill_group']);
+							// $redis_battle_history->HSET($multi_key,'skill_damage',$skill['skill_damage']);
+							// $redis_battle_history->HSET($multi_key,'direction',$data['direction']);
+							if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
+								$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$$data['direction'],$current,$skill['skill_group'],$skill['skill_damage']);
+							}
 						}
 					}
 				}
@@ -204,12 +206,12 @@ class BattleController extends Controller
 			}
 			// Log::info($multi);
 			if(isset($multi['skill_id'])){	
-				Log::info("test hit damge 3,4");
-					// $hit=$attackhitutil->checkSkillHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
-					// if($hit&&$hit!=null&&$hit!=''){
-				 // 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
-					// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
+					$hit=$attackhitutil->multiHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
+
+				// 	if($hit&&$hit!=null&&$hit!=''){
+				//  		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
+				// 		$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+				// 		$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
 				// 	Log::info($charData);
 				// }
 			}
@@ -255,6 +257,22 @@ class BattleController extends Controller
 		}
 
 }
+
+	private function simulateMulti($skill_id,$u_id,$match_id,$time){
+		$interval_key=$match_id.$u_id.$skill_id;
+		$SkillMstModel=new
+		$redis_battle_history=Redis::connection('battle');
+		$redis_battle_history->HSET($interval_key,0,$time);
+		$redis_battle_history->HSET($interval_key,1,$time+(200*1));
+		$redis_battle_history->HSET($interval_key,2,$time+(200*2));
+		$redis_battle_history->HSET($interval_key,3,$time+(200*3));
+		$redis_battle_history->HSET($interval_key,4,$time+(200*4));
+		$redis_battle_history->HSET($interval_key,5,$time+(200*5));
+		$redis_battle_history->HSET($interval_key,6,$time+(200*6));
+		$redis_battle_history->HSET($interval_key,7,$time+(200*7));
+		$redis_battle_history->HSET($interval_key,9,$time+(200*8));
+		$redis_battle_history->HSET($interval_key,10,$time+(200*9));
+	}
 	private function removeUsedSkill($u_id){
 		$redis_user=Redis::connection('battle_user');
 		$battle_status_key='battle'.$u_id;
