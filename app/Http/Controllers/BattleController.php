@@ -210,8 +210,8 @@ class BattleController extends Controller
 				 // 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
 					// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 					// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
-				}
+				// 	Log::info($charData);
+				// }
 			}
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
