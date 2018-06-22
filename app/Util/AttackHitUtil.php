@@ -877,7 +877,7 @@ class AttackHitUtil
        $redis_battle=Redis::connection('battle');
        $multi_key=$key.$match_id.$u_id;
        
-       $exist=$redis_battle->HEXISTS($multi_key);
+       $exist=$redis_battle->EXISTS($multi_key);
        $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
