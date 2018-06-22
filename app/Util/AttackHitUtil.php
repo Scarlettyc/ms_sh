@@ -389,9 +389,9 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
     $round=round($duration['eff_value']/$interval['eff_value']);
-    $multi_key='multi'.$match_id.$u_id.$skill_id;
+    $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
     for($i=0;$i<$round;$i++){
-      $redis_battle_history->HSET($multi_key,$i,$i*$interval['eff_value']+$time);
+      $redis_battle_history->HSET($multi_interval_key,$i,$i*$interval['eff_value']+$time);
     }
   }
 
