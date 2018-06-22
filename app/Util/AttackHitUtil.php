@@ -372,10 +372,10 @@ class AttackHitUtil
     $TL_y_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',2)->first();
     $interval=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',45)->first();
     $duration=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',43)->first();
-    $X_from=$start_x+$TL_x_a*$direction;
-    $Y_from=$start_y+$BR_y_a;
-    $X_to=$start_x+$BR_x_a*$direction;
-    $Y_to=$start_y+$TL_y_a;
+    $X_from=$start_x+$TL_x_a['eff_value']*$direction;
+    $Y_from=$start_y+$BR_y_a['eff_value'];
+    $X_to=$start_x+$BR_x_a['eff_value']*$direction;
+    $Y_to=$start_y+$TL_y_a['eff_value'];
     $redis_battle_history->HSET($multi_key,'skill_id',$skill_id);
     $redis_battle_history->HSET($multi_key,'occur_time',$current);
     $redis_battle_history->HSET($multi_key,'x_from',$X_from['eff_value']);
