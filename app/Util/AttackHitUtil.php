@@ -377,7 +377,7 @@ class AttackHitUtil
     $X_to=$x+$BR_x_a['eff_value']*$direction;
     $Y_to=$y+$TL_y_a['eff_value'];
     $redis_battle_history->HSET($multi_key,'skill_id',$skill_id);
-    $redis_battle_history->HSET($multi_key,'occur_time',$current);
+    $redis_battle_history->HSET($multi_key,'occur_time',$time);
     $redis_battle_history->HSET($multi_key,'x_from',$X_from['eff_value']);
     $redis_battle_history->HSET($multi_key,'y_from',$Y_from['eff_value']);
     $redis_battle_history->HSET($multi_key,'x_to',$X_to['eff_value']);
