@@ -146,6 +146,7 @@ class BattleController extends Controller
 							// $redis_battle_history->HSET($multi_key,'skill_damage',$skill['skill_damage']);
 							// $redis_battle_history->HSET($multi_key,'direction',$data['direction']);
 							if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
+								Log::info('check skill interval');
 								$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage']);
 							}
 						}
