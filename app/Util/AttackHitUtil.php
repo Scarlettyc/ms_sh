@@ -423,7 +423,7 @@ class AttackHitUtil
     if($hit&&!$current<$end_time){
          if(!$hitTime){     
            if($current<=$mild_time&&$current>=$first_time){
-             $hitTime=$count-2;
+             $hitTime=$count-1;
              $last_hit=$current;
              $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
              $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
@@ -442,7 +442,8 @@ class AttackHitUtil
          else if($hitTime&&$hitTime!=0){
            $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
            $interval=$redis_battle_history->HGET($multi_key,'interval'); 
-           if($current+$interval-$last_hit_time<=30){
+           if($current-$interval-$last_hit_time<=30){
+             Log::info('last_hit'.$$last_hit_time.'current'.$current)
               $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
            }
