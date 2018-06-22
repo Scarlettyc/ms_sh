@@ -407,12 +407,14 @@ class AttackHitUtil
     $y_front=$y+$defindFront['value2'];
     $y_back=$y+$defindBack['value2'];
 
-    $enemyX_from=$redis_battle_history->HGET($multi_key,'x_from');
+    $enemyX_from=-($redis_battle_history->HGET($multi_key,'x_from'));
     $enemyY_from=$redis_battle_history->HGET($multi_key,'y_from');
-    $enemyX_to=$redis_battle_history->HGET($multi_key,'x_to');
+    $enemyX_to=-($redis_battle_history->HGET($multi_key,'x_to'));
     $enemyY_to=$redis_battle_history->HGET($multi_key,'y_to');
     $hit=false;
+      Log::info('damage 3 skill_id'.$skill_id.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
+
     // if($hit){
 
     // }
