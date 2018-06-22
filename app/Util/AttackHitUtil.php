@@ -868,9 +868,12 @@ class AttackHitUtil
   // public function checkDisplament($match_id,$u_id){
   //      $redis_battle=Redis::connection('battle');
   //      $displacement_key='displacement'.$match_id.$u_id;
-  //      $displacement_skills=$redis_battle->HVALS($displacement_key);
+  //      $exist=$redis_battle->EXISTS($multi_key);
+  //      $displacement_skills=[];
+  //      if($exist){
+  //       $displacement_skills=$redis_battle->HGETALL($displacement_key);
+  //      }
   //      return $displacement_skills;
-
   // }
 
   public function checkMulti($match_id,$u_id,$key,$current){

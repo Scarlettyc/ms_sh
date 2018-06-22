@@ -127,18 +127,17 @@ class BattleController extends Controller
 							$flySkillJson=json_encode($flytools);
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
 						}
-						if($skill['skill_damage']==6){
-							$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
-							$redis_battle_history->HSET($displacement_key,'occur_time',$current);
-							$redis_battle_history->HSET($displacement_key,'x',$x);
-							$redis_battle_history->HSET($displacement_key,'y',$y);
-							$redis_battle_history->HSET($displacement_key,'skill_group',$skill['skill_group']);
-							$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
-							$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
-						}
+						// if($skill['skill_damage']==6){
+						// 	$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
+						// 	$redis_battle_history->HSET($displacement_key,'occur_time',$current);
+						// 	$redis_battle_history->HSET($displacement_key,'x',$x);
+						// 	$redis_battle_history->HSET($displacement_key,'y',$y);
+						// 	$redis_battle_history->HSET($displacement_key,'skill_group',$skill['skill_group']);
+						// 	$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
+						// 	$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
+						// }
 					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
 							if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
-								Log::info('check skill interval');
 								$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage'],$match_id,$u_id);
 							}
 						}
@@ -161,7 +160,7 @@ class BattleController extends Controller
 				    }
 			}
 		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');	   
-		    //$displacement=$attackhitutil->checkMulti($match_id,$enemy_uid,'displacement');
+		    // $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi',$current);
 
 			if(isset($enemyData['skill_id'])){
