@@ -415,7 +415,7 @@ class AttackHitUtil
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
     $current=$this->getMillisecond();
     $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
-    $futuerList=$redis_battle_history->HVALS($multi_interval_key);
+    $futuerList=$redis_battle_history->HGETALL($multi_interval_key);
     //$hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
     // $count=$redis_battle_history->HLEN($multi_interval_key);
     // $first_time=$redis_battle_history->HGET($multi_interval_key,1);
@@ -460,7 +460,7 @@ class AttackHitUtil
       $interval=$redis_battle_history->HGET($multi_key,'interval'); 
       $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
       if(!$last_hit_time){
-        $$last_hit_time=$current;
+        $last_hit_time=$current;
       }
       foreach ($futuerList as $key => $occurtime) {
         if($current-$interval-$last_hit_time<=30){
@@ -879,10 +879,15 @@ class AttackHitUtil
        $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
        $count=$redis_battle->HLEN($multi_interval_key);
        $skills=[];
-       $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
-       if($current<$end_time){
-       $skills=$redis_battle->HGETALL($multi_key);
+       if($count>0){
+          $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
+          if($current<$end_time){
+          $skills=$redis_battle->HGETALL($multi_key);
       }
+      else if($current>=$end_time){
+        $redis_battle->HDEL($multi_key);
+      }
+
        return $skills;
   }
 }
