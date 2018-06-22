@@ -306,7 +306,7 @@ class AttackHitUtil
 
 
             // }
-               //$hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid);
+               $hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid);
           }
 
            if($skill_damage==2&&isset($enemySkill['occur_time']))
