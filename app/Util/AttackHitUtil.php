@@ -417,7 +417,7 @@ class AttackHitUtil
     $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
     if($hit){
       $futureArray=$redis_battle_history->HVALS($multi_key);
-      if(!in_array($current,$futureArray){
+      if(!in_array($current,$futureArray)){
         $hit=false;
       }
     }
