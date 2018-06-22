@@ -425,16 +425,19 @@ class AttackHitUtil
            if($current<=$mild_time&&$current>=$first_time){
              $hitTime=$count-2;
              $last_hit=$current;
+             $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
+             $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
            }
            else if($current>=$mild_time&&$current<=$end_time){
              $hitTime=$count-$mild_time;
              $last_hit=$current;
+             $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
+             $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
            }
            else {
              $hit=false;
            }
-           $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
-           $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
+          
          }
          else if($hitTime&&$hitTime!=0){
            $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
