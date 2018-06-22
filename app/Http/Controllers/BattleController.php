@@ -113,10 +113,8 @@ class BattleController extends Controller
 						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
 							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
-							// $attackhitutil->addBuff($data['skill_id'],$u_id,$match_id,$enemy_uid);
 						}
 						if($skill['skill_damage']==2){
-							Log::info('damage 2');
 							$flytools['skill_id']=$skill['skill_id'];
 							$flytools['skill_damage']=$skill['skill_damage'];
 							$flytools['skill_group']=$skill['skill_group'];
@@ -160,7 +158,7 @@ class BattleController extends Controller
 				    }
 			}
 		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');	   
-		    // $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
+		    $displacement=$attackhitutil->checkDisplament($match_id,$enemy_uid);
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi',$current);
 
 			if(isset($enemyData['skill_id'])){
