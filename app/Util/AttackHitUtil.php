@@ -876,16 +876,19 @@ class AttackHitUtil
   public function checkMulti($match_id,$u_id,$key,$current){
        $redis_battle=Redis::connection('battle');
        $multi_key=$key.$match_id.$u_id;
-       $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
-       $count=$redis_battle->HLEN($multi_interval_key);
+       
+       $exist=$redis_battle->HEXISTS($multi_key);
        $skills=[];
-       if($count>0){
+       if($exist>0){
+          $skill_id=$redis_battle->HGET($multi_key,'skill_id');
+          $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
+          $count=$redis_battle->HLEN($multi_interval_key);
           $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
           if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
           }
            else if($current>=$end_time){
-        $redis_battle->HDEL($multi_key);
+            $redis_battle->HDEL($multi_key);
         }
       }
        return $skills;
