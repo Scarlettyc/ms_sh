@@ -207,7 +207,7 @@ class BattleController extends Controller
 			}
 			// Log::info($multi);
 			if(isset($multi['skill_id'])){	
-					$hit=$attackhitutil->multiHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
+					//$hit=$attackhitutil->multiHit($multi,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
 
 				// 	if($hit&&$hit!=null&&$hit!=''){
 				//  		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
