@@ -373,6 +373,7 @@ class AttackHitUtil
     $interval=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',45)->where('skill_id',$skill_id)->first();
     $duration=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',43)->where('skill_id',$skill_id)->first();
     $X_from=$x+$TL_x_a['eff_value']*$direction;
+    Log::info('x'.$x.'x_from'.$x_from.'TL_x_a'.$TL_x_a['eff_value']);
     $Y_from=$y+$BR_y_a['eff_value'];
     $X_to=$x+$BR_x_a['eff_value']*$direction;
     $Y_to=$y+$TL_y_a['eff_value'];
