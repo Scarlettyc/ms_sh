@@ -888,7 +888,7 @@ class AttackHitUtil
           $skills=$redis_battle->HGETALL($multi_key);
           }
            else if($current>=$end_time){
-            $redis_battle->HDEL($multi_key);
+            $redis_battle->DEL($multi_key);
         }
       }
        return $skills;
