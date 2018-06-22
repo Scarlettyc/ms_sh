@@ -161,7 +161,7 @@ class BattleController extends Controller
 				    }
 			}
 		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');	   
-		    $displacement=$attackhitutil->checkMulti($match_id,$enemy_uid,'displacement');
+		    //$displacement=$attackhitutil->checkMulti($match_id,$enemy_uid,'displacement');
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi');
 
 			if(isset($enemyData['skill_id'])){

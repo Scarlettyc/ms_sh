@@ -415,51 +415,62 @@ class AttackHitUtil
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
     $current=$this->getMillisecond();
     $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
-    $hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
-    $count=$redis_battle_history->HLEN($multi_interval_key);
-    $first_time=$redis_battle_history->HGET($multi_interval_key,1);
-    $mild_time=$redis_battle_history->HGET($multi_interval_key,ceil($count/2));
-    $end_time=$redis_battle_history->HGET($multi_interval_key,$count-1);
-    if($hit&&!$current<$end_time){
-         if(!$hitTime){     
-           if($current<=$mild_time&&$current>=$first_time){
-             $hitTime=$count-1;
-             $last_hit=$current;
-             $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
-             $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
-           }
-           else if($current>=$mild_time&&$current<=$end_time){
-             $hitTime=$count-$mild_time;
-             $last_hit=$current;
-             $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
-             $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
-           }
-           else {
-             $hit=false;
-           }
-          
-         }
-         else if($hitTime&&$hitTime!=0){
-           $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
-           $interval=$redis_battle_history->HGET($multi_key,'interval'); 
-           if($current-$interval-$last_hit_time<=30){
-             Log::info('last_hit'.$last_hit_time.'current'.$current);
-              $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
-              $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-           }
-           else{
-              $hit=false;
-           }
+    $futuerList=$redis_battle_history->HVALS($multi_interval_key);
+    //$hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
+    // $count=$redis_battle_history->HLEN($multi_interval_key);
+    // $first_time=$redis_battle_history->HGET($multi_interval_key,1);
+    // $mild_time=$redis_battle_history->HGET($multi_interval_key,ceil($count/2));
+    // $end_time=$redis_battle_history->HGET($multi_interval_key,$count-1);
+    if($hit){
+    //      if(!$hitTime){     
+    //        if($current<=$mild_time&&$current>=$first_time){
+    //          $hitTime=$count-1;
+    //          $last_hit=$current;
+    //          $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
+    //          $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
+    //        }
+    //        else if($current>=$mild_time&&$current<=$end_time){
+    //          $hitTime=$count-$mild_time;
+    //          $last_hit=$current;
+    //          $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
+    //          $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
+    //        }
+    //        else {
+    //          $hit=false;
+    //        }
+    //      }
+    //      else if($hitTime&&$hitTime!=0){
+    //        $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+    //        $interval=$redis_battle_history->HGET($multi_key,'interval'); 
+    //        if($current-$interval-$last_hit_time<=30){
+    //          Log::info('last_hit'.$last_hit_time.'current'.$current);
+    //           $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
+    //           $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+    //        }
+    //        else{
+    //           $hit=false;
+    //        }
 
-         }
-         else {
-          $hit=false;
-         }
+
+         // }
+         // else if($hitTime!=0){
+
+         //  $hit=false;
+         // }
+      $interval=$redis_battle_history->HGET($multi_key,'interval'); 
+      $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+      if(!$last_hit_time){
+        $$last_hit_time=$current;
+      }
+      foreach ($futuerList as $key => $occurtime) {
+        if($current-$interval-$last_hit_time<=30){
+          $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+          break;
+        }
+        # code...
+      }
+          return $hit;
     }
-    else{
-       $hit=false;
-    }
-    return $hit;
 
   }
 
@@ -862,11 +873,16 @@ class AttackHitUtil
 
   // }
 
-  public function checkMulti($match_id,$u_id,$key){
+  public function checkMulti($match_id,$u_id,$key,$current){
        $redis_battle=Redis::connection('battle');
        $multi_key=$key.$match_id.$u_id;
+       $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
+       $count=$redis_battle->HLEN($multi_interval_key);
+       $skills=[];
+       $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
+       if($current<$end_time){
        $skills=$redis_battle->HGETALL($multi_key);
-       $battleData=json_encode($skills,TRUE);
+      }
        return $skills;
   }
 }
