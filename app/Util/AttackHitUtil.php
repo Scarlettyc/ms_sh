@@ -415,11 +415,45 @@ class AttackHitUtil
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
     $current=$this->getMillisecond();
     $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
-    if($hit){
-      $futureArray=$redis_battle_history->HVALS($multi_key);
-      if(!in_array($current,$futureArray)){
-        $hit=false;
-      }
+    $hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
+    $count=$redis_battle_history->HLEN($multi_interval_key);
+    $first_time=$redis_battle_history->HGET($multi_interval_key,1);
+    $mild_time=$redis_battle_history->HGET($multi_interval_key,ceil($count/2));
+    $end_time=$redis_battle_history->HGET($multi_interval_key,$count-1);
+    if($hit&&!$current<$end_time){
+         if(!$hitTime){     
+           if($current<=$mild_time&&$current>=$first_time){
+             $hitTime=$count-2;
+             $last_hit=$current;
+           }
+           else if($current>=$mild_time&&$current<=$end_time){
+             $hitTime=$count-$mild_time;
+             $last_hit=$current;
+           }
+           else {
+             $hit=false;
+           }
+           $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
+           $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
+         }
+         else if($hitTime&&$hitTime!=0){
+           $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+           $interval=$redis_battle_history->HGET($multi_key,'interval'); 
+           if($current+$interva-$last_hit_time<=30){
+              $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
+              $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+           }
+           else{
+              $hit=false;
+           }
+
+         }
+         else {
+          $hit=false;
+         }
+    }
+    else{
+       $hit=false;
     }
     return $hit;
 
