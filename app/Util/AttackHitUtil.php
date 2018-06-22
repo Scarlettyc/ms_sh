@@ -883,11 +883,11 @@ class AttackHitUtil
           $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
           if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
-      }
-      else if($current>=$end_time){
+          }
+           else if($current>=$end_time){
         $redis_battle->HDEL($multi_key);
+        }
       }
-
        return $skills;
   }
 }
