@@ -889,6 +889,7 @@ class AttackHitUtil
           }
            else if($current>=$end_time){
             $redis_battle->DEL($multi_key);
+            $redis_battle->DEL($multi_interval_key);
         }
       }
        return $skills;
