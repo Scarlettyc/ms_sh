@@ -200,13 +200,12 @@ class BattleController extends Controller
 			// Log::info($multi);
 			if(isset($multi['skill_id'])){	
 					$hit=$attackhitutil->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid);
-
-				// 	if($hit&&$hit!=null&&$hit!=''){
-				//  		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
-				// 		$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-				// 		$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-				// 	Log::info($charData);
-				// }
+					if($hit&&$hit!=null&&$hit!=''){
+				 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
+						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
+					Log::info($charData);
+				}
 			}
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
