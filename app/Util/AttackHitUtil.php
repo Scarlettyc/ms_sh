@@ -443,7 +443,7 @@ class AttackHitUtil
            $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
            $interval=$redis_battle_history->HGET($multi_key,'interval'); 
            if($current-$interval-$last_hit_time<=30){
-             Log::info('last_hit'.$$last_hit_time.'current'.$current)
+             Log::info('last_hit'.$$last_hit_time.'current'.$current);
               $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
            }
