@@ -306,7 +306,7 @@ class AttackHitUtil
 
 
             // }
-               $hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid);
+               $hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id);
           }
 
            if($skill_damage==2&&isset($enemySkill['occur_time']))
@@ -395,7 +395,7 @@ class AttackHitUtil
     }
   }
 
-  public function multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid){
+  public function multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id){
     $redis_battle_history=Redis::connection('battle');
     $multi_key='multi'.$match_id.$enemy_uid;
     $defindMst=new DefindMstModel();
@@ -413,10 +413,14 @@ class AttackHitUtil
     $enemyY_to=$redis_battle_history->HGET($multi_key,'y_to');
     $hit=false;
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-
-    // if($hit){
-
-    // }
+    $current=$this->getMillisecond();
+    $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
+    if($hit){
+      $futureArray=$redis_battle_history->HVALS($multi_key);
+      if(!in_array($current,$futureArray){
+        $hit=false;
+      }
+    }
     return $hit;
 
   }
