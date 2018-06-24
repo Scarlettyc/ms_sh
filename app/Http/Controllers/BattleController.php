@@ -220,6 +220,7 @@ class BattleController extends Controller
 			else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
 				$result['end']=1;
 				$win=0;
+				$redis_battle_history->HSET($matchKey,'status',0);
 				$redis_user->HSET($battle_status_key,'end',0);
 				//$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 			}
