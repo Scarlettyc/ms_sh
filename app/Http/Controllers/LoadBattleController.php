@@ -37,7 +37,7 @@ class LoadBattleController extends Controller
         // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
     	// if($checkToken){
     		$match_id=$data['match_id'];
-            $battleKey='battle_status'..$u_id.$dmy;
+            $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
             if($matchID!=$match_id){
