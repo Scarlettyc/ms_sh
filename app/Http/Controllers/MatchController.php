@@ -82,8 +82,8 @@ class MatchController extends Controller
 					$enmeyBattle=$redis_battle->HGET($battleKeyEnemy,'status');
 
 					if(!empty($myBattle)||!empty($enmeyBattle)){
-						$match_id=$enmeyBattleData['match_id'];
-						$map_id=$enmeyBattleData['map_id'];
+						//$match_id=$enmeyBattleData['match_id'];
+						//$map_id=$enmeyBattleData['map_id'];
 						return null;
 					}
 					else{
