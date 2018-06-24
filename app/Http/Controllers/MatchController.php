@@ -78,8 +78,8 @@ class MatchController extends Controller
 					
 					$battleKeyUser='battle_status'.$u_id.$dmy;
 					$battleKeyEnemy='battle_status'.$match_uid[0].$dmy;
-					$myBattle=$redis_battle->HGET($battleKeyUser.'status');
-					$enmeyBattle=$redis_battle->HGET($battleKeyEnemy.'status');
+					$myBattle=$redis_battle->HGET($battleKeyUser,'status');
+					$enmeyBattle=$redis_battle->HGET($battleKeyEnemy,'status');
 
 					if(!empty($myBattle)||!empty($enmeyBattle)){
 						$match_id=$enmeyBattleData['match_id'];
