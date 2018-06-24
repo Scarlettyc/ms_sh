@@ -57,7 +57,7 @@ class BattleController extends Controller
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
  			$end=0;
- 			$enemy_clientId=$battleData['enmey_client'];
+ 			$enemy_clientId=$redis_battle_history->HGET($matchKey,'enmey_client');
  			// $this->removeUsedSkill($u_id);
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
