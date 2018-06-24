@@ -37,15 +37,12 @@ class LoadBattleController extends Controller
         // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
     	// if($checkToken){
     		$match_id=$data['match_id'];
-            $battleKey='battle_status'.$dmy;
- 	    	$matchList=$redis_battle->HGET($battleKey,$u_id);
-
- 	    	$matchArr=json_decode($matchList,TRUE);
- 	    	
-            if($matchArr['match_id']!=$match_id){
+            $battleKey='battle_status'..$u_id.$dmy;
+ 	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
+ 	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+            if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
-            $enemy_uid=$matchArr['enemy_uid'];
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
@@ -132,12 +129,11 @@ class LoadBattleController extends Controller
         // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
         $redis_battle=Redis::connection('battle');
         $match_id=$data['match_id'];
-        $battleKey='battle_status'.$dmy;
+        $battleKey='battle_status'.$u_id.$dmy;
         if(isset($data)){
-            $matchList=$redis_battle->HGET($battleKey,$u_id);
-            $matchArr=json_decode($matchList,TRUE);
-            if($match_id==$matchArr['match_id']){
-                $mapId=$matchArr['map_id'];
+            $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
+            if($match_id==$hveMatchID){
+                $mapId=$redis_battle->HGET($battleKey,'map_id');
                 $mapData=$mapTrapUtil->getMapData($mapId);
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);

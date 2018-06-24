@@ -42,7 +42,7 @@ class MatchController extends Controller
      		if(isset($chardata)){
 		 		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
-				$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
+				$matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
 				$matchList=$redis_battle->HEXISTS($matchKey,$u_id);
 				$matchCount=$redis_battle->HLEN($matchKey);
 				$list['u_id_1']=$u_id;
@@ -76,27 +76,46 @@ class MatchController extends Controller
 					
 					//$enmeydata=$usermodel->where('u_id',$match_uid)->first();
 					
-					$battleKey='battle_status'.$dmy;
-					$enmeyBattle=$redis_battle->HGET($battleKey,$match_uid[0]);
-					$enmeyBattleData=json_decode($enmeyBattle,TRUE);
-					if(isset($enmeyBattleData)){
+					$battleKeyUser='battle_status'.$u_id.$dmy;
+					$battleKeyEnemy='battle_status'.$match_uid[0].$dmy;
+					$myBattle=$redis_battle->HGET($battleKeyUser.'status');
+					$enmeyBattle=$redis_battle->HGET($battleKeyEnemy.'status');
+
+					if(!empty($myBattle)||!empty($enmeyBattle)){
 						$match_id=$enmeyBattleData['match_id'];
 						$map_id=$enmeyBattleData['map_id'];
+						return null;
 					}
 					else{
 						$match_id='m_'.time();
 						$map_id=$mapData;
 
-					}
-					$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid[0],'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'client'=>$clientID,'enmey_client'=>$waitUser['client_id'],'create_date'=>time()]);
+				
+						$matchResult=json_encode(['u_id'=>$u_id,'enemy_uid'=>$match_uid[0],'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'client'=>$clientID,'enmey_client'=>$waitUser['client_id'],'create_date'=>time()]);
 
-					$matchResult2=json_encode(['u_id'=>$match_uid[0],'enemy_uid'=>$u_id,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'client'=>$waitUser['client_id'],'enmey_client'=>$clientID,'create_date'=>time()]);
+						$matchResult2=json_encode(['u_id'=>$match_uid[0],'enemy_uid'=>$u_id,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'client'=>$waitUser['client_id'],'enmey_client'=>$clientID,'create_date'=>time()]);
 
-                    $redis_battle->HSET($battleKey,$u_id,$matchResult);
-                    $redis_battle->HSET($battleKey,$match_uid[0],$matchResult2);
+                   		$redis_battle->HSET($battleKeyUser,'u_id',$u_id);
+                   		$redis_battle->HSET($battleKeyUser,'enemy_uid',$match_uid[0]);
+                   		$redis_battle->HSET($battleKeyUser,'match_id',$match_id);
+                   		$redis_battle->HSET($battleKeyUser,'map_id',$mapData);
+                   		$redis_battle->HSET($battleKeyUser,'status',1);
+                   		$redis_battle->HSET($battleKeyUser,'client',$clientID);
+						$redis_battle->HSET($battleKeyUser,'enmey_client',$waitUser['client_id']);
+						$redis_battle->HSET($battleKeyUser,'create_date',time());
+
+						$redis_battle->HSET($battleKeyEnemy,'enemy_uid',$u_id);
+                   		$redis_battle->HSET($battleKeyEnemy,'u_id',$match_uid[0]);
+                   		$redis_battle->HSET($battleKeyEnemy,'match_id',$match_id);
+                   		$redis_battle->HSET($battleKeyEnemy,'map_id',$mapData);
+                   		$redis_battle->HSET($battleKeyEnemy,'status',1);
+                   		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
+						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
+						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
                   
 					$resultList['match_id']=$match_id;
 					return $resultList;
+					}
 				}
 			}
 		}
