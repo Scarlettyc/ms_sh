@@ -167,21 +167,19 @@ class MatchController extends Controller
 		 		->first();
 		$waitmatch='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
 		$matchKey=$redis_battle->HKEYS($waitmatch);
-		$battleKey='battle_status'.$dmy;
+		$battleKey='battle_status'.$u_id.$dmy;
 		foreach ($matchKey as $key) {
-			$battleStatus=$redis_battle->HGET($battleKey,$key);
-			$battleList=json_decode($battleStatus,TRUE);
-			if($battleList&&$battleList['status']==1){
+			$battleStatus=$redis_battle->HGET($battleKey,'status');
+			if($battleStatus&&$battleStatus==1){
 				// Log::info($key);
 				$redis_battle->HDEL($waitmatch,$key);
 			}
 		}
-		$myStatus=$redis_battle->HGET($battleKey,$u_id);
+		$myStatus=$redis_battle->HGET($battleKey,'status');
 		$mybattleList=json_decode($myStatus,TRUE);
 		if($mybattleList&&$mybattleList['status']==1){
 			$redis_battle->HDEL($waitmatch,$u_id);
 		}
-
 	}
 	public function testWebsocket(Request $request){
 		$req=$request->getContent();
