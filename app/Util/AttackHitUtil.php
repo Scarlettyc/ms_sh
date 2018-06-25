@@ -261,7 +261,7 @@ class AttackHitUtil
 
         $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
         $displacement_key='displacement'.$match_id.$enemy_uid;
-        $multi_key='multi'.$match_id.$enemy_uid;
+        $multi_key='multi'.$enemy_uid;
         if($skill_damage==1){
         $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
         // Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
@@ -365,7 +365,7 @@ class AttackHitUtil
   public function checkInterval($skill_id,$x,$y,$direction,$time,$skill_group,$skill_damage,$match_id,$u_id){
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle_history=Redis::connection('battle');
-    $multi_key='multi'.$match_id.$u_id;
+    $multi_key='multi'.$u_id;
     $TL_x_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',1)->where('skill_id',$skill_id)->first();
     $BR_y_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',4)->where('skill_id',$skill_id)->first();
     $BR_x_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',3)->where('skill_id',$skill_id)->first();
@@ -388,7 +388,7 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
     $round=round($duration['eff_value']/$interval['eff_value']);
-    $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
+    $multi_interval_key='multi'.$u_id.$skill_id;
     for($i=0;$i<$round;$i++){
       $redis_battle_history->HSET($multi_interval_key,$i,$i*$interval['eff_value']+$time);
     }
@@ -396,7 +396,7 @@ class AttackHitUtil
 
   public function multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id){
     $redis_battle_history=Redis::connection('battle');
-    $multi_key='multi'.$match_id.$enemy_uid;
+    $multi_key='multi'.$enemy_uid;
     $defindMst=new DefindMstModel();
     $defindFront=$defindMst->select('value1','value2')->where('defind_id',9)->first();
     $defindBack=$defindMst->select('value1','value2')->where('defind_id',11)->first();
@@ -413,7 +413,7 @@ class AttackHitUtil
     $hit=false;
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
     $current=$this->getMillisecond();
-    $multi_interval_key='multi'.$match_id.$enemy_uid.$skill_id;
+    $multi_interval_key='multi'.$enemy_uid.$skill_id;
     $futuerList=$redis_battle_history->HGETALL($multi_interval_key);
     //$hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
     // $count=$redis_battle_history->HLEN($multi_interval_key);
@@ -456,8 +456,8 @@ class AttackHitUtil
 
          //  $hit=false;
          // }
-      $interval=$redis_battle_history->HGET($multi_key,'interval'); 
-      $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+        $interval=$redis_battle_history->HGET($multi_key,'interval'); 
+        $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
       if(!$last_hit_time){
         $last_hit_time=$current;
       }
@@ -877,13 +877,13 @@ class AttackHitUtil
 
   public function checkMulti($match_id,$u_id,$key,$current){
        $redis_battle=Redis::connection('battle');
-       $multi_key=$key.$match_id.$u_id;
+       $multi_key=$key.$u_id;
        
        $exist=$redis_battle->EXISTS($multi_key);
        $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
-          $multi_interval_key='multi'.$match_id.$u_id.$skill_id;
+          $multi_interval_key='multi'.$u_id.$skill_id;
           $count=$redis_battle->HLEN($multi_interval_key);
           $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
           if($current<$end_time){

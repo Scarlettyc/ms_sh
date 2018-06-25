@@ -84,7 +84,7 @@ class BattleController extends Controller
 			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
 			$displacement_key='displacement'.$match_id.$u_id;
 			
-			$multi_interval_key='multi_interval'.$match_id.$u_id;
+			$multi_interval_key='multi_interval'.$u_id;
 			if(isset($data['skill_id'])){
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				$checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
@@ -198,7 +198,7 @@ class BattleController extends Controller
 				 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-					//Log::info($charData);
+					Log::info($charData);
 				}
 			}
 			$charData['request_time']=$data['request_time'];
