@@ -213,7 +213,7 @@ class BattleController extends Controller
 				$result['end']=2;
 				$win=1;
 				$redis_battle_history->HSET($matchKey,'status',0);
-				$redis_user->HSET($battle_status_key,'end',0);
+				//$redis_user->HSET($battle_status_key,'end',0);
 
 				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
@@ -221,7 +221,7 @@ class BattleController extends Controller
 				$result['end']=1;
 				$win=0;
 				$redis_battle_history->HSET($matchKey,'status',0);
-				$redis_user->HSET($battle_status_key,'end',0);
+				//$redis_user->HSET($battle_status_key,'end',0);
 				//$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 			}
 			else {
