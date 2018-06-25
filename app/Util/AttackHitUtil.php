@@ -421,51 +421,19 @@ class AttackHitUtil
     // $mild_time=$redis_battle_history->HGET($multi_interval_key,ceil($count/2));
     // $end_time=$redis_battle_history->HGET($multi_interval_key,$count-1);
     if($hit){
-    //      if(!$hitTime){     
-    //        if($current<=$mild_time&&$current>=$first_time){
-    //          $hitTime=$count-1;
-    //          $last_hit=$current;
-    //          $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
-    //          $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
-    //        }
-    //        else if($current>=$mild_time&&$current<=$end_time){
-    //          $hitTime=$count-$mild_time;
-    //          $last_hit=$current;
-    //          $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime);
-    //          $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$last_hit);
-    //        }
-    //        else {
-    //          $hit=false;
-    //        }
-    //      }
-    //      else if($hitTime&&$hitTime!=0){
-    //        $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
-    //        $interval=$redis_battle_history->HGET($multi_key,'interval'); 
-    //        if($current-$interval-$last_hit_time<=30){
-    //          Log::info('last_hit'.$last_hit_time.'current'.$current);
-    //           $redis_battle_history->HSET($multi_key,'enmey_hit_interval',$hitTime-1);
-    //           $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-    //        }
-    //        else{
-    //           $hit=false;
-    //        }
-
-
-         // }
-         // else if($hitTime!=0){
-
-         //  $hit=false;
-         // }
         $interval=$redis_battle_history->HGET($multi_key,'interval'); 
         $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
       if(!$last_hit_time){
         $last_hit_time=$current;
+        $last_hit_time=$redis_battle_history->HSET($multi_key,$current);
       }
-      foreach ($futuerList as $key => $occurtime) {
-        if($current-$interval-$last_hit_time<=30){
-          $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-          break;
-        }
+      else {
+          foreach ($futuerList as $key => $occurtime) {
+             if($current-$interval-$last_hit_time<=30){
+            $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+           break;
+           }
+         }
         # code...
       }
           return $hit;
