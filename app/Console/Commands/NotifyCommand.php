@@ -80,7 +80,7 @@ class NotifyCommand extends Command
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
                         $redis_battle=Redis::connection('battle');
-                        $matchController->validateMatch($u_id);
+                       // $matchController->validateMatch($u_id);
                         $battleKey='battle_status'.$dmy;
                         $inBattle=$redis_battle->HGET($battleKey,$u_id);
                     //    $match_uid=$redis_battle->HKEYS($matchKey);

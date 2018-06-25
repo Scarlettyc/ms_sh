@@ -25,6 +25,7 @@ use App\LevelUPModel;
 use App\Util\BaggageUtil;
 use App\Util\AttackHitUtil;
 use App\Util\CharSkillEffUtil;
+use App\MatchRangeModel;
 use DateTime;
 use Exception;
 use Math;
@@ -66,6 +67,7 @@ class BattleController extends Controller
 			$redis_user->HSET($battle_status_key,'status',$status);
 			$redis_user->HSET($battle_status_key,'end',$end);
 			$redis_user->HSET($battle_status_key,'direction',$direction);
+			$this->BattleEnter($u_id,$enemy_uid);
  			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
@@ -329,6 +331,15 @@ class BattleController extends Controller
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
+  private function BattleEnter($u_id,$enemy_uid){
+  	$matchrange=new MatchRangeModel();
+  	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
+		 		->first();
+				$matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
+    $redis_user->HDEL($matchKey,$u_id);
+    $redis_user->HDEL($matchKey,$match_uid[0]);
+
+  }
   private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
 		  	$baNorReward=new BattleNormalRewardsMst();
 		  	$baSpReward=new BattleSpRewardsMst();

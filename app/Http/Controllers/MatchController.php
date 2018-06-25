@@ -114,9 +114,8 @@ class MatchController extends Controller
                    		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
 						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
-                  	$redis_user->del($battle_status_key);
-                  	$redis_user->HDEL($matchKey,$u_id);
-                  	$redis_user->HDEL($matchKey,$match_uid[0]);
+                  	 	$redis_user->del($battle_status_key);
+
 					$resultList['match_id']=$match_id;
 
 					return $resultList;
