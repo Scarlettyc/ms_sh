@@ -441,8 +441,6 @@ class AttackHitUtil
            return $hit;
         # code...
       }
-          
-    }
 
   }
 
