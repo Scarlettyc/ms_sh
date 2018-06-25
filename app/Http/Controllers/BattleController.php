@@ -35,7 +35,7 @@ class BattleController extends Controller
 	public function battleNew($data,$clientInfo){
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		if($data['u_id']){
+		if(isset($data['u_id'])){
  			$x=$data['x'];
  			$y=$data['y'];
  			$x2=$data['x2'];
@@ -329,15 +329,7 @@ class BattleController extends Controller
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
-  private function BattleEnter($u_id,$enemy_uid,$chardata){
-  	$matchrange=new MatchRangeModel();
-  	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
-		 		->first();
-				$matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
-    $redis_user->HDEL($matchKey,$u_id);
-    $redis_user->HDEL($matchKey,$match_uid[0]);
 
-  }
   private function BattleRewards($u_id,$map_id,$match_id,$win,$ch_lv,$ch_ranking){
 		  	$baNorReward=new BattleNormalRewardsMst();
 		  	$baSpReward=new BattleSpRewardsMst();
