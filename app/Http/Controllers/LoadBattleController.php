@@ -124,6 +124,7 @@ class LoadBattleController extends Controller
         $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
 
         $redis_user->HDEL($matchKey,$u_id);
+        Log::info($matchKey.' '.$u_id);
  	    return $final;
  	  }
 
