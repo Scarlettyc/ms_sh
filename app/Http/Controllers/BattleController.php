@@ -266,7 +266,7 @@ class BattleController extends Controller
 		$skillModel=new SkillMstModel();
 		if($skill_group==1&&strpos($skill_name,'b')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-a%')->first();
-			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skill_key='skill_'.$u_id;
 			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
@@ -278,7 +278,7 @@ class BattleController extends Controller
 		}
 		else if($skill_group==1&&strpos($skill_name,'c')){
 			$skill_before=$skillModel->select('skill_id','skill_group','skill_cd','skill_name','skill_prepare_time','skill_atk_time')->where('skill_group',$skill_group)->where('skill_name','like','%-b%')->first();
-			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skill_key='skill_'.$u_id;
 			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime-$current<=$skill_before['skill_prepare_time']+$skill_before['skill_atk_time']){
@@ -412,7 +412,7 @@ class BattleController extends Controller
 		$skill_id=$skill['skill_id'];
 		$skill_cd=$skill['skill_cd'];
 		if($skill_cd>0){
-			$skill_key='skill_'.$match_id.'_'.$u_id;
+			$skill_key='skill_'.$u_id;
 			$skillTime=$redis_battle_history->HGET($skill_key,$skill_id);
 			$current=$this->getMillisecond();
 			if($skillTime){
