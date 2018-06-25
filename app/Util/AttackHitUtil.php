@@ -425,7 +425,7 @@ class AttackHitUtil
         $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
       if(!$last_hit_time){
         $last_hit_time=$current;
-        $last_hit_time=$redis_battle_history->HSET($multi_key,$current);
+        $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
           foreach ($futuerList as $key => $occurtime) {
