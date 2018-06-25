@@ -426,22 +426,25 @@ class AttackHitUtil
       if(!$last_hit_time){
         $last_hit_time=$current;
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+        return $hit;
       }
       else {
 
             foreach ($futuerList as $key => $occurtime) {
-             if($current-$interval>=$occurtime+30){
+              Log::info($occurtime);
+             if($current-$interval==$occurtime){
               $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+              Log::info('enmey_hit_last_time'.$current-$interval)
                break;
               }
            else {
             $hit=false;
            }
          }
-
+          return $hit;
         # code...
       }
-          return $hit;
+          
     }
 
   }
@@ -862,10 +865,10 @@ class AttackHitUtil
           if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
           }
-           else if($current>=$end_time){
-            $redis_battle->DEL($multi_key);
-            $redis_battle->DEL($multi_interval_key);
-        }
+        //    else if($current>=$end_time){
+        //     $redis_battle->DEL($multi_key);
+        //     $redis_battle->DEL($multi_interval_key);
+        // }
       }
        return $skills;
   }
