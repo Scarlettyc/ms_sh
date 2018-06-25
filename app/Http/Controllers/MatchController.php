@@ -32,12 +32,14 @@ class MatchController extends Controller
 
 		// if($access_token2==$access_token){
 			$redis_battle=Redis::connection('battle');
+			$redis_user=Redis::connection('battle_user');
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
      		$characterModel=new CharacterModel();
      		$charSkillUtil=new CharSkillEffUtil();
      		$chardata=$characterModel->where('u_id',$u_id)->first();
      		$ch_star=$chardata['ch_star'];
+
 	
      		if(isset($chardata)){
 		 		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
@@ -112,8 +114,10 @@ class MatchController extends Controller
                    		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
 						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
-       
-
+       					$battle_status_key='battle'.$u_id;
+       					$$battle_status_key_enemy='battle'.$match_uid[0];
+						$redis_user->HSET($battle_status_key,'ch_hp_max',1000);
+						$redis_user->HSET($battle_status_key_enemy,'ch_hp_max',1000);
 					$resultList['match_id']=$match_id;
 
 					return $resultList;
