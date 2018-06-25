@@ -208,11 +208,12 @@ class BattleController extends Controller
 			// $enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
 			$result['user_data']=$charData;
 			$result['enemy_data']=$enemyData;
+
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
 				$result['end']=2;
 				$win=1;
 				$redis_battle_history->HSET($matchKey,'status',0);
-				$redis_user->DEl($battle_status_key);
+				$redis_user->HSET($battle_status_key,'end',0);
 
 				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
@@ -220,7 +221,7 @@ class BattleController extends Controller
 				$result['end']=1;
 				$win=0;
 				$redis_battle_history->HSET($matchKey,'status',0);
-				$redis_user->DEl($battle_status_key);
+				$redis_user->HSET($battle_status_key,'end',0);
 				//$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 			}
 			else {
@@ -228,7 +229,7 @@ class BattleController extends Controller
 			}
 
 			$charData['end']=$result['end'];
-			
+			$result['end']=$end;
 			if($clientId>$enemy_clientId){
 				$charData['x']=-($charData['x']);
 				$charData['x2']=-($charData['x2']);
