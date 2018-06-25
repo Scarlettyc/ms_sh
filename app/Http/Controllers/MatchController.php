@@ -67,7 +67,7 @@ class MatchController extends Controller
 					$match_result=$redis_battle->HGET($matchKey,$match_uid[0]);
 					$waitUser=json_decode($match_result,TRUE);
 					
-					$redis_battle->HDEL($matchKey,$match_uid[0]);
+				
 					// Log::info($match_result);
 					$resultList=json_decode($match_result,TRUE);
 					$resultList['u_id_1']=$match_uid[0];
@@ -118,7 +118,9 @@ class MatchController extends Controller
        					$battle_status_key_enemy='battle'.$match_uid[0];
 						$redis_user->HSET($battle_status_key,'ch_hp_max',1000);
 						$redis_user->HSET($battle_status_key_enemy,'ch_hp_max',1000);
-					$resultList['match_id']=$match_id;
+						$redis_battle->HDEL($matchKey,$match_uid[0]);
+						$redis_battle->HDEL($matchKey,$u_id);
+						$resultList['match_id']=$match_id;
 
 					return $resultList;
 					}
