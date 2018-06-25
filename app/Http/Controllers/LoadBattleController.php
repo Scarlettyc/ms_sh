@@ -59,7 +59,7 @@ class LoadBattleController extends Controller
 		// }
     }
 
-    private function getData($u_id){
+    private function getData($u_id,$match_id){
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
  	    $charaM=new CharacterModel();
