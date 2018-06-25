@@ -244,13 +244,12 @@ class BattleController extends Controller
 
 
 			$response=json_encode($result,TRUE);
-			Log::info($response);
 			return  $response;
 		}
 
 }
 
-	private function removeUsedSkill($u_id.$match_id){
+	private function removeUsedSkill($u_id,$match_id){
 		$redis_user=Redis::connection('battle_user');
 		$battle_status_key='battle'.$match_id.$u_id;
 		$redis_user->HDEL($battle_status_key,'skill_id');
