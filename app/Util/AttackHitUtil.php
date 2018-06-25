@@ -434,7 +434,7 @@ class AttackHitUtil
               Log::info($occurtime);
              if($current-$interval==$occurtime){
               $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-              Log::info('enmey_hit_last_time'.$current-$interval)
+              Log::info('enmey_hit_last_time'.$current-$interval);
                break;
               }
            else {
