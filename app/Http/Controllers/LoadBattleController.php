@@ -70,7 +70,7 @@ class LoadBattleController extends Controller
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
-        $battle_status_key='battle'.$match_id.$u_id;
+        $battle_status_key='battle'.$u_id;
         // $exist=$redis_user->EXISTS($battle_status_key);
         // if($exist==1){
         //     $redis_user->DEL($battle_status_key);
@@ -92,7 +92,13 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
         $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
         $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
-         $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
+        $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
+        $redis_user->HSET($battle_status_key,'x',-1000);
+        $redis_user->HSET($battle_status_key,'x2',-1000);
+        $redis_user->HSET($battle_status_key,'y',-290);
+        $redis_user->HSET($battle_status_key,'y2',-290);
+        $redis_user->HSET($battle_status_key,'status',1);
+        $redis_user->HSET($battle_status_key,'direction',1);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
