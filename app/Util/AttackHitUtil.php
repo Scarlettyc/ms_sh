@@ -428,9 +428,10 @@ class AttackHitUtil
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
-          foreach ($futuerList as $key => $occurtime) {
-             if($current-$interval-$last_hit_time<=30){
-            $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
+
+            foreach ($futuerList as $key => $occurtime) {
+             if($current-$interval>=$occurtime+30){
+              $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
            break;
            }
          }
