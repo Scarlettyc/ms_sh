@@ -304,14 +304,12 @@ class BattleController extends Controller
 		// $userExist=$redis_battle_history->HLEN($battlekey);
 		$charData=[];
 		if($existX<1){
-			if($identity==2){
 				$user_data['x']=-1000;
 				$user_data['y']=-290;
 				$user_data['x2']=-1000;
 				$user_data['y2']=-290;
 				$user_data['direction']=-1;
 				$user_data['status']=0;
-			}
 		}
 		else{ 	
 			if($identity==1){			
