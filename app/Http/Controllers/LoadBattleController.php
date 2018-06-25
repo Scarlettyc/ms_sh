@@ -60,7 +60,8 @@ class LoadBattleController extends Controller
     }
 
     private function getData($u_id){
-
+        $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
  	    $charaM=new CharacterModel();
  	    $eqModel=new EquipmentMstModel();
  	    $skillModel=new SkillMstModel();
