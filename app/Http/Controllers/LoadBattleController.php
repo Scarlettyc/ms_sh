@@ -16,6 +16,7 @@ use App\Util\MapTrapUtil;
 use Illuminate\Support\Facades\Redis;
 use App\SkillEffDeatilModel;
 use App\Util\AttackHitUtil;
+use App\MatchRangeModel;
 use DateTime;
 use Exception;
 use DB;
@@ -68,6 +69,11 @@ class LoadBattleController extends Controller
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
         $battle_status_key='battle'.$u_id;
+        $exist=$redis_user->EXISTS($battle_status_key);
+        if($exist==1){
+            $redis_user->DEL($battle_status_key);
+        }
+
         $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
         $charRe['ch_title']=$charData['ch_title'];
@@ -111,6 +117,12 @@ class LoadBattleController extends Controller
         $result['movement_skill']=$movement_skill;
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
+        $matchrange=new MatchRangeModel();
+        $match=$matchrange->where('user_ranking',$charData['ch_ranking'])->where('star_from','<=',$charData['ch_star'])->where('star_to','>=',$charData['ch_star'])
+                ->first();
+        $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
+
+        $redis_user->HDEL($matchKey,$u_id);
  	    return $final;
  	  }
 

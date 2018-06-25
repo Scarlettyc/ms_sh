@@ -66,7 +66,6 @@ class BattleController extends Controller
 			$redis_user->HSET($battle_status_key,'status',$status);
 			$redis_user->HSET($battle_status_key,'end',$end);
 			$redis_user->HSET($battle_status_key,'direction',$direction);
-			$this->BattleEnter($u_id,$enemy_uid);
  			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
@@ -330,7 +329,7 @@ class BattleController extends Controller
 		return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
 	}
 
-  private function BattleEnter($u_id,$enemy_uid){
+  private function BattleEnter($u_id,$enemy_uid,$chardata){
   	$matchrange=new MatchRangeModel();
   	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();

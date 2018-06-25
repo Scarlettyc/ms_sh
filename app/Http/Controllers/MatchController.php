@@ -32,7 +32,6 @@ class MatchController extends Controller
 
 		// if($access_token2==$access_token){
 			$redis_battle=Redis::connection('battle');
-			$redis_user=Redis::connection('battle_user');
 			$battle_status_key='battle'.$u_id;
      		$usermodel=new UserModel();
      		$matchrange=new MatchRangeModel();
@@ -114,7 +113,7 @@ class MatchController extends Controller
                    		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
 						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
-                  	 	$redis_user->del($battle_status_key);
+                  	 	
 
 					$resultList['match_id']=$match_id;
 
