@@ -426,22 +426,19 @@ class AttackHitUtil
       if(!$last_hit_time){
         $last_hit_time=$current;
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-        return $hit;
       }
       else {
-
-            foreach ($futuerList as $key => $occurtime) {
-              Log::info($occurtime);
-             if($current-$interval==$occurtime){
+             if($current-$interval-30>=$last_hit_time){
               $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-              Log::info('enmey_hit_last_time'.$current-$interval);
+              Log::info('enmey_hit_last_time'.$current-$interval-$last_hit_time);
                break;
               }
            else {
             $hit=false;
            }
+         
          }
-          return $hit;
+           return $hit;
         # code...
       }
           
