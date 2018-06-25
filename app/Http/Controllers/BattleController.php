@@ -55,7 +55,7 @@ class BattleController extends Controller
 			$clientId=$redis_battle_history->HGET($matchKey,'client');
  			$map_id=$redis_battle_history->HGET($matchKey,'map_id');
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
- 			$battle_status_key='battle'.$u_id;
+ 			$battle_status_key='battle'.$match_id.$u_id;
  			$end=0;
  			$enemy_clientId=$redis_battle_history->HGET($matchKey,'enmey_client');
  			// $this->removeUsedSkill($u_id);
@@ -167,7 +167,7 @@ class BattleController extends Controller
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
 					//Log::info($charData);
 				}
-				$this->removeUsedSkill($enemy_uid);
+				$this->removeUsedSkill($enemy_uid,$match_id);
 			}
 			if(isset($flytools)){
 					//Log::info($flytools);
@@ -250,9 +250,9 @@ class BattleController extends Controller
 
 }
 
-	private function removeUsedSkill($u_id){
+	private function removeUsedSkill($u_id.$match_id){
 		$redis_user=Redis::connection('battle_user');
-		$battle_status_key='battle'.$u_id;
+		$battle_status_key='battle'.$match_id.$u_id;
 		$redis_user->HDEL($battle_status_key,'skill_id');
 		$redis_user->HDEL($battle_status_key,'skill_group');
 		$redis_user->HDEL($battle_status_key,'skill_damage');

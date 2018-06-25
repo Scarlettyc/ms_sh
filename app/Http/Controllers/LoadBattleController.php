@@ -69,11 +69,11 @@ class LoadBattleController extends Controller
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
-        $battle_status_key='battle'.$u_id;
-        $exist=$redis_user->EXISTS($battle_status_key);
-        if($exist==1){
-            $redis_user->DEL($battle_status_key);
-        }
+        // $battle_status_key='battle'.$u_id;
+        // $exist=$redis_user->EXISTS($battle_status_key);
+        // if($exist==1){
+        //     $redis_user->DEL($battle_status_key);
+        // }
 
         $charRe['u_id']=$charData['u_id'];
         $charRe['ch_id']=$charData['ch_id'];
