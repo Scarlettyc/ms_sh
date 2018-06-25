@@ -47,8 +47,8 @@ class LoadBattleController extends Controller
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
- 	    	$userData=$this->getData($u_id);
- 	    	$enemyData=$this->getData($enemy_uid);
+ 	    	$userData=$this->getData($u_id,$match_id);
+ 	    	$enemyData=$this->getData($enemy_uid,$match_id);
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
@@ -69,7 +69,7 @@ class LoadBattleController extends Controller
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
-        // $battle_status_key='battle'.$u_id;
+        $battle_status_key='battle'.$match_id.$u_id;
         // $exist=$redis_user->EXISTS($battle_status_key);
         // if($exist==1){
         //     $redis_user->DEL($battle_status_key);
