@@ -387,6 +387,7 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'direction',$direction);
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
+      $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
     $round=round($duration['eff_value']/$interval['eff_value']);
     // $multi_interval_key='multi'.$u_id.$skill_id;
     // for($i=0;$i<$round;$i++){
@@ -430,7 +431,7 @@ class AttackHitUtil
       else {
         $diff=$current-$interval-$last_hit_time;
         Log::info('check multi hit'.$diff);
-             if($current-$interval-$last_hit_time<=30&&$current-$interval-$last_hit_time>=0){
+             if($current-$interval-30>=$last_hit_time){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
            else {
@@ -855,14 +856,14 @@ class AttackHitUtil
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $duration=$redis_battle->HGET($multi_key,'duration');
-          $end_time=$current+$duration;
+          $end_time=$redis_battle->HGET($multi_key,'end_time');
           if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
          }
         else if($current>=$end_time){
+        //  Log::info('del multi key')
             $redis_battle->DEL($multi_key);
         }
-        Log::info('check multi'.$end_time.'current_time'.$current);
       }
        return $skills;
   }
