@@ -435,9 +435,9 @@ class AttackHitUtil
               Log::info('enmey_hit_last_time'.$current.'interval'.$interval);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
-           // else {
-           //  $hit=false;
-           // }
+           else {
+            $hit=false;
+           }
          
          }
            return $hit;
