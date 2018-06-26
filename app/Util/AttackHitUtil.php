@@ -429,7 +429,7 @@ class AttackHitUtil
       }
       else {
         $diff=$current-$interval-$last_hit_time;
-             if($current-$interval-$last_hit_time>=0&&$current-$interval-$last_hit_time<=50){
+             if($current-$interval-$last_hit_time<=50){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
            else {
