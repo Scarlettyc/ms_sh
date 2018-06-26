@@ -429,7 +429,7 @@ class AttackHitUtil
       }
       else {
         $diff=$current-$interval-$last_hit_time;
-             if($current-$interval-$last_hit_time<=50){
+             if($current-$interval-$last_hit_time>=30){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
            else {
@@ -861,6 +861,7 @@ class AttackHitUtil
         else if($current>=$end_time){
             $redis_battle->DEL($multi_key);
         }
+        Log::info('check multi'.$end_time.'current_time'.$current);
       }
        return $skills;
   }
