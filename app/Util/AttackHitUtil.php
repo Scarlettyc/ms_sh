@@ -429,7 +429,7 @@ class AttackHitUtil
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
-          Log::info('enmey_hit_last_time'.$current.'interval'.$interval));
+          Log::info('enmey_hit_last_time'.$current.'interval'.$interval);
              if($current-$interval-30>=$last_hit_time){
               $redis_battle_histor->HSET($multi_key,'enmey_hit_last_time',$current);
               }
