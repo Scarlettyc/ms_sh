@@ -421,16 +421,18 @@ class AttackHitUtil
     // $mild_time=$redis_battle_history->HGET($multi_interval_key,ceil($count/2));
     // $end_time=$redis_battle_history->HGET($multi_interval_key,$count-1);
     if($hit){
+
         $interval=$redis_battle_history->HGET($multi_key,'interval'); 
         $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+        Log::info("check enemy hit");
       if(!$last_hit_time){
         $last_hit_time=$current;
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
              if($current-$interval-30>=$last_hit_time){
-              $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
-              Log::info('enmey_hit_last_time'.$current-$interval-$last_hit_time);
+              $redis_battle_histor->HSET($multi_key,'enmey_hit_last_time',$current);
+              Log::info('enmey_hit_last_time'.$current-$interval);
               }
            else {
             $hit=false;
