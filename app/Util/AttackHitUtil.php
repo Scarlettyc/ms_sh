@@ -864,9 +864,9 @@ class AttackHitUtil
       }
        return $skills;
   }
-  public function checkBuff($u_id,$current.$skill_id){
-    $buff_key='buff'.$u_id.$skill_id;
-    $redis_user=Redis::connection('battle_user');
-    $redis_user->HGETALL($buff_key,$u_id);
-  }
+  // public function checkBuff($u_id,$current,$skill_id){
+  //   $buff_key='buff'.$u_id.$skill_id;
+  //   $redis_user=Redis::connection('battle_user');
+  //   $redis_user->HGETALL($buff_key,$u_id);
+  // }
 }
