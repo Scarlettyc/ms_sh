@@ -413,8 +413,8 @@ class AttackHitUtil
     $hit=false;
     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
     $current=$this->getMillisecond();
-    $multi_interval_key='multi'.$enemy_uid.$skill_id;
-    $futuerList=$redis_battle_history->HGETALL($multi_interval_key);
+   // $multi_interval_key='multi'.$enemy_uid.$skill_id;
+    //$futuerList=$redis_battle_history->HGETALL($multi_interval_key);
     //$hitTime=$redis_battle_history->HGET($multi_key,'enmey_hit_interval');
     // $count=$redis_battle_history->HLEN($multi_interval_key);
     // $first_time=$redis_battle_history->HGET($multi_interval_key,1);
@@ -429,7 +429,7 @@ class AttackHitUtil
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
-         
+        Log::info('enmey_hit_last_time'.$last_hit_time.'interval'.$interval.' current'.$current);
              if($current-$interval-30>=$last_hit_time){
               Log::info('enmey_hit_last_time'.$current.'interval'.$interval);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
