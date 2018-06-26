@@ -112,7 +112,19 @@ class BattleController extends Controller
 						$redis_user->HSET($battle_status_key,'start_y',$y);
 						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
-							$skillatkEff=$attackhitutil->getEffValue($data['skill_id']);
+							$buff_key='buff'.$u_id.$skill_id;
+							if($skill['skill_id']==76 ||$skill['skill_id']==76 ){
+								$haveSkill=$redis_user->HEXISTS($buff_key,$skill['skill_id']);
+								if($haveSkill==0){
+									$haveSkill=$redis_user->HSET($buff_key,'skill_id',$skill['skill_id']);
+								}
+								else{
+									$redis_user->HDEL($buff_key,'time',9999);
+								}
+							}
+							else{
+								
+							}
 						}
 						if($skill['skill_damage']==2){
 							$flytools['skill_id']=$skill['skill_id'];
@@ -200,9 +212,9 @@ class BattleController extends Controller
 				 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
 						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
 						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
 				}
 			}
+
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
@@ -249,6 +261,7 @@ class BattleController extends Controller
 		}
 
 }
+	
 
 	private function removeUsedSkill($u_id){
 		$redis_user=Redis::connection('battle_user');
