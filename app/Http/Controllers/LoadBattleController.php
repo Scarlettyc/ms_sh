@@ -125,13 +125,12 @@ class LoadBattleController extends Controller
         $result['movement_skill']=$movement_skill;
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
-        $matchrange=new MatchRangeModel();
-        $match=$matchrange->where('user_ranking',$charData['ch_ranking'])->where('star_from','<=',$charData['ch_star'])->where('star_to','>=',$charData['ch_star'])
-                ->first();
-        $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
+        // $matchrange=new MatchRangeModel();
+        // $match=$matchrange->where('user_ranking',$charData['ch_ranking'])->where('star_from','<=',$charData['ch_star'])->where('star_to','>=',$charData['ch_star'])
+        //         ->first();
+        // $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
 
-        $redis_user->HDEL($matchKey,$u_id);
-        Log::info($matchKey.' '.$u_id);
+        //$redis_user->HDEL($matchKey,$u_id);
  	    return $final;
  	  }
 

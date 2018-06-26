@@ -54,6 +54,8 @@ class BattleController extends Controller
 			$match_id=$redis_battle_history->HGET($matchKey,'match_id');
 			$clientId=$redis_battle_history->HGET($matchKey,'client');
  			$map_id=$redis_battle_history->HGET($matchKey,'map_id');
+ 			$match_range=$redis_battle_history->HGET($matchKey,'match_range');
+ 			$redis_battle_history->HDEL($match_range,$u_id);
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
  			$end=0;

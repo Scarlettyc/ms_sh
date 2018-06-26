@@ -105,6 +105,7 @@ class MatchController extends Controller
                    		$redis_battle->HSET($battleKeyUser,'client',$clientID);
 						$redis_battle->HSET($battleKeyUser,'enmey_client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyUser,'create_date',time());
+						$redis_battle->HSET($battleKeyUser,'match_key',$matchKey);
 
 						$redis_battle->HSET($battleKeyEnemy,'enemy_uid',$u_id);
                    		$redis_battle->HSET($battleKeyEnemy,'u_id',$match_uid[0]);
@@ -114,12 +115,14 @@ class MatchController extends Controller
                    		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
 						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
+						$redis_battle->HSET($battleKeyEnemy,'match_range',$matchKey);
        					$battle_status_key='battle'.$u_id;
        					$battle_status_key_enemy='battle'.$match_uid[0];
 						$redis_user->HSET($battle_status_key,'ch_hp_max',1000);
 						$redis_user->HSET($battle_status_key_enemy,'ch_hp_max',1000);
-						$redis_battle->HDEL($matchKey,$match_uid[0]);
-						$redis_battle->HDEL($matchKey,$u_id);
+						$redis_user->HSET($battle_status_key_enemy,'match_key',$matchKey);
+						// $redis_battle->HDEL($matchKey,$match_uid[0]);
+						// $redis_battle->HDEL($matchKey,$u_id);
 						$resultList['match_id']=$match_id;
 
 					return $resultList;
