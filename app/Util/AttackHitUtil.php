@@ -388,6 +388,10 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
     $round=round($duration['eff_value']/$interval['eff_value']);
+    // $multi_interval_key='multi'.$u_id.$skill_id;
+    // for($i=0;$i<$round;$i++){
+    //   $redis_battle_history->HSET($multi_interval_key,$i,$i*$interval['eff_value']+$time);
+    // }
   }
 
   public function multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id){
@@ -419,12 +423,15 @@ class AttackHitUtil
     if($hit){
         $interval=$redis_battle_history->HGET($multi_key,'interval'); 
         $last_hit_time=$redis_battle_history->HGET($multi_key,'enmey_hit_last_time');
+        Log::info("check enemy hit");
       if(!$last_hit_time){
         $last_hit_time=$current;
         $last_hit_time=$redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
       }
       else {
+         
              if($current-$interval-30>=$last_hit_time){
+              Log::info('enmey_hit_last_time'.$current.'interval'.$interval);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
            else {
@@ -856,7 +863,7 @@ class AttackHitUtil
           }
         //    else if($current>=$end_time){
         //     $redis_battle->DEL($multi_key);
-        // //     $redis_battle->DEL($multi_interval_key);
+        //     $redis_battle->DEL($multi_interval_key);
         // }
       }
        return $skills;
