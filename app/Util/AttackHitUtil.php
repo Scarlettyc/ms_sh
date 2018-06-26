@@ -435,9 +435,9 @@ class AttackHitUtil
               Log::info('enmey_hit_last_time'.$current.'interval'.$interval);
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
-           else {
-            $hit=false;
-           }
+           // else {
+           //  $hit=false;
+           // }
          
          }
            return $hit;
@@ -858,10 +858,10 @@ class AttackHitUtil
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $multi_interval_key='multi'.$u_id.$skill_id;
           $count=$redis_battle->HLEN($multi_interval_key);
-          $end_time=$redis_battle->HGET($multi_interval_key,$count-1);
-          if($current<$end_time){
+          //$end_time=$redis_battle->HGET($multi_interval_key,$count-1);
+          //if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
-          }
+         // }
         //    else if($current>=$end_time){
         //     $redis_battle->DEL($multi_key);
         //     $redis_battle->DEL($multi_interval_key);
