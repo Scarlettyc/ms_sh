@@ -429,7 +429,8 @@ class AttackHitUtil
       }
       else {
         $diff=$current-$interval-$last_hit_time;
-             if($current-$interval-$last_hit_time>=30){
+        Log::info('check multi hit'.$diff);
+             if($current-$interval-$last_hit_time<=30&&$current-$interval-$last_hit_time>=0){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
            else {
