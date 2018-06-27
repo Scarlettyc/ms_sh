@@ -333,7 +333,7 @@ class BattleController extends Controller
 				$user_data['y']=$y;
 				$user_data['x2']=$x2;
 				$user_data['y2']=$y2;
-				$user_data['direction']=$direction;
+				$user_data['direction']=1;
 				$user_data['status']=$status;
 			}
 		}
