@@ -119,13 +119,13 @@ return [
             'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
-            'database' => 9,
+            'database' => 2,
         ],
         'battle_user' => [
             'host' => env('REDIS_HOST', '127.0.0.1'),
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
-            'database' => 10,
+            'database' => 3,
         ],
         'options' => [
                 'parameters' => ['password' => env('REDIS_PASSWORD', null)],
