@@ -68,7 +68,7 @@ class BattleController extends Controller
 			$redis_user->HSET($battle_status_key,'status',$status);
 			//$redis_user->HSET($battle_status_key,'end',$end);
 			$redis_user->HSET($battle_status_key,'direction',$direction);
- 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,1);
+ 			$charData=$this->mapingData($match_id,$u_id,1,$x,$y,$x2,$y2,$status,$direction);
  			$charData['time']=$current;
  			$charData['address']=$clientInfo['address'];
  			$charData['port']=$clientInfo['port'];
