@@ -77,6 +77,7 @@ class BaggageUtil
 				$arry['item_id']=$obj['b_equ_id'];
 				$arry['item_type']=2;
 				$arry['equ_type']=$equ_type;
+				$arry['item_rarity']=$obj['b_equ_rarity'];
 				if($arry['equ_type']==1){
 				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$obj['b_equ_rarity'])->first();
 				$arry['need_lv']=$standardData['value2'];
@@ -127,7 +128,7 @@ class BaggageUtil
 				$equipment['eff_ch_crit_per']=$eqAtr['eff_ch_crit_per'];
 			}
 
-			$skillInfo = $skillMstModel->select('skill_id','skill_info','skill_name','skill_icon')->where('skill_id',$EquipmentInfo['special_skill_id'])->first();
+			$skillInfo = $skillMstModel->select('skill_id','skill_info','skill_name','skill_icon')->where('equ_id',$EquipmentInfo['equ_id'])->first();
 			$equipment['skill_id']=$skillInfo['skill_id'];
 			$equipment['skill_name']=$skillInfo['skill_name'];
 			$equipment['skill_info']=$skillInfo['skill_info'];
