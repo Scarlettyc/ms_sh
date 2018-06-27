@@ -123,7 +123,7 @@ class BattleController extends Controller
 								}
 							}
 							else{
-								$attackhitutil->addBuff($skill_id,$current);
+								$attackhitutil->addBuff($skill['skill_id'],$current);
 							}
 						}
 						if($skill['skill_damage']==2){
