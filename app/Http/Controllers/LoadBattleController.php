@@ -117,13 +117,15 @@ class LoadBattleController extends Controller
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
         $move_effs=$this->getEffs($movement_skill);
-        $special_skill['skill_effs']=$move_effs;
+        $special_skill['skill_effs']=$special_effs;
         $result['special_skill']=$special_skill;
-        $core_skill['skill_effs']=$move_effs;
+        $core_skill['skill_effs']=$core_effs;
         $result['core_skill']=$core_skill;
         $movement_skill['skill_effs']=$move_effs; 
-        var_dump( $movement_skill);
+        $move_effsJson=json_encode($move_effs,TRUE);
+        Log::info($move_effsJson);
         $result['movement_skill']=$movement_skill;
+        Log::info($movement_skill);
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
         // $matchrange=new MatchRangeModel();
