@@ -124,9 +124,7 @@ class LoadBattleController extends Controller
         $result['core_skill']=$core_skill;
         $movement_skill['skill_effs']=$move_effs; 
         $move_effsJson=json_encode($move_effs,TRUE);
-        Log::info($move_effsJson);
         $result['movement_skill']=$movement_skill;
-        Log::info($movement_skill);
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
         // $matchrange=new MatchRangeModel();
@@ -169,7 +167,7 @@ class LoadBattleController extends Controller
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-        $effs= $attackHitUtil->getEffValueBytype($skill->skill_id);
+        $effs= $attackHitUtil->getEffValueBytype($skill['skill_id']);
         return $effs;
     }
 }
