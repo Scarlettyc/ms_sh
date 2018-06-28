@@ -126,12 +126,6 @@ class LoadBattleController extends Controller
         $result['movement_skill']=$movement_skill;
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
-        // $matchrange=new MatchRangeModel();
-        // $match=$matchrange->where('user_ranking',$charData['ch_ranking'])->where('star_from','<=',$charData['ch_star'])->where('star_to','>=',$charData['ch_star'])
-        //         ->first();
-        // $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
-
-        //$redis_user->HDEL($matchKey,$u_id);
  	    return $final;
  	  }
 
@@ -145,9 +139,6 @@ class LoadBattleController extends Controller
         $data=json_decode($json,TRUE);
         $redisLoad= Redis::connection('default');
         $u_id=$data['u_id'];
-        // $CharSkillEffUtil=new CharSkillEffUtil();
-        // $access_token=$data['access_token'];
-        // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
         $redis_battle=Redis::connection('battle');
         $match_id=$data['match_id'];
         $battleKey='battle_status'.$u_id.$dmy;
