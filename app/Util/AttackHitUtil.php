@@ -264,7 +264,6 @@ class AttackHitUtil
         $multi_key='multi'.$enemy_uid;
         if($skill_damage==1){
         $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-        // Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
         }
          if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
@@ -811,7 +810,7 @@ class AttackHitUtil
   //     }
   //   }
   // }
-    public function addBuff($skill_id,$current){
+    public function addBuff($skill_id,$current,$u_id){
       $redis_user=Redis::connection('battle_user');
       $buff_key='buff'.$u_id.$skill_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
