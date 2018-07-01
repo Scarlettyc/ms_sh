@@ -806,7 +806,7 @@ class AttackHitUtil
 			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
       // Log::info('enmey damage'.$enemyDMG);
 			$hpMax=$chardata['ch_hp_max'];
-			$chardata['ch_hp_max']=round($hpMaxbuyo*(1-$execute_hp_precentage)-$enemyDMG);
+			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
 			if($chardata['ch_hp_max']<0){
 				$chardata['ch_hp_max']=0;
 			}
