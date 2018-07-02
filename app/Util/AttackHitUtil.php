@@ -858,13 +858,15 @@ class AttackHitUtil
   //     }
   //   }
   // }
-    public function addBuff($skill_id,$current,$u_id){
+    public function addBuff($skill_id,$current,$u_id,$match_id){
       $redis_user=Redis::connection('battle_user');
       $buff_key='buff_'.$u_id.$skill_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
       $redis_user->HSET($buff_key,'time',$duration['eff_value']);
-       $redis_user->HSET($key_count+1,$battle_status_key);
+      $key_list=$match_id.'_'.$u_id;
+      $key_count=$redis_user->HLEN($key_list);
+      $redis_user->HSET($key_list,$key_count+1,$buff_key);
   }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){
