@@ -34,6 +34,7 @@ class LoadBattleController extends Controller
 		$data=json_decode($json,TRUE);
         $u_id=$data['u_id'];
         $redis_battle=Redis::connection('battle');
+        $redis_user=Redis::connection('battle_user');
         // $CharSkillEffUtil=new CharSkillEffUtil();
         // $access_token=$data['access_token'];
         // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
@@ -42,6 +43,9 @@ class LoadBattleController extends Controller
             $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+            $key_list=$matchID.'_'.$u_id;
+            $key_count=$redis_user->HLEN($key_list);
+            $redis_user->HSET($key_count+1,$battleKey);
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
@@ -100,6 +104,9 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'status',1);
         $redis_user->HSET($battle_status_key,'direction',1);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
+        $key_list=$matchID.'_'.$u_id;
+        $key_count=$redis_user->HLEN($key_list);
+        $redis_user->HSET($key_count+1,$battle_status_key);
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];

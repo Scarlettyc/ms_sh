@@ -284,26 +284,6 @@ class AttackHitUtil
         }
 
            if($skill_damage==3||$skill_damage==4){
-            // $battleData=json_encode($enemySkill,TRUE);
-            // $occur_time=$enemySkill['occur_time'];
-            // $start_x=-($enemyX);
-            // $start_y=($enemyY);
-            // $start_direction=-$enemySkill['direction'];
-            // if(!isset($effs['eff_duration'])){
-            // $effs['eff_duration']=0;
-            // }
-            // if(!isset($effs['eff_interval'])){
-            //   $effs['eff_interval']=1;
-            // }
-            // if(!isset($effs['movable_time'])){
-            //     $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
-            //     $enemyY_from=$start_y+$effs['BR_y_a'];
-            //     $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
-            //     $enemyY_to=$start_y+$effs['TL_y_a'];
-            //     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-            //     $interval_key=$match_id.$u_id.$skill_id;
-
-
             // }
                $hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id);
           }
@@ -880,10 +860,11 @@ class AttackHitUtil
   // }
     public function addBuff($skill_id,$current,$u_id){
       $redis_user=Redis::connection('battle_user');
-      $buff_key='buff'.$u_id.$skill_id;
+      $buff_key='buff_'.$u_id.$skill_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
       $redis_user->HSET($buff_key,'time',$duration['eff_value']);
+       $redis_user->HSET($key_count+1,$battle_status_key);
   }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){
