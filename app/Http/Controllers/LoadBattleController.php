@@ -45,7 +45,7 @@ class LoadBattleController extends Controller
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
             $key_list=$matchID.'_'.$u_id;
             $key_count=$redis_user->HLEN($key_list);
-            $redis_user->HSET($key_count+1,$battleKey);
+            $redis_user->HSET($key_list,$key_count+1,$battleKey);
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
@@ -106,7 +106,7 @@ class LoadBattleController extends Controller
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
         $key_list=$matchID.'_'.$u_id;
         $key_count=$redis_user->HLEN($key_list);
-        $redis_user->HSET($key_count+1,$battle_status_key);
+        $redis_user->HSET($key_list,$key_count+1,$battle_status_key);
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
