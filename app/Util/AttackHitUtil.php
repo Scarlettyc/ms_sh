@@ -344,6 +344,7 @@ class AttackHitUtil
   public function checkInterval($skill_id,$x,$y,$direction,$time,$skill_group,$skill_damage,$match_id,$u_id){
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle_history=Redis::connection('battle');
+    $redis_user=Redis::connection('battle_user');
     $multi_key='multi'.$u_id;
     $TL_x_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',1)->where('skill_id',$skill_id)->first();
     $BR_y_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',4)->where('skill_id',$skill_id)->first();
@@ -366,8 +367,10 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'direction',$direction);
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
-      $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
-    $round=round($duration['eff_value']/$interval['eff_value']);
+    $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
+    $key_list=$u_id.$dmy;
+    $redis_user->HSET($key_list,'mult',$multi_key);
+    //$round=round($duration['eff_value']/$interval['eff_value']);
     // $multi_interval_key='multi'.$u_id.$skill_id;
     // for($i=0;$i<$round;$i++){
     //   $redis_battle_history->HSET($multi_interval_key,$i,$i*$interval['eff_value']+$time);
@@ -864,9 +867,8 @@ class AttackHitUtil
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
       $redis_user->HSET($buff_key,'time',$duration['eff_value']);
-      $key_list=$match_id.'_'.$u_id;
-      $key_count=$redis_user->HLEN($key_list);
-      $redis_user->HSET($key_list,$key_count+1,$buff_key);
+      $key_list=$u_id.$dmy;
+      $redis_user->HSET($key_list,'user_buff',$buff_key);
   }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){

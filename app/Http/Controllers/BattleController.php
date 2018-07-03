@@ -136,8 +136,12 @@ class BattleController extends Controller
 							$flytools['x']=$x;
 							$flytools['y']=$y;
 							$flytools['direction']=$data['direction'];
+
+							$key_list=$u_id.$dmy;
 							$flySkillJson=json_encode($flytools);
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
+							$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
+
 						}
 						// if($skill['skill_damage']==6){
 						// 	$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
@@ -424,6 +428,7 @@ class BattleController extends Controller
   	
 	private function checkSkillCD($skill,$match_id,$u_id){
 		$attackhitutil=new AttackHitUtil();
+		$redis_user=Redis::connection('battle_user');
 		$redis_battle_history=Redis::connection('battle');
 		$skill_id=$skill['skill_id'];
 		$skill_cd=$skill['skill_cd'];
@@ -434,6 +439,8 @@ class BattleController extends Controller
 			if($skillTime){
 				if($current-$skillTime>=$skill_cd){
 				$redis_battle_history->HSET($skill_key,$skill_id,$current);
+				$key_list=$u_id.$dmy;
+       			$redis_user->HSET($key_list,'user_status',$battle_status_key);
 				return $skillTime;
 				}
 			else {

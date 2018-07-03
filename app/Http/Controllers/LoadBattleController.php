@@ -43,9 +43,10 @@ class LoadBattleController extends Controller
             $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
-            $key_list=$matchID.'_'.$u_id;
+            $key_list=$u_id.$dmy;
             $key_count=$redis_user->HLEN($key_list);
-            $redis_user->HSET($key_list,$key_count+1,$battleKey);
+            $redis_user->HSET('match_id',$matchID);
+            $redis_user->HSET('battle_status'.$key_list,$battleKey);
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
@@ -104,9 +105,8 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'status',1);
         $redis_user->HSET($battle_status_key,'direction',1);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
-        $key_list=$match_id.'_'.$u_id;
-        $key_count=$redis_user->HLEN($key_list);
-        $redis_user->HSET($key_list,$key_count+1,$battle_status_key);
+        $key_list=$u_id.$dmy;
+        $redis_user->HSET($key_list,'user_status',$battle_status_key);
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
@@ -153,7 +153,7 @@ class LoadBattleController extends Controller
             $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
             if($match_id==$hveMatchID){
                 $mapId=$redis_battle->HGET($battleKey,'map_id');
-                $mapData=$mapTrapUtil->getMapData($mapId);
+                $mapData=$key_count->getMapData($mapId);
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);
              return  base64_encode($response);
