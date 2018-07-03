@@ -137,7 +137,7 @@ class BattleController extends Controller
 							$flytools['y']=$y;
 							$flytools['direction']=$data['direction'];
 
-							$key_list=$u_id.$dmy;
+							$key_list='battle'.$u_id.$dmy;
 							$flySkillJson=json_encode($flytools);
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
 							$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
@@ -233,7 +233,7 @@ class BattleController extends Controller
 				$result['end']=2;
 				$win=1;
 				$redis_battle_history->HSET($matchKey,'status',0);
-				$key_list=$u_id.$dmy;
+				$key_list='battle'.$u_id.$dmy;
 				$redis_user->HSET($key_list,'end',2);
 				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
@@ -443,7 +443,7 @@ class BattleController extends Controller
 			if($skillTime){
 				if($current-$skillTime>=$skill_cd){
 				$redis_battle_history->HSET($skill_key,$skill_id,$current);
-				$key_list=$u_id.$dmy;
+				$key_list='battle'.$u_id.$dmy;
        			$redis_user->HSET($key_list,'user_status',$skill_key);
 				return $skillTime;
 				}

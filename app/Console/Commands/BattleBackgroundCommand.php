@@ -13,7 +13,7 @@ class BattleBackgroundCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'battle:start';
+    protected $signature = 'battle:background';
 
     /**
      * The console command description.
@@ -39,9 +39,25 @@ class BattleBackgroundCommand extends Command
      */
 
     public function handle()
-    {  
-        
+    {   $now   = new DateTime;
+        $dmy=$now->format( 'Ymd' );
+        $redis_user=Redis::connection('battle_user');
+        $u_list='battle_users';
+        $users=$redis_user->LRANGE($u_list,0,-1);
+        foreach ($users as $key => $user) {
+           $battleEnd=$redis_user->HGET('battle'.$user.$dmy,'end');
+           if($battleEnd>0){
+            $redis_user->DEL('battle'.$user.$dmy);
+            $redis_user->LPOP($users, $user,$key);
+           }
+           else{
+            // $this->checkBattleStatus($user);
+           }
+        }
 
     }
+    // private function checkBattleStatus(){
+
+    // }
 
 }

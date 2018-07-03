@@ -43,7 +43,7 @@ class LoadBattleController extends Controller
             $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
-            $key_list=$u_id.$dmy;
+            $key_list='battle'.$u_id.$dmy;
             $key_count=$redis_user->HLEN($key_list);
             $redis_user->HSET($key_list,'match_id',$matchID);
             $redis_user->HSET($key_list,'battle_status',$battleKey);
@@ -105,8 +105,10 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'status',1);
         $redis_user->HSET($battle_status_key,'direction',1);
  	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
-        $key_list=$u_id.$dmy;
+        $key_list='battle'.$u_id.$dmy;
         $redis_user->HSET($key_list,'user_status',$battle_status_key);
+        $u_list='battle_users';
+        $redis_user->LPUSH($u_list,$u_id);
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];

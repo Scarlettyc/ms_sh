@@ -370,7 +370,7 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
     $now   = new DateTime;
     $dmy=$now->format( 'Ymd' );
-    $key_list=$u_id.$dmy;
+    $key_list='battle'.$u_id.$dmy;
     $redis_user->HSET($key_list,'mult',$multi_key);
     //$round=round($duration['eff_value']/$interval['eff_value']);
     // $multi_interval_key='multi'.$u_id.$skill_id;
@@ -871,7 +871,7 @@ class AttackHitUtil
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
       $redis_user->HSET($buff_key,'time',$duration['eff_value']);
-      $key_list=$u_id.$dmy;
+      $key_list='battle'.$u_id.$dmy;
       $redis_user->HSET($key_list,'user_buff',$buff_key);
   }
 
