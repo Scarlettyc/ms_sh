@@ -153,7 +153,7 @@ class LoadBattleController extends Controller
             $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
             if($match_id==$hveMatchID){
                 $mapId=$redis_battle->HGET($battleKey,'map_id');
-                $mapData=$key_count->getMapData($mapId);
+                $mapData=$mapTrapUtil->getMapData($mapId);
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);
              return  base64_encode($response);
