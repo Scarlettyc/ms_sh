@@ -45,8 +45,8 @@ class LoadBattleController extends Controller
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
             $key_list=$u_id.$dmy;
             $key_count=$redis_user->HLEN($key_list);
-            $redis_user->HSET('match_id',$matchID);
-            $redis_user->HSET('battle_status'.$key_list,$battleKey);
+            $redis_user->HSET($key_list,'match_id',$matchID);
+            $redis_user->HSET($key_list,'battle_status',$battleKey);
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
