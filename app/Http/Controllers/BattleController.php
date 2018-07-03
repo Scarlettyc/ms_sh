@@ -233,13 +233,15 @@ class BattleController extends Controller
 				$result['end']=2;
 				$win=1;
 				$redis_battle_history->HSET($matchKey,'status',0);
-
+				$key_list=$u_id.$dmy;
+				$redis_user->HSET($key_list,'end',2);
 				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
 			else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
 				$result['end']=1;
 				$win=0;
 				$redis_battle_history->HSET($matchKey,'status',0);
+				$redis_user->HSET($key_list,'end',1);
 				//$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 			}
 			else {
