@@ -444,7 +444,7 @@ class BattleController extends Controller
 				if($current-$skillTime>=$skill_cd){
 				$redis_battle_history->HSET($skill_key,$skill_id,$current);
 				$key_list=$u_id.$dmy;
-       			$redis_user->HSET($key_list,'user_status',$battle_status_key);
+       			$redis_user->HSET($key_list,'user_status',$skill_key);
 				return $skillTime;
 				}
 			else {
