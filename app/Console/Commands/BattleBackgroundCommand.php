@@ -43,12 +43,12 @@ class BattleBackgroundCommand extends Command
         $dmy=$now->format( 'Ymd' );
         $redis_user=Redis::connection('battle_user');
         $u_list='battle_users';
-        $users=$redis_user->LRANGE($u_list,0,-1);
-        foreach ($users as $key => $user) {
+        $users=$redis_user->HKEYS($u_list);
+        foreach ($users as $user) {
            $battleEnd=$redis_user->HGET('battle'.$user.$dmy,'end');
            if($battleEnd>0){
             $redis_user->DEL('battle'.$user.$dmy);
-            $redis_user->LPOP($users, $user,$key);
+            $redis_user->HDEL($users, $user);
            }
            else{
             // $this->checkBattleStatus($user);

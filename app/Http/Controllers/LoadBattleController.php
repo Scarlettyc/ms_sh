@@ -108,7 +108,7 @@ class LoadBattleController extends Controller
         $key_list='battle'.$u_id.$dmy;
         $redis_user->HSET($key_list,'user_status',$battle_status_key);
         $u_list='battle_users';
-        $redis_user->LPUSH($u_list,$u_id);
+        $redis_user->HSET($u_list,$u_id,time());
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
