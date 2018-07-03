@@ -368,6 +368,8 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
     $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
+    $now   = new DateTime;
+    $dmy=$now->format( 'Ymd' );
     $key_list=$u_id.$dmy;
     $redis_user->HSET($key_list,'mult',$multi_key);
     //$round=round($duration['eff_value']/$interval['eff_value']);
@@ -862,6 +864,8 @@ class AttackHitUtil
   //   }
   // }
     public function addBuff($skill_id,$current,$u_id,$match_id){
+      $now   = new DateTime;
+      $dmy=$now->format( 'Ymd' );
       $redis_user=Redis::connection('battle_user');
       $buff_key='buff_'.$u_id.$skill_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
