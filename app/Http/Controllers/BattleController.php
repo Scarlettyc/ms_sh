@@ -434,6 +434,7 @@ class BattleController extends Controller
 		$redis_battle_history=Redis::connection('battle');
 		$skill_id=$skill['skill_id'];
 		$skill_cd=$skill['skill_cd'];
+		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		if($skill_cd>0){
 			$skill_key='skill_'.$u_id;
