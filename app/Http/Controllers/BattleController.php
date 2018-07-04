@@ -161,7 +161,7 @@ class BattleController extends Controller
 				}
 			}
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2);	
-			if(isset($enemyData['x'])&&isset($charData['x'])){
+			if(isset($enemyData['x'])&&isset($charData['x'])&&isset($enemyData['direction'])){
 					if($clientId<$enemy_clientId){
 				    	$enemyData['x']=-($enemyData['x']);
 				    	$enemyData['x2']=-($enemyData['x2']);
