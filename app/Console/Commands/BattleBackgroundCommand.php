@@ -51,22 +51,23 @@ class BattleBackgroundCommand extends Command
         foreach ($users as $user) {
            $battleEnd=$redis_user->HGET('battle'.$user.$dmy,'end');
            if($battleEnd>0){
-            $redis_user->DEL('battle'.$user);
-            $redis_user->HDEL($u_list,$user);
-            $Keys=$redis_user->HGETALL('battle'.$user.$dmy);
-            foreach ($Keys as $key) {
-               $redis_battle->DEL($key);
-            }
-            $redis_user->DEL('battle'.$user.$dmy);
+            // $redis_user->DEL('battle'.$user);
+            // $redis_user->HDEL($u_list,$user);
+            // $Keys=$redis_user->HGETALL('battle'.$user.$dmy);
+            // foreach ($Keys as $key) {
+            //    $redis_battle->DEL($key);
+            // }
+            // $redis_user->DEL('battle'.$user.$dmy);
            }
            else if ($battleEnd==0||!$battleEnd){
-               Log::info('test runing cron tab'.$dmy);
+
             $multi_key='multi'.$user;
             $exist=$redis_battle->EXISTS($multi_key);
             $current=$this->getMillisecond();
             if($exist>0){
                  $end_time=$redis_battle->HGET($multi_key,'end_time');
                  if($current>=$end_time){
+                    Log::info('test runing cron tab'.$dmy);
                     $redis_battle->DEL($multi_key);
                  }
              }
