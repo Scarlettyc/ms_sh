@@ -43,7 +43,7 @@ class BattleBackgroundCommand extends Command
     {   
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
-     
+        Log::info('test background');
         $redis_user=Redis::connection('battle_user');
         $redis_battle=Redis::connection('battle');
         $u_list='battle_users';
