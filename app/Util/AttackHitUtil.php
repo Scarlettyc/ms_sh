@@ -915,20 +915,22 @@ class AttackHitUtil
        $multi_key=$key.$u_id;
        
        $exist=$redis_battle->EXISTS($multi_key);
-       // $skills=[];
+       $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $duration=$redis_battle->HGET($multi_key,'duration');
           $end_time=$redis_battle->HGET($multi_key,'end_time');
           // if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
+
         //  }
         // else if($current>=$end_time){
         // //  Log::info('del multi key')
         //     $redis_battle->DEL($multi_key);
         // }
       }
-       return $skills;
+        return $skills;
+  
   }
   // public function checkBuff($u_id,$current,$skill_id){
   //   $buff_key='buff'.$u_id.$skill_id;
