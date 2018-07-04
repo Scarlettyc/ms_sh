@@ -178,7 +178,7 @@ class BattleController extends Controller
 		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');
 		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi',$current);
 
-			if(isset($enemyData['skill_id'])){
+			if(isset($enemyData['skill_id'])&&isset($enemyData['skill_damage'])){
 				$hit=$attackhitutil->checkSkillHit($enemyData,$x,$y,$charData['direction'],$match_id,$enemy_uid,$u_id);
 				//Log::info("check skill enmeyData".$enemyData['skill_id']);
 				if($hit&&$hit!=null&&$hit!=''){
