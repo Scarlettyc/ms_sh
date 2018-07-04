@@ -39,8 +39,10 @@ class BattleBackgroundCommand extends Command
      */
 
     public function handle()
-    {   $now   = new DateTime;
+    {   
+        $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
+        Log::info('test cron tab'.$dmy);
         $redis_user=Redis::connection('battle_user');
         $u_list='battle_users';
         $users=$redis_user->HKEYS($u_list);
@@ -50,9 +52,9 @@ class BattleBackgroundCommand extends Command
             $redis_user->DEL('battle'.$user.$dmy);
             $redis_user->HDEL($users, $user);
            }
-           else{
-            // $this->checkBattleStatus($user);
-           }
+           // else{
+           //  // $this->checkBattleStatus($user);
+           // }
         }
 
     }
