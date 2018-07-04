@@ -43,7 +43,7 @@ class BattleBackgroundCommand extends Command
     {   
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
-        Log::info('test cron tab'.$dmy);
+     
         $redis_user=Redis::connection('battle_user');
         $redis_battle=Redis::connection('battle');
         $u_list='battle_users';
@@ -59,7 +59,8 @@ class BattleBackgroundCommand extends Command
             }
             $redis_user->DEL('battle'.$user.$dmy);
            }
-           else{
+           else if ($battleEnd==0||!$battleEnd){
+               Log::info('test runing cron tab'.$dmy);
             $multi_key='multi'.$user;
             $exist=$redis_battle->EXISTS($multi_key);
             $current=$this->getMillisecond();

@@ -414,7 +414,7 @@ class AttackHitUtil
       }
       else {
         $diff=$current-$interval-$last_hit_time;
-        Log::info('check multi hit'.$diff);
+        // Log::info('check multi hit'.$diff);
              if($current-$interval-30>=$last_hit_time){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
@@ -837,7 +837,7 @@ class AttackHitUtil
            
        }
        
-      Log::info('enmey  speical damage'.$enemyDMG);
+     // Log::info('enmey  speical damage'.$enemyDMG);
   	}
 
     $redis_user->HSET($battle_status_key,'ch_hp_max',$chardata['ch_hp_max']);
