@@ -414,7 +414,7 @@ class AttackHitUtil
       }
       else {
         $diff=$current-$interval-$last_hit_time;
-        // Log::info('check multi hit'.$diff);
+        Log::info('check multi hit'.$diff);
              if($current-$interval-30>=$last_hit_time){
               $redis_battle_history->HSET($multi_key,'enmey_hit_last_time',$current);
               }
@@ -837,7 +837,7 @@ class AttackHitUtil
            
        }
        
-     // Log::info('enmey  speical damage'.$enemyDMG);
+      Log::info('enmey  speical damage'.$enemyDMG);
   	}
 
     $redis_user->HSET($battle_status_key,'ch_hp_max',$chardata['ch_hp_max']);
@@ -915,22 +915,20 @@ class AttackHitUtil
        $multi_key=$key.$u_id;
        
        $exist=$redis_battle->EXISTS($multi_key);
-       $skills=[];
+       // $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $duration=$redis_battle->HGET($multi_key,'duration');
           $end_time=$redis_battle->HGET($multi_key,'end_time');
-          // if($current<$end_time){
+          if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
-
-        //  }
-        // else if($current>=$end_time){
-        // //  Log::info('del multi key')
-        //     $redis_battle->DEL($multi_key);
-        // }
+           }
+          else if($current>=$end_time){
+         //  Log::info('del multi key')
+            $redis_battle->DEL($multi_key);
+          }
       }
-        return $skills;
-  
+       return $skills;
   }
   // public function checkBuff($u_id,$current,$skill_id){
   //   $buff_key='buff'.$u_id.$skill_id;
