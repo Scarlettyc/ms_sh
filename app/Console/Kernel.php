@@ -28,6 +28,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('battle:background')
-                ->cron('* 3 * * *');
+                ->everyMinute();
     }
 }
