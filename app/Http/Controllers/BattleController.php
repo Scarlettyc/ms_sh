@@ -81,11 +81,11 @@ class BattleController extends Controller
  			// $charData['status']=$status;
  			//$user_res=1;
  			
- 			$fly_tools_key='battle_flytools'.$match_id.$u_id;
+ 			$fly_tools_key='battle_flytools'.$u_id;
 			if(isset($data['direction'])){
 				$charData['direction']=$data['direction'];
 			}
-			$enemy_fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+			$enemy_fly_tools_key='battle_flytools'.$enemy_uid;
 			$displacement_key='displacement'.$match_id.$u_id;
 			
 			$multi_interval_key='multi_interval'.$u_id;
@@ -140,7 +140,7 @@ class BattleController extends Controller
 							$key_list='battle'.$u_id.$dmy;
 							$flySkillJson=json_encode($flytools);
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
-							$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
+							//$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
 
 						}
 						// if($skill['skill_damage']==6){

@@ -259,7 +259,7 @@ class AttackHitUtil
 				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
 
-        $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+        $fly_tools_key='battle_flytools'.$enemy_uid;
         $displacement_key='displacement'.$match_id.$enemy_uid;
         $multi_key='multi'.$enemy_uid;
         if($skill_damage==1){
@@ -915,18 +915,18 @@ class AttackHitUtil
        $multi_key=$key.$u_id;
        
        $exist=$redis_battle->EXISTS($multi_key);
-       $skills=[];
+       // $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $duration=$redis_battle->HGET($multi_key,'duration');
           $end_time=$redis_battle->HGET($multi_key,'end_time');
-          if($current<$end_time){
+          // if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
-         }
-        else if($current>=$end_time){
-        //  Log::info('del multi key')
-            $redis_battle->DEL($multi_key);
-        }
+        //  }
+        // else if($current>=$end_time){
+        // //  Log::info('del multi key')
+        //     $redis_battle->DEL($multi_key);
+        // }
       }
        return $skills;
   }

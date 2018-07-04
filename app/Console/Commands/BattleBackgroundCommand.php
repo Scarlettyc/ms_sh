@@ -59,14 +59,24 @@ class BattleBackgroundCommand extends Command
             }
             $redis_user->DEL('battle'.$user.$dmy);
            }
-           // else{
-           //  // $this->checkBattleStatus($user);
-           // }
+           else{
+            $multi_key='multi'.$u_id;
+            $exist=$redis_battle->EXISTS($multi_key);
+            $current=$this->getMillisecond();
+            if($exist>0){
+                 $end_time=$redis_battle->HGET($multi_key,'end_time');
+                 if($current>=$end_time){
+                    $redis_battle->DEL($multi_key);
+                 }
+             }
+            // $this->checkBattleStatus($user);
+           }
         }
 
     }
-    // private function checkBattleStatus(){
-
-    // }
+    private function getMillisecond() {
+        list($t1, $t2) = explode(' ', microtime());     
+        return (float)sprintf('%.0f', (floatval($t1) + floatval($t2)) * 1000);  
+    }
 
 }
