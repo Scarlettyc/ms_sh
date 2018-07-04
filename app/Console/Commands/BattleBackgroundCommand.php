@@ -45,13 +45,19 @@ class BattleBackgroundCommand extends Command
         $dmy=$now->format( 'Ymd' );
         Log::info('test cron tab'.$dmy);
         $redis_user=Redis::connection('battle_user');
+        $redis_battle=Redis::connection('battle');
         $u_list='battle_users';
         $users=$redis_user->HKEYS($u_list);
         foreach ($users as $user) {
            $battleEnd=$redis_user->HGET('battle'.$user.$dmy,'end');
            if($battleEnd>0){
-            $redis_user->DEL('battle'.$user.$dmy);
+            $redis_user->DEL('battle'.$user);
             $redis_user->HDEL($users, $user);
+            $Keys=$redis_user->HGETALL('battle'.$user.$dmy);
+            foreach ($Keys as $key) {
+               $redis_battle->DEL($key);
+            }
+            $redis_user->DEL('battle'.$user.$dmy);
            }
            // else{
            //  // $this->checkBattleStatus($user);
