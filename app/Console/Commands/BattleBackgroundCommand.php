@@ -52,7 +52,7 @@ class BattleBackgroundCommand extends Command
            $battleEnd=$redis_user->HGET('battle'.$user.$dmy,'end');
            if($battleEnd>0){
             $redis_user->DEL('battle'.$user);
-            $redis_user->HDEL($users, $user);
+            $redis_user->HDEL($u_list,$user);
             $Keys=$redis_user->HGETALL('battle'.$user.$dmy);
             foreach ($Keys as $key) {
                $redis_battle->DEL($key);
