@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\BattleController;
 use Log;
+use DateTime;
 class BattleBackgroundCommand extends Command
 {
     /**
