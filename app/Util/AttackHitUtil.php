@@ -915,7 +915,7 @@ class AttackHitUtil
        $multi_key=$key.$u_id;
        
        $exist=$redis_battle->EXISTS($multi_key);
-       // $skills=[];
+       $skills=[];
        if($exist>0){
           $skill_id=$redis_battle->HGET($multi_key,'skill_id');
           $duration=$redis_battle->HGET($multi_key,'duration');
