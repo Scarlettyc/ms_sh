@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
   \App\Console\Commands\SwooleCommand::class,
-\App\Console\Commands\NotifyCommand::class
+\App\Console\Commands\NotifyCommand::class,
+\App\Console\Commands\BattleBackgroundCommand::class
     ];
 
     /**
@@ -26,7 +27,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('battle:background')
-        //          ->everyFiveMinutes();
+        $schedule->command('battle:background')
+                 ->everyFiveMinutes();
     }
 }
