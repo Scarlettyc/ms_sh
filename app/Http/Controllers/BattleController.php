@@ -140,7 +140,7 @@ class BattleController extends Controller
 							$key_list='battle'.$u_id.$dmy;
 							$flySkillJson=json_encode($flytools);
 							$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
-							//$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
+							$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
 
 						}
 						// if($skill['skill_damage']==6){
