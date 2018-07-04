@@ -60,7 +60,7 @@ class BattleBackgroundCommand extends Command
             $redis_user->DEL('battle'.$user.$dmy);
            }
            else{
-            $multi_key='multi'.$u_id;
+            $multi_key='multi'.$user;
             $exist=$redis_battle->EXISTS($multi_key);
             $current=$this->getMillisecond();
             if($exist>0){
