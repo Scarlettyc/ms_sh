@@ -61,7 +61,7 @@ class LoadBattleController extends Controller
  	    	$userData=$this->getData($u_id,$match_id);
             $userData['client_id']=$client_id;
  	    	$enemyData=$this->getData($enemy_uid,$match_id);
-            $enemyDat['client_id']=$enemy_client;
+            $enemyData['client_id']=$enemy_client;
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);

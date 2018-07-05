@@ -113,7 +113,7 @@ class BattleController extends Controller
 						$redis_user->HSET($battle_status_key,'start_x',$x);
 						$redis_user->HSET($battle_status_key,'start_y',$y);
 						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
-						if($skill['skill_damage']==0||$skill['skill_damage']==5){
+						if($skill['skill_damage']==0){
 							$buff_key='buff_skill'.$skill['skill_id'].'_'.$u_id;
 							if($skill['skill_id']==76 ||$skill['skill_id']==76 ){
 								$haveSkill=$redis_user->HEXISTS($buff_key,$skill['skill_id']);
@@ -125,10 +125,14 @@ class BattleController extends Controller
 								}
 							}
 							else{
-								$attackhitutil->addBuff($skill['skill_id'],$u_id,$current,$match_id);
+								$attackhitutil->addBuff($skill['skill_id'],$u_id,$current,$match_id,$current);
 							}
 						}
-						if($skill['skill_damage']==2){
+						else if($skill['skill_damage']==5){	
+							$attackhitutil->checkStrike($u_id,$skill['skill_id'],$current);
+
+						}
+						else if($skill['skill_damage']==2){
 							$flytools['skill_id']=$skill['skill_id'];
 							$flytools['skill_damage']=$skill['skill_damage'];
 							$flytools['skill_group']=$skill['skill_group'];
@@ -152,7 +156,7 @@ class BattleController extends Controller
 						// 	$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
 						// 	$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
 						// }
-					    if($skill['skill_damage']==3||$skill['skill_damage']==4){
+					    else if($skill['skill_damage']==3||$skill['skill_damage']==4){
 							if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
 								$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage'],$match_id,$u_id);
 							}
@@ -184,6 +188,13 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+					$newEnemy=$attackhitutil->strikeCal($enemyData,$chardata,$u_id,$current);
+					if(!$newEnemy){
+						$enemyData=$newEnemy;
+						$status=6;
+						$redis_user->HSET($battle_status_key,'status',6);
+						$charData['status']=6;
+					}
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
 					//Log::info($charData);
 				}
