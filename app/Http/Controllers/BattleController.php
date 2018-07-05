@@ -197,7 +197,7 @@ class BattleController extends Controller
 					}
 					else{
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					Log::info($charData);
+					//Log::info($charData);
 					}
 				}
 				$this->removeUsedSkill($enemy_uid);
@@ -279,6 +279,7 @@ class BattleController extends Controller
 
 
 			$response=json_encode($result,TRUE);
+			Log::info($response);
 			return  $response;
 		}
 
