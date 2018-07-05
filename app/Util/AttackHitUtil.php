@@ -685,13 +685,6 @@ class AttackHitUtil
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
-<<<<<<< Updated upstream
-
-=======
-      if(isset($checkMyBuffs)&&$checkMyBuffs){
-
-      }
->>>>>>> Stashed changes
       $critBool=1;
       if($randCrit<=$enemyData['ch_crit']||!$crit=0){
         $critBool=2;
