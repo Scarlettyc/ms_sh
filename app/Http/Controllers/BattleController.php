@@ -195,6 +195,7 @@ class BattleController extends Controller
 						//$redis_user->HSET($battle_status_key,'status',6);
 						$redis_user->HSET($battle_status_key,'skill_group',7);
 						$charData['skill_group']=7;
+						Log::info('test skill group 7');
 					}
 					else{
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
