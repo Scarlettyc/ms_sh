@@ -191,8 +191,9 @@ class BattleController extends Controller
 					$newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
 					if($newEnemy){
 						$enemyData=$newEnemy;
-						$status=6;
-						$redis_user->HSET($battle_status_key,'status',6);
+						//$status=6;
+						//$redis_user->HSET($battle_status_key,'status',6);
+						$redis_user->HSET($battle_status_key,'skill_group',7);
 						$charData['skill_group']=7;
 					}
 					else{
