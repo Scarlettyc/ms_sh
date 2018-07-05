@@ -193,7 +193,7 @@ class BattleController extends Controller
 						$enemyData=$newEnemy;
 						$status=6;
 						$redis_user->HSET($battle_status_key,'status',6);
-						$charData['status']=6;
+						$charData['skill_group']=7;
 					}
 					else{
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
