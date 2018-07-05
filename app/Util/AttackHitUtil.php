@@ -759,6 +759,7 @@ class AttackHitUtil
   }
   public function strikeCal($enemyData,$chardata,$u_id,$current){
     $strike_key='strike'.$u_id;
+    $redis_battle=Redis::connection('battle');
     $end=$redis_battle->HGET($strike_key,'end_time');
     $hit=$redis_battle->HGET($strike_key,'hit');
     if($current<$end&&$hit==0){
