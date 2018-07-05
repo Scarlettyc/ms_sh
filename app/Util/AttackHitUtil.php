@@ -685,7 +685,13 @@ class AttackHitUtil
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
+<<<<<<< Updated upstream
 
+=======
+      if(isset($checkMyBuffs)&&$checkMyBuffs){
+
+      }
+>>>>>>> Stashed changes
       $critBool=1;
       if($randCrit<=$enemyData['ch_crit']||!$crit=0){
         $critBool=2;
@@ -796,7 +802,7 @@ class AttackHitUtil
   //     }
   //   }
   // }
-    public function addBuff($skill_id,$current,$u_id,$match_id,$current){
+    public function addBuff($skill_id,$current,$u_id,$match_id){
       $now   = new DateTime;
       $dmy=$now->format( 'Ymd' );
       $redis_user=Redis::connection('battle');
