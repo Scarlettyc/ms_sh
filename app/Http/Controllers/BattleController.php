@@ -188,7 +188,7 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					$newEnemy=$attackhitutil->strikeCal($enemyData,$chardata,$u_id,$current);
+					$newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
 					if(!$newEnemy){
 						$enemyData=$newEnemy;
 						$status=6;
