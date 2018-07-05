@@ -867,7 +867,7 @@ class AttackHitUtil
       $now   = new DateTime;
       $dmy=$now->format( 'Ymd' );
       $redis_user=Redis::connection('battle_user');
-      $buff_key='buff_'.$u_id.$skill_id;
+      $buff_key='buff_skill'.$skill_id.'_'.$u_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
       $redis_user->HSET($buff_key,'time',$duration['eff_value']);

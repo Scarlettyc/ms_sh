@@ -43,10 +43,15 @@ class LoadBattleController extends Controller
             $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+            $client_id=$redis_battle->HGET($battleKey,'client');
+
             $key_list='battle'.$u_id.$dmy;
             $key_count=$redis_user->HLEN($key_list);
             $redis_user->HSET($key_list,'match_id',$matchID);
             $redis_user->HSET($key_list,'battle_status',$battleKey);
+            $enemy_battle_key='battle_status'.$enemy_uid.$dmy;
+            $enemy_client=$redis_battle->HGET($enemy_battle_key,'client');
+
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
@@ -54,7 +59,9 @@ class LoadBattleController extends Controller
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
  	    	$userData=$this->getData($u_id,$match_id);
+            $userData['client_id']=$client_id;
  	    	$enemyData=$this->getData($enemy_uid,$match_id);
+            $enemyDat['client_id']=$enemy_client;
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);

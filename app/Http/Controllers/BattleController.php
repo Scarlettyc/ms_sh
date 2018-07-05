@@ -114,7 +114,7 @@ class BattleController extends Controller
 						$redis_user->HSET($battle_status_key,'start_y',$y);
 						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 						if($skill['skill_damage']==0||$skill['skill_damage']==5){
-							$buff_key='buff_'.$u_id.$skill['skill_id'];
+							$buff_key='buff_skill'.$skill_id.'_'.$u_id;
 							if($skill['skill_id']==76 ||$skill['skill_id']==76 ){
 								$haveSkill=$redis_user->HEXISTS($buff_key,$skill['skill_id']);
 								if($haveSkill==0){
