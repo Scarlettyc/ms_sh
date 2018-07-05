@@ -196,7 +196,7 @@ class BattleController extends Controller
 						$charData['status']=6;
 					}
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					//Log::info($charData);
+					Log::info($charData);
 				}
 				$this->removeUsedSkill($enemy_uid);
 			}
