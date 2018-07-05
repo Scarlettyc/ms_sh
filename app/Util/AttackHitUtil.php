@@ -803,7 +803,7 @@ class AttackHitUtil
       $buff_key='buff_skill'.$skill_id.'_'.$u_id;
       $SkillEffDeatilModel=new SkillEffDeatilModel();
       $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
-      $end_time=$duration+$current;
+      $end_time=$duration['eff_value']+$current;
       $redis_user->HSET('battle_buff'.$u_id,$end_time,$skill_id);
   }
 
