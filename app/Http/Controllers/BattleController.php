@@ -188,19 +188,19 @@ class BattleController extends Controller
 				if($hit&&$hit!=null&&$hit!=''){
 					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
 					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					$newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
-					if($newEnemy){
-						$enemyData=$newEnemy;
-						//$status=6;
-						//$redis_user->HSET($battle_status_key,'status',6);
-						$redis_user->HSET($battle_status_key,'skill_group',7);
-						$charData['skill_group']=7;
-						Log::info('test skill group 7');
-					}
-					else{
+					// $newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
+					// if($newEnemy){
+					// 	$enemyData=$newEnemy;
+					// 	//$status=6;
+					// 	//$redis_user->HSET($battle_status_key,'status',6);
+					// 	$redis_user->HSET($battle_status_key,'skill_group',7);
+					// 	$charData['skill_group']=7;
+					// 	Log::info('test skill group 7');
+					// }
+					// else{
 					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					//Log::info($charData);
-					}
+					// //Log::info($charData);
+					// }
 				}
 				$this->removeUsedSkill($enemy_uid);
 			}
