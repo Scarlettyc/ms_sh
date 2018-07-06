@@ -64,7 +64,7 @@ class MapTrapUtil
         $mapModel=new MapModel();
         $trapMst=new TrapMstModel();
         $mapRelation=new MapTrapRelationMst();
-        $mapData=$mapRelation->select(map_id,trap_id,x,y)->where('map_id',$map_id)->get();
+        $mapData=$mapRelation->select('map_id','trap_id','x','y')->where('map_id',$map_id)->get();
         return   $mapData;      
         
     }
