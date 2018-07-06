@@ -204,8 +204,7 @@ class MatchController extends Controller
     private function chooseMap(){
     	$defindmst=new DefindMstModel();
     	$defindData=$defindmst->where('defind_id',10)->first();
-    	$mapID=rand($defindData['value1'],$defindData['value2'] );
-    	return $mapID;
+    	return $defindData['value1'];
 
     }
 
