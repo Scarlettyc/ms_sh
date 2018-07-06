@@ -169,6 +169,7 @@ class BattleController extends Controller
 						// }
 					// }
 				}
+			   $redis_user->HSET($battle_status_key,'count',$charData['count');
 			// }
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2);	
 			if(isset($enemyData['x'])&&isset($charData['x'])&&isset($enemyData['direction'])){
@@ -247,8 +248,8 @@ class BattleController extends Controller
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
 			// $enemyData['buffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,1);
 			// $enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
-			$result[$clientId]=$charData;
-			$result[$enemy_clientId]=$enemyData;
+			$result['user_data']=$charData;
+			$result['enemy_data']=$enemyData;
 
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
 				$result['end']=2;

@@ -100,6 +100,8 @@ class BaggageUtil
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
 			$equipment['baggage_id']=$user_beq_id;
+			$equipment['equ_code']=$EquipmentInfo['equ_code'];
+			$equipment['equ_lv']=$EquipmentInfo['equ_lv'];
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
