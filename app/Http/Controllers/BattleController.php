@@ -287,7 +287,7 @@ class BattleController extends Controller
 
 
 			$response=json_encode($result,TRUE);
-			//Log::info($response);
+			Log::info($response);
 			return  $response;
 		}
 
