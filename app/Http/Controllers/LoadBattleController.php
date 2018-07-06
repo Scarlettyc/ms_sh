@@ -159,14 +159,14 @@ class LoadBattleController extends Controller
         $match_id=$data['match_id'];
         $battleKey='battle_status'.$u_id.$dmy;
         if(isset($data)){
-            $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
-            if($match_id==$hveMatchID){
+            // $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
+            // if($match_id==$hveMatchID){
                 $mapId=$redis_battle->HGET($battleKey,'map_id');
                 $mapData=$mapTrapUtil->getMapData($mapId);
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);
-             return  base64_encode($response);
-            } 
+            //  return  base64_encode($response);
+            // } 
         }
     }
 

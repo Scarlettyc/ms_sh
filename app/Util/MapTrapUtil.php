@@ -71,6 +71,7 @@ class MapTrapUtil
                     ->select('Map_Trap_Relation_mst.trap_id','Map_Trap_Relation_mst.x','Map_Trap_Relation_mst.y', 'Trap_mst.trap_id',  'Trap_mst.trap_name',  'Trap_mst.destroyable',  'Trap_mst.passable',  'Trap_mst.TL_x_a',  'Trap_mst.TL_y_a',  'Trap_mst.BR_x_a',  'Trap_mst.BR_y_a',  'Trap_mst.CD',  'Trap_mst.DMG',  'Trap_mst.slow_presentage',  'Trap_mst.created_at',  'Trap_mst.updated_at')
                     ->where('Map_mst.map_id',$map_id)
                     ->get();
+        var_dump($mapList);
         return   $mapList;      
         
     }

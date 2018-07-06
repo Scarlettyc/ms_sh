@@ -179,62 +179,62 @@ class BattleController extends Controller
 				    	$charData['direction']=-($charData['direction']);
 				    }
 			}
-		    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');
-		    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi',$current);
+		 //    $flytools=$attackhitutil->checkSkillRecord($match_id,$enemy_uid,'battle_flytools');
+		 //    $multi=$attackhitutil->checkMulti($match_id,$enemy_uid,'multi',$current);
 
 			if(isset($enemyData['skill_id'])&&isset($enemyData['skill_id'])){
-				$hit=$attackhitutil->checkSkillHit($enemyData,$x,$y,$charData['direction'],$match_id,$enemy_uid,$u_id);
-				//Log::info("check skill enmeyData".$enemyData['skill_id']);
-				if($hit&&$hit!=null&&$hit!=''){
-					$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
-					$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-					// $newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
-					// if($newEnemy){
-					// 	$enemyData=$newEnemy;
-					// 	//$status=6;
-					// 	//$redis_user->HSET($battle_status_key,'status',6);
-					// 	$redis_user->HSET($battle_status_key,'skill_group',7);
-					// 	$charData['skill_group']=7;
-					// 	Log::info('test skill group 7');
-					// }
-					// else{
-					$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
-					// //Log::info($charData);
-					// }
-				}
+				// $hit=$attackhitutil->checkSkillHit($enemyData,$x,$y,$charData['direction'],$match_id,$enemy_uid,$u_id);
+				// //Log::info("check skill enmeyData".$enemyData['skill_id']);
+				// if($hit&&$hit!=null&&$hit!=''){
+				// 	$skillatkEff=$attackhitutil->getEffValue($enemyData['skill_id']);
+				// 	$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+				// 	// $newEnemy=$attackhitutil->strikeCal($enemyData,$charData,$u_id,$current);
+				// 	// if($newEnemy){
+				// 	// 	$enemyData=$newEnemy;
+				// 	// 	//$status=6;
+				// 	// 	//$redis_user->HSET($battle_status_key,'status',6);
+				// 	// 	$redis_user->HSET($battle_status_key,'skill_group',7);
+				// 	// 	$charData['skill_group']=7;
+				// 	// 	Log::info('test skill group 7');
+				// 	// }
+				// 	// else{
+				// 	$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$enemyData['skill_group'],$u_id,$u_id,$enemy_uid,$match_id);
+				// 	// //Log::info($charData);
+				// 	// }
+				// }
 				$this->removeUsedSkill($enemy_uid);
 			}
-			if(isset($flytools)){
-					//Log::info($flytools);
-				 	foreach ($flytools as $key => $eachskill) 
-				 	{	$eachskillData=json_decode($eachskill,TRUE);
-				 		Log::info($eachskill);
-				 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
-				 	if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
-				 	}
-				  }
-			}
-			if(isset($displacement['skill_id'])){
-					$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
-					if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$displacement['skill_group'],$u_id,$enemy_uid,$match_id);
-					// Log::info($charData);
-				 	}
-			}
-			// Log::info($multi);
-			if(isset($multi['skill_id'])){	
-					$hit=$attackhitutil->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$multi['skill_id']);
-					if($hit&&$hit!=null&&$hit!=''){
-				 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
-						$effValues=$attackhitutil->findEffFunciton($skillatkEff);
-						$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
-				}
-			}
+			// if(isset($flytools)){
+			// 		//Log::info($flytools);
+			// 	 	foreach ($flytools as $key => $eachskill) 
+			// 	 	{	$eachskillData=json_decode($eachskill,TRUE);
+			// 	 		Log::info($eachskill);
+			// 	 		$hit=$attackhitutil->checkSkillHit($eachskillData,$x,$y,$direction,$match_id,$enemy_uid,$u_id);
+			// 	 	if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($eachskillData['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$eachskillData['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 	 	}
+			// 	  }
+			// }
+			// if(isset($displacement['skill_id'])){
+			// 		$hit=$attackhitutil->checkSkillHit($displacement,$x,$y,$enemyData['x'],$enemyData['y'],$charData['direction'],$enemyData['direction'],$match_id,$enemy_uid,$u_id);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($displacement['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$displacement['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 		// Log::info($charData);
+			// 	 	}
+			// }
+			// // Log::info($multi);
+			// if(isset($multi['skill_id'])){	
+			// 		$hit=$attackhitutil->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$multi['skill_id']);
+			// 		if($hit&&$hit!=null&&$hit!=''){
+			// 	 		$skillatkEff=$attackhitutil->getEffValue($multi['skill_id']);
+			// 			$effValues=$attackhitutil->findEffFunciton($skillatkEff);
+			// 			$charData=$attackhitutil->calculateCharValue($charData,$enemyData,$effValues,$multi['skill_group'],$u_id,$enemy_uid,$match_id);
+			// 	}
+			// }
 
 			$charData['request_time']=$data['request_time'];
 			// $charData['buffs']=$attackhitutil->mapingBuffs($u_id,$match_id,1);
