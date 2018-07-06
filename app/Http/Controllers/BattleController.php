@@ -161,7 +161,7 @@ class BattleController extends Controller
 						// 		$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage'],$match_id,$u_id);
 						// 	}
 						// }
-					}
+					// }
 				}
 			// }
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2);	
