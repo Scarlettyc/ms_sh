@@ -240,7 +240,7 @@ class BaggageUtil
 					$tmp['r_qu_need']=$each->r_quantity;
 					if($rQu['br_quantity']){
 						$tmp['r_qu_have']=$rQu['br_quantity'];
-						if($upgarde==1&&$rQu['br_quantity']<$each->r_quantity&&$coinLeft){
+						if($upgarde==1&&$rQu['br_quantity']<$each->r_quantity){
 						throw new Exception("no enough resouce id".$each->r_id);
 							}
 						else{
@@ -276,7 +276,7 @@ class BaggageUtil
 			$result['equ_atr']['equ_code']=$equData['equ_code'];
 			$result['equ_atr']['item_rarity']=$equData['equ_rarity'];
 			$result['equ_atr']['equ_lv']=$equData['equ_lv'];
-			
+
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
 			$result['equ_atr']['eff_ch_armor']=$equAtr['eff_ch_armor'];
