@@ -324,7 +324,7 @@ class BaggageUtil
 	// 		}
 	// 			$UserModel->where('u_id',$u_id)->update(['u_coin'=>$coin,'updated_at'=>$datetime]);
 	// 	}
-
+	
 	function insertToBaggage($u_id,$rewards){
 
 		$UserBaggageEqModel=new UserBaggageEqModel();

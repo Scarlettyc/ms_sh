@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
 use App\BattleRewardExpModel;
+use DB;
 use Log;
 use DateTime;
 class AccessController extends Controller
@@ -156,8 +157,17 @@ class AccessController extends Controller
 			}
 			
 			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
-			$haveChar=$characterModel->where('u_id',$userData['u_id'])->count();
+			$charData=$characterModel->select('ch_img','w_bag_id')->where('u_id',$userData['u_id'])->first();
+			$equ_data=DB::table('User_Baggage_Eq')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+					->select('User_Baggage_Eq.b_equ_rarity as item_rarity','Equipment_mst.equ_code','Equipment_mst.equ_lv')
+					->first();
+
 			$result['u_id']=$userfinal['u_id'];
+			$result['ch_img']=$charData['charData'];
+			$result['equ_id']=$equ_data['equ_id'];
+			$result['item_rarity']=$equ_data['item_rarity'];
+			$result['equ_lv']=$equ_data['equ_lv'];
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
 			$result['fb_id']=$userfinal['fb_id'];
