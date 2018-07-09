@@ -162,7 +162,6 @@ class AccessController extends Controller
 					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
 					->select('User_Baggage_Eq.b_equ_rarity as item_rarity','Equipment_mst.equ_code','Equipment_mst.equ_lv')
 					->first();
-					var_dump($equ_data);
 			$result['u_id']=$userfinal['u_id'];
 			$result['ch_img']=$charData['charData'];
 			$result['equ_code']=$equ_data->equ_code;
@@ -176,7 +175,6 @@ class AccessController extends Controller
 			$result['u_login_count']=$userfinal['u_login_count'];
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
-			$result['haveChar']=$haveChar;
 			$redis_login->HSET('login_data',$userData['u_id'],$loginlist);
 			$response=json_encode($result,TRUE);
 
