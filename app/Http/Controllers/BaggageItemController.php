@@ -68,11 +68,10 @@ class BaggageItemController extends Controller
 		$u_id=$data['u_id'];
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
-			$equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id','b_equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
-			$equ=$EquipmentMstModel->select('equ_code','equ_rarity','equ_lv')->where('equ_id',$equ_data['item_id'])->first();
-			$equ_data['equ_code']=$equ['equ_code'];
-			$equ_data['item_rarity']=$equ['equ_rarity'];
-			$equ_data['equ_lv']=$equ['equ_lv'];
+			$equ_data=DB::table('User_Baggage_Eq')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+					->select('User_Baggage_Eq.user_beq_id as baggage_id,','User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
+					->get();
 			$result['ch_equ']=$equ_data;
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
