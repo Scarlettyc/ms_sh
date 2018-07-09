@@ -35,9 +35,11 @@ class LeaderBoardController extends Controller
 
         $equ_data=$BaggageUtil->getEquipedCode($leader['w_bag_id']);
         var_dump($equ_data);
-        $leader['item_rarity']=$equ_data->item_rarity;
-        $leader['equ_code']=$equ_data->equ_code;
-        $leader['equ_lv']=$equ_data->equ_lv;
+        if($equ_data){
+          $leader['item_rarity']=$equ_data->item_rarity;
+          $leader['equ_code']=$equ_data->equ_code;
+          $leader['equ_lv']=$equ_data->equ_lv;
+        }
         $leaders[]=$leader;
       }
       $myRanking=$char->select('ch_ranking','ch_title','u_id','ch_title','ch_ranking','ch_star','ch_lv','ch_img')->where('u_id',$u_id)->first();
