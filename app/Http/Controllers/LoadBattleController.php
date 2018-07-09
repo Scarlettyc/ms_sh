@@ -111,7 +111,10 @@ class LoadBattleController extends Controller
         $redis_user->HSET($battle_status_key,'y2',-290);
         $redis_user->HSET($battle_status_key,'status',1);
         $redis_user->HSET($battle_status_key,'direction',1);
- 	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
+ 	    $eqData=$eqModel->select('equ_group','equ_code','equ_rarity as item_rarity','equ_lv')->where('equ_id',$weapon_id)->first();
+        $charRe['equ_code']=$eqData['equ_code'];
+        $charRe['item_rarity']=$eqData['item_rarity'];
+        $charRe['equ_lv']=$eqData['equ_lv'];
         $key_list='battle'.$u_id.$dmy;
         $redis_user->HSET($key_list,'user_status',$battle_status_key);
         $u_list='battle_users';
