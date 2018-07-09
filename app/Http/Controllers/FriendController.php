@@ -384,7 +384,9 @@ class FriendController extends Controller
 					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
 					->where('User_Baggage_Eq.user_beq_id',$friendCharacter['w_bag_id'])
 					->get();
-		$friendCharacter['b_equ_rarity']=$equ_data['b_equ_rarity'];
+		$friendCharacter['item_rarity']=$equ_data['item_rarity'];
+		$friendCharacter['equ_code']=$equ_data['equ_code'];
+		$friendCharacter['equ_lv']=$equ_data['equ_lv'];
 		$friendCharacter['friend_id']=$data['friend_id'];
 		$result["friend_details"]=$friendCharacter;
 		$response=json_encode($result,TRUE);
