@@ -12,8 +12,8 @@ use App\UserFriendModel;
 use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\DefindMstModel;
-
-
+use DB;
+use App\Util\BaggageUtil;
 class UpdateController extends Controller
 {
 	public function updateEmail(Request $request){
@@ -58,15 +58,19 @@ class UpdateController extends Controller
 		$dmy=$now->format( 'Ymd' );
 		$usermodel=new UserModel();
 		$redis_login=Redis::connection('default');
+		$BaggageUtil=new BaggageUtil();
 		$CharacterModel=new CharacterModel();
 			$u_id=$data['u_id'];
 			$userData=$usermodel->select('u_id','profile_img','email','fb_id')->where('u_id',$u_id)->first();
-			$userDetails=$CharacterModel->select('ch_title')->where('u_id',$u_id)->first();
+			$userDetails=$CharacterModel->select('ch_title','ch_img','w_bag_id')->where('u_id',$u_id)->first();
+			$equ_data=$BaggageUtil->getEquipedCode($userDetails['w_bag_id']); 
 			$result['u_id']=$userData['u_id'];
 			$result['email']=$userData['email'];
 			$result['fb_id']=$userData['fb_id'];
-			$result['profile_img']=$userData['profile_img'];
-			// $result['ch_img']=strval($userDetails['ch_img']);
+			$result['ch_img']=$userDetails['ch_img'];
+			$result['item_rarity']=$equ_data->item_rarity;
+        	$result['equ_code']=$equ_data->equ_code;
+       	 	$result['equ_lv']=$equ_data->equ_lv;
 			$result['ch_title']=$userDetails['ch_title'];
 			$response=json_encode($result,TRUE);
 			return base64_encode($response);

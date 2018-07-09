@@ -15,6 +15,7 @@ use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
 use DB;
+use App\Util\BaggageUtil;
 use App\Http\Controllers\MissionController;
 
 class FriendController extends Controller
@@ -88,13 +89,19 @@ class FriendController extends Controller
 		$requestlist=Redis::HVALS($key);
 		$characterModel=new CharacterModel();
 		$result=[];
+		$BaggageUtil=new BaggageUtil();
 		if(isset($requestlist)){
 			foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
-			$ch_title=$characterModel->select('ch_title')->where('u_id',$friendArr->u_id)->first();
+			$ch_title=$characterModel->select('ch_title','ch_img','w_bag_id')->where('u_id',$friendArr->u_id)->first();
+			$equ_data=$BaggageUtil->getEquipedCode($ch_title['w_bag_id');
+			$frData['item_rarity']=$equ_data->item_rarity;
+			$frData['equ_code']=$equ_data->equ_code;	
+			$frData['equ_lv']=$equ_data->equ_lv;	
+			$frData['ch_img']=$ch_title['ch_img'];		
 			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
 			
@@ -378,12 +385,9 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
+		$BaggageUtil=new BaggageUtil();
 		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
-		$equ_data=DB::table('User_Baggage_Eq')
-					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
-					->where('User_Baggage_Eq.user_beq_id',$friendCharacter['w_bag_id'])
-					->first();
+		$equ_data=$BaggageUtil->getEquipedCode($friendCharacter['w_bag_id');
 		$friendCharacter['item_rarity']=$equ_data->item_rarity;
 		$friendCharacter['equ_code']=$equ_data->equ_code;
 		$friendCharacter['equ_lv']=$equ_data->equ_lv;
