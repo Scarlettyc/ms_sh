@@ -97,7 +97,7 @@ class FriendController extends Controller
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
 			$ch_title=$characterModel->select('ch_title','ch_img','w_bag_id')->where('u_id',$friendArr->u_id)->first();
-			$equ_data=$BaggageUtil->getEquipedCode($ch_title['w_bag_id');
+			$equ_data=$BaggageUtil->getEquipedCode($ch_title['w_bag_id']);
 			$frData['item_rarity']=$equ_data->item_rarity;
 			$frData['equ_code']=$equ_data->equ_code;	
 			$frData['equ_lv']=$equ_data->equ_lv;	
