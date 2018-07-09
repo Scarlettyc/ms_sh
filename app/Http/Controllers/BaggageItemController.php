@@ -70,7 +70,9 @@ class BaggageItemController extends Controller
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
 
-			$equ_data=$BaggageUtil->getEquipedCode($characterDetail['w_bag_id']);
+			$equ_data[]=$BaggageUtil->getEquipedCode($characterDetail['w_bag_id']);
+			$equ_data[]=$BaggageUtil->getEquipedCode($characterDetail['m_bag_id']);
+			$equ_data[]=$BaggageUtil->getEquipedCode($characterDetail['core_bag_id']);
 			$result['ch_equ']=$equ_data;
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
