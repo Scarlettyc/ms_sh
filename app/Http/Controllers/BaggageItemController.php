@@ -60,6 +60,7 @@ class BaggageItemController extends Controller
 
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
+		$BaggageUtil=new BaggageUtil();
 		$result=[];
 		$weaponData=[];
 		$movementData=[];
@@ -68,11 +69,8 @@ class BaggageItemController extends Controller
 		$u_id=$data['u_id'];
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
-			$equ_data=DB::table('User_Baggage_Eq')
-					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-					->select('User_Baggage_Eq.user_beq_id as baggage_id,','User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
-					->where('User_Baggage_Eq.u_id',$u_id)
-					->get();
+
+			$equ_data=$BaggageUtil->getEquipedCode($characterDetail['w_bag_id']);
 			$result['ch_equ']=$equ_data;
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
