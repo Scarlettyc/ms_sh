@@ -135,6 +135,7 @@ class FriendController extends Controller
 					->where('User_friend_list.friend_status',1)
 					->orderby('User_Character.ch_ranking','DESC')
 					->orderBy('User_Character.ch_title', 'ASC')
+					->groupby('User_friend_list.friend_u_id')
 					->get();
 
 		$key='friend_request_'.$data['u_id'];
