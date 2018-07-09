@@ -163,6 +163,7 @@ class AccessController extends Controller
 					->select('User_Baggage_Eq.b_equ_rarity as item_rarity','Equipment_mst.equ_code','Equipment_mst.equ_lv')
 					->first();
 			$result['u_id']=$userfinal['u_id'];
+			$result['friend_id']=$userfinal['friend_id'];
 			$result['ch_img']=$charData['charData'];
 			$result['equ_code']=$equ_data->equ_code;
 			$result['item_rarity']=$equ_data->item_rarity;
