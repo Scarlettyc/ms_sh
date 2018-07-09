@@ -512,5 +512,6 @@ class BaggageUtil
 					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
 					->where('User_Baggage_Eq.user_beq_id',$w_bag_id)
 					->first();
+					return $equ_data;
  		}
 }
