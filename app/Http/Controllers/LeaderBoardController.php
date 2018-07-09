@@ -34,7 +34,6 @@ class LeaderBoardController extends Controller
         $leader['loseRounds']=0;
 
         $equ_data=$BaggageUtil->getEquipedCode($leader['w_bag_id']);
-        var_dump($equ_data);
         if($equ_data){
           $leader['item_rarity']=$equ_data->item_rarity;
           $leader['equ_code']=$equ_data->equ_code;
