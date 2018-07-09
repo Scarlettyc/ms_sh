@@ -387,7 +387,7 @@ class FriendController extends Controller
 		$characterModel=new CharacterModel();
 		$BaggageUtil=new BaggageUtil();
 		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
-		$equ_data=$BaggageUtil->getEquipedCode($friendCharacter['w_bag_id');
+		$equ_data=$BaggageUtil->getEquipedCode($friendCharacter['w_bag_id']);
 		$friendCharacter['item_rarity']=$equ_data->item_rarity;
 		$friendCharacter['equ_code']=$equ_data->equ_code;
 		$friendCharacter['equ_lv']=$equ_data->equ_lv;
