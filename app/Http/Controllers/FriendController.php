@@ -378,7 +378,13 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
-		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$friend['u_id'])->first();
+		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
+		$equ_data=DB::table('User_Baggage_Eq')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
+					->where('User_Baggage_Eq.user_beq_id',$friendCharacter['w_bag_id'])
+					->get();
+		$friendCharacter['b_equ_rarity']=$equ_data['b_equ_rarity'];
 		$friendCharacter['friend_id']=$data['friend_id'];
 		$result["friend_details"]=$friendCharacter;
 		$response=json_encode($result,TRUE);
