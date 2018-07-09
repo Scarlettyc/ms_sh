@@ -255,6 +255,9 @@ class BaggageItemController extends Controller
 			}else{
 				$result['upgrade']=0;
 			}
+			$result['equ_code']=$equData['equ_code'];
+			$result['item_rarity']=$equData['equ_rarity'];
+			$result['equ_lv']=$equData['equ_lv']+1;
 			$result['item_id']=$upgarde['equ_id'];
 			$result['baggage_id']=$upgarde['baggage_id'];
 			$response=json_encode($result,TRUE);
