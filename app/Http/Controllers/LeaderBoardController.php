@@ -32,7 +32,9 @@ class LeaderBoardController extends Controller
         $leader['friend_id']=$friend['friend_id'];
         $leader['winRounds']=0;
         $leader['loseRounds']=0;
+
         $equ_data=$BaggageUtil->getEquipedCode($leader['w_bag_id']);
+        var_dump($equ_data);
         $leader['item_rarity']=$equ_data->item_rarity;
         $leader['equ_code']=$equ_data->equ_code;
         $leader['equ_lv']=$equ_data->equ_lv;
