@@ -165,9 +165,9 @@ class AccessController extends Controller
 
 			$result['u_id']=$userfinal['u_id'];
 			$result['ch_img']=$charData['charData'];
-			$result['equ_id']=$equ_data['equ_id'];
-			$result['item_rarity']=$equ_data['item_rarity'];
-			$result['equ_lv']=$equ_data['equ_lv'];
+			$result['equ_id']=$equ_data->equ_id;
+			$result['item_rarity']=$equ_data->item_rarity;
+			$result['equ_lv']=$equ_data->equ_lv;
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
 			$result['fb_id']=$userfinal['fb_id'];
