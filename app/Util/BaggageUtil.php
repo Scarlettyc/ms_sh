@@ -78,6 +78,9 @@ class BaggageUtil
 				$arry['item_type']=2;
 				$arry['equ_type']=$equ_type;
 				$arry['item_rarity']=$obj['b_equ_rarity'];
+				$eq_data=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$arry['item_id'])->first();
+				$arry['equ_code']=$eq_data['equ_code'];
+				$arry['equ_lv']=$eq_data['equ_lv'];
 				if($arry['equ_type']==1){
 				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$obj['b_equ_rarity'])->first();
 				$arry['need_lv']=$standardData['value2'];
@@ -270,11 +273,18 @@ class BaggageUtil
 			$result['equ_name']=$equData['equ_name'];
 			$result['coin']=$equData['upgrade_coin'];
 			$result['equ_atr']['equ_id']=$equ_id;
+			$result['equ_atr']['equ_code']=$equData['equ_code'];
+			$result['equ_atr']['item_rarity']=$equData['equ_rarity'];
+			$result['equ_atr']['equ_lv']=$equData['equ_lv'];
+			
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
 			$result['equ_atr']['eff_ch_armor']=$equAtr['eff_ch_armor'];
 			$result['equ_atr']['eff_ch_crit_per']=$equAtr['eff_ch_crit_per'];
 			$result['up_equ']['equ_id']=$comEqData['equ_id'];
+			$result['up_equ']['equ_code']=$comEqData['equ_code'];
+			$result['up_equ']['item_rarity']=$comEqData['equ_rarity'];
+			$result['up_equ']['equ_lv']=$comEqData['equ_lv'];
 			$result['up_equ']['eff_ch_stam']=$comEquAtr['eff_ch_stam'];
 			$result['up_equ']['eff_ch_atk']=$comEquAtr['eff_ch_atk'];
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
