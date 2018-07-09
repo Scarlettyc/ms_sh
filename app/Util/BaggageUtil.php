@@ -23,6 +23,7 @@ use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
 use App\DefindMstModel;
+use DB;
 
 class BaggageUtil
 {
