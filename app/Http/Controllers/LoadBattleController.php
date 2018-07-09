@@ -58,9 +58,9 @@ class LoadBattleController extends Controller
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
- 	    	$userData=$this->getData($u_id,$match_id);
+ 	    	$userData=$this->getData($u_id,$match_id,$client_id);
             $userData['client_id']=$client_id;
- 	    	$enemyData=$this->getData($enemy_uid,$match_id);
+ 	    	$enemyData=$this->getData($enemy_uid,$match_id,$enemy_client);
             $enemyData['client_id']=$enemy_client;
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
@@ -72,7 +72,7 @@ class LoadBattleController extends Controller
 		// }
     }
 
-    private function getData($u_id,$match_id){
+    private function getData($u_id,$match_id,$client_id){
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
  	    $charaM=new CharacterModel();
@@ -101,6 +101,7 @@ class LoadBattleController extends Controller
         $user_def=($charData['ch_armor']*1.1)/(15*$charData['ch_lv']+$charData['ch_armor']+40);
         $redis_user->HSET($battle_status_key,'ch_def',(round($user_def,3)));
         $redis_user->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
+        $redis_user->HSET($battle_status_key,'client_id',$client_id);
         $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
         $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
         $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);

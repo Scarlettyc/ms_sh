@@ -41,6 +41,7 @@ class BattleController extends Controller
  			$x2=$data['x2'];
  			$y2=$data['y2'];
  			$u_id=$data['u_id'];
+ 			$frame_id=$data['frame_id'];
  			$direction=$data['direction'];
  			$status=$data['status'];//status of user in battle
  			$current=$this->getMillisecond();
@@ -277,7 +278,7 @@ class BattleController extends Controller
 				$charData['x2']=-($charData['x2']);
 				$charData['direction']=-($charData['direction']);
 			}	
-
+			$result['frame_id']=$frame_id;
 			//$charJson=json_encode($charData);
 			
 			// $this->removeUsedSkill($u_id);
@@ -287,7 +288,8 @@ class BattleController extends Controller
 
 
 			$response=json_encode($result,TRUE);
-			Log::info($response);
+			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
+			//Log::info($response);
 			return  $response;
 		}
 
@@ -541,14 +543,7 @@ class BattleController extends Controller
  	 	$req=$request->getContent();
 		$json=base64_decode($req);
 		$data=json_decode($json,TRUE);
-		$redis_battle_history=Redis::connection('battle');
-		// $current=$this->getMillisecond();
-		// $characterModel=new CharacterModel();
-		// $match_id=$data['match_id'];
-		// $u_id=$data['u_id'];
-		$battlekey='displacementm_1529568843ui100000074';
-		$skills=$redis_battle_history->HGETALL($battlekey);
-		var_dump($skills);
+
  	 }
 
 	 public function finalMatchResult ($data){
