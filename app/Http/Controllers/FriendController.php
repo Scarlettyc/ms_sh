@@ -383,7 +383,7 @@ class FriendController extends Controller
 					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
 					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','User_Baggage_Eq.b_equ_type  as equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
 					->where('User_Baggage_Eq.user_beq_id',$friendCharacter['w_bag_id'])
-					->get();
+					->first();
 		$friendCharacter['item_rarity']=$equ_data['item_rarity'];
 		$friendCharacter['equ_code']=$equ_data['equ_code'];
 		$friendCharacter['equ_lv']=$equ_data['equ_lv'];
