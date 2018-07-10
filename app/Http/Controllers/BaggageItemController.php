@@ -14,6 +14,7 @@ use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeReMstModel;
+use App\DefindMstModel;
 use App\Util\BaggageUtil;
 use App\Util\CharSkillEffUtil;
 use Exception;
@@ -196,13 +197,21 @@ class BaggageItemController extends Controller
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$MissionController=new MissionController();
+		$User_Baggage_Eq=new User_Baggage_Eq();
+		$defindMstModel=new DefindMstModel();
 
 		$u_id=$data['u_id'];
 		$scrollId=$data['item_id'];
 		$equ_type=$data['equ_type'];
 		$item_type=$data['item_type'];
 		$baggage_id=$data['baggage_id'];
-		
+
+			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
+			$countBaggage=$User_Baggage_Eq->where('u_id',$u_id)->count();
+			if($countBaggage>=$baggageLimit['value1']){
+				throw new Exception("baggage is full, please clear your baggage");
+				
+			}
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
 			if($scrollInfo['sc_rarity']==2){
