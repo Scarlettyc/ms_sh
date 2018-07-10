@@ -213,7 +213,7 @@ class BaggageItemController extends Controller
 				
 			}
 			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
-			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
+			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity','quantity')->where('sc_id',$scrollId)->first();
 			if($scrollInfo['sc_rarity']==2){
 				$MissionController->achieveMission(15,2,$u_id,1);
 			}else if($scrollInfo['sc_rarity']==3){
@@ -222,8 +222,8 @@ class BaggageItemController extends Controller
 			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
-				if($UserBaggageScrollModel['quantity']>1){
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$UserBaggageScrollModel['quantity']-1,'updated_at'=>$datetime]);
+				if($scrollInfo['quantity']>1){
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$scrollInfo['quantity']-1,'updated_at'=>$datetime]);
 				}
 				else{
 				$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
