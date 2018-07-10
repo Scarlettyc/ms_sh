@@ -73,9 +73,17 @@ class BaggageUtil
 				$result=[];
 			$defindMstModel=new DefindMstModel();
 			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
+			if($equ_type==1){
+				$eqLimit=$baggageLimit['value1'];
+		
+			}
+			else {
+				$eqLimit=$baggageLimit['value2'];
+			}
 			$baggageWeapon=$UserBaggageEqModel
 				->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-				->select('User_Baggage_Eq.user_beq_id','User_Baggage_Eq.b_equ_id','User_Baggage_Eq.b_icon_path','User_Baggage_Eq.b_equ_rarity')->where('u_id','=',$u_id)->where('User_Baggage_Eq.status','=',$status)->where('User_Baggage_Eq.b_equ_type','=',$equ_type)->orderBy('Equipment_mst.equ_rarity','DESC')->orderBy('equ_lv','DESC')->orderBy('Equipment_mst.equ_group')->orderBy('User_Baggage_Eq.b_equ_id')->limit($baggageLimit['value1'])->get();
+				->select('User_Baggage_Eq.user_beq_id','User_Baggage_Eq.b_equ_id','User_Baggage_Eq.b_icon_path','User_Baggage_Eq.b_equ_rarity')->where('u_id','=',$u_id)->where('User_Baggage_Eq.status','=',$status)->where('User_Baggage_Eq.b_equ_type','=',$equ_type)->orderBy('Equipment_mst.equ_rarity','DESC')->orderBy('equ_lv','DESC')->orderBy('Equipment_mst.equ_group')->orderBy('User_Baggage_Eq.b_equ_id')->limit($eqLimit)->get();
+				
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
