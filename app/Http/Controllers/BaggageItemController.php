@@ -212,7 +212,7 @@ class BaggageItemController extends Controller
 				throw new Exception("baggage is full, please clear your baggage");
 				
 			}
-			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
+			// $UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity','quantity')->where('sc_id',$scrollId)->first();
 			if($scrollInfo['sc_rarity']==2){
 				$MissionController->achieveMission(15,2,$u_id,1);
