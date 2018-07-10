@@ -73,7 +73,7 @@ class BaggageItemController extends Controller
 			// $equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id','b_equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
 			$equ_data=DB::table('User_Baggage_Eq')
 					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-					->select('User_Baggage_Eq.b_equ_id as item_id','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv','User_Baggage_Eq.baggage_id')
+					->select('User_Baggage_Eq.b_equ_id as item_id','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv','User_Baggage_Eq.user_beq_id as baggage_id')
 					->where('User_Baggage_Eq.status',1)
 					->where('User_Baggage_Eq.u_id',$u_id)
 					->get();
