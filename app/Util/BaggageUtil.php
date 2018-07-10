@@ -83,7 +83,7 @@ class BaggageUtil
 			$baggageWeapon=$UserBaggageEqModel
 				->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
 				->select('User_Baggage_Eq.user_beq_id','User_Baggage_Eq.b_equ_id','User_Baggage_Eq.b_icon_path','User_Baggage_Eq.b_equ_rarity')->where('u_id','=',$u_id)->where('User_Baggage_Eq.status','=',$status)->where('User_Baggage_Eq.b_equ_type','=',$equ_type)->orderBy('Equipment_mst.equ_rarity','DESC')->orderBy('equ_lv','DESC')->orderBy('Equipment_mst.equ_group')->orderBy('User_Baggage_Eq.b_equ_id')->limit($eqLimit)->get();
-				
+
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
@@ -161,13 +161,13 @@ class BaggageUtil
 			$result=[];
 			$scrollMstModel=new ScrollMstModel();
 
-			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
+			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon','quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
 
 			foreach ($baggageScroll as $obj) 
 			{	$arry['baggage_id']=$obj['user_bsc_id'];
 				$arry['item_id']=$obj['bsc_id'];
 				$arry['item_type']=3;
-				$arry['item_quantity']=1;
+				$arry['item_quantity']=$obj['quantity'];
 				$arry['equ_type']=0;
 				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['bsc_id'])->first();
 				$arry['sc_img_path']=$scrollMst['sc_img_path'];
@@ -178,9 +178,7 @@ class BaggageUtil
 
 	function getScrollInfo ($Item_Id,$u_id,$user_bsc_id)
 	{
-		$ScrollId=$Item_Id;
-		$u_id=$u_id;
-
+			$ScrollId=$Item_Id;
 			$UserModel=new UserModel();
 			$ScrollMstModel=new ScrollMstModel();
 			$EquipmentMstModel=new EquipmentMstModel();
@@ -384,7 +382,7 @@ class BaggageUtil
 				
 			}
 			else if($reward['item_type']==2){
-				for ($i=0;$i<$reward['item_quantity'];$i++) {
+		
 					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
@@ -392,11 +390,11 @@ class BaggageUtil
 					$result['b_icon_path']=$eqData['icon_path'];
 					$result['b_equ_rarity']=$eqData['equ_rarity'];
 					$result['b_equ_type']=$eqData['equ_type'];
+					$result['quantity']=$reward['item_quantity'];
 					$result['status']=0;
 					$result['updated_at']=$datetime;
 					$result['created_at']=$datetime;
 					$UserBaggageEqModel->insert($result);
-				}
 			}
 			else if($reward['item_type']==3){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
