@@ -222,7 +222,12 @@ class BaggageItemController extends Controller
 			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
+				if($UserBaggageScrollModel['quantity']>1){
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$UserBaggageScrollModel['quantity']-1,'updated_at'=>$datetime]);
+				}
+				else{
 				$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+				}
 
 				$response='Successfully Meraged';
 				return base64_encode($response);
