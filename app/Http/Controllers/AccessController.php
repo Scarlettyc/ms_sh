@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Redis;
 use Carbon\Carbon;
 use App\Http\Controllers\MissionController;
 use App\BattleRewardExpModel;
+use App\Util\BaggageUtil;
 use DB;
 use Log;
 use DateTime;
@@ -158,16 +159,9 @@ class AccessController extends Controller
 			
 			$userfinal=$usermodel->where('u_id',$userData['u_id'])->first();
 			$charData=$characterModel->select('ch_img','w_bag_id')->where('u_id',$userData['u_id'])->first();
-			$equ_data=DB::table('User_Baggage_Eq')
-					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-					->select('User_Baggage_Eq.b_equ_rarity as item_rarity','Equipment_mst.equ_code','Equipment_mst.equ_lv')
-					->first();
 			$result['u_id']=$userfinal['u_id'];
 			$result['friend_id']=$userfinal['friend_id'];
 			$result['ch_img']=$charData['charData'];
-			$result['equ_code']=$equ_data->equ_code;
-			$result['item_rarity']=$equ_data->item_rarity;
-			$result['equ_lv']=$equ_data->equ_lv;
 			$result['access_token']=$token;
 			$result['email']=$userfinal['email'];
 			$result['fb_id']=$userfinal['fb_id'];
@@ -193,13 +187,19 @@ class AccessController extends Controller
 		$data=json_decode($json,TRUE);
 		$userModel=new UserModel();
 		$charModel=new CharacterModel();
+		$BaggageUtil=new BaggageUtil();
 		$u_id=$data['u_id'];
-		$userMoney=$userModel->select('u_id','u_coin','u_gem','profile_img')->where('u_id',$u_id)->first();
+		$userMoney=$userModel->select('u_id','u_coin','u_gem')->where('u_id',$u_id)->first();
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
+
+		$equ_data=$BaggageUtil->getEquipedCode($equ_data['w_bag_id']);
+		$result['equ_code']=$equ_data['equ_code'];
+		$result['item_rarity']=$equ_data['item_rarity'];
+		$result['equ_lv']=$equ_data['equ_lv'];
+		
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
 		$result['u_gem']=$userMoney['u_gem'];
-		$result['profile_img']=$userMoney['profile_img'];
 		$result['ch_img']=strval($userDetails['ch_img']);
 		$result['ch_title']=$userDetails['ch_title'];
 		$result['ch_lv']=$userDetails['ch_lv'];
