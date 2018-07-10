@@ -72,7 +72,8 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 				$result=[];
 			$defindMstModel=new DefindMstModel();
-			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path','b_equ_rarity')->where('u_id','=',$u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
+			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
+			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path','b_equ_rarity')->where('u_id','=',$u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->orderBy('equ_group')->limit($baggageLimit['value1'])->get();
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
