@@ -190,13 +190,13 @@ class AccessController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$u_id=$data['u_id'];
 		$userMoney=$userModel->select('u_id','u_coin','u_gem')->where('u_id',$u_id)->first();
-		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking')->where('u_id',$u_id)->first();
+		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking','w_bag_id')->where('u_id',$u_id)->first();
 
-		$equ_data=$BaggageUtil->getEquipedCode($equ_data['w_bag_id']);
+		$equ_data=$BaggageUtil->getEquipedCode($userDetails['w_bag_id']);
 		$result['equ_code']=$equ_data['equ_code'];
 		$result['item_rarity']=$equ_data['item_rarity'];
 		$result['equ_lv']=$equ_data['equ_lv'];
-		
+
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
 		$result['u_gem']=$userMoney['u_gem'];
