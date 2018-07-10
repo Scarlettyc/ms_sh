@@ -197,7 +197,7 @@ class BaggageItemController extends Controller
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$MissionController=new MissionController();
-		$User_Baggage_Eq=new User_Baggage_Eq();
+		$UserBaggageEqModel=new UserBaggageEqModel();
 		$defindMstModel=new DefindMstModel();
 
 		$u_id=$data['u_id'];
@@ -207,7 +207,7 @@ class BaggageItemController extends Controller
 		$baggage_id=$data['baggage_id'];
 
 			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
-			$countBaggage=$User_Baggage_Eq->where('u_id',$u_id)->count();
+			$countBaggage=$UserBaggageEqModel->where('u_id',$u_id)->where('b_equ_type',1)count();
 			if($countBaggage>=$baggageLimit['value1']){
 				throw new Exception("baggage is full, please clear your baggage");
 				
