@@ -196,7 +196,6 @@ class AccessController extends Controller
 		$result['equ_code']=$equ_data->equ_code;
 		$result['item_rarity']=$equ_data->item_rarity;
 		$result['equ_lv']=$equ_data->equ_lv;
-
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
 		$result['u_gem']=$userMoney['u_gem'];
