@@ -193,9 +193,9 @@ class AccessController extends Controller
 		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking','w_bag_id')->where('u_id',$u_id)->first();
 
 		$equ_data=$BaggageUtil->getEquipedCode($userDetails['w_bag_id']);
-		$result['equ_code']=$equ_data['equ_code'];
-		$result['item_rarity']=$equ_data['item_rarity'];
-		$result['equ_lv']=$equ_data['equ_lv'];
+		$result['equ_code']=$equ_data->equ_code;
+		$result['item_rarity']=$equ_data->item_rarity;
+		$result['equ_lv']=$equ_data->equ_lv;
 
 		$result['u_id']=$userMoney['u_id'];
 		$result['u_coin']=$userMoney['u_coin'];
