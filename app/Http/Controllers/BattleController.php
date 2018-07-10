@@ -61,6 +61,11 @@ class BattleController extends Controller
  			$battle_status_key='battle'.$u_id;
  			$end=0;
  			$enemy_clientId=$redis_battle_history->HGET($matchKey,'enmey_client');
+ 			$count=$redis_user->HLEN('battle_history'.$match_id);
+ 			if($count!=$frame_id-1){
+ 				throw new Exception("there have error of frame_id");	
+ 			}
+ 			//$redis_user->HGET('battle_history'.$match_id,$count);
  			// $this->removeUsedSkill($u_id);
  			$redis_user->HSET($battle_status_key,'x',$x);
 			$redis_user->HSET($battle_status_key,'x2',$x2);
