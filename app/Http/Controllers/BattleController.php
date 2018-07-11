@@ -100,7 +100,6 @@ class BattleController extends Controller
 			$displacement_key='displacement'.$match_id.$u_id;
 			
 			$multi_interval_key='multi_interval'.$u_id;
-			$charData['count']=$count+1;
 			if(isset($data['skill_id'])){
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				// $checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
@@ -254,19 +253,21 @@ class BattleController extends Controller
 			// $charData['debuffs']=$attackhitutil->mapingBuffs($u_id,$match_id,2);
 			// $enemyData['buffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,1);
 			// $enemyData['debuffs']=$attackhitutil->mapingBuffs($enemy_uid,$match_id,2);
-			$result['user_data']=$charData;
-			$result['enemy_data']=$enemyData;
+			
 
 			 if(isset($enemyData['ch_hp_max'])&&$enemyData['ch_hp_max']<=0){
-				$result['end']=2;
+				$charData['end']=2;
+				$enemyData['end']=1;
 				$win=1;
 				$redis_battle_history->HSET($matchKey,'status',0);
 				$key_list='battle'.$u_id.$dmy;
 				$redis_user->HSET($key_list,'end',2);
+
 				// $this->BattleRewards($u_id,$map_id,$win,$match_id,$charData['ch_lv']);
 			}
 			else if(isset($charData['ch_hp_max'])&&$charData['ch_hp_max']<=0){
-				$result['end']=1;
+				$charData['end']=1;
+				$enemyData['end']=2;
 				$win=0;
 				$key_list='battle'.$u_id.$dmy;
 				$redis_battle_history->HSET($matchKey,'status',0);
@@ -274,8 +275,11 @@ class BattleController extends Controller
 				//$this->BattleRewards($u_id,$map_id,$match_id,$win,$charData['ch_lv'],$charData['ch_ranking']);
 			}
 			else {
-				$result['end']=0;
-			}
+				$charData['end']=0;
+				$enemyData['end']=0;
+			}	
+			$result['battle_data'][]=$charData;
+			$result['battle_data'][]=$enemyData;
 
 			//$charData['end']=$result['end'];
 			// $result['end']=$ ;
