@@ -35,13 +35,16 @@ class BattleController extends Controller
 	public function battleNew($data,$clientInfo){
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
+		$redis_battle_history=Redis::connection('battle');
+ 		$redis_user=Redis::connection('battle_user');
 		if(isset($data['u_id'])){
  			$x=$data['x'];
  			$y=$data['y'];
  			$x2=$data['x2'];
  			$y2=$data['y2'];
  			$u_id=$data['u_id'];
- 			$frame_id=$data['frame_id'];
+
+ 			
  			// $frame_id=0;
  			$direction=$data['direction'];
  			$status=$data['status'];//status of user in battle
@@ -49,8 +52,7 @@ class BattleController extends Controller
  			$characterModel=new CharacterModel();
  			$skillModel=new SkillMstModel();
  			$attackhitutil=new AttackHitUtil();
- 			$redis_battle_history=Redis::connection('battle');
- 			$redis_user=Redis::connection('battle_user');
+
  			$matchKey='battle_status'.$u_id.$dmy;
  			$enemy_uid=$redis_battle_history->HGET($matchKey,'enemy_uid');
 			$match_id=$redis_battle_history->HGET($matchKey,'match_id');
@@ -61,11 +63,27 @@ class BattleController extends Controller
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
  			$end=0;
+ 			if(isset($data['frame_id'])){
+ 				$frame_id=$data['frame_id'];
+ 			}
+ 			else{
+ 				$u_list='battle_users';
+ 				$existUser=$redis_user->HEXISTS($u_list,$u_id);
+ 				$existEnemy=$redis_user->HEXISTS($u_list,$enemy_uid);
+ 				if($existUser&&$existEnemy){
+ 					$frame_id=1;
+ 				}
+ 				else {
+ 					$end=1;
+ 				}
+
+ 			}
  			$enemy_clientId=$redis_battle_history->HGET($matchKey,'enmey_client');
  			$count=$redis_user->HLEN('battle_history'.$match_id);
- 			// if($count!=$frame_id-1){
- 			// 	throw new Exception("there have error of frame_id");	
- 			// }
+
+ 			if($count!=$frame_id-1){
+ 				throw new Exception("there have error of frame_id");	
+ 			}
  			//$redis_user->HGET('battle_history'.$match_id,$count);
  			// $this->removeUsedSkill($u_id);
  			$redis_user->HSET($battle_status_key,'x',$x);
