@@ -62,7 +62,7 @@ class BattleController extends Controller
  			$battle_status_key='battle'.$u_id;
  			$end=0;
  			$enemy_clientId=$redis_battle_history->HGET($matchKey,'enmey_client');
- 			// $count=$redis_user->HLEN('battle_history'.$match_id);
+ 			$count=$redis_user->HLEN('battle_history'.$match_id);
  			// if($count!=$frame_id-1){
  			// 	throw new Exception("there have error of frame_id");	
  			// }
@@ -100,7 +100,7 @@ class BattleController extends Controller
 			$displacement_key='displacement'.$match_id.$u_id;
 			
 			$multi_interval_key='multi_interval'.$u_id;
-			$charData['count']=$charData['count']+1;
+			$charData['count']=$count+1;
 			if(isset($data['skill_id'])){
 				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
 				// $checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
