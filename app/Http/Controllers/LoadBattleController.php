@@ -190,6 +190,6 @@ class LoadBattleController extends Controller
         $match_id=$data['match_id'];
         $redis_user=Redis::connection('battle_user');
         $lostFrame=$redis_user->HGET('battle_history'.$match_id,$frame_id);
-        return $lostFrame;
+        return  base64_encode($lostFrame);
     }
 }
