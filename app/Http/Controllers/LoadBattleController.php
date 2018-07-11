@@ -154,7 +154,6 @@ class LoadBattleController extends Controller
         $json=base64_decode($req);
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
-        $data=json_decode($json,TRUE);
         $mapTrapUtil=new MapTrapUtil();
         $data=json_decode($json,TRUE);
         $redisLoad= Redis::connection('default');
@@ -179,5 +178,18 @@ class LoadBattleController extends Controller
         $result=[];
         $effs= $attackHitUtil->getEffValueBytype($skill['skill_id']);
         return $effs;
+    }
+
+    public function getLostFrame(Request $request){
+        $req=$request->getContent();
+        $json=base64_decode($req);
+        $now   = new DateTime;
+        $data=json_decode($json,TRUE);
+        $u_id=$data['u_id'];
+        $frame_id=$data['frame_id'];
+        $match_id=$data['match_id'];
+        $redis_user=Redis::connection('battle_user');
+        $lostFrame=$redis_user->HGET('battle_history'.$match_id,$frame_id);
+        return $lostFrame;
     }
 }
