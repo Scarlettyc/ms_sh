@@ -226,7 +226,7 @@ class BaggageItemController extends Controller
 					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 				}
 				else{
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'updated_at'=>$datetime]);
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
 				}
 				
 				$response='Successfully Meraged';
