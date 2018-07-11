@@ -41,7 +41,8 @@ class BattleController extends Controller
  			$x2=$data['x2'];
  			$y2=$data['y2'];
  			$u_id=$data['u_id'];
- 			$frame_id=$data['frame_id'];
+ 			// $frame_id=$data['frame_id'];
+ 			$frame_id=0;
  			$direction=$data['direction'];
  			$status=$data['status'];//status of user in battle
  			$current=$this->getMillisecond();
