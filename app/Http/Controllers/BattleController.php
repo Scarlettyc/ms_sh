@@ -119,30 +119,30 @@ class BattleController extends Controller
 			$displacement_key='displacement'.$match_id.$u_id;
 			
 			$multi_interval_key='multi_interval'.$u_id;
-			if(isset($data['skill_id'])){
-				$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
-				// $checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
-				// if($checkCD>0){
-				// 	$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
-					// if($possbileSkill){
-						$charData['skill_id']=$data['skill_id'];
-						$charData['skill_group']=$skill['skill_group'];
-						$charData['skill_damage']=$skill['skill_damage'];
-						$charData['skill_prepare_time']=$skill['skill_prepare_time'];
-						$charData['skill_atk_time']=$skill['skill_atk_time'];
-						$charData['occur_time']=$current;
-						$charData['start_x']=$x;
-						$charData['start_y']=$y;
-						$charData['start_direction']=$data['direction'];
-						$redis_user->HSET($battle_status_key,'skill_id',$data['skill_id']);
-						$redis_user->HSET($battle_status_key,'skill_group',$skill['skill_group']);
-						$redis_user->HSET($battle_status_key,'skill_damage',$skill['skill_damage']);
-						$redis_user->HSET($battle_status_key,'skill_prepare_time',$skill['skill_prepare_time']);
-						$redis_user->HSET($battle_status_key,'skill_atk_time',$skill['skill_atk_time']);
-						$redis_user->HSET($battle_status_key,'occur_time',$current);
-						$redis_user->HSET($battle_status_key,'start_x',$x);
-						$redis_user->HSET($battle_status_key,'start_y',$y);
-						$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
+			// if(isset($data['skill_id'])){
+			// 	$skill=$skillModel->select('skill_id','skill_group','skill_cd','skill_damage','skill_name','skill_prepare_time','skill_atk_time')->where('skill_id',$data['skill_id'])->first();
+			// 	// $checkCD=$this->checkSkillCD($skill,$match_id,$u_id);
+			// 	// if($checkCD>0){
+			// 	// 	$possbileSkill=$this->checkNormalSkill($skill['skill_group'],$skill['skill_name'],$skill['skill_prepare_time'],$skill['skill_atk_time']);
+			// 		// if($possbileSkill){
+			// 			$charData['skill_id']=$data['skill_id'];
+			// 			$charData['skill_group']=$skill['skill_group'];
+			// 			$charData['skill_damage']=$skill['skill_damage'];
+			// 			$charData['skill_prepare_time']=$skill['skill_prepare_time'];
+			// 			$charData['skill_atk_time']=$skill['skill_atk_time'];
+			// 			$charData['occur_time']=$current;
+			// 			$charData['start_x']=$x;
+			// 			$charData['start_y']=$y;
+			// 			$charData['start_direction']=$data['direction'];
+			// 			$redis_user->HSET($battle_status_key,'skill_id',$data['skill_id']);
+			// 			$redis_user->HSET($battle_status_key,'skill_group',$skill['skill_group']);
+			// 			$redis_user->HSET($battle_status_key,'skill_damage',$skill['skill_damage']);
+			// 			$redis_user->HSET($battle_status_key,'skill_prepare_time',$skill['skill_prepare_time']);
+			// 			$redis_user->HSET($battle_status_key,'skill_atk_time',$skill['skill_atk_time']);
+			// 			$redis_user->HSET($battle_status_key,'occur_time',$current);
+			// 			$redis_user->HSET($battle_status_key,'start_x',$x);
+			// 			$redis_user->HSET($battle_status_key,'start_y',$y);
+			// 			$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 
 					// 	if($skill['skill_damage']==0){
 					// 		$buff_key='buff_skill'.$skill['skill_id'].'_'.$u_id;
@@ -233,7 +233,7 @@ class BattleController extends Controller
 				// 	// //Log::info($charData);
 				// 	// }
 				// }
-				$this->removeUsedSkill($enemy_uid);
+				// $this->removeUsedSkill($enemy_uid);
 			// }
 			// if(isset($flytools)){
 			// 		//Log::info($flytools);
@@ -318,7 +318,7 @@ class BattleController extends Controller
 
 			$response=json_encode($result,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
-			//Log::info($response);
+			Log::info($response);
 			return  $response;
 		}
 

@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use swoole_websocket_server;
 use swoole_server;
 use App\Http\Controllers\FriendController  
+use Log;
 
 class ChatWebsocket extends Command
 {

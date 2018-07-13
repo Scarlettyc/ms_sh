@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         // Commands\Inspire::class,
   \App\Console\Commands\SwooleCommand::class,
 \App\Console\Commands\NotifyCommand::class,
-\App\Console\Commands\BattleBackgroundCommand::class
+\App\Console\Commands\BattleBackgroundCommand::class,
+\App\Console\Commands\ChatWebsocket::class,
     ];
 
     /**
