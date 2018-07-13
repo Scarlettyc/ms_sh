@@ -144,56 +144,56 @@ class BattleController extends Controller
 			// 			$redis_user->HSET($battle_status_key,'start_y',$y);
 			// 			$redis_user->HSET($battle_status_key,'start_direction',$data['direction']);
 
-					// 	if($skill['skill_damage']==0){
-					// 		$buff_key='buff_skill'.$skill['skill_id'].'_'.$u_id;
-					// 		if($skill['skill_id']==76 ||$skill['skill_id']==76 ){
-					// 			$haveSkill=$redis_user->HEXISTS($buff_key,$skill['skill_id']);
-					// 			if($haveSkill==0){
-					// 				$haveSkill=$redis_user->HSET($buff_key,'skill_id',$skill['skill_id']);
-					// 			}
-					// 			else{
-					// 				$redis_user->HDEL($buff_key,'time',9999);
-					// 			}
-					// 		}
-					// 		else{
-					// 			$attackhitutil->addBuff($skill['skill_id'],$u_id,$current,$match_id);
-					// 		}
-					// 	}
-					// 	else if($skill['skill_damage']==5){	
-					// 		$attackhitutil->checkStrike($u_id,$skill['skill_id'],$current);
+			// 		// 	if($skill['skill_damage']==0){
+			// 		// 		$buff_key='buff_skill'.$skill['skill_id'].'_'.$u_id;
+			// 		// 		if($skill['skill_id']==76 ||$skill['skill_id']==76 ){
+			// 		// 			$haveSkill=$redis_user->HEXISTS($buff_key,$skill['skill_id']);
+			// 		// 			if($haveSkill==0){
+			// 		// 				$haveSkill=$redis_user->HSET($buff_key,'skill_id',$skill['skill_id']);
+			// 		// 			}
+			// 		// 			else{
+			// 		// 				$redis_user->HDEL($buff_key,'time',9999);
+			// 		// 			}
+			// 		// 		}
+			// 		// 		else{
+			// 		// 			$attackhitutil->addBuff($skill['skill_id'],$u_id,$current,$match_id);
+			// 		// 		}
+			// 		// 	}
+			// 		// 	else if($skill['skill_damage']==5){	
+			// 		// 		$attackhitutil->checkStrike($u_id,$skill['skill_id'],$current);
 
-					// 	}
-						// else if($skill['skill_damage']==2){
-						// 	$flytools['skill_id']=$skill['skill_id'];
-						// 	$flytools['skill_damage']=$skill['skill_damage'];
-						// 	$flytools['skill_group']=$skill['skill_group'];
-						// 	$flytools['occur_time']=$current;
-						// 	$flytools['x']=$x;
-						// 	$flytools['y']=$y;
-						// 	$flytools['direction']=$data['direction'];
+			// 		// 	}
+			// 			// else if($skill['skill_damage']==2){
+			// 			// 	$flytools['skill_id']=$skill['skill_id'];
+			// 			// 	$flytools['skill_damage']=$skill['skill_damage'];
+			// 			// 	$flytools['skill_group']=$skill['skill_group'];
+			// 			// 	$flytools['occur_time']=$current;
+			// 			// 	$flytools['x']=$x;
+			// 			// 	$flytools['y']=$y;
+			// 			// 	$flytools['direction']=$data['direction'];
 
-						// 	$key_list='battle'.$u_id.$dmy;
-						// 	$flySkillJson=json_encode($flytools);
-						// 	$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
-						// 	$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
+			// 			// 	$key_list='battle'.$u_id.$dmy;
+			// 			// 	$flySkillJson=json_encode($flytools);
+			// 			// 	$redis_battle_history->HSET($fly_tools_key,$skill['skill_id'],$flySkillJson);
+			// 			// 	$redis_user->HSET($key_list,'fly_tools',$fly_tools_key);
 
-						// }
-						// if($skill['skill_damage']==6){
-						// 	$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
-						// 	$redis_battle_history->HSET($displacement_key,'occur_time',$current);
-						// 	$redis_battle_history->HSET($displacement_key,'x',$x);
-						// 	$redis_battle_history->HSET($displacement_key,'y',$y);
-						// 	$redis_battle_history->HSET($displacement_key,'skill_group',$skill['skill_group']);
-						// 	$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
-						// 	$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
-						// }
-					 //    else if($skill['skill_damage']==3||$skill['skill_damage']==4){
-						// 	if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
-						// 		$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage'],$match_id,$u_id);
-						// 	}
-						// }
-					// }
-				}
+			// 			// }
+			// 			// if($skill['skill_damage']==6){
+			// 			// 	$redis_battle_history->HSET($displacement_key,'skill_id',$skill['skill_id']);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'occur_time',$current);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'x',$x);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'y',$y);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'skill_group',$skill['skill_group']);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'skill_damage',$skill['skill_damage']);
+			// 			// 	$redis_battle_history->HSET($displacement_key,'direction',$data['direction']);
+			// 			// }
+			// 		 //    else if($skill['skill_damage']==3||$skill['skill_damage']==4){
+			// 			// 	if(!in_array($skill['skill_id'], [38,39,40,41,42,43,67,68,69,70,71,72])){
+			// 			// 		$attackhitutil->checkInterval($skill['skill_id'],$x,$y,$data['direction'],$current,$skill['skill_group'],$skill['skill_damage'],$match_id,$u_id);
+			// 			// 	}
+			// 			// }
+			// 		// }
+			// 	}
 			// }
 			$enemyData=$this->mapingData($match_id,$enemy_uid,2);	
 			if(isset($enemyData['x'])&&isset($charData['x'])&&isset($enemyData['direction'])){
@@ -233,7 +233,7 @@ class BattleController extends Controller
 				// 	// //Log::info($charData);
 				// 	// }
 				// }
-				// $this->removeUsedSkill($enemy_uid);
+				$this->removeUsedSkill($enemy_uid);
 			// }
 			// if(isset($flytools)){
 			// 		//Log::info($flytools);
