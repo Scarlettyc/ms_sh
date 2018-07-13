@@ -297,8 +297,8 @@ class BattleController extends Controller
 				$charData['end']=0;
 				$enemyData['end']=0;
 			}	
-			$result['battle_data'][]=$charData;
-			$result['battle_data'][]=$enemyData;
+			$final['battle_data'][]=$charData;
+			$final['battle_data'][]=$enemyData;
 
 			//$charData['end']=$result['end'];
 			// $result['end']=$ ;
@@ -307,7 +307,7 @@ class BattleController extends Controller
 				$charData['x2']=-($charData['x2']);
 				$charData['direction']=-($charData['direction']);
 			}	
-			$result['frame_id']=$frame_id;
+			$final['frame_id']=$frame_id;
 			//$charJson=json_encode($charData);
 			
 			// $this->removeUsedSkill($u_id);
@@ -316,7 +316,7 @@ class BattleController extends Controller
 			//$redis_battle_history->LPUSH($battlekey,$charJson);
 
 
-			$response=json_encode($result,TRUE);
+			$response=json_encode($final,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 			Log::info($response);
 			return  $response;
