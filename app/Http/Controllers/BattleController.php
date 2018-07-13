@@ -32,17 +32,18 @@ use Log;
 class BattleController extends Controller
 {
 /*2018.04.19 edition*/
-	public function battleNew($data,$clientInfo){
+	public function battleNew($result,$clientInfo){
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$redis_battle_history=Redis::connection('battle');
  		$redis_user=Redis::connection('battle_user');
+ 		$data=$result['playerData'];
 		if(isset($data['u_id'])){
  			$x=$data['x'];
  			$y=$data['y'];
  			$x2=$data['x2'];
  			$y2=$data['y2'];
- 			$u_id=$data['u_id'];
+ 			$u_id=$result['u_id'];
 
  			
  			// $frame_id=0;
@@ -63,8 +64,8 @@ class BattleController extends Controller
  			$battlekey='battle_data'.$match_id.'_'.$u_id;
  			$battle_status_key='battle'.$u_id;
  			$end=0;
- 			if(isset($data['frame_id'])){
- 				$frame_id=$data['frame_id'];
+ 			if(isset($result['frame_id'])){
+ 				$frame_id=$result['frame_id'];
  			}
  			else{
  				$u_list='battle_users';
