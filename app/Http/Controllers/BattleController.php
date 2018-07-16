@@ -328,6 +328,7 @@ class BattleController extends Controller
  		$redis_user=Redis::connection('battle_user');
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
+		$u_id=$result['u_id'];
 		$battleKey='battle_status'.$u_id.$dmy;
  	   	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	   	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
