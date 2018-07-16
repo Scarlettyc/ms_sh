@@ -318,7 +318,6 @@ class BattleController extends Controller
 
 			$response=json_encode($final,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
-			Log::info($response);
 			return  $response;
 		}
 

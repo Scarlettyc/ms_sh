@@ -45,10 +45,10 @@ class LoadBattleController extends Controller
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
             $client_id=$redis_battle->HGET($battleKey,'client');
 
-            $key_list='battle'.$u_id.$dmy;
-            $key_count=$redis_user->HLEN($key_list);
-            $redis_user->HSET($key_list,'match_id',$matchID);
-            $redis_user->HSET($key_list,'battle_status',$battleKey);
+            // $key_list='battle'.$u_id.$dmy;
+            // $key_count=$redis_user->HLEN($key_list);
+            // $redis_user->HSET($key_list,'match_id',$matchID);
+            // $redis_user->HSET($key_list,'battle_status',$battleKey);
             $enemy_battle_key='battle_status'.$enemy_uid.$dmy;
             $enemy_client=$redis_battle->HGET($enemy_battle_key,'client');
 
@@ -82,7 +82,7 @@ class LoadBattleController extends Controller
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
-        $battle_status_key='battle'.$u_id;
+        // $battle_status_key='battle'.$u_id;
         // $exist=$redis_user->EXISTS($battle_status_key);
         // if($exist==1){
         //     $redis_user->DEL($battle_status_key);
@@ -99,27 +99,27 @@ class LoadBattleController extends Controller
  	    $movement_id=$charData['m_id'];
  	    $core_id=$charData['core_id'];
         $user_def=($charData['ch_armor']*1.1)/(15*$charData['ch_lv']+$charData['ch_armor']+40);
-        $redis_user->HSET($battle_status_key,'ch_def',(round($user_def,3)));
-        $redis_user->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
-        $redis_user->HSET($battle_status_key,'client_id',$client_id);
-        $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
-        $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
-        $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
-        $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
-        $redis_user->HSET($battle_status_key,'x',-1000);
-        $redis_user->HSET($battle_status_key,'x2',-1000);
-        $redis_user->HSET($battle_status_key,'y',-290);
-        $redis_user->HSET($battle_status_key,'y2',-290);
-        $redis_user->HSET($battle_status_key,'status',1);
-        $redis_user->HSET($battle_status_key,'direction',1);
+        // $redis_user->HSET($battle_status_key,'ch_def',(round($user_def,3)));
+        // $redis_user->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
+        // $redis_user->HSET($battle_status_key,'client_id',$client_id);
+        // $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
+        // $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
+        // $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
+        // $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
+        // $redis_user->HSET($battle_status_key,'x',-1000);
+        // $redis_user->HSET($battle_status_key,'x2',-1000);
+        // $redis_user->HSET($battle_status_key,'y',-290);
+        // $redis_user->HSET($battle_status_key,'y2',-290);
+        // $redis_user->HSET($battle_status_key,'status',1);
+        // $redis_user->HSET($battle_status_key,'direction',1);
  	    $eqData=$eqModel->select('equ_group','equ_code','equ_rarity as item_rarity','equ_lv')->where('equ_id',$weapon_id)->first();
         $charRe['equ_code']=$eqData['equ_code'];
         $charRe['item_rarity']=$eqData['item_rarity'];
         $charRe['equ_lv']=$eqData['equ_lv'];
-        $key_list='battle'.$u_id.$dmy;
-        $redis_user->HSET($key_list,'user_status',$battle_status_key);
-        $u_list='battle_users';
-        $redis_user->HSET($u_list,$u_id,time());
+        // $key_list='battle'.$u_id.$dmy;
+        // $redis_user->HSET($key_list,'user_status',$battle_status_key);
+        // $u_list='battle_users';
+        // $redis_user->HSET($u_list,$u_id,time());
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];

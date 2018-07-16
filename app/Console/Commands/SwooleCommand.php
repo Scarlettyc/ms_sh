@@ -116,7 +116,7 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if($result){
+             if($result||$result!=null){
                 Log::info('get udp result'.$result);
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
 
