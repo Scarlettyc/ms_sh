@@ -98,7 +98,18 @@ class SwooleCommand extends Command
 
 //         echo "Result: {$data}n";
 
-// }
+// }  $serv->start(); 
+
+        $serv->start(); 
+        
+        $serv->tick(600, function() use ($serv, $data,$clientInfo) {
+                $battle=new BattleController();
+                $arr=json_decode($data,TRUE);
+                $final=$battle->battleReturn($arr);
+                 Log::info($final);
+                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+
+        } );
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
@@ -106,14 +117,9 @@ class SwooleCommand extends Command
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
 
-                $serv->after(600, function() use ($serv, $data,$clientInfo) {
-                $battle=new BattleController();
-                $arr=json_decode($data,TRUE);
-                    $final=$battle->battleReturn($arr);
-                     Log::info($final);
-                    $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
-
-                });
+                // $serv->after(600, function() use ($serv, $data,$clientInfo) {
+                   
+                // });
             // $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
@@ -138,7 +144,7 @@ class SwooleCommand extends Command
 
              } );
 
-        $serv->start(); 
+
 
     }
 
