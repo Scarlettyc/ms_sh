@@ -115,7 +115,8 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if(isset($result['battle_data'])&&$result!=[]&&$result!=null){
+             if($result&&$result!=[]&&$result!=null){
+
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
 
                 }
