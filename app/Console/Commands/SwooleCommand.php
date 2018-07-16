@@ -104,6 +104,7 @@ class SwooleCommand extends Command
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
              $result=$battle->battleTestNew($arr,$clientInfo);
+             $final=$data;
             // $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
@@ -115,12 +116,15 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if($result&&$result!=[]&&$result!=null){
+
+             if($result){
                 swoole_timer_after(60, function () {
-                    echo "send";
-                    $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
-                    });
+                   $final=$battle->battleReturn($arr,$clientInfo);
+           
+                });
+                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 }
+
              } );
 
         $serv->start(); 
