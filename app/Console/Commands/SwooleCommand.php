@@ -140,9 +140,10 @@ class SwooleCommand extends Command
              } );
 
         $serv->start(){
+              Log::info("test udp start");
              $serv->tick(600, function() {
                 $battle=new BattleController();
-                $arr=json_decode($data,TRUE);
+                //$arr=json_decode($data,TRUE);
                 $final=$battle->battleReturn($test_uid);
                  Log::info($final);
                // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
