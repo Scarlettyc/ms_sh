@@ -345,7 +345,6 @@ class BattleController extends Controller
 				// 	throw new Exception("lost this frame data", 1);
 					
 				// }
-				if($frameData&&$enmeyFrameData){
 				$result['battle_data'][]=$frameData;
 				$result['battle_data'][]=$enmeyFrameData;
 				$result['frame_id']=$frame_id;		
@@ -353,7 +352,6 @@ class BattleController extends Controller
 				$response=json_encode($result,TRUE);
 				Log::info($response);
 				return  $response;
-				}
 			}
 
 	}
