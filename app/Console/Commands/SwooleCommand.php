@@ -105,8 +105,11 @@ class SwooleCommand extends Command
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
-                    Log::info('test timer'.$result);
-                 //$serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                if($result==1){
+                    $final=$battle->battleReturn($arr);
+                    Log::info($final);
+                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                }
                 });
             // $redis_battle=Redis::connection('battle');
              // if($result){
