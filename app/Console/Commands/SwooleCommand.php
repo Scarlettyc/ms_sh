@@ -107,7 +107,7 @@ class SwooleCommand extends Command
                 $result=$battle->battleTestNew($arr,$clientInfo);
                 if($result==1){
                     $final=$battle->battleReturn($arr);
-                   // Log::info($final);
+                    Log::info($final);
                  $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 }
                 });
