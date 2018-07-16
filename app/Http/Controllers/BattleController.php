@@ -323,7 +323,14 @@ class BattleController extends Controller
 		}
 
 }
-	
+
+	public function battleTestNew($result,$clientInfo){
+
+		$response=json_encode($result,TRUE);
+		Log::info($response);
+		return  $response;
+
+	}
 
 	private function removeUsedSkill($u_id){
 		$redis_user=Redis::connection('battle_user');

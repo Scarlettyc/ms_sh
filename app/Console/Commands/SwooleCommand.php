@@ -103,9 +103,9 @@ class SwooleCommand extends Command
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
-                // Log::info($data);
-             $result=$battle->battleNew($arr,$clientInfo);
-             $redis_battle=Redis::connection('battle');
+             Log::info('test swoole UDP'.$data);
+             $result=$battle->battleTestNew($arr,$clientInfo);
+            // $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
              //    $key='match_history'.$arr['match_id'].'_'.$result;
