@@ -97,25 +97,25 @@ class MatchController extends Controller
 
 						$matchResult2=json_encode(['u_id'=>$match_uid[0],'enemy_uid'=>$u_id,'match_id'=>$match_id,'map_id'=>$mapData,'status'=>1,'client'=>$waitUser['client_id'],'enmey_client'=>$clientID,'create_date'=>time()]);
 
-      //              		$redis_battle->HSET($battleKeyUser,'u_id',$u_id);
-      //              		$redis_battle->HSET($battleKeyUser,'enemy_uid',$match_uid[0]);
-      //              		$redis_battle->HSET($battleKeyUser,'match_id',$match_id);
-      //              		$redis_battle->HSET($battleKeyUser,'map_id',$mapData);
-      //              		$redis_battle->HSET($battleKeyUser,'status',1);
-      //              		$redis_battle->HSET($battleKeyUser,'client',$clientID);
-						// $redis_battle->HSET($battleKeyUser,'enmey_client',$waitUser['client_id']);
-						// $redis_battle->HSET($battleKeyUser,'create_date',time());
-						// $redis_battle->HSET($battleKeyUser,'match_key',$matchKey);
+                   		$redis_battle->HSET($battleKeyUser,'u_id',$u_id);
+                   		$redis_battle->HSET($battleKeyUser,'enemy_uid',$match_uid[0]);
+                   		$redis_battle->HSET($battleKeyUser,'match_id',$match_id);
+                   		$redis_battle->HSET($battleKeyUser,'map_id',$mapData);
+                   		$redis_battle->HSET($battleKeyUser,'status',1);
+                   		$redis_battle->HSET($battleKeyUser,'client',$clientID);
+						$redis_battle->HSET($battleKeyUser,'enmey_client',$waitUser['client_id']);
+						$redis_battle->HSET($battleKeyUser,'create_date',time());
+						$redis_battle->HSET($battleKeyUser,'match_key',$matchKey);
 
-						// $redis_battle->HSET($battleKeyEnemy,'enemy_uid',$u_id);
-      //              		$redis_battle->HSET($battleKeyEnemy,'u_id',$match_uid[0]);
-      //              		$redis_battle->HSET($battleKeyEnemy,'match_id',$match_id);
-      //              		$redis_battle->HSET($battleKeyEnemy,'map_id',$mapData);
-      //              		$redis_battle->HSET($battleKeyEnemy,'status',1);
-      //              		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
-						// $redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
-						// $redis_battle->HSET($battleKeyEnemy,'create_date',time());
-						// $redis_battle->HSET($battleKeyEnemy,'match_range',$matchKey);
+						$redis_battle->HSET($battleKeyEnemy,'enemy_uid',$u_id);
+                   		$redis_battle->HSET($battleKeyEnemy,'u_id',$match_uid[0]);
+                   		$redis_battle->HSET($battleKeyEnemy,'match_id',$match_id);
+                   		$redis_battle->HSET($battleKeyEnemy,'map_id',$mapData);
+                   		$redis_battle->HSET($battleKeyEnemy,'status',1);
+                   		$redis_battle->HSET($battleKeyEnemy,'enmey_client',$clientID);
+						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
+						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
+						$redis_battle->HSET($battleKeyEnemy,'match_range',$matchKey);
       //  					$battle_status_key='battle'.$u_id;
       //  					$battle_status_key_enemy='battle'.$match_uid[0];
 						// $redis_user->HSET($battle_status_key,'ch_hp_max',1000);

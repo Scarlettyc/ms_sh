@@ -103,7 +103,6 @@ class SwooleCommand extends Command
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
-             Log::info('test swoole UDP'.$data);
              $result=$battle->battleTestNew($arr,$clientInfo);
             // $redis_battle=Redis::connection('battle');
              // if($result){
@@ -116,8 +115,7 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if($result||$result!=null){
-                Log::info('get udp result'.$result);
+             if($result&&$result!=[]&&$result!=null){
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
 
                 }

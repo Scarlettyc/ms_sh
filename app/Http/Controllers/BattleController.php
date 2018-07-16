@@ -324,6 +324,28 @@ class BattleController extends Controller
 }
 
 	public function battleTestNew($result,$clientInfo){
+		$redis_battle_history=Redis::connection('battle');
+ 		$redis_user=Redis::connection('battle_user');
+ 		$now   = new DateTime;
+		$dmy=$now->format( 'Ymd' );
+		$battleKey='battle_status'.$u_id.$dmy;
+ 	   	$matchID=$redis_battle->HGET($battleKey,'match_id');
+ 	   	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+		$current=$this->getMillisecond();
+		$playerData=$result['playerData'];
+		$frame_id=$result['frame_id'];
+		$frameKey='battle_status'.$u_id.$match_id;
+		$frameData=json_encode($playerData,TRUE);
+		$redis_user->HSET($frameKey,'frame_id',$frameData);
+		$enemyFramekey='battle_status'.$enemy_uid.$match_id;
+		$enmeyFrameData=$redis_user->HGET($enemyFramekey,$frame_id);
+		if(!$enmeyFrameData){
+			throw new Exception("lost this frame data", 1);
+			
+		}
+		$result['battle_data'][]=$frameData
+		$result['battle_data'][]=$enmeyFrameData;
+		$result['frame_id']=$frame_id;
 
 		$response=json_encode($result,TRUE);
 		Log::info($response);
