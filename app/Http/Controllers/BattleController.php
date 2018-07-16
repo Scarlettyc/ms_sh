@@ -354,7 +354,9 @@ class BattleController extends Controller
 			$enmeyFrameData=$redis_user->HGET($enemyFramekey,$frame_id);
 			$result['battle_data'][]=$frameData;
 			$result['battle_data'][]=$enmeyFrameData;
-			$result['frame_id']=$frame_id;		
+			$result['frame_id']=$frame_id;	
+			$response=json_encode($result,TRUE);
+			return 	$response;
 	}
 
 	private function removeUsedSkill($u_id){

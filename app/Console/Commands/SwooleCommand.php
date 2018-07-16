@@ -118,10 +118,10 @@ class SwooleCommand extends Command
              // }
 
              if($result){
-                $final=swoole_timer_after(60, function ($arr,$clientInfo) {
+                $final=swoole_timer_after(60, function ($arr) {
                      $battle=new BattleController();
                     Log::info('test timer');
-                   $final=$battle->battleReturn($arr,$clientInfo);
+                   $final=$battle->battleReturn($arr);
                     return $final;
                 });
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
