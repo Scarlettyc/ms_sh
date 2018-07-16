@@ -339,7 +339,7 @@ class BattleController extends Controller
 				$frameKey='battle_data'.$u_id.$match_id;
 				$frameData=json_encode($playerData,TRUE);
 				$redis_user->HSET($frameKey,$frame_id,$frameData);
-				return  TRUE;
+				return  1;
 			}
 
 	}
