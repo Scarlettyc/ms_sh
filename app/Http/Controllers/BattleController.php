@@ -343,7 +343,7 @@ class BattleController extends Controller
 			throw new Exception("lost this frame data", 1);
 			
 		}
-		$result['battle_data'][]=$frameData
+		$result['battle_data'][]=$frameData;
 		$result['battle_data'][]=$enmeyFrameData;
 		$result['frame_id']=$frame_id;
 
