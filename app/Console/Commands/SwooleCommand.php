@@ -105,8 +105,10 @@ class SwooleCommand extends Command
              $arr=json_decode($data,TRUE);
              $result=$battle->battleTestNew($arr,$clientInfo);
              $final=$data;
-             swoole_timer_tick(60, function ($data, $clientInfo) {
-                echo "tick-2000ms\n";
+
+             $serv->tick(60, function() use ($serv, $data,$clientInfo) {
+                Log::info('test timer');
+                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 });
             // $redis_battle=Redis::connection('battle');
              // if($result){
