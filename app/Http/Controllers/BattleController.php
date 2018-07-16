@@ -358,6 +358,7 @@ class BattleController extends Controller
 			$frameData=$redis_user->HGET($frameKey,$frame_id);
 			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
 			$enmeyFrameData=$redis_user->HGET($enemyFramekey,$frame_id);
+			Log::info($enmeyFrameData);
 			$result['battle_data'][]=$frameData;
 			$result['battle_data'][]=$enmeyFrameData;
 			$result['frame_id']=$frame_id;	
