@@ -100,8 +100,8 @@ class SwooleCommand extends Command
 
 // }  $serv->start(); 
 
-        $serv->start(); 
         
+
         $serv->tick(600, function() use ($serv, $data,$clientInfo) {
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
@@ -144,7 +144,7 @@ class SwooleCommand extends Command
 
              } );
 
-
+        $serv->start(); 
 
     }
 
