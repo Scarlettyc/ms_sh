@@ -340,10 +340,10 @@ class BattleController extends Controller
 		$redis_user->HSET($frameKey,$frame_id,$frameData);
 		$enemyFramekey='battle_status'.$enemy_uid.$match_id;
 		$enmeyFrameData=$redis_user->HGET($enemyFramekey,$frame_id);
-		if(!$enmeyFrameData){
-			throw new Exception("lost this frame data", 1);
+		// if(!$enmeyFrameData){
+		// 	throw new Exception("lost this frame data", 1);
 			
-		}
+		// }
 		if($frameData&&$enmeyFrameData){
 		$result['battle_data'][]=$frameData;
 		$result['battle_data'][]=$enmeyFrameData;
