@@ -355,16 +355,17 @@ class BattleController extends Controller
 		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 			$frameKey='battle_data'.$u_id.$match_id;
-			$frameData=$redis_user->HGET($frameKey,$frame_id);
+			$frameDataJson=$redis_user->HGET($frameKey,$frame_id);
 			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
-			$enmeyFrameData=$redis_user->HGET($enemyFramekey,$frame_id);
-			
+			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
+			$frameData=json_decode($frameDataJson,TRUE);
 			$result['battle_data'][]=$frameData;
-			if($enmeyFrameData){
+			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
+			if(isset($enmeyFrameData)){
 			$result['battle_data'][]=$enmeyFrameData;
 			}
 			$result['frame_id']=$frame_id;	
-			//$response=json_encode($result,TRUE);
+			$response=json_encode($result,TRUE);
 			return 	$result;
 	}
 
