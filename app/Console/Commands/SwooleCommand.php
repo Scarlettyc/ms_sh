@@ -31,6 +31,7 @@ class SwooleCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**
@@ -53,6 +54,7 @@ class SwooleCommand extends Command
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
         ));
+        $test_uid=[];
         // $this->serv->on('Task', array($this, 'onTask'));
 
         // $this->serv->on('Finish', array($this, 'onFinish'));
@@ -102,12 +104,12 @@ class SwooleCommand extends Command
 
         
 
-        $serv->tick(600, function() use ($serv, $data,$clientInfo) {
+            $serv->tick(600, function($) {
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
-                $final=$battle->battleReturn($arr);
+                $final=$battle->battleReturn($test_uid);
                  Log::info($final);
-                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+               // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
 
         } );
 
@@ -116,7 +118,7 @@ class SwooleCommand extends Command
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
-
+                $test_uid=$arr['u_id'];
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
                    
                 // });
