@@ -364,7 +364,7 @@ class BattleController extends Controller
 			$result['battle_data'][]=$enmeyFrameData;
 			}
 			$result['frame_id']=$frame_id;	
-			$response=json_encode($result,TRUE);
+			//$response=json_encode($result,TRUE);
 			return 	$response;
 	}
 
