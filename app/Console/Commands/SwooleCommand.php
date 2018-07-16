@@ -112,6 +112,8 @@ class SwooleCommand extends Command
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
                 $test_uid=$arr['u_id'];
+
+               
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
                    
                 // });
@@ -127,25 +129,25 @@ class SwooleCommand extends Command
              //        }
              // }
 
-             // if($result){
-             //    $final=swoole_timer_after(60, function ($arr) {
-             //         $battle=new BattleController();
-             //        Log::info('test timer');
-             //       $final=$battle->battleReturn($arr);
+             if($result){
+                // $final=swoole_timer_after(60, function ($arr) {
+                //      $battle=new BattleController();
+                //     Log::info('test timer');
+                $final=$battle->battleReturn($arr);
              //        return $final;
              //    });
-             //    $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
-             //    }
+                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                }
 
              } );
 
-        $serv->heartbeat(function (){
-            Log::info("test udp start");
-            $battle=new BattleController();
-            $final=$battle->battleReturn($test_uid);
+        // $serv->heartbeat(function (){
+        //     Log::info("test udp start");
+        //     $battle=new BattleController();
+        //     $final=$battle->battleReturn($test_uid);
           
 
-        });
+        // });
 
         $serv->start();
 
