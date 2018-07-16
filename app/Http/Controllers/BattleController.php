@@ -365,7 +365,7 @@ class BattleController extends Controller
 			}
 			$result['frame_id']=$frame_id;	
 			//$response=json_encode($result,TRUE);
-			return 	$response;
+			return 	$result;
 	}
 
 	private function removeUsedSkill($u_id){
