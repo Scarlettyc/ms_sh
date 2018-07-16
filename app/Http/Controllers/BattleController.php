@@ -347,6 +347,8 @@ class BattleController extends Controller
 	public function battleReturn($result){
 			$u_id=$result['u_id'];
 			$frame_id=$result['frame_id'];
+			$now   = new DateTime;
+			$dmy=$now->format( 'Ymd' );
 			$battleKey='battle_status'.$u_id.$dmy;
 			$frameKey='battle_data'.$u_id.$match_id;
 			$frameData=$redis_user->HGET($frameKey,$frame_id);
