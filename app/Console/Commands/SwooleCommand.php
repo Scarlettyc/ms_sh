@@ -104,14 +104,7 @@ class SwooleCommand extends Command
 
         
 
-            $serv->tick(600, function() {
-                $battle=new BattleController();
-                $arr=json_decode($data,TRUE);
-                $final=$battle->battleReturn($test_uid);
-                 Log::info($final);
-               // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
-
-        } );
+   
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
@@ -146,7 +139,17 @@ class SwooleCommand extends Command
 
              } );
 
-        $serv->start(); 
+        $serv->start(
+                $serv->tick(600, function() {
+                $battle=new BattleController();
+                $arr=json_decode($data,TRUE);
+                $final=$battle->battleReturn($test_uid);
+                 Log::info($final);
+               // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+
+        } ); 
+
+        ); 
 
     }
 
