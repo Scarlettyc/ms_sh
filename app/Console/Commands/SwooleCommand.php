@@ -115,10 +115,11 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if($result&&$result!=[]&&$result!=null){
-
-                $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
-
+             if($res&&$result!=[]&&$result!=null){
+                swoole_timer_after(60, function () {
+                    echo "send";
+                    $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
+                    });
                 }
              } );
 
