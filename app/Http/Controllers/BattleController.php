@@ -324,7 +324,7 @@ class BattleController extends Controller
 }
 
 	public function battleTestNew($result,$clientInfo){
-		$redis_battle_history=Redis::connection('battle');
+		$redis_battle=Redis::connection('battle');
  		$redis_user=Redis::connection('battle_user');
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
