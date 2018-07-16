@@ -117,7 +117,9 @@ class SwooleCommand extends Command
              //        }
              // }
              if($result){
+                Log::info('get udp result'.$result);
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
+
                 }
              } );
 
