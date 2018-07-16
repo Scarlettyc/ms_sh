@@ -139,7 +139,7 @@ class SwooleCommand extends Command
 
              } );
 
-        $serv->heartbeat({
+        $serv->heartbeat(function (){
             Log::info("test udp start");
             $battle=new BattleController();
             $final=$battle->battleReturn($test_uid);
