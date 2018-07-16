@@ -104,7 +104,7 @@ class SwooleCommand extends Command
 
         
 
-            $serv->tick(600, function($) {
+            $serv->tick(600, function() {
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $final=$battle->battleReturn($test_uid);
