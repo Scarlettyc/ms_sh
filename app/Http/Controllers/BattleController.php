@@ -366,6 +366,7 @@ class BattleController extends Controller
 			}
 			$result['frame_id']=$frame_id;	
 			$response=json_encode($result,TRUE);
+			$lostFrame=$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 			return 	$response;
 	}
 
