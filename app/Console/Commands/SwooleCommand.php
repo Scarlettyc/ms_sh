@@ -103,13 +103,11 @@ class SwooleCommand extends Command
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              $battle=new BattleController();
              $arr=json_decode($data,TRUE);
-              swoole_timer_tick(60, function ($data,$clientInfo) {
+             $result=$battle->battleTestNew($arr,$clientInfo);
+             $final=$data;
+             swoole_timer_tick(60, function ($data, $clientInfo) {
                 echo "tick-2000ms\n";
-                 $result=$battle->battleTestNew($arr,$clientInfo);
-            });
-          }
-             // $result=$battle->battleTestNew($arr,$clientInfo);
-             // $final=$data;
+                });
             // $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
@@ -132,7 +130,7 @@ class SwooleCommand extends Command
              //    $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
              //    }
 
-             // } );
+             } );
 
         $serv->start(); 
 
