@@ -119,6 +119,7 @@ class SwooleCommand extends Command
 
              if($result){
                 swoole_timer_after(60, function () {
+                    Log::info('test timer');
                    $final=$battle->battleReturn($arr,$clientInfo);
            
                 });
