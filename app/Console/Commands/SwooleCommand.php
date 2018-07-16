@@ -147,7 +147,7 @@ class SwooleCommand extends Command
                  Log::info($final);
                // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
 
-        } ); 
+        } ) 
 
         ); 
 
