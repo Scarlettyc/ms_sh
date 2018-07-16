@@ -108,7 +108,7 @@ class SwooleCommand extends Command
 
              $serv->tick(60, function() use ($serv, $data,$clientInfo) {
                 Log::info('test timer');
-                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                //$serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 });
             // $redis_battle=Redis::connection('battle');
              // if($result){
