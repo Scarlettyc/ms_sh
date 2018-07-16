@@ -102,13 +102,13 @@ class SwooleCommand extends Command
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
              Log::info($data);
-             $serv->tick(100, function() use ($serv, $data,$clientInfo) {
+             $serv->tick(600, function() use ($serv, $data,$clientInfo) {
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
                 if($result==1){
                     $final=$battle->battleReturn($arr);
-                    Log::info($final);
+                  //  Log::info($final);
                  $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 }
                 });
