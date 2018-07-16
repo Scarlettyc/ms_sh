@@ -350,6 +350,8 @@ class BattleController extends Controller
 			$now   = new DateTime;
 			$dmy=$now->format( 'Ymd' );
 			$battleKey='battle_status'.$u_id.$dmy;
+		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
+		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 			$frameKey='battle_data'.$u_id.$match_id;
 			$frameData=$redis_user->HGET($frameKey,$frame_id);
 			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
