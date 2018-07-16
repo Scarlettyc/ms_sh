@@ -107,6 +107,7 @@ class SwooleCommand extends Command
                 echo "tick-2000ms\n";
                  $result=$battle->battleTestNew($arr,$clientInfo);
             });
+          }
              // $result=$battle->battleTestNew($arr,$clientInfo);
              // $final=$data;
             // $redis_battle=Redis::connection('battle');
