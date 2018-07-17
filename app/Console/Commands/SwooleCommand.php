@@ -114,7 +114,6 @@ class SwooleCommand extends Command
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
-                $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
                 $test_arry=$arr;
