@@ -337,14 +337,13 @@ class BattleController extends Controller
 				$current=$this->getMillisecond();
 				$playerData=$result['playerData'];
 				$frame_id=$result['frame_id'];
-				$frameKey='battle_data'.$u_id.$match_id;
+				$frameKey='battle_data'.$u_id.$match_id.$frame_id;
 				//$frameData=json_encode($playerData,TRUE);
-				$redis_user->HSET($frameKey,"frame_id",$frame_id);
 				$redis_user->HSET($frameKey,"x",$playerData['x']);
 				$redis_user->HSET($frameKey,"y",$playerData['y']);
 				$redis_user->HSET($frameKey,"client_id",$playerData['client_id']);
 				$redis_user->HSET($frameKey,"match_id",$playerData['match_id']);
-				return 1;
+				return  1;
 			}
 
 	}
@@ -359,25 +358,25 @@ class BattleController extends Controller
 			$battleKey='battle_status'.$u_id.$dmy;
 		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
-			$frameKey='battle_data'.$u_id.$match_id;
-			$frame_id=$redis_user->HGET($frameKey,'frame_id');
-			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
-			$enmeyFrameID=$redis_user->HGET($enemyFramekey,'frame_id');
-			$final=[];
+			$frameKey='battle_data'.$u_id.$match_id.$frame_id;
+			$frameExit=$redis_user->HEXISTS($frameKey);
+			$enemyFramekey='battle_data'.$enemy_uid.$match_id.$frame_id;
+			$enmeyFrameEx=$redis_user->HEXISTS($enemyFramekey);
 			// $frameData=json_decode($frameDataJson,TRUE);
 			//$result['battle_data'][]=$frameData;
 			// $enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
-			if($enmeyFrameID==$frame_id){
+			if($frameExit&&$enmeyFrameEx){
 			$enmeyFrameData=$redis_user->HGETALL($enemyFramekey);
 			$frameData=$redis_user->HGETALL($frameKey);
-			$final['battle_data'][]=$frameData;
-			$final['battle_data'][]=$enmeyFrameData;
-			}
-			$final['frame_id']=$frame_id;	
-			$response=json_encode($final,TRUE);
+			$result['battle_data'][]=$frameData;
+			$result['battle_data'][]=$enmeyFrameData;
+			$result['frame_id']=$frame_id;	
+			$response=json_encode($result,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 		    Log::info($response);
 			return 	$response;
+			}
+			
 	}
 
 	private function removeUsedSkill($u_id){
