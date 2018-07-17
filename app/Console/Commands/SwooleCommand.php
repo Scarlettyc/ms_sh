@@ -107,6 +107,7 @@ class SwooleCommand extends Command
      
         do {
             usleep(60000);
+             $response=json_encode($final,TRUE);
             $serv->sendto($final['address_1'], $final['port_1'],$response);
             $serv->sendto($final['address_2'], $final['port_2'],$response);  
         }while($final);
