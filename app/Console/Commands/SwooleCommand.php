@@ -101,22 +101,14 @@ class SwooleCommand extends Command
 //         echo "Result: {$data}n";
 
 // }  $serv->start(); 
-        $battle=new BattleController();
-        $final=$battle->battleReturn($test_arry);
 
-     
-        do {
-            usleep(60000);
-             $response=json_encode($final,TRUE);
-            $serv->sendto($final['address_1'], $final['port_1'],$response);
-            $serv->sendto($final['address_2'], $final['port_2'],$response);  
-        }while($final);
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
+                $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
-                $test_arry=$arr;
+                $test_arry=$arr['u_id'];
 
                
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
@@ -133,21 +125,21 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-            
-            //  if($result){
-            //     // $final=swoole_timer_after(60, function ($arr) {
-            //     //      $battle=new BattleController();
-            //     //     Log::info('test timer');
-            //     $final=$battle->battleReturn($arr);
+             if($result==1){
+                // $final=swoole_timer_after(60, function ($arr) {
+                //      $battle=new BattleController();
+                //     Log::info('test timer');
+                $final=$battle->battleReturn($arr);
 
-            //  //        return $final;
-            //  //    });
-            //     if($final){
-            //         $response=json_encode($final,TRUE);
+             //        return $final;
+             //    });
+                if($final){
+                    $response=json_encode($final,TRUE);
                    
-            //         $serv->sendto($clientInfo['address'], $clientInfo['port'],$response);
-            //     }
-            // }
+                    $serv->sendto($final['address_1'], $final['port_1'],$response);
+                    $serv->sendto($final['address_2'], $final['port_1'],$response);
+                }
+            }
 
              } );
 

@@ -350,7 +350,6 @@ class BattleController extends Controller
 	public function battleReturn($result){
 			$redis_battle=Redis::connection('battle');
  			$redis_user=Redis::connection('battle_user');
- 			if(isset($result['u_id'])){
 			$u_id=$result['u_id'];
 			$frame_id=$result['frame_id'];
 			$now   = new DateTime;
@@ -371,14 +370,13 @@ class BattleController extends Controller
 			$final['frame_id']=$frame_id;
 			$final['address_1']=$frameData['address'];
 			$final['port_1']=$frameData['port'];
-			$final['address_2']=$enmeyFrameData['address'];
-			$final['port_2']=$enmeyFrameData['port'];
+			$final['address_2']=$frameData['address'];
+			$final['port_2']=$frameData['port'];
 			$response=json_encode($final,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 		    Log::info($response);
 			return 	$final;
 			}
-		}
 	}
 
 	private function removeUsedSkill($u_id){
