@@ -338,8 +338,12 @@ class BattleController extends Controller
 				$playerData=$result['playerData'];
 				$frame_id=$result['frame_id'];
 				$frameKey='battle_data'.$u_id.$match_id;
-				$frameData=json_encode($playerData,TRUE);
-				$redis_user->HSET($frameKey,$frame_id,$frameData);
+				//$frameData=json_encode($playerData,TRUE);
+				$redis_user->HSET($frameKey,"frame_id",$frame_id);
+				$redis_user->HSET($frameKey,"x",$playerData['x']);
+				$redis_user->HSET($frameKey,"y",$playerData['y']);
+				$redis_user->HSET($frameKey,"client_id",$playerData['client_id']);
+				$redis_user->HSET($frameKey,"match_id",$playerData['match_id']);
 				return  1;
 			}
 
@@ -356,13 +360,16 @@ class BattleController extends Controller
 		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 			$frameKey='battle_data'.$u_id.$match_id;
-			$frameDataJson=$redis_user->HGET($frameKey,$frame_id);
+			$frame_id=$redis_user->HGET($frameKey,'frame_id');
 			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
-			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
-			$frameData=json_decode($frameDataJson,TRUE);
-			$result['battle_data'][]=$frameData;
+			$enmeyFrameID=$redis_user->HGET($enemyFramekey,'frame_id');
+			// $frameData=json_decode($frameDataJson,TRUE);
+			//$result['battle_data'][]=$frameData;
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
-			if(isset($enmeyFrameData)){
+			if($enmeyFrameID==$frame_id){
+			$enmeyFrameData=$redis_user->HVALS($enemyFramekey);
+			$frameData=$redis_user->HVALS($frameKey);
+			$result['battle_data'][]=$frameData;
 			$result['battle_data'][]=$enmeyFrameData;
 			}
 			$result['frame_id']=$frame_id;	
