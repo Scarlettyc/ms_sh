@@ -107,10 +107,9 @@ class SwooleCommand extends Command
      
         do {
             usleep(60000);
-        } while($final){
-             $serv->sendto($final['address_1'], $final['port_1'],$response);
-             $serv->sendto($final['address_2'], $final['port_2'],$response);  
-        }
+            $serv->sendto($final['address_1'], $final['port_1'],$response);
+            $serv->sendto($final['address_2'], $final['port_2'],$response);  
+        }while($final);
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
