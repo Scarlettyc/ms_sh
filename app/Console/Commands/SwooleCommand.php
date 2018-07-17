@@ -102,14 +102,6 @@ class SwooleCommand extends Command
 
 // }  $serv->start(); 
 
-        
-        // while($serv){
-
-        // }
-        // do{
-
-        // }
-        
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
@@ -133,7 +125,7 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-            // usleep(600000);
+             usleep(600000);
              if($result){
                 // $final=swoole_timer_after(60, function ($arr) {
                 //      $battle=new BattleController();
@@ -143,7 +135,9 @@ class SwooleCommand extends Command
              //        return $final;
              //    });
                 if($final){
-                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                    $response=json_encode($final,TRUE);
+                    $serv->sendto($final['address_1'], $final['port_1'],$response);
+                    $serv->sendto($final['address_2'], $final['port_2'],$response);
                 }
             }
 

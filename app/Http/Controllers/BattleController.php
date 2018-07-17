@@ -336,6 +336,8 @@ class BattleController extends Controller
 		 	   	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 				$current=$this->getMillisecond();
 				$playerData=$result['playerData'];
+				$playerData['address']=$clientInfo['address'];
+				$playerData['port']=$clientInfo['port'];
 				$frame_id=$result['frame_id'];
 				$frameKey='battle_data'.$u_id.$match_id;
 				$frameData=json_encode($playerData,TRUE);
@@ -365,11 +367,15 @@ class BattleController extends Controller
 			if(isset($enmeyFrameData)){
 			$result['battle_data'][]=$frameData;
 			$final['battle_data'][]=$enmeyFrameData;
-			$final['frame_id']=$frame_id;	
+			$final['frame_id']=$frame_id;
+			$final['address_1']=$frameData['address'];
+			$final['port_1']=$frameData['port'];
+			$final['address_2']=$enmeyFrameData['address'];
+			$final['port_2']=$enmeyFrameData['port'];
 			$response=json_encode($final,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 		    Log::info($response);
-			return 	$response;
+			return 	$final;
 			}
 	}
 
