@@ -54,7 +54,7 @@ class SwooleCommand extends Command
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
         ));
-        $test_uid=[];
+        $test_arry=[];
         // $this->serv->on('Task', array($this, 'onTask'));
 
         // $this->serv->on('Finish', array($this, 'onFinish'));
@@ -103,15 +103,20 @@ class SwooleCommand extends Command
 // }  $serv->start(); 
 
         
+        // while($serv){
 
-           
+        // }
+        // do{
+
+        // }
+        
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
-                $test_uid=$arr['u_id'];
+                $test_arry=$arr['u_id'];
 
                
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
@@ -128,16 +133,19 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-            usleep(6000);
+            // usleep(600000);
              if($result){
                 // $final=swoole_timer_after(60, function ($arr) {
                 //      $battle=new BattleController();
                 //     Log::info('test timer');
                 $final=$battle->battleReturn($arr);
+
              //        return $final;
              //    });
+                if($final){
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 }
+            }
 
              } );
 

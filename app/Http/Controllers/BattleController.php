@@ -363,13 +363,13 @@ class BattleController extends Controller
 			$result['battle_data'][]=$frameData;
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
 			if(isset($enmeyFrameData)){
-			$result['battle_data'][]=$enmeyFrameData;
-			}
-			$result['frame_id']=$frame_id;	
+			$final['battle_data'][]=$enmeyFrameData;
+			$final['frame_id']=$frame_id;	
 			$response=json_encode($result,TRUE);
-			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
+			$redis_user->HSET('battle_history'.$match_id,$frame_id,$final);
 		    Log::info($response);
 			return 	$response;
+			}
 	}
 
 	private function removeUsedSkill($u_id){
