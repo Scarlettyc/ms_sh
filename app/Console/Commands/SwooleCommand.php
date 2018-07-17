@@ -101,16 +101,20 @@ class SwooleCommand extends Command
 //         echo "Result: {$data}n";
 
 // }  $serv->start(); 
+        $final=$battle->battleReturn($test_arry);
 
-        while(usleep(600000)){
+        while($final){
              $battle=new BattleController();
              $final=$battle->battleReturn($test_arry);
              if($final){
-             $response=json_encode($final,TRUE);
+             
              $serv->sendto($final['address_1'], $final['port_1'],$response);
              $serv->sendto($final['address_2'], $final['port_2'],$response);
             }
 
+        }
+        do {
+            usleep(60000);
         }
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
