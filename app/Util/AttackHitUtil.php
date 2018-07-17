@@ -259,12 +259,11 @@ class AttackHitUtil
 				$enemyX_to=$enemyX+$effs['BR_x_a']*$enemy_direction;
 				$enemyY_to=$enemyY+$effs['TL_y_a'];
 
-        $fly_tools_key='battle_flytools'.$match_id.$enemy_uid;
+        $fly_tools_key='battle_flytools'.$enemy_uid;
         $displacement_key='displacement'.$match_id.$enemy_uid;
         $multi_key='multi'.$enemy_uid;
         if($skill_damage==1){
         $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-        // Log::info('damage 1 skill_id'.$skill_id.' enemyX'.$enemyX.' enemyY'.$enemyY.' enemyskillXfrom'.$enemyX_from.' enemyskillXto'.$enemyX_to.' enemyskillYfrom'.$enemyY_from.' enemyskillYto'.$enemyY_to.' enemy_direction'.$enemy_direction.' userxfront'.$x_front.' useryfront'.$y_front.' user_xBack'.$x_back.' user_yBack'.$y_back.' userDirection'.$direction);  
         }
          if($skill_damage==6||isset($enemySkill['displacement_distance'])){
           $battleData=json_encode($enemySkill,TRUE);
@@ -285,26 +284,6 @@ class AttackHitUtil
         }
 
            if($skill_damage==3||$skill_damage==4){
-            // $battleData=json_encode($enemySkill,TRUE);
-            // $occur_time=$enemySkill['occur_time'];
-            // $start_x=-($enemyX);
-            // $start_y=($enemyY);
-            // $start_direction=-$enemySkill['direction'];
-            // if(!isset($effs['eff_duration'])){
-            // $effs['eff_duration']=0;
-            // }
-            // if(!isset($effs['eff_interval'])){
-            //   $effs['eff_interval']=1;
-            // }
-            // if(!isset($effs['movable_time'])){
-            //     $enemyX_from=$start_x+$effs['TL_x_a']*$start_direction;
-            //     $enemyY_from=$start_y+$effs['BR_y_a'];
-            //     $enemyX_to=$start_x+$effs['BR_x_a']*$start_direction;
-            //     $enemyY_to=$start_y+$effs['TL_y_a'];
-            //     $hit=$this->hitvalues($enemyX_from,$enemyX_to,$enemyY_from,$enemyY_to,$x_front,$x_back,$y_front,$y_back,$hit);
-            //     $interval_key=$match_id.$u_id.$skill_id;
-
-
             // }
                $hit=$this->multiHit($match_id,$u_id,$x,$y,$direction,$enemy_uid,$skill_id);
           }
@@ -362,9 +341,11 @@ class AttackHitUtil
           return $hit;
         }
       }
-  public function checkInterval($skill_id,$x,$y,$direction,$time,$skill_group,$skill_damage,$match_id,$u_id){
+
+    public function checkInterval($skill_id,$x,$y,$direction,$time,$skill_group,$skill_damage,$match_id,$u_id){
     $SkillEffDeatilModel=new SkillEffDeatilModel();
     $redis_battle_history=Redis::connection('battle');
+    $redis_user=Redis::connection('battle_user');
     $multi_key='multi'.$u_id;
     $TL_x_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',1)->where('skill_id',$skill_id)->first();
     $BR_y_a=$SkillEffDeatilModel->select('eff_value')->where('eff_element_id',4)->where('skill_id',$skill_id)->first();
@@ -387,8 +368,12 @@ class AttackHitUtil
     $redis_battle_history->HSET($multi_key,'direction',$direction);
     $redis_battle_history->HSET($multi_key,'interval',$interval['eff_value']);
     $redis_battle_history->HSET($multi_key,'duration',$duration['eff_value']);
-      $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
-    $round=round($duration['eff_value']/$interval['eff_value']);
+    $redis_battle_history->HSET($multi_key,'end_time',$time+$duration['eff_value']);
+    $now   = new DateTime;
+    $dmy=$now->format( 'Ymd' );
+    $key_list='battle'.$u_id.$dmy;
+    $redis_user->HSET($key_list,'mult',$multi_key);
+    //$round=round($duration['eff_value']/$interval['eff_value']);
     // $multi_interval_key='multi'.$u_id.$skill_id;
     // for($i=0;$i<$round;$i++){
     //   $redis_battle_history->HSET($multi_interval_key,$i,$i*$interval['eff_value']+$time);
@@ -498,83 +483,6 @@ class AttackHitUtil
       }
       return $result;
     }
-  //   public function checkBuffs($u_id,$match_id,$buff){
-  //     $myBuffKey='mybuff'.$match_id.'_'.$u_id;
-  //     if($buff==2){
-  //       $myBuffKey='debuff'.$match_id.'_'.$u_id;
-  //     }
-  //     $redis_battle=Redis::connection('battle');
-  //     $buffData=$redis_battle->HGETALL($myBuffKey);
-  //     $damage_reduction_percentage=0;
-  //     $elementPrence=[];
-  //     $elementTime=[];
-  //     $current=$this->getMillisecond();
-  //     if(isset($buffData)){
-  //       foreach ($buffData as $myBuffKey=> $time) {
-  //         $keys=strpos($myBuffKey,'_');
-  //         $pre_skill=$keys[0];
-  //         $element_type=$keys[1];
-  //           $elementTime=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','like','%time%')->first();
-  //           if($time+$elementTime['eff_value']<$current){
-  //             if($element_type==24){
-  //              $result['invincible']=1;
-  //             }
-  //             else {
-  //               $elementPrence=$SkillEffDeatilModel->select('skill_id','eff_value','eff_element_id')->where('skill_id',$pre_skill)->where('eff_type',$element_type)->where('eff_name','not like','%precent%')->get();
-  //               foreach ($elementPrence as $key => $value) {
-  //                 switch ($value['eff_element_id']) {
-  //                   case 33:
-  //                   case 34:
-  //                     $result['damage_reduction']=$value['eff_value'];
-  //                     break;
-  //                   case 40:
-  //                   case 70:
-  //                     $result['damage_enemy']=$value['eff_value'];
-  //                      break;
-  //                   case 38:
-  //                     $result['crit']=$value['eff_value'];
-  //                      break;
-  //                   case 61:
-  //                     $result['atk_increase']=$value['eff_value'];
-  //                      break;
-  //                   case 42:
-  //                     $result['atk_range']=$value['eff_value'];
-  //                       break;
-  //                   case 41:
-  //                     $result['defence']=$value['eff_value'];
-  //                     break;
-  //                   case 62:
-  //                     $result['damge_absorb']=$value['eff_value'];
-  //                     break;
-  //                   case 67:
-  //                     $result['enhance_defence']=$value['eff_value'];
-  //                     break;
-  //                   case 37:
-  //                     $result['quick']=$value['eff_value'];
-  //                     break;
-  //                   case 68:
-  //                     $result['recover_hp']=$value['eff_value'];
-  //                     break;
-  //                   case 70:
-  //                     $result['reflect_dame']=$value['eff_value'];
-  //                     break;
-  //                   case 35:
-  //                     $result['slow']=$value['eff_value'];
-  //                     break;
-  //                   default:
-  //                     # code...
-  //                     break;
-  //                 }
-  //               }
-  //               return $result;
-  //             }
-  //         }
-  //         else {
-  //           $redis_battle->HDEL($debuffkey,$deffKey);
-  //         }
-  //       }
-  //     }
-  // }
 
   public function getEffValueBytype($skill_id){
       $skillModel=new SkillMstModel();
@@ -605,124 +513,155 @@ class AttackHitUtil
   		$result=[];
   		foreach ($skill_eff as $key => $each_eff) {
   		switch ($each_eff->eff_element_id) {
-           case 1: $result['TL_x_a']=$each_eff->eff_value; 
+          case 1: $result['TL_x_a']=$each_eff->eff_value; 
                                  break;
-           case 2: $result['TL_y_a']=$each_eff->eff_value; 
-                                 break;
-           case 3: $result['BR_x_a']=$each_eff->eff_value; 
-                                 break;
-           case 4: $result['BR_y_a']=$each_eff->eff_value; 
-                                 break;
-           case 5: $result['hit_recover_time']=$each_eff->eff_value; 
-                                 break;
-           case 6: $result['knockdown_time']=$each_eff->eff_value; 
-                                 break;
-           case 7: $result['stun_time']=$each_eff->eff_value; 
-                                 break;
-           case 8: $result['execute_hp_precentage']=$each_eff->eff_value; 
-                                 break;
-           case 9: $result['slow_time']=$each_eff->eff_value; 
-                                 break;
-           case 10: $result['snipe_time']=$each_eff->eff_value; 
-                                 break;
-           case 11: $result['dash_distance']=$each_eff->eff_value; 
-                                 break;
-           case 12: $result['immune_control']=$each_eff->eff_value; 
-                                 break;
-           case 13: $result['displacement_time']=$each_eff->eff_value; 
-                                 break;
-           case 14: $result['spread_interval']=$each_eff->eff_value; 
-                                 break;
-           case 15: $result['block_time']=$each_eff->eff_value; 
-                                 break;
-           case 16: $result['damage_reduction_time']=$each_eff->eff_value; 
-                                 break;
-           case 17: $result['strike_back']=$each_eff->eff_value; 
-                                 break;
-           case 18: $result['crash_hititem']=$each_eff->eff_value; 
-                                 break;
-           case 19: $result['shadowstep']=$each_eff->eff_value; 
-                                 break;
-           case 20: $result['crit_time']=$each_eff->eff_value; 
-                                 break;
-           case 21: $result['omnislash_time']=$each_eff->eff_value; 
-                                 break;
-           case 22: $result['avatar_time']=$each_eff->eff_value; 
-                                 break;
-           case 23: $result['eff_skill_atk_point']=$each_eff->eff_value; 
-                                 break;
-           case 24: $result['crash_hitpeole']=$each_eff->eff_value; 
-                                 break;
-           case 25: $result['movable_time']=$each_eff->eff_value; 
-                                 break;
-           case 26: $result['quick_time']=$each_eff->eff_value; 
-                                 break;
-           case 27: $result['dash_time']=$each_eff->eff_value; 
-                                 break;
-           case 28: $result['dash_direction']=$each_eff->eff_value; 
-                                 break;
-           case 29: $result['displacement_direction']=$each_eff->eff_value; 
-                                 break;
-           case 30: $result['displacement_distance']=$each_eff->eff_value; 
-                                 break;
-           case 31: $result['spread_distance']=$each_eff->eff_value; 
-                                 break;
-           case 32: $result['spread_frequency']=$each_eff->eff_value; 
-                                 break;
-           case 33: $result['block_percentage']=$each_eff->eff_value; 
-                                 break;
-           case 34: $result['damage_reduction_percentage']=$each_eff->eff_value; 
-                                 break;
-           case 35: $result['slow_percentage']=$each_eff->eff_value; 
-                                 break;
-           case 36: $result['strike_back_times']=$each_eff->eff_value; 
-                                 break;
-           case 37: $result['quick_percentage']=$each_eff->eff_value; 
-                                 break;
-           case 38: $result['crit_percentage']=$each_eff->eff_value; 
-                                 break;
-           case 39: $result['execute_time']=$each_eff->eff_value; 
-                                 break;
-           case 40: $result['avatar_damage_precent']=$each_eff->eff_value; 
-                                 break;
-           case 41: $result['avatar_defince_precent']=$each_eff->eff_value; 
-                                 break;
-           case 42: $result['avatar_atk_range_precent']=$each_eff->eff_value; 
-                                 break;
-           case 43: $result['eff_duration']=$each_eff->eff_value; 
-                                 break;
-           case 44: $result['eff_speed']=$each_eff->eff_value; 
-                                 break;
-           case 45: $result['eff_interval']=$each_eff->eff_value; 
-                                 break;
-           case 47: $result['TL_x_b']=$each_eff->eff_value; 
-                                 break;
-           case 48: $result['TL_y_b']=$each_eff->eff_value; 
-                                 break;
-           case 49: $result['BR_x_b']=$each_eff->eff_value; 
-                                 break;
-           case 50: $result['BR_y_b']=$each_eff->eff_value; 
-                                 break;
-           case 51: $result['TL_x_c']=$each_eff->eff_value; 
-                                 break;
-           case 52: $result['TL_y_c']=$each_eff->eff_value; 
-                                 break;
-           case 53: $result['BR_x_c']=$each_eff->eff_value; 
-                                 break;
-           case 54: $result['BR_y_c']=$each_eff->eff_value; 
-                                 break;
-           case 55: $result['TL_x_d']=$each_eff->eff_value; 
-                                 break;
-           case 56: $result['TL_y_d']=$each_eff->eff_value; 
-                                 break;
-           case 57: $result['BR_x_d']=$each_eff->eff_value; 
-                                 break;
-           case 58: $result['BR_y_d']=$each_eff->eff_value; 
-                                 break;
+          case 2: $result['TL_y_a']=$each_eff->eff_value; 
+                                           break;
+          case 3: $result['BR_x_a']=$each_eff->eff_value; 
+                                           break;
+          case 4: $result['BR_y_a']=$each_eff->eff_value; 
+                                           break;
+          case 5: $result['hit_recover_time']=$each_eff->eff_value; 
+                                           break;
+          case 6: $result['knockdown_time']=$each_eff->eff_value; 
+                                           break;
+          case 7: $result['stun_time']=$each_eff->eff_value; 
+                                           break;
+          case 8: $result['execute_hp_percent']=$each_eff->eff_value; 
+                                           break;
+          case 9: $result['slow_time']=$each_eff->eff_value; 
+                                           break;
+          case 10: $result['snipe_time']=$each_eff->eff_value; 
+                                           break;
+          case 11: $result['dash_distance']=$each_eff->eff_value; 
+                                           break;
+          case 12: $result['immune_control']=$each_eff->eff_value; 
+                                           break;
+          case 13: $result['displacement_time']=$each_eff->eff_value; 
+                                           break;
+          case 14: $result['spread_interval']=$each_eff->eff_value; 
+                                           break;
+          case 15: $result['block_time']=$each_eff->eff_value; 
+                                           break;
+          case 16: $result['damage_reduction_time']=$each_eff->eff_value; 
+                                           break;
+          case 17: $result['strike_back']=$each_eff->eff_value; 
+                                           break;
+          case 18: $result['crash_hititem']=$each_eff->eff_value; 
+                                           break;
+          case 19: $result['shadowstep']=$each_eff->eff_value; 
+                                           break;
+          case 20: $result['crit_time']=$each_eff->eff_value; 
+                                           break;
+          case 21: $result['omnislash_time']=$each_eff->eff_value; 
+                                           break;
+          case 22: $result['avatar_time']=$each_eff->eff_value; 
+                                           break;
+          case 23: $result['eff_skill_atk_point']=$each_eff->eff_value; 
+                                           break;
+          case 24: $result['crash_hitpeole']=$each_eff->eff_value; 
+                                           break;
+          case 25: $result['movable_time']=$each_eff->eff_value; 
+                                           break;
+          case 26: $result['quick_time']=$each_eff->eff_value; 
+                                           break;
+          case 27: $result['dash_time']=$each_eff->eff_value; 
+                                           break;
+          case 28: $result['dash_direction']=$each_eff->eff_value; 
+                                           break;
+          case 29: $result['displacement_direction']=$each_eff->eff_value; 
+                                           break;
+          case 30: $result['displacement_distance']=$each_eff->eff_value; 
+                                           break;
+          case 31: $result['spread_distance']=$each_eff->eff_value; 
+                                           break;
+          case 32: $result['spread_frequency']=$each_eff->eff_value; 
+                                           break;
+          case 33: $result['block_percent']=$each_eff->eff_value; 
+                                           break;
+          case 34: $result['damage_reduction_percent']=$each_eff->eff_value; 
+                                           break;
+          case 35: $result['slow_percentage']=$each_eff->eff_value; 
+                                           break;
+          case 36: $result['strike_back_frequency']=$each_eff->eff_value; 
+                                           break;
+          case 37: $result['quick_percentage']=$each_eff->eff_value; 
+                                           break;
+          case 38: $result['crit_percentage']=$each_eff->eff_value; 
+                                           break;
+          case 39: $result['execute_time']=$each_eff->eff_value; 
+                                           break;
+          case 40: $result['avatar_damage_percent']=$each_eff->eff_value; 
+                                           break;
+          case 41: $result['avatar_defence_percent']=$each_eff->eff_value; 
+                                           break;
+          case 42: $result['avatar_atk_range_percent']=$each_eff->eff_value; 
+                                           break;
+          case 43: $result['eff_duration']=$each_eff->eff_value; 
+                                           break;
+          case 44: $result['eff_speed']=$each_eff->eff_value; 
+                                           break;
+          case 45: $result['eff_interval']=$each_eff->eff_value; 
+                                           break;
+          case 47: $result['TL_x_b']=$each_eff->eff_value; 
+                                           break;
+          case 48: $result['TL_y_b']=$each_eff->eff_value; 
+                                           break;
+          case 49: $result['BR_x_b']=$each_eff->eff_value; 
+                                           break;
+          case 50: $result['BR_y_b']=$each_eff->eff_value; 
+                                           break;
+          case 51: $result['TL_x_c']=$each_eff->eff_value; 
+                                           break;
+          case 52: $result['TL_y_c']=$each_eff->eff_value; 
+                                           break;
+          case 53: $result['BR_x_c']=$each_eff->eff_value; 
+                                           break;
+          case 54: $result['BR_y_c']=$each_eff->eff_value; 
+                                           break;
+          case 55: $result['TL_x_d']=$each_eff->eff_value; 
+                                           break;
+          case 56: $result['TL_y_d']=$each_eff->eff_value; 
+                                           break;
+          case 57: $result['BR_x_d']=$each_eff->eff_value; 
+                                           break;
+          case 58: $result['BR_y_d']=$each_eff->eff_value; 
+                                           break;
+          case 60: $result['atk_increase_time']=$each_eff->eff_value; 
+                                           break;
+          case 61: $result['atk_increase_percent']=$each_eff->eff_value; 
+                                           break;
+          case 62: $result['damge_absorb_percent']=$each_eff->eff_value; 
+                                           break;
+          case 63: $result['extra_damge_hp']=$each_eff->eff_value; 
+                                           break;
+          case 64: $result['extra_damge_frequency']=$each_eff->eff_value; 
+                                           break;
+          case 65: $result['Invincible_time']=$each_eff->eff_value; 
+                                           break;
+          case 66: $result['enhance_defence_time']=$each_eff->eff_value; 
+                                           break;
+          case 67: $result['enhance_defence_percent']=$each_eff->eff_value; 
+                                           break;
+          case 68: $result['recover_hp_percent']=$each_eff->eff_value; 
+                                           break;
+          case 69: $result['clear_buff_bool']=$each_eff->eff_value; 
+                                           break;
+          case 70: $result['reflect_dame_percent']=$each_eff->eff_value; 
+                                           break;
+          case 71: $result['reflect_dame_time']=$each_eff->eff_value; 
+                                           break;
+          case 72: $result['frezz_time']=$each_eff->eff_value; 
+                                           break;
+          case 73: $result['stealth_time']=$each_eff->eff_value; 
+                                           break;
+          case 74: $result['repel_distance']=$each_eff->eff_value; 
+                                           break;
+          case 75: $result['repel_time']=$each_eff->eff_value; 
+                                           break;
   			default:
   				# code...
             				             break;
-
   		}
   		# code...
   	}
@@ -735,61 +674,107 @@ class AttackHitUtil
   code edition from 2018.04.10
 */
   public function calculateCharValue($chardata,$enemyData,$skillatkEff,$skill_group,$u_id,$enemy_uid,$match_id){
+      $battle_status_key='battle'.$u_id;
   		$SkillEffDeatilModel=new SkillEffDeatilModel();
       $randCrit=rand(1,100);
       $current=$this->getMillisecond();
       $battle_status_key='battle'.$u_id;
       $redis_user=Redis::connection('battle_user');
       $redis_battle=Redis::connection('battle');
-     // $checkEnmeyBuffs=$this->checkBuffs($match_id,$enemy_uid,1);
+      $checkMyBuffs=$this->checkBuffs($u_id,$current);
       $damage_reduction=0;
       $crit=0;
       $atk_increase=0;
-      if(isset($checkEnmeyBuffs)&&$checkEnmeyBuffs){
-        foreach ($checkEnmeyBuffs as $key => $value) {
-          if(isset($checkEnmeyBuffs['crit'])){
-            $crit=0;
-          }
-          if(isset($checkEnmeyBuffs['atk_increase'])){
-            $atk_increase=0;
-          }
-      }
-    }
       $critBool=1;
       if($randCrit<=$enemyData['ch_crit']||!$crit=0){
         $critBool=2;
       }
-		 // $user_def=($chardata['ch_armor']*1.1)/(15*$chardata['ch_lv']+$chardata['ch_armor']+40);
-		  $user_def=$chardata['ch_def'];
-      $enemy_res=$enemyData['ch_res'];
-		  $hpMax=$chardata['ch_hp_max'];
-      $execute_hp_precentage=0;
-  		if($skill_group==1||$skill_group==5||$skill_group==6){
-        if(!isset($skillatkEff['eff_skill_atk_point'])){
-           $skillatkEff['eff_skill_atk_point']=3;
-        }
-      if(isset($elementPrence['eff_value'])){
-        $execute_hp_precentage=$elementPrence['eff_value'];
-      }
-			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res*(1+$atk_increase);
-			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
-      // Log::info('enmey damage'.$enemyDMG);
-			$hpMax=$chardata['ch_hp_max'];
-			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
-			if($chardata['ch_hp_max']<0){
-				$chardata['ch_hp_max']=0;
-			}
-  		}
-  		else if ($skill_group==2){
-  		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemyData['ch_lv'],2)*2;
- 	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
- 	 		$hpMax=$chardata['ch_hp_max'];
-			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
-      Log::info('enmey  speical damage'.$enemyDMG);
+ 
+        		  $user_def=$chardata['ch_def'];
+              $enemy_res=$enemyData['ch_res'];
+        		  $hpMax=$chardata['ch_hp_max'];
+              $execute_hp_precentage=0;
+          		if($skill_group==1||$skill_group==5||$skill_group==6){
+                if(!isset($skillatkEff['eff_skill_atk_point'])){
+                   $skillatkEff['eff_skill_atk_point']=3;
+                }
+              if(isset($elementPrence['eff_value'])){
+                $execute_hp_precentage=$elementPrence['eff_value'];
+              }
+        			$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']*$enemy_res*(1+$atk_increase);
+        			$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
+              // Log::info('enmey damage'.$enemyDMG);
+        			$hpMax=$chardata['ch_hp_max'];
+        			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
+        			if($chardata['ch_hp_max']<0){
+        				$chardata['ch_hp_max']=0;
+        			}
+          		}
+          		else if ($skill_group==2){
+          		$enemy_atk=$enemyData['ch_atk']*$skillatkEff['eff_skill_atk_point']+pow($enemyData['ch_lv'],2)*2;
+         	 		$enemyDMG=($enemy_atk*$critBool)*(1-$user_def);
+         	 		$hpMax=$chardata['ch_hp_max'];
+        			$chardata['ch_hp_max']=round($hpMax*(1-$execute_hp_precentage)-$enemyDMG);
+              $chardata['hp_change']=$enemyDMG;
+               if(isset($skillatkEff['repel_distance'])){
+                    $chardata['repel_distance']=$skillatkEff['repel_distance'];       
+
+                    $redis_user->HSET($battle_status_key,'repel_distance',$skillatkEff['repel_distance']);
+                   
+               }        
+
+              if(isset($skillatkEff['repel_time'])){
+                    $chardata['repel_time']=$skillatkEff['repel_time'];
+                    $redis_user->HSET($battle_status_key,'repel_time',$skillatkEff['repel_time']);
+              }
+              if(isset($skillatkEff['frezz_time'])){
+                    $chardata['frezz_time']=$skillatkEff['frezz_time'];       
+
+                    $redis_user->HSET($battle_status_key,'frezz_time',$skillatkEff['frezz_time']);
+                   
+               }
+               if(isset($skillatkEff['frezz_time'])){
+                    $chardata['frezz_time']=$skillatkEff['frezz_time'];       
+
+                    $redis_user->HSET($battle_status_key,'frezz_time',$skillatkEff['frezz_time']);
+                   
+               }
+               if(isset($skillatkEff['slow_time'])){
+                    $chardata['slow_time']=$skillatkEff['slow_time'];
+                    $chardata['slow_percentage']=$skillatkEff['slow_percentage'];
+                    $redis_user->HSET($battle_status_key,'slow_time',$skillatkEff['slow_time']);
+                   
+               }
+               if(isset($skillatkEff['stun_time'])){
+                    $chardata['stun_time']=$skillatkEff['stun_time'];
+                    $redis_user->HSET($battle_status_key,'stun_time',$skillatkEff['stun_time']);
+                   
+               }
+               
+              Log::info('enmey  speical damage'.$enemyDMG);
   	}
 
     $redis_user->HSET($battle_status_key,'ch_hp_max',$chardata['ch_hp_max']);
   	return $chardata;
+  }
+  public function strikeCal($enemyData,$chardata,$u_id,$current){
+    $strike_key='strike'.$u_id;
+    $redis_battle=Redis::connection('battle');
+    $end=$redis_battle->HGET($strike_key,'end_time');
+    $hit=$redis_battle->HGET($strike_key,'hit');
+    if($current<$end&&$hit==0){
+        $skill_fre=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',36)->first();
+        $atk_point=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',23)->first();
+        $enemy_hpMax=$enemyData['ch_hp_max'];
+
+    $strike=$chardata['ch_atk']*$atk_point*$skill_fre;
+    $enemyData['ch_hp_max']=$enemy_hpMax-$strike;
+    $redis_battle->HSET($strike_key,'hit',1);
+    return $enemyData;
+    }
+    else {
+      return null;
+    }
   }
 
   // public function addBuff($skill_id,$u_id,$match_id,$enemy_uid){
@@ -810,6 +795,27 @@ class AttackHitUtil
   //       }
   //     }
   //   }
+  // }
+    public function addBuff($skill_id,$current,$u_id,$match_id){
+      $now   = new DateTime;
+      $dmy=$now->format( 'Ymd' );
+      $redis_user=Redis::connection('battle');
+      $buff_key='buff_skill'.$skill_id.'_'.$u_id;
+      $SkillEffDeatilModel=new SkillEffDeatilModel();
+      $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
+      $end_time=$duration['eff_value']+$current;
+      $redis_user->HSET('battle_buff'.$u_id,$end_time,$skill_id);
+  }
+
+    public function checkBuffs($u_id,$current){
+      $redis_user=Redis::connection('battle');
+      $buffs=$redis_user->HGETALL('battle_buff'.$u_id);
+      foreach ($buffs as $time => $skill_id) {
+        if($time<$current){
+            $skillEff=$this->getEffValue($skill_id);
+        }
+      }
+    }
   // }
 
   public function clearOutOftime($match_id,$u_id,$skill_id){
@@ -859,11 +865,11 @@ class AttackHitUtil
           $end_time=$redis_battle->HGET($multi_key,'end_time');
           if($current<$end_time){
           $skills=$redis_battle->HGETALL($multi_key);
-         }
-        else if($current>=$end_time){
-        //  Log::info('del multi key')
+           }
+          else if($current>=$end_time){
+         //  Log::info('del multi key')
             $redis_battle->DEL($multi_key);
-        }
+          }
       }
        return $skills;
   }
@@ -872,4 +878,14 @@ class AttackHitUtil
   //   $redis_user=Redis::connection('battle_user');
   //   $redis_user->HGETALL($buff_key,$u_id);
   // }
+    public function checkStrike($u_id,$current,$skill_id){
+      $redis_battle=Redis::connection('battle');
+      $strike_key='strike'.$u_id;
+      $SkillEffDeatilModel=new SkillEffDeatilModel();
+      $duration=$SkillEffDeatilModel->select('eff_value')->where('skill_id',$skill_id)->where('eff_element_id',43)->first();
+      $end_time=$current+$duration;
+      $redis_battle->HSET($strike_key,'end_time',$end_time);
+      $redis_battle->HSET($strike_key,'skill_id',$skill_id);
+      $redis_battle->HSET($strike_key,'hit',0);
+    } 
 }

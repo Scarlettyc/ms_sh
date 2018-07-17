@@ -46,7 +46,7 @@ class NotifyCommand extends Command
     {
 	 $reqs=array(); //保持客户端的长连接在这个数组里
         $serv = new swoole_websocket_server("0.0.0.0",6385,SWOOLE_BASE);
-        $serv->set(['worker_num' => 2,'daemonize'   => 1,
+        $serv->set(['worker_num' => 2,'daemonize'   => 0,
             'log_file'=> './storage/logs/websocket.log',
             'heartbeat_check_interval' => 600,
             'heartbeat_idle_time' => 6000

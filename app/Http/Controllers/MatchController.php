@@ -116,11 +116,11 @@ class MatchController extends Controller
 						$redis_battle->HSET($battleKeyEnemy,'client',$waitUser['client_id']);
 						$redis_battle->HSET($battleKeyEnemy,'create_date',time());
 						$redis_battle->HSET($battleKeyEnemy,'match_range',$matchKey);
-       					$battle_status_key='battle'.$u_id;
-       					$battle_status_key_enemy='battle'.$match_uid[0];
-						$redis_user->HSET($battle_status_key,'ch_hp_max',1000);
-						$redis_user->HSET($battle_status_key_enemy,'ch_hp_max',1000);
-						$redis_user->HSET($battle_status_key_enemy,'match_key',$matchKey);
+      //  					$battle_status_key='battle'.$u_id;
+      //  					$battle_status_key_enemy='battle'.$match_uid[0];
+						// $redis_user->HSET($battle_status_key,'ch_hp_max',1000);
+						// $redis_user->HSET($battle_status_key_enemy,'ch_hp_max',1000);
+						// $redis_user->HSET($battle_status_key_enemy,'match_key',$matchKey);
 						// $redis_battle->HDEL($matchKey,$match_uid[0]);
 						// $redis_battle->HDEL($matchKey,$u_id);
 						$resultList['match_id']=$match_id;
@@ -204,8 +204,7 @@ class MatchController extends Controller
     private function chooseMap(){
     	$defindmst=new DefindMstModel();
     	$defindData=$defindmst->where('defind_id',10)->first();
-    	$mapID=rand($defindData['value1'],$defindData['value2'] );
-    	return $mapID;
+    	return $defindData['value1'];
 
     }
 

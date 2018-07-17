@@ -14,6 +14,7 @@ use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeReMstModel;
+use App\DefindMstModel;
 use App\Util\BaggageUtil;
 use App\Util\CharSkillEffUtil;
 use Exception;
@@ -60,6 +61,7 @@ class BaggageItemController extends Controller
 
 		$CharacterModel=new CharacterModel();
 		$EquipmentMstModel=new EquipmentMstModel();
+		$BaggageUtil=new BaggageUtil();
 		$result=[];
 		$weaponData=[];
 		$movementData=[];
@@ -68,7 +70,14 @@ class BaggageItemController extends Controller
 		$u_id=$data['u_id'];
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
-			$equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id','b_equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
+
+			// $equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id','b_equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
+			$equ_data=DB::table('User_Baggage_Eq')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+					->select('User_Baggage_Eq.b_equ_id as item_id','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv','User_Baggage_Eq.user_beq_id as baggage_id')
+					->where('User_Baggage_Eq.status',1)
+					->where('User_Baggage_Eq.u_id',$u_id)
+					->get();
 			$result['ch_equ']=$equ_data;
 			$result['ch_stam']=$characterDetail['ch_stam'];
 			$result['ch_atk']=$characterDetail['ch_atk'];
@@ -188,14 +197,22 @@ class BaggageItemController extends Controller
 		$ScrollMstModel=new ScrollMstModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$MissionController=new MissionController();
+		$UserBaggageEqModel=new UserBaggageEqModel();
+		$defindMstModel=new DefindMstModel();
 
 		$u_id=$data['u_id'];
 		$scrollId=$data['item_id'];
 		$equ_type=$data['equ_type'];
 		$item_type=$data['item_type'];
 		$baggage_id=$data['baggage_id'];
-		
-			$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->update(array('status'=>2,'updated_at'=>$datetime));
+
+			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
+			$countBaggage=$UserBaggageEqModel->where('u_id',$u_id)->where('b_equ_type',1)->count();
+			if($countBaggage>=$baggageLimit['value1']){
+				throw new Exception("baggage is full, please clear your baggage");
+				
+			}
+			$scrollQu=$UserBaggageScrollModel->select('quantity')->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->first();
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
 			if($scrollInfo['sc_rarity']==2){
 				$MissionController->achieveMission(15,2,$u_id,1);
@@ -205,8 +222,13 @@ class BaggageItemController extends Controller
 			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
-				$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
-
+				if($scrollQu['quantity']==1){
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+				}
+				else{
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
+				}
+				
 				$response='Successfully Meraged';
 				return base64_encode($response);
 			}
@@ -252,6 +274,9 @@ class BaggageItemController extends Controller
 			}else{
 				$result['upgrade']=0;
 			}
+			$result['equ_code']=$equData['equ_code'];
+			$result['item_rarity']=$equData['equ_rarity'];
+			$result['equ_lv']=$equData['equ_lv']+1;
 			$result['item_id']=$upgarde['equ_id'];
 			$result['baggage_id']=$upgarde['baggage_id'];
 			$response=json_encode($result,TRUE);

@@ -63,15 +63,9 @@ class MapTrapUtil
     public function getMapData($map_id){
         $mapModel=new MapModel();
         $trapMst=new TrapMstModel();
-        // $mapRelation=new MapTrapRelationMst();
-        $mapData=$mapModel->where('map_id',$map_id)->first();
-        $mapList=DB::table('Map_mst')
-                    ->join('Map_Trap_Relation_mst','Map_mst.map_id','=','Map_Trap_Relation_mst.map_id')
-                    ->join('Trap_mst','Trap_mst.trap_id','=','Map_Trap_Relation_mst.trap_id')
-                    ->select('Map_Trap_Relation_mst.trap_id','Map_Trap_Relation_mst.trap_x_from','Map_Trap_Relation_mst.trap_x_to','Map_Trap_Relation_mst.trap_y_from','Map_Trap_Relation_mst.trap_y_to','Map_Trap_Relation_mst.trap_center_x','Map_Trap_Relation_mst.trap_center_y','Trap_mst.trap_name','Trap_mst.trap_icon','Trap_mst.trap_chartlet')
-                    ->where('Map_mst.map_id',$map_id)
-                    ->get();
-        return   $mapList;      
+        $mapRelation=new MapTrapRelationMst();
+        $mapData=$mapRelation->select('map_id','trap_id','x','y')->where('map_id',$map_id)->get();
+        return   $mapData;      
         
     }
 

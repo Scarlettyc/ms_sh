@@ -15,6 +15,7 @@ use App\DefindMstModel;
 use App\UserFriendCoinHistoryModel;
 use App\UserFriendCoinReceiveModel;
 use DB;
+use App\Util\BaggageUtil;
 use App\Http\Controllers\MissionController;
 
 class FriendController extends Controller
@@ -88,13 +89,19 @@ class FriendController extends Controller
 		$requestlist=Redis::HVALS($key);
 		$characterModel=new CharacterModel();
 		$result=[];
+		$BaggageUtil=new BaggageUtil();
 		if(isset($requestlist)){
 			foreach($requestlist as $friend){
 			$friendArr=json_decode($friend);
 			$frData['u_id']=$friendArr->u_id;
 			$frData['friend_id']=$friendArr->friend_id;
 			$frData['time']=time()-($friendArr->time);
-			$ch_title=$characterModel->select('ch_title')->where('u_id',$friendArr->u_id)->first();
+			$ch_title=$characterModel->select('ch_title','ch_img','w_bag_id')->where('u_id',$friendArr->u_id)->first();
+			$equ_data=$BaggageUtil->getEquipedCode($ch_title['w_bag_id']);
+			$frData['item_rarity']=$equ_data->item_rarity;
+			$frData['equ_code']=$equ_data->equ_code;	
+			$frData['equ_lv']=$equ_data->equ_lv;	
+			$frData['ch_img']=$ch_title['ch_img'];		
 			$frData['ch_title']=$ch_title['ch_title'];
 			$result[]=$frData;
 			
@@ -121,11 +128,14 @@ class FriendController extends Controller
 		$friendList=DB::table('User_friend_list')
 					->join('User','User.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
-					->select('User.u_id','User.friend_id','User.like_number','User.profile_img','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv')
+					->join('User_Baggage_Eq','User_Baggage_Eq.u_id','=','User.u_id')
+					->join('Equipment_mst','User_Baggage_Eq.b_equ_id','=','Equipment_mst.equ_id')
+					->select('User.u_id','User.friend_id','User.like_number','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv','User_Character.ch_img','Equipment_mst.equ_code','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_lv')
 					->where('User_friend_list.u_id',$data['u_id'])
 					->where('User_friend_list.friend_status',1)
 					->orderby('User_Character.ch_ranking','DESC')
 					->orderBy('User_Character.ch_title', 'ASC')
+					->groupby('User_friend_list.friend_u_id')
 					->get();
 
 		$key='friend_request_'.$data['u_id'];
@@ -133,7 +143,6 @@ class FriendController extends Controller
 		$friend_user_ids=[];
 		if($friendList){
 			foreach($friendList as $friend){
-
 				$loginToday=Redis::HGET('login_data',$friend->u_id);
 				if($loginToday){
 					$loginTodayArr=json_decode($loginToday);
@@ -377,9 +386,14 @@ class FriendController extends Controller
 		$usermodel=new UserModel();
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
-		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit')->where('u_id',$friend['u_id'])->first();
+		$BaggageUtil=new BaggageUtil();
+		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
+		$equ_data=$BaggageUtil->getEquipedCode($friendCharacter['w_bag_id']);
+		$friendCharacter['item_rarity']=$equ_data->item_rarity;
+		$friendCharacter['equ_code']=$equ_data->equ_code;
+		$friendCharacter['equ_lv']=$equ_data->equ_lv;
 		$friendCharacter['friend_id']=$data['friend_id'];
-		$result["friend_details"]=$friendCharacter;
+		$result['friend_details']=$friendCharacter;
 		$response=json_encode($result,TRUE);
 		 return base64_encode($response);
 	}

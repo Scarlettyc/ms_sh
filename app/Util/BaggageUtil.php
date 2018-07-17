@@ -23,6 +23,7 @@ use App\UserModel;
 use Illuminate\Support\Facades\Redis;
 use App\Http\Controllers\MissionController;
 use App\DefindMstModel;
+use DB;
 
 class BaggageUtil
 {
@@ -71,13 +72,27 @@ class BaggageUtil
 			$UserBaggageEqModel=new UserBaggageEqModel();
 				$result=[];
 			$defindMstModel=new DefindMstModel();
-			$baggageWeapon=$UserBaggageEqModel->select('user_beq_id','b_equ_id','b_icon_path','b_equ_rarity')->where('u_id','=',$u_id)->where('status','=',$status)->where('b_equ_type','=',$equ_type)->orderBy('b_equ_rarity','DESC')->orderBy('b_equ_id','DESC')->get();
+			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
+			if($equ_type==1){
+				$eqLimit=$baggageLimit['value1'];
+		
+			}
+			else {
+				$eqLimit=$baggageLimit['value2'];
+			}
+			$baggageWeapon=$UserBaggageEqModel
+				->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+				->select('User_Baggage_Eq.user_beq_id','User_Baggage_Eq.b_equ_id','User_Baggage_Eq.b_icon_path','User_Baggage_Eq.b_equ_rarity')->where('u_id','=',$u_id)->where('User_Baggage_Eq.status','=',$status)->where('User_Baggage_Eq.b_equ_type','=',$equ_type)->orderBy('Equipment_mst.equ_rarity','DESC')->orderBy('equ_lv','DESC')->orderBy('Equipment_mst.equ_group')->orderBy('User_Baggage_Eq.b_equ_id')->limit($eqLimit)->get();
+
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['b_equ_id'];
 				$arry['item_type']=2;
 				$arry['equ_type']=$equ_type;
 				$arry['item_rarity']=$obj['b_equ_rarity'];
+				$eq_data=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$arry['item_id'])->first();
+				$arry['equ_code']=$eq_data['equ_code'];
+				$arry['equ_lv']=$eq_data['equ_lv'];
 				if($arry['equ_type']==1){
 				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$obj['b_equ_rarity'])->first();
 				$arry['need_lv']=$standardData['value2'];
@@ -100,6 +115,8 @@ class BaggageUtil
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
 			$EquipmentInfo = $EquipmentMstModel->where('equ_id','=',$Item_Id)->first(); 
 			$equipment['baggage_id']=$user_beq_id;
+			$equipment['equ_code']=$EquipmentInfo['equ_code'];
+			$equipment['equ_lv']=$EquipmentInfo['equ_lv'];
 			$equipment['item_id']=$EquipmentInfo['equ_id'];
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
@@ -144,13 +161,13 @@ class BaggageUtil
 			$result=[];
 			$scrollMstModel=new ScrollMstModel();
 
-			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
+			$baggageScroll=$UserBaggageScrollModel->select('user_bsc_id','bsc_id','bsc_icon','quantity')->where('u_id','=',$baggage_u_id)->where('status','=',0)->orderBy('bsc_rarity','DESC')->get();
 
 			foreach ($baggageScroll as $obj) 
 			{	$arry['baggage_id']=$obj['user_bsc_id'];
 				$arry['item_id']=$obj['bsc_id'];
 				$arry['item_type']=3;
-				$arry['item_quantity']=1;
+				$arry['item_quantity']=$obj['quantity'];
 				$arry['equ_type']=0;
 				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['bsc_id'])->first();
 				$arry['sc_img_path']=$scrollMst['sc_img_path'];
@@ -161,9 +178,7 @@ class BaggageUtil
 
 	function getScrollInfo ($Item_Id,$u_id,$user_bsc_id)
 	{
-		$ScrollId=$Item_Id;
-		$u_id=$u_id;
-
+			$ScrollId=$Item_Id;
 			$UserModel=new UserModel();
 			$ScrollMstModel=new ScrollMstModel();
 			$EquipmentMstModel=new EquipmentMstModel();
@@ -235,7 +250,7 @@ class BaggageUtil
 					$tmp['r_qu_need']=$each->r_quantity;
 					if($rQu['br_quantity']){
 						$tmp['r_qu_have']=$rQu['br_quantity'];
-						if($upgarde==1&&$rQu['br_quantity']<$each->r_quantity&&$coinLeft){
+						if($upgarde==1&&$rQu['br_quantity']<$each->r_quantity){
 						throw new Exception("no enough resouce id".$each->r_id);
 							}
 						else{
@@ -268,11 +283,18 @@ class BaggageUtil
 			$result['equ_name']=$equData['equ_name'];
 			$result['coin']=$equData['upgrade_coin'];
 			$result['equ_atr']['equ_id']=$equ_id;
+			$result['equ_atr']['equ_code']=$equData['equ_code'];
+			$result['equ_atr']['item_rarity']=$equData['equ_rarity'];
+			$result['equ_atr']['equ_lv']=$equData['equ_lv'];
+
 			$result['equ_atr']['eff_ch_stam']=$equAtr['eff_ch_stam'];
 			$result['equ_atr']['eff_ch_atk']=$equAtr['eff_ch_atk'];
 			$result['equ_atr']['eff_ch_armor']=$equAtr['eff_ch_armor'];
 			$result['equ_atr']['eff_ch_crit_per']=$equAtr['eff_ch_crit_per'];
 			$result['up_equ']['equ_id']=$comEqData['equ_id'];
+			$result['up_equ']['equ_code']=$comEqData['equ_code'];
+			$result['up_equ']['item_rarity']=$comEqData['equ_rarity'];
+			$result['up_equ']['equ_lv']=$comEqData['equ_lv'];
 			$result['up_equ']['eff_ch_stam']=$comEquAtr['eff_ch_stam'];
 			$result['up_equ']['eff_ch_atk']=$comEquAtr['eff_ch_atk'];
 			$result['up_equ']['eff_ch_armor']=$comEquAtr['eff_ch_armor'];
@@ -360,7 +382,7 @@ class BaggageUtil
 				
 			}
 			else if($reward['item_type']==2){
-				for ($i=0;$i<$reward['item_quantity'];$i++) {
+		
 					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
@@ -368,11 +390,11 @@ class BaggageUtil
 					$result['b_icon_path']=$eqData['icon_path'];
 					$result['b_equ_rarity']=$eqData['equ_rarity'];
 					$result['b_equ_type']=$eqData['equ_type'];
+					$result['quantity']=$reward['item_quantity'];
 					$result['status']=0;
 					$result['updated_at']=$datetime;
 					$result['created_at']=$datetime;
 					$UserBaggageEqModel->insert($result);
-				}
 			}
 			else if($reward['item_type']==3){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
@@ -492,5 +514,13 @@ class BaggageUtil
 				// $mission->archiveMission(6,$u_id,$spendData['gem']);
 				// }
 				$redisShop->HSET($spentKey,$u_id,$spendJson);
+ 		}
+ 		public function getEquipedCode($w_bag_id){
+ 				$equ_data=DB::table('User_Baggage_Eq')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
+					->select('User_Baggage_Eq.b_equ_id as item_id','User_Baggage_Eq.b_equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv')
+					->where('User_Baggage_Eq.user_beq_id',$w_bag_id)
+					->first();
+					return $equ_data;
  		}
 }

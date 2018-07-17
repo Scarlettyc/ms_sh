@@ -31,6 +31,7 @@ class SwooleCommand extends Command
     public function __construct()
     {
         parent::__construct();
+
     }
 
     /**
@@ -43,7 +44,7 @@ class SwooleCommand extends Command
     {   $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
         $serv->set(array(
             'worker_num'  => 8,
-            'daemonize'   => 1, //是否作为守护进程,此配置一般配合log_file使用
+            'daemonize'   => 0, //是否作为守护进程,此配置一般配合log_file使用
             'max_request' => 1000,
             'dispatch_mode' => 2,
             'debug_mode' => 1,
@@ -53,6 +54,7 @@ class SwooleCommand extends Command
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
         ));
+        $test_uid=[];
         // $this->serv->on('Task', array($this, 'onTask'));
 
         // $this->serv->on('Finish', array($this, 'onFinish'));
@@ -98,14 +100,24 @@ class SwooleCommand extends Command
 
 //         echo "Result: {$data}n";
 
-// }
+// }  $serv->start(); 
+
+        
+
+           
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
-             $battle=new BattleController();
-             $arr=json_decode($data,TRUE);
-                // Log::info($data);
-             $result=$battle->battleNew($arr,$clientInfo);
-             $redis_battle=Redis::connection('battle');
+                Log::info($data);
+                $battle=new BattleController();
+                $arr=json_decode($data,TRUE);
+                $result=$battle->battleTestNew($arr,$clientInfo);
+                $test_uid=$arr['u_id'];
+
+               
+                // $serv->after(600, function() use ($serv, $data,$clientInfo) {
+                   
+                // });
+            // $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
              //    $key='match_history'.$arr['match_id'].'_'.$result;
@@ -116,12 +128,42 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
+
              if($result){
-                $serv->sendto($clientInfo['address'], $clientInfo['port'],$result);
+                // $final=swoole_timer_after(60, function ($arr) {
+                //      $battle=new BattleController();
+                //     Log::info('test timer');
+                $final=$battle->battleReturn($arr);
+             //        return $final;
+             //    });
+                $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
                 }
+
              } );
 
-        $serv->start(); 
+        // $serv->heartbeat(function (){
+        //     Log::info("test udp start");
+        //     $battle=new BattleController();
+        //     $final=$battle->battleReturn($test_uid);
+          
+
+        // });
+
+        $serv->start();
+
+        //      Log::info("test udp start");
+        //      // $serv->tick(600, function() {
+        //         $battle=new BattleController();
+        //         //$arr=json_decode($data,TRUE);
+        //         $final=$battle->battleReturn($test_uid);
+        //          Log::info($final);
+        //        // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+
+        //     } )
+
+        // }
+
+
 
     }
 

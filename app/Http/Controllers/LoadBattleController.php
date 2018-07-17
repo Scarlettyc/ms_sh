@@ -34,6 +34,7 @@ class LoadBattleController extends Controller
 		$data=json_decode($json,TRUE);
         $u_id=$data['u_id'];
         $redis_battle=Redis::connection('battle');
+        $redis_user=Redis::connection('battle_user');
         // $CharSkillEffUtil=new CharSkillEffUtil();
         // $access_token=$data['access_token'];
         // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
@@ -42,14 +43,25 @@ class LoadBattleController extends Controller
             $battleKey='battle_status'.$u_id.$dmy;
  	    	$matchID=$redis_battle->HGET($battleKey,'match_id');
  	    	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+            $client_id=$redis_battle->HGET($battleKey,'client');
+
+            // $key_list='battle'.$u_id.$dmy;
+            // $key_count=$redis_user->HLEN($key_list);
+            // $redis_user->HSET($key_list,'match_id',$matchID);
+            // $redis_user->HSET($key_list,'battle_status',$battleKey);
+            $enemy_battle_key='battle_status'.$enemy_uid.$dmy;
+            $enemy_client=$redis_battle->HGET($enemy_battle_key,'client');
+
             if($matchID!=$match_id){
  	    		throw new Exception("wrong match_id");
  	    	}
 
  	    	$charaM=new CharacterModel();
  	    	$eqModel=new EquipmentMstModel();
- 	    	$userData=$this->getData($u_id,$match_id);
- 	    	$enemyData=$this->getData($enemy_uid,$match_id);
+ 	    	$userData=$this->getData($u_id,$match_id,$client_id);
+            $userData['client_id']=$client_id;
+ 	    	$enemyData=$this->getData($enemy_uid,$match_id,$enemy_client);
+            $enemyData['client_id']=$enemy_client;
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
@@ -60,7 +72,7 @@ class LoadBattleController extends Controller
 		// }
     }
 
-    private function getData($u_id,$match_id){
+    private function getData($u_id,$match_id,$client_id){
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
  	    $charaM=new CharacterModel();
@@ -70,7 +82,7 @@ class LoadBattleController extends Controller
     	$charData=$charaM->where('u_id',$u_id)->first();
         $redis_battle=Redis::connection('battle');
         $redis_user=Redis::connection('battle_user');
-        $battle_status_key='battle'.$u_id;
+        // $battle_status_key='battle'.$u_id;
         // $exist=$redis_user->EXISTS($battle_status_key);
         // if($exist==1){
         //     $redis_user->DEL($battle_status_key);
@@ -87,19 +99,27 @@ class LoadBattleController extends Controller
  	    $movement_id=$charData['m_id'];
  	    $core_id=$charData['core_id'];
         $user_def=($charData['ch_armor']*1.1)/(15*$charData['ch_lv']+$charData['ch_armor']+40);
-        $redis_user->HSET($battle_status_key,'ch_def',(round($user_def,3)));
-        $redis_user->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
-        $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
-        $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
-        $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
-        $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
-        $redis_user->HSET($battle_status_key,'x',-1000);
-        $redis_user->HSET($battle_status_key,'x2',-1000);
-        $redis_user->HSET($battle_status_key,'y',-290);
-        $redis_user->HSET($battle_status_key,'y2',-290);
-        $redis_user->HSET($battle_status_key,'status',1);
-        $redis_user->HSET($battle_status_key,'direction',1);
- 	    $eqData=$eqModel->select('equ_group')->where('equ_id',$weapon_id)->first();
+        // $redis_user->HSET($battle_status_key,'ch_def',(round($user_def,3)));
+        // $redis_user->HSET($battle_status_key,'ch_hp_max',$charData['ch_hp_max']);
+        // $redis_user->HSET($battle_status_key,'client_id',$client_id);
+        // $redis_user->HSET($battle_status_key,'ch_crit',$charData['ch_crit']);
+        // $redis_user->HSET($battle_status_key,'ch_res',$charData['ch_res']);
+        // $redis_user->HSET($battle_status_key,'ch_atk',$charData['ch_atk']);
+        // $redis_user->HSET($battle_status_key,'ch_lv',$charData['ch_lv']);
+        // $redis_user->HSET($battle_status_key,'x',-1000);
+        // $redis_user->HSET($battle_status_key,'x2',-1000);
+        // $redis_user->HSET($battle_status_key,'y',-290);
+        // $redis_user->HSET($battle_status_key,'y2',-290);
+        // $redis_user->HSET($battle_status_key,'status',1);
+        // $redis_user->HSET($battle_status_key,'direction',1);
+ 	    $eqData=$eqModel->select('equ_group','equ_code','equ_rarity as item_rarity','equ_lv')->where('equ_id',$weapon_id)->first();
+        $charRe['equ_code']=$eqData['equ_code'];
+        $charRe['item_rarity']=$eqData['item_rarity'];
+        $charRe['equ_lv']=$eqData['equ_lv'];
+        // $key_list='battle'.$u_id.$dmy;
+        // $redis_user->HSET($key_list,'user_status',$battle_status_key);
+        // $u_list='battle_users';
+        // $redis_user->HSET($u_list,$u_id,time());
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
@@ -117,20 +137,15 @@ class LoadBattleController extends Controller
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
         $move_effs=$this->getEffs($movement_skill);
-        $special_skill['skill_effs']=$move_effs;
+        $special_skill['skill_effs']=$special_effs;
         $result['special_skill']=$special_skill;
-        $core_skill['skill_effs']=$move_effs;
+        $core_skill['skill_effs']=$core_effs;
         $result['core_skill']=$core_skill;
         $movement_skill['skill_effs']=$move_effs; 
+        $move_effsJson=json_encode($move_effs,TRUE);
         $result['movement_skill']=$movement_skill;
         $final['chardata']=$charRe;
  	    $final['skillData']=$result;
-        // $matchrange=new MatchRangeModel();
-        // $match=$matchrange->where('user_ranking',$charData['ch_ranking'])->where('star_from','<=',$charData['ch_star'])->where('star_to','>=',$charData['ch_star'])
-        //         ->first();
-        // $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
-
-        //$redis_user->HDEL($matchKey,$u_id);
  	    return $final;
  	  }
 
@@ -139,33 +154,42 @@ class LoadBattleController extends Controller
         $json=base64_decode($req);
         $now   = new DateTime;
         $dmy=$now->format( 'Ymd' );
-        $data=json_decode($json,TRUE);
         $mapTrapUtil=new MapTrapUtil();
         $data=json_decode($json,TRUE);
         $redisLoad= Redis::connection('default');
         $u_id=$data['u_id'];
-        // $CharSkillEffUtil=new CharSkillEffUtil();
-        // $access_token=$data['access_token'];
-        // $checkToken=$CharSkillEffUtil->($access_token,$u_id);
         $redis_battle=Redis::connection('battle');
         $match_id=$data['match_id'];
         $battleKey='battle_status'.$u_id.$dmy;
         if(isset($data)){
-            $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
-            if($match_id==$hveMatchID){
+            // $hveMatchID=$redis_battle->HGET($battleKey,'match_id');
+            // if($match_id==$hveMatchID){
                 $mapId=$redis_battle->HGET($battleKey,'map_id');
                 $mapData=$mapTrapUtil->getMapData($mapId);
                 $result["map_data"]=$mapData;
                 $response=json_encode($result,TRUE);
              return  base64_encode($response);
-            } 
+            // } 
         }
     }
 
     private function getEffs($skill){
         $attackHitUtil=new AttackHitUtil();
         $result=[];
-        $effs= $attackHitUtil->getEffValueBytype($skill->skill_id);
+        $effs= $attackHitUtil->getEffValueBytype($skill['skill_id']);
         return $effs;
+    }
+
+    public function getLostFrame(Request $request){
+        $req=$request->getContent();
+        $json=base64_decode($req);
+        $now   = new DateTime;
+        $data=json_decode($json,TRUE);
+        $u_id=$data['u_id'];
+        $frame_id=$data['frame_id'];
+        $match_id=$data['match_id'];
+        $redis_user=Redis::connection('battle_user');
+        $lostFrame=$redis_user->HGET('battle_history'.$match_id,$frame_id);
+        return  base64_encode($lostFrame);
     }
 }
