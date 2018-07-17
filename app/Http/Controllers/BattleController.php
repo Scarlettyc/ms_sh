@@ -344,7 +344,7 @@ class BattleController extends Controller
 				$redis_user->HSET($frameKey,"y",$playerData['y']);
 				$redis_user->HSET($frameKey,"client_id",$playerData['client_id']);
 				$redis_user->HSET($frameKey,"match_id",$playerData['match_id']);
-				return  1;
+				return 1;
 			}
 
 	}

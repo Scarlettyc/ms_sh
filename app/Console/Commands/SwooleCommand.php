@@ -127,7 +127,7 @@ class SwooleCommand extends Command
              //        }
              // }
 
-             if($result){
+             if($result==1){
                 // $final=swoole_timer_after(60, function ($arr) {
                 //      $battle=new BattleController();
                 //     Log::info('test timer');
