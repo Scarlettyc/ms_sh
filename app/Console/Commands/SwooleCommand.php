@@ -136,12 +136,8 @@ class SwooleCommand extends Command
              //    });
                 if($final){
                     $response=json_encode($final,TRUE);
-                    if($clientInfo['address']==$final['address_1']){
-                    $serv->sendto($final['address_1'], $final['port_1'],$response);
-                    }
-                    else{
-                    $serv->sendto($final['address_2'], $final['port_2'],$response);
-                    }
+                   
+                    $serv->sendto($clientInfo['address'], $clientInfo['port'],$response);
                 }
             }
 
