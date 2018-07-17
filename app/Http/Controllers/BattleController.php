@@ -350,7 +350,7 @@ class BattleController extends Controller
 	public function battleReturn($result){
 			$redis_battle=Redis::connection('battle');
  			$redis_user=Redis::connection('battle_user');
- 			if(isset(($result)){
+ 			if(isset($result)){
 			$u_id=$result['u_id'];
 			$frame_id=$result['frame_id'];
 			$now   = new DateTime;
