@@ -136,8 +136,10 @@ class SwooleCommand extends Command
              //    });
                 if($final){
                     $response=json_encode($final,TRUE);
-                    $serv->sendto($final['address_1'], $final['port_1'],$response);
-                    $serv->sendto($final['address_2'], $final['port_2'],$response);
+                    $serv->push($final['client_id'], $response); 
+                    //$server->push($final['client_id'], $result2);
+                    // $serv->sendto($final['client_id'], $final['port_1'],$response);
+                    // $serv->sendto($final['address_2'], $final['port_2'],$response);
                 }
             }
 
