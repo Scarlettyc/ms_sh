@@ -128,7 +128,7 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-
+            usleep(6000);
              if($result){
                 // $final=swoole_timer_after(60, function ($arr) {
                 //      $battle=new BattleController();
