@@ -337,12 +337,9 @@ class BattleController extends Controller
 				$current=$this->getMillisecond();
 				$playerData=$result['playerData'];
 				$frame_id=$result['frame_id'];
-				$frameKey='battle_data'.$u_id.$match_id.$frame_id;
-				//$frameData=json_encode($playerData,TRUE);
-				$redis_user->HSET($frameKey,"x",$playerData['x']);
-				$redis_user->HSET($frameKey,"y",$playerData['y']);
-				$redis_user->HSET($frameKey,"client_id",$playerData['client_id']);
-				$redis_user->HSET($frameKey,"match_id",$playerData['match_id']);
+				$frameKey='battle_data'.$u_id.$match_id;
+				$frameData=json_encode($playerData,TRUE);
+				$redis_user->HSET($frameKey,$frame_id,$frameData);
 				return  1;
 			}
 
@@ -358,25 +355,22 @@ class BattleController extends Controller
 			$battleKey='battle_status'.$u_id.$dmy;
 		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
-			$frameKey='battle_data'.$u_id.$match_id.$frame_id;
-			$frameExit=$redis_user->EXISTS($frameKey);
-			$enemyFramekey='battle_data'.$enemy_uid.$match_id.$frame_id;
-			$enmeyFrameEx=$redis_user->EXISTS($enemyFramekey);
-			// $frameData=json_decode($frameDataJson,TRUE);
-			//$result['battle_data'][]=$frameData;
-			// $enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
-			if($frameExit&&$enmeyFrameEx){
-			$enmeyFrameData=$redis_user->HGETALL($enemyFramekey);
-			$frameData=$redis_user->HGETALL($frameKey);
+			$frameKey='battle_data'.$u_id.$match_id;
+			$frameDataJson=$redis_user->HGET($frameKey,$frame_id);
+			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
+			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
+			$frameData=json_decode($frameDataJson,TRUE);
 			$result['battle_data'][]=$frameData;
-			$result['battle_data'][]=$enmeyFrameData;
-			$result['frame_id']=$frame_id;	
-			$response=json_encode($result,TRUE);
+			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
+			$final=[];
+			if(isset($enmeyFrameData)){
+			$final['battle_data'][]=$enmeyFrameData;
+			}
+			$final['frame_id']=$frame_id;	
+			$response=json_encode($final,TRUE);
 			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 		    Log::info($response);
 			return 	$response;
-			}
-			
 	}
 
 	private function removeUsedSkill($u_id){
