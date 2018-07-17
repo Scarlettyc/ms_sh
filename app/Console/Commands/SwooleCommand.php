@@ -104,12 +104,12 @@ class SwooleCommand extends Command
         $battle=new BattleController();
         $final=$battle->battleReturn($test_arry);
 
-        while($final){
-             $serv->sendto($final['address_1'], $final['port_1'],$response);
-             $serv->sendto($final['address_2'], $final['port_2'],$response);  
-        }
+     
         do {
             usleep(60000);
+        } while($final){
+             $serv->sendto($final['address_1'], $final['port_1'],$response);
+             $serv->sendto($final['address_2'], $final['port_2'],$response);  
         }
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
