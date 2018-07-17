@@ -106,12 +106,9 @@ class SwooleCommand extends Command
         while($final){
              $battle=new BattleController();
              $final=$battle->battleReturn($test_arry);
-             if($final){
              
              $serv->sendto($final['address_1'], $final['port_1'],$response);
              $serv->sendto($final['address_2'], $final['port_2'],$response);
-            }
-
         }
         do {
             usleep(60000);
