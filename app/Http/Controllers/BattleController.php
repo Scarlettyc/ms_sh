@@ -372,7 +372,6 @@ class BattleController extends Controller
 			$frameData=$redis_user->HVALS($frameKey);
 			$final['battle_data'][]=$frameData;
 			$final['battle_data'][]=$enmeyFrameData;
-			Log::info($response);
 			}
 			$final['frame_id']=$frame_id;	
 			$response=json_encode($final,TRUE);
