@@ -102,13 +102,23 @@ class SwooleCommand extends Command
 
 // }  $serv->start(); 
 
+        while(usleep(600000)){
+             $battle=new BattleController();
+             $final=$battle->battleReturn($test_arry);
+             if($final){
+             $response=json_encode($final,TRUE);
+             $serv->sendto($final['address_1'], $final['port_1'],$response);
+             $serv->sendto($final['address_2'], $final['port_2'],$response);
+            }
+
+        }
 
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
                 $result=$battle->battleTestNew($arr,$clientInfo);
-                $test_arry=$arr['u_id'];
+                $test_arry=$arr;
 
                
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
@@ -125,21 +135,21 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             usleep(600000);
-             if($result){
-                // $final=swoole_timer_after(60, function ($arr) {
-                //      $battle=new BattleController();
-                //     Log::info('test timer');
-                $final=$battle->battleReturn($arr);
+            
+            //  if($result){
+            //     // $final=swoole_timer_after(60, function ($arr) {
+            //     //      $battle=new BattleController();
+            //     //     Log::info('test timer');
+            //     $final=$battle->battleReturn($arr);
 
-             //        return $final;
-             //    });
-                if($final){
-                    $response=json_encode($final,TRUE);
+            //  //        return $final;
+            //  //    });
+            //     if($final){
+            //         $response=json_encode($final,TRUE);
                    
-                    $serv->sendto($clientInfo['address'], $clientInfo['port'],$response);
-                }
-            }
+            //         $serv->sendto($clientInfo['address'], $clientInfo['port'],$response);
+            //     }
+            // }
 
              } );
 
