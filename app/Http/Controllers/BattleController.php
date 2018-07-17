@@ -368,8 +368,8 @@ class BattleController extends Controller
 			//$result['battle_data'][]=$frameData;
 			// $enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
 			if($enmeyFrameID==$frame_id){
-			$enmeyFrameData=$redis_user->HVALS($enemyFramekey);
-			$frameData=$redis_user->HVALS($frameKey);
+			$enmeyFrameData=$redis_user->HGETALL($enemyFramekey);
+			$frameData=$redis_user->HGETALL($frameKey);
 			$final['battle_data'][]=$frameData;
 			$final['battle_data'][]=$enmeyFrameData;
 			}
