@@ -360,9 +360,10 @@ class BattleController extends Controller
 			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
 			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
 			$frameData=json_decode($frameDataJson,TRUE);
-			$result['battle_data'][]=$frameData;
+			
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
 			if(isset($enmeyFrameData)){
+			$result['battle_data'][]=$frameData;
 			$final['battle_data'][]=$enmeyFrameData;
 			$final['frame_id']=$frame_id;	
 			$response=json_encode($final,TRUE);
