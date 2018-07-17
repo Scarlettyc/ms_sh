@@ -136,7 +136,9 @@ class SwooleCommand extends Command
                 $final=$battle->battleReturn($arr);
              //        return $final;
              //    });
+                if($final){
                 $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
+                    }
                 }
 
              } );
