@@ -65,6 +65,8 @@ class LoadBattleController extends Controller
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
+
+            $this->dispatch(new SwooleClient());
 			return  base64_encode($response);
 		// }
 		// else {
