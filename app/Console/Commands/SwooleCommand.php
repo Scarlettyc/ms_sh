@@ -41,7 +41,23 @@ class SwooleCommand extends Command
      */
 
     public function handle()
-    {   $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
+    {    $client = new swoole_client(SWOOLE_SOCK_UDP);
+
+        $test=swoole_timer_tick(300, function ($id) use ($client){
+        $client->send("test\n");;
+           $message = $client->recv();
+            echo "Get Message From Server:{$message}\n";
+
+        });
+
+         swoole_timer_after(14000, function () use($client,$test){
+        swoole_timer_clear($test);
+         echo "client close";
+         $client->close();
+        });          
+
+
+        $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
         $serv->set(array(
             'worker_num'  => 8,
             'daemonize'   => 0, //是否作为守护进程,此配置一般配合log_file使用
