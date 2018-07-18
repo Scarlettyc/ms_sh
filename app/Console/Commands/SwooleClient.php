@@ -41,7 +41,7 @@ class SwooleClient extends Command
      */
 
     public function handle()
-    {   $client = new Swoole\Client(SWOOLE_SOCK_UDP);
+    {   $client = new swoole_client(SWOOLE_SOCK_UDP);
 
         $test=swoole_timer_tick(300, function ($id) use ($client){
          $client->send("test\n");;
