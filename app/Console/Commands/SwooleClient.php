@@ -14,7 +14,7 @@ class SwooleClient extends Command
      *
      * @var string
      */
-    protected $signature = 'swoole: client';
+    protected $signature = 'swoole:client';
 
     /**
      * The console command description.
