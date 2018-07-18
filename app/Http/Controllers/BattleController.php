@@ -348,34 +348,34 @@ class BattleController extends Controller
 	}
 
 	public function battleReturn($result){
-			$redis_battle=Redis::connection('battle');
- 			$redis_user=Redis::connection('battle_user');
-			$u_id=$result['u_id'];
-			$frame_id=$result['frame_id'];
-			$now   = new DateTime;
-			$dmy=$now->format( 'Ymd' );
-			$battleKey='battle_status'.$u_id.$dmy;
-		 	$match_id=$redis_battle->HGET($battleKey,'match_id');
-		 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
-			$frameKey='battle_data'.$u_id.$match_id;
-			$frameDataJson=$redis_user->HGET($frameKey,$frame_id);
-			$enemyFramekey='battle_data'.$enemy_uid.$match_id;
-			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
-			$frameData=json_decode($frameDataJson,TRUE);
+			// $redis_battle=Redis::connection('battle');
+ 		// 	$redis_user=Redis::connection('battle_user');
+			// $u_id=$result['u_id'];
+			// $frame_id=$result['frame_id'];
+			// $now   = new DateTime;
+			// $dmy=$now->format( 'Ymd' );
+			// $battleKey='battle_status'.$u_id.$dmy;
+		 // 	$match_id=$redis_battle->HGET($battleKey,'match_id');
+		 // 	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+			// $frameKey='battle_data'.$u_id.$match_id;
+			// $frameDataJson=$redis_user->HGET($frameKey,$frame_id);
+			// $enemyFramekey='battle_data'.$enemy_uid.$match_id;
+			// $enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
+			// $frameData=json_decode($frameDataJson,TRUE);
 			
-			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
-			if(isset($enmeyFrameData)){
-			$result['battle_data'][]=$frameData;
-			$final['battle_data'][]=$enmeyFrameData;
-			$final['frame_id']=$frame_id;
-			$final['address_1']=$frameData['address'];
-			$final['port_1']=$frameData['port'];
-			$final['address_2']=$frameData['address'];
-			$final['port_2']=$frameData['port'];
-			$response=json_encode($final,TRUE);
-			$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
-		    Log::info($response);
-			return 	$final;
+			// $enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
+			// if(isset($enmeyFrameData)){
+			// $result['battle_data'][]=$frameData;
+			// $final['battle_data'][]=$enmeyFrameData;
+			// $final['frame_id']=$frame_id;
+			// $final['address_1']=$frameData['address'];
+			// $final['port_1']=$frameData['port'];
+			// $final['address_2']=$frameData['address'];
+			// $final['port_2']=$frameData['port'];
+			// $response=json_encode($final,TRUE);
+			// $redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
+		    Log::info($result);
+			return 	$result;
 			}
 	}
 

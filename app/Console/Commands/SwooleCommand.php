@@ -107,7 +107,7 @@ class SwooleCommand extends Command
                 Log::info($data);
                 $battle=new BattleController();
                 $arr=json_decode($data,TRUE);
-                $result=$battle->battleTestNew($arr,$clientInfo);
+                $battle->battleTestNew($arr,$clientInfo);
                 $test_arry=$arr['u_id'];
 
                
@@ -125,47 +125,48 @@ class SwooleCommand extends Command
              //            $result=$battle->battle($result['enemy_uid'],$result['u_id'],$data);
              //        }
              // }
-             if($result==1){
-                // $final=swoole_timer_after(60, function ($arr) {
-                //      $battle=new BattleController();
-                //     Log::info('test timer');
-                $final=$battle->battleReturn($arr);
+            //  if($result==1){
+            //     // $final=swoole_timer_after(60, function ($arr) {
+            //     //      $battle=new BattleController();
+            //     //     Log::info('test timer');
+            //     $final=$battle->battleReturn($arr);
 
-             //        return $final;
-             //    });
+            //  //        return $final;
+            //  //    });
                 if($final){
                     $response=json_encode($final,TRUE);
                    
                     $serv->sendto($final['address_1'], $final['port_1'],$response);
                     $serv->sendto($final['address_2'], $final['port_1'],$response);
                 }
-            }
+            // }
+                 $final=$serv->task($data);
+                //     if($final){
+                //     $response=json_encode($final,TRUE);
+                   
+                //     $serv->sendto($final['address_1'], $final['port_1'],$response);
+                //     $serv->sendto($final['address_2'], $final['port_1'],$response);
+                // }
 
              } );
 
-        // $serv->heartbeat(function (){
-        //     Log::info("test udp start");
-        //     $battle=new BattleController();
-        //     $final=$battle->battleReturn($test_uid);
-          
+            $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+                $arr=json_decode($data,TRUE);
+                if(isset($data['tick_timer'])){
+                     $final=$battle->battleReturn('test');
+                     return $final
+                }
+                
+                });
 
-        // });
+            $serv->on('Finish', function ($serv,$task_id, $data) {
+                    echo "Task {$task_id} finish\n";
+                    echo "Result: {$data}\n";
+
+            });
+
 
         $serv->start();
-
-        //      Log::info("test udp start");
-        //      // $serv->tick(600, function() {
-        //         $battle=new BattleController();
-        //         //$arr=json_decode($data,TRUE);
-        //         $final=$battle->battleReturn($test_uid);
-        //          Log::info($final);
-        //        // $serv->sendto($clientInfo['address'], $clientInfo['port'],$final);
-
-        //     } )
-
-        // }
-
-
 
     }
 

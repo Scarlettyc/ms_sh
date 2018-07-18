@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         // Commands\Inspire::class,
   \App\Console\Commands\SwooleCommand::class,
+    \App\Console\Commands\SwooleClient::class,
 \App\Console\Commands\NotifyCommand::class,
 \App\Console\Commands\BattleBackgroundCommand::class,
 \App\Console\Commands\ChatWebsocket::class,
