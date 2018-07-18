@@ -133,12 +133,12 @@ class SwooleCommand extends Command
 
             //  //        return $final;
             //  //    });
-                if($final){
-                    $response=json_encode($final,TRUE);
+                // if($final){
+                //     $response=json_encode($final,TRUE);
                    
-                    $serv->sendto($final['address_1'], $final['port_1'],$response);
-                    $serv->sendto($final['address_2'], $final['port_1'],$response);
-                }
+                //     $serv->sendto($final['address_1'], $final['port_1'],$response);
+                //     $serv->sendto($final['address_2'], $final['port_1'],$response);
+                // }
             // }
                  $final=$serv->task($data);
                 //     if($final){
