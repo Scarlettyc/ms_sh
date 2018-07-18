@@ -46,7 +46,7 @@ class SwooleClient extends Command
         $client->connect('127.0.0.1', 6380, 1);
 
         $test=swoole_timer_tick(300, function ($id) use ($client){
-         $client->send("test\n");;
+         $client->send("test\n");
            $message = $client->recv();
             echo "Get Message From Server:{$message}\n";
 
