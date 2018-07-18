@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Redis;
 use App\SkillEffDeatilModel;
 use App\Util\AttackHitUtil;
 use App\MatchRangeModel;
+use App\Console\Commands\SwooleClient;
 use Log;
 use DateTime;
 use Exception;
