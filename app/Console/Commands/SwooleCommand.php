@@ -154,7 +154,7 @@ class SwooleCommand extends Command
                 $arr=json_decode($data,TRUE);
                 if(isset($data['tick_timer'])){
                      $final=$battle->battleReturn('test');
-                     return $final
+                     return $final;
                 }
                 
                 });
