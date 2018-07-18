@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Redis;
 use swoole_server;
+use swoole_client;
 use App\Http\Controllers\BattleController;
 use Log;
 class SwooleCommand extends Command
