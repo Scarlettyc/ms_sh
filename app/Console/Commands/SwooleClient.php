@@ -41,22 +41,21 @@ class SwooleClient extends Command
      */
 
     public function handle()
-    {   
-        $client = new swoole_client(SWOOLE_SOCK_UDP);
+    {   $client = new swoole_client(SWOOLE_SOCK_UDP);
         $client->connect('127.0.0.1', 6380, 1);
 
         $test=swoole_timer_tick(300, function ($id) use ($client){
-         $client->send("test\n");
-           $message = $client->recv();
-            Log::info("Get Message From Server:{$message}\n");
+         $client->send("start");
+         //  $message = $client->recv();
+            Log::info("Get Message From Server\n");
 
-});
+        });
 
         swoole_timer_after(14000, function () use($client,$test){
         swoole_timer_clear($test);
         Log::info("client close\n");
          $client->close();
-        });                                       
+        });
 
     }
 

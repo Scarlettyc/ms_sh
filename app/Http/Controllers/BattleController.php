@@ -374,7 +374,7 @@ class BattleController extends Controller
 			// $final['port_2']=$frameData['port'];
 			// $response=json_encode($final,TRUE);
 			// $redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
-		    Log::info($result);
+		    Log::info('battleReturn '.$result);
 			return 	$result;
 	}
 
