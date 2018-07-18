@@ -44,12 +44,13 @@ class SwooleCommand extends Command
     {   $serv = new swoole_server("0.0.0.0/0", 6380, SWOOLE_PROCESS, SWOOLE_SOCK_UDP);
         $serv->set(array(
             'worker_num'  => 8,
+            'task_worker_num' => 4,
             'daemonize'   => 0, //是否作为守护进程,此配置一般配合log_file使用
             'max_request' => 1000,
             'dispatch_mode' => 2,
             'debug_mode' => 1,
             // 'task_worker_num' => 8, 
-            // 'task_ipc_mode' => 3,
+            'task_ipc_mode' => 3,
             'log_file'    => './storage/logs/swoole.log',
             'heartbeat_check_interval' => 60,
             'heartbeat_idle_time' => 600, 
