@@ -376,7 +376,6 @@ class BattleController extends Controller
 			// $redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
 		    Log::info($result);
 			return 	$result;
-			}
 	}
 
 	private function removeUsedSkill($u_id){
