@@ -152,6 +152,7 @@ class SwooleCommand extends Command
              } );
 
             $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+                $battle=new BattleController();
                 Log::info("test test");
                 Log::info($data);
                 if($data=='start'){
