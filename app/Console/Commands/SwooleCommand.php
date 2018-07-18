@@ -153,12 +153,11 @@ class SwooleCommand extends Command
 
             $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
                 Log::info("test test");
+                Log::info($data);
                 if($data=='start'){
                      $arr=json_decode($data,TRUE);
-                    if(isset($data['tick_timer'])){
                          $final=$battle->battleReturn('test');
                          return $final;
-                    }
                 }
                 
                 });
