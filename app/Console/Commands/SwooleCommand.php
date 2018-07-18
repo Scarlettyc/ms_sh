@@ -152,6 +152,7 @@ class SwooleCommand extends Command
              } );
 
             $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+                Log::info("test test");
                 $arr=json_decode($data,TRUE);
                 if(isset($data['tick_timer'])){
                      $final=$battle->battleReturn('test');
@@ -161,8 +162,8 @@ class SwooleCommand extends Command
                 });
 
             $serv->on('Finish', function ($serv,$task_id, $data) {
-                    echo "Task {$task_id} finish\n";
-                    echo "Result: {$data}\n";
+                    Log::info("Task {$task_id} finish\n");
+                    Log::info("Result: {$data}\n");
 
             });
 

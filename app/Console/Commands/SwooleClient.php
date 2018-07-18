@@ -48,13 +48,13 @@ class SwooleClient extends Command
         $test=swoole_timer_tick(300, function ($id) use ($client){
          $client->send("test\n");
            $message = $client->recv();
-            echo "Get Message From Server:{$message}\n";
+            Log::info("Get Message From Server:{$message}\n");
 
 });
 
-         swoole_timer_after(14000, function () use($client,$test){
+        swoole_timer_after(14000, function () use($client,$test){
         swoole_timer_clear($test);
-         echo "client close";
+        Log::info("client close\n");
          $client->close();
         });                                       
 
