@@ -107,7 +107,7 @@ class SwooleCommand extends Command
         $serv->on('Packet', function ($serv, $data, $clientInfo) {
                 Log::info($data);
                 $battle=new BattleController();
-                if(isset($$data)){
+                if(isset($data)){
                 $arr=json_decode($data,TRUE);
                 $battle->battleTestNew($arr,$clientInfo);
             }
