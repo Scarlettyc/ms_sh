@@ -129,7 +129,7 @@ class FriendController extends Controller
 					->join('User','User.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Baggage_Eq','User_Baggage_Eq.u_id','=','User.u_id')
-					->join('Equipment_mst','User_Baggage_Eq.b_equ_id','=','Equipment_mst.equ_id')
+					->join('Equipment_mst','User_Baggage_Eq.equ_id','=','Equipment_mst.equ_id')
 					->select('User.u_id','User.friend_id','User.like_number','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv','User_Character.ch_img','Equipment_mst.equ_code','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_lv')
 					->where('User_friend_list.u_id',$data['u_id'])
 					->where('User_friend_list.friend_status',1)

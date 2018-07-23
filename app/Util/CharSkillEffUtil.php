@@ -72,9 +72,9 @@ class CharSkillEffUtil
 	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->first();
 	 	$legData=$eqModel->where('equ_id',$charData['m_id'])->where('equ_part',2)->first();
 	 	$eqData=$eqModel->where('equ_id',$charData['w_id'])->where('equ_part',1)->first();
-	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_attribute_id'])->first();
-	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_attribute_id'])->first();
-	 	$legAttData=$eqAttr->where('equ_att_id',$legData['equ_attribute_id'])->first();
+	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_att_id'])->first();
+	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_att_id'])->first();
+	 	$legAttData=$eqAttr->where('equ_att_id',$legData['equ_att_id'])->first();
 
 	 	$userStam=($charAttData['base_stamina']+$eqAttData['eff_ch_stam']+$asAttData['eff_ch_stam']+$legAttData['eff_ch_stam']);
 	 	$userHp=$userStam*$charAttData['stamina_hp_ratio']+$charData['ch_lv']*$defindData['value1']-$defindData['value2'];
@@ -114,9 +114,9 @@ class CharSkillEffUtil
 	 private function mapEQ($u_id,$code,$status){
 	 	$eqData=$eqModel->where('equ_code',$code)->where('equ_lv',1)->first();
 	 	$result['u_id']=$u_id;
-	 	$result['b_equ_id']=$coreData['equ_id'];
-	 	$result['b_equ_rarity']=$coreData['equ_rarity'];
-	 	$result['b_icon_path']=$coreData['icon_path'];
+	 	$result['equ_id']=$coreData['equ_id'];
+	 	$result['equ_rarity']=$coreData['equ_rarity'];
+	 	$result['icon_path']=$coreData['icon_path'];
 	 	$result['status']=$status;
 	 	$result['updated_at']=$datetime;
 	 	$result['created_at']=$datetime;
@@ -140,9 +140,9 @@ class CharSkillEffUtil
 	 	}
 	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->where('status',1)->first();
 	 	$eqData=$eqModel->where('equ_id',$equ_id)->where('equ_part',1)->first();
-	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_attribute_id'])->first();
-	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_attribute_id'])->first();
-	 	$legAttData=$eqAttr->where('equ_att_id',$asData['equ_attribute_id'])->first();
+	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_att_id'])->first();
+	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_att_id'])->first();
+	 	$legAttData=$eqAttr->where('equ_att_id',$asData['equ_att_id'])->first();
 
 
 	 	$userStam=($charAttData['base_stamina']+$eqAttData['eff_ch_stam']);

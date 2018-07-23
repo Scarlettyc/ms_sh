@@ -18,6 +18,7 @@ class BattleRewardExpModel extends Model
  'loots_special',
  'start_date',
  'end_date',
+ 'updated_at',
  'createdate'];
 
 	protected $connection='mysql';
