@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Redis;
 use App\SkillEffDeatilModel;
 use App\Util\AttackHitUtil;
 use App\MatchRangeModel;
+use App\Console\Commands\SwooleClient;
 use Log;
 use DateTime;
 use Exception;
@@ -65,6 +66,8 @@ class LoadBattleController extends Controller
  	    	$result['user_data']=$userData;
  	    	$result['enemy_data']=$enemyData;
  	    	$response=json_encode($result,TRUE);
+
+            // $this->dispatch(new SwooleClient());
 			return  base64_encode($response);
 		// }
 		// else {
