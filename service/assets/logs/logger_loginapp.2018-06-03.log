@@ -1,0 +1,777 @@
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 623] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 623] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 624] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 624] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 626] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 626] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 628] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63902 )
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 628] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63902, SOMAXCONN=128.
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 628] - server-configs:
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 629] - 	internalAddr : 192.168.0.103:63902
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 629] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:11 629] - 	componentID : 9000
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 308] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 26593. PID: 12528 ----
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 308] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 308] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 308] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 442] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 443] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 444] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 448] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 448] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 448] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 449] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 491] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 530] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 530] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 531] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 532] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:13 830] - ---- loginapp is running ----
+   DEBUG   loginapp-1 26593 9000  [2018-06-03 12:34:13 831] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:20 953] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:20 974] - Components::findComponents: found logger, addr:192.168.0.103:63899
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:20 975] - Components::addComponent: reset orderLog, uid=26593!
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:20 976] - Components::addComponent[logger], uid=26593, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:20 978] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:21 086] - Components::findComponents: found dbmgr, addr:192.168.0.103:63901
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:21 086] - Components::addComponent: reset orderLog, uid=26593!
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:21 087] - Components::addComponent[dbmgr], uid=26593, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:21 087] - Components::findComponents: found dbmgr, addr:192.168.0.103:63901
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:23 091] - Components::findComponents: find baseappmgr(1)...
+ WARNING   loginapp-1 26593 9000  [2018-06-03 12:34:23 401] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20307, errorno=10048
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:24 411] - Components::findComponents: find baseappmgr(2)...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:24 416] - Components::findComponents: found baseappmgr, addr:192.168.0.103:63904
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:24 416] - Components::addComponent[baseappmgr], uid=26593, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:24 417] - Components::findComponents: found baseappmgr, addr:192.168.0.103:63904
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:26 451] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:26 471] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:26 487] - Components::process(): Found all the components!
+    INFO   loginapp-1 26593 9000  [2018-06-03 12:34:30 592] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+ WARNING   loginapp01 26593 9000  [2018-06-03 12:34:31 506] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20980, errorno=10048
+    INFO   loginapp01 26593 9000  [2018-06-03 12:34:32 117] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 26593 9000  [2018-06-03 12:34:32 117] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.53 seconds
+    INFO   loginapp01 26593 9000  [2018-06-03 12:34:32 852] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 541] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 541] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 541] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 541] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 544] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 544] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63938 )
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63938, SOMAXCONN=128.
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - server-configs:
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - 	internalAddr : 192.168.0.103:63938
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:35 545] - 	componentID : 9000
+ WARNING   loginapp-1 26672 9000  [2018-06-03 12:34:36 061] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20855, errorno=10048
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 065] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 26672. PID: 13080 ----
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 065] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 065] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 066] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 190] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 191] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 191] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 194] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 195] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 195] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 195] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 223] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 250] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 250] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 252] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 252] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:36 528] - ---- loginapp is running ----
+   DEBUG   loginapp-1 26672 9000  [2018-06-03 12:34:36 528] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 633] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 722] - Components::findComponents: found logger, addr:192.168.0.103:63934
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 723] - Components::addComponent: reset orderLog, uid=26672!
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 723] - Components::addComponent[logger], uid=26672, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 726] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 827] - Components::findComponents: found dbmgr, addr:192.168.0.103:63937
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 827] - Components::addComponent: reset orderLog, uid=26672!
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 828] - Components::addComponent[dbmgr], uid=26672, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:43 828] - Components::findComponents: found dbmgr, addr:192.168.0.103:63937
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:45 832] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:45 868] - Components::findComponents: found baseappmgr, addr:192.168.0.103:63936
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:45 868] - Components::addComponent[baseappmgr], uid=26672, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:45 869] - Components::findComponents: found baseappmgr, addr:192.168.0.103:63936
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:47 913] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:47 933] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:47 942] - Components::process(): Found all the components!
+    INFO   loginapp-1 26672 9000  [2018-06-03 12:34:54 472] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=2, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 26672 9000  [2018-06-03 12:34:55 677] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 26672 9000  [2018-06-03 12:34:55 677] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+    INFO   loginapp01 26672 9000  [2018-06-03 12:34:56 372] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 26672 9000  [2018-06-03 12:37:49 531] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64038/0/0/0
+ WARNING   loginapp01 26672 9000  [2018-06-03 12:37:49 531] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64038/0/0/0
+  S_INFO   loginapp01 26672 9000  [2018-06-03 12:37:49 631] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 26672 9000  [2018-06-03 12:37:49 631] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 26672 9000  [2018-06-03 12:37:49 631] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 26672 9000  [2018-06-03 12:37:49 811] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 26672 9000  [2018-06-03 12:37:49 931] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 26672 9000  [2018-06-03 12:37:49 931] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 26672 9000  [2018-06-03 12:37:50 025] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64038): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 330] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 331] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 331] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 331] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 333] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 333] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 334] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64047 )
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 334] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64047, SOMAXCONN=128.
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 335] - server-configs:
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 335] - 	internalAddr : 192.168.0.103:64047
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 335] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:23 335] - 	componentID : 9000
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 043] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 27413. PID: 12608 ----
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 044] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 044] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 044] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 167] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 168] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 168] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 171] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 171] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 171] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 172] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 210] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 244] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 244] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 246] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 246] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:25 589] - ---- loginapp is running ----
+   DEBUG   loginapp-1 27413 9000  [2018-06-03 12:38:25 590] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 687] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 714] - Components::findComponents: found logger, addr:192.168.0.103:64054
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 714] - Components::addComponent: reset orderLog, uid=27413!
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 715] - Components::addComponent[logger], uid=27413, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 716] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 820] - Components::findComponents: found dbmgr, addr:192.168.0.103:64049
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 821] - Components::addComponent: reset orderLog, uid=27413!
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 821] - Components::addComponent[dbmgr], uid=27413, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:32 822] - Components::findComponents: found dbmgr, addr:192.168.0.103:64049
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:34 827] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:34 855] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64052
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:34 855] - Components::addComponent[baseappmgr], uid=27413, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:34 856] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64052
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:36 907] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:36 927] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:36 930] - Components::process(): Found all the components!
+    INFO   loginapp-1 27413 9000  [2018-06-03 12:38:43 526] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 27413 9000  [2018-06-03 12:38:44 731] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 27413 9000  [2018-06-03 12:38:44 731] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+    INFO   loginapp01 27413 9000  [2018-06-03 12:38:45 486] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 27413 9000  [2018-06-03 12:39:01 186] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64083/0/0/0
+ WARNING   loginapp01 27413 9000  [2018-06-03 12:39:01 186] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64083/0/0/0
+  S_INFO   loginapp01 27413 9000  [2018-06-03 12:39:01 266] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 27413 9000  [2018-06-03 12:39:01 266] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 27413 9000  [2018-06-03 12:39:01 266] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 27413 9000  [2018-06-03 12:39:01 366] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 27413 9000  [2018-06-03 12:39:01 426] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 27413 9000  [2018-06-03 12:39:01 426] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 27413 9000  [2018-06-03 12:39:01 457] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64083): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 021] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 022] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 022] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 022] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 024] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 024] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64096 )
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64096, SOMAXCONN=128.
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - server-configs:
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - 	internalAddr : 192.168.0.103:64096
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 026] - 	componentID : 9000
+ WARNING   loginapp-1 27838 9000  [2018-06-03 12:40:33 567] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20674, errorno=10048
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 571] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 27838. PID: 10784 ----
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 571] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 571] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 572] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 696] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 696] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 697] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 700] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 700] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 700] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 701] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:33 727] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 754] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 754] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 756] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:33 756] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:34 026] - ---- loginapp is running ----
+   DEBUG   loginapp-1 27838 9000  [2018-06-03 12:40:34 026] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 124] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 210] - Components::findComponents: found logger, addr:192.168.0.103:64093
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 211] - Components::addComponent: reset orderLog, uid=27838!
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 211] - Components::addComponent[logger], uid=27838, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 213] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 316] - Components::findComponents: found dbmgr, addr:192.168.0.103:64089
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 316] - Components::addComponent: reset orderLog, uid=27838!
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 317] - Components::addComponent[dbmgr], uid=27838, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:41 317] - Components::findComponents: found dbmgr, addr:192.168.0.103:64089
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:43 323] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:43 358] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64094
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:43 358] - Components::addComponent[baseappmgr], uid=27838, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:43 359] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64094
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:45 417] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:45 423] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:45 437] - Components::process(): Found all the components!
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:47 917] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64121/0/0/0
+ WARNING   loginapp-1 27838 9000  [2018-06-03 12:40:47 917] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64121/0/0/0
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:48 017] - Loginapp::loginFailed: loginName=1 login is failed. failedcode=SERVER_ERR_SRV_STARTING, datas=initProgress: 0.
+ WARNING   loginapp-1 27838 9000  [2018-06-03 12:40:51 106] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64121): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:51 217] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64126/0/0/0
+ WARNING   loginapp-1 27838 9000  [2018-06-03 12:40:51 217] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64126/0/0/0
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:51 317] - Loginapp::loginFailed: loginName=1 login is failed. failedcode=SERVER_ERR_SRV_STARTING, datas=initProgress: 0.
+    INFO   loginapp-1 27838 9000  [2018-06-03 12:40:51 957] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=2, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 27838 9000  [2018-06-03 12:40:53 159] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 27838 9000  [2018-06-03 12:40:53 159] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+ WARNING   loginapp01 27838 9000  [2018-06-03 12:40:54 108] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64126): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 27838 9000  [2018-06-03 12:40:54 217] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64127/0/0/0
+ WARNING   loginapp01 27838 9000  [2018-06-03 12:40:54 217] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64127/0/0/0
+    INFO   loginapp01 27838 9000  [2018-06-03 12:40:54 257] - Loginapp::onBaseappInitProgress: progress=1.
+  S_INFO   loginapp01 27838 9000  [2018-06-03 12:40:54 317] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 27838 9000  [2018-06-03 12:40:54 317] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 27838 9000  [2018-06-03 12:40:54 317] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 27838 9000  [2018-06-03 12:40:54 417] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 27838 9000  [2018-06-03 12:40:54 557] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 27838 9000  [2018-06-03 12:40:54 557] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 27838 9000  [2018-06-03 12:40:54 609] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64127): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 810] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 810] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 810] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 810] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 814] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 814] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64163 )
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64163, SOMAXCONN=128.
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - server-configs:
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - 	internalAddr : 192.168.0.103:64163
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:55 816] - 	componentID : 9000
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 548] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 28305. PID: 12632 ----
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 549] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 549] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 549] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 674] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 674] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 675] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 678] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 678] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 678] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 678] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:57 710] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 742] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 742] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 743] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:57 744] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:42:58 029] - ---- loginapp is running ----
+   DEBUG   loginapp-1 28305 9000  [2018-06-03 12:42:58 029] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 165] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 199] - Components::findComponents: found logger, addr:192.168.0.103:64161
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 200] - Components::addComponent: reset orderLog, uid=28305!
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 201] - Components::addComponent[logger], uid=28305, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 203] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 306] - Components::findComponents: found dbmgr, addr:192.168.0.103:64166
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 306] - Components::addComponent: reset orderLog, uid=28305!
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 307] - Components::addComponent[dbmgr], uid=28305, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:05 308] - Components::findComponents: found dbmgr, addr:192.168.0.103:64166
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:07 312] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:07 348] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64162
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:07 348] - Components::addComponent[baseappmgr], uid=28305, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:07 349] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64162
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:09 403] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:09 412] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:09 423] - Components::process(): Found all the components!
+    INFO   loginapp-1 28305 9000  [2018-06-03 12:43:16 004] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 28305 9000  [2018-06-03 12:43:17 209] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 28305 9000  [2018-06-03 12:43:17 209] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+    INFO   loginapp01 28305 9000  [2018-06-03 12:43:17 924] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 28305 9000  [2018-06-03 12:43:43 443] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64208/0/0/0
+ WARNING   loginapp01 28305 9000  [2018-06-03 12:43:43 443] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64208/0/0/0
+  S_INFO   loginapp01 28305 9000  [2018-06-03 12:43:43 543] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 28305 9000  [2018-06-03 12:43:43 543] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 28305 9000  [2018-06-03 12:43:43 543] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 28305 9000  [2018-06-03 12:43:44 123] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 28305 9000  [2018-06-03 12:43:44 183] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 28305 9000  [2018-06-03 12:43:44 183] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 28305 9000  [2018-06-03 12:43:44 229] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64208): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 205] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 206] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 206] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 206] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 218] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 219] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 221] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64225 )
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 221] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64225, SOMAXCONN=128.
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 222] - server-configs:
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 222] - 	internalAddr : 192.168.0.103:64225
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 222] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:29 222] - 	componentID : 9000
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:30 994] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 28804. PID: 12044 ----
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:30 994] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:30 995] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:30 995] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 126] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 127] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 127] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 130] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 130] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 131] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 131] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 164] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:31 198] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:31 198] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 28804 9000  [2018-06-03 12:45:31 200] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:31 200] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:31 535] - ---- loginapp is running ----
+   DEBUG   loginapp-1 28804 9000  [2018-06-03 12:45:31 535] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 601] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 688] - Components::findComponents: found logger, addr:192.168.0.103:64224
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 688] - Components::addComponent: reset orderLog, uid=28804!
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 688] - Components::addComponent[logger], uid=28804, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 689] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 790] - Components::findComponents: found dbmgr, addr:192.168.0.103:64219
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 790] - Components::addComponent: reset orderLog, uid=28804!
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 790] - Components::addComponent[dbmgr], uid=28804, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:38 790] - Components::findComponents: found dbmgr, addr:192.168.0.103:64219
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:40 801] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:40 900] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64222
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:40 900] - Components::addComponent[baseappmgr], uid=28804, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:40 901] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64222
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:42 941] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:42 961] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:42 975] - Components::process(): Found all the components!
+    INFO   loginapp-1 28804 9000  [2018-06-03 12:45:47 881] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 28804 9000  [2018-06-03 12:45:49 082] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 28804 9000  [2018-06-03 12:45:49 082] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+    INFO   loginapp01 28804 9000  [2018-06-03 12:45:50 141] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 28804 9000  [2018-06-03 12:45:58 181] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64262/0/0/0
+ WARNING   loginapp01 28804 9000  [2018-06-03 12:45:58 181] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64262/0/0/0
+  S_INFO   loginapp01 28804 9000  [2018-06-03 12:45:58 261] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 28804 9000  [2018-06-03 12:45:58 261] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 28804 9000  [2018-06-03 12:45:58 261] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 28804 9000  [2018-06-03 12:45:58 401] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 28804 9000  [2018-06-03 12:45:58 441] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 28804 9000  [2018-06-03 12:45:58 441] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 28804 9000  [2018-06-03 12:45:58 460] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64262): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:00 999] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 000] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 000] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 000] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 003] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 003] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 005] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64274 )
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 005] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64274, SOMAXCONN=128.
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 005] - server-configs:
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 006] - 	internalAddr : 192.168.0.103:64274
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 006] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:01 006] - 	componentID : 9000
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 750] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 29105. PID: 9684 ----
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 750] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 750] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 751] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 878] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 879] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 879] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 882] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 882] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 882] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 883] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:02 915] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 951] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 951] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 954] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:02 954] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:03 259] - ---- loginapp is running ----
+   DEBUG   loginapp-1 29105 9000  [2018-06-03 12:47:03 259] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 314] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 391] - Components::findComponents: found logger, addr:192.168.0.103:64273
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 391] - Components::addComponent: reset orderLog, uid=29105!
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 391] - Components::addComponent[logger], uid=29105, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 392] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 492] - Components::findComponents: found dbmgr, addr:192.168.0.103:64268
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 492] - Components::addComponent: reset orderLog, uid=29105!
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 493] - Components::addComponent[dbmgr], uid=29105, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:10 493] - Components::findComponents: found dbmgr, addr:192.168.0.103:64268
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:12 494] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:12 502] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64271
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:12 502] - Components::addComponent[baseappmgr], uid=29105, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:12 503] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64271
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:14 554] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:14 573] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:14 592] - Components::process(): Found all the components!
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:18 754] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64306/0/0/0
+ WARNING   loginapp-1 29105 9000  [2018-06-03 12:47:18 754] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64306/0/0/0
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:18 854] - Loginapp::loginFailed: loginName=1 login is failed. failedcode=SERVER_ERR_SRV_STARTING, datas=initProgress: 0.
+    INFO   loginapp-1 29105 9000  [2018-06-03 12:47:19 574] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=8E3D5E947DD75DF6C1835B4ACB01C274.
+    INFO   loginapp01 29105 9000  [2018-06-03 12:47:20 775] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 29105 9000  [2018-06-03 12:47:20 775] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+    INFO   loginapp01 29105 9000  [2018-06-03 12:47:21 554] - Loginapp::onBaseappInitProgress: progress=1.
+ WARNING   loginapp01 29105 9000  [2018-06-03 12:47:21 945] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64306): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 29105 9000  [2018-06-03 12:47:22 054] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64307/0/0/0
+ WARNING   loginapp01 29105 9000  [2018-06-03 12:47:22 054] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64307/0/0/0
+  S_INFO   loginapp01 29105 9000  [2018-06-03 12:47:22 154] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 29105 9000  [2018-06-03 12:47:22 154] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 29105 9000  [2018-06-03 12:47:22 154] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 29105 9000  [2018-06-03 12:47:22 274] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 29105 9000  [2018-06-03 12:47:22 354] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 29105 9000  [2018-06-03 12:47:22 354] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 29105 9000  [2018-06-03 12:47:22 447] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64307): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 471] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 471] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 471] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 471] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 475] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 475] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 476] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64675 )
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 476] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64675, SOMAXCONN=128.
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 477] - server-configs:
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 477] - 	internalAddr : 192.168.0.103:64675
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 477] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 477] - 	componentID : 9000
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 894] - Components::findLogger: found logger, addr:192.168.0.103:64672
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 895] - Components::addComponent: reset orderLog, uid=4314!
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 895] - Components::addComponent[logger], uid=4314, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 902] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 4314. PID: 18284 ----
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 902] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 902] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:44 902] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 027] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 028] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 028] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 031] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 031] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 031] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 032] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 060] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:45 090] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:45 090] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 4314 9000  [2018-06-03 13:27:45 091] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:45 091] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:45 391] - ---- loginapp is running ----
+   DEBUG   loginapp-1 4314 9000  [2018-06-03 13:27:45 392] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:52 473] - Components::findComponents: find dbmgr(1)...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:52 561] - Components::findComponents: found dbmgr, addr:192.168.0.103:64670
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:52 561] - Components::addComponent: reset orderLog, uid=4314!
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:52 561] - Components::addComponent[dbmgr], uid=4314, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:52 561] - Components::findComponents: found dbmgr, addr:192.168.0.103:64670
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:54 572] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:54 598] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64673
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:54 598] - Components::addComponent[baseappmgr], uid=4314, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:54 599] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64673
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:56 632] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:56 652] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:27:56 661] - Components::process(): Found all the components!
+    INFO   loginapp-1 4314 9000  [2018-06-03 13:28:03 372] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=2, startGroupOrder=1, digest=AAFBA00DE60C9E59F8F720FF50CA4B6A.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:28:04 577] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:28:04 577] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+    INFO   loginapp01 4314 9000  [2018-06-03 13:28:05 492] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:28:45 792] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64715/0/0/0
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:28:45 792] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64715/0/0/0
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:28:45 872] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:28:45 872] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:28:45 872] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:28:46 032] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:28:46 092] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:28:46 092] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:28:46 169] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64715): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 4314 9000  [2018-06-03 13:30:23 211] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64727/0/0/0
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:30:23 211] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64727/0/0/0
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:30:23 311] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:30:23 311] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:30:23 311] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:30:23 411] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=10
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:30:23 491] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:30:23 491] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:30:23 594] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64727): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 4314 9000  [2018-06-03 13:32:27 789] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64742/0/0/0
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:32:27 789] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64742/0/0/0
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:32:27 889] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:32:27 889] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:32:27 889] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:32:28 009] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=10
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:32:28 089] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:32:28 089] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:32:28 166] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64742): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 4314 9000  [2018-06-03 13:33:35 189] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64770/0/0/0
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:33:35 189] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64770/0/0/0
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:33:35 269] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:33:35 269] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 4314 9000  [2018-06-03 13:33:35 269] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 4314 9000  [2018-06-03 13:33:35 429] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=10
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:33:35 489] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 4314 9000  [2018-06-03 13:33:35 489] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 4314 9000  [2018-06-03 13:33:35 562] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64770): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 084] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 084] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 084] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 084] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 094] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 094] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 099] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64858 )
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 099] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64858, SOMAXCONN=128.
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 100] - server-configs:
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 100] - 	internalAddr : 192.168.0.103:64858
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 100] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:44 100] - 	componentID : 9000
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:45 849] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 7645. PID: 17284 ----
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:45 850] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:45 850] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:45 850] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 985] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 986] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 986] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 990] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 991] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 991] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:45 991] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:46 026] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:46 056] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:46 056] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 7645 9000  [2018-06-03 13:44:46 058] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:46 058] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:46 359] - ---- loginapp is running ----
+   DEBUG   loginapp-1 7645 9000  [2018-06-03 13:44:46 359] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 459] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 510] - Components::findComponents: found logger, addr:192.168.0.103:64860
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 510] - Components::addComponent: reset orderLog, uid=7645!
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 511] - Components::addComponent[logger], uid=7645, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 512] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 617] - Components::findComponents: found dbmgr, addr:192.168.0.103:64853
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 617] - Components::addComponent: reset orderLog, uid=7645!
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 618] - Components::addComponent[dbmgr], uid=7645, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:53 618] - Components::findComponents: found dbmgr, addr:192.168.0.103:64853
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:55 638] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:55 739] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64856
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:55 740] - Components::addComponent[baseappmgr], uid=7645, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:55 741] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64856
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:57 790] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:57 798] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:44:57 812] - Components::process(): Found all the components!
+    INFO   loginapp-1 7645 9000  [2018-06-03 13:45:02 959] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=ABEC0BE45068C1A05390920169634774.
+    INFO   loginapp01 7645 9000  [2018-06-03 13:45:04 164] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 7645 9000  [2018-06-03 13:45:04 164] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+    INFO   loginapp01 7645 9000  [2018-06-03 13:45:04 899] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 7645 9000  [2018-06-03 13:45:17 999] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64891/0/0/0
+ WARNING   loginapp01 7645 9000  [2018-06-03 13:45:17 999] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64891/0/0/0
+  S_INFO   loginapp01 7645 9000  [2018-06-03 13:45:18 079] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 7645 9000  [2018-06-03 13:45:18 079] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 7645 9000  [2018-06-03 13:45:18 079] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 7645 9000  [2018-06-03 13:45:18 199] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 7645 9000  [2018-06-03 13:45:18 299] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 7645 9000  [2018-06-03 13:45:18 299] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 7645 9000  [2018-06-03 13:45:18 379] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64891): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 687] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 688] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 688] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 688] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 693] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 693] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64904 )
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64904, SOMAXCONN=128.
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - server-configs:
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - 	internalAddr : 192.168.0.103:64904
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:28 697] - 	componentID : 9000
+ WARNING   loginapp-1 7988 9000  [2018-06-03 13:46:29 194] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20486, errorno=10048
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 198] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 7988. PID: 16772 ----
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 200] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 200] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 200] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 330] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 330] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 330] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 334] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 334] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 334] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 334] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 365] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 395] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 395] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 397] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 398] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:29 689] - ---- loginapp is running ----
+   DEBUG   loginapp-1 7988 9000  [2018-06-03 13:46:29 690] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:36 790] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:36 895] - Components::findComponents: found logger, addr:192.168.0.103:64900
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:36 895] - Components::addComponent: reset orderLog, uid=7988!
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:36 896] - Components::addComponent[logger], uid=7988, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:36 897] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:37 002] - Components::findComponents: found dbmgr, addr:192.168.0.103:64905
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:37 002] - Components::addComponent: reset orderLog, uid=7988!
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:37 003] - Components::addComponent[dbmgr], uid=7988, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:37 003] - Components::findComponents: found dbmgr, addr:192.168.0.103:64905
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:39 017] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:39 027] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64901
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:39 027] - Components::addComponent[baseappmgr], uid=7988, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:39 027] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64901
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:41 077] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:41 090] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:41 097] - Components::process(): Found all the components!
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:44 037] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64934/0/0/0
+ WARNING   loginapp-1 7988 9000  [2018-06-03 13:46:44 037] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64934/0/0/0
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:44 117] - Loginapp::loginFailed: loginName=1 login is failed. failedcode=SERVER_ERR_SRV_STARTING, datas=initProgress: 0.
+ WARNING   loginapp-1 7988 9000  [2018-06-03 13:46:46 810] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64934): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:46 918] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64939/0/0/0
+ WARNING   loginapp-1 7988 9000  [2018-06-03 13:46:46 918] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64939/0/0/0
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:47 018] - Loginapp::loginFailed: loginName=1 login is failed. failedcode=SERVER_ERR_SRV_STARTING, datas=initProgress: 0.
+    INFO   loginapp-1 7988 9000  [2018-06-03 13:46:47 578] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=2, startGroupOrder=1, digest=ABEC0BE45068C1A05390920169634774.
+    INFO   loginapp01 7988 9000  [2018-06-03 13:46:48 780] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 7988 9000  [2018-06-03 13:46:48 780] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+ WARNING   loginapp01 7988 9000  [2018-06-03 13:46:49 416] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64939): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp01 7988 9000  [2018-06-03 13:46:49 538] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64940/0/0/0
+ WARNING   loginapp01 7988 9000  [2018-06-03 13:46:49 538] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64940/0/0/0
+    INFO   loginapp01 7988 9000  [2018-06-03 13:46:49 539] - Loginapp::onBaseappInitProgress: progress=1.
+  S_INFO   loginapp01 7988 9000  [2018-06-03 13:46:49 618] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 7988 9000  [2018-06-03 13:46:49 618] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 7988 9000  [2018-06-03 13:46:49 618] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 7988 9000  [2018-06-03 13:46:49 738] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 7988 9000  [2018-06-03 13:46:49 838] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 7988 9000  [2018-06-03 13:46:49 838] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 7988 9000  [2018-06-03 13:46:49 920] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64940): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 550] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 551] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 551] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 551] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 555] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 555] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 557] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64951 )
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 557] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64951, SOMAXCONN=128.
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 557] - server-configs:
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 557] - 	internalAddr : 192.168.0.103:64951
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 557] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:25 558] - 	componentID : 9000
+ WARNING   loginapp-1 8174 9000  [2018-06-03 13:47:26 070] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20618, errorno=10048
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 074] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 8174. PID: 17860 ----
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 074] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 075] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 075] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 198] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 198] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 198] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 202] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 202] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 202] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 202] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 231] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 259] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 259] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 261] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 261] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:26 536] - ---- loginapp is running ----
+   DEBUG   loginapp-1 8174 9000  [2018-06-03 13:47:26 536] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 641] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 656] - Components::findComponents: found logger, addr:192.168.0.103:64948
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 656] - Components::addComponent: reset orderLog, uid=8174!
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 656] - Components::addComponent[logger], uid=8174, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 657] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 762] - Components::findComponents: found dbmgr, addr:192.168.0.103:64946
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 763] - Components::addComponent: reset orderLog, uid=8174!
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 763] - Components::addComponent[dbmgr], uid=8174, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:33 764] - Components::findComponents: found dbmgr, addr:192.168.0.103:64946
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:35 781] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:35 805] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64954
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:35 805] - Components::addComponent[baseappmgr], uid=8174, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:35 805] - Components::findComponents: found baseappmgr, addr:192.168.0.103:64954
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:37 853] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:37 861] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:37 880] - Components::process(): Found all the components!
+    INFO   loginapp-1 8174 9000  [2018-06-03 13:47:44 421] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=2, startGroupOrder=1, digest=ABEC0BE45068C1A05390920169634774.
+ WARNING   loginapp01 8174 9000  [2018-06-03 13:47:45 333] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20996, errorno=10048
+    INFO   loginapp01 8174 9000  [2018-06-03 13:47:45 943] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 8174 9000  [2018-06-03 13:47:45 943] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.52 seconds
+    INFO   loginapp01 8174 9000  [2018-06-03 13:47:46 601] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 8174 9000  [2018-06-03 13:48:00 361] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:64988/0/0/0
+ WARNING   loginapp01 8174 9000  [2018-06-03 13:48:00 361] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:64988/0/0/0
+  S_INFO   loginapp01 8174 9000  [2018-06-03 13:48:00 441] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 8174 9000  [2018-06-03 13:48:00 441] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 8174 9000  [2018-06-03 13:48:00 441] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 8174 9000  [2018-06-03 13:48:00 521] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 8174 9000  [2018-06-03 13:48:00 601] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 8174 9000  [2018-06-03 13:48:00 601] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 8174 9000  [2018-06-03 13:48:00 635] - TCPPacketReceiver::processPendingEvents(127.0.0.1:64988): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 047] - -----------------------------------------------------------------------------------------
+
+
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 048] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 048] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 048] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 051] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:20013 )
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 052] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.103:20013, SOMAXCONN=128.
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 054] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:65012 )
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 054] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:65012, SOMAXCONN=128.
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 054] - server-configs:
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 055] - 	internalAddr : 192.168.0.103:65012
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 055] - 	externalAddr : 192.168.0.103:20013
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:23 055] - 	componentID : 9000
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 776] - ---- loginapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: B20F257E332779D9E1EA7D34638E6146. Config: Debug X86. Built: 15:53:07 Apr 29 2018. AppID: 9000. UID: 8556. PID: 19116 ----
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 776] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 776] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 776] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 899] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 899] - Script::install_py_dlls(): PyInit__socket
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 900] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 903] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 903] - Script::install_py_dlls(): PyInit_select
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 903] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 904] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:24 934] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 965] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 965] - Script::install(): KBExtra is successfully!
+  S_INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 967] - onLoginAppReady: bootstrapGroupIndex=0, bootstrapGlobalIndex=0
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:24 967] - TelnetServer server is running on port 31000
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:25 252] - ---- loginapp is running ----
+   DEBUG   loginapp-1 8556 9000  [2018-06-03 13:49:25 252] - Components::process(): Request for the process of identity...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 347] - Components::findComponents: find logger(1)...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 440] - Components::findComponents: found logger, addr:192.168.0.103:65008
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 441] - Components::addComponent: reset orderLog, uid=8556!
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 441] - Components::addComponent[logger], uid=8556, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 442] - Components::findComponents: find dbmgr(2)...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 548] - Components::findComponents: found dbmgr, addr:192.168.0.103:65013
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 548] - Components::addComponent: reset orderLog, uid=8556!
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 549] - Components::addComponent[dbmgr], uid=8556, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:32 549] - Components::findComponents: found dbmgr, addr:192.168.0.103:65013
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:34 567] - Components::findComponents: find baseappmgr(1)...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:34 663] - Components::findComponents: found baseappmgr, addr:192.168.0.103:65010
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:34 663] - Components::addComponent[baseappmgr], uid=8556, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:34 664] - Components::findComponents: found baseappmgr, addr:192.168.0.103:65010
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:36 707] - Components::findComponents: register self to dbmgr...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:36 726] - Components::findComponents: register self to baseappmgr...
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:36 743] - Components::process(): Found all the components!
+    INFO   loginapp-1 8556 9000  [2018-06-03 13:49:41 827] - Loginapp::onDbmgrInitCompleted:startGlobalOrder=3, startGroupOrder=1, digest=ABEC0BE45068C1A05390920169634774.
+    INFO   loginapp01 8556 9000  [2018-06-03 13:49:43 029] - HTTPCBHandler::bind: 192.168.0.103:21103
+ WARNING   loginapp01 8556 9000  [2018-06-03 13:49:43 029] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+    INFO   loginapp01 8556 9000  [2018-06-03 13:49:44 067] - Loginapp::onBaseappInitProgress: progress=1.
+    INFO   loginapp01 8556 9000  [2018-06-03 13:49:50 987] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:127.0.0.1:65046/0/0/0
+ WARNING   loginapp01 8556 9000  [2018-06-03 13:49:50 987] - Loginapp::onHello: client is not encrypted, addr=127.0.0.1:65046/0/0/0
+  S_INFO   loginapp01 8556 9000  [2018-06-03 13:49:51 087] - onRequestLogin() loginName=1, clientType=7
+   DEBUG   loginapp01 8556 9000  [2018-06-03 13:49:51 087] - PendingLoginMgr::add: 1, size=1.
+    INFO   loginapp01 8556 9000  [2018-06-03 13:49:51 087] - Loginapp::login: new client[CLIENT_TYPE_MINI], loginName=1, datas=WindowsEditor.
+  S_INFO   loginapp01 8556 9000  [2018-06-03 13:49:51 227] - onLoginCallbackFromDB() loginName=1, accountName=1, errorno=0
+   DEBUG   loginapp01 8556 9000  [2018-06-03 13:49:51 307] - Loginapp::onLoginAccountQueryBaseappAddrFromBaseappmgr:accountName=1, addr=192.168.0.103:20015.
+   DEBUG   loginapp01 8556 9000  [2018-06-03 13:49:51 307] - PendingLoginMgr::remove: 1, size=0.
+ WARNING   loginapp01 8556 9000  [2018-06-03 13:49:51 369] - TCPPacketReceiver::processPendingEvents(127.0.0.1:65046): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET

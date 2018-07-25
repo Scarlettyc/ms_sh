@@ -1,0 +1,673 @@
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 734] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 734] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 734] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 735] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 740] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 740] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50800 )
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50800, SOMAXCONN=128.
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - server-configs:
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - 	internalAddr : 192.168.0.106:50800
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:56 742] - 	componentID : 7001
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 417] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 19624. PID: 7740 ----
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 417] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 418] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 418] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 540] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 541] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 541] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 544] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 544] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 544] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 545] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 579] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 610] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 610] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 652] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 653] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 667] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 677] - loaded entity-script:Room(4).
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 678] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 678] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:28:58 987] - ---- baseapp is running ----
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:28:58 987] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 19624 7001  [2018-06-24 12:29:05 061] - EntityApp::checkTickPeriod: tick took 6073% (6.07 seconds)!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 088] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 133] - Components::findComponents: found logger, addr:192.168.0.106:50803
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 133] - Components::addComponent: reset orderLog, uid=19624!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 133] - Components::addComponent[logger], uid=19624, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 135] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 239] - Components::findComponents: found dbmgr, addr:192.168.0.106:50798
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 239] - Components::addComponent: reset orderLog, uid=19624!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 240] - Components::addComponent[dbmgr], uid=19624, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:06 240] - Components::findComponents: found dbmgr, addr:192.168.0.106:50798
+ WARNING    baseapp-1 19624 7001  [2018-06-24 12:29:07 241] - EntityApp::checkTickPeriod: tick took 1253% (1.25 seconds)!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:08 287] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:08 368] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50804
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:08 368] - Components::addComponent[baseappmgr], uid=19624, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:08 369] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50804
+ WARNING    baseapp-1 19624 7001  [2018-06-24 12:29:09 369] - EntityApp::checkTickPeriod: tick took 1182% (1.18 seconds)!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:10 387] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:10 485] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50797
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:10 485] - Components::addComponent[cellappmgr], uid=19624, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:10 486] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50797
+ WARNING    baseapp-1 19624 7001  [2018-06-24 12:29:11 487] - EntityApp::checkTickPeriod: tick took 1199% (1.20 seconds)!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 637] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 19624 7001  [2018-06-24 12:29:12 638] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 669] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 670] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 683] - Components::process(): Found all the components!
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 688] - ServerApp::onRegisterNewApp: uid:19624, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50801, extaddr:nonsupport, extport:0,  from 192.168.0.106:50829/0/0/0.
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 689] - Components::addComponent[cellapp], uid=19624, componentID=8001, globalorderid=4, grouporderid=1, totalcount=1
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:12 689] - ServerApp::onRegisterNewApp: uid:19624, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50801, extaddr:nonsupport, extport:0,  from 192.168.0.106:50829/0/0/0.
+    INFO    baseapp-1 19624 7001  [2018-06-24 12:29:15 687] - EntityApp::onDbmgrInitCompleted: entityID alloc(2001-4001), startGlobalOrder=5, startGroupOrder=1, digest=72B53B125E0C7FE07C8DC50622FE08C2.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:15 687] - IDClient::onAddRange: number of ids increased from 2001 to 4001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:16 891] - onInit::isReload:0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:16 891] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.20 seconds
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:16 892] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.21 seconds
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:16 892] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:16 892] - EntityApp::checkTickPeriod: tick took 1205% (1.21 seconds)!
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:17 487] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:17 536] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=5
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:17 540] - EntityApp::createEntity: new Halls 2001
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:17 587] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:27 887] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:28 087] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50838/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:28 087] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50838/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:28 187] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50838/0/0/0].
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:28 387] - PendingLoginMgr::remove: 1, size=0.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:28 387] - EntityApp::createEntity: new Account 2002
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:28 388] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50838.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:28 388] - Baseapp::onQueryAccountCBFromDbmgr: user=1, uuid=6570503538504826880, entityID=2002, flags=0, deadline=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:31 487] - 123123123------
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:31 487] - 结束后长度
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:29:31 487] - 0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:31 587] - EntityApp::createEntity: new Room 2003
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:32 087] - onGlobalData: Room_1
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:32 387] - 没有cell
+    INFO    baseapp01 19624 7001  [2018-06-24 12:29:36 288] - EntityApp::createEntity: new Room 2004
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:36 387] - onGlobalData: Room_2
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:36 487] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:36 487] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:36 587] - 换房间成功，当前房间号---832717
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:29:43 117] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50838): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:29:43 117] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:29:43 117] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:33:35 986] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 186] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50915/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:33:36 186] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50915/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50915/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - 50915
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:36 286] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50915.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:33:36 678] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:38 086] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:33:38 086] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:38 186] - 换房间成功，当前房间号---590647
+    INFO    baseapp01 19624 7001  [2018-06-24 12:33:38 486] - Baseapp::onBackupEntityCellData: Account(2002), 51 bytes.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:54 286] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:33:54 286] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:33:54 386] - 换房间成功，当前房间号---832717
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:34:00 006] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50915): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:34:00 007] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:34:00 007] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:34:49 085] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 285] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50940/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:34:49 285] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50940/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 385] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50940/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 385] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 385] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 385] - 50940
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 385] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:49 386] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50940.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:34:49 677] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:51 685] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:34:51 685] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:34:51 785] - 换房间成功，当前房间号---590647
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:35:01 030] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50940): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:35:01 030] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:35:01 031] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 12:35:43 485] - Baseapp::onBackupEntityCellData: Room(2004), 55 bytes.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:28 485] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 685] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50951/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:36:28 685] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50951/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50951/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - 50951
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:28 785] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50951.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:29 677] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:31 285] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:31 285] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:31 385] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:37 785] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:37 785] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:37 885] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:52 885] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:52 885] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:52 985] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:57 784] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:36:57 784] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:36:57 884] - 换房间成功，当前房间号---590647
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:37:01 134] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50951): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:37:01 134] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:37:01 135] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:37:19 784] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 084] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50958/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:37:20 084] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50958/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50958/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - 50958
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:20 184] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50958.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:37:20 676] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:22 085] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:37:22 085] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:37:22 185] - 换房间成功，当前房间号---832717
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:37:28 433] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50958): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:37:28 434] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:37:28 434] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 12:37:48 484] - Baseapp::onBackupEntityCellData: Room(2003), 55 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:38:59 084] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:38:59 084] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 12:41:58 482] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:43:59 082] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:43:59 082] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 12:44:03 483] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:38 282] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 482] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:51010/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:45:38 482] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:51010/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:51010/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - 51010
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:38 582] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:51010.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:38 675] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:40 281] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:40 281] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:40 381] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:41 481] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:41 481] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:41 581] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:42 481] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:42 481] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:42 581] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:43 381] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:43 381] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:43 481] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:44 381] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:44 381] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:44 481] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:45 381] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:45 381] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:45 481] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:46 181] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:46 181] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:46 281] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:47 181] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:47 181] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 12:45:47 281] - 换房间成功，当前房间号---832717
+ WARNING    baseapp01 19624 7001  [2018-06-24 12:45:49 375] - TCPPacketReceiver::processPendingEvents(192.168.0.106:51010): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 12:45:49 375] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 12:45:49 375] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 12:46:08 482] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:48:59 080] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:48:59 080] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 12:50:18 480] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:53:59 079] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:53:59 079] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 12:54:28 478] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:56:33 477] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:58:38 478] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:58:59 077] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 12:58:59 077] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:00:43 477] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:03:59 075] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:03:59 075] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:04:53 475] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:06:58 474] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:08:59 074] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:08:59 074] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:09:03 473] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:11:08 472] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:13:59 072] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:13:59 072] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:15:18 472] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:18:59 070] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:18:59 070] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:19:28 470] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:21:33 469] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:23:38 468] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:23:59 069] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:23:59 069] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:27:48 468] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:28:59 067] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:28:59 067] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:29:53 467] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:31:58 466] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:33:59 065] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:33:59 065] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:36:08 464] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:38:13 463] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:38:59 064] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:38:59 064] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:40:18 464] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:43:59 062] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:43:59 062] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:44:28 462] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:46:33 461] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:48:38 460] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:48:59 060] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:48:59 060] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:52:48 458] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:53:59 059] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:53:59 059] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:54:53 459] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:58:59 057] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 13:58:59 057] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 13:59:03 457] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:01:08 456] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:03:13 455] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:03:59 055] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:03:59 055] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:05:18 454] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:07:23 454] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:08:59 054] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:08:59 054] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:09:28 454] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:13:59 052] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:13:59 052] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:15:43 351] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:17:48 350] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:18:59 050] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:18:59 050] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:19:53 349] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:23:59 048] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:23:59 048] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:24:03 349] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:26:08 348] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:27:37 847] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 147] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:51530/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:27:38 147] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:51530/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:51530/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - 51530
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:38 247] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:51530.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:27:38 658] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:55 847] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:27:55 847] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:27:55 947] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:02 947] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:02 947] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:03 047] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:04 748] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:04 748] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:04 848] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:06 047] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:06 047] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:06 147] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:07 247] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:07 247] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:07 347] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:08 147] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:08 147] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:08 247] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:08 947] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:08 947] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:28:09 047] - 换房间成功，当前房间号---590647
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:28:13 271] - TCPPacketReceiver::processPendingEvents(192.168.0.106:51530): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:28:13 272] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 14:28:13 272] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 14:28:13 347] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:28:59 047] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:28:59 047] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:30:18 346] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:02 546] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 746] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:51579/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:31:02 746] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:51579/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:51579/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - 51579
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:02 846] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:51579.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:03 658] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:05 046] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:05 046] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:05 146] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:09 546] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:09 546] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:09 646] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:11 146] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:11 146] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:11 246] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:12 746] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:12 746] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:12 846] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:15 046] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:15 046] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:15 146] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:16 946] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:16 946] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:17 046] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:19 046] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:19 046] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:19 146] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:20 646] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:20 646] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:20 746] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:22 046] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:22 046] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:22 146] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:23 546] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:23 546] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:23 646] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:24 946] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:24 946] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:25 046] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:26 346] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:26 346] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:26 446] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:27 646] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:27 646] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:27 746] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:34 846] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:34 846] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:34 946] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:38 046] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:38 046] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:38 146] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:40 146] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:31:40 146] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:31:40 246] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:01 246] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:01 246] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:01 346] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:02 946] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:02 946] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:03 046] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:04 845] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:04 845] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:04 946] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:06 545] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:06 545] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:06 645] - 换房间成功，当前房间号---590647
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:07 845] - 开始换房间，当前房间号---590647
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:07 845] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:07 945] - 换房间成功，当前房间号---832717
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:09 045] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:09 045] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:32:09 145] - 换房间成功，当前房间号---590647
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:32:11 671] - TCPPacketReceiver::processPendingEvents(192.168.0.106:51579): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:32:11 672] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 14:32:11 672] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 14:33:59 045] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:33:59 045] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:34:28 344] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:34:50 645] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 745] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:51606/0/0/0
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:34:50 745] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:51606/0/0/0
+    INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:51606/0/0/0].
+    INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - 192.168.0.106
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - 51606
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - 1
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:34:50 845] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:51606.
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:34:51 657] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:34:58 345] - Baseapp::onBackupEntityCellData: Account(2002), 51 bytes.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:01 444] - 123123123------
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:01 444] - 2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:01 444] - 832717-需要玩家数量--2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:01 544] - 没有cell
+    INFO    baseapp01 19624 7001  [2018-06-24 14:35:04 445] - Baseapp::onBackupEntityCellData: Account(2002), 51 bytes.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:06 745] - 123123123------
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:06 745] - 2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:06 745] - 832717-需要玩家数量--2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:06 845] - 没有cell
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:09 045] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:35:09 045] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:09 145] - 换房间成功，当前房间号---590647
+    INFO    baseapp01 19624 7001  [2018-06-24 14:35:11 745] - Baseapp::onBackupEntityCellData: Account(2002), 51 bytes.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:13 445] - 123123123------
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:13 445] - 2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:13 445] - 832717-需要玩家数量--2
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:13 545] - 没有cell
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:16 244] - 开始换房间，当前房间号---832717
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:35:16 244] - Room::reqTeleportOther: reqTeleportEntityID=2002, reqTeleportEntityCellAppID=8001.
+  S_INFO    baseapp01 19624 7001  [2018-06-24 14:35:16 344] - 换房间成功，当前房间号---590647
+ WARNING    baseapp01 19624 7001  [2018-06-24 14:35:31 033] - TCPPacketReceiver::processPendingEvents(192.168.0.106:51606): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 19624 7001  [2018-06-24 14:35:31 033] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 19624 7001  [2018-06-24 14:35:31 034] - Account[2002].onClientDeath:
+    INFO    baseapp01 19624 7001  [2018-06-24 14:36:33 345] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:38:38 344] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:38:59 043] - Baseapp::onBackupEntityCellData: Account(2002), 51 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:38:59 043] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:40:43 343] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:42:48 342] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:43:59 042] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:43:59 042] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:46:58 340] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:48:59 040] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:48:59 040] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:49:03 340] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:51:08 340] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:53:59 038] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:53:59 038] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:55:18 338] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:58:59 037] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 14:58:59 037] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 14:59:28 336] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:01:33 335] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:03:38 336] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:03:59 035] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:03:59 035] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:05:43 335] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:07:48 334] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:08:59 033] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:08:59 033] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:11:58 332] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:13:59 032] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:13:59 032] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:14:03 331] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:16:08 330] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:18:59 030] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:18:59 030] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:22:23 329] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:23:59 028] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:23:59 028] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:24:28 328] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:26:33 327] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:28:38 326] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:28:59 027] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:28:59 027] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:30:43 325] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:32:48 326] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:33:59 025] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:33:59 025] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:36:58 324] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:38:59 023] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:38:59 023] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:39:03 323] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:41:08 322] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:43:59 021] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:43:59 021] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:45:18 321] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:48:59 020] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:48:59 020] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:49:28 320] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:51:33 319] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:53:59 018] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:53:59 018] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:55:43 317] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:57:48 316] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:58:59 016] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 15:58:59 016] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 15:59:53 317] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:01:58 416] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:03:59 015] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:03:59 015] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:04:03 315] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:08:13 313] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:08:59 013] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:08:59 013] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:10:18 312] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:13:59 011] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:13:59 011] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:14:28 312] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:16:33 311] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:18:38 310] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:18:59 010] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:18:59 010] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:20:43 309] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:22:48 308] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:23:59 008] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:23:59 008] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:28:59 006] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:28:59 006] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:29:03 207] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:31:08 206] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:33:13 205] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:33:59 005] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:33:59 005] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:35:18 204] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:37:23 203] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:38:59 003] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:38:59 003] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:41:33 203] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:43:38 202] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:43:59 001] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:43:59 001] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:47:48 200] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:48:59 000] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:48:59 000] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:49:53 199] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:53:58 998] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:53:58 998] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 16:54:03 197] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:56:08 198] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:58:13 197] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:58:58 996] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 16:58:58 996] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:00:18 196] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:02:23 195] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:03:58 995] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:03:58 995] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:04:28 194] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:08:58 993] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:08:58 993] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:10:43 193] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:12:48 192] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:13:58 991] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:13:58 991] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:14:53 191] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:16:58 190] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:18:58 989] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:18:58 989] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:21:08 188] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:23:13 188] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:23:58 988] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:23:58 988] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:25:18 188] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:27:23 187] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:28:58 986] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:28:58 986] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:29:28 186] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:33:38 184] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:33:58 985] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:33:58 985] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:35:43 183] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:38:58 983] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:38:58 983] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:39:53 183] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:41:58 182] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:43:58 981] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:43:58 981] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:44:03 181] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:46:08 180] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:48:58 979] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:48:58 979] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:50:18 179] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:53:58 978] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:53:58 978] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 17:54:28 178] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:56:33 177] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:58:38 176] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:58:58 976] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 17:58:58 976] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:02:48 174] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:03:58 974] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:03:58 974] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:04:53 174] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:06:58 174] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:08:58 973] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:08:58 973] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:11:08 172] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:13:13 171] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:13:58 971] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:13:58 971] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:15:18 170] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:17:23 169] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:18:58 969] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:18:58 969] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:21:33 169] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:23:58 967] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:23:58 967] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:25:43 167] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:27:48 166] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:28:58 966] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:28:58 966] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:29:53 165] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:31:58 165] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:33:58 964] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:33:58 964] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:34:03 165] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:38:13 163] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:38:58 963] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:38:58 963] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:40:18 162] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:43:58 961] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:43:58 961] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:44:28 060] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:46:33 060] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:48:38 060] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:48:58 959] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:48:58 959] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:52:48 058] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:53:58 957] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:53:58 957] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:54:53 057] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:56:58 056] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:58:58 955] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 18:58:58 955] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 18:59:03 055] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:01:08 055] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:03:58 954] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:03:58 954] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 19:07:23 053] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:08:58 953] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:08:58 953] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 19:09:28 052] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:11:33 051] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:13:38 050] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:13:58 951] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:13:58 951] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 19:15:43 051] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:17:48 050] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:18:58 949] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:18:58 949] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 19:21:58 048] - Baseapp::onBackupEntityCellData: Room(2004), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:23:58 947] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 19624 7001  [2018-06-24 19:23:58 947] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 19624 7001  [2018-06-24 19:24:03 047] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
