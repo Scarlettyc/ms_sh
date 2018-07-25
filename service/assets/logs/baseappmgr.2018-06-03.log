@@ -1,0 +1,556 @@
+  INFO root [2018-06-03 12:32:44,786] - 
+  INFO root [2018-06-03 12:32:44,815] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:32:46,428] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:32:46,429] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:32:46,430] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:32:46,748] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63840 )
+  INFO root [2018-06-03 12:32:46,793] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63840, SOMAXCONN=5.
+  INFO root [2018-06-03 12:32:46,794] - server-configs:
+  INFO root [2018-06-03 12:32:46,794] - 	internalAddr : 192.168.0.103:63840
+  INFO root [2018-06-03 12:32:46,794] - 	componentID : 5000
+  INFO root [2018-06-03 12:32:48,753] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 26277. PID: 11296 ----
+  INFO root [2018-06-03 12:32:48,754] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:32:48,807] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:32:48,918] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:32:49,544] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:32:49,700] - Components::process(): Request for the process of identity...
+  WARN root [2018-06-03 12:32:57,356] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 0.49 seconds
+  INFO root [2018-06-03 12:32:58,358] - Components::findComponents: find logger(1)...
+ ERROR root [2018-06-03 12:32:59,913] - BundleBroadcast::receive: failed! It can be caused by the firewall, the broadcastaddr, etc.Maybe broadcastaddr is not a LAN ADDR, or the Machine process is not running.
+ ERROR root [2018-06-03 12:32:59,946] - Components::findComponents: receive error!
+  WARN root [2018-06-03 12:32:59,947] - Components::findComponents: not found logger!
+  INFO root [2018-06-03 12:33:00,958] - Components::findComponents: find dbmgr(1)...
+ ERROR root [2018-06-03 12:33:02,459] - BundleBroadcast::receive: failed! It can be caused by the firewall, the broadcastaddr, etc.Maybe broadcastaddr is not a LAN ADDR, or the Machine process is not running.
+ ERROR root [2018-06-03 12:33:02,461] - Components::findComponents: receive error!
+  INFO root [2018-06-03 12:33:03,479] - Components::findComponents: find dbmgr(2)...
+ ERROR root [2018-06-03 12:33:04,980] - BundleBroadcast::receive: failed! It can be caused by the firewall, the broadcastaddr, etc.Maybe broadcastaddr is not a LAN ADDR, or the Machine process is not running.
+ ERROR root [2018-06-03 12:33:04,983] - Components::findComponents: receive error!
+  INFO root [2018-06-03 12:33:05,999] - Components::findComponents: find dbmgr(3)...
+ ERROR root [2018-06-03 12:33:07,500] - BundleBroadcast::receive: failed! It can be caused by the firewall, the broadcastaddr, etc.Maybe broadcastaddr is not a LAN ADDR, or the Machine process is not running.
+ ERROR root [2018-06-03 12:33:07,502] - Components::findComponents: receive error!
+  INFO root [2018-06-03 12:33:08,518] - Components::findComponents: find dbmgr(4)...
+  INFO root [2018-06-03 12:33:10,680] - 
+  INFO root [2018-06-03 12:33:10,681] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:33:10,682] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:33:10,682] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:33:10,682] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:33:10,685] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63851 )
+  INFO root [2018-06-03 12:33:10,686] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63851, SOMAXCONN=5.
+  INFO root [2018-06-03 12:33:10,686] - server-configs:
+  INFO root [2018-06-03 12:33:10,686] - 	internalAddr : 192.168.0.103:63851
+  INFO root [2018-06-03 12:33:10,686] - 	componentID : 5000
+  WARN root [2018-06-03 12:33:10,996] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20255, errorno=10048
+  INFO root [2018-06-03 12:33:11,012] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 26394. PID: 9112 ----
+  INFO root [2018-06-03 12:33:11,013] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:33:11,014] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:33:11,015] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:33:11,363] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:33:11,363] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:33:18,455] - Components::findComponents: find logger(1)...
+  WARN root [2018-06-03 12:33:19,548] - Components::findComponents: not found logger!
+  INFO root [2018-06-03 12:33:20,556] - Components::findComponents: find dbmgr(1)...
+  INFO root [2018-06-03 12:33:22,576] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:33:24,585] - Components::findComponents: find dbmgr(3)...
+  INFO root [2018-06-03 12:33:26,616] - Components::findComponents: find dbmgr(4)...
+  INFO root [2018-06-03 12:33:28,716] - Components::findComponents: find dbmgr(5)...
+  INFO root [2018-06-03 12:33:30,735] - Components::findComponents: find dbmgr(6)...
+  INFO root [2018-06-03 12:33:32,755] - Components::findComponents: find dbmgr(7)...
+  INFO root [2018-06-03 12:33:34,775] - Components::findComponents: find dbmgr(8)...
+  INFO root [2018-06-03 12:33:36,795] - Components::findComponents: find dbmgr(9)...
+  INFO root [2018-06-03 12:33:38,816] - Components::findComponents: find dbmgr(10)...
+  INFO root [2018-06-03 12:33:40,836] - Components::findComponents: find dbmgr(11)...
+  INFO root [2018-06-03 12:33:42,856] - Components::findComponents: find dbmgr(12)...
+  INFO root [2018-06-03 12:33:44,876] - Components::findComponents: find dbmgr(13)...
+  INFO root [2018-06-03 12:33:46,896] - Components::findComponents: find dbmgr(14)...
+  INFO root [2018-06-03 12:33:48,916] - Components::findComponents: find dbmgr(15)...
+  INFO root [2018-06-03 12:33:50,935] - Components::findComponents: find dbmgr(16)...
+  WARN root [2018-06-03 12:33:52,955] - Components::findComponents: find dbmgr(17)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:33:55,016] - Components::findComponents: find dbmgr(18)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:33:57,036] - Components::findComponents: find dbmgr(19)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:33:59,056] - Components::findComponents: find dbmgr(20)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:34:01,176] - Components::findComponents: find dbmgr(21)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:34:03,216] - Components::findComponents: find dbmgr(22)...
+delay time is too long, please check the dbmgr logs!
+  WARN root [2018-06-03 12:34:05,256] - Components::findComponents: find dbmgr(23)...
+delay time is too long, please check the dbmgr logs!
+  INFO root [2018-06-03 12:34:06,570] - 
+  INFO root [2018-06-03 12:34:06,573] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:34:06,574] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:34:06,574] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:34:06,574] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:34:06,577] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63892 )
+  INFO root [2018-06-03 12:34:06,578] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63892, SOMAXCONN=5.
+  INFO root [2018-06-03 12:34:06,578] - server-configs:
+  INFO root [2018-06-03 12:34:06,578] - 	internalAddr : 192.168.0.103:63892
+  INFO root [2018-06-03 12:34:06,578] - 	componentID : 5000
+  INFO root [2018-06-03 12:34:08,088] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 26577. PID: 12712 ----
+  INFO root [2018-06-03 12:34:08,088] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:34:08,089] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:34:08,089] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:34:08,421] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:34:08,421] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:34:11,641] - 
+  INFO root [2018-06-03 12:34:11,641] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:34:11,642] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:34:11,642] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:34:11,642] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:34:11,645] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63904 )
+  INFO root [2018-06-03 12:34:11,645] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63904, SOMAXCONN=5.
+  INFO root [2018-06-03 12:34:11,645] - server-configs:
+  INFO root [2018-06-03 12:34:11,645] - 	internalAddr : 192.168.0.103:63904
+  INFO root [2018-06-03 12:34:11,645] - 	componentID : 5000
+  INFO root [2018-06-03 12:34:13,161] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 26593. PID: 13296 ----
+  INFO root [2018-06-03 12:34:13,162] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:34:13,165] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:34:13,167] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:34:13,532] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:34:13,532] - Components::process(): Request for the process of identity...
+  WARN root [2018-06-03 12:34:13,842] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20846, errorno=10048
+  INFO root [2018-06-03 12:34:20,944] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:34:20,971] - Components::findComponents: found logger, addr:192.168.0.103:63899
+  INFO root [2018-06-03 12:34:20,971] - Components::addComponent: reset orderLog, uid=26593!
+  INFO root [2018-06-03 12:34:20,972] - Components::addComponent[logger], uid=26593, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:34:20,974] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:34:21,082] - Components::findComponents: found dbmgr, addr:192.168.0.103:63901
+  INFO root [2018-06-03 12:34:21,083] - Components::addComponent: reset orderLog, uid=26593!
+  INFO root [2018-06-03 12:34:21,084] - Components::addComponent[dbmgr], uid=26593, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:34:21,084] - Components::findComponents: found dbmgr, addr:192.168.0.103:63901
+  WARN root [2018-06-03 12:34:22,085] - Forwarding logs to logger[192.168.0.103:63899/0/0/0]...
+ ERROR root [2018-06-03 12:34:34,300] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:34:34,303] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:34:34,304] - ==> [2018-06-03 12:34:34 299] TCPPacketReceiver::processPendingEvents(192.168.0.103:63899): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:34:34,304] - ==> [2018-06-03 12:34:34 300] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:34:34,354] - TCPPacketReceiver::processPendingEvents(192.168.0.103:63901): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:34:34,356] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:34:34,361] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:34:34,366] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:34:34,366] - Shutdowner::onShutdownEnd: shutting down
+  INFO root [2018-06-03 12:34:35,519] - 
+  INFO root [2018-06-03 12:34:35,519] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:34:35,520] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:34:35,520] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:34:35,520] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:34:35,527] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:63936 )
+  INFO root [2018-06-03 12:34:35,527] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:63936, SOMAXCONN=5.
+  INFO root [2018-06-03 12:34:35,527] - server-configs:
+  INFO root [2018-06-03 12:34:35,527] - 	internalAddr : 192.168.0.103:63936
+  INFO root [2018-06-03 12:34:35,528] - 	componentID : 5000
+  WARN root [2018-06-03 12:34:35,838] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20140, errorno=10048
+  INFO root [2018-06-03 12:34:35,841] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 26672. PID: 13104 ----
+  INFO root [2018-06-03 12:34:35,841] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:34:35,841] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:34:35,842] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:34:36,163] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:34:36,164] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:34:43,242] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:34:43,311] - Components::findComponents: found logger, addr:192.168.0.103:63934
+  INFO root [2018-06-03 12:34:43,312] - Components::addComponent: reset orderLog, uid=26672!
+  INFO root [2018-06-03 12:34:43,312] - Components::addComponent[logger], uid=26672, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:34:43,314] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:34:43,416] - Components::findComponents: found dbmgr, addr:192.168.0.103:63937
+  INFO root [2018-06-03 12:34:43,417] - Components::addComponent: reset orderLog, uid=26672!
+  INFO root [2018-06-03 12:34:43,417] - Components::addComponent[dbmgr], uid=26672, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:34:43,418] - Components::findComponents: found dbmgr, addr:192.168.0.103:63937
+  WARN root [2018-06-03 12:34:44,418] - Forwarding logs to logger[192.168.0.103:63934/0/0/0]...
+ ERROR root [2018-06-03 12:38:22,174] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:38:22,177] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:38:22,177] - ==> [2018-06-03 12:38:22 171] TCPPacketReceiver::processPendingEvents(192.168.0.103:63934): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:38:22,177] - ==> [2018-06-03 12:38:22 174] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:38:22,228] - TCPPacketReceiver::processPendingEvents(192.168.0.103:63937): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:38:22,230] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:38:22,234] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:38:22,235] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:38:22,235] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 12:38:22,235] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 12:38:23,461] - 
+  INFO root [2018-06-03 12:38:23,471] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:38:23,471] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:38:23,472] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:38:23,472] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:38:23,474] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64052 )
+  INFO root [2018-06-03 12:38:23,474] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64052, SOMAXCONN=5.
+  INFO root [2018-06-03 12:38:23,475] - server-configs:
+  INFO root [2018-06-03 12:38:23,475] - 	internalAddr : 192.168.0.103:64052
+  INFO root [2018-06-03 12:38:23,475] - 	componentID : 5000
+  WARN root [2018-06-03 12:38:23,785] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20861, errorno=10048
+  INFO root [2018-06-03 12:38:23,788] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 27413. PID: 13480 ----
+  INFO root [2018-06-03 12:38:23,789] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:38:23,789] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:38:23,789] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:38:24,099] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:38:24,100] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:38:31,209] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:38:31,295] - Components::findComponents: found logger, addr:192.168.0.103:64054
+  INFO root [2018-06-03 12:38:31,296] - Components::addComponent: reset orderLog, uid=27413!
+  INFO root [2018-06-03 12:38:31,297] - Components::addComponent[logger], uid=27413, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:38:31,299] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:38:31,400] - Components::findComponents: found dbmgr, addr:192.168.0.103:64049
+  INFO root [2018-06-03 12:38:31,401] - Components::addComponent: reset orderLog, uid=27413!
+  INFO root [2018-06-03 12:38:31,402] - Components::addComponent[dbmgr], uid=27413, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:38:31,402] - Components::findComponents: found dbmgr, addr:192.168.0.103:64049
+  WARN root [2018-06-03 12:38:32,402] - Forwarding logs to logger[192.168.0.103:64054/0/0/0]...
+ ERROR root [2018-06-03 12:40:31,820] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:40:31,822] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:40:31,823] - ==> [2018-06-03 12:40:31 818] TCPPacketReceiver::processPendingEvents(192.168.0.103:64054): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:40:31,823] - ==> [2018-06-03 12:40:31 820] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:40:31,872] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64049): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:40:31,874] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:40:31,878] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:40:31,878] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:40:31,878] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 12:40:31,878] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 12:40:33,015] - 
+  INFO root [2018-06-03 12:40:33,015] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:40:33,016] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:40:33,016] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:40:33,016] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:40:33,021] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64094 )
+  INFO root [2018-06-03 12:40:33,021] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64094, SOMAXCONN=5.
+  INFO root [2018-06-03 12:40:33,021] - server-configs:
+  INFO root [2018-06-03 12:40:33,021] - 	internalAddr : 192.168.0.103:64094
+  INFO root [2018-06-03 12:40:33,021] - 	componentID : 5000
+  WARN root [2018-06-03 12:40:33,332] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20910, errorno=10048
+  INFO root [2018-06-03 12:40:33,335] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 27838. PID: 7696 ----
+  INFO root [2018-06-03 12:40:33,336] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:40:33,336] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:40:33,336] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:40:33,656] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:40:33,656] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:40:40,718] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:40:40,786] - Components::findComponents: found logger, addr:192.168.0.103:64093
+  INFO root [2018-06-03 12:40:40,787] - Components::addComponent: reset orderLog, uid=27838!
+  INFO root [2018-06-03 12:40:40,787] - Components::addComponent[logger], uid=27838, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:40:40,789] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:40:40,892] - Components::findComponents: found dbmgr, addr:192.168.0.103:64089
+  INFO root [2018-06-03 12:40:40,893] - Components::addComponent: reset orderLog, uid=27838!
+  INFO root [2018-06-03 12:40:40,893] - Components::addComponent[dbmgr], uid=27838, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:40:40,894] - Components::findComponents: found dbmgr, addr:192.168.0.103:64089
+  WARN root [2018-06-03 12:40:41,894] - Forwarding logs to logger[192.168.0.103:64093/0/0/0]...
+ ERROR root [2018-06-03 12:42:54,598] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:42:54,600] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:42:54,600] - ==> [2018-06-03 12:42:54 596] TCPPacketReceiver::processPendingEvents(192.168.0.103:64093): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:42:54,600] - ==> [2018-06-03 12:42:54 598] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:42:54,656] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64089): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:42:54,657] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:42:54,661] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:42:54,662] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:42:54,662] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 12:42:54,662] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 12:42:55,799] - 
+  INFO root [2018-06-03 12:42:55,800] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:42:55,800] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:42:55,800] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:42:55,800] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:42:55,806] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64162 )
+  INFO root [2018-06-03 12:42:55,806] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64162, SOMAXCONN=5.
+  INFO root [2018-06-03 12:42:55,806] - server-configs:
+  INFO root [2018-06-03 12:42:55,806] - 	internalAddr : 192.168.0.103:64162
+  INFO root [2018-06-03 12:42:55,806] - 	componentID : 5000
+  INFO root [2018-06-03 12:42:57,327] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 28305. PID: 13808 ----
+  INFO root [2018-06-03 12:42:57,328] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:42:57,329] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:42:57,330] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:42:57,756] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:42:57,756] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:43:04,870] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:43:04,891] - Components::findComponents: found logger, addr:192.168.0.103:64161
+  INFO root [2018-06-03 12:43:04,892] - Components::addComponent: reset orderLog, uid=28305!
+  INFO root [2018-06-03 12:43:04,892] - Components::addComponent[logger], uid=28305, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:43:04,894] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:43:04,993] - Components::findComponents: found dbmgr, addr:192.168.0.103:64166
+  INFO root [2018-06-03 12:43:04,994] - Components::addComponent: reset orderLog, uid=28305!
+  INFO root [2018-06-03 12:43:04,994] - Components::addComponent[dbmgr], uid=28305, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:43:04,994] - Components::findComponents: found dbmgr, addr:192.168.0.103:64166
+  WARN root [2018-06-03 12:43:05,994] - Forwarding logs to logger[192.168.0.103:64161/0/0/0]...
+ ERROR root [2018-06-03 12:45:27,975] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:45:27,976] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:45:27,977] - ==> [2018-06-03 12:45:27 973] TCPPacketReceiver::processPendingEvents(192.168.0.103:64161): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:45:27,977] - ==> [2018-06-03 12:45:27 975] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:45:28,032] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64166): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:45:28,035] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:45:28,039] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:45:28,041] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:45:28,041] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 12:45:28,041] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 12:45:29,206] - 
+  INFO root [2018-06-03 12:45:29,206] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:45:29,207] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:45:29,207] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:45:29,207] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:45:29,219] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64222 )
+  INFO root [2018-06-03 12:45:29,219] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64222, SOMAXCONN=5.
+  INFO root [2018-06-03 12:45:29,220] - server-configs:
+  INFO root [2018-06-03 12:45:29,220] - 	internalAddr : 192.168.0.103:64222
+  INFO root [2018-06-03 12:45:29,220] - 	componentID : 5000
+  WARN root [2018-06-03 12:45:29,530] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20900, errorno=10048
+  INFO root [2018-06-03 12:45:29,533] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 28804. PID: 12204 ----
+  INFO root [2018-06-03 12:45:29,533] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:45:29,534] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:45:29,534] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:45:29,859] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:45:29,860] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:45:36,915] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:45:36,976] - Components::findComponents: found logger, addr:192.168.0.103:64224
+  INFO root [2018-06-03 12:45:36,976] - Components::addComponent: reset orderLog, uid=28804!
+  INFO root [2018-06-03 12:45:36,976] - Components::addComponent[logger], uid=28804, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:45:36,977] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:45:37,077] - Components::findComponents: found dbmgr, addr:192.168.0.103:64219
+  INFO root [2018-06-03 12:45:37,078] - Components::addComponent: reset orderLog, uid=28804!
+  INFO root [2018-06-03 12:45:37,078] - Components::addComponent[dbmgr], uid=28804, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:45:37,078] - Components::findComponents: found dbmgr, addr:192.168.0.103:64219
+  WARN root [2018-06-03 12:45:38,078] - Forwarding logs to logger[192.168.0.103:64224/0/0/0]...
+ ERROR root [2018-06-03 12:46:59,778] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:46:59,782] - The following logs sent to logger failed:
+  WARN root [2018-06-03 12:46:59,782] - ==> [2018-06-03 12:46:59 776] TCPPacketReceiver::processPendingEvents(192.168.0.103:64224): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:46:59,782] - ==> [2018-06-03 12:46:59 778] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 12:46:59,834] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64219): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 12:46:59,836] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 12:46:59,840] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 12:46:59,843] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 12:46:59,844] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 12:46:59,844] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 12:47:00,981] - 
+  INFO root [2018-06-03 12:47:00,983] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 12:47:00,983] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 12:47:00,983] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 12:47:00,983] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 12:47:00,992] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64271 )
+  INFO root [2018-06-03 12:47:00,992] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64271, SOMAXCONN=5.
+  INFO root [2018-06-03 12:47:00,993] - server-configs:
+  INFO root [2018-06-03 12:47:00,993] - 	internalAddr : 192.168.0.103:64271
+  INFO root [2018-06-03 12:47:00,993] - 	componentID : 5000
+  WARN root [2018-06-03 12:47:01,305] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20921, errorno=10048
+  INFO root [2018-06-03 12:47:01,311] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 29105. PID: 14004 ----
+  INFO root [2018-06-03 12:47:01,311] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 12:47:01,311] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 12:47:01,312] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 12:47:01,637] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 12:47:01,637] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 12:47:08,712] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 12:47:08,776] - Components::findComponents: found logger, addr:192.168.0.103:64273
+  INFO root [2018-06-03 12:47:08,776] - Components::addComponent: reset orderLog, uid=29105!
+  INFO root [2018-06-03 12:47:08,776] - Components::addComponent[logger], uid=29105, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:47:08,776] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 12:47:08,877] - Components::findComponents: found dbmgr, addr:192.168.0.103:64268
+  INFO root [2018-06-03 12:47:08,878] - Components::addComponent: reset orderLog, uid=29105!
+  INFO root [2018-06-03 12:47:08,878] - Components::addComponent[dbmgr], uid=29105, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 12:47:08,878] - Components::findComponents: found dbmgr, addr:192.168.0.103:64268
+  WARN root [2018-06-03 12:47:09,878] - Forwarding logs to logger[192.168.0.103:64273/0/0/0]...
+ ERROR root [2018-06-03 13:27:43,143] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:27:43,150] - The following logs sent to logger failed:
+  WARN root [2018-06-03 13:27:43,150] - ==> [2018-06-03 13:27:43 139] TCPPacketReceiver::processPendingEvents(192.168.0.103:64273): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:27:43,150] - ==> [2018-06-03 13:27:43 144] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 13:27:43,217] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64268): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:27:43,218] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:27:43,225] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 13:27:43,227] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 13:27:43,228] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 13:27:43,228] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 13:27:44,462] - 
+  INFO root [2018-06-03 13:27:44,463] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 13:27:44,464] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 13:27:44,464] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 13:27:44,464] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 13:27:44,472] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64673 )
+  INFO root [2018-06-03 13:27:44,472] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64673, SOMAXCONN=5.
+  INFO root [2018-06-03 13:27:44,472] - server-configs:
+  INFO root [2018-06-03 13:27:44,472] - 	internalAddr : 192.168.0.103:64673
+  INFO root [2018-06-03 13:27:44,473] - 	componentID : 5000
+  INFO root [2018-06-03 13:27:45,978] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 4314. PID: 14624 ----
+  INFO root [2018-06-03 13:27:45,979] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 13:27:45,979] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 13:27:45,980] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 13:27:46,317] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 13:27:46,317] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 13:27:53,441] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 13:27:53,472] - Components::findComponents: found logger, addr:192.168.0.103:64672
+  INFO root [2018-06-03 13:27:53,473] - Components::addComponent: reset orderLog, uid=4314!
+  INFO root [2018-06-03 13:27:53,473] - Components::addComponent[logger], uid=4314, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:27:53,474] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 13:27:53,576] - Components::findComponents: found dbmgr, addr:192.168.0.103:64670
+  INFO root [2018-06-03 13:27:53,576] - Components::addComponent: reset orderLog, uid=4314!
+  INFO root [2018-06-03 13:27:53,576] - Components::addComponent[dbmgr], uid=4314, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:27:53,577] - Components::findComponents: found dbmgr, addr:192.168.0.103:64670
+  WARN root [2018-06-03 13:27:54,577] - Forwarding logs to logger[192.168.0.103:64672/0/0/0]...
+ ERROR root [2018-06-03 13:44:42,764] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:44:42,766] - The following logs sent to logger failed:
+  WARN root [2018-06-03 13:44:42,767] - ==> [2018-06-03 13:44:42 759] TCPPacketReceiver::processPendingEvents(192.168.0.103:64672): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:44:42,767] - ==> [2018-06-03 13:44:42 764] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 13:44:42,828] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64670): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:44:42,833] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:44:42,838] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 13:44:42,845] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 13:44:42,845] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 13:44:42,845] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 13:44:44,081] - 
+  INFO root [2018-06-03 13:44:44,084] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 13:44:44,084] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 13:44:44,084] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 13:44:44,084] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 13:44:44,093] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64856 )
+  INFO root [2018-06-03 13:44:44,093] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64856, SOMAXCONN=5.
+  INFO root [2018-06-03 13:44:44,093] - server-configs:
+  INFO root [2018-06-03 13:44:44,094] - 	internalAddr : 192.168.0.103:64856
+  INFO root [2018-06-03 13:44:44,094] - 	componentID : 5000
+  WARN root [2018-06-03 13:44:44,408] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20979, errorno=10048
+  INFO root [2018-06-03 13:44:44,411] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 7645. PID: 14696 ----
+  INFO root [2018-06-03 13:44:44,412] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 13:44:44,412] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 13:44:44,412] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 13:44:44,733] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 13:44:44,734] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 13:44:51,832] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 13:44:51,883] - Components::findComponents: found logger, addr:192.168.0.103:64860
+  INFO root [2018-06-03 13:44:51,884] - Components::addComponent: reset orderLog, uid=7645!
+  INFO root [2018-06-03 13:44:51,884] - Components::addComponent[logger], uid=7645, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:44:51,886] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 13:44:51,989] - Components::findComponents: found dbmgr, addr:192.168.0.103:64853
+  INFO root [2018-06-03 13:44:51,990] - Components::addComponent: reset orderLog, uid=7645!
+  INFO root [2018-06-03 13:44:51,990] - Components::addComponent[dbmgr], uid=7645, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:44:51,991] - Components::findComponents: found dbmgr, addr:192.168.0.103:64853
+  WARN root [2018-06-03 13:44:52,991] - Forwarding logs to logger[192.168.0.103:64860/0/0/0]...
+ ERROR root [2018-06-03 13:46:27,352] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:46:27,361] - The following logs sent to logger failed:
+  WARN root [2018-06-03 13:46:27,361] - ==> [2018-06-03 13:46:27 351] TCPPacketReceiver::processPendingEvents(192.168.0.103:64860): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:46:27,361] - ==> [2018-06-03 13:46:27 353] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 13:46:27,418] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64853): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:46:27,420] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:46:27,429] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 13:46:27,430] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 13:46:27,431] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 13:46:27,431] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 13:46:28,674] - 
+  INFO root [2018-06-03 13:46:28,676] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 13:46:28,676] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 13:46:28,677] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 13:46:28,677] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 13:46:28,681] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64901 )
+  INFO root [2018-06-03 13:46:28,681] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64901, SOMAXCONN=5.
+  INFO root [2018-06-03 13:46:28,682] - server-configs:
+  INFO root [2018-06-03 13:46:28,682] - 	internalAddr : 192.168.0.103:64901
+  INFO root [2018-06-03 13:46:28,682] - 	componentID : 5000
+  INFO root [2018-06-03 13:46:30,198] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 7988. PID: 11176 ----
+  INFO root [2018-06-03 13:46:30,199] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 13:46:30,200] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 13:46:30,200] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 13:46:30,546] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 13:46:30,546] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 13:46:37,620] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 13:46:37,704] - Components::findComponents: found logger, addr:192.168.0.103:64900
+  INFO root [2018-06-03 13:46:37,705] - Components::addComponent: reset orderLog, uid=7988!
+  INFO root [2018-06-03 13:46:37,705] - Components::addComponent[logger], uid=7988, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:46:37,706] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 13:46:37,811] - Components::findComponents: found dbmgr, addr:192.168.0.103:64905
+  INFO root [2018-06-03 13:46:37,811] - Components::addComponent: reset orderLog, uid=7988!
+  INFO root [2018-06-03 13:46:37,812] - Components::addComponent[dbmgr], uid=7988, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:46:37,812] - Components::findComponents: found dbmgr, addr:192.168.0.103:64905
+  WARN root [2018-06-03 13:46:38,813] - Forwarding logs to logger[192.168.0.103:64900/0/0/0]...
+ ERROR root [2018-06-03 13:47:24,220] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:47:24,225] - The following logs sent to logger failed:
+  WARN root [2018-06-03 13:47:24,225] - ==> [2018-06-03 13:47:24 219] TCPPacketReceiver::processPendingEvents(192.168.0.103:64900): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:47:24,225] - ==> [2018-06-03 13:47:24 220] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 13:47:24,285] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64905): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:47:24,290] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:47:24,296] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 13:47:24,297] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 13:47:24,297] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 13:47:24,297] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 13:47:25,560] - 
+  INFO root [2018-06-03 13:47:25,561] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 13:47:25,561] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 13:47:25,561] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 13:47:25,561] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 13:47:25,564] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:64954 )
+  INFO root [2018-06-03 13:47:25,564] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:64954, SOMAXCONN=5.
+  INFO root [2018-06-03 13:47:25,564] - server-configs:
+  INFO root [2018-06-03 13:47:25,565] - 	internalAddr : 192.168.0.103:64954
+  INFO root [2018-06-03 13:47:25,565] - 	componentID : 5000
+  WARN root [2018-06-03 13:47:25,875] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20007, errorno=10048
+  INFO root [2018-06-03 13:47:25,878] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 8174. PID: 11788 ----
+  INFO root [2018-06-03 13:47:25,879] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 13:47:25,879] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 13:47:25,879] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 13:47:26,198] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 13:47:26,199] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 13:47:33,299] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 13:47:33,351] - Components::findComponents: found logger, addr:192.168.0.103:64948
+  INFO root [2018-06-03 13:47:33,351] - Components::addComponent: reset orderLog, uid=8174!
+  INFO root [2018-06-03 13:47:33,351] - Components::addComponent[logger], uid=8174, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:47:33,352] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 13:47:33,454] - Components::findComponents: found dbmgr, addr:192.168.0.103:64946
+  INFO root [2018-06-03 13:47:33,454] - Components::addComponent: reset orderLog, uid=8174!
+  INFO root [2018-06-03 13:47:33,455] - Components::addComponent[dbmgr], uid=8174, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:47:33,455] - Components::findComponents: found dbmgr, addr:192.168.0.103:64946
+  WARN root [2018-06-03 13:47:34,455] - Forwarding logs to logger[192.168.0.103:64948/0/0/0]...
+ ERROR root [2018-06-03 13:49:21,717] - Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:49:21,719] - The following logs sent to logger failed:
+  WARN root [2018-06-03 13:49:21,719] - ==> [2018-06-03 13:49:21 711] TCPPacketReceiver::processPendingEvents(192.168.0.103:64948): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:49:21,719] - ==> [2018-06-03 13:49:21 717] Components::removeComponentByChannel: logger : 2000, Abnormal exit! errorno=10054
+  WARN root [2018-06-03 13:49:21,779] - TCPPacketReceiver::processPendingEvents(192.168.0.103:64946): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+ ERROR root [2018-06-03 13:49:21,784] - Components::removeComponentByChannel: dbmgr : 4000, Abnormal exit! errorno=10054
+  INFO root [2018-06-03 13:49:21,789] - Shutdowner::onShutdownBegin: shutting down(period=0, tickPeriod=1)
+  INFO root [2018-06-03 13:49:21,790] - Shutdowner::onShutdown: shutting down
+  INFO root [2018-06-03 13:49:21,790] - Shutdowner::onShutdownEnd: shutting down
+ DEBUG root [2018-06-03 13:49:21,791] - ThreadPool::destroy(): starting size 2.
+  INFO root [2018-06-03 13:49:23,036] - 
+  INFO root [2018-06-03 13:49:23,037] - -----------------------------------------------------------------------------------------
+
+
+  INFO root [2018-06-03 13:49:23,038] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+  INFO root [2018-06-03 13:49:23,038] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+  INFO root [2018-06-03 13:49:23,038] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+  INFO root [2018-06-03 13:49:23,045] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.103 ( 192.168.0.103:65010 )
+  INFO root [2018-06-03 13:49:23,045] - NetworkInterface::initialize(INTERNAL): address 192.168.0.103:65010, SOMAXCONN=5.
+  INFO root [2018-06-03 13:49:23,045] - server-configs:
+  INFO root [2018-06-03 13:49:23,045] - 	internalAddr : 192.168.0.103:65010
+  INFO root [2018-06-03 13:49:23,045] - 	componentID : 5000
+  WARN root [2018-06-03 13:49:23,359] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20444, errorno=10048
+  INFO root [2018-06-03 13:49:23,362] - ---- baseappmgr Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: EE09E8FDB2CCFCF3A31D35776E8954CE. Config: Debug X86. Built: 15:53:05 Apr 29 2018. AppID: 5000. UID: 8556. PID: 19008 ----
+  INFO root [2018-06-03 13:49:23,362] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+  INFO root [2018-06-03 13:49:23,363] - ThreadPool::createThreadPool: creating  threadpool...
+  INFO root [2018-06-03 13:49:23,363] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+  INFO root [2018-06-03 13:49:23,703] - ---- baseappmgr is running ----
+ DEBUG root [2018-06-03 13:49:23,703] - Components::process(): Request for the process of identity...
+  INFO root [2018-06-03 13:49:30,803] - Components::findComponents: find logger(1)...
+  INFO root [2018-06-03 13:49:30,813] - Components::findComponents: found logger, addr:192.168.0.103:65008
+  INFO root [2018-06-03 13:49:30,814] - Components::addComponent: reset orderLog, uid=8556!
+  INFO root [2018-06-03 13:49:30,814] - Components::addComponent[logger], uid=8556, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:49:30,816] - Components::findComponents: find dbmgr(2)...
+  INFO root [2018-06-03 13:49:30,919] - Components::findComponents: found dbmgr, addr:192.168.0.103:65013
+  INFO root [2018-06-03 13:49:30,919] - Components::addComponent: reset orderLog, uid=8556!
+  INFO root [2018-06-03 13:49:30,920] - Components::addComponent[dbmgr], uid=8556, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+  INFO root [2018-06-03 13:49:30,920] - Components::findComponents: found dbmgr, addr:192.168.0.103:65013
+  WARN root [2018-06-03 13:49:31,920] - Forwarding logs to logger[192.168.0.103:65008/0/0/0]...

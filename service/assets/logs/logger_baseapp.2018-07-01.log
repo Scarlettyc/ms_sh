@@ -1,0 +1,769 @@
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:54 472] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 562] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 563] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 563] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 839] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 843] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50597 )
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50597, SOMAXCONN=128.
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - server-configs:
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - 	internalAddr : 192.168.0.106:50597
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:55 845] - 	componentID : 7001
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 242] - Components::findLogger: found logger, addr:192.168.0.106:50584
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 242] - Components::addComponent: reset orderLog, uid=32762!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 243] - Components::addComponent[logger], uid=32762, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 296] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 32762. PID: 6324 ----
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 296] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 297] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 316] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 711] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 723] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 737] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 788] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 789] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 789] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 793] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 825] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 871] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:56 871] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 976] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:56 978] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:57 020] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:57 027] - loaded entity-script:Room(4).
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:57 027] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:57 043] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:50:57 362] - ---- baseapp is running ----
+   DEBUG    baseapp-1 32762 7001  [2018-07-01 12:50:57 362] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:03 482] - EntityApp::checkTickPeriod: tick took 6119% (6.12 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:04 508] - Components::findComponents: find dbmgr(1)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:05 587] - EntityApp::checkTickPeriod: tick took 1124% (1.12 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:06 608] - Components::findComponents: find dbmgr(2)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:06 918] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20341, errorno=10048
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:06 918] - EntityApp::checkTickPeriod: tick took 355% (0.35 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:07 963] - Components::findComponents: find dbmgr(3)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:09 015] - EntityApp::checkTickPeriod: tick took 1152% (1.15 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:10 028] - Components::findComponents: find dbmgr(4)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:11 130] - EntityApp::checkTickPeriod: tick took 1167% (1.17 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:12 163] - Components::findComponents: find dbmgr(5)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:13 242] - EntityApp::checkTickPeriod: tick took 1179% (1.18 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:14 262] - Components::findComponents: find dbmgr(6)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:15 359] - EntityApp::checkTickPeriod: tick took 1197% (1.20 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:16 362] - Components::findComponents: find dbmgr(7)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:17 373] - EntityApp::checkTickPeriod: tick took 1111% (1.11 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:18 407] - Components::findComponents: find dbmgr(8)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:19 481] - EntityApp::checkTickPeriod: tick took 1118% (1.12 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:20 507] - Components::findComponents: find dbmgr(9)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:21 603] - EntityApp::checkTickPeriod: tick took 1140% (1.14 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:22 607] - Components::findComponents: find dbmgr(10)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:23 624] - EntityApp::checkTickPeriod: tick took 1061% (1.06 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:24 663] - Components::findComponents: find dbmgr(11)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:25 738] - EntityApp::checkTickPeriod: tick took 1175% (1.17 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:26 762] - Components::findComponents: find dbmgr(12)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:27 850] - EntityApp::checkTickPeriod: tick took 1188% (1.19 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:28 862] - Components::findComponents: find dbmgr(13)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:29 868] - EntityApp::checkTickPeriod: tick took 1106% (1.11 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:30 907] - Components::findComponents: find dbmgr(14)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:31 988] - EntityApp::checkTickPeriod: tick took 1126% (1.13 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:33 007] - Components::findComponents: find dbmgr(15)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:34 102] - EntityApp::checkTickPeriod: tick took 1140% (1.14 seconds)!
+    INFO    baseapp-1 32762 7001  [2018-07-01 12:51:35 106] - Components::findComponents: find dbmgr(16)...
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:36 123] - EntityApp::checkTickPeriod: tick took 1061% (1.06 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:37 163] - Components::findComponents: find dbmgr(17)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:38 243] - EntityApp::checkTickPeriod: tick took 1180% (1.18 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:39 262] - Components::findComponents: find dbmgr(18)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:40 355] - EntityApp::checkTickPeriod: tick took 1193% (1.19 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:41 362] - Components::findComponents: find dbmgr(19)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:42 375] - EntityApp::checkTickPeriod: tick took 1113% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:43 407] - Components::findComponents: find dbmgr(20)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:44 512] - EntityApp::checkTickPeriod: tick took 1150% (1.15 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:45 562] - Components::findComponents: find dbmgr(21)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:46 629] - EntityApp::checkTickPeriod: tick took 1167% (1.17 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:47 662] - Components::findComponents: find dbmgr(22)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:48 738] - EntityApp::checkTickPeriod: tick took 1176% (1.18 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:49 761] - Components::findComponents: find dbmgr(23)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:50 848] - EntityApp::checkTickPeriod: tick took 1187% (1.19 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:51 861] - Components::findComponents: find dbmgr(24)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:52 961] - EntityApp::checkTickPeriod: tick took 1200% (1.20 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:54 007] - Components::findComponents: find dbmgr(25)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:55 076] - EntityApp::checkTickPeriod: tick took 1114% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:56 106] - Components::findComponents: find dbmgr(26)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:57 198] - EntityApp::checkTickPeriod: tick took 1136% (1.14 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:58 206] - Components::findComponents: find dbmgr(27)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:58 517] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20205, errorno=10048
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:58 517] - EntityApp::checkTickPeriod: tick took 355% (0.35 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:51:59 562] - Components::findComponents: find dbmgr(28)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:00 631] - EntityApp::checkTickPeriod: tick took 1169% (1.17 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:01 661] - Components::findComponents: find dbmgr(29)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:02 747] - EntityApp::checkTickPeriod: tick took 1186% (1.19 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:03 761] - Components::findComponents: find dbmgr(30)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:04 865] - EntityApp::checkTickPeriod: tick took 1204% (1.20 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:05 906] - Components::findComponents: find dbmgr(31)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:06 994] - EntityApp::checkTickPeriod: tick took 1133% (1.13 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:08 006] - Components::findComponents: find dbmgr(32)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:09 015] - EntityApp::checkTickPeriod: tick took 1054% (1.05 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:10 026] - Components::findComponents: find dbmgr(33)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:11 034] - EntityApp::checkTickPeriod: tick took 1073% (1.07 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:12 062] - Components::findComponents: find dbmgr(34)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:13 158] - EntityApp::checkTickPeriod: tick took 1196% (1.20 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:14 161] - Components::findComponents: find dbmgr(35)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:15 175] - EntityApp::checkTickPeriod: tick took 1114% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:16 206] - Components::findComponents: find dbmgr(36)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:17 297] - EntityApp::checkTickPeriod: tick took 1136% (1.14 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:18 306] - Components::findComponents: find dbmgr(37)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:19 321] - EntityApp::checkTickPeriod: tick took 1060% (1.06 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:20 361] - Components::findComponents: find dbmgr(38)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:21 435] - EntityApp::checkTickPeriod: tick took 1174% (1.17 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:22 461] - Components::findComponents: find dbmgr(39)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:23 551] - EntityApp::checkTickPeriod: tick took 1190% (1.19 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:24 561] - Components::findComponents: find dbmgr(40)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:25 573] - EntityApp::checkTickPeriod: tick took 1112% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:26 605] - Components::findComponents: find dbmgr(41)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:27 693] - EntityApp::checkTickPeriod: tick took 1133% (1.13 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:28 706] - Components::findComponents: find dbmgr(42)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:29 805] - EntityApp::checkTickPeriod: tick took 1144% (1.14 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:30 806] - Components::findComponents: find dbmgr(43)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:31 820] - EntityApp::checkTickPeriod: tick took 1059% (1.06 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:32 861] - Components::findComponents: find dbmgr(44)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:33 935] - EntityApp::checkTickPeriod: tick took 1174% (1.17 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:34 961] - Components::findComponents: find dbmgr(45)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:35 271] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20921, errorno=10048
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:35 271] - EntityApp::checkTickPeriod: tick took 410% (0.41 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:36 305] - Components::findComponents: find dbmgr(46)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:37 356] - EntityApp::checkTickPeriod: tick took 1095% (1.10 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:38 360] - Components::findComponents: find dbmgr(47)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:39 366] - EntityApp::checkTickPeriod: tick took 1106% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:40 405] - Components::findComponents: find dbmgr(48)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:41 471] - EntityApp::checkTickPeriod: tick took 1111% (1.11 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:42 505] - Components::findComponents: find dbmgr(49)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:43 578] - EntityApp::checkTickPeriod: tick took 1118% (1.12 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:44 604] - Components::findComponents: find dbmgr(50)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:45 699] - EntityApp::checkTickPeriod: tick took 1139% (1.14 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:46 705] - Components::findComponents: find dbmgr(51)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:47 714] - EntityApp::checkTickPeriod: tick took 1053% (1.05 seconds)!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:48 760] - Components::findComponents: find dbmgr(52)...
+delay time is too long, please check the dbmgr logs!
+ WARNING    baseapp-1 32762 7001  [2018-07-01 12:52:49 835] - EntityApp::checkTickPeriod: tick took 1175% (1.17 seconds)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 361] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 362] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 362] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 362] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 365] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 365] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 366] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50615 )
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 366] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50615, SOMAXCONN=128.
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - server-configs:
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - 	internalAddr : 192.168.0.106:50615
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:14 367] - 	componentID : 7001
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 054] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 559. PID: 11684 ----
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 055] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 055] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 055] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 183] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 184] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 185] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 189] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 190] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 190] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 191] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 227] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 263] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 263] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 284] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 285] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 292] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 294] - loaded entity-script:Room(4).
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 294] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 295] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:16 663] - ---- baseapp is running ----
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:16 664] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 559 7001  [2018-07-01 12:53:22 719] - EntityApp::checkTickPeriod: tick took 6054% (6.05 seconds)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 764] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 802] - Components::findComponents: found logger, addr:192.168.0.106:50619
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 802] - Components::addComponent: reset orderLog, uid=559!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 802] - Components::addComponent[logger], uid=559, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 803] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 904] - Components::findComponents: found dbmgr, addr:192.168.0.106:50614
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 904] - Components::addComponent: reset orderLog, uid=559!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 904] - Components::addComponent[dbmgr], uid=559, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:23 904] - Components::findComponents: found dbmgr, addr:192.168.0.106:50614
+ WARNING    baseapp-1 559 7001  [2018-07-01 12:53:24 904] - EntityApp::checkTickPeriod: tick took 1239% (1.24 seconds)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:25 964] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:26 021] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50611
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:26 021] - Components::addComponent[baseappmgr], uid=559, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:26 021] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50611
+ WARNING    baseapp-1 559 7001  [2018-07-01 12:53:27 021] - EntityApp::checkTickPeriod: tick took 1156% (1.16 seconds)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:28 064] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:28 129] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50613
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:28 129] - Components::addComponent[cellappmgr], uid=559, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:28 131] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50613
+ WARNING    baseapp-1 559 7001  [2018-07-01 12:53:29 131] - EntityApp::checkTickPeriod: tick took 1167% (1.17 seconds)!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 295] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 559 7001  [2018-07-01 12:53:30 295] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 363] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 364] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 416] - Components::process(): Found all the components!
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 464] - ServerApp::onRegisterNewApp: uid:559, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50617, extaddr:nonsupport, extport:0,  from 192.168.0.106:50648/0/0/0.
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 464] - Components::addComponent[cellapp], uid=559, componentID=8001, globalorderid=4, grouporderid=1, totalcount=1
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:30 464] - ServerApp::onRegisterNewApp: uid:559, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50617, extaddr:nonsupport, extport:0,  from 192.168.0.106:50648/0/0/0.
+    INFO    baseapp-1 559 7001  [2018-07-01 12:53:33 384] - EntityApp::onDbmgrInitCompleted: entityID alloc(2001-4001), startGlobalOrder=5, startGroupOrder=1, digest=70D8F67BBC844A4B952DAFCF7FE7AA54.
+    INFO    baseapp01 559 7001  [2018-07-01 12:53:33 384] - IDClient::onAddRange: number of ids increased from 2001 to 4001.
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:53:34 605] - onInit::isReload:0
+ WARNING    baseapp01 559 7001  [2018-07-01 12:53:34 606] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.24 seconds
+ WARNING    baseapp01 559 7001  [2018-07-01 12:53:34 606] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.24 seconds
+ WARNING    baseapp01 559 7001  [2018-07-01 12:53:34 606] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.24 seconds
+ WARNING    baseapp01 559 7001  [2018-07-01 12:53:34 606] - EntityApp::checkTickPeriod: tick took 1242% (1.24 seconds)!
+   DEBUG    baseapp01 559 7001  [2018-07-01 12:53:35 480] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:53:35 563] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=5
+    INFO    baseapp01 559 7001  [2018-07-01 12:53:35 604] - EntityApp::createEntity: new Halls 2001
+   DEBUG    baseapp01 559 7001  [2018-07-01 12:53:35 663] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 559 7001  [2018-07-01 12:54:08 364] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 559 7001  [2018-07-01 12:54:08 564] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50653/0/0/0
+ WARNING    baseapp01 559 7001  [2018-07-01 12:54:08 564] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50653/0/0/0
+    INFO    baseapp01 559 7001  [2018-07-01 12:54:08 664] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50653/0/0/0].
+   DEBUG    baseapp01 559 7001  [2018-07-01 12:54:08 778] - PendingLoginMgr::remove: 1, size=0.
+    INFO    baseapp01 559 7001  [2018-07-01 12:54:08 805] - EntityApp::createEntity: new Account 2002
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:54:08 809] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50653.
+    INFO    baseapp01 559 7001  [2018-07-01 12:54:08 809] - Baseapp::onQueryAccountCBFromDbmgr: user=1, uuid=6573107491277045760, entityID=2002, flags=0, deadline=0.
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:54:15 264] - 123123123------
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:54:15 264] - 结束后长度
+  S_INFO    baseapp01 559 7001  [2018-07-01 12:54:15 264] - 0
+    INFO    baseapp01 559 7001  [2018-07-01 12:54:15 377] - EntityApp::createEntity: new Room 2003
+   S_DBG    baseapp01 559 7001  [2018-07-01 12:54:15 564] - onGlobalData: Room_1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 106] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 107] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 107] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 107] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 109] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 109] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 110] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50664 )
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 110] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50664, SOMAXCONN=128.
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 110] - server-configs:
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 110] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 111] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 111] - 	internalAddr : 192.168.0.106:50664
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 111] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 111] - 	componentID : 7001
+ WARNING    baseapp-1 984 7001  [2018-07-01 12:55:25 608] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20117, errorno=10048
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 611] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 984. PID: 10624 ----
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 612] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 612] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 613] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 740] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 740] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 740] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 745] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 745] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 746] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 746] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 774] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 807] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 807] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 823] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 825] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 831] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:25 833] - loaded entity-script:Room(4).
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 833] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:25 833] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:26 147] - ---- baseapp is running ----
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:26 147] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 984 7001  [2018-07-01 12:55:32 214] - EntityApp::checkTickPeriod: tick took 6066% (6.07 seconds)!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 247] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 354] - Components::findComponents: found logger, addr:192.168.0.106:50658
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 354] - Components::addComponent: reset orderLog, uid=984!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 355] - Components::addComponent[logger], uid=984, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 357] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 456] - Components::findComponents: found dbmgr, addr:192.168.0.106:50661
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 457] - Components::addComponent: reset orderLog, uid=984!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 457] - Components::addComponent[dbmgr], uid=984, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:33 457] - Components::findComponents: found dbmgr, addr:192.168.0.106:50661
+ WARNING    baseapp-1 984 7001  [2018-07-01 12:55:34 458] - EntityApp::checkTickPeriod: tick took 1310% (1.31 seconds)!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:35 507] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:35 582] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50659
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:35 583] - Components::addComponent[baseappmgr], uid=984, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:35 583] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50659
+ WARNING    baseapp-1 984 7001  [2018-07-01 12:55:36 583] - EntityApp::checkTickPeriod: tick took 1136% (1.14 seconds)!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:37 607] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:37 705] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50660
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:37 705] - Components::addComponent[cellappmgr], uid=984, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:37 706] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50660
+ WARNING    baseapp-1 984 7001  [2018-07-01 12:55:38 706] - EntityApp::checkTickPeriod: tick took 1159% (1.16 seconds)!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 807] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 984 7001  [2018-07-01 12:55:39 807] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 833] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 846] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 872] - Components::process(): Found all the components!
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 946] - ServerApp::onRegisterNewApp: uid:984, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50663, extaddr:nonsupport, extport:0,  from 192.168.0.106:50690/0/0/0.
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 947] - Components::addComponent[cellapp], uid=984, componentID=8001, globalorderid=4, grouporderid=1, totalcount=1
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:39 947] - ServerApp::onRegisterNewApp: uid:984, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50663, extaddr:nonsupport, extport:0,  from 192.168.0.106:50690/0/0/0.
+    INFO    baseapp-1 984 7001  [2018-07-01 12:55:42 847] - EntityApp::onDbmgrInitCompleted: entityID alloc(2001-4001), startGlobalOrder=5, startGroupOrder=1, digest=70D8F67BBC844A4B952DAFCF7FE7AA54.
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:42 847] - IDClient::onAddRange: number of ids increased from 2001 to 4001.
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:44 051] - onInit::isReload:0
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:44 051] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.20 seconds
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:44 051] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.20 seconds
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:44 051] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:44 051] - EntityApp::checkTickPeriod: tick took 1204% (1.20 seconds)!
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:55:44 608] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:44 647] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=5
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:44 649] - EntityApp::createEntity: new Halls 2001
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:55:44 707] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:55:56 946] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:57 146] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50694/0/0/0
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:57 146] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50694/0/0/0
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:57 246] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50694/0/0/0].
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:55:57 346] - PendingLoginMgr::remove: 1, size=0.
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:57 346] - EntityApp::createEntity: new Account 2002
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:57 346] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50694.
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:57 346] - Baseapp::onQueryAccountCBFromDbmgr: user=1, uuid=6573107959428481024, entityID=2002, flags=0, deadline=0.
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:58 847] - 123123123------
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:58 847] - 结束后长度
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:55:58 847] - 0
+    INFO    baseapp01 984 7001  [2018-07-01 12:55:58 947] - EntityApp::createEntity: new Room 2003
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:55:59 047] - onGlobalData: Room_1
+ WARNING    baseapp01 984 7001  [2018-07-01 12:55:59 147] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2002.
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:55:59 147] - 没有cell
+    INFO    baseapp01 984 7001  [2018-07-01 12:56:09 046] - Baseapp::onBackupEntityCellData: Account(2002), 56 bytes.
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:12 046] - 123123123------
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:12 046] - 1
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:12 046] - 999084-需要玩家数量--2
+ WARNING    baseapp01 984 7001  [2018-07-01 12:56:12 146] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2002.
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:12 146] - 没有cell
+ WARNING    baseapp01 984 7001  [2018-07-01 12:56:18 541] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50694): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:56:18 541] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:18 542] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:56:23 346] - PendingLoginMgr::add: 2, size=1.
+    INFO    baseapp01 984 7001  [2018-07-01 12:56:23 646] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50702/0/0/0
+ WARNING    baseapp01 984 7001  [2018-07-01 12:56:23 646] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50702/0/0/0
+    INFO    baseapp01 984 7001  [2018-07-01 12:56:23 846] - Baseapp::loginBaseapp: new user[2], channel[192.168.0.106:50702/0/0/0].
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:56:23 946] - PendingLoginMgr::remove: 2, size=0.
+    INFO    baseapp01 984 7001  [2018-07-01 12:56:23 946] - EntityApp::createEntity: new Account 2004
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:56:23 946] - account[2004] entities enable. entityCall:Client id:2004, utype:1, component=client[0], addr: 192.168.0.106:50702.
+    INFO    baseapp01 984 7001  [2018-07-01 12:56:23 946] - Baseapp::onQueryAccountCBFromDbmgr: user=2, uuid=6573108071097630720, entityID=2004, flags=0, deadline=0.
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:56:25 746] - 123123123------
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:56:25 746] - 1
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:56:25 746] - 999084-需要玩家数量--1
+ WARNING    baseapp01 984 7001  [2018-07-01 12:56:25 846] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2004.
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:56:25 846] - 没有cell
+ WARNING    baseapp01 984 7001  [2018-07-01 12:56:43 964] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50702): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:56:43 966] - Account::onClientDeath: 2004.
+   S_DBG    baseapp01 984 7001  [2018-07-01 12:56:43 966] - Account[2004].onClientDeath:
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:58:18 445] - PendingLoginMgr::add: 2, size=1.
+    INFO    baseapp01 984 7001  [2018-07-01 12:58:18 645] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50710/0/0/0
+ WARNING    baseapp01 984 7001  [2018-07-01 12:58:18 645] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50710/0/0/0
+    INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - Baseapp::loginBaseapp: new user[2], channel[192.168.0.106:50710/0/0/0].
+    INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - Baseapp::loginBaseapp: user[2] has entity(2004).
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - 192.168.0.106
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - 50710
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - 2
+  S_INFO    baseapp01 984 7001  [2018-07-01 12:58:18 745] - account[2004] entities enable. entityCall:Client id:2004, utype:1, component=client[0], addr: 192.168.0.106:50710.
+   DEBUG    baseapp01 984 7001  [2018-07-01 12:58:18 831] - PendingLoginMgr::process: [2] is timeout, currsize=0.
+    INFO    baseapp01 984 7001  [2018-07-01 13:00:11 243] - Baseapp::onBackupEntityCellData: Room(2003), 55 bytes.
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 705] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 706] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 706] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 706] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 710] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 710] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 711] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50726 )
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 711] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50726, SOMAXCONN=128.
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - server-configs:
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - 	internalAddr : 192.168.0.106:50726
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:50 712] - 	componentID : 7001
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 431] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 2048. PID: 10560 ----
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 432] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 432] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 432] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 555] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 556] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 556] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 559] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 560] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 560] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 560] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 589] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 616] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 616] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 632] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 633] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 638] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 639] - loaded entity-script:Room(4).
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 639] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 640] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:00:52 931] - ---- baseapp is running ----
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:00:52 931] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 2048 7001  [2018-07-01 13:00:58 986] - EntityApp::checkTickPeriod: tick took 6052% (6.05 seconds)!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 008] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 084] - Components::findComponents: found logger, addr:192.168.0.106:50722
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 085] - Components::addComponent: reset orderLog, uid=2048!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 085] - Components::addComponent[logger], uid=2048, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 087] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 187] - Components::findComponents: found dbmgr, addr:192.168.0.106:50725
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 187] - Components::addComponent: reset orderLog, uid=2048!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 187] - Components::addComponent[dbmgr], uid=2048, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:00 188] - Components::findComponents: found dbmgr, addr:192.168.0.106:50725
+ WARNING    baseapp-1 2048 7001  [2018-07-01 13:01:01 190] - EntityApp::checkTickPeriod: tick took 1258% (1.26 seconds)!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:02 208] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:02 306] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50724
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:02 307] - Components::addComponent[baseappmgr], uid=2048, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:02 307] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50724
+ WARNING    baseapp-1 2048 7001  [2018-07-01 13:01:03 307] - EntityApp::checkTickPeriod: tick took 1175% (1.17 seconds)!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:04 308] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:04 310] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50723
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:04 310] - Components::addComponent[cellappmgr], uid=2048, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:04 310] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50723
+ WARNING    baseapp-1 2048 7001  [2018-07-01 13:01:05 310] - EntityApp::checkTickPeriod: tick took 1078% (1.08 seconds)!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 432] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 2048 7001  [2018-07-01 13:01:06 432] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 507] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 531] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 553] - Components::process(): Found all the components!
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 632] - ServerApp::onRegisterNewApp: uid:2048, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50727, extaddr:nonsupport, extport:0,  from 192.168.0.106:50757/0/0/0.
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 632] - Components::addComponent[cellapp], uid=2048, componentID=8001, globalorderid=4, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:06 632] - ServerApp::onRegisterNewApp: uid:2048, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50727, extaddr:nonsupport, extport:0,  from 192.168.0.106:50757/0/0/0.
+    INFO    baseapp-1 2048 7001  [2018-07-01 13:01:09 532] - EntityApp::onDbmgrInitCompleted: entityID alloc(2001-4001), startGlobalOrder=5, startGroupOrder=1, digest=70D8F67BBC844A4B952DAFCF7FE7AA54.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:09 532] - IDClient::onAddRange: number of ids increased from 2001 to 4001.
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:10 738] - onInit::isReload:0
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:10 739] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.21 seconds
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:10 739] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.21 seconds
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:10 739] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:10 740] - EntityApp::checkTickPeriod: tick took 1208% (1.21 seconds)!
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:11 631] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:11 639] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=5
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:11 642] - EntityApp::createEntity: new Halls 2001
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:11 707] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:29 431] - PendingLoginMgr::add: 2, size=1.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:29 731] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50768/0/0/0
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:29 731] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50768/0/0/0
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:29 831] - Baseapp::loginBaseapp: new user[2], channel[192.168.0.106:50768/0/0/0].
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:29 931] - PendingLoginMgr::remove: 2, size=0.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:29 931] - EntityApp::createEntity: new Account 2002
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:29 931] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50768.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:29 931] - Baseapp::onQueryAccountCBFromDbmgr: user=2, uuid=6573109385357623296, entityID=2002, flags=0, deadline=0.
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:32 032] - 123123123------
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:32 032] - 结束后长度
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:32 032] - 0
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:32 132] - EntityApp::createEntity: new Room 2003
+   S_DBG    baseapp01 2048 7001  [2018-07-01 13:01:32 232] - onGlobalData: Room_1
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:32 332] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2002.
+   S_DBG    baseapp01 2048 7001  [2018-07-01 13:01:32 332] - 没有cell
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:53 302] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50768): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:53 302] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 2048 7001  [2018-07-01 13:01:53 303] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:58 731] - PendingLoginMgr::add: 3, size=1.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:58 931] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50775/0/0/0
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:01:58 931] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50775/0/0/0
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:59 031] - Baseapp::loginBaseapp: new user[3], channel[192.168.0.106:50775/0/0/0].
+   DEBUG    baseapp01 2048 7001  [2018-07-01 13:01:59 131] - PendingLoginMgr::remove: 3, size=0.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:59 131] - EntityApp::createEntity: new Account 2004
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:01:59 131] - account[2004] entities enable. entityCall:Client id:2004, utype:1, component=client[0], addr: 192.168.0.106:50775.
+    INFO    baseapp01 2048 7001  [2018-07-01 13:01:59 131] - Baseapp::onQueryAccountCBFromDbmgr: user=3, uuid=6573109514206642176, entityID=2004, flags=0, deadline=0.
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:02:00 831] - 123123123------
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:02:00 831] - 1
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:02:00 831] - 785024-需要玩家数量--1
+ WARNING    baseapp01 2048 7001  [2018-07-01 13:02:00 931] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2004.
+  S_INFO    baseapp01 2048 7001  [2018-07-01 13:02:00 932] - 没有cell
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 335] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 336] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 336] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 336] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 349] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 349] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50786 )
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50786, SOMAXCONN=128.
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - server-configs:
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 351] - 	internalAddr : 192.168.0.106:50786
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 352] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 352] - 	componentID : 7001
+ WARNING    baseapp-1 2636 7001  [2018-07-01 13:03:50 865] - BundleBroadcast::BundleBroadcast: Cannot bind to port 20670, errorno=10048
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 868] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 2636. PID: 9516 ----
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 869] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 869] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:50 869] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 991] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 992] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 992] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 995] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 995] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 996] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:50 996] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 024] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:51 052] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:51 052] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 066] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 067] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 072] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 073] - loaded entity-script:Room(4).
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:51 073] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:51 074] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:51 356] - ---- baseapp is running ----
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:03:51 356] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 2636 7001  [2018-07-01 13:03:57 437] - EntityApp::checkTickPeriod: tick took 6081% (6.08 seconds)!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 456] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 513] - Components::findComponents: found logger, addr:192.168.0.106:50785
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 513] - Components::addComponent: reset orderLog, uid=2636!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 513] - Components::addComponent[logger], uid=2636, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 515] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 616] - Components::findComponents: found dbmgr, addr:192.168.0.106:50789
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 617] - Components::addComponent: reset orderLog, uid=2636!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 617] - Components::addComponent[dbmgr], uid=2636, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:03:58 617] - Components::findComponents: found dbmgr, addr:192.168.0.106:50789
+ WARNING    baseapp-1 2636 7001  [2018-07-01 13:03:59 618] - EntityApp::checkTickPeriod: tick took 1261% (1.26 seconds)!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:00 647] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:00 738] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50790
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:00 738] - Components::addComponent[baseappmgr], uid=2636, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:00 740] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50790
+ WARNING    baseapp-1 2636 7001  [2018-07-01 13:04:01 740] - EntityApp::checkTickPeriod: tick took 1184% (1.18 seconds)!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:02 747] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:02 756] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50787
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:02 756] - Components::addComponent[cellappmgr], uid=2636, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:02 757] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50787
+ WARNING    baseapp-1 2636 7001  [2018-07-01 13:04:03 757] - EntityApp::checkTickPeriod: tick took 1101% (1.10 seconds)!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 856] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 2636 7001  [2018-07-01 13:04:04 856] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 888] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 948] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 955] - Components::process(): Found all the components!
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 955] - ServerApp::onRegisterNewApp: uid:2636, username:, componentType:cellapp, componentID:8001, globalorderID=5, grouporderID=1, intaddr:192.168.0.106, intport:50791, extaddr:nonsupport, extport:0,  from 192.168.0.106:50789/0/0/0.
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:04 955] - Components::addComponent[cellapp], uid=2636, componentID=8001, globalorderid=5, grouporderid=1, totalcount=1
+    INFO    baseapp-1 2636 7001  [2018-07-01 13:04:07 955] - EntityApp::onDbmgrInitCompleted: entityID alloc(1-2001), startGlobalOrder=4, startGroupOrder=1, digest=70D8F67BBC844A4B952DAFCF7FE7AA54.
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:07 955] - IDClient::onAddRange: number of ids increased from 1 to 2001.
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:09 160] - onInit::isReload:0
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:09 160] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.20 seconds
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:09 160] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.20 seconds
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:09 161] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.21 seconds
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:09 161] - EntityApp::checkTickPeriod: tick took 1205% (1.21 seconds)!
+   DEBUG    baseapp01 2636 7001  [2018-07-01 13:04:10 056] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:10 074] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=4
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:10 074] - EntityApp::createEntity: new Halls 1
+   DEBUG    baseapp01 2636 7001  [2018-07-01 13:04:10 148] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 2636 7001  [2018-07-01 13:04:15 356] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:15 656] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50823/0/0/0
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:15 656] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50823/0/0/0
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:15 756] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50823/0/0/0].
+   DEBUG    baseapp01 2636 7001  [2018-07-01 13:04:15 856] - PendingLoginMgr::remove: 1, size=0.
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:15 856] - EntityApp::createEntity: new Account 2
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:15 856] - account[2] entities enable. entityCall:Client id:2, utype:1, component=client[0], addr: 192.168.0.106:50823.
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:15 856] - Baseapp::onQueryAccountCBFromDbmgr: user=1, uuid=6573110098322194432, entityID=2, flags=0, deadline=0.
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:17 356] - 123123123------
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:17 356] - 结束后长度
+  S_INFO    baseapp01 2636 7001  [2018-07-01 13:04:17 356] - 0
+    INFO    baseapp01 2636 7001  [2018-07-01 13:04:17 456] - EntityApp::createEntity: new Room 3
+   S_DBG    baseapp01 2636 7001  [2018-07-01 13:04:17 556] - onGlobalData: Room_1
+ WARNING    baseapp01 2636 7001  [2018-07-01 13:04:17 656] - Baseapp::onEntityCall: not found cellEntityCall! entitycallType=3, entityID=2.
+   S_DBG    baseapp01 2636 7001  [2018-07-01 13:04:17 656] - 没有cell
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 600] - -----------------------------------------------------------------------------------------
+
+
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 600] - Resmgr::initialize: KBE_ROOT=E:/kbengine/
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 600] - Resmgr::initialize: KBE_RES_PATH=E:/kbengine/kbe/res/;E:/kbengine/assets/;E:/kbengine/assets/scripts/;E:/kbengine/assets/res/
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 600] - Resmgr::initialize: KBE_BIN_PATH=E:/kbengine/kbe/bin/server/
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 607] - NetworkInterface::initialize(EXTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:20015 )
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 607] - NetworkInterface::initialize(EXTERNAL): address 192.168.0.106:20015, SOMAXCONN=128.
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 608] - NetworkInterface::initialize(INTERNAL): bound to all interfaces with default route interface on 192.168.0.106 ( 192.168.0.106:50843 )
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 608] - NetworkInterface::initialize(INTERNAL): address 192.168.0.106:50843, SOMAXCONN=128.
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 608] - server-configs:
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 608] - 	gameUpdateHertz : 10
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 609] - 	entryScriptFile : kbemain
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 609] - 	internalAddr : 192.168.0.106:50843
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 609] - 	externalAddr : 192.168.0.106:20015
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:56 609] - 	componentID : 7001
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 293] - ---- baseapp Version: 2.0.0. ScriptVersion: 0.1.0. Protocol: F9DFFB319FBADF35943ADF4D42C4718C. Config: Debug X86. Built: 15:53:31 Apr 29 2018. AppID: 7001. UID: 3439. PID: 1716 ----
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 293] - Server : Intel(R) Xeon(R) CPU E3-1230 v3 @ 3.30GHz with 4194303kB RAM
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 294] - ThreadPool::createThreadPool: creating  threadpool...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 294] - ThreadPool::createThreadPool: successfully(2), newThreadCount=1, normalMaxThreadCount=2, maxThreadCount=8
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 418] - Script::install_py_dlls(): PyInit_pyexpat
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 418] - Script::install_py_dlls(): PyInit__socket
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 418] - Script::install_py_dlls(): PyInit__ssl
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 421] - Script::install_py_dlls(): PyInit__hashlib
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 422] - Script::install_py_dlls(): PyInit_select
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 422] - Script::install_py_dlls(): PyInit__ctypes
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 422] - Script::install_py_dlls(): PyInit__elementtree
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 453] - Script::install_py_dlls(): PyInit_unicodedata
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 486] - Script::install(): is successfully, Python=(3.4.2 (default, Apr 29 2018, 15:53:05) [MSC v.1913 32 bit (Intel)])!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 486] - Script::install(): KBExtra is successfully!
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 530] - loaded entity-script:Account(1).
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 531] - loaded entity-script:CheckName(2).
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 536] - loaded entity-script:Halls(3).
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 537] - loaded entity-script:Room(4).
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 537] - Baseapp::initializeEnd: started resmgr tick(60s)!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 538] - TelnetServer server is running on port 40000
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:07:58 869] - ---- baseapp is running ----
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:07:58 869] - Components::process(): Request for the process of identity...
+ WARNING    baseapp-1 3439 7001  [2018-07-01 13:08:04 949] - EntityApp::checkTickPeriod: tick took 6078% (6.08 seconds)!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:05 969] - Components::findComponents: find logger(1)...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:05 972] - Components::findComponents: found logger, addr:192.168.0.106:50839
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:05 972] - Components::addComponent: reset orderLog, uid=3439!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:05 972] - Components::addComponent[logger], uid=3439, componentID=2000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:05 973] - Components::findComponents: find dbmgr(2)...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:06 081] - Components::findComponents: found dbmgr, addr:192.168.0.106:50842
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:06 081] - Components::addComponent: reset orderLog, uid=3439!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:06 082] - Components::addComponent[dbmgr], uid=3439, componentID=4000, globalorderid=1, grouporderid=1, totalcount=1
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:06 082] - Components::findComponents: found dbmgr, addr:192.168.0.106:50842
+ WARNING    baseapp-1 3439 7001  [2018-07-01 13:08:07 082] - EntityApp::checkTickPeriod: tick took 1212% (1.21 seconds)!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:08 105] - Components::findComponents: find baseappmgr(1)...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:08 205] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50841
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:08 205] - Components::addComponent[baseappmgr], uid=3439, componentID=5000, globalorderid=2, grouporderid=1, totalcount=1
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:08 205] - Components::findComponents: found baseappmgr, addr:192.168.0.106:50841
+ WARNING    baseapp-1 3439 7001  [2018-07-01 13:08:09 205] - EntityApp::checkTickPeriod: tick took 1136% (1.14 seconds)!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:10 269] - Components::findComponents: find cellappmgr(1)...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:10 313] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50840
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:10 313] - Components::addComponent[cellappmgr], uid=3439, componentID=6000, globalorderid=3, grouporderid=1, totalcount=1
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:10 313] - Components::findComponents: found cellappmgr, addr:192.168.0.106:50840
+ WARNING    baseapp-1 3439 7001  [2018-07-01 13:08:11 313] - EntityApp::checkTickPeriod: tick took 1144% (1.14 seconds)!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 405] - Components::findComponents: register self to dbmgr...
+   DEBUG    baseapp-1 3439 7001  [2018-07-01 13:08:12 406] - SyncEntityStreamTemplateHandler::~SyncEntityStreamTemplateHandler()
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 469] - Components::findComponents: register self to baseappmgr...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 495] - Components::findComponents: register self to cellappmgr...
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 498] - Components::process(): Found all the components!
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 569] - ServerApp::onRegisterNewApp: uid:3439, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50844, extaddr:nonsupport, extport:0,  from 192.168.0.106:50870/0/0/0.
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 569] - Components::addComponent[cellapp], uid=3439, componentID=8001, globalorderid=4, grouporderid=1, totalcount=1
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:12 569] - ServerApp::onRegisterNewApp: uid:3439, username:, componentType:cellapp, componentID:8001, globalorderID=-1, grouporderID=-1, intaddr:192.168.0.106, intport:50844, extaddr:nonsupport, extport:0,  from 192.168.0.106:50870/0/0/0.
+    INFO    baseapp-1 3439 7001  [2018-07-01 13:08:15 470] - EntityApp::onDbmgrInitCompleted: entityID alloc(2001-4001), startGlobalOrder=5, startGroupOrder=1, digest=9D86A399DC6EBA6BB59A5E18F6705617.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:08:15 470] - IDClient::onAddRange: number of ids increased from 2001 to 4001.
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:08:16 673] - onInit::isReload:0
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:08:16 673] - e:\kbengine\kbe\src\lib\server\entity_app.h:749: Profile processRecvMessages took 1.20 seconds
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:08:16 673] - e:\kbengine\kbe\src\server\baseapp\baseapp.cpp:505: Profile gameTick took 1.20 seconds
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:08:16 673] - e:\kbengine\kbe\src\lib\network\event_dispatcher.cpp:153: Profile callSystemTimers took 1.20 seconds
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:08:16 674] - EntityApp::checkTickPeriod: tick took 1204% (1.20 seconds)!
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:08:17 270] - EntityAutoLoader::~EntityAutoLoader()
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:08:17 305] - onBaseAppReady: isBootstrap=True, appID=7001, bootstrapGroupIndex=1, bootstrapGlobalIndex=5
+    INFO    baseapp01 3439 7001  [2018-07-01 13:08:17 307] - EntityApp::createEntity: new Halls 2001
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:08:17 369] - InitProgressHandler::~InitProgressHandler()
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:05 370] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:05 570] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50881/0/0/0
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:05 570] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50881/0/0/0
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:05 670] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50881/0/0/0].
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:05 770] - PendingLoginMgr::remove: 1, size=0.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:05 770] - EntityApp::createEntity: new Account 2002
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:05 770] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50881.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:05 770] - Baseapp::onQueryAccountCBFromDbmgr: user=1, uuid=6573111343862710272, entityID=2002, flags=0, deadline=0.
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:07 570] - 123123123------
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:07 570] - 结束后长度
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:07 570] - 0
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:07 670] - EntityApp::createEntity: new Room 2003
+   S_DBG    baseapp01 3439 7001  [2018-07-01 13:09:07 770] - onGlobalData: Room_1
+   S_DBG    baseapp01 3439 7001  [2018-07-01 13:09:07 871] - 没有cell
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:12 612] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50881): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:12 612] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 3439 7001  [2018-07-01 13:09:12 613] - Account[2002].onClientDeath:
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:17 869] - PendingLoginMgr::add: 2, size=1.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:18 069] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50885/0/0/0
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:18 069] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50885/0/0/0
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:18 169] - Baseapp::loginBaseapp: new user[2], channel[192.168.0.106:50885/0/0/0].
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:18 269] - PendingLoginMgr::remove: 2, size=0.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:18 269] - EntityApp::createEntity: new Account 2004
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:18 269] - account[2004] entities enable. entityCall:Client id:2004, utype:1, component=client[0], addr: 192.168.0.106:50885.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:18 269] - Baseapp::onQueryAccountCBFromDbmgr: user=2, uuid=6573111399697285120, entityID=2004, flags=0, deadline=0.
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:20 469] - 123123123------
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:20 469] - 1
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:20 469] - 872681-需要玩家数量--1
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:20 569] - 没有cell
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:38 984] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50885): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:38 984] - Account::onClientDeath: 2004.
+   S_DBG    baseapp01 3439 7001  [2018-07-01 13:09:38 984] - Account[2004].onClientDeath:
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:43 670] - PendingLoginMgr::add: 1, size=1.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 870] - ServerApp::onHello: verInfo=2.0.0, scriptVerInfo=0.1.0, encryptedKey=None, addr:192.168.0.106:50889/0/0/0
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:43 870] - Baseapp::onHello: client is not encrypted, addr=192.168.0.106:50889/0/0/0
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - Baseapp::loginBaseapp: new user[1], channel[192.168.0.106:50889/0/0/0].
+    INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - Baseapp::loginBaseapp: user[1] has entity(2002).
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - 192.168.0.106
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - 50889
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - 1
+  S_INFO    baseapp01 3439 7001  [2018-07-01 13:09:43 970] - account[2002] entities enable. entityCall:Client id:2002, utype:1, component=client[0], addr: 192.168.0.106:50889.
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:44 538] - PendingLoginMgr::process: [1] is timeout, currsize=0.
+ WARNING    baseapp01 3439 7001  [2018-07-01 13:09:48 269] - TCPPacketReceiver::processPendingEvents(192.168.0.106:50889): Throwing REASON_GENERAL_NETWORK - WSAECONNRESET
+   DEBUG    baseapp01 3439 7001  [2018-07-01 13:09:48 269] - Account::onClientDeath: 2002.
+   S_DBG    baseapp01 3439 7001  [2018-07-01 13:09:48 269] - Account[2002].onClientDeath:
+    INFO    baseapp01 3439 7001  [2018-07-01 13:13:07 268] - Baseapp::onBackupEntityCellData: Account(2002), 56 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:15:28 968] - Baseapp::onBackupEntityCellData: Account(2004), 64 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:15:28 968] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:17:17 269] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:17:58 968] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:17:58 968] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:19:22 268] - Baseapp::onBackupEntityCellData: Room(2003), 55 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:20:28 968] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:20:28 968] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:22:58 967] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:22:58 967] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:23:32 267] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:25:28 967] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:25:28 967] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:25:37 267] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:27:42 266] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:27:58 966] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:27:58 966] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:29:47 267] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:30:28 966] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:30:28 966] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:31:52 266] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:32:58 966] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:32:58 966] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:35:28 965] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:35:28 965] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:36:02 265] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:37:58 965] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:37:58 965] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:38:07 265] - Baseapp::onBackupEntityCellData: Room(2003), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:40:28 964] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:40:28 964] - Baseapp::onCellWriteToDBCompleted: Account(2004).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:42:17 264] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:42:58 964] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:42:58 964] - Baseapp::onCellWriteToDBCompleted: Account(2002).
+    INFO    baseapp01 3439 7001  [2018-07-01 13:44:22 265] - Baseapp::onBackupEntityCellData: Account(2002), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:45:28 964] - Baseapp::onBackupEntityCellData: Account(2004), 1 bytes.
+    INFO    baseapp01 3439 7001  [2018-07-01 13:45:28 964] - Baseapp::onCellWriteToDBCompleted: Account(2004).

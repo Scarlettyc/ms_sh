@@ -71,10 +71,10 @@ class BaggageItemController extends Controller
 			$characterDetail=$CharacterModel->where('u_id',$u_id)->first();
 			$UserBaggageEqModel=new UserBaggageEqModel();
 
-			// $equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','b_equ_id as item_id','b_equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
+			// $equ_data=$UserBaggageEqModel->select('user_beq_id as baggage_id','equ_id as item_id','equ_type as equ_type')->where('u_id',$u_id)->where('status',1)->get();
 			$equ_data=DB::table('User_Baggage_Eq')
-					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.b_equ_id')
-					->select('User_Baggage_Eq.b_equ_id as item_id','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv','User_Baggage_Eq.user_beq_id as baggage_id')
+					->join('Equipment_mst','Equipment_mst.equ_id','=','User_Baggage_Eq.equ_id')
+					->select('User_Baggage_Eq.equ_id as item_id','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_type','Equipment_mst.equ_code','Equipment_mst.equ_lv','User_Baggage_Eq.user_beq_id as baggage_id')
 					->where('User_Baggage_Eq.status',1)
 					->where('User_Baggage_Eq.u_id',$u_id)
 					->get();
@@ -152,7 +152,7 @@ class BaggageItemController extends Controller
 			}else if($itemType == 3)//sell Scroll
 			{	
 				$ScrollMstModel=new ScrollMstModel();
-				$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+				$UserBaggageScrollModel->where('u_id',$u_id)->where('status','=',0)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 				$scData=$ScrollMstModel->where('sc_id',$itemId)->first();
 				$ItemPrice=$scData['sc_coin'];
 				$UserData=$UserModel->where('u_id',$u_id)->first();
@@ -207,12 +207,12 @@ class BaggageItemController extends Controller
 		$baggage_id=$data['baggage_id'];
 
 			$baggageLimit=$defindMstModel->where('defind_id',68)->first();
-			$countBaggage=$UserBaggageEqModel->where('u_id',$u_id)->where('b_equ_type',1)->count();
+			$countBaggage=$UserBaggageEqModel->where('u_id',$u_id)->where('equ_type',1)->count();
 			if($countBaggage>=$baggageLimit['value1']){
 				throw new Exception("baggage is full, please clear your baggage");
 				
 			}
-			$scrollQu=$UserBaggageScrollModel->select('quantity')->where('u_id',$u_id)->where('status','=',0)->where('bsc_id',$scrollId)->where('user_bsc_id',$baggage_id)->first();
+			$scrollQu=$UserBaggageScrollModel->select('quantity')->where('u_id',$u_id)->where('status','=',0)->where('sc_id',$scrollId)->where('user_sc_id',$baggage_id)->first();
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
 			if($scrollInfo['sc_rarity']==2){
 				$MissionController->achieveMission(15,2,$u_id,1);
@@ -223,10 +223,10 @@ class BaggageItemController extends Controller
 			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
 			if($upgarde){
 				if($scrollQu['quantity']==1){
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 				}
 				else{
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_bsc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
+					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
 				}
 				
 				$response='Successfully Meraged';
@@ -264,7 +264,7 @@ class BaggageItemController extends Controller
 		if($equData['equ_rarity']==2&&$equData['equ_lv']==2){
 			$MissionController->achieveMission(19,2,$u_id,1);
 		}
-		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$baggage_id)->where('b_equ_id',$equ_id)->first();
+		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$baggage_id)->where('equ_id',$equ_id)->first();
 		$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equ_id,$equ_type,$equData['upgrade_coin'],1,$eqDetail['status']);
 		if($upgarde){
 			$UserBaggageEqModel->where('user_beq_id',$baggage_id)->where('u_id',$u_id)->update(['status'=>2,'updated_at'=>$datetime]);

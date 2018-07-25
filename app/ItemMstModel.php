@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ItemMstModel extends Model
 {
-	protected $fillable = ['Item_tpye','Item_name','updatedate','createdate'];
+	protected $fillable = ['Item_type','Item_name','updatedate','createdate'];
 	protected $connection = 'mysql';
 	protected $table = "Item_mst";
 }
