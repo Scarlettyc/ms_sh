@@ -55,13 +55,13 @@ class BattleCommand extends Command
 //$server->addlistener('0.0.0.0', 9502, SWOOLE_SOCK_UDP);
 //$server->set(['worker_num' => 4]);
 
-        $serv->on('BattleOpen', function($server, $req) {
+        $serv->on('Open', function($server, $req) {
             global $reqs;
         $reqs[]=$req->fd;
        // $serv->sendto($clientInfo['address'], $clientInfo['port'], "Server ".$result);      //var_dump(count($reqs));//输出长连接数
     });
 
-        $serv->on('BattleMessage', function($server, $frame) {
+        $serv->on('Message', function($server, $frame) {
         global $reqs;
             foreach ($server->connections as $key => $value) {  
             if($frame->fd != $value){
