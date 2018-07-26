@@ -44,18 +44,18 @@ class SwooleClient extends Command
     {   $client = new swoole_client(SWOOLE_SOCK_TCP);
         $client->connect('127.0.0.1', 6390, 1);
 
-        $test=swoole_timer_tick(300, function ($id) use ($client){
-         $client->send("start");
-         //  $message = $client->recv();
-            Log::info("Get Message From Server\n");
+        // $test=swoole_timer_tick(300, function ($id) use ($client){
+         $client->send("42{"BattleStart",{uid:"ui100000001",access_token:123334,battle_data:"testtest",frame_id:1}}");
+         $message = $client->recv();
+            Log::info("Get Message From Server\n".$message);
 
-        });
+        // });
 
-        swoole_timer_after(14000, function () use($client,$test){
-        swoole_timer_clear($test);
-        Log::info("client close\n");
-         $client->close();
-        });
+        // swoole_timer_after(14000, function () use($client,$test){
+        // swoole_timer_clear($test);
+        // Log::info("client close\n");
+        //  $client->close();
+        // });
 
     }
 
