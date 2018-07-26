@@ -69,8 +69,9 @@ class BattleCommand extends Command
                  $tag=substr($string,0,2);
                  $now   = new DateTime;
                  $dmy=$now->format( 'Ymd' );
-                 if($tag==42){
-                    Log::info($tag);
+                  Log::info($tag);
+                 // if($tag==42){
+                 //    Log::info($tag);
                     // $ustring=substr($string,2);
                     // $uslist= json_decode($ustring);
                     // $u_id=$uslist[1]->u_id;
@@ -100,8 +101,8 @@ class BattleCommand extends Command
                     //     // $server->push($value, $result1);  
                     //     $server->close();
                     // }
-            // }
-        } 
+         //    // }
+         // } 
     });
 
 
