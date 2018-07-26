@@ -83,6 +83,7 @@ class BattleCommand extends Command
                     $match_id=$redis_battle->HGET($battleKey,'match_id');
                     if($uslist[0]=="BattleStart"){
                         $server->tick(600, function() use ($match_id,$frame_id,$frame) {
+                            Log::info("test tick");
                         $resultList=$BattleController->battleReturn($match_id,$frame_id);
                               $server->push($resultList['client_id_2'], $resultList['battle_data']); 
                             $server->push($resultList['client_id'], $resultList['battle_data']);
