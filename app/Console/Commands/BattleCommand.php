@@ -68,6 +68,7 @@ class BattleCommand extends Command
                 echo "test";
                 $server->push($value, $frame->fd); 
             }
+        }
     });
 
 
