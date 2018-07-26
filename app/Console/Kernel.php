@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
 \App\Console\Commands\NotifyCommand::class,
 \App\Console\Commands\BattleBackgroundCommand::class,
 \App\Console\Commands\ChatWebsocket::class,
+\App\Console\Commands\BattleCommand::class,
     ];
 
     /**
