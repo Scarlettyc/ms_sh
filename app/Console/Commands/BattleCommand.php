@@ -91,7 +91,7 @@ class BattleCommand extends Command
                          $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data);
 
                      }
-                    if($uslist[0]=="CloseBattle"){
+                    if($uslist[0]=="BattleClose"){
                         // $u_id=$uslist[1]->u_id;
                         // $access_token=$uslist[1]->access_token;
                         // $matchController->closeMatch($u_id,$access_token);
