@@ -101,7 +101,7 @@ class BattleCommand extends Command
                     //     $server->close();
                     // }
             // }
-        } 
+         } 
     });
 
 
