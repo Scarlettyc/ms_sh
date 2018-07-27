@@ -77,16 +77,7 @@ class BattleCommand extends Command
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
                         Log::info($string);
-                    // $server->tick(600, function() {
-                    //         Log::info("test tick");
-                    //    });     
-                         if(isset($uslist[1]->battle_data)){
-                            $battle_data=$uslist[1]->battle_data;
-                        }
-                        $frame_id=$uslist[1]->frame_id;
-                        $redis_battle=Redis::connection('battle');
-                        $battleKey='battle_status'.$u_id.$dmy;
-                        $match_id=$redis_battle->HGET($battleKey,'match_id');
+                        
                      if($uslist[0]=="BattleStart"){
                         $server->tick(600, function() use ($match_id,$frame_id,$frame) {
                             Log::info("test tick 666");
@@ -97,6 +88,11 @@ class BattleCommand extends Command
  
                      }
                      if($uslist[0]=="BattleRecieve"){
+                        $battle_data=$uslist[1]->battle_data;
+                        $frame_id=$uslist[1]->frame_id;
+                        $redis_battle=Redis::connection('battle');
+                        $battleKey='battle_status'.$u_id.$dmy;
+                        $match_id=$redis_battle->HGET($battleKey,'match_id');
                          $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data,$frame_id,$match_id);
 
                      }
