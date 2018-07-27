@@ -70,45 +70,46 @@ class BattleCommand extends Command
                  $now   = new DateTime;
                  $dmy=$now->format( 'Ymd' );
                  Log::info($string);
-         //         if($tag==42){
-         //            $ustring=substr($string,2);
-         //            $uslist= json_decode($ustring);
-         //            $u_id=$uslist[1]->u_id;
-         //            $access_token=$uslist[1]->access_token;
-         //            Log::info($string);
-         //            // $server->tick(600, function() {
-         //            //         Log::info("test tick");
-         //            //    });     
-         //            if(isset($uslist[1]->battle_data)){
-         //                $battle_data=$uslist[1]->battle_data;
-         //            }
-         //            $frame_id=$uslist[1]->frame_id;
-         //            $redis_battle=Redis::connection('battle');
-         //            $battleKey='battle_status'.$u_id.$dmy;
-         //            $match_id=$redis_battle->HGET($battleKey,'match_id');
-         //            if($uslist[0]=="BattleStart"){
-         //                $server->tick(600, function() use ($match_id,$frame_id,$frame) {
-         //                    Log::info("test tick");
-         //                    $resultList=$BattleController->battleReturn($match_id,$frame_id);
-         //                      $server->push($resultList['client_id_2'], $resultList['battle_data']); 
-         //                    $server->push($resultList['client_id'], $resultList['battle_data']);
-         //                  });
+                 if($tag==42){
+                    $ustring=substr($string,2);
+                    $uslist= json_decode($ustring);
+                    if($uslist[0]!="Boop"){
+                        $u_id=$uslist[1]->u_id;
+                        $access_token=$uslist[1]->access_token;
+                        Log::info($string);
+                    // $server->tick(600, function() {
+                    //         Log::info("test tick");
+                    //    });     
+                         if(isset($uslist[1]->battle_data)){
+                            $battle_data=$uslist[1]->battle_data;
+                        }
+                        $frame_id=$uslist[1]->frame_id;
+                        $redis_battle=Redis::connection('battle');
+                        $battleKey='battle_status'.$u_id.$dmy;
+                        $match_id=$redis_battle->HGET($battleKey,'match_id');
+                     if($uslist[0]=="BattleStart"){
+                        $server->tick(600, function() use ($match_id,$frame_id,$frame) {
+                            Log::info("test tick 666");
+                            // $resultList=$BattleController->battleReturn($match_id,$frame_id);
+                            //   $server->push($resultList['client_id_2'], $resultList['battle_data']); 
+                            // $server->push($resultList['client_id'], $resultList['battle_data']);
+                          });
  
-         //             }
-         //             if($uslist[0]=="BattleRecieve"){
-         //                 $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data,$frame_id,$match_id);
+                     }
+                     if($uslist[0]=="BattleRecieve"){
+                         $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data,$frame_id,$match_id);
 
-         //             }
-         //            if($uslist[0]=="BattleClose"){
-         //                // $u_id=$uslist[1]->u_id;
-         //                // $access_token=$uslist[1]->access_token;
-         //                // $matchController->closeMatch($u_id,$access_token);
-         //                // $result1=$tag.'["CloseBattle",{"Battle canceled"}]"';
-         //                // $server->push($value, $result1);  
-         //                $server->close();
-         //            }
-         //    // }
-         // } 
+                     }
+                    if($uslist[0]=="BattleClose"){
+                        // $u_id=$uslist[1]->u_id;
+                        // $access_token=$uslist[1]->access_token;
+                        // $matchController->closeMatch($u_id,$access_token);
+                        // $result1=$tag.'["CloseBattle",{"Battle canceled"}]"';
+                        // $server->push($value, $result1);  
+                        $server->close();
+                    }
+             }
+         } 
     });
 
 
