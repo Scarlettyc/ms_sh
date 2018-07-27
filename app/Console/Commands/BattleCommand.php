@@ -85,14 +85,14 @@ class BattleCommand extends Command
                            
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                            if(isset($resultList['client_id_1'])&&isset($resultList['client_id_2'])){
+                            // if(isset($resultList['client_id_1'])&&isset($resultList['client_id_2'])){
                                     $response=json_encode($resultList['battle_data'],TRUE);
                                     Log::info("test response ".$response);
                                 Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id_1']);
                                 foreach ($server->connections as  $fd) {  
                                 $server->push($fd,$response); 
                                 //$server->push($fd, $response);
-                                }
+                                // }
                             }
                           });
  
