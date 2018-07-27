@@ -68,31 +68,32 @@ class BattleCommand extends Command
                  $string=$frame->data;
                  $tag=substr($string,0,2);
                  $now   = new DateTime;
-                 $dmy=$now->format( 'Ymd' );
-                 Log::info($string);
+                 $dmy=$now->format( 'Ymd' ); 
+                 $redis_battle=Redis::connection('battle');
+
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
                     if($uslist[0]!="Boop"){
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
-                        Log::info($string);
-                        
+                        $battleKey='battle_status'.$u_id.$dmy;
+                        $match_id=$redis_battle->HGET($battleKey,'match_id');
+                        $frame_id=0;
                      if($uslist[0]=="BattleStart"){
-                        $server->tick(600, function() {
+                        $server->tick(600, function()use($u_id, $match_id) {
+                            $frame_id=$frame_id+1;
                             Log::info("test tick 666");
-                            // $resultList=$BattleController->battleReturn($match_id,$frame_id);
-                            //   $server->push($resultList['client_id_2'], $resultList['battle_data']); 
-                            // $server->push($resultList['client_id'], $resultList['battle_data']);
+                            $resultList=$BattleController->battleReturn($match_id,$frame_id);
+                              $server->push($resultList['client_id_2'], $resultList['battle_data']); 
+                            $server->push($resultList['client_id'], $resultList['battle_data']);
                           });
  
                      }
                      if($uslist[0]=="BattleRecieve"){
                         $battle_data=$uslist[1]->battle_data;
                         $frame_id=$uslist[1]->frame_id;
-                        $redis_battle=Redis::connection('battle');
-                        $battleKey='battle_status'.$u_id.$dmy;
-                        $match_id=$redis_battle->HGET($battleKey,'match_id');
+                       
                          $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data,$frame_id,$match_id);
 
                      }
