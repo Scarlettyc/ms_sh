@@ -363,6 +363,7 @@ class BattleController extends Controller
 			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
 			$frameData=json_decode($frameDataJson,TRUE);
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
+			Log::info($frameData);
 			if(isset($enmeyFrameData)){
 				$result['client_id_1']=$frameData['client'];
 				$result['client_id_2']=$enmeyFrameData['client'];
