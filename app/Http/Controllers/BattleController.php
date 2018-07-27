@@ -338,11 +338,11 @@ class BattleController extends Controller
 				$playerData[]=$data;
 				$playerData['client']=$clientID;
 				$frameKey='battle_data'.$u_id.$match_id;
-				$frameKey_2='battle_data'.$enemy_uid.$match_id;
-				$responseKey='battle_data'.$match_id;
+				//$frameKey_2='battle_data'.$enemy_uid.$match_id;
+				//$responseKey='battle_data'.$match_id;
 				$frameData=json_encode($playerData,TRUE);
 				$redis_user->HSET($frameKey,$frame_id,$frameData);
-				$redis_user->HSET($frameKey_2,$frame_id,$frameData);
+				//$redis_user->HSET($frameKey_2,$frame_id,$frameData);
 				return  1;
 			}
 
