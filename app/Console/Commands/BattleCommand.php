@@ -91,7 +91,7 @@ class BattleCommand extends Command
  
                      }
                      if($uslist[0]=="BattleRecieve"){
-                         $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data);
+                         $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data，$frame_id);
 
                      }
                     if($uslist[0]=="BattleClose"){
