@@ -84,6 +84,9 @@ class BattleCommand extends Command
                         $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server) {
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
+                            $response=json_encode($resultList,TRUE);
+                            Log::info("test response ".$response);
+                             Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id']);
                               $server->push($resultList['client_id_2'], $resultList['battle_data']); 
                             $server->push($resultList['client_id'], $resultList['battle_data']);
                           });
