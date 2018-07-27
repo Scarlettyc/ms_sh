@@ -79,7 +79,7 @@ class BattleCommand extends Command
                         Log::info($string);
                         
                      if($uslist[0]=="BattleStart"){
-                        $server->tick(600, function() use ($match_id,$frame_id,$frame) {
+                        $server->tick(600, function() {
                             Log::info("test tick 666");
                             // $resultList=$BattleController->battleReturn($match_id,$frame_id);
                             //   $server->push($resultList['client_id_2'], $resultList['battle_data']); 
