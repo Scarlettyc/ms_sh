@@ -85,9 +85,9 @@ class BattleCommand extends Command
                             $frame_id=$frame_id+1;
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                              $server->push($resultList['client_id_2'], $resultList['battle_data']); 
-                            $server->push($resultList['client_id'], $resultList['battle_data']);
-                          });
+                          //     $server->push($resultList['client_id_2'], $resultList['battle_data']); 
+                          //   $server->push($resultList['client_id'], $resultList['battle_data']);
+                          // });
  
                      }
                      if($uslist[0]=="BattleRecieve"){
