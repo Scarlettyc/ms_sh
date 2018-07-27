@@ -324,7 +324,7 @@ class BattleController extends Controller
 
 }
 
-	public function battleTestNew($clientID,$u_id,$data){
+	public function battleTestNew($clientID,$u_id,$data,$frame_id){
 		$redis_battle=Redis::connection('battle');
  		$redis_user=Redis::connection('battle_user');
  		$now   = new DateTime;
@@ -337,7 +337,7 @@ class BattleController extends Controller
 				$current=$this->getMillisecond();
 				$playerData=$data;
 				//$playerData['client']=$clientID;
-				$frame_id=$result['frame_id'];
+				// $frame_id=$result['frame_id'];
 				$frameKey='battle_data'.$u_id.$match_id;
 				$frameKey_2='battle_data'.$enemy_uid.$match_id;
 				$responseKey='battle_data'.$match_id;
