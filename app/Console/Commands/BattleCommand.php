@@ -76,9 +76,9 @@ class BattleCommand extends Command
                     $u_id=$uslist[1]->u_id;
                     $access_token=$uslist[1]->access_token;
                     Log::info($string);
-                    $server->tick(600, function() {
-                            Log::info("test tick");
-                       });     
+                    // $server->tick(600, function() {
+                    //         Log::info("test tick");
+                    //    });     
                     if(isset($uslist[1]->battle_data)){
                         $battle_data=$uslist[1]->battle_data;
                     }
