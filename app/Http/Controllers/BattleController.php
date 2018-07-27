@@ -335,9 +335,9 @@ class BattleController extends Controller
 		 	   	//$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	   	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 				$current=$this->getMillisecond();
-				$playerData=$data;
-				//$playerData['client']=$clientID;
-				// $frame_id=$result['frame_id'];
+				$playerData[]=$data;
+				$playerData['client']=$clientID;
+				$frame_id=$result['frame_id'];
 				$frameKey='battle_data'.$u_id.$match_id;
 				$frameKey_2='battle_data'.$enemy_uid.$match_id;
 				$responseKey='battle_data'.$match_id;
