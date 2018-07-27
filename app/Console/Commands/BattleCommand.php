@@ -63,7 +63,7 @@ class BattleCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-            // foreach ($server->connections as $key => $value) {  
+   
                  $BattleController=new BattleController();
                  $string=$frame->data;
                  $tag=substr($string,0,2);
@@ -82,15 +82,17 @@ class BattleCommand extends Command
                         $frame_id=1;
                      if($uslist[0]=="BattleStart"){
                         $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server) {
+                           
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                             if(isset($resultList['client_id_1'])&&isset($resultList['client_id_2'])){
-                            $response=json_encode($resultList['battle_data'],TRUE);
-                            Log::info("test response ".$response);
-                             Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id_1']);
-
-                              $server->push($resultList['client_id_2'],$response); 
-                            $server->push($resultList['client_id_1'], $response);
+                                    $response=json_encode($resultList['battle_data'],TRUE);
+                                    Log::info("test response ".$response);
+                                Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id_1']);
+                                foreach ($server->connections as  $fd) {  
+                                $server->push($fd,$response); 
+                                //$server->push($fd, $response);
+                                }
                             }
                           });
  
