@@ -69,14 +69,16 @@ class BattleCommand extends Command
                  $tag=substr($string,0,2);
                  $now   = new DateTime;
                  $dmy=$now->format( 'Ymd' );
-                 Log::info($string);
+                  // Log::info($tag);
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
                     $u_id=$uslist[1]->u_id;
                     $access_token=$uslist[1]->access_token;
-                   
-                    $battle_data=$uslist[1]->battle_data;
+                    Log::info($string);
+                    if(isset($uslist[1]->battle_data)){
+                        $battle_data=$uslist[1]->battle_data;
+                    }
                     $frame_id=$uslist[1]->frame_id;
                     $redis_battle=Redis::connection('battle');
                     $battleKey='battle_status'.$u_id.$dmy;
