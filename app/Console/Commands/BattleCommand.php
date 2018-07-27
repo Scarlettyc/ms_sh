@@ -71,7 +71,6 @@ class BattleCommand extends Command
                  $dmy=$now->format( 'Ymd' );
                   // Log::info($tag);
                  if($tag==42){
-                    Log::info($tag);
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
                     $u_id=$uslist[1]->u_id;
@@ -84,7 +83,7 @@ class BattleCommand extends Command
                     if($uslist[0]=="BattleStart"){
                         $server->tick(600, function() use ($match_id,$frame_id,$frame) {
                             Log::info("test tick");
-                        $resultList=$BattleController->battleReturn($match_id,$frame_id);
+                            $resultList=$BattleController->battleReturn($match_id,$frame_id);
                               $server->push($resultList['client_id_2'], $resultList['battle_data']); 
                             $server->push($resultList['client_id'], $resultList['battle_data']);
                           });
