@@ -115,7 +115,7 @@ class SwooleCommand extends Command
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
                    
                 // });
-            // $redis_battle=Redis::connection('battle');
+            $redis_battle=Redis::connection('battle');
              // if($result){
              //    Log::info($result);
              //    $key='match_history'.$arr['match_id'].'_'.$result;
@@ -154,7 +154,7 @@ class SwooleCommand extends Command
                      
                    
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
-                        $serv->sendto($final['address_2'], $final['port_1'],$response);
+                        $serv->sendto($final['address_2'], $final['port_2'],$response);
                     }
                 }
 
