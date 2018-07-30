@@ -102,7 +102,14 @@ class BattleCommand extends Command
                         $frame_id=$uslist[1]->frame_id;
                        
                          $resultList=$BattleController->battleTestNew($frame->fd,$u_id,$battle_data,$frame_id,$match_id);
-
+                         if($resultList==1){
+                        $tick_key="battle_tick".$match_id;
+                        $tickCount=$redis_battle->HLEN($tick_key);
+                        $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount-1);
+                        if($tickLastStatus==0){
+                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
+                             $server->push($frame->fb,"testtest");
+                        }
                      }
                     if($uslist[0]=="BattleClose"){
                         // $u_id=$uslist[1]->u_id;

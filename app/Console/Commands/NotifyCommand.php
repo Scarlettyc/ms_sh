@@ -118,16 +118,13 @@ class NotifyCommand extends Command
                         $inBattle=$redis_battle->HGET($battleKey,$u_id);
                     //    $match_uid=$redis_battle->HKEYS($matchKey);
                         $resultList=$matchController->match($frame->fd,$u_id,$access_token);
-
-                        Log::info(json_encode($server->connection_info($value)));
-                        $server->tick(600, function()use($frame,$server,$value) {
+                        $tick_key="battle_tick".$match_id;
+                        $count=0;
+                        $server->tick(600, function()use($redis_battle,$tick_key,$count(var)) {
                             Log::info("test tick 667");
-                             // if($frame->fd != $value){
-                            // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                                    // $response=json_encode($resultList['battle_data'],TRUE);
-                                   // Log::info("test response ".$response);
-                                    $server->push($value, "testtest"); 
-                                // }
+
+                            $redis_battle->HSET($tick_key,$count,0);
+                            $count=$count+1;
                           });
 
                      }
