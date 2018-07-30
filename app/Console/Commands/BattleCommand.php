@@ -63,7 +63,7 @@ class BattleCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-   
+      foreach ($server->connections as $key => $value) {  
                  $BattleController=new BattleController();
                  $string=$frame->data;
                  $tag=substr($string,0,2);
@@ -111,13 +111,16 @@ class BattleCommand extends Command
                             Log::info("test tick");
                         }
                         $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                        if( $resultList&&$frame->fd == $resultList['client_id_2']){
+                        if( isset($resultList)){
+                             if($frame->fd == $resultList['client_id_2']){ 
                           $server->push($resultList['client_id_2'], "teste 2"); 
-                            $server->push($resultList['client_id'], "teste 1");
+                            $server->push($resultList['client_id_1'], "teste 1");
                              Log::info("test do while funciton");
                          $tickLastStatus=$redis_battle->HSET($tick_key,$tickCount,1);
+                         }
+                        }
                      }
-                     }
+                 }
                     if($uslist[0]=="BattleClose"){
                         // $u_id=$uslist[1]->u_id;
                         // $access_token=$uslist[1]->access_token;
@@ -126,8 +129,8 @@ class BattleCommand extends Command
                         // $server->push($value, $result1);  
                         $server->close();
                     }
-             }
-          }
+              }
+            }
          } 
     });
 
