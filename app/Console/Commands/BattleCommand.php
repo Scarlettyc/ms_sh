@@ -116,7 +116,7 @@ class BattleCommand extends Command
                           $server->push($resultList['client_id_2'], "teste 2"); 
                             $server->push($resultList['client_id_1'], "teste 1");
                              Log::info("test do while funciton");
-                         $tickLastStatus=$redis_battle->HSET($tick_key,$tickCount,1);
+                            $redis_battle->HSET($tick_key,$tickCount,1);
                          }
                         }
                      }
