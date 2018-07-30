@@ -106,11 +106,15 @@ class BattleCommand extends Command
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
                         $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount-1);
-                        if($tickLastStatus==0){
-                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
+
+                        do{
+                            Log::info("test tick");
+
+                        }
+                        while($tickLastStatus!=0);
+                             // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                              $server->push($frame->fd,"testtest");
                               $tickLastStatus=$redis_battle->HSET($tick_key,$tickCount-1,1);
-                        }
                      }
                     if($uslist[0]=="BattleClose"){
                         // $u_id=$uslist[1]->u_id;
