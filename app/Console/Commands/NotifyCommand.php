@@ -103,47 +103,47 @@ class NotifyCommand extends Command
                         }
  
                      }
-                     if($uslist[0]=="BattleStart"){
-                        $redis_battle=Redis::connection('battle');
-                        $u_id=$uslist[1]->u_id;
-                        $frame_id=1;
-                        $BattleController=new BattleController();
-                        $battleKey='battle_status'.$u_id.$dmy;
-                        $match_id=$redis_battle->HGET($battleKey,'match_id');
-                        $client_id=$frame->fd;
-                        $access_token=$uslist[1]->access_token;
-                        $redis_battle=Redis::connection('battle');
-                       // $matchController->validateMatch($u_id);
-                        $battleKey='battle_status'.$dmy;
-                        $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                    //    $match_uid=$redis_battle->HKEYS($matchKey);
-                        $resultList=$matchController->match($frame->fd,$u_id,$access_token);
-                        $tick_key="battle_tick".$match_id;
+                    //  if($uslist[0]=="BattleStart"){
+                    //     $redis_battle=Redis::connection('battle');
+                    //     $u_id=$uslist[1]->u_id;
+                    //     $frame_id=1;
+                    //     $BattleController=new BattleController();
+                    //     $battleKey='battle_status'.$u_id.$dmy;
+                    //     $match_id=$redis_battle->HGET($battleKey,'match_id');
+                    //     $client_id=$frame->fd;
+                    //     $access_token=$uslist[1]->access_token;
+                    //     $redis_battle=Redis::connection('battle');
+                    //    // $matchController->validateMatch($u_id);
+                    //     $battleKey='battle_status'.$dmy;
+                    //     $inBattle=$redis_battle->HGET($battleKey,$u_id);
+                    // //    $match_uid=$redis_battle->HKEYS($matchKey);
+                    //     $resultList=$matchController->match($frame->fd,$u_id,$access_token);
+                    //     $tick_key="battle_tick".$match_id;
 
-                        $tickCount=$redis_battle->HLEN($tick_key);
-                        if($tickCount==0){
-                        $count=1;
-                        }
-                        else {
-                           $count=$tickCount;
-                        }
+                    //     $tickCount=$redis_battle->HLEN($tick_key);
+                    //     if($tickCount==0){
+                    //     $count=1;
+                    //     }
+                    //     else {
+                    //        $count=$tickCount;
+                    //     }
 
-                        $server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
+                    //     $server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
 
-                        $tick_key="battle_tick".$match_id;
-                        $tickCount=$redis_battle->HLEN($tick_key);
-                        if($tickCount==0){
-                        $count=1;
-                        }
-                        else {
-                           $count=$tickCount+1;
-                        }
-                            Log::info("test tick 667");
+                    //     $tick_key="battle_tick".$match_id;
+                    //     $tickCount=$redis_battle->HLEN($tick_key);
+                    //     if($tickCount==0){
+                    //     $count=1;
+                    //     }
+                    //     else {
+                    //        $count=$tickCount+1;
+                    //     }
+                    //         Log::info("test tick 667");
 
-                            $redis_battle->HSET($tick_key,$count,0);
-                          });
+                    //         $redis_battle->HSET($tick_key,$count,0);
+                    //       });
 
-                     }
+                    //  }
                     if($uslist[0]=="CloseMatch"){
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
