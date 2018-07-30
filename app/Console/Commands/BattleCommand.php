@@ -108,7 +108,7 @@ class BattleCommand extends Command
                         $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount-1);
                         if($tickLastStatus==0){
                              $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                             $server->push($frame->fb,"testtest");
+                             $server->push($frame->fd,"testtest");
                         }
                      }
                     if($uslist[0]=="BattleClose"){
