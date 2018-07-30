@@ -120,7 +120,7 @@ class NotifyCommand extends Command
                         $resultList=$matchController->match($frame->fd,$u_id,$access_token);
 
                         Log::info(json_encode($server->connection_info($frame->fd)));
-                        $server->tick(600, function()use($frame) {
+                        $server->tick(600, function()use($frame,$server) {
                             Log::info("test tick 667");
 
                             // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
