@@ -95,18 +95,9 @@ class NotifyCommand extends Command
                                 $uData2=$matchController->finalMatchResult($resultList['u_id_2'],$resultList['u_id_1'],$resultList['match_id'],$resultList['map_id']);
                                 $result1=$tag.'["BattleMatch",'.$uData1.']';
 
-                                $result2=$tag.'["BattleMatch",'.$uData2.']';
-                                $server->tick(600, function()use($u_id,$server,$frame,$resultList,$result2,$result1) {
-                                    Log::info("test tick 667");
-                                // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                                    // $response=json_encode($resultList['battle_data'],TRUE);
-                                    Log::info("test response ");
-                                     $server->push($resultList['client_id_2'], $result1); 
-                                 $server->push($resultList['client_id'], $result2);
-                          });
-                             
-                                // $server->push($resultList['client_id_2'], $result1); 
-                                // $server->push($resultList['client_id'], $result2);
+                                $result2=$tag.'["BattleMatch",'.$uData2.']';                             
+                                $server->push($resultList['client_id_2'], $result1); 
+                                $server->push($resultList['client_id'], $result2);
                                 $break;   
                             }
                         }
@@ -119,13 +110,13 @@ class NotifyCommand extends Command
                         $BattleController=new BattleController();
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
-
-                        $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame) {
+                        $client_id=$frame->fd;
+                        $server->tick(600, function()use($u_id, $match_id,$client_id,$BattleController,$server,$frame) {
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     $response=json_encode($resultList['battle_data'],TRUE);
                                     Log::info("test response ".$response);
-                                    $server->push($frame->fd, "testtests"); 
+                                    $server->push($client_id, "testtest"); 
                           });
 
                      }
