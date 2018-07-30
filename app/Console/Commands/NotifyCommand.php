@@ -136,7 +136,7 @@ class NotifyCommand extends Command
                         $count=1;
                         }
                         else {
-                           $count=$tickCount;
+                           $count=$tickCount+1;
                         }
                             Log::info("test tick 667");
 
