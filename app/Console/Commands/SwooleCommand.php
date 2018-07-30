@@ -177,7 +177,7 @@ class SwooleCommand extends Command
                     //          Log::info("test tick");
                     // }
                     $final=$battle->battleReturn($u_id,$match_id,$frame_id);
-                    $redis_battle->HSET($tick_key,$tickCount,1);
+                    // $redis_battle->HSET($tick_key,$tickCount,1);
                     return $final;
                 
                 });
