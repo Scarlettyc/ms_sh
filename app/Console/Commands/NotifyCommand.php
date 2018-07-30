@@ -106,7 +106,7 @@ class NotifyCommand extends Command
                      if($uslist[0]=="BattleStart"){
                         $redis_battle=Redis::connection('battle');
                         $u_id=$uslist[1]->u_id;
-                        $frame_id=$uslist[1]->frame_id;
+                        $frame_id=1;
                         $BattleController=new BattleController();
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
