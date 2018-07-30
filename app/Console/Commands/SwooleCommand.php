@@ -151,8 +151,14 @@ class SwooleCommand extends Command
                     if(isset($final)){
                            $response=json_encode($final,TRUE);
                             Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2'].$response);
+                    $tick_key="battle_tick".$match_id;
+                    $tickCount=$redis_battle->HLEN($tick_key);
+                    $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
                      
-                   
+                    while($tickLastStatus!=0){
+                             Log::info("test tick");
+                    }
+                    $redis_battle->HSET($tick_key,$tickCount,1);
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
                         $serv->sendto($final['address_2'], $final['port_2'],$response);
                     }
