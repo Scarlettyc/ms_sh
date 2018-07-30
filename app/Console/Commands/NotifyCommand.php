@@ -102,6 +102,17 @@ class NotifyCommand extends Command
                         }
  
                      }
+                     if($uslist[0]=="BattleStart"){
+                    $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame) {
+                           
+                            Log::info("test tick 667");
+                            $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
+                                    $response=json_encode($resultList['battle_data'],TRUE);
+                                    Log::info("test response ".$response);
+                                    $server->push($frame->fd, $response); 
+                          });
+
+                     }
                     if($uslist[0]=="CloseMatch"){
                         $u_id=$uslist[1]->u_id;
                         $access_token=$uslist[1]->access_token;
