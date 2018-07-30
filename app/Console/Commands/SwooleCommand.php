@@ -143,8 +143,8 @@ class SwooleCommand extends Command
             // }
                     $now   = new DateTime;
                     $dmy=$now->format( 'Ymd' ); 
-                    $u_id=$data['u_id'];
-                    $frame_id=$data['frame_id'];
+                    $u_id=$arr['u_id'];
+                    $frame_id=$arr['frame_id'];
                     $battleKey='battle_status'.$u_id.$dmy;
                     $match_id=$redis_battle->HGET($battleKey,'match_id');
                      $final=$battle->battleReturn($u_id,$match_id,$frame_id);
