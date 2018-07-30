@@ -132,12 +132,6 @@ class NotifyCommand extends Command
 
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
-                        if($tickCount==0){
-                        $count=1;
-                        }
-                        else {
-                           $count=$tickCount+1;
-                        }
                             Log::info("test tick 667");
 
                             $redis_battle->HSET($tick_key,$count,0);
