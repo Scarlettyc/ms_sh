@@ -330,6 +330,7 @@ class BattleController extends Controller
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
 		$u_id=$arr['u_id'];
+		$frame_id=$arr['frame_id'];
 		if($u_id){
 				$battleKey='battle_status'.$u_id.$dmy;
 		 	   	$match_id=$redis_battle->HGET($battleKey,'match_id');

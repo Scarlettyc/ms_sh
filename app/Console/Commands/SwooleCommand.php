@@ -159,6 +159,7 @@ class SwooleCommand extends Command
                 $battle=new BattleController();
                 $redis_battle=Redis::connection('battle');
                 $u_id=$data['u_id'];
+                $frame_id=$data['frame_id'];
                 $battleKey='battle_status'.$u_id.$dmy;
                 $match_id=$redis_battle->HGET($battleKey,'match_id');
                 $tick_key="battle_tick".$match_id;
@@ -174,7 +175,7 @@ class SwooleCommand extends Command
                     while($tickLastStatus!=0){
                              Log::info("test tick");
                     }
-                    $final=$battle->battleReturn($u_id,$match_id,1);
+                    $final=$battle->battleReturn($u_id,$match_id,$frame_id);
                     $redis_battle->HSET($tick_key,$tickCount,1);
                     return $final;
                 
