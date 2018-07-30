@@ -111,7 +111,7 @@ class SwooleCommand extends Command
                 if(isset($data)){
                 $arr=json_decode($data,TRUE);
                 $battle->battleTestNew($arr,$clientInfo);
-            }
+                }
 
                
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
@@ -158,12 +158,13 @@ class SwooleCommand extends Command
                 $dmy=$now->format( 'Ymd' ); 
                 $battle=new BattleController();
                 $redis_battle=Redis::connection('battle');
+                $u_id=$data['u_id'];
                 $battleKey='battle_status'.$u_id.$dmy;
                 $match_id=$redis_battle->HGET($battleKey,'match_id');
                 $tick_key="battle_tick".$match_id;
                 $tickCount=$redis_battle->HLEN($tick_key);
                 $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
-                $u_id=$data['u_id'];
+              
                 
                
                 // if($data=='start'){
