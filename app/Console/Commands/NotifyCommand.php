@@ -115,7 +115,7 @@ class NotifyCommand extends Command
                             Log::info("test tick 667");
                             // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     // $response=json_encode($resultList['battle_data'],TRUE);
-                                    Log::info("test response ".$response);
+                                   // Log::info("test response ".$response);
                                     $server->push($client_id, "testtest"); 
                           });
 
