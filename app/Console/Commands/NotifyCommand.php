@@ -125,10 +125,19 @@ class NotifyCommand extends Command
                         $count=1;
                         }
                         else {
-                           $count= $tickCount;
+                           $count=$tickCount;
                         }
 
-                        $server->tick(600, function()use($redis_battle,$tick_key,$count) {
+                        $server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
+
+                        $tick_key="battle_tick".$match_id;
+                        $tickCount=$redis_battle->HLEN($tick_key);
+                        if($tickCount==0){
+                        $count=1;
+                        }
+                        else {
+                           $count=$tickCount;
+                        }
                             Log::info("test tick 667");
 
                             $redis_battle->HSET($tick_key,$count,0);
