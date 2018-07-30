@@ -120,7 +120,7 @@ class NotifyCommand extends Command
                         $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                         $tick_key="battle_tick".$match_id;
                         $count=0;
-                        $server->tick(600, function()use($redis_battle,$tick_key,$count(var)) {
+                        $server->tick(600, function()use($redis_battle,$tick_key,$count) {
                             Log::info("test tick 667");
 
                             $redis_battle->HSET($tick_key,$count,0);
