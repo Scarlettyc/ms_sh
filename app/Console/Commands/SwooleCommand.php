@@ -142,25 +142,34 @@ class SwooleCommand extends Command
                 //     $serv->sendto($final['address_2'], $final['port_1'],$response);
                 // }
             // }
-                 $final=$serv->task($data);
-                //     if($final){
-                //     $response=json_encode($final,TRUE);
+                    $final=$serv->task($arr);
+                    if($final){
+                        $response=json_encode($final,TRUE);
                    
-                //     $serv->sendto($final['address_1'], $final['port_1'],$response);
-                //     $serv->sendto($final['address_2'], $final['port_1'],$response);
-                // }
+                        $serv->sendto($final['address_1'], $final['port_1'],$response);
+                        $serv->sendto($final['address_2'], $final['port_1'],$response);
+                    }
 
              } );
 
             $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
                 $battle=new BattleController();
-                Log::info("test test");
-                Log::info($data);
-                if($data=='start'){
-                     $arr=json_decode($data,TRUE);
-                         $final=$battle->battleReturn('test');
-                         return $final;
-                }
+                $redis_battle=Redis::connection('battle');
+                $tick_key="battle_tick".$match_id;
+                $tickCount=$redis_battle->HLEN($tick_key);
+                $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
+                $u_id=$data['u_id'];
+                $battleKey='battle_status'.$u_id.$dmy;
+                $match_id=$redis_battle->HGET($battleKey,'match_id');
+                // if($data=='start'){
+                //      $arr=json_decode($data,TRUE);
+                     
+                // }
+                    while($tickLastStatus!=0){
+                             Log::info("test tick");
+                    }
+                    $final=$battle->battleReturn($u_id,$match_id,1);
+                    return $final;
                 
                 });
 
