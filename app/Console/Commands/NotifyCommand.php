@@ -111,12 +111,22 @@ class NotifyCommand extends Command
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
                         $client_id=$frame->fd;
-                        $server->tick(600, function()use($u_id, $match_id,$client_id,$BattleController,$server,$frame) {
+                        $access_token=$uslist[1]->access_token;
+                        $redis_battle=Redis::connection('battle');
+                       // $matchController->validateMatch($u_id);
+                        $battleKey='battle_status'.$dmy;
+                        $inBattle=$redis_battle->HGET($battleKey,$u_id);
+                    //    $match_uid=$redis_battle->HKEYS($matchKey);
+                        $resultList=$matchController->match($frame->fd,$u_id,$access_token);
+
+                        Log::info(json_encode($server->connection_info($client_id)));
+                        $server->tick(600, function()use($frame) {
                             Log::info("test tick 667");
+
                             // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     // $response=json_encode($resultList['battle_data'],TRUE);
                                    // Log::info("test response ".$response);
-                                    $server->push($client_id, "testtest"); 
+                                    $server->push($frame->fd, "testtest"); 
                           });
 
                      }
