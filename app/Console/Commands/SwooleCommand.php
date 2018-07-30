@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Redis;
 use swoole_server;
 use App\Http\Controllers\BattleController;
 use Log;
+use DateTime;
 class SwooleCommand extends Command
 {
     /**
@@ -153,14 +154,18 @@ class SwooleCommand extends Command
              } );
 
             $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+                $now   = new DateTime;
+                $dmy=$now->format( 'Ymd' ); 
                 $battle=new BattleController();
                 $redis_battle=Redis::connection('battle');
+                $battleKey='battle_status'.$u_id.$dmy;
+                $match_id=$redis_battle->HGET($battleKey,'match_id');
                 $tick_key="battle_tick".$match_id;
                 $tickCount=$redis_battle->HLEN($tick_key);
                 $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
                 $u_id=$data['u_id'];
-                $battleKey='battle_status'.$u_id.$dmy;
-                $match_id=$redis_battle->HGET($battleKey,'match_id');
+                
+               
                 // if($data=='start'){
                 //      $arr=json_decode($data,TRUE);
                      
