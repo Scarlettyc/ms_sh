@@ -111,7 +111,7 @@ class SwooleCommand extends Command
                 if(isset($data)){
                 $arr=json_decode($data,TRUE);
                 $battle->battleTestNew($arr,$clientInfo);
-                }
+               
 
                
                 // $serv->after(600, function() use ($serv, $data,$clientInfo) {
@@ -143,50 +143,58 @@ class SwooleCommand extends Command
                 //     $serv->sendto($final['address_2'], $final['port_1'],$response);
                 // }
             // }
-                    $final=$serv->task($arr);
+                    $now   = new DateTime;
+                    $dmy=$now->format( 'Ymd' ); 
+                    $u_id=$data['u_id'];
+                    $frame_id=$data['frame_id'];
+                    $battleKey='battle_status'.$u_id.$dmy;
+                    $match_id=$redis_battle->HGET($battleKey,'match_id');
+                     $final=$battle->battleReturn($u_id,$match_id,$frame_id);
                     if(isset($final)){
-                        Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2'].$response);
-                        $response=json_encode($final,TRUE);
+                           $response=json_encode($final,TRUE);
+                            Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2'].$response);
+                     
                    
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
                         $serv->sendto($final['address_2'], $final['port_1'],$response);
                     }
+                }
 
              } );
 
-            $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
-                $now   = new DateTime;
-                $dmy=$now->format( 'Ymd' ); 
-                $battle=new BattleController();
-                $redis_battle=Redis::connection('battle');
-                $u_id=$data['u_id'];
-                $frame_id=$data['frame_id'];
-                $battleKey='battle_status'.$u_id.$dmy;
-                $match_id=$redis_battle->HGET($battleKey,'match_id');
-                // $tick_key="battle_tick".$match_id;
-                // $tickCount=$redis_battle->HLEN($tick_key);
-                // $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
+            // $serv->on('Task', function ($serv, $task_id, $from_id, $data) {
+            //     $now   = new DateTime;
+            //     $dmy=$now->format( 'Ymd' ); 
+            //     $battle=new BattleController();
+            //     $redis_battle=Redis::connection('battle');
+            //     $u_id=$data['u_id'];
+            //     $frame_id=$data['frame_id'];
+            //     $battleKey='battle_status'.$u_id.$dmy;
+            //     $match_id=$redis_battle->HGET($battleKey,'match_id');
+            //     // $tick_key="battle_tick".$match_id;
+            //     // $tickCount=$redis_battle->HLEN($tick_key);
+            //     // $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
               
                 
                
-                // if($data=='start'){
-                //      $arr=json_decode($data,TRUE);
+            //     // if($data=='start'){
+            //     //      $arr=json_decode($data,TRUE);
                      
-                // }
-                    // while($tickLastStatus!=0){
-                    //          Log::info("test tick");
-                    // }
-                    $final=$battle->battleReturn($u_id,$match_id,$frame_id);
-                    // $redis_battle->HSET($tick_key,$tickCount,1);
-                    return $final;
+            //     // }
+            //         // while($tickLastStatus!=0){
+            //         //          Log::info("test tick");
+            //         // }
+            //         $final=$battle->battleReturn($u_id,$match_id,$frame_id);
+            //         // $redis_battle->HSET($tick_key,$tickCount,1);
+            //         return $final;
                 
-                });
+            //     });
 
-            $serv->on('Finish', function ($serv,$task_id, $data) {
-                    Log::info("Task {$task_id} finish\n");
-                    // Log::info("Result: {$data}\n");
+            // $serv->on('Finish', function ($serv,$task_id, $data) {
+            //         Log::info("Task {$task_id} finish\n");
+            //         Log::info("Result: {$data}\n");
 
-            });
+            // });
 
 
         $serv->start();
