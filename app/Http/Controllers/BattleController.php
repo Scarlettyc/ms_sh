@@ -324,19 +324,20 @@ class BattleController extends Controller
 
 }
 
-	public function battleTestNew($clientID,$u_id,$data,$frame_id,$match_id){
+	public function battleTestNew($arr,$clientInfo){
 		$redis_battle=Redis::connection('battle');
  		$redis_user=Redis::connection('battle_user');
  		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
-		//$u_id=$result['u_id'];
+		$u_id=$arr['u_id'];
 		if($u_id){
 				$battleKey='battle_status'.$u_id.$dmy;
 		 	   	//$match_id=$redis_battle->HGET($battleKey,'match_id');
 		 	   	$enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
 				$current=$this->getMillisecond();
-				$playerData[]=$data;
-				$playerData['client']=$clientID;
+				$playerData[]=$arr;
+				$playerData['address']=$clientInfo['address'];
+				$playerData['port']=$clientInfo['port'];
 				$frameKey='battle_data'.$u_id.$match_id;
 				//$frameKey_2='battle_data'.$enemy_uid.$match_id;
 				//$responseKey='battle_data'.$match_id;
@@ -365,8 +366,10 @@ class BattleController extends Controller
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
 			Log::info($frameData);
 			if(isset($enmeyFrameData)){
-				$result['client_id_1']=$frameData['client'];
-				$result['client_id_2']=$enmeyFrameData['client'];
+				$result['address_1']=$frameData['address'];
+				$result['address_2']=$enmeyFrameData['address'];
+				$result['port_1']=$frameData['port'];
+				$result['port_2']=$enmeyFrameData['port'];
 				$result['battle_data'][]=$frameData;
 				$result['battle_data'][]=$enmeyFrameData;
 				$result['frame_id']=$frame_id;
