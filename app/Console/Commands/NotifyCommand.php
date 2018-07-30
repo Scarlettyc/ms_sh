@@ -122,12 +122,12 @@ class NotifyCommand extends Command
                         Log::info(json_encode($server->connection_info($value)));
                         $server->tick(600, function()use($frame,$server,$value) {
                             Log::info("test tick 667");
-                             if($frame->fd != $value){
+                             // if($frame->fd != $value){
                             // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     // $response=json_encode($resultList['battle_data'],TRUE);
                                    // Log::info("test response ".$response);
-                                    $server->push($frame->fd, "testtest"); 
-                                }
+                                    $server->push($value, "testtest"); 
+                                // }
                           });
 
                      }
