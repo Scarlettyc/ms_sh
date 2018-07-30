@@ -105,7 +105,7 @@ class BattleCommand extends Command
                          if($resultList==1){
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
-                        $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount-1);
+                        $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
 
                         do{
                             Log::info("test tick");
