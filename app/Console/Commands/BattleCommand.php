@@ -112,7 +112,7 @@ class BattleCommand extends Command
                         }
                         $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                         if( isset($resultList)){
-                             if($frame->fd == $resultList['client_id_2']){ 
+                             if($value == $resultList['client_id_2']){ 
                           $server->push($resultList['client_id_2'], "teste 2"); 
                             $server->push($resultList['client_id_1'], "teste 1");
                              Log::info("test do while funciton");
