@@ -99,8 +99,8 @@ class NotifyCommand extends Command
                                 $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame,$resultList,$result2,$result1) {
                                     Log::info("test tick 667");
                                 // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                                    $response=json_encode($resultList['battle_data'],TRUE);
-                                    Log::info("test response ".$response);
+                                    // $response=json_encode($resultList['battle_data'],TRUE);
+                                    Log::info("test response ");
                                      $server->push($resultList['client_id_2'], $result1); 
                                  $server->push($resultList['client_id'], $result2);
                           });
