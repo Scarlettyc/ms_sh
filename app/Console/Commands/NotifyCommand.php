@@ -104,12 +104,13 @@ class NotifyCommand extends Command
  
                      }
                      if($uslist[0]=="BattleStart"){
+                        $redis_battle=Redis::connection('battle');
                         $u_id=$uslist[1]->u_id;
                         $BattleController=new BattleController();
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
 
-                    $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame) {
+                        $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame) {
                             Log::info("test tick 667");
                             $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     $response=json_encode($resultList['battle_data'],TRUE);
