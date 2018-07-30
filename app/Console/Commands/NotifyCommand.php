@@ -96,7 +96,7 @@ class NotifyCommand extends Command
                                 $result1=$tag.'["BattleMatch",'.$uData1.']';
 
                                 $result2=$tag.'["BattleMatch",'.$uData2.']';
-                                $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame,$resultList,$result2,$result1) {
+                                $server->tick(600, function()use($u_id,$frame_id,$BattleController,$server,$frame,$resultList,$result2,$result1) {
                                     Log::info("test tick 667");
                                 // $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
                                     // $response=json_encode($resultList['battle_data'],TRUE);
