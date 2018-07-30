@@ -7,6 +7,7 @@ use swoole_websocket_server;
 use swoole_server;
 use App\Http\Controllers\MatchController;
 use Illuminate\Support\Facades\Redis;
+use App\Http\Controllers\BattleController;
 use Log;
 use DateTime;
 
@@ -103,6 +104,10 @@ class NotifyCommand extends Command
  
                      }
                      if($uslist[0]=="BattleStart"){
+                        $BattleController=new BattleController();
+                        $battleKey='battle_status'.$u_id.$dmy;
+                        $match_id=$redis_battle->HGET($battleKey,'match_id');
+
                     $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server,$frame) {
                            
                             Log::info("test tick 667");
