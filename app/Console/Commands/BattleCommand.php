@@ -79,24 +79,24 @@ class BattleCommand extends Command
                         $access_token=$uslist[1]->access_token;
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
-                        $frame_id=1;
-                     if($uslist[0]=="BattleStart"){
-                        $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server) {
+                     //    $frame_id=1;
+                     // if($uslist[0]=="BattleStart"){
+                     //    $server->tick(600, function()use($u_id, $match_id,$frame_id,$BattleController,$server) {
                            
-                            Log::info("test tick 667");
-                            $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
-                            // if(isset($resultList['client_id_1'])&&isset($resultList['client_id_2'])){
-                                    $response=json_encode($resultList['battle_data'],TRUE);
-                                    Log::info("test response ".$response);
-                                Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id_1']);
-                                foreach ($server->connections as  $fd) {  
-                                $server->push($fd,$response); 
-                                //$server->push($fd, $response);
-                                // }
-                            }
-                          });
+                     //        Log::info("test tick 667");
+                     //        $resultList=$BattleController->battleReturn($u_id,$match_id,$frame_id);
+                     //        // if(isset($resultList['client_id_1'])&&isset($resultList['client_id_2'])){
+                     //                $response=json_encode($resultList['battle_data'],TRUE);
+                     //                Log::info("test response ".$response);
+                     //            Log::info("test".$resultList['client_id_2']."test2".$resultList['client_id_1']);
+                     //            foreach ($server->connections as  $fd) {  
+                     //            $server->push($fd,$response); 
+                     //            //$server->push($fd, $response);
+                     //            // }
+                     //        }
+                     //      });
  
-                     }
+                     // }
                      if($uslist[0]=="BattleRecieve"){
                         $battle_data=$uslist[1]->battle_data;
                         $frame_id=$uslist[1]->frame_id;
