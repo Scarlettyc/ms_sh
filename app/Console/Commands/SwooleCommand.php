@@ -144,8 +144,8 @@ class SwooleCommand extends Command
                 // }
             // }
                     $final=$serv->task($arr);
-                    if($final){
-                        Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2']);
+                    if(isset($final)){
+                        Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2'].$response);
                         $response=json_encode($final,TRUE);
                    
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
