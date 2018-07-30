@@ -145,6 +145,7 @@ class SwooleCommand extends Command
             // }
                     $final=$serv->task($arr);
                     if($final){
+                        Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2']);
                         $response=json_encode($final,TRUE);
                    
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
@@ -162,9 +163,9 @@ class SwooleCommand extends Command
                 $frame_id=$data['frame_id'];
                 $battleKey='battle_status'.$u_id.$dmy;
                 $match_id=$redis_battle->HGET($battleKey,'match_id');
-                $tick_key="battle_tick".$match_id;
-                $tickCount=$redis_battle->HLEN($tick_key);
-                $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
+                // $tick_key="battle_tick".$match_id;
+                // $tickCount=$redis_battle->HLEN($tick_key);
+                // $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
               
                 
                
@@ -172,9 +173,9 @@ class SwooleCommand extends Command
                 //      $arr=json_decode($data,TRUE);
                      
                 // }
-                    while($tickLastStatus!=0){
-                             Log::info("test tick");
-                    }
+                    // while($tickLastStatus!=0){
+                    //          Log::info("test tick");
+                    // }
                     $final=$battle->battleReturn($u_id,$match_id,$frame_id);
                     $redis_battle->HSET($tick_key,$tickCount,1);
                     return $final;
