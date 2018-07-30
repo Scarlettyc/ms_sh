@@ -183,7 +183,7 @@ class SwooleCommand extends Command
 
             $serv->on('Finish', function ($serv,$task_id, $data) {
                     Log::info("Task {$task_id} finish\n");
-                    Log::info("Result: {$data}\n");
+                    // Log::info("Result: {$data}\n");
 
             });
 
