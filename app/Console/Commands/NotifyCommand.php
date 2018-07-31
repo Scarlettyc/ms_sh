@@ -67,12 +67,12 @@ class NotifyCommand extends Command
 
         $serv->on('Message', function($server, $frame) {
         global $reqs;
-            foreach ($server->connections as $key => $value) {  
                  $matchController=new MatchController();
                  $string=$frame->data;
                  $tag=substr($string,0,2);
                  $now   = new DateTime;
                  $dmy=$now->format( 'Ymd' );
+                 $tick=0;
                  if($tag==42){
                     $ustring=substr($string,2);
                     $uslist= json_decode($ustring);
@@ -128,7 +128,7 @@ class NotifyCommand extends Command
                            $count=$tickCount;
                         }
 
-                        $server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
+                        $tick=$server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
 
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
@@ -143,9 +143,14 @@ class NotifyCommand extends Command
                         $access_token=$uslist[1]->access_token;
                         $matchController->closeMatch($u_id,$access_token);
                         $result1=$tag.'["CloseMatch",{"match canceled"}]"';
-                        $server->push($value, $result1);  
+                        $server->push($frame->fd, $result1);  
                     }
-            }
+                    if($uslist[0]=="BattleClose"){
+                        if($tick){
+                             Log::info("test close tick");
+                            swoole_timer_clear($tick);
+                        }
+                    }
         } 
     });
 
