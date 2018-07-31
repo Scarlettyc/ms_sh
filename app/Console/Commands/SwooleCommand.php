@@ -158,7 +158,9 @@ class SwooleCommand extends Command
                     while($tickLastStatus!=0){
                              Log::info("test tick");
                     }
+                    if($tickCount>1){
                     $redis_battle->HSET($tick_key,$tickCount,1);
+                    }
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
                         $serv->sendto($final['address_2'], $final['port_2'],$response);
                     }
