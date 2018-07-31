@@ -32,9 +32,12 @@ class AccessController extends Controller
 		$characterModel=new CharacterModel();
 
 		if($data['uuid'])
-		{  	if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
+		{  	$userData=$usermodel->where('uuid',$data['uuid'])->first();
+			if(isset($userData)){
+			if(($data['os']='ios'&&strlen($data['uuid'])==40)||($data['os']='android'&&strlen($data['uuid'])==37))
 			{		
 					$userData=$usermodel->createNew($data);	
+				}
 			}
 		}
 		else {
