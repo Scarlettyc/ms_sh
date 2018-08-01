@@ -193,7 +193,7 @@ class AccessController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$u_id=$data['u_id'];
 		$userMoney=$userModel->select('u_id','u_coin','u_gem')->where('u_id',$u_id)->first();
-		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_ranking','w_bag_id')->where('u_id',$u_id)->first();
+		$userDetails=$charModel->select('ch_img','ch_title','ch_lv','ch_exp','ch_rank_id','w_bag_id')->where('u_id',$u_id)->first();
 
 		$equ_data=$BaggageUtil->getEquipedCode($userDetails['w_bag_id']);
 		$result['equ_code']=$equ_data->equ_code;
@@ -206,7 +206,7 @@ class AccessController extends Controller
 		$result['ch_title']=$userDetails['ch_title'];
 		$result['ch_lv']=$userDetails['ch_lv'];
 		$result['ch_exp']=$userDetails['ch_exp'];
-		$result['ch_ranking']=$userDetails['ch_ranking'];
+		$result['ch_rank_id']=$userDetails['ch_rank_id'];
 		$response=json_encode($result,TRUE);
 		
 		 return base64_encode($response);
