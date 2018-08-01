@@ -42,10 +42,8 @@ class MatchController extends Controller
 
 	
      		if(isset($chardata)){
-		 		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
-		 		->first();
-				// $matchKey='battle_match'.$match['user_ranking'].'start'.$match['star_from'].'to'.$match['star_to'].$dmy;
-				$matchKey='battle_match'.$dmy;
+		 		$match=$matchrange->where('rank_from','<=',$chardata['ch_rank_id']-1)->where('rank_to','>=',$chardata['ch_rank_id']+1)->first();
+				$matchKey='battle_match_rankfrom'.$match['rank_from'].'rankto'.$match['rank_to'].$dmy;
 				$matchList=$redis_battle->HEXISTS($matchKey,$u_id);
 				$matchCount=$redis_battle->HLEN($matchKey);
 				$list['u_id_1']=$u_id;
