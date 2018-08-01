@@ -312,7 +312,6 @@ class BaggageItemController extends Controller
 			$m_id=$characterDetail['m_id'];
 			$core_id=$characterDetail['core_id'];
 			$EquNew=$EquipmentMstModel->where('equ_id',$equ_id)->first();
-			$Equ_part=$EquNew['equ_part'];
 			$CharSkillEffUtil=new CharSkillEffUtil;
 			if($equ_type==1){
 				$ch_lv=$characterDetail['ch_lv'];
