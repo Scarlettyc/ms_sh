@@ -42,10 +42,10 @@ class SwooleClient extends Command
 
     public function handle()
     {   $client = new swoole_client(SWOOLE_SOCK_TCP);
-        $client->connect('127.0.0.1', 6380, 1);
+        $client->connect('127.0.0.1', 6385, 1);
 
         // $test=swoole_timer_tick(300, function ($id) use ($client){
-         // $client->send("42{"BattleStart",{uid:"ui100000001",access_token:123334,battle_data:"testtest",frame_id:1}}");
+         $client->send("test");
          $message = $client->recv();
             Log::info("Get Message From Server\n".$message);
 
