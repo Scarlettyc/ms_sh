@@ -123,7 +123,7 @@ class CharSkillEffUtil
 	    return $result;	
 	 }
 
-	 public function  equipLaChar($u_id,$equ_id,$equ_part){ 
+	 public function  equipLaChar($u_id,$equ_id,$equ_type){ 
 	 	$charModel=new CharacterModel();
 	 	$charAttr=new CharAttModel();
 	 	$eqAttr=new EqAttrmstModel();
@@ -134,12 +134,12 @@ class CharSkillEffUtil
 	 	$charData=$charModel->where('u_id',$u_id)->first();
 
 	 	$charAttData=$charAttr->where('ch_lv',$charData['ch_lv'])->first();
-		if($equ_part=2){
-		$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->where('status',1)->first();
+		if($equ_part==2){
+		$asData=$eqModel->where('equ_id',$charData['m_id'])->where('equ_type',3)->where('status',1)->first();
 	 		
 	 	}
-	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_part',3)->where('status',1)->first();
-	 	$eqData=$eqModel->where('equ_id',$equ_id)->where('equ_part',1)->first();
+	 	$asData=$eqModel->where('equ_id',$charData['core_id'])->where('equ_type',2)->where('status',1)->first();
+	 	$eqData=$eqModel->where('equ_id',$equ_id)->where('equ_type',1)->first();
 	 	$eqAttData=$eqAttr->where('equ_att_id',$eqData['equ_att_id'])->first();
 	 	$asAttData=$eqAttr->where('equ_att_id',$asData['equ_att_id'])->first();
 	 	$legAttData=$eqAttr->where('equ_att_id',$asData['equ_att_id'])->first();
