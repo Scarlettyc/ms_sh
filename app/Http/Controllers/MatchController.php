@@ -156,7 +156,7 @@ class MatchController extends Controller
 			$redis_battle=Redis::connection('battle');
 			$chardata=$characterModel->where('u_id',$u_id)->first();
      		$ch_star=$chardata['ch_star'];
-     		$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
+     		$match=$matchrange->where('user_ranking',$chardata['ch_rank_id'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
 		 	$matchKey='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
 		 	$redis_battle->HDEL($matchKey,$u_id);
@@ -173,7 +173,7 @@ class MatchController extends Controller
 		$matchrange=new MatchRangeModel();
 		$chardata=$characterModel->where('u_id',$u_id)->first();
      	$ch_star=$chardata['ch_star'];
-     	$match=$matchrange->where('user_ranking',$chardata['ch_ranking'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
+     	$match=$matchrange->where('user_ranking',$chardata['ch_rank_id'])->where('star_from','<=',$ch_star)->where('star_to','>=',$ch_star)
 		 		->first();
 		$waitmatch='battle_match'.$match['user_ranking'].'star'.$match['star_from'].'to'.$match['star_to'].$dmy;
 		$matchKey=$redis_battle->HKEYS($waitmatch);
