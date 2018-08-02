@@ -371,8 +371,8 @@ class BattleController extends Controller
 				$result['address_2']=$enmeyFrameData['address'];
 				$result['port_1']=$frameData['port'];
 				$result['port_2']=$enmeyFrameData['port'];
-				$result['battle_data'][]=$frameData;
-				$result['battle_data'][]=$enmeyFrameData;
+				$result['battle_data'][]=$frameData[0];
+				$result['battle_data'][]=$enmeyFrameData[0];
 				$result['frame_id']=$frame_id;
 				$response=json_encode($result,TRUE);
 				$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
