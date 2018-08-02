@@ -96,7 +96,7 @@ class LoadBattleController extends Controller
         $charRe['ch_title']=$charData['ch_title'];
         $charRe['ch_hp_max']=$charData['ch_hp_max'];
         $charRe['ch_img']=$charData['ch_img'];
-        $charRe['ch_rank_id']=$charData['ch_rank_id'];
+        $charRe['ch_ranking']=$charData['ch_ranking'];
         $charRe['ch_lv']=$charData['ch_lv'];
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];
@@ -137,6 +137,8 @@ class LoadBattleController extends Controller
             // $redis_battle->HSET($skill_keys,$eachSkill['skill_id'],time());
          }
         // $redis_battle->HSET($skill_keys,$special_skill['skill_id'],time());
+        var_dump($normal_skills);
+        var_dump($special_skill);
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
         $move_effs=$this->getEffs($movement_skill);
