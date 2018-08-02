@@ -106,7 +106,7 @@ class NotifyCommand extends Command
                      if($uslist[0]=="BattleStart"){
                         $redis_battle=Redis::connection('battle');
                         $u_id=$uslist[1]->u_id;
-                        $frame_id=1;
+                        //$frame_id=$uslist[1]->frame_id;
                         $BattleController=new BattleController();
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
@@ -120,19 +120,19 @@ class NotifyCommand extends Command
                         $resultList=$matchController->match($frame->fd,$u_id,$access_token);
                         $tick_key="battle_tick".$match_id;
 
+
+
+                        $tick=$server->tick(66, function()use($redis_battle,$tick_key,$count,$match_id) {
                         $tickCount=$redis_battle->HLEN($tick_key);
-                        if($tickCount==0){
-                        $count=1;
-                        }
+                         if($tickCount==0){
+                             $count=1;
+                            }
                         else {
-                           $count=$tickCount;
+                            $count=$tickCount+1;
                         }
-
-                        $tick=$server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
-
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
-                            Log::info("test tick 667");
+                            Log::info("test tick 66");
 
                             $redis_battle->HSET($tick_key,$count,0);
                           });
