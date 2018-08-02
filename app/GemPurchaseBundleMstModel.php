@@ -11,5 +11,5 @@ class GemPurchaseBundleMst extends Model
 	protected $fillable = ['bundle_id','u_payment','os','country','gem_quantity','start_date','end_date','updated_at','created_at'];
 
 	protected $connection = 'mysql';
-	protected $table = "Gem_Purchase_Bundle_mst";
+	protected $table = "Store_Gem_Purchase_mst";
 }
