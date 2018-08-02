@@ -128,7 +128,7 @@ class NotifyCommand extends Command
                            $count=$tickCount;
                         }
 
-                        $tick=$server->tick(600, function()use($redis_battle,$tick_key,$count,$match_id) {
+                        $tick=$server->tick(66, function()use($redis_battle,$tick_key,$count,$match_id) {
 
                         $tick_key="battle_tick".$match_id;
                         $tickCount=$redis_battle->HLEN($tick_key);
