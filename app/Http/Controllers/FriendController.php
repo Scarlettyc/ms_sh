@@ -130,10 +130,10 @@ class FriendController extends Controller
 					->join('User_Character','User_Character.u_id','=','User_friend_list.friend_u_id')
 					->join('User_Baggage_Eq','User_Baggage_Eq.u_id','=','User.u_id')
 					->join('Equipment_mst','User_Baggage_Eq.equ_id','=','Equipment_mst.equ_id')
-					->select('User.u_id','User.friend_id','User.like_number','User_Character.ch_title','User_Character.ch_ranking','User_Character.ch_lv','User_Character.ch_img','Equipment_mst.equ_code','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_lv')
+					->select('User.u_id','User.friend_id','User.like_number','User_Character.ch_title','User_Character.ch_rank_id','User_Character.ch_lv','User_Character.ch_img','Equipment_mst.equ_code','Equipment_mst.equ_rarity as item_rarity','Equipment_mst.equ_lv')
 					->where('User_friend_list.u_id',$data['u_id'])
 					->where('User_friend_list.friend_status',1)
-					->orderby('User_Character.ch_ranking','DESC')
+					->orderby('User_Character.ch_rank_id','DESC')
 					->orderBy('User_Character.ch_title', 'ASC')
 					->groupby('User_friend_list.friend_u_id')
 					->get();
@@ -387,7 +387,7 @@ class FriendController extends Controller
 		$friend=$usermodel->where('friend_id',$friend_id)->first();
 		$characterModel=new CharacterModel();
 		$BaggageUtil=new BaggageUtil();
-		$friendCharacter=$characterModel->select('ch_title','ch_ranking','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
+		$friendCharacter=$characterModel->select('ch_title','ch_rank_id','ch_stam','ch_atk','ch_armor','ch_crit','ch_img','w_bag_id')->where('u_id',$friend['u_id'])->first();
 		$equ_data=$BaggageUtil->getEquipedCode($friendCharacter['w_bag_id']);
 		$friendCharacter['item_rarity']=$equ_data->item_rarity;
 		$friendCharacter['equ_code']=$equ_data->equ_code;

@@ -96,7 +96,7 @@ class LoadBattleController extends Controller
         $charRe['ch_title']=$charData['ch_title'];
         $charRe['ch_hp_max']=$charData['ch_hp_max'];
         $charRe['ch_img']=$charData['ch_img'];
-        $charRe['ch_ranking']=$charData['ch_ranking'];
+        $charRe['ch_rank_id']=$charData['ch_rank_id'];
         $charRe['ch_lv']=$charData['ch_lv'];
  	    $weapon_id=$charData['w_id'];
  	    $movement_id=$charData['m_id'];

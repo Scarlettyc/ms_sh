@@ -25,7 +25,7 @@ class LeaderBoardController extends Controller
       $usermodel=new UserModel();
       $BaggageUtil=new BaggageUtil();
       $u_id=$data['u_id'];
-      $leaderRanking=$char->select('u_id','ch_title','ch_ranking','ch_star','ch_lv','ch_img','w_bag_id')->orderBy('ch_ranking', 'desc')->limit(10)->get();
+      $leaderRanking=$char->select('u_id','ch_title','ch_rank_id','ch_star','ch_lv','ch_img','w_bag_id')->orderBy('ch_rank_id', 'desc')->limit(10)->get();
       $leaders=[];
       foreach ($leaderRanking as $key => $leader) {
         $friend=$usermodel->select('friend_id')->where('u_id',$leader['u_id'])->first();
@@ -41,7 +41,7 @@ class LeaderBoardController extends Controller
         }
         $leaders[]=$leader;
       }
-      $myRanking=$char->select('ch_ranking','ch_title','u_id','ch_title','ch_ranking','ch_star','ch_lv','ch_img')->where('u_id',$u_id)->first();
+      $myRanking=$char->select('ch_rank_id','ch_title','u_id','ch_title','ch_rank_id','ch_star','ch_lv','ch_img')->where('u_id',$u_id)->first();
       $myRanking['winRounds']=0;
       $myRanking['loseRounds']=0;
       $myfriend=$usermodel->select('friend_id')->where('u_id',$u_id)->first();
