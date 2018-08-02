@@ -393,6 +393,7 @@ class FriendController extends Controller
 		$friendCharacter['equ_code']=$equ_data->equ_code;
 		$friendCharacter['equ_lv']=$equ_data->equ_lv;
 		$friendCharacter['friend_id']=$data['friend_id'];
+		$friendCharacter['friend_like']=$friend['like_number'];
 		$result['friend_details']=$friendCharacter;
 		$response=json_encode($result,TRUE);
 		 return base64_encode($response);
