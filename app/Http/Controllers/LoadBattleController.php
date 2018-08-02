@@ -126,8 +126,10 @@ class LoadBattleController extends Controller
         // $coreData=$eqModel->select('special_skill_id')->where('equ_id',$core_id)->first();
         // $moveData=$eqModel->select('special_skill_id')->where('equ_id',$movement_id)->first();
  	    $result=[];
-        $normal_skills=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',0)->get();
+        $normal_skills=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('skill_code', 'like', '%00%')->get();
+        var_dump($normal_skills);
         $special_skill=$skillModel->select('skill_id','skill_group', 'skill_damage','skill_name','skill_icon','skill_cd','skill_info')->where('equ_group',$eqData['equ_group'])->where('equ_id',$weapon_id)->first();
+         var_dump($special_skill);
         $core_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$core_id)->first();
         $movement_skill=$skillModel->select('skill_id','skill_group','skill_damage', 'skill_name','skill_icon','skill_cd','skill_info')->where('equ_id',$movement_id)->first();
         $skill_keys='battle_user_skills_'.$u_id;
@@ -137,8 +139,7 @@ class LoadBattleController extends Controller
             // $redis_battle->HSET($skill_keys,$eachSkill['skill_id'],time());
          }
         // $redis_battle->HSET($skill_keys,$special_skill['skill_id'],time());
-        var_dump($normal_skills);
-        var_dump($special_skill);
+
         $special_effs=$this->getEffs($special_skill);
         $core_effs=$this->getEffs($core_skill);
         $move_effs=$this->getEffs($movement_skill);
