@@ -106,19 +106,18 @@ class NotifyCommand extends Command
                      if($uslist[0]=="BattleStart"){
                         $redis_battle=Redis::connection('battle');
                         $u_id=$uslist[1]->u_id;
-                        //$frame_id=$uslist[1]->frame_id;
                         $BattleController=new BattleController();
                         $battleKey='battle_status'.$u_id.$dmy;
                         $match_id=$redis_battle->HGET($battleKey,'match_id');
+                        $enemy_uid=$redis_battle->HGET($battleKey,'enemy_uid');
+                        $redis_battle->HSET($battleKey,'status',7);
+                        
+                        $enemy_Key='battle_status'.$enemy_uid.$dmy;
+                        $enemy_status=$redis_battle->HGET($enemy_Key,'status');
+
                         $client_id=$frame->fd;
                         $access_token=$uslist[1]->access_token;
-                        $redis_battle=Redis::connection('battle');
-                       // $matchController->validateMatch($u_id);
-                        $battleKey='battle_status'.$dmy;
-                        $inBattle=$redis_battle->HGET($battleKey,$u_id);
-                    //    $match_uid=$redis_battle->HKEYS($matchKey);
-                        $resultList=$matchController->match($frame->fd,$u_id,$access_token);
-
+                        if($enemy_status==7){
                         $tick=$server->tick(66, function()use($redis_battle,$match_id) {
 
                         $tick_key="battle_tick".$match_id;
@@ -132,6 +131,7 @@ class NotifyCommand extends Command
                             Log::info("test tick 66");
                             $redis_battle->HSET($tick_key,$count,0);
                           });
+                        }
 
                      }
                     if($uslist[0]=="CloseMatch"){

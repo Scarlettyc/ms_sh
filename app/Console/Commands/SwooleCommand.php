@@ -149,19 +149,22 @@ class SwooleCommand extends Command
                     $match_id=$redis_battle->HGET($battleKey,'match_id');
                      $final=$battle->battleReturn($u_id,$match_id,$frame_id);
                     if(isset($final)){
-                           $response=json_encode($final,TRUE);
-                            Log::info('send to address_1'.$final['address_1']." address_2".$final['address_2'].$response);
+                  
                     $tick_key="battle_tick".$match_id;
                     $tickCount=$redis_battle->HLEN($tick_key);
                     $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
                      
                     while($tickLastStatus!=0){
-                             Log::info("test tick");
+                             Log::info("test tick ".$frame_id);
                     }
                     if($tickCount>1){
                     $redis_battle->HSET($tick_key,$tickCount,1);
                     }  
-                        Log::info("send to client");
+                        $tmp['battle_data']=$final['battle_data'];
+                        $tmp['frame_id']=$final['frame_id
+                        '];
+                        $response=json_encode($tmp,TRUE);
+                        Log::info("send to client ".$response);
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
                         $serv->sendto($final['address_2'], $final['port_2'],$response);
                     }
