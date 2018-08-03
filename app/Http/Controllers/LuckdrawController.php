@@ -511,8 +511,8 @@ class LuckdrawController extends Controller
 // 		   			$draw['description']=$rescourceData['r_description'];
 // 		   			$baRedata=$baReModel->where('u_id',$data['u_id'])->where('r_id',$drawresult['item_id'])->first();
 // 		   			if(isset($baRedata)){
-// 		   				$br_quanitty=$baRedata['br_quantity']+$drawresult['item_quantity'];
-// 		   				$baReModel->where('u_id',$data['u_id'])->where('r_id',$drawresult['item_id'])->update(['br_quantity'=>$br_quanitty,'updated_at'=>$date]);
+// 		   				$br_quanitty=$baRedata['quantity']+$drawresult['item_quantity'];
+// 		   				$baReModel->where('u_id',$data['u_id'])->where('r_id',$drawresult['item_id'])->update(['quantity'=>$br_quanitty,'updated_at'=>$date]);
 // 		   			}
 // 		   			else{
 // 		   				$baReNew['u_id']=$data['u_id'];
@@ -520,7 +520,7 @@ class LuckdrawController extends Controller
 // 		   				$baReNew['br_icon']=$rescourceData['r_img_path'];
 // 		   				$baReNew['r_rarity']=$rescourceData['r_rarity'];
 // 		   				$baReNew['r_type']=$rescourceData['r_type'];
-// 		   				$baReNew['br_quantity']=$drawresult['item_quantity'];
+// 		   				$baReNew['quantity']=$drawresult['item_quantity'];
 // 		   				$baReNew['status']=0;
 // 		   				$baReNew['updated_at']=$date;
 // 		   				$baReNew['created_at']=$date;
