@@ -161,8 +161,7 @@ class SwooleCommand extends Command
                     $redis_battle->HSET($tick_key,$tickCount,1);
                     }  
                         $tmp['battle_data']=$final['battle_data'];
-                        $tmp['frame_id']=$final['frame_id
-                        '];
+                        $tmp['frame_id']=$final['frame_id'];
                         $response=json_encode($tmp,TRUE);
                         Log::info("send to client ".$response);
                         $serv->sendto($final['address_1'], $final['port_1'],$response);
