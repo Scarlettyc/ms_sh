@@ -218,16 +218,33 @@ class BaggageItemController extends Controller
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','equ_group','sc_rarity')->where('sc_id',$scrollId)->first();
 			$scrollReData=$ScrollResourceModel->select('r_id','r_quantity')->where('sc_id',$scrollInfo['sc_id'])->get();
 			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
-			if($validate){
+			if($validate&&$scrollQu>=1){
 				if($scrollInfo['equ_group']==0){
 					$equipmentInfo=$EquipmentMstModel->select('equ_id')->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
 				}
 				else{
 					$equipmentInfo=$EquipmentMstModel->select('equ_id')->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
 					}
-					$equitmp['item_type']=2;
-					$equitmp['item_id']=$equipmentInfo['equ_id'];
-					$BaggageUtil->insertToBaggage($u_id,$equitmp);
+
+					$hadEq=$UserBaggageEqModel->where('equ_id',$equipmentInfo['equ_id'])->where('u_id',$u_id)->count();
+					if($hadEq>=1){
+						throw new Exception("no enough coin");
+						$response=[
+						'status' => 'Wrong',
+						'error' => "you already have this equipment",
+						];
+					}
+					$result['u_id']=$u_id;
+					$result['equ_id']=$equipmentInfo['equ_id'];
+					$result['icon_path']=$equipmentInfo['icon_path'];
+					$result['equ_rarity']=$equipmentInfo['equ_rarity'];
+					$result['equ_type']=$equipmentInfo['equ_type'];
+					//$result['quantity']=$reward['item_quantity'];
+					$result['status']=0;
+					$result['updated_at']=$datetime;
+					$result['created_at']=$datetime;
+					$UserBaggageEqModel->insert(
+					$BaggageUtil->insertToBaggage($u_id,$result);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
 					}else if($scrollInfo['sc_rarity']==3){
