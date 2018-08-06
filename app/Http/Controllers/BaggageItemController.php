@@ -13,6 +13,7 @@ use App\ResourceMstModel;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
+use App\ScrollResourceModel;
 use App\EquUpgradeReMstModel;
 use App\DefindMstModel;
 use App\Util\BaggageUtil;
@@ -195,6 +196,7 @@ class BaggageItemController extends Controller
 		$BaggageUtil=new BaggageUtil();
 		$UserBaggageScrollModel=new UserBaggageScrollModel();
 		$ScrollMstModel=new ScrollMstModel();
+		$ScrollResourceModel=new ScrollResourceModel();
 		$EquipmentMstModel=new EquipmentMstModel();
 		$MissionController=new MissionController();
 		$UserBaggageEqModel=new UserBaggageEqModel();
@@ -213,28 +215,40 @@ class BaggageItemController extends Controller
 				
 			}
 			$scrollQu=$UserBaggageScrollModel->select('quantity')->where('u_id',$u_id)->where('status','=',0)->where('sc_id',$scrollId)->where('user_sc_id',$baggage_id)->first();
-			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
-			if($scrollInfo['sc_rarity']==2){
-				$MissionController->achieveMission(15,2,$u_id,1);
-			}else if($scrollInfo['sc_rarity']==3){
-				$MissionController->achieveMission(25,2,$u_id,1);
-			}
-			$equipmentInfo=$EquipmentMstModel->where('upgrade_id',$scrollInfo['upgrade_id'])->first();
-			$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
-			if($upgarde){
-				if($scrollQu['quantity']==1){
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','equ_group','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();\
+			$scrollReData=$ScrollResourceModel->select('r_id','r_quantity')->where('sc_id',$scrollInfo['sc_id'])->get();
+			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
+			if($validate){
+				if($scrollInfo['equ_group']==0){
+					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
 				}
 				else{
-					$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
+					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
+					}
+					if($scrollInfo['sc_rarity']==2){
+						$MissionController->achieveMission(16,2,$u_id,1);
+					}else if($scrollInfo['sc_rarity']==3){
+						$MissionController->achieveMission(26,2,$u_id,1);
+					}
+					else if($scrollInfo['sc_rarity']==4){
+						$MissionController->achieveMission(37,2,$u_id,1);
+					}
+					$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
+					if($upgarde){
+						if($scrollQu['quantity']==1){
+							$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
+						}
+						else{
+							$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['quantity'=>$scrollQu['quantity']-1,'status'=>0,'updated_at'=>$datetime]);
+						}
+						
+						$response='Successfully Meraged';
+						return base64_encode($response);
+					}
+					else{
+						throw new Exception("upgradeInfo is null");
+					}
 				}
-				
-				$response='Successfully Meraged';
-				return base64_encode($response);
-			}
-			else{
-				throw new Exception("upgradeInfo is null");
-			}
 	}
 
 	public function equipmentUpgrade (Request $request)
