@@ -382,7 +382,10 @@ class BaggageUtil
 				
 			}
 			else if($reward['item_type']==2){
-		
+					$hadEq=$UserBaggageEqModel->where('equ_id',$eqData['equ_id'])->where('u_id',$u_id)->count();
+					if($hadEq>=1){
+						throw
+					}
 					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
@@ -390,7 +393,7 @@ class BaggageUtil
 					$result['icon_path']=$eqData['icon_path'];
 					$result['equ_rarity']=$eqData['equ_rarity'];
 					$result['equ_type']=$eqData['equ_type'];
-					$result['quantity']=$reward['item_quantity'];
+					//$result['quantity']=$reward['item_quantity'];
 					$result['status']=0;
 					$result['updated_at']=$datetime;
 					$result['created_at']=$datetime;
