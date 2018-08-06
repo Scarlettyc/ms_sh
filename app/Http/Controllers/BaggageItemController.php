@@ -225,6 +225,7 @@ class BaggageItemController extends Controller
 				else{
 					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
 					}
+					$equipmentInfo['item_type']=2;
 					$BaggageUtil->insertToBaggage($u_id,$equipmentInfo);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
