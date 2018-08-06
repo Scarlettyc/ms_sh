@@ -225,6 +225,7 @@ class BaggageItemController extends Controller
 				else{
 					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
 					}
+					$BaggageUtil->insertToBaggage($u_id,$equipmentInfo);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
 					}else if($scrollInfo['sc_rarity']==3){
@@ -233,8 +234,6 @@ class BaggageItemController extends Controller
 					else if($scrollInfo['sc_rarity']==4){
 						$MissionController->achieveMission(37,2,$u_id,1);
 					}
-					$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equipmentInfo['equ_id'],$equipmentInfo['equ_type'],$scrollInfo['sc_coin'],1,0);
-					if($upgarde){
 						if($scrollQu['quantity']==1){
 							$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
 						}
@@ -244,7 +243,6 @@ class BaggageItemController extends Controller
 						
 						$response='Successfully Meraged';
 						return base64_encode($response);
-					}
 					else{
 						throw new Exception("upgradeInfo is null");
 					}
