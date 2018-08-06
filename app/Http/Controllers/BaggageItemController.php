@@ -227,7 +227,8 @@ class BaggageItemController extends Controller
 					}
 					$equitmp['item_type']=2;
 					$equitmp['item_id']=$equipmentInfo['equ_id'];
-					$BaggageUtil->insertToBaggage($u_id,$equitmp);
+					$result[]=$equitmp;
+					$BaggageUtil->insertToBaggage($u_id,$result);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
 					}else if($scrollInfo['sc_rarity']==3){
