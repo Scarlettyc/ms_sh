@@ -365,8 +365,10 @@ class BattleController extends Controller
 			$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id);
 			$frameData=json_decode($frameDataJson,TRUE);
 			$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
-			Log::info($frameData);
-			if(isset($enmeyFrameData)){
+			if(!isset($enmeyFrameData)){
+				$enmeyFrameDataJson=$redis_user->HGET($enemyFramekey,$frame_id-1);
+				$enmeyFrameData=json_decode($enmeyFrameDataJson,TRUE);
+			}
 				$result['address_1']=$frameData['address'];
 				$result['address_2']=$enmeyFrameData['address'];
 				$result['port_1']=$frameData['port'];
@@ -376,10 +378,9 @@ class BattleController extends Controller
 				$result['frame_id']=$frame_id;
 				$response=json_encode($result,TRUE);
 				$redis_user->HSET('battle_history'.$match_id,$frame_id,$response);
-		   		Log::info('battleReturn '.$response);
 				return 	$result;
-		}
 	}
+
 
 	private function removeUsedSkill($u_id){
 		$redis_user=Redis::connection('battle_user');
