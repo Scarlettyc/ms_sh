@@ -215,7 +215,7 @@ class BaggageItemController extends Controller
 				
 			}
 			$scrollQu=$UserBaggageScrollModel->select('quantity')->where('u_id',$u_id)->where('status','=',0)->where('sc_id',$scrollId)->where('user_sc_id',$baggage_id)->first();
-			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','equ_group','upgrade_id','sc_rarity')->where('sc_id',$scrollId)->first();
+			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','equ_group','sc_rarity')->where('sc_id',$scrollId)->first();
 			$scrollReData=$ScrollResourceModel->select('r_id','r_quantity')->where('sc_id',$scrollInfo['sc_id'])->get();
 			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
 			if($validate){
