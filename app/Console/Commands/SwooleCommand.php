@@ -154,9 +154,9 @@ class SwooleCommand extends Command
                     $tickCount=$redis_battle->HLEN($tick_key);
                     $tickLastStatus=$redis_battle->HGET($tick_key,$tickCount);
                      
-                    while($tickLastStatus!=0){
-                             Log::info("test tick ".$frame_id);
-                    }
+                    // while($tickLastStatus!=0){
+                    //          Log::info("test tick ".$frame_id);
+                    // }
                     if($tickCount>1){
                     $redis_battle->HSET($tick_key,$tickCount,1);
                     }  
