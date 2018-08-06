@@ -220,13 +220,14 @@ class BaggageItemController extends Controller
 			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
 			if($validate){
 				if($scrollInfo['equ_group']==0){
-					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
+					$equipmentInfo=$EquipmentMstModel->select('equ_id')->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
 				}
 				else{
-					$equipmentInfo=$EquipmentMstModel->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
+					$equipmentInfo=$EquipmentMstModel->select('equ_id')->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
 					}
-					$equipmentInfo['item_type']=2;
-					$BaggageUtil->insertToBaggage($u_id,$equipmentInfo);
+					$equitmp['item_type']=2;
+					$equitmp['item_id']=$equipmentInfo['equ_id'];
+					$BaggageUtil->insertToBaggage($u_id,$equitmp);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
 					}else if($scrollInfo['sc_rarity']==3){
