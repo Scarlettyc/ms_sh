@@ -243,9 +243,10 @@ class BaggageItemController extends Controller
 						
 						$response='Successfully Meraged';
 						return base64_encode($response);
-					else{
+
+				}
+				else{
 						throw new Exception("upgradeInfo is null");
-					}
 				}
 	}
 
