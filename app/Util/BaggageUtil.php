@@ -385,9 +385,6 @@ class BaggageUtil
 			}
 			else if($reward['item_type']==2){
 					$hadEq=$UserBaggageEqModel->where('equ_id',$eqData['equ_id'])->where('u_id',$u_id)->count();
-					if($hadEq>=1){
-						throw
-					}
 					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
 					$result['u_id']=$u_id;
