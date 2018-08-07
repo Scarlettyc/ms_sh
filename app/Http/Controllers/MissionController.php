@@ -39,6 +39,7 @@ class MissionController extends Controller
 		$chaData=$charModel->where('u_id',$u_id)->first();
 		$missionLv=0;
 		if($mission_type==2){
+			
 			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
 		}
