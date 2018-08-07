@@ -51,7 +51,7 @@ class MissionController extends Controller
 		foreach ($missionList as $key => $mission) {
 			$recordJson=$redis_mission->HGET($key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
-			$rewards=$missionReward->select(DB::raw('item_id, equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
+			$rewards=$missionReward->select(DB::raw('item_id, item_equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['rewards']=$rewards;
 				// if($rewards['item_type']==3){
