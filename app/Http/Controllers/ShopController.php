@@ -66,7 +66,9 @@ class ShopController extends Controller
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
 		$pay_type=$data['pay_type'];
-		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('pay_type',$pay_type)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('pay_type',$pay_type)->where('item_type',$item_type)
+		// ->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)
+		->first();
 		$totalSpend=$times*$shopData['item_spend'];
 		if($pay_type==1){
 			$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
@@ -266,7 +268,9 @@ class ShopController extends Controller
 			$UserModel=new UserModel;
 			
 			$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
-				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+				$coinList=$StoreGemToCoinMstModel->select('id','coin','gem')
+				// ->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)
+				->get();
 				$result['store_coin_list']=$coinList;
 				$response=json_encode($result,TRUE);
 				return base64_encode($response);
@@ -288,7 +292,9 @@ class ShopController extends Controller
 			$GemPurchaseBundleMst=new GemPurchaseBundleMst;
 			// if($checkToken){
 				$userData=$UserModel->select('country','os')->where('u_id',$u_id)->first();
-				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->where('os',$userData['os'])->where('country',$userData['country'])->orderby('gem_quantity')->get();
+				$gemList=$GemPurchaseBundleMst->select('bundle_id','u_payment','gem_quantity')
+				// ->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)
+				->where('os',$userData['os'])->where('country',$userData['country'])->orderby('gem_quantity')->get();
 				$result['store_gem_list']=$gemList;
 				$response=json_encode($result,TRUE);
 				return base64_encode($response);
