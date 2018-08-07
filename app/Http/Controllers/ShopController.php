@@ -39,13 +39,7 @@ class ShopController extends Controller
 		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$inAppModel=new InAppPurchaseModel();
 		// if($access_token==$data['access_token']){
-		$resourceShop=$inAppModel
-				->join('Rescource_mst','Rescource_mst.r_id','=','Store_purchase_mst.item_id')
-				->select('Store_purchase_mst.item_id','Store_purchase_mst.item_type','Store_purchase_mst.item_min_quantity','Store_purchase_mst.item_max_times','Rescource_mst.r_rarity as pay_type','Rescource_mst.r_price * Store_purchase_mst.item_min_quantity as item_spend')
-				// ->where('Store_purchase_mst.start_date','<=','now()')
-				// ->where('Store_purchase_mst.end_date','>=', 'now()')
-				->where('Store_purchase_mst.item_type',1)
-				->get();
+		$resourceShop=$inAppModel->select('item_id','item_type','item_min_quantity','item_max_times','item_spend','pay_type')->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$result['shop_list']=$resourceShop;
 		$response=json_encode($result,TRUE);
  	    return base64_encode($response);
@@ -63,7 +57,7 @@ class ShopController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$dmy=$now->format( 'Ymd' );
 		$redisShop= Redis::connection('default');
-		$resourceModle=new ResourceMstModel();
+		
 		$UserModel=new UserModel;
 		$inAppModel=new InAppPurchaseModel();
 		$BaggageUtil=new BaggageUtil();
@@ -72,9 +66,8 @@ class ShopController extends Controller
 		$item_type=$data['item_type'];
 		$times=$data['item_times'];
 		$pay_type=$data['pay_type'];
-		$shopData=$inAppModel->select('item_min_quantity')->where('item_id',$item_id)->where('pay_type',$pay_type)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
-		$resourceData=$resourceModle->select('r_price')->where('item_id',$item_id)->first();
-		$totalSpend=$times*$shopData['item_min_quantity']*$resourceData['r_price'];
+		$shopData=$inAppModel->select('item_spend','item_min_quantity')->where('item_id',$item_id)->where('pay_type',$pay_type)->where('item_type',$item_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->first();
+		$totalSpend=$times*$shopData['item_spend'];
 		if($pay_type==1){
 			$userData=$UserModel->select('u_coin')->where('u_id',$u_id)->first();
 				if($userData['u_coin']<$totalSpend){
