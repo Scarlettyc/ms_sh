@@ -39,7 +39,6 @@ class ShopController extends Controller
 		// $checkToken=$CharSkillEffUtil->($access_token,$u_id);
 		$inAppModel=new InAppPurchaseModel();
 		// if($access_token==$data['access_token']){
-		$resourceShop
 		$resourceShop=$inAppModel
 				->join('Rescource_mst','Rescource_mst.r_id','=','Store_purchase_mst.item_id')
 				->select('Store_purchase_mst.item_id','Store_purchase_mst.item_type','Store_purchase_mst.item_min_quantity','Store_purchase_mst.item_max_times','Rescource_mst.r_rarity as pay_type','Rescource_mst.r_price * Store_purchase_mst.item_min_quantity as item_spend')
