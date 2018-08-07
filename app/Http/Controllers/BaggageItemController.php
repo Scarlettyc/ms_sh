@@ -243,6 +243,7 @@ class BaggageItemController extends Controller
 					$result['status']=0;
 					$result['updated_at']=$datetime;
 					$result['created_at']=$datetime;
+					
 					$UserBaggageEqModel->insert($result);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
