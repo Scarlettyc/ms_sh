@@ -318,8 +318,8 @@ class ShopController extends Controller
 		$coin=$data['coin'];
 		$UserModel=new UserModel;
 		$StoreGemToCoinMstModel=new StoreGemToCoinMstModel;
-		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)->
-		// where('start_date','<=',$datetime)->where('end_date','>=',$datetime)
+		$buyType=$StoreGemToCoinMstModel->where('coin',$coin)
+		// ->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)
 		->first();
 		$UserInfo=$UserModel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$spend_gem=$buyType['gem'];
