@@ -218,7 +218,7 @@ class BaggageItemController extends Controller
 			$scrollInfo=$ScrollMstModel->select('sc_id','sc_coin','equ_group','sc_rarity')->where('sc_id',$scrollId)->first();
 			$scrollReData=$ScrollResourceModel->select('r_id','r_quantity')->where('sc_id',$scrollInfo['sc_id'])->get();
 			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
-			if($validate&&$scrollQu>=1){
+			if($validate&&$scrollQu){
 				if($scrollInfo['equ_group']==0){
 					$equipmentInfo=$EquipmentMstModel->select('equ_id')->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
 				}
@@ -243,7 +243,7 @@ class BaggageItemController extends Controller
 					$result['status']=0;
 					$result['updated_at']=$datetime;
 					$result['created_at']=$datetime;
-					
+
 					$UserBaggageEqModel->insert($result);
 					if($scrollInfo['sc_rarity']==2){
 						$MissionController->achieveMission(16,2,$u_id,1);
