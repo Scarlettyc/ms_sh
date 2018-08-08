@@ -199,7 +199,7 @@ class BaggageUtil
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
 			$result['baggage_id']=$user_sc_id;
-			$upgradeRES=$ScrollResourceModel->select('r_id','r_quantity','lv','r_id','r_quantity')->where('sc_id',$Item_Id)->get();
+			$upgradeRES=$ScrollResourceModel->select('r_id','r_quantity')->where('sc_id',$Item_Id)->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $each) {
 				$tmp['r_id']=$each['r_id'];
