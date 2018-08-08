@@ -233,11 +233,11 @@ class BaggageUtil
 		}
 		$eqUpData=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->get();
 		// if($equ_type==2||$equ_type==3){
-		$eqNextData=$EquUpgradeReMstModel->where('equ_code','like',$equData['equ_code'].'%' )->where('lv',$equData['equ_lv']+1)->first();
+		// $eqNextData=$EquUpgradeReMstModel->where('equ_code','like',$equData['equ_code'].'%' )->where('lv',$equData['equ_lv']+1)->first();
 		// }else{
 		// 	$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 		// }
-		$comEqData=$EquipmentMstModel->where('upgrade_id',$eqNextData['upgrade_id'])->where('equ_code',$equData['equ_code'])->first();
+		$comEqData=$EquipmentMstModel->where('equ_code','like',$equData['equ_code'].'%' )->where('lv',$equData['equ_lv']+1)->first();
 
 				foreach ($eqUpData as $key => $each) {
 					$tmp['r_id']=$each->r_id;
