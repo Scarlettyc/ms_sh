@@ -43,7 +43,7 @@ class LuckdrawController extends Controller
 		$defindFree=$defindMst->where('defind_id',33)->first();
 
 		$luckData=$luckdraw-> 
-		select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
+		select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,if(item_type=2, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('end_date','>=',$date)->get();
 		if($draw_type==$defindFree['value1']){
 			$freeDraw=$redisLuck->HGET('luckdrawfree',$dmy.$data['u_id']);
 			if($freeDraw){
@@ -192,7 +192,7 @@ class LuckdrawController extends Controller
 				}
 				if($drawresult){
 					if($drawresult['item_type']==3){
-						$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
+						$scroll_list=$ScrollMstModel->select('sc_id','sc_img_path')->where('sc_rarity',$drawresult['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
 						$drawresult['item_id']=$scroll_list['sc_id'];
 					}
 					$drawresult['time']=time();
