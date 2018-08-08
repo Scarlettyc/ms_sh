@@ -228,7 +228,8 @@ class MissionController extends Controller
 				$result['status']=1;
 				$result['times']=0;
 			}
-				$redis_mission->HSET($key,$mission_id,$result);
+			$resultJson=json_encode($result,TRUE);
+			$redis_mission->HSET($key,$mission_id,$resultJson);
 		}
 	}
  }
