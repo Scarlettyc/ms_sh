@@ -125,10 +125,7 @@ class BaggageUtil
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 			$standardData=$equLimitModel->select('ch_lv')->where('equ_rarity',$EquipmentInfo['equ_rarity'])->first();
 			$equipment['need_lv']=$standardData['ch_lv'];
-					
-
-
-			if($equipment['upgrade_id']==0){
+			if($EquipmentInfo['upgrade_id']==0){
 				$equipment['upgrade']=0;
 			}
 			else {
