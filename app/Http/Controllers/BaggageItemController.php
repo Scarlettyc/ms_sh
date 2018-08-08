@@ -220,10 +220,10 @@ class BaggageItemController extends Controller
 			$validate=$BaggageUtil->validateResource($u_id,$scrollReData,$scrollInfo['sc_coin']);
 			if($validate&&$scrollQu){
 				if($scrollInfo['equ_group']==0){
-					$equipmentInfo=$EquipmentMstModel->select('equ_id','equ_rarity','equ_type')->where('equ_rarity',$scrollInfo['sc_rarity'])->orderBy(DB::raw('RAND()'))->take(10)->first();
+					$equipmentInfo=$EquipmentMstModel->select('equ_id','equ_rarity','equ_type')->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_lv',0)->orderBy(DB::raw('RAND()'))->take(10)->first();
 				}
 				else{
-					$equipmentInfo=$EquipmentMstModel->select('equ_id','equ_rarity','equ_type')->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->		orderBy(DB::raw('RAND()'))->take(10)->first();
+					$equipmentInfo=$EquipmentMstModel->select('equ_id','equ_rarity','equ_type')->where('equ_rarity',$scrollInfo['sc_rarity'])->where('equ_group',$scrollInfo['equ_group'])->where('equ_lv',0)->		orderBy(DB::raw('RAND()'))->take(10)->first();
 					}
 
 					$hadEq=$UserBaggageEqModel->where('equ_id',$equipmentInfo['equ_id'])->where('u_id',$u_id)->count();
