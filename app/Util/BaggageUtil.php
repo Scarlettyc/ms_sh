@@ -6,7 +6,6 @@ use Illuminate\Http\JsonResponse;
 use App\UserBaggageResModel;
 use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
-use App\EquUpgradeMstModel;
 use App\ScrollMstModel;
 use App\ScrollResourceModel;
 use App\ResourceMstModel;
@@ -238,11 +237,11 @@ class BaggageUtil
 			throw new Exception("no enough coin");
 		}
 		$eqUpData=$EquUpgradeReMstModel->where('upgrade_id',$equData['upgrade_id'])->get();
-		if($equ_type==2){
-			$eqNextData=$EquUpgradeReMstModel->where('equ_code','like', substr($equData['equ_code'],0,4))->where('lv',$equData['equ_lv']+1)->first();
-		}else{
-			$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
-		}
+		// if($equ_type==2||$equ_type==3){
+		// 	$eqNextData=$EquUpgradeReMstModel->where('equ_code','like', substr($equData['equ_code'],0,4))->where('lv',$equData['equ_lv']+1)->first();
+		// }else{
+		// 	$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
+		// }
 		$comEqData=$EquipmentMstModel->where('upgrade_id',$eqNextData['upgrade_id'])->where('equ_code',$equData['equ_code'])->first();
 
 				foreach ($eqUpData as $key => $each) {

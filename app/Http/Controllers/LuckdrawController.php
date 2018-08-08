@@ -132,7 +132,7 @@ class LuckdrawController extends Controller
 				}
 				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpend,'updated_at'=>$date]);
 				$mission_key='mission_daily_'.$dmy.'_'.$u_id;
-				$achiveMission=$redisLuck->HEXIST($mission_key,$defindMission['value1']);
+				$achiveMission=$redisLuck->HEXISTS($mission_key,$defindMission['value1']);
 				if(!$achiveMission){
 				$redisLuck->HSET($mission_key,$defindMission['value1'],1);
 				}
