@@ -181,7 +181,7 @@ class LuckdrawController extends Controller
 					$luck_total=0;
 				}
 			$getLk=$luck_rate->select('lk_id')->where('draw_count',$luck_total+1)->where('rate_from','<=',$rate)->where('rate_to','>=',$rate)->where('draw_type',$draw_type)->first();
-			$drawresult=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,item_rarity,if(item_type=3, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
+			$drawresult=$luckdraw->select(DB::raw('lk_id,item_id,draw_type ,item_quantity,item_name,item_type,item_rarity,if(item_type=2, CONCAT("Scroll_Random_",item_rarity),"") as sc_img_path'))->where('draw_type',$draw_type)->where('start_date','<=',$date)->where('lk_id',$getLk['lk_id'])->first();
 			$history_key="luck_draw_history";
 				if($getLk['lk_id']==$defindSp['value1']||$getLk['lk_id']==$defindSp['value2']){
 				
