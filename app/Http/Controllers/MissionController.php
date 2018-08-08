@@ -39,7 +39,7 @@ class MissionController extends Controller
 		$chaData=$charModel->where('u_id',$u_id)->first();
 		$missionLv=0;
 		if($mission_type==2){
-			
+
 			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
 		}
@@ -91,7 +91,8 @@ class MissionController extends Controller
 		$u_id=$data['u_id'];
 		$mission_type=$data['mission_type'];
 		$mission_id=$data['mission_id'];
-		$missionModel=new MissionRewardsModel();
+		$missionList=new Mission_List_mst();
+		$missionRewardsModel=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
 		$CharSkillEffUtil=new CharSkillEffUtil();
@@ -100,7 +101,7 @@ class MissionController extends Controller
 		$datetime=$now->format( 'Y-m-d h:m:s' );
 		$redis_mission=Redis::connection('default');
 		$charaData=$charModel->select('ch_id','ch_lv','ch_exp')->where('u_id',$u_id)->first();
-		$missionReward=$missionModel->select('item_id','item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+	
 		$userData=$usermodel->where('u_id',$u_id)->first();
 		$BaggageUtil=new BaggageUtil();
 		$result=[];
@@ -110,7 +111,9 @@ class MissionController extends Controller
 		else{
 			$mission_key='mission_'.$u_id;
 		}
-		$recordJson=$redis_mission->HGET($mission_key,$mission_id);
+		$recordTimes=$redis_mission->HGET($mission_key,$mission_id);
+		
+		$missionReward=$missionRewardsModel->select('item_id','item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 		$record=json_decode($recordJson,TRUE);
 		foreach ($missionReward as $key => $rewards) {
 			if($rewards['item_type']==6){
@@ -136,7 +139,7 @@ class MissionController extends Controller
 		
 		$status=2;
 		$times=$record['times']+1;
-		$redis_mission->HSET($key,$mission_id,$status);
+		$redis_mission->HSET($mission_key,$mission_id,$status);
 		return base64_encode('successfully');
 	}
 

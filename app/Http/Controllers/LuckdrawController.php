@@ -20,7 +20,7 @@ use App\Util\BaggageUtil;
 use App\Lucky_draw_rateModel;
 use Exception;
 use Illuminate\Support\Facades\Redis;
-// use App\Util\CharSkillEffUtil;
+use App\Http\Controllers\MissionController;
 use DB;
 use DateTime;
 
@@ -116,6 +116,7 @@ class LuckdrawController extends Controller
 		$result=[];
 		$defindSpend=$defindMstModel->where('defind_id',28)->first();
 		$defindDiscount=$defindMstModel->where('defind_id',22)->first();  
+		$defindMission=$defindMstModel->where('defind_id',1)->first(); 
 		if($quantity==$defindDiscount['value2']){
 			$totalSpend=$defindSpend['value1']*$defindDiscount['value1']*$quantity;
 		}
@@ -130,8 +131,15 @@ class LuckdrawController extends Controller
 				throw new Exception("no enough coin!");
 				}
 				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpend,'updated_at'=>$date]);
+				$mission_key='mission_daily_'.$dmy.'_'.$u_id;
+				$achiveMission=$redisLuck->HEXIST($mission_key,$defindMission['value1']);
+				if(!$achiveMission){
+				$redisLuck->HSET($mission_key,$defindMission['value1'],1);
+				}
+
 			}
 			else if($draw_type==2){
+				$mission_key='mission'.'_'.$u_id;
 					if($quantity==1){
 						$freeData=$redisLuck->HGET('luckdrawfree',$dmy.$u_id);
 						if(!$freeData){
@@ -157,6 +165,11 @@ class LuckdrawController extends Controller
 						}
 						$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
 					}
+
+			$achiveMission=$redisLuck->HEXIST($mission_key,$defindMission['value2']);
+				if(!$achiveMission){
+				$redisLuck->HSET($mission_key,$defindMission['value2'],1);
+				}
 			}
 
 			$defindSp=$defindMstModel->where('defind_id',34)->first();  
