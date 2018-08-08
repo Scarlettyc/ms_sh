@@ -169,10 +169,8 @@ class LuckdrawController extends Controller
 						$usermodel->where('u_id',$u_id)->update(['u_gem'=>$user_data['u_gem']-$totalSpend,'updated_at'=>$date]);
 					}
 
-			$achiveMission=$redisLuck->HEXISTS($mission_key,$defindMission['value2']);
-				if(!$achiveMission){
-				$redisLuck->HSET($mission_key,$defindMission['value2'],1);
-				}
+			$misisonController->achieveMission($defindMission['value2'],$u_id,1);
+			
 			}
 
 			$defindSp=$defindMstModel->where('defind_id',34)->first();  
