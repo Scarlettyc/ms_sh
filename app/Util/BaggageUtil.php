@@ -125,21 +125,14 @@ class BaggageUtil
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
 			$standardData=$equLimitModel->select('ch_lv')->where('equ_rarity',$EquipmentInfo['equ_rarity'])->first();
 			$equipment['need_lv']=$standardData['ch_lv'];
-			if($equ_type==2){
-				$countUp=$eqUpgrade->where('equ_code',substr($EquipmentInfo['equ_code'], 0,4))->where('lv',$EquipmentInfo['equ_lv']+1)->count();
-			}
-			else if($equ_type==3){
-				$countUp=$eqUpgrade->where('equ_code',substr($EquipmentInfo['equ_code'], 0,3))->where('lv',$EquipmentInfo['equ_lv']+1)->count();
-			}
-			else{	
-			$countUp=$eqUpgrade->where('equ_code',$EquipmentInfo['equ_code'])->where('lv',$EquipmentInfo['equ_lv']+1)->count();
-			}
+					
 
-			if($countUp>0){
-				$equipment['upgrade']=1;
+
+			if($equipment['upgrade_id']==0){
+				$equipment['upgrade']=0;
 			}
 			else {
-				$equipment['upgrade']=0;
+				$equipment['upgrade']=1;
 			}
 			$eqAtr=$eqAttrmstModel->where('equ_att_id',$EquipmentInfo['equ_att_id'])->first();
 
