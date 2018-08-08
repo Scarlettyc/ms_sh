@@ -12,6 +12,7 @@ use App\ResourceMstModel;
 use App\ItemMstModel;
 use App\EquipmentMstModel;
 use App\EquUpgradeReMstModel;
+use App\EquipLVLimitMstModel;
 use Exception;
 use App\EqAttrmstModel;
 use App\SkillMstModel;
@@ -110,6 +111,7 @@ class BaggageUtil
 			$userBaggage=new UserBaggageEqModel();
 			$eqUpgrade=new EquUpgradeReMstModel();
 			$defindMstModel=new DefindMstModel();
+			$equLimitModel=new EquipLVLimitMstModel();
 			$equipment=[];
 			$result=[];
 			$baggeData=$userBaggage->where('u_id',$u_id)->where('user_beq_id',$user_beq_id)->where('status','!=',2)->first();
@@ -121,10 +123,13 @@ class BaggageUtil
 			$equipment['item_name']=$EquipmentInfo['equ_name'];
 			$equipment['item_rarity']=$EquipmentInfo['equ_rarity'];
 			$equipment['item_price']=$EquipmentInfo['equ_price'];
+			$standardData=$equLimitModel->select('ch_lv')->where('equ_rarity',$EquipmentInfo['equ_rarity'])->first();
+			$equipment['need_lv']=$standardData['ch_lv'];
 			if($equ_type==2){
-				$standardData=$defindMstModel->select('value1','value2')->wherein('defind_id',[29,30,31,32])->where('value1',$EquipmentInfo['equ_rarity'])->first();
-				$equipment['need_lv']=$standardData['value2'];
 				$countUp=$eqUpgrade->where('equ_code',substr($EquipmentInfo['equ_code'], 0,4))->where('lv',$EquipmentInfo['equ_lv']+1)->count();
+			}
+			else if($equ_type==3){
+				$countUp=$eqUpgrade->where('equ_code',substr($EquipmentInfo['equ_code'], 0,3))->where('lv',$EquipmentInfo['equ_lv']+1)->count();
 			}
 			else{	
 			$countUp=$eqUpgrade->where('equ_code',$EquipmentInfo['equ_code'])->where('lv',$EquipmentInfo['equ_lv']+1)->count();
