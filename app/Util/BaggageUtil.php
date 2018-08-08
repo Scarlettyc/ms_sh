@@ -237,7 +237,7 @@ class BaggageUtil
 		// }else{
 		// 	$eqNextData=$EquUpgradeReMstModel->where('equ_code',$equData['equ_code'])->where('lv',$equData['equ_lv']+1)->first();
 		// }
-		$comEqData=$EquipmentMstModel->where('equ_code','like',$equData['equ_code'].'%' )->where('lv',$equData['equ_lv']+1)->first();
+		$comEqData=$EquipmentMstModel->where('equ_code','like',$equData['equ_code'].'%' )->where('equ_lv',$equData['equ_lv']+1)->first();
 
 				foreach ($eqUpData as $key => $each) {
 					$tmp['r_id']=$each->r_id;
