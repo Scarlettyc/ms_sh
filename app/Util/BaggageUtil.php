@@ -8,6 +8,7 @@ use App\UserBaggageEqModel;
 use App\UserBaggageScrollModel;
 use App\EquUpgradeMstModel;
 use App\ScrollMstModel;
+use App\ScrollResourceModel;
 use App\ResourceMstModel;
 use App\ItemMstModel;
 use App\EquipmentMstModel;
@@ -185,7 +186,7 @@ class BaggageUtil
 			$SkillMstModel=new SkillMstModel();
 			$ResourceMstModel=new ResourceMstModel();
 			$EquUpgradeReMstModel=new EquUpgradeReMstModel();
-
+			$ScrollResourceModel=new ScrollResourceModel();
 			$UserBaggageResModel=new UserBaggageResModel();
 			$userData=$UserModel->where('u_id',$u_id)->first();
 			$scrollData=$ScrollMstModel->where('sc_id',$Item_Id)->first();
@@ -198,12 +199,12 @@ class BaggageUtil
 			$result['sc_coin']=$scrollData['sc_coin'];
 			$result['sc_img_path']=$scrollData['sc_img_path'];
 			$result['baggage_id']=$user_sc_id;
-			$upgradeRES=$EquUpgradeReMstModel->select('equ_code','upgrade_id','lv','r_id','r_quantity')->where('upgrade_id',$scrollData['upgrade_id'])->get();
+			$upgradeRES=$ScrollResourceModel->select('r_id','r_quantity','lv','r_id','r_quantity')->where('sc_id',$Item_Id)->get();
 			$resource=[];
 			foreach ($upgradeRES as $key => $each) {
 				$tmp['r_id']=$each['r_id'];
 				$rQu=$UserBaggageResModel->where('u_id',$u_id)->where('r_id',$each->r_id)->first();
-				$tmp['r_qu_need']=$each->r_quantity;
+				$tmp['r_qu_need']=$each['r_quantity'];
 				if($rQu['quantity']){
 				$tmp['r_qu_have']=$rQu['quantity'];
 				}
