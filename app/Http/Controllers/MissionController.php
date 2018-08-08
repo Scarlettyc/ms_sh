@@ -196,7 +196,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		$userModel=new UserModel();
 		$missionModel=new MissionListMstModel();
-		$missionData=$missionModel->select('user_lv_from','times','mission_type')->where('mission_id',$mission_id);
+		$missionData=$missionModel->select('user_lv_from','times','mission_type')->where('mission_id',$mission_id)->first();
 		$chaData=$charModel->select('ch_lv')->where('u_id',$u_id)->first();
 		$mission_update=0;
 		if($missionData['mission_type']==2){
