@@ -112,6 +112,7 @@ class LuckdrawController extends Controller
 		$ScrollMstModel=new ScrollMstModel();
 		$luckdraw=new Luck_draw_rewardsModel();
 		$luck_rate=new Lucky_draw_rateModel();
+		$misisonController=new MissionController();
 		$user_data=$usermodel->select('u_gem','u_coin')->where('u_id',$u_id)->first();
 		$result=[];
 		$defindSpend=$defindMstModel->where('defind_id',28)->first();
@@ -131,11 +132,13 @@ class LuckdrawController extends Controller
 				throw new Exception("no enough coin!");
 				}
 				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$user_data['u_coin']-$totalSpend,'updated_at'=>$date]);
-				$mission_key='mission_daily_'.$dmy.'_'.$u_id;
-				$achiveMission=$redisLuck->HEXISTS($mission_key,$defindMission['value1']);
-				if(!$achiveMission){
-				$redisLuck->HSET($mission_key,$defindMission['value1'],1);
-				}
+
+				$misisonController->achieveMission($defindMission['value1'],$u_id,1);
+				// $mission_key='mission_daily_'.$dmy.'_'.$u_id;
+				// $achiveMission=$redisLuck->HEXISTS($mission_key,$defindMission['value1']);
+				// if(!$achiveMission){
+				// $redisLuck->HSET($mission_key,$defindMission['value1'],1);
+				// }
 
 			}
 			else if($draw_type==2){

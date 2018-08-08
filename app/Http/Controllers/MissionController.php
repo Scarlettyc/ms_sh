@@ -187,7 +187,7 @@ class MissionController extends Controller
 	}
 
 
-	public function achieveMission($mission_id,$mission_type,$u_id,$times){
+	public function achieveMission($mission_id,$u_id,$times){
 		$missionModel=new MissionRewardsModel();
 		$now   = new DateTime;
 		$dmy=$now->format( 'Ymd' );
@@ -196,10 +196,10 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		$userModel=new UserModel();
 		$missionModel=new MissionListMstModel();
-		$missionData=$missionModel->select('user_lv_from','times')->where('mission_id',$mission_id);
+		$missionData=$missionModel->select('user_lv_from','times','mission_type')->where('mission_id',$mission_id);
 		$chaData=$charModel->select('ch_lv')->where('u_id',$u_id)->first();
 		$mission_update=0;
-		if($mission_type==2){
+		if($missionData['mission_type']==2){
 			$key='mission_daily_'.$dmy.'_'.$u_id;
 			$mission_update=1;
 		}

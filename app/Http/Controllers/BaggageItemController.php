@@ -245,12 +245,13 @@ class BaggageItemController extends Controller
 
 					$UserBaggageEqModel->insert($result);
 					if($scrollInfo['sc_rarity']==2){
-						$MissionController->achieveMission(16,2,$u_id,1);
+
+						$MissionController->achieveMission(16,$u_id,1);
 					}else if($scrollInfo['sc_rarity']==3){
-						$MissionController->achieveMission(26,2,$u_id,1);
+						$MissionController->achieveMission(26,$u_id,1);
 					}
 					else if($scrollInfo['sc_rarity']==4){
-						$MissionController->achieveMission(37,2,$u_id,1);
+						$MissionController->achieveMission(37,$u_id,1);
 					}
 						if($scrollQu['quantity']==1){
 							$UserBaggageScrollModel->where('u_id',$u_id)->where('user_sc_id',$baggage_id)->update(['status'=>9,'updated_at'=>$datetime]);
@@ -293,7 +294,7 @@ class BaggageItemController extends Controller
 
 		$equData=$EquipmentMstModel->select('equ_id','equ_type','equ_code','equ_rarity','equ_lv','upgrade_coin')->where('equ_id',$equ_id)->first();
 		if($equData['equ_rarity']==2&&$equData['equ_lv']==2){
-			$MissionController->achieveMission(19,2,$u_id,1);
+			$MissionController->achieveMission(19,$u_id,1);
 		}
 		$eqDetail=$UserBaggageEqModel->where('u_id',$u_id)->where('user_beq_id',$baggage_id)->where('equ_id',$equ_id)->first();
 		$upgarde=$BaggageUtil->compareUpgradeEQ($u_id,$equ_id,$equ_type,$equData['upgrade_coin'],1,$eqDetail['status']);
