@@ -158,7 +158,7 @@ class MissionController extends Controller
 				$result[]=$rewards;
 			}
 		}
-		$BaggageUtil->insertToBaggage('u_id',$result);
+		$BaggageUtil->insertToBaggage($u_id,$result);
 		
 		$status=2;
 		if(isset($record['times'])){
