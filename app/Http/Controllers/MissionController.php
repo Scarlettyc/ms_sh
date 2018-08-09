@@ -51,6 +51,7 @@ class MissionController extends Controller
 		foreach ($missionList as $key => $mission) {
 			$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
+			
 			$rewards=$missionReward->select(DB::raw('item_id, item_equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['rewards']=$rewards;
@@ -91,7 +92,7 @@ class MissionController extends Controller
 		$u_id=$data['u_id'];
 		$mission_type=$data['mission_type'];
 		$mission_id=$data['mission_id'];
-		$missionList=new Mission_List_mst();
+		$missionList=new MissionListMstModel();
 		$missionRewardsModel=new MissionRewardsModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
