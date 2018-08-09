@@ -66,6 +66,8 @@ class MissionController extends Controller
 					else{
 						$tmp['status']=0;
 						$tmp['description']=$mission['description'].' (0'.'|'.$mission['times'].')';
+						$tmp['mission_lv']=$mission['user_lv_from'];
+						$result[0]=$tmp;
 					}
 				}
 				else{
@@ -76,9 +78,11 @@ class MissionController extends Controller
 						$tmp['status']=0;
 					}
 					$tmp['description']=$mission['description'];
+					$tmp['mission_lv']=$mission['user_lv_from'];
+					$result[]=$tmp;
 				}
-				$tmp['mission_lv']=$mission['user_lv_from'];
-				$result[]=$tmp;
+				
+				
 			}
 			$final['mission_list']=$result;
 			$response=json_encode($final,TRUE);
