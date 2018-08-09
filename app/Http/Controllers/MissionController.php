@@ -62,13 +62,17 @@ class MissionController extends Controller
 					if(is_array($record)){
 					$tmp['status']=$record['status'];
 					$tmp['description']=$mission['description'].' ('.$record['times'].'|'.$mission['times'].')';
+					$tmp['mission_lv']=$mission['user_lv_from'];
+					$result[0]=$tmp;
+
 					}
 					else{
 						$tmp['status']=0;
 						$tmp['description']=$mission['description'].' (0'.'|'.$mission['times'].')';
 						$tmp['mission_lv']=$mission['user_lv_from'];
-						$result[0]=$tmp;
+						$result[]=$tmp;
 					}
+
 				}
 				else{
 					if(is_array($record)){	
@@ -81,8 +85,7 @@ class MissionController extends Controller
 					$tmp['mission_lv']=$mission['user_lv_from'];
 					$result[]=$tmp;
 				}
-				
-				
+
 			}
 			$final['mission_list']=$result;
 			$response=json_encode($final,TRUE);
