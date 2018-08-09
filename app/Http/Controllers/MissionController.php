@@ -161,7 +161,12 @@ class MissionController extends Controller
 		$BaggageUtil->insertToBaggage('u_id',$result);
 		
 		$status=2;
+		if(isset($record['times'])){
 		$times=$record['times'];
+		}else {
+			$times=1;
+		}
+
 		$redis_mission->HSET($mission_key,$mission_id,json_encode(['status'=>$status,'times'=>$times]));
 		return base64_encode('successfully');
 	}
