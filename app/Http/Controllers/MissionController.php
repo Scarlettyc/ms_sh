@@ -47,7 +47,7 @@ class MissionController extends Controller
 			$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
 
-			$rewards=$missionReward->select(DB::raw('item_id, item_equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
+			$rewards=$missionReward->select(DB::raw('item_id, equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty+1),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['rewards']=$rewards;
 				// if($rewards['item_type']==3){
@@ -83,7 +83,7 @@ class MissionController extends Controller
 			foreach ($missionList as $key => $mission) {
 				$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
 				$record=json_decode($recordJson,TRUE);
-				$rewards=$missionReward->select(DB::raw('item_id, item_equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
+				$rewards=$missionReward->select(DB::raw('item_id, equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty+1),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
 				$tmp['mission_id']=$mission['mission_id'];
 				$tmp['rewards']=$rewards;
 				if(is_array($record)){
@@ -136,7 +136,7 @@ class MissionController extends Controller
 			$mission_key='mission_'.$u_id;
 		}
 		$recordJson=$redis_mission->HGET($mission_key,$mission_id);
-		$missionReward=$missionRewardsModel->select('item_id','item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+		$missionReward=$missionRewardsModel->select('item_id','equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 		$record=json_decode($recordJson,TRUE);
 		foreach ($missionReward as $key => $rewards) {
 			if($rewards['item_type']==6){
@@ -191,7 +191,7 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 			$chaData=$charModel->where('u_id',$u_id)->first();
 			$missionData=$missionModel->select('description','mission_id')->where('mission_id',$mission_id)->where('mission_type',$mission_type)->first();
-			$rewards=$missionReward->select('item_id', 'item_equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
+			$rewards=$missionReward->select('item_id', 'equ_type','item_quantity', 'item_rarilty', 'item_type')->where('mission_id',$mission_id)->get();
 			if($mission_type==2){
 				$key='mission_daily_'.$dmy.'_'.$u_id;
 			}
