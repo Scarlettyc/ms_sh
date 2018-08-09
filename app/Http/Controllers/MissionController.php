@@ -38,17 +38,12 @@ class MissionController extends Controller
 		$charModel=new CharacterModel();
 		$chaData=$charModel->where('u_id',$u_id)->first();
 		$missionLv=0;
+		$result=[];
 		if($mission_type==2){
 
 			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 		$mission_key='mission_daily_'.$dmy.'_'.$u_id;
-		}
-		else{ 
-			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
-			$mission_key='mission'.'_'.$u_id;
-		}
-		$result=[];
-		foreach ($missionList as $key => $mission) {
+			foreach ($missionList as $key => $mission) {
 			$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
 			$record=json_decode($recordJson,TRUE);
 
@@ -80,6 +75,29 @@ class MissionController extends Controller
 				$tmp['mission_lv']=$mission['user_lv_from'];
 				array_push($result,$tmp);
 			}
+		}
+		else{ 
+			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
+			$mission_key='mission'.'_'.$u_id;
+			$user_lv=$chaData['ch_lv'];
+			foreach ($missionList as $key => $mission) {
+				$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
+				$record=json_decode($recordJson,TRUE);
+				if(is_array($record)){
+					$tmp['status']=$record['status'];
+				}
+				else if($user_lv<=$mission['user_lv_from']){
+					$tmp['status']=1;
+				}
+				else {
+					$tmp['status']=2;
+				}
+				$tmp['description']=$mission['description'];
+				array_push($result,$tmp);
+			}
+		}
+	
+	
 			$final['mission_list']=$result;
 			$response=json_encode($final,TRUE);
 			return  base64_encode($response);
