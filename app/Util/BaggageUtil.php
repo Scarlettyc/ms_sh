@@ -377,7 +377,7 @@ class BaggageUtil
 				}
 				
 			}
-			else if($reward['item_type']==2){
+			else if($reward['item_type']==3){
 					$hadEq=$UserBaggageEqModel->where('equ_id',$reward['item_id'])->where('u_id',$u_id)->count();
 					if($hadEq>=1){
 						throw new Exception("no enough coin");
@@ -399,7 +399,7 @@ class BaggageUtil
 					$result['created_at']=$datetime;
 					$UserBaggageEqModel->insert($result);
 			}
-			else if($reward['item_type']==3){
+			else if($reward['item_type']==2){
 				for ($i=0;$i<$reward['item_quantity'];$i++) {
 					$result=[];
 					$scrData=$scrModel->where('sc_id',$reward['item_id'])->first();

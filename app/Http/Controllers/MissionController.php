@@ -149,12 +149,12 @@ class MissionController extends Controller
 			else if($rewards['item_type']==99){
 				$CharSkillEffUtil->levelUP($u_id,$rewards['item_quantity']);
 			}
-			else if($rewards['item_type']==3){
-				$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$rewards['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
-				$rewards['item_id']=$scroll_list['sc_id'];
-				$result[]=$rewards;
-			}
-			else if($rewards['item_type']==1 &&$rewards['item_type']==2){
+			// else if($rewards['item_type']==2){
+			// 	$scroll_list=$ScrollMstModel->select('sc_id')->where('sc_rarity',$rewards['item_rarity'])->orderBy(DB::raw('RAND()'))->first();
+			// 	$rewards['item_id']=$scroll_list['sc_id'];
+			// 	$result[]=$rewards;
+			// }
+			else if($rewards['item_type']==1 ||$rewards['item_type']==2||$rewards['item_type']==3){
 				$result[]=$rewards;
 			}
 		}
