@@ -89,7 +89,7 @@ class MissionController extends Controller
 				if(is_array($record)){
 					$tmp['status']=$record['status'];
 				}
-				else if($user_lv<=$mission['user_lv_from']){
+				else if($user_lv>=$mission['user_lv_from']){
 					$tmp['status']=1;
 				}
 				else {
