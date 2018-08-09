@@ -112,6 +112,7 @@ class MissionController extends Controller
 		$mission_id=$data['mission_id'];
 		$missionList=new MissionListMstModel();
 		$missionRewardsModel=new MissionRewardsModel();
+		$ScrollMstModel=new ScrollMstModel();
 		$usermodel=new UserModel();
 		$charModel=new CharacterModel();
 		$CharSkillEffUtil=new CharSkillEffUtil();
