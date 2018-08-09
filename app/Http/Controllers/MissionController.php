@@ -96,7 +96,6 @@ class MissionController extends Controller
 					$tmp['status']=0;
 				}
 				$tmp['description']=$mission['description'];
-				$tmp['rewards']=$mission;
 				array_push($result,$tmp);
 			}
 		}
