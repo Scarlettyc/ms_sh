@@ -62,7 +62,6 @@ class MissionController extends Controller
 						$tmp['status']=0;
 						$tmp['description']=$mission['description'].' (0'.'|'.$mission['times'].')';
 					}
-					$tmp['rewards']=$mission;
 				}
 				else{
 					if(is_array($record)){	
@@ -74,7 +73,6 @@ class MissionController extends Controller
 					$tmp['description']=$mission['description'];
 				}
 				$tmp['mission_lv']=$mission['user_lv_from'];
-				$tmp['rewards']=$mission;
 				array_push($result,$tmp);
 			}
 		}
@@ -85,6 +83,9 @@ class MissionController extends Controller
 			foreach ($missionList as $key => $mission) {
 				$recordJson=$redis_mission->HGET($mission_key,$mission['mission_id']);
 				$record=json_decode($recordJson,TRUE);
+				$rewards=$missionReward->select(DB::raw('item_id, item_equ_type,item_quantity, item_rarilty, item_type,if(item_type=3, CONCAT("Scroll_Random_",item_rarilty),"") as sc_img_path'))->where('mission_id',$mission['mission_id'])->Get();
+				$tmp['mission_id']=$mission['mission_id'];
+				$tmp['rewards']=$rewards;
 				if(is_array($record)){
 					$tmp['status']=$record['status'];
 				}
