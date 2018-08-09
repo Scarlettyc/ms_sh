@@ -380,11 +380,7 @@ class BaggageUtil
 			else if($reward['item_type']==3){
 					$hadEq=$UserBaggageEqModel->where('equ_id',$reward['item_id'])->where('u_id',$u_id)->count();
 					if($hadEq>=1){
-						throw new Exception("no enough coin");
-						$response=[
-						'status' => 'Wrong',
-						'error' => "you already have this equipment",
-						];
+						throw new Exception("you already have this equipment");
 					}
 					$result=[];
 					$eqData=$eqModel->where('equ_id',$reward['item_id'])->first();
