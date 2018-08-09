@@ -45,10 +45,10 @@ class BaggageItemController extends Controller
 		if($item_type==1){
 			$result['Baggage_data']=$BaggageUtil->getResource($u_id);
 		}
-		else if($item_type==3){
+		else if($item_type==2){
 			$result['Baggage_data']=$BaggageUtil->getScroll($u_id);
 		}
-		else if($item_type==2){
+		else if($item_type==3){
 			$result['Baggage_data']=$BaggageUtil->getEquipment($u_id,$equ_type,0);
 		}
 
