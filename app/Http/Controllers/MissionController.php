@@ -121,7 +121,7 @@ class MissionController extends Controller
 				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_coin']+$rewards['item_quantity'],'updated_at'=>$datetime]);
 			}
 			else if($rewards['item_type']==7){
-				$usermodel->where('u_id',$u_id)->update(['u_coin'=>$userData['u_gem']+$rewards['item_quantity'],'updated_at'=>$datetime]);
+				$usermodel->where('u_id',$u_id)->update(['u_gem'=>$userData['u_gem']+$rewards['item_quantity'],'updated_at'=>$datetime]);
 			}
 			else if($rewards['item_type']==99){
 				$CharSkillEffUtil->levelUP($u_id,$rewards['item_quantity']);
