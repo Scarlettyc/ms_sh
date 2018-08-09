@@ -139,7 +139,7 @@ class MissionController extends Controller
 		
 		$status=2;
 		$times=$record['times']+1;
-		$redis_mission->HSET($mission_key,$mission_id,['status'=>$status,'times'=>$times]);
+		$redis_mission->HSET($mission_key,$mission_id,json_encode(['status'=>$status,'times'=>$times]));
 		return base64_encode('successfully');
 	}
 
