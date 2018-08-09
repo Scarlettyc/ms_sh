@@ -88,7 +88,7 @@ class BaggageUtil
 			foreach ($baggageWeapon as $obj) 
 			{	$arry['baggage_id']=$obj['user_beq_id'];
 				$arry['item_id']=$obj['equ_id'];
-				$arry['item_type']=2;
+				$arry['item_type']=3;
 				$arry['equ_type']=$equ_type;
 				$arry['item_rarity']=$obj['equ_rarity'];
 				$eq_data=$EquipmentMstModel->select('equ_code','equ_lv')->where('equ_id',$arry['item_id'])->first();
@@ -161,7 +161,7 @@ class BaggageUtil
 			foreach ($baggageScroll as $obj) 
 			{	$arry['baggage_id']=$obj['user_sc_id'];
 				$arry['item_id']=$obj['sc_id'];
-				$arry['item_type']=3;
+				$arry['item_type']=2;
 				$arry['item_quantity']=$obj['quantity'];
 				$arry['equ_type']=0;
 				$scrollMst=$scrollMstModel->select('sc_img_path')->where('sc_id',$obj['sc_id'])->first();
@@ -187,7 +187,7 @@ class BaggageUtil
 			$result['coin_have']=$userData['u_coin'];
 			$result['coin_need']=$scrollData['sc_coin'];
 			$result['item_id']=$scrollData['sc_id'];
-			$result['item_type']=3;
+			$result['item_type']=2;
 			$result['equ_type']=0;
 			$result['sc_name']=$scrollData['sc_name'];
 			$result['sc_coin']=$scrollData['sc_coin'];
@@ -435,13 +435,13 @@ class BaggageUtil
 			$result['item_description']=$reData['r_description'];
 			$result['item_image']=$reData['r_img_path'];
 		}
-		else if($mission['item_type']==2){
+		else if($mission['item_type']==3){
 			$eqData=$eqModel->where('equ_id',$mission['item_id'])->first();
 			$result['item_name']=$reData['equ_name'];
 			$result['item_description']=$reData['equ_description'];
 			$result['item_image']=$reData['icon_path'];
 		}
-		else if($mission['item_type']==3){
+		else if($mission['item_type']==2){
 			$scrData=$scrModel->where('sc_id',$mission['item_id'])->first();
 			$result['item_name']=$reData['sc_name'];
 			$result['item_description']=$reData['sc_description'];
@@ -482,7 +482,7 @@ class BaggageUtil
 			}
 
 		}
-		else if($item_type==3){
+		else if($item_type==2){
 			$scrollData=$ScrollMstModel->where('sc_id',$item_id)->first();
 						$baScNew['u_id']=$u_id;
 		   				$baScNew['sc_id']=$item_id;

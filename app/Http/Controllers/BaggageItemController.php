@@ -107,9 +107,9 @@ class BaggageItemController extends Controller
 			if($item_type == 1)
 			{	$result = $BaggageUtil->getResourceInfo($item_id);
 			}
-			else if($item_type == 2)
+			else if($item_type == 3)
 			{	$result = $BaggageUtil->getEquipmentInfo($item_id,$u_id,$baggage_id,$equ_type);
-			}else if($item_type == 3)
+			}else if($item_type == 2)
 			{	
 				$result = $BaggageUtil->getScrollInfo($item_id,$u_id,$baggage_id);
 			}
