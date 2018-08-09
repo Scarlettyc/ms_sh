@@ -62,6 +62,7 @@ class MissionController extends Controller
 						$tmp['status']=0;
 						$tmp['description']=$mission['description'].' (0'.'|'.$mission['times'].')';
 					}
+					$tmp['rewards']=$mission;
 				}
 				else{
 					if(is_array($record)){	
@@ -73,6 +74,7 @@ class MissionController extends Controller
 					$tmp['description']=$mission['description'];
 				}
 				$tmp['mission_lv']=$mission['user_lv_from'];
+				$tmp['rewards']=$mission;
 				array_push($result,$tmp);
 			}
 		}
