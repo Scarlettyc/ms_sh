@@ -76,7 +76,7 @@ class MissionController extends Controller
 				array_push($result,$tmp);
 			}
 		}
-		else if ($mission_type==1){ 
+		else { 
 			$missionList=$missionModel->select('mission_id','description','user_lv_from','times')->where('mission_type',$mission_type)->where('start_date','<=',$datetime)->where('end_date','>=',$datetime)->get();
 			$mission_key='mission'.'_'.$u_id;
 			$user_lv=$chaData['ch_lv'];
