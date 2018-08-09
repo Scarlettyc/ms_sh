@@ -96,6 +96,7 @@ class MissionController extends Controller
 					$tmp['status']=0;
 				}
 				$tmp['description']=$mission['description'];
+				$tmp['mission_lv']=$mission['user_lv_from'];
 				array_push($result,$tmp);
 			}
 		}
