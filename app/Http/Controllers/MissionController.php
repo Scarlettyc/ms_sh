@@ -90,7 +90,7 @@ class MissionController extends Controller
 					$tmp['status']=1;
 				}
 				else {
-					$tmp['status']=2;
+					$tmp['status']=0;
 				}
 				$tmp['description']=$mission['description'];
 				array_push($result,$tmp);
