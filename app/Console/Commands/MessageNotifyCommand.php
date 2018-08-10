@@ -50,7 +50,7 @@ class MessageNotifyCommand extends Command
         // $GMNoticeEmailModel->setConnection('gm_db');
         // $GMNoticeRewardsModel->setConnection('gm_db');
         $UserModel=new UserModel();
-        $emailData=$GMNoticeEmailModel->where('status',0)->get();
+        $emailData=DB::connection('gm_db')->table('')->where('status',0)->get();
         $DefindMstModel=new DefindMstModel();
         $definActive= $DefindMstModel->select('value1','value2')->where('defind_id',7)->first();
         foreach ($emailData as $key => $email) {
