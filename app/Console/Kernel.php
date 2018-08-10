@@ -20,6 +20,7 @@ class Kernel extends ConsoleKernel
 \App\Console\Commands\BattleBackgroundCommand::class,
 \App\Console\Commands\ChatWebsocket::class,
 \App\Console\Commands\BattleCommand::class,
+\App\Console\Commands\MessageNotifyCommand::class,
     ];
 
     /**
@@ -32,5 +33,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('battle:background')
                 ->everyMinute();
+        // $schedule->command('battle:background')
+        //         ->everyMinute();
     }
 }

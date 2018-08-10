@@ -67,6 +67,7 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['u_get_reward']=0;
 			$result['haveChar']=$haveChar;
+			$usermodel->where('u_id',$userData['u_id'])->update(['u_last_login'=>time(),'updated_at'=>$datetime]);
 			
 			$response=json_encode($result,TRUE);
 			return  base64_encode($response);
@@ -174,6 +175,7 @@ class AccessController extends Controller
 			$result['uuid']=$userfinal['uuid'];
 			$result['get_reward']=$userData['u_get_reward'];
 			$redis_login->HSET('login_data',$userData['u_id'],$loginlist);
+			$usermodel->where('u_id',$userData['u_id'])->update(['u_last_login'=>time(),'updated_at'=>$datetime]);
 			$response=json_encode($result,TRUE);
 
 			return  base64_encode($response);

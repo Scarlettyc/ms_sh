@@ -65,6 +65,19 @@ return [
             'strict' => false,
             'engine' => null,
         ],
+        'gm_db' => [
+            'driver' => 'mysql',
+            'host' => env('DB_HOST', '116.62.127.102'),
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'ms_gm'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', '123456'),
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+        ],
 
         'pgsql' => [
             'driver' => 'pgsql',
@@ -126,6 +139,12 @@ return [
             'password' => env('REDIS_PASSWORD', null),
             'port' => env('REDIS_PORT', 6379),
             'database' => 3,
+        ],
+        'gm_user' => [
+            'host' => env('REDIS_HOST', '127.0.0.1'),
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_PORT', 6379),
+            'database' => 4,
         ],
         'options' => [
                 'parameters' => ['password' => env('REDIS_PASSWORD', null)],
