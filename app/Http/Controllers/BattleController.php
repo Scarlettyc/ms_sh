@@ -339,6 +339,9 @@ class BattleController extends Controller
 				$playerData[]=$arr['playerData'];
 				$playerData['address']=$clientInfo['address'];
 				$playerData['port']=$clientInfo['port'];
+
+				$playerData['rand1']=rand(1,100);
+				$playerData['rand2']=rand(1,100);
 				$frameKey='battle_data'.$u_id.$match_id;
 				//$frameKey_2='battle_data'.$enemy_uid.$match_id;
 				//$responseKey='battle_data'.$match_id;
