@@ -10,7 +10,7 @@ use App\MessageMstModel;
 class MessageController extends Controller
 {
   public function getMessageList(Request $request){
-    
+    Redis
 
   }
   public function readMessage(Request $request){

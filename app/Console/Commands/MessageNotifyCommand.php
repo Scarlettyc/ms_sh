@@ -87,7 +87,7 @@ class MessageNotifyCommand extends Command
                 }
 
             }
-            else($email['user_group']==2){
+            else if ($email['user_group']==2){
                  if($email['country']==1){
 
                     $activeLastTime=time()-$definActive['value1']*$definActive['value2'];

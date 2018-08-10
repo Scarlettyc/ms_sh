@@ -31,9 +31,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('battle:background')
-                ->everyMinute();
         // $schedule->command('battle:background')
         //         ->everyMinute();
+        $schedule->command('battle:background')
+                ->everyMinute();
     }
 }
