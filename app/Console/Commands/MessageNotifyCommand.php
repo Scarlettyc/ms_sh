@@ -45,7 +45,8 @@ class MessageNotifyCommand extends Command
      */
 
     public function handle()
-    // {   $GMNoticeEmailModel=new GMNoticeEmailModel();
+    {   
+    // $GMNoticeEmailModel=new GMNoticeEmailModel();
     //     $GMNoticeRewardsModel=new GMNoticeRewardsModel();
         // $GMNoticeEmailModel->setConnection('gm_db');
         // $GMNoticeRewardsModel->setConnection('gm_db');
