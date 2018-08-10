@@ -45,8 +45,8 @@ class MessageNotifyCommand extends Command
      */
 
     public function handle()
-    {   $GMNoticeEmailModel=new GMNoticeEmailModel();
-        $GMNoticeRewardsModel=new GMNoticeRewardsModel();
+    // {   $GMNoticeEmailModel=new GMNoticeEmailModel();
+    //     $GMNoticeRewardsModel=new GMNoticeRewardsModel();
         // $GMNoticeEmailModel->setConnection('gm_db');
         // $GMNoticeRewardsModel->setConnection('gm_db');
         $UserModel=new UserModel();
@@ -116,7 +116,7 @@ class MessageNotifyCommand extends Command
             }
 
             foreach ($uList as $key => $userData) {
-                $emialReward=$GMNoticeRewardsModel->where('notice_id',$email['notice_id'])->get();
+                $emialReward=DB::connection('gm_db')->table('GM_notice_rewards')->where('notice_id',$email['notice_id'])->get();
                 $redisGm=Redis::connection('gm_user');
                 $emailKey='email_pending'.$userData['u_id'];
                 $redisGm->hset($emailKey,$emialReward);
