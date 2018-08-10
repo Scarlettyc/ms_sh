@@ -54,7 +54,7 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '116.62.127.102'),
+            'host' => env('DB_HOST', '47.96.231.235'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'ms_project2'),
             'username' => env('DB_USERNAME', 'root'),
@@ -67,7 +67,7 @@ return [
         ],
         'gm_db' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '116.62.127.102'),
+            'host' => env('DB_HOST', '47.96.231.235'),
             'port' => env('DB_PORT', '3306'),
             'database' => env('DB_DATABASE', 'ms_gm'),
             'username' => env('DB_USERNAME', 'root'),

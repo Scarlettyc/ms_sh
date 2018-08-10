@@ -11,6 +11,7 @@ use App\UserModel;
 use App\DefindMstModel;
 use Log;
 use DateTime;
+use DB;
 class MessageNotifyCommand extends Command
 {
     /**
